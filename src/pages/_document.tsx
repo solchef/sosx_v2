@@ -97,12 +97,12 @@ class MyDocument extends Document {
                                         
                                         <li className="mm-active"><a href="#" className="mm-active">
                                                 <i className="fa fa-repeat active"></i>
-                                                <span className="nav-text">X-Swap</span>
+                                                <span className="nav-text">Swap</span>
                                             </a>
                                         </li>
-                                        <li><a href="https://locahost:3001/staking-form">
+                                        <li><a href="https://app.socialx.io/staking-form">
                                                 <i className="fa fa-coins"></i>
-                                                <span className="nav-text">X-Stake</span>
+                                                <span className="nav-text">Staking</span>
                                             </a>
                                         </li>
 
@@ -113,21 +113,21 @@ class MyDocument extends Document {
                                             </a>
                                         </li>
                                         <li>
-                                            < a href="https://locahost:3001/staking-form/referrals">
+                                            < a href="https://app.socialx.io/affiliate">
                                                 <i className="fa fa-bullhorn"></i>
                                                 <span className="nav-text">Affili-X</span>
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a href="#">
+                                            <a href="https://app.socialx.io/ad-space">
                                                 <i className="fa fa-briefcase"></i>
                                                 <span className="nav-text comingsoon">Ad Space</span>
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a href="#">
+                                            <a href="https://app.socialx.io/x-mining">
                                                 <i className="fa fa-users"></i>
                                                 <span className="nav-text comingsoon">X-Mining</span>
                                             </a>
