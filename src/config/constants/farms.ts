@@ -2452,16 +2452,7 @@ const farms: SerializedFarmConfig[] = [
     token: serializedTokens.reef,
     quoteToken: serializedTokens.wbnb,
   },
-  {
-    pid: 277,
-    lpSymbol: 'Ditto-BNB LP',
-    lpAddresses: {
-      97: '',
-      56: '0x8645148dE4E339964bA480AE3478653b5bc6E211',
-    },
-    token: serializedTokens.ditto,
-    quoteToken: serializedTokens.wbnb,
-  },
+ 
   {
     pid: 276,
     lpSymbol: 'VAI-BUSD LP',
@@ -3555,16 +3546,7 @@ const farms: SerializedFarmConfig[] = [
     token: serializedTokens.reef,
     quoteToken: serializedTokens.wbnb,
   },
-  {
-    pid: 166,
-    lpSymbol: 'Ditto-BNB LP',
-    lpAddresses: {
-      97: '',
-      56: '0xb33D432eACe45DF62F0145228B550b214DCaA6D4',
-    },
-    token: serializedTokens.ditto,
-    quoteToken: serializedTokens.wbnb,
-  },
+
   {
     pid: 165,
     lpSymbol: 'VAI-BUSD LP',
@@ -4728,16 +4710,7 @@ const farms: SerializedFarmConfig[] = [
     token: serializedTokens.reef,
     quoteToken: serializedTokens.wbnb,
   },
-  {
-    pid: 44,
-    lpSymbol: 'Ditto-BNB LP',
-    lpAddresses: {
-      97: '',
-      56: '0x470bc451810b312bbb1256f96b0895d95ea659b1',
-    },
-    token: serializedTokens.ditto,
-    quoteToken: serializedTokens.wbnb,
-  },
+
   {
     pid: 43,
     lpSymbol: 'JUV-BNB LP',

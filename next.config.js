@@ -29,9 +29,23 @@ const config = {
     scrollRestoration: true,
   },
   reactStrictMode: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     domains: ['static-nft.pancakeswap.com'],
   },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
+  ignoreBuildErrors: true,
+
+  // webpack5: false,
+
   async rewrites() {
     return [
       {
@@ -93,5 +107,6 @@ const config = {
     ]
   },
 }
+
 
 module.exports = withBundleAnalyzer(withSentryConfig(config, sentryWebpackPluginOptions))
