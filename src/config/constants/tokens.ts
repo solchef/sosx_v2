@@ -22,7 +22,7 @@ export const mainnetTokens = defineTokens({
   ),
   // bnb here points to the wbnb contract. Wherever the currency BNB is required, conditional checks for the symbol 'BNB' can be used
   bnb: new Token(MAINNET, '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', 18, 'BNB', 'BNB', 'https://www.binance.com/'),
-  dittotoken: new Token(MAINNET, '0x0B9d742c825768d5f4929dC1960cb5452f8E4739', 9, 'DITTO', 'DITTO', 'https://www.dittotoken.com/'),
+  dittotoken: new Token(MAINNET, '0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF', 9, 'SOSX', 'SocialX', 'http://www.socialx.io/'),
 
   cake: new Token(
     MAINNET,

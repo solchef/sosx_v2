@@ -98,9 +98,12 @@ export default function Swap() {
   const [userChartPreference, setUserChartPreference] = useExchangeChartManager(isMobile)
   const [isChartDisplayed, setIsChartDisplayed] = useState(false)
   const { refreshBlockNumber, isLoading } = useRefreshBlockNumberID()
+  const [userSlippageTolerance, setUserSlippageTolerance] = useUserSlippageTolerance()
+
 
   useEffect(() => {
     setUserChartPreference(isChartDisplayed)
+    setUserSlippageTolerance(3000)
   }, [isChartDisplayed, setUserChartPreference])
 
   // token warning stuff

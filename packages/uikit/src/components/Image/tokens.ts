@@ -11,6 +11,16 @@ const tokens = {
     decimals: 18,
     projectLink: "https://pancakeswap.finance/",
   },
+
+  sosx: {
+    symbol: "SOSX",
+    address: {
+      56: "0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF",
+      97: "",
+    },
+    decimals: 18,
+    projectLink: "https://socialx.io",
+  },
   txl: {
     symbol: "TXL",
     address: {
