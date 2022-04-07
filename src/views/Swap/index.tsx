@@ -544,6 +544,8 @@ export default function Swap() {
                     {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
                   </Box>
 
+                 
+
 
                 {/* 
                     <div className="transaction-box pt-3 pb-3 pr-2 pl-2">
@@ -561,9 +563,13 @@ export default function Swap() {
                       </div>
                 </div> */}
               </div>
+              <span className='m-2 p-3 text-white'>When placing order. Choose the (SOSX) amount first until allowed swap.</span>
             </div>
           </div>
+         
+
         </div>
+        
       </div>
 
     // <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>

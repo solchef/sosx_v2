@@ -52,7 +52,7 @@ class MyDocument extends Document {
           <meta name="viewport" content="width=device-width,initial-scale=1"/> */}
           {/* <title>Ditto Token - A token that change and adjust to any market conditions</title> */}
       
-          <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png"/>
+          <link rel="icon" type="image/png" sizes="16x16" href="/utils/images/favicon.png"/>
           <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
           <link href="/utils/css/style.css" rel="stylesheet"/>
           <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet"/>
@@ -107,20 +107,20 @@ class MyDocument extends Document {
                                         </li>
 
                                         <li>
-                                            <a href="#">
+                                            <a href="https://app.socialx.io/x-game">
                                                 <i className="fa fa-gamepad"></i>
                                                 <span className="nav-text comingsoon">X-Game</span>
                                             </a>
                                         </li>
                                         <li>
-                                            < a href="https://app.socialx.io/affiliate">
+                                            < a href="https://app.socialx.io/referrals">
                                                 <i className="fa fa-bullhorn"></i>
                                                 <span className="nav-text">Affili-X</span>
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a href="https://app.socialx.io/ad-space">
+                                            <a href="https://app.socialx.io/adspace">
                                                 <i className="fa fa-briefcase"></i>
                                                 <span className="nav-text comingsoon">Ad Space</span>
                                             </a>
