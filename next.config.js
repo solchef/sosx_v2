@@ -28,6 +28,7 @@ const config = {
   experimental: {
     scrollRestoration: true,
   },
+  basePath: '/utils',
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
