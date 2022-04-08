@@ -563,20 +563,21 @@ export default function Swap() {
                       </div>
                 </div> */}
               </div>
-              <span className='m-2 p-3 text-white'>When placing order. Choose the (SOSX) amount first until allowed swap.</span>
+              
+              <span className='m-2 p-3 text-white'>When placing order. Choose the (SOSX) amount first until allowed swap</span>
+
             </div>
           </div>
-         
-
+          
         </div>
-        
+
       </div>
 
     // <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
     //   <Flex width="100%" justifyContent="center" position="relative">
     //     <Flex flexDirection="column">
     //       <StyledSwapContainer $isChartExpanded={isChartExpanded}>
-    //         <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
+    //         <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}></StyledInputCurrencyWrapper>
     //           <AppBody>
     //             <CurrencyInputHeader
     //               title={""}

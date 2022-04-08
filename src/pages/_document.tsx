@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
+import { useState } from 'react'
 import { ServerStyleSheet } from 'styled-components'
 import { nodes } from 'utils/getRpcUrl'
 
@@ -7,6 +8,7 @@ class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
     const originalRenderPage = ctx.renderPage
+    
 
     try {
       // eslint-disable-next-line no-param-reassign
@@ -53,7 +55,7 @@ class MyDocument extends Document {
           {/* <title>Ditto Token - A token that change and adjust to any market conditions</title> */}
       
           <link rel="icon" type="image/png" sizes="16x16" href="/utils/images/favicon.png"/>
-          <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+          <link href="/utils/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
           <link href="/utils/css/style.css" rel="stylesheet"/>
           <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet"/>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -65,7 +67,7 @@ class MyDocument extends Document {
         <body data-typography="poppins" data-theme-version="dark" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="fixed" data-header-position="fixed" data-container="wide" dir="ltr" data-primary="color_1">
           <noscript>
             <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTAG}`}
+              // src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTAG}`}
               height="0"
               width="0"
               style={{ display: 'none', visibility: 'hidden' }} />
@@ -77,7 +79,7 @@ class MyDocument extends Document {
               <div className="collapse navbar-collapse justify-content-between">
                 <div className="header-left">
                   <div className="dashboard_bar">
-                    Staking
+                    Swap
                   </div>
                 </div>
                 <ul className="navbar-nav header-right">
@@ -146,7 +148,7 @@ class MyDocument extends Document {
             
                           <div className="nav-header">
                               <a href="#" className="brand-logo">
-                                  <img className="brand-title" src="/images/xlogo-black.b90261b2.svg" alt=""/>
+                                  <img className="logo-abbr" src="/utils/images/xlogo-black.b90261b2.svg" alt=""/>
                               </a>
                               <div className="nav-control">
                                   <div className="hamburger">
