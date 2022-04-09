@@ -31337,6 +31337,7 @@ background-color: #ff00cc;
       /* display:none; */
       font-size: 10px;
       display: block;
+      margin-top: 10px;
     }
 
     .mobile-nav li{
@@ -31344,7 +31345,7 @@ background-color: #ff00cc;
       align-items: center;
       text-align: center;
       color:white;
-      margin-top: 10px;
+      
     }
 
     .nav-header{
