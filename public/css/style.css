@@ -31259,7 +31259,7 @@ background-color: #ff00cc;
   
   .adspace-cmpny-img {
     width: 100%;
-    min-width: 150px;
+    /* min-width: 150px; */
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -31315,11 +31315,45 @@ background-color: #ff00cc;
     display: none;
   }
 
-  [data-sidebar-position="fixed"][data-layout="vertical"] .deznav {
-    /* position: fixed; */
+  .metismenu{
     display: none;
   }
 
+
+  .mobile-nav {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      display: flex;
+      flex-direction: row;
+      z-index: 99999;
+      background: #111117;
+      width: 100%;
+      justify-content: space-evenly;
+      padding: 12px;
+  }
+
+    .mobile-nav span{
+      /* display:none; */
+      font-size: 10px;
+      display: block;
     }
+
+    .mobile-nav li{
+      /* margin:10px; */
+      align-items: center;
+      text-align: center;
+      color:white;
+      margin-top: 10px;
+    }
+
+    .nav-header{
+      background: transparent !important;
+    }
+
+
+ }
+
+ 
 
    

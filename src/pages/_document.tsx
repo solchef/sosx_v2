@@ -92,7 +92,55 @@ class MyDocument extends Document {
             </nav>
           </div>
         </div>
-          <div className="deznav">
+
+             <ul className="mobile-nav" id="menu">
+                                    <li className="mm-active"><a href="#" className="mm-active">
+                                                <i className="fa fa-repeat active"></i>
+                                                <span className="nav-text">Swap</span>
+                                            </a>
+                                        </li>
+                                        <li><a href="https://app.socialx.io/staking-form">
+                                                <i className="fa fa-coins"></i>
+                                                <span className="nav-text">Staking</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://app.socialx.io/x-game">
+                                                <i className="fa fa-gamepad"></i>
+                                                <span className="nav-text ">X-Game</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            < a href="https://app.socialx.io/referrals">
+                                                <i className="fa fa-bullhorn"></i>
+                                                <span className="nav-text">Affiliate</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://app.socialx.io/adspace">
+                                                <i className="fa fa-briefcase"></i>
+                                                <span className="nav-text ">Ad Space</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://app.socialx.io/x-mining">
+                                                <i className="fa fa-users"></i>
+                                                <span className="nav-text ">Social Mining</span>
+                                            </a>
+                                        </li>
+
+                                        {/* <li>
+                                            <a href="#">
+                                                <i className="fa fa-images"></i>
+                                                <span className="nav-text ">NFT</span>
+                                            </a>
+                                        </li> */}
+
+                                    </ul>
+                     <div className="deznav mobile-hide">
                                 <div className="deznav-scroll">
                                     <ul className="metismenu" id="menu">
 
@@ -111,27 +159,27 @@ class MyDocument extends Document {
                                         <li>
                                             <a href="https://app.socialx.io/x-game">
                                                 <i className="fa fa-gamepad"></i>
-                                                <span className="nav-text comingsoon">X-Game</span>
+                                                <span className="nav-text ">X-Game</span>
                                             </a>
                                         </li>
                                         <li>
                                             < a href="https://app.socialx.io/referrals">
                                                 <i className="fa fa-bullhorn"></i>
-                                                <span className="nav-text">Affili-X</span>
+                                                <span className="nav-text">Affiliate</span>
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="https://app.socialx.io/adspace">
                                                 <i className="fa fa-briefcase"></i>
-                                                <span className="nav-text comingsoon">Ad Space</span>
+                                                <span className="nav-text ">Ad Space</span>
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="https://app.socialx.io/x-mining">
                                                 <i className="fa fa-users"></i>
-                                                <span className="nav-text comingsoon">X-Mining</span>
+                                                <span className="nav-text ">Social Mining</span>
                                             </a>
                                         </li>
 
@@ -151,7 +199,7 @@ class MyDocument extends Document {
                                   <img className="logo-abbr" src="/utils/images/xlogo-black.b90261b2.svg" alt=""/>
                               </a>
                               <div className="nav-control">
-                                  <div className="hamburger">
+                                  <div className="">
                                   <span className="line"></span><span className="line"></span><span className="line"></span>
                                   </div>
                               </div>
