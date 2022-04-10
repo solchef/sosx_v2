@@ -64,6 +64,7 @@ import SwapWarningModal from './components/SwapWarningModal'
 import PriceChartContainer from './components/Chart/PriceChartContainer'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 import CurrencyInputHeader from './components/CurrencyInputHeader'
+import { ItemImage } from 'views/Nft/market/components/Filters/ListFilter/styles'
 
 const Label = styled(Text)`
   font-size: 12px;
@@ -103,7 +104,16 @@ export default function Swap() {
 
   useEffect(() => {
     setUserChartPreference(isChartDisplayed)
-    setUserSlippageTolerance(3000)
+    // 
+    if(!localStorage.getItem('referral')){
+      let param = router.query['ref'];
+      if(param){
+      //  @ts-ignore
+        localStorage.setItem('referral',param)
+      }
+    }
+
+    setUserSlippageTolerance(3700)
   }, [isChartDisplayed, setUserChartPreference])
 
   // token warning stuff
