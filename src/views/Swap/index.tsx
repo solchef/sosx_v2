@@ -574,7 +574,7 @@ export default function Swap() {
                 </div> */}
               </div>
               
-              <span className='m-2 p-3 text-white'>When placing order. Choose the (SOSX) amount first until allowed swap</span>
+              <span className=' m-2 px-3 py-2 fs-14 text-white'>When placing order. Choose the (SOSX) amount first until allowed swap</span>
 
             </div>
           </div>

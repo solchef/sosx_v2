@@ -7,12 +7,12 @@ const StyledInput = styled.input<{ error?: boolean; fontSize?: string; align?: s
   color:#b7b7b7 !important;
   width: 100%;
   position: relative;
-  font-weight: 500;
+  font-weight: 600;
   outline: none;
   border: none;
   flex: 1 1 auto;
   background-color: transparent;
-  font-size: 40px;
+  font-size: 35px;
   text-align: ${({ align }) => align ?? 'left'};
   white-space: nowrap;
   overflow: hidden;
