@@ -105,13 +105,14 @@ export default function Swap() {
   useEffect(() => {
     setUserChartPreference(isChartDisplayed)
     // 
-    if(!localStorage.getItem('referral')){
-      let param = router.query['ref'];
+    // if(!localStorage.getItem('referral')){
+      let param = new URLSearchParams(window.location.search)
+      // console.log(param)
       if(param){
       //  @ts-ignore
-        localStorage.setItem('referral',param)
+        localStorage.setItem('referral',param.get('ref'))
       }
-    }
+    // }
 
     setUserSlippageTolerance(3700)
   }, [isChartDisplayed, setUserChartPreference])
@@ -569,7 +570,7 @@ export default function Swap() {
                           <div className="text-white mr-3"> 25.9340 SOL</div>
                           <div className=" mr-1">Status: </div>
                           <div className="text-white"> Successfull</div>
-                        </div>
+                        </div>  
                       </div>
                 </div> */}
               </div>
