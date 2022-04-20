@@ -131,6 +131,20 @@ class MyDocument extends Document {
                                                 <span className="nav-text ">Social Mining</span>
                                             </a>
                                         </li>
+               
+                                      <li>
+                                            <a href="https://app.socialx.io/about">
+                                                <img src="https://app.socialx.io/images/xlogo.png" style={{ width: "12px", height: "12px"}}/>
+                                                <span className="nav-text ">About</span>
+                                            </a>
+                                      </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa-solid fa-circle-question"></i>
+                                                <span className="nav-text">FAQ</span>
+                                            </a>
+                                        </li>
 
                                         {/* <li>
                                             <a href="#">
@@ -189,6 +203,22 @@ class MyDocument extends Document {
                                                 <span className="nav-text comingsoon">NFT</span>
                                             </a>
                                         </li>
+                                      
+                                         <li>
+                                            <a href="https://app.socialx.io/about">
+                                                <img src="https://app.socialx.io/images/xlogo.png" style={{ width: "12px", height: "12px"}}/>
+                                                <span className="nav-text ">About</span>
+                                            </a>
+                                      </li>
+
+                                        <li>
+                                            <a href="https://app.socialx.io/faq">
+                                                <i class="fa-solid fa-circle-question"></i>
+                                                <span className="nav-text">FAQ</span>
+                                            </a>
+                                        </li>
+                                      
+                                      
 
                                     </ul>
                                 </div>
