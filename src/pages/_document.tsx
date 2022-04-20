@@ -135,7 +135,7 @@ class MyDocument extends Document {
                                       <li>
                                             <a href="https://app.socialx.io/about">
                                                 <img src="https://app.socialx.io/images/xlogo.png" style={{ width: "12px", height: "12px"}}/>
-                                                <span className="nav-text ">About</span>
+                                                <span className="nav-text ml-3">About</span>
                                             </a>
                                       </li>
 
@@ -207,7 +207,7 @@ class MyDocument extends Document {
                                          <li>
                                             <a href="https://app.socialx.io/about">
                                                 <img src="https://app.socialx.io/images/xlogo.png" style={{ width: "12px", height: "12px"}}/>
-                                                <span className="nav-text ">About</span>
+                                                <span className="nav-text ml-3">About</span>
                                             </a>
                                       </li>
 
