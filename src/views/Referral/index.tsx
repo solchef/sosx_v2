@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import useToast from 'hooks/useToast'
 import { FacebookShareButton, TwitterShareButton, TelegramShareButton, EmailShareButton, WhatsappShareButton, WhatsappIcon, TelegramIcon
@@ -12,8 +12,14 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-
+import sosxStakingAbi from 'config/abi/sosxABI.json'
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { useWeb3React } from '@web3-react/core';
+import { useStakingContract } from 'hooks/useContract';
+import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice';
+import get from 'lodash/get'
+import { Contract } from '@ethersproject/contracts';
+import { Web3Provider } from '@ethersproject/providers';
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -21,15 +27,19 @@ const BorderCard = styled.div`
   padding: 16px;
 `
 
-export default function Referral() {
 
+export default function Referral() {
   const[referralCount, setReferralCount] = useState(0);
   const[viewReferralReward, setViewReferralReward] = useState(0);
-  const[account, setAccount] = useState('');
   const[referrals, setReferrals] = useState([]);
   const[loading, setLoading] = useState('');
+  const [copied, setCopied] = useState(false);
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const { account, active, library} = useWeb3React<Web3Provider>()
 
 
+  // const account = "dd"
+  const contract = useStakingContract();
 
   
   let popover = (
@@ -87,13 +97,55 @@ export default function Referral() {
   </OverlayTrigger>
 );
 
-const withDrawReferralReward = () => {
-    
-}
+
+
+
+
+      const fetchReferral = async() => {
+
+        // contract.methods.getCurrentReferrals().call().then( (result) => {
+
+        //     console.log(result);
+        // });
+        console.log(library)
+
+        console.log('get')
+
+        if(!(active && account && library)) return
+           const contract = new Contract('0xee52def4a2683e68ba8aecda8219004c4af376df', sosxStakingAbi, library.getSigner());
+            //  erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
+          console.log(contract)
+            console.log(await contract.getAllAccount())
+
+        let res =  await contract.getCurrentStakeAmount(10).catch('error', console.error)
+
+
+        // this.state.contractInstance.methods.getCurrentReferrals().call().then( (result) => {
+        //     console.log("Fetched Referrals")
+        //     console.log(result)
+
+        //     if(result.length == 0){
+        //         result = null;
+        //     }
+
+        //     this.setState({referrals: result}, () => {
+        //         this.fetchTotalReward();
+        //     });
+        // }).catch( (err) => {
+        //     console.log("Unable to list active stake; " + err)
+        // });       
+        
+      }
+
+      useEffect(() =>{
+
+        fetchReferral();
+      },  [])
+
 
   
   return (
-    <div className="content-body">
+    <>
        
     <div className="container">
       <div className="row">
@@ -209,15 +261,16 @@ const withDrawReferralReward = () => {
                 <div className="d-flex justify-content-between align-items-center pb-1">
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
-                  <span className="fs-16">https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span>
-                  <li className="nav-item ">
-                  <CopyToClipboard
+                  <span className="fs-16">{`${account ? 'https://socialx.io?ref='+account.replace(/(.{13})..+/, "$1…")   : ''}  : `} </span>
+                       <li className="nav-item ">
+                           <CopyToClipboard
                             text={`https://socialx.io?ref=${account}`}
-                            onCopy={console.log('copied')} > 
+                            onCopy={() => setCopied(true)} > 
                                 {/* <Button variant="outlined"><Trans i18nKey="referral_panel.copyButton" /></Button> */}
                                 <a  className="nav-link" data-toggle="modal"><i className="fa-regular fa-clone" /></a>
-                </CopyToClipboard>
-                     
+                                
+                          </CopyToClipboard>
+                          {copied ? <span style={{color: 'red'}}>Copied.</span> : null}
                   
                   </li>
                   <li className="nav-item ">
@@ -502,6 +555,6 @@ const withDrawReferralReward = () => {
                 </div>
               </div>
     </div>
-  </div>
+  </>
   )
 }

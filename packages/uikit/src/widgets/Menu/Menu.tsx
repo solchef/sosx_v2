@@ -14,6 +14,7 @@ import { MENU_HEIGHT, MOBILE_MENU_HEIGHT, TOP_BANNER_HEIGHT, TOP_BANNER_HEIGHT_M
 import { NavProps } from "./types";
 import LangSelector from "../../components/LangSelector/LangSelector";
 import { MenuContext } from "./context";
+import Link from 'next/link'
 
 const Wrapper = styled.div`
   position: relative;
@@ -177,27 +178,154 @@ const Menu: React.FC<NavProps> = ({
 
     <>
 
-  <div className="header">
-			<div className="header-content">
-				<nav className="navbar navbar-expand">
-					<div className="collapse navbar-collapse justify-content-between">
-						<div className="header-left">
-							<div className="dashboard_bar">
-								Swap
-							</div>
-						</div>
-						<ul className="navbar-nav header-right">
 
-							<li className="nav-item wallet-btn">
-								{/* <button type="button" className="btn btn-primary btn-lg">Connect Wallet</button> */}
-                {userMenu}
-							</li>
-						</ul>
-					</div>
-				</nav>
-			</div>
-		</div>
+                <div className="header">
+                    <div className="header-content">
+                      <nav className="navbar navbar-expand">
+                        <div className="collapse navbar-collapse justify-content-between">
+                          <div className="header-left">
+                            <div className="dashboard_bar">
+                              Swap
+                            </div>
+                          </div>
+                          <ul className="navbar-nav header-right">
+
+                            <li className="nav-item wallet-btn">
+                              {/* <button type="button" className="btn btn-primary btn-lg">Connect Wallet</button> */}
+                              {userMenu}
+                            </li>
+                          </ul>
+                        </div>
+                      </nav>
+                    </div>
+                  </div>
+
+                    <ul className="mobile-nav" id="menu">
+                                    <li className="mm-active">
+                                      <Link href="/">
+                                           <a>
+                                                <i className="fa fa-repeat active"></i>
+                                                <span className="nav-text">Swap</span>
+                                            </a>
+                                         </Link>
+                                        </li>
+                                        <li>
+                                          <Link href="/stake">
+                                                <a>
+                                                <i className="fa fa-coins"></i>
+                                                <span className="nav-text">Staking</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+
+                                        <li>
+                                            <Link href="/x-game">
+                                            <a>
+                                                <i className="fa fa-gamepad"></i>
+                                                <span className="nav-text ">X-Game</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link href="/referrals">
+                                            <a>
+                                                <i className="fa fa-bullhorn"></i>
+                                                <span className="nav-text">Affiliate</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+
+                                        <li>
+                                            <Link href="/adspace">
+                                                <a>
+                                                <i className="fa fa-briefcase"></i>
+                                                <span className="nav-text ">Ad Space</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+
+                                        <li>
+                                            <Link href="/x-mining">
+                                               <a>
+                                                <i className="fa fa-users"></i>
+                                                <span className="nav-text ">Social Mining</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+
+
+                                    </ul>
+                               <div className="deznav mobile-hide">
+                                <div className="deznav-scroll">
+                                    <ul className="metismenu" id="menu">
+
+                                         <li className="mm-active">
+                                    <Link href="/stake">
+                                           <a>
+                                                <i className="fa fa-repeat active"></i>
+                                                <span className="nav-text">Swap</span>
+                                            </a>
+                                         </Link>
+                                        </li>
+                                        <li>
+                                          <Link href="/stake">
+                                                <a>
+                                                <i className="fa fa-coins"></i>
+                                                <span className="nav-text">Staking</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+
+                                        <li>
+                                            <Link href="/x-game">
+                                            <a>
+                                                <i className="fa fa-gamepad"></i>
+                                                <span className="nav-text ">X-Game</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link href="/referrals">
+                                            <a>
+                                                <i className="fa fa-bullhorn"></i>
+                                                <span className="nav-text">Affiliate</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+
+                                        <li>
+                                            <Link href="/adspace">
+                                                <a>
+                                                <i className="fa fa-briefcase"></i>
+                                                <span className="nav-text ">Ad Space</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link href="/x-mining">
+                                               <a>
+                                                <i className="fa fa-users"></i>
+                                                <span className="nav-text ">Social Mining</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+            
+                          <div className="nav-header">
+                              <Link href="/">
+                                  <img className="brand-logo ml-2" src="/utils/images/xlogo-black.b90261b2.svg" alt=""/>
+                              </Link>
+                              <div className="nav-control">
+                                  <div className="">
+                                  <span className="line"></span><span className="line"></span><span className="line"></span>
+                                  </div>
+                              </div>
+                          </div>
     <div className="content-body">
+
+      
       {children}
       </div>
 

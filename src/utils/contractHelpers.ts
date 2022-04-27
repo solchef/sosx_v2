@@ -21,6 +21,7 @@ import {
   getEasterNftAddress,
   getCakeVaultAddress,
   getIfoPoolAddress,
+  getstakingContractAddress,
   getPredictionsAddress,
   getChainlinkOracleAddress,
   getMulticallAddress,
@@ -59,6 +60,7 @@ import tradingCompetitionV2Abi from 'config/abi/tradingCompetitionV2.json'
 import easterNftAbi from 'config/abi/easterNft.json'
 import cakeVaultAbi from 'config/abi/cakeVault.json'
 import ifoPoolAbi from 'config/abi/ifoPool.json'
+import sosxStakingAbi from 'config/abi/sosxABI.json'
 import predictionsAbi from 'config/abi/predictions.json'
 import chainlinkOracleAbi from 'config/abi/chainlinkOracle.json'
 import MultiCallAbi from 'config/abi/Multicall.json'
@@ -182,6 +184,10 @@ export const getCakeVaultContract = (signer?: Signer | Provider) => {
 }
 export const getIfoPoolContract = (signer?: Signer | Provider) => {
   return getContract(ifoPoolAbi, getIfoPoolAddress(), signer) as IfoPool
+}
+
+export const getStakingContract = (signer?: Signer | Provider) => {
+  return getContract(sosxStakingAbi, getstakingContractAddress(), signer);
 }
 
 export const getPredictionsContract = (signer?: Signer | Provider) => {

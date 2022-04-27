@@ -32,6 +32,7 @@ import {
   getPancakeSquadContract,
   getErc721CollectionContract,
   getBunnySpecialXmasContract,
+  getStakingContract,
 } from 'utils/contractHelpers'
 import { getMulticallAddress } from 'utils/addressHelpers'
 import { VaultKey } from 'state/types'
@@ -186,6 +187,11 @@ export const useCakeVaultContract = () => {
 export const useIfoPoolContract = () => {
   const { library } = useActiveWeb3React()
   return useMemo(() => getIfoPoolContract(library.getSigner()), [library])
+}
+
+export const useStakingContract = () => {
+  const { library } = useActiveWeb3React()
+  return useMemo(() => getStakingContract(library.getSigner()), [library])
 }
 
 export const usePredictionsContract = () => {

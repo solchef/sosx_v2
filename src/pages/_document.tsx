@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
+import Link from 'next/link'
 import { useState } from 'react'
 import { ServerStyleSheet } from 'styled-components'
 import { nodes } from 'utils/getRpcUrl'
@@ -73,137 +74,7 @@ class MyDocument extends Document {
               style={{ display: 'none', visibility: 'hidden' }} />
           </noscript>
           <div id="main-wrapper">
-          <div className="header">
-          <div className="header-content">
-            <nav className="navbar navbar-expand">
-              <div className="collapse navbar-collapse justify-content-between">
-                <div className="header-left">
-                  <div className="dashboard_bar">
-                    Swap
-                  </div>
-                </div>
-                <ul className="navbar-nav header-right">
-
-                  <li className="nav-item wallet-btn">
-                    <button type="button" className="btn btn-primary btn-lg">Connected</button>
-                  </li>
-                </ul>
-              </div>
-            </nav>
-          </div>
-        </div>
-
-             <ul className="mobile-nav" id="menu">
-                                    <li className="mm-active"><a href="#" className="mm-active">
-                                                <i className="fa fa-repeat active"></i>
-                                                <span className="nav-text">Swap</span>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://app.socialx.io/staking-form">
-                                                <i className="fa fa-coins"></i>
-                                                <span className="nav-text">Staking</span>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="https://app.socialx.io/x-game">
-                                                <i className="fa fa-gamepad"></i>
-                                                <span className="nav-text ">X-Game</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            < a href="https://app.socialx.io/referrals">
-                                                <i className="fa fa-bullhorn"></i>
-                                                <span className="nav-text">Affiliate</span>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="https://app.socialx.io/adspace">
-                                                <i className="fa fa-briefcase"></i>
-                                                <span className="nav-text ">Ad Space</span>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="https://app.socialx.io/x-mining">
-                                                <i className="fa fa-users"></i>
-                                                <span className="nav-text ">Social Mining</span>
-                                            </a>
-                                        </li>
-
-                                        {/* <li>
-                                            <a href="#">
-                                                <i className="fa fa-images"></i>
-                                                <span className="nav-text ">NFT</span>
-                                            </a>
-                                        </li> */}
-
-                                    </ul>
-                     <div className="deznav mobile-hide">
-                                <div className="deznav-scroll">
-                                    <ul className="metismenu" id="menu">
-
-                                        
-                                        <li className="mm-active"><a href="#" className="mm-active">
-                                                <i className="fa fa-repeat active"></i>
-                                                <span className="nav-text">Swap</span>
-                                            </a>
-                                        </li>
-                                        <li><a href="https://app.socialx.io/staking-form">
-                                                <i className="fa fa-coins"></i>
-                                                <span className="nav-text">Staking</span>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="https://app.socialx.io/x-game">
-                                                <i className="fa fa-gamepad"></i>
-                                                <span className="nav-text ">X-Game</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            < a href="https://app.socialx.io/referrals">
-                                                <i className="fa fa-bullhorn"></i>
-                                                <span className="nav-text">Affiliate</span>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="https://app.socialx.io/adspace">
-                                                <i className="fa fa-briefcase"></i>
-                                                <span className="nav-text ">Ad Space</span>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="https://app.socialx.io/x-mining">
-                                                <i className="fa fa-users"></i>
-                                                <span className="nav-text ">Social Mining</span>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">
-                                                <i className="fa fa-images"></i>
-                                                <span className="nav-text comingsoon">NFT</span>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-            
-                          <div className="nav-header">
-                              <a href="#" className="brand-logo">
-                                  <img className="logo-abbr" src="/utils/images/xlogo-black.b90261b2.svg" alt=""/>
-                              </a>
-                              <div className="nav-control">
-                                  <div className="">
-                                  <span className="line"></span><span className="line"></span><span className="line"></span>
-                                  </div>
-                              </div>
-                          </div>
+        
            
           <Main />
           <NextScript />

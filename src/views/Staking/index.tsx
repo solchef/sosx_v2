@@ -21,7 +21,7 @@ export default function Staking() {
   
 
   return (
-    <div className="content-body">
+    <>
     <div className="container">
 
         <div className="row mobile-hide">
@@ -109,7 +109,7 @@ export default function Staking() {
 									<div className="d-flex justify-content-between align-items-center">
                                          <span>
                                                                                                                                                                         
-                                        <select className="form-control  select-special" value={stakingClass}  style={{padding:"0px !important", margin:"0px important"}} onChange={(e) =>  setStakingClass(e.target.value)} >
+                                        <select className="form-control  select-special" value={stakingClass}  style={{padding:"0px !important", margin:"0px important"}} onChange={(e) =>  setStakingClass(e.target)} >
                                                 <option value={1}>3 </option>
                                                 <option value={2}>6 </option>
                                                 <option value={3}>12 </option>
@@ -262,18 +262,18 @@ export default function Staking() {
 								</ul>
                                 </>
 							
-                        ): (
-                            stakingList
-                        )}
-               </div>
-           </div>
-       </div>
+                                ): (
+                                    stakingList
+                                )}
+                    </div>
+                </div>
+            </div>
 
-       </div>
-                                           
-                                            </div>
-                                          </div>
-                                       </div>
-                                       </div>
+            </div>
+                
+                </div>
+                </div>
+            </div>
+            </>
   )
 }
