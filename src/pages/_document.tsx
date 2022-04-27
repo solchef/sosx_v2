@@ -74,9 +74,6 @@ class MyDocument extends Document {
               style={{ display: 'none', visibility: 'hidden' }} />
           </noscript>
           <div id="main-wrapper">
-<<<<<<< HEAD
-        
-=======
           <div className="header">
           <div className="header-content">
             <nav className="navbar navbar-expand">
@@ -145,7 +142,7 @@ class MyDocument extends Document {
 
                                         <li>
                                             <a href="#">
-                                                <i class="fa-solid fa-circle-question"></i>
+                                                <i className="fa-solid fa-circle-question"></i>
                                                 <span className="nav-text">FAQ</span>
                                             </a>
                                         </li>
@@ -217,7 +214,7 @@ class MyDocument extends Document {
 
                                         <li>
                                             <a href="https://app.socialx.io/faq">
-                                                <i class="fa-solid fa-circle-question"></i>
+                                                <i className="fa-solid fa-circle-question"></i>
                                                 <span className="nav-text">FAQ</span>
                                             </a>
                                         </li>
@@ -238,7 +235,6 @@ class MyDocument extends Document {
                                   </div>
                               </div>
                           </div>
->>>>>>> 9554b915fde06703a98b45e2f3d0a6b172668365
            
           <Main />
           <NextScript />
