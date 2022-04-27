@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react'
 import { withStyles } from '@material-ui/core/styles';
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -150,3 +151,6 @@ const ShareComponent = (props) => (
         
  }
  
+=======
+
+>>>>>>> 9554b915fde06703a98b45e2f3d0a6b172668365

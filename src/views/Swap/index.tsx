@@ -433,7 +433,7 @@ export default function Swap() {
                       otherCurrency={currencies[Field.OUTPUT]}
                       id="swap-currency-input"
                     />
-                <div className="py-3 d-inline-flex justify-content-center text-center w-100 m-auto">
+                <div className="d-inline-flex justify-content-center text-center w-100 m-auto">
                   <i className="switch fa-solid fa-repeat"  onClick={() => {
                            setApprovalSubmitted(false) 
                           onSwitchTokens()
