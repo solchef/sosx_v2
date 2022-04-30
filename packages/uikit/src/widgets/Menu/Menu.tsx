@@ -15,6 +15,7 @@ import { NavProps } from "./types";
 import LangSelector from "../../components/LangSelector/LangSelector";
 import { MenuContext } from "./context";
 import Link from 'next/link'
+import router, { useRouter } from "next/router";
 
 const Wrapper = styled.div`
   position: relative;
@@ -125,7 +126,42 @@ const Menu: React.FC<NavProps> = ({
 
   const subLinksWithoutMobile = subLinks?.filter((subLink) => !subLink.isMobileOnly);
   const subLinksMobileOnly = subLinks?.filter((subLink) => subLink.isMobileOnly);
+  const title = () => {
+    switch (router.pathname) {
+      
+      case '/':
 
+        return "Swap";
+      case '/stake':
+        return "Stake";
+
+      case '/x-game':
+        return "Game";
+
+      case '/referrals':
+        return "Referrals";
+
+      case '/adspace':
+        return "Adspace";
+
+      case '/x-mining':
+        return "X-mining";
+
+      case '/aboutsosx':
+        return "Aboutsosx";
+
+      case '/faq':
+        return "Faq";
+        case '/socialmining-s1':
+          return "Socialmining";
+          case '/socialmining-s2':
+            return "Socialmining";
+            case '/socialmining-s3':
+              return "Socialmining";
+      default:
+        return;
+    }
+  }
   return (
     // <MenuContext.Provider value={{ linkComponent }}>
     //   <Wrapper>
@@ -136,8 +172,8 @@ const Menu: React.FC<NavProps> = ({
     //           {!isMobile && <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />}
     //         </Flex>
     //         <Flex alignItems="center" height="100%">
-             
-           
+
+
     //           {globalMenu} {userMenu}
     //         </Flex>
     //       </StyledNav>
@@ -178,158 +214,239 @@ const Menu: React.FC<NavProps> = ({
 
     <>
 
-
-                <div className="header">
-                    <div className="header-content">
-                      <nav className="navbar navbar-expand">
-                        <div className="collapse navbar-collapse justify-content-between">
-                          <div className="header-left">
-                            <div className="dashboard_bar">
-                              Swap
-                            </div>
-                          </div>
-                          <ul className="navbar-nav header-right">
-
-                            <li className="nav-item wallet-btn">
-                              {/* <button type="button" className="btn btn-primary btn-lg">Connect Wallet</button> */}
-                              {userMenu}
-                            </li>
-                          </ul>
-                        </div>
-                      </nav>
-                    </div>
-                  </div>
-
-                    <ul className="mobile-nav" id="menu">
-                                    <li className="mm-active">
-                                      <Link href="/">
-                                           <a>
-                                                <i className="fa fa-repeat active"></i>
-                                                <span className="nav-text">Swap</span>
-                                            </a>
-                                         </Link>
-                                        </li>
-                                        <li>
-                                          <Link href="/stake">
-                                                <a>
-                                                <i className="fa fa-coins"></i>
-                                                <span className="nav-text">Staking</span>
-                                                </a>
-                                            </Link>
-                                        </li>
-
-                                        <li>
-                                            <Link href="/x-game">
-                                            <a>
-                                                <i className="fa fa-gamepad"></i>
-                                                <span className="nav-text ">X-Game</span>
-                                                </a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/referrals">
-                                            <a>
-                                                <i className="fa fa-bullhorn"></i>
-                                                <span className="nav-text">Affiliate</span>
-                                                </a>
-                                            </Link>
-                                        </li>
-
-                                        <li>
-                                            <Link href="/adspace">
-                                                <a>
-                                                <i className="fa fa-briefcase"></i>
-                                                <span className="nav-text ">Ad Space</span>
-                                                </a>
-                                            </Link>
-                                        </li>
-
-                                        <li>
-                                            <Link href="/x-mining">
-                                               <a>
-                                                <i className="fa fa-users"></i>
-                                                <span className="nav-text ">Social Mining</span>
-                                                </a>
-                                            </Link>
-                                        </li>
-
-
-                                    </ul>
-                               <div className="deznav mobile-hide">
-                                <div className="deznav-scroll">
-                                    <ul className="metismenu" id="menu">
-
-                                         <li className="mm-active">
-                                    <Link href="/stake">
-                                           <a>
-                                                <i className="fa fa-repeat active"></i>
-                                                <span className="nav-text">Swap</span>
-                                            </a>
-                                         </Link>
-                                        </li>
-                                        <li>
-                                          <Link href="/stake">
-                                                <a>
-                                                <i className="fa fa-coins"></i>
-                                                <span className="nav-text">Staking</span>
-                                                </a>
-                                            </Link>
-                                        </li>
-
-                                        <li>
-                                            <Link href="/x-game">
-                                            <a>
-                                                <i className="fa fa-gamepad"></i>
-                                                <span className="nav-text ">X-Game</span>
-                                                </a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/referrals">
-                                            <a>
-                                                <i className="fa fa-bullhorn"></i>
-                                                <span className="nav-text">Affiliate</span>
-                                                </a>
-                                            </Link>
-                                        </li>
-
-                                        <li>
-                                            <Link href="/adspace">
-                                                <a>
-                                                <i className="fa fa-briefcase"></i>
-                                                <span className="nav-text ">Ad Space</span>
-                                                </a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/x-mining">
-                                               <a>
-                                                <i className="fa fa-users"></i>
-                                                <span className="nav-text ">Social Mining</span>
-                                                </a>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-            
-                          <div className="nav-header">
-                              <Link href="/">
-                                  <img className="brand-logo ml-2" src="/utils/images/xlogo-black.b90261b2.svg" alt=""/>
-                              </Link>
-                              <div className="nav-control">
-                                  <div className="">
-                                  <span className="line"></span><span className="line"></span><span className="line"></span>
-                                  </div>
-                              </div>
-                          </div>
-    <div className="content-body">
-
-      
-      {children}
+      <div className="nav-header">
+        <a href="index.html" className="brand-logo">
+          <img className="logo-abbr" src="/utils/images/xlogo-black.b90261b2.svg" alt="" />
+        </a>
       </div>
 
-</>
+      <div className="header">
+        <div className="header-content">
+          <nav className="navbar navbar-expand">
+            <div className="collapse navbar-collapse justify-content-between">
+              <div className="header-left">
+                <div className="dashboard_bar">
+                  {title()}
+                </div>
+              </div>
+              <ul className="navbar-nav header-right">
+
+                <li className="nav-item wallet-btn">
+                  {/* <button type="button" className="btn btn-primary btn-lg">Connect Wallet</button> */}
+                  {userMenu}
+
+
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <ul className="mobile-nav" id="menu">
+        <li className={router.pathname == "/" ? "mm-active" : ""}>
+          <Link href="/">
+            <a>
+              <i className="fa fa-repeat active"></i>
+              <span className="nav-text">Swap</span>
+            </a>
+          </Link>
+        </li>
+        <li className={router.pathname == "/stake" ? "mm-active" : ""}>
+          <Link href="/stake">
+            <a>
+              <i className="fa fa-coins"></i>
+              <span className="nav-text">Staking</span>
+            </a>
+          </Link>
+        </li>
+
+        <li className={router.pathname == "/x-game" ? "mm-active" : ""}>
+          <Link href="/x-game">
+            <a>
+              <i className="fa fa-gamepad"></i>
+              <span className="nav-text ">X-Game</span>
+            </a>
+          </Link>
+        </li>
+        <li className={router.pathname == "/referrals" ? "mm-active" : ""}>
+          <Link href="/referrals">
+            <a>
+              <i className="fa fa-bullhorn"></i>
+              <span className="nav-text">Affiliate</span>
+            </a>
+          </Link>
+        </li>
+
+        <li className={router.pathname == "/adspace" ? "mm-active" : ""}>
+          <Link href="/adspace">
+            <a>
+              <i className="fa fa-briefcase"></i>
+              <span className="nav-text ">Ad Space</span>
+            </a>
+          </Link>
+        </li>
+
+        <li className={router.pathname == "/x-mining" || router.pathname == "/socialmining-s1" || router.pathname == "/socialmining-s2" || router.pathname == "/socialmining-s3" ? "mm-active" : ""}>
+          <Link href="/x-mining">
+            <a>
+              <i className="fa fa-users"></i>
+              <span className="nav-text ">Social Mining</span>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href="#">
+
+            <a>
+              <i className="fa fa-images"></i>
+              <span className="nav-text comingsoon">NFT</span>
+            </a>
+          </Link>
+
+        </li>
+
+        <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
+
+          <Link href="/aboutsosx">
+
+            <a>
+              <img src="/utils/images/xlogo.png" style={{ width: '12px', height: '12px' }} />
+              <span className="nav-text pl-3">About SOSX</span>
+            </a>
+          </Link>
+
+        </li>
+
+        <li className={router.pathname == "/faq" ? "mm-active" : ""}>
+
+          <Link href="/faq">
+
+            <a>
+              <i className="fa-solid fa-circle-question"></i>
+              <span className="nav-text">FAQ</span>
+            </a>
+          </Link>
+
+        </li>
+
+      </ul>
+      <div className="deznav mobile-hide">
+        <div className="deznav-scroll">
+          <ul className="metismenu" id="menu">
+            <li className={router.pathname == "/" ? "mm-active" : ""}>
+
+              <Link href="/">
+                <a>
+                  <i className="fa fa-repeat"></i>
+                  <span className="nav-text">Swap</span>
+                </a>
+              </Link>
+
+            </li>
+            <li className={router.pathname == "/stake" ? "mm-active" : ""}>
+              <Link href="/stake">
+                <a>
+                  <i className="fa fa-coins"></i>
+                  <span className="nav-text">Staking</span>
+                </a>
+              </Link>
+
+            </li>
+
+            <li className={router.pathname == "/x-game" ? "mm-active" : ""}>
+              <Link href="/x-game">
+
+                <a>
+                  <i className="fa fa-gamepad"></i>
+                  <span className="nav-text">X-Game</span>
+                </a>
+              </Link>
+
+            </li>
+            <li className={router.pathname == "/referrals" ? "mm-active" : ""}>
+
+              <Link href="/referrals">
+
+                <a>
+                  <i className="fa fa-bullhorn"></i>
+                  <span className="nav-text">Affiliate</span>
+                </a>
+              </Link>
+
+            </li>
+
+            <li className={router.pathname == "/adspace" ? "mm-active" : ""}>
+
+              <Link href="/adspace">
+
+                <a>
+                  <i className="fa fa-briefcase"></i>
+                  <span className="nav-text">Ad Space</span>
+                </a>
+              </Link>
+
+            </li>
+
+            <li className={router.pathname == "/x-mining" || router.pathname == "/socialmining-s1" || router.pathname == "/socialmining-s2" || router.pathname == "/socialmining-s3" ? "mm-active" : ""}>
+              <Link href="/x-mining">
+
+                <a>
+                  <i className="fa fa-users"></i>
+                  <span className="nav-text">Social Mining</span>
+                </a>
+              </Link>
+
+            </li>
+
+            <li className={router.pathname == "#" ? "mm-active" : ""}>
+              <Link href="#">
+
+                <a>
+                  <i className="fa fa-images"></i>
+                  <span className="nav-text comingsoon">NFT</span>
+                </a>
+              </Link>
+
+            </li>
+
+            <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
+              <Link href="/aboutsosx">
+
+                <a>
+                  <img src="/utils/images/xlogo.png" style={{ width: '12px', height: '12px' }} />
+                  <span className="nav-text pl-3">About SOSX</span>
+                </a>
+              </Link>
+
+            </li>
+
+            <li className={router.pathname == "/faq" ? "mm-active" : ""}>
+
+              <Link href="/faq">
+
+                <a>
+                  <i className="fa-solid fa-circle-question"></i>
+                  <span className="nav-text">FAQ</span>
+                </a>
+              </Link>
+
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <div className="content-body">
+
+
+        {children}
+      </div>
+      <div className="footer">
+        <div className="copyright">
+          <p>Copyright © <a href="https://socialx.io/" target="_blank">SocialX</a> 2022</p>
+        </div>
+      </div>
+
+    </>
 
 
 
