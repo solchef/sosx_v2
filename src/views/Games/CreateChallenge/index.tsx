@@ -386,8 +386,30 @@ const CreateGame = () => {
 
                        <Choices choices={choices} onChange={handleChoiceChange} />
                       {formErrors.choices && fieldsState.choices && <FormErrors errors={formErrors.choices} />}
+
+                      {account ? (
+                  <>
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-lg w-100 mt-4"
+                      isLoading={isLoading}
+                      endIcon={isLoading ? <AutoRenewIcon spin color="currentColor" /> : null}
+                      disabled={!isEmpty(formErrors)}
+                      mb="16px">
+                      Submit
+                    </button>
+                    <Text color="failure" as="p" mb="4px">
+                      {t('You need at least %count% voting power to publish a proposal.', { count: VOTE_THRESHOLD })}{' '}
+                    </Text>
+                    <Button scale="sm" type="button" variant="text" onClick={onPresentVoteDetailsModal} p={0}>
+                      {t('Check voting power')}
+                    </Button>
+                  </>
+                ) : (
+                  <ConnectWalletButton width="100%" type="button" />
+                )}
                    
-                      <button type="button" className="btn btn-primary btn-lg w-100 mt-4">Submit</button>
+                      {/* <button type="button" className="btn btn-primary btn-lg w-100 mt-4">Submit</button> */}
 
 
                       </form>
