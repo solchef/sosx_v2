@@ -72,9 +72,9 @@ export default function Referral() {
 
       </div>
 
-      <div className="container-fluid mt-3">
+      <div className="container-fluid height-game">
         <div className="row mobile-hide-card">
-          <div className="col-sm-4 mb-3 mt-3">
+          <div className="col-sm-4 pb-3 pt-3">
             <Link href="/createchallenge">
               <a>
                 <div className="card2 h-100 w-100 overflow-hidden ">
@@ -84,7 +84,7 @@ export default function Referral() {
             </Link>
           </div>
 
-          <div className="col-sm-4 mb-3 mt-3">
+          <div className="col-sm-4 pb-3 pt-3">
             <Link href="/votechallenge">
 
               <a>
@@ -95,7 +95,7 @@ export default function Referral() {
             </Link>
           </div>
 
-          <div className="col-sm-4 mb-3 mt-3">
+          <div className="col-sm-4 pb-3 pt-3">
             <Link href="/thechallenge">
               <a>
                 <div className="card2 h-100 w-100 overflow-hidden ">

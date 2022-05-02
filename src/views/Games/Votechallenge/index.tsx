@@ -51,11 +51,14 @@ export default function Votechallenge() {
 									</ul>
 								</div>
 							</div>
-							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
-										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+							<div className="card-footer d-flex flex-column flex-lg-row align-items-center justify-content-between">
+								<div>
+								<i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+									id="votes">17</span><span className="fs-12">Votes</span>
+								</div>
+								<button type="button"
+										className="btn btn-primary float-right"><i
+											className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
 							</div>
 						</div>
 					</div>
@@ -78,10 +81,10 @@ export default function Votechallenge() {
 								</div>
 							</div>
 							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+								<i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
 									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
 										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button>
 							</div>
 						</div>
 					</div>
@@ -104,10 +107,10 @@ export default function Votechallenge() {
 								</div>
 							</div>
 							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+								<i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
 									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
 										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button>
 							</div>
 						</div>
 					</div>
@@ -130,10 +133,10 @@ export default function Votechallenge() {
 								</div>
 							</div>
 							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+								<i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
 									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
 										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button>
 							</div>
 						</div>
 					</div>
@@ -156,10 +159,10 @@ export default function Votechallenge() {
 								</div>
 							</div>
 							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+								<i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
 									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
 										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button>
 							</div>
 						</div>
 					</div>
@@ -182,10 +185,10 @@ export default function Votechallenge() {
 								</div>
 							</div>
 							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+								<i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
 									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
 										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button>
 							</div>
 						</div>
 					</div>
@@ -208,10 +211,10 @@ export default function Votechallenge() {
 								</div>
 							</div>
 							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+								<i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
 									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
 										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button>
 							</div>
 						</div>
 					</div>
@@ -234,10 +237,10 @@ export default function Votechallenge() {
 								</div>
 							</div>
 							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+								<i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
 									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
 										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button>
 							</div>
 						</div>
 					</div>
@@ -260,10 +263,10 @@ export default function Votechallenge() {
 								</div>
 							</div>
 							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+								<i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
 									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
 										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button>
 							</div>
 						</div>
 					</div>

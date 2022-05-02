@@ -30776,7 +30776,9 @@ body {
 }
 
 
-
+.height-game {
+height: calc(100vh-320px);
+}
 
 .card2 {
   position: relative;

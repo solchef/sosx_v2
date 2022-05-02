@@ -1,4 +1,4 @@
-import Votechallenge from '../views/Votechallenge'
+import Votechallenge from '../views/Games/Votechallenge'
 
 const votechallenge = () => {
   return <Votechallenge />

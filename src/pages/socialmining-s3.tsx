@@ -1,4 +1,4 @@
-import SocialminingS3 from '../views/SocialminingS3'
+import SocialminingS3 from '../views/SocialMining/SocialminingS3'
 
 const socialminingS3 = () => {
   return <SocialminingS3 />

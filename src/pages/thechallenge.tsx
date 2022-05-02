@@ -1,4 +1,4 @@
-import Thechallenge from '../views/Thechallenge'
+import Thechallenge from '../views/Games/Thechallenge'
 
 const thechallenge = () => {
   return <Thechallenge />
