@@ -128,7 +128,7 @@ const Menu: React.FC<NavProps> = ({
   const subLinksMobileOnly = subLinks?.filter((subLink) => subLink.isMobileOnly);
   const title = () => {
     switch (router.pathname) {
-      
+
       case '/':
 
         return "Swap";
@@ -152,16 +152,26 @@ const Menu: React.FC<NavProps> = ({
 
       case '/faq':
         return "Faq";
-        case '/socialmining-s1':
-          return "Socialmining";
-          case '/socialmining-s2':
-            return "Socialmining";
-            case '/socialmining-s3':
-              return "Socialmining";
+      case '/socialmining-s1':
+        return "Socialmining";
+      case '/socialmining-s2':
+        return "Socialmining";
+      case '/socialmining-s3':
+        return "Socialmining";
       default:
         return;
     }
   }
+const [preloader,setPreloader ] = useState(false);
+  useEffect(() => {
+    setPreloader(true);
+    setTimeout(() => {
+      setPreloader(false);
+    }, 22);
+    
+    
+  }
+  ,[children])
   return (
     // <MenuContext.Provider value={{ linkComponent }}>
     //   <Wrapper>
@@ -213,7 +223,6 @@ const Menu: React.FC<NavProps> = ({
     // </MenuContext.Provider>
 
     <>
-
       <div className="nav-header">
         <a href="index.html" className="brand-logo">
           <img className="logo-abbr" src="/utils/images/xlogo-black.b90261b2.svg" alt="" />
@@ -436,10 +445,11 @@ const Menu: React.FC<NavProps> = ({
         </div>
       </div>
       <div className="content-body">
-
-
+       
         {children}
       </div>
+      {/* <div className=  {`preloader ${preloader?'preloaderr':''}`}></div> */}
+
       <div className="footer">
         <div className="copyright">
           <p>Copyright © <a href="https://socialx.io/" target="_blank">SocialX</a> 2022</p>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Referral() {
 
@@ -58,7 +59,7 @@ export default function Referral() {
             <p className="font-w700">Prize Pool</p>
             <h1>$1,000</h1>
           </div>
-         
+
           <div className="p-2">
             <p className="font-w700">The Challenge Will End Soon</p>
             <p>Send your video now! and win the prize pool money!
@@ -74,59 +75,67 @@ export default function Referral() {
       <div className="container-fluid mt-3">
         <div className="row mobile-hide-card">
           <div className="col-sm-4 mb-3 mt-3">
-
-            <a href="createchallenge.html">
-              <div className="card2 h-100 w-100 overflow-hidden ">
-                <img src="images/create-challenge-img.png"/>
-              </div>
-            </a>
+            <Link href="/createchallenge">
+              <a>
+                <div className="card2 h-100 w-100 overflow-hidden ">
+                  <img src="images/create-challenge-img.png" />
+                </div>
+              </a>
+            </Link>
           </div>
 
           <div className="col-sm-4 mb-3 mt-3">
+            <Link href="/votechallenge">
 
-            <a href="votechallenge.html">
-              <div className="card2 h-100 w-100 overflow-hidden ">
-                <img src="images/vote-challenge-img.png"/>
-              </div>
-            </a>
+              <a>
+                <div className="card2 h-100 w-100 overflow-hidden ">
+                  <img src="images/vote-challenge-img.png" />
+                </div>
+              </a>
+            </Link>
           </div>
 
           <div className="col-sm-4 mb-3 mt-3">
-
-            <a href="thechallenge.html">
-              <div className="card2 h-100 w-100 overflow-hidden ">
-                <img src="images/the-challenge-img.png"/>
-              </div>
-            </a>
+            <Link href="/thechallenge">
+              <a>
+                <div className="card2 h-100 w-100 overflow-hidden ">
+                  <img src="images/the-challenge-img.png" />
+                </div>
+              </a>
+            </Link>
           </div>
         </div>
 
         <div className="row mobile-show-card">
           <div className="col-sm-12 mb-1 mt-1">
-
-            <a href="createchallenge.html">
-              <div className="card2">
-                <img src="images/create-challenge-img-mob.png"/>
-              </div>
-            </a>
+            <Link href="/createchallenge">
+              <a>
+                <div className="card2">
+                  <img src="images/create-challenge-img-mob.png" />
+                </div>
+              </a>
+            </Link>
           </div>
 
           <div className="col-sm-12 mb-1 mt-1">
+            <Link href="/votechallenge">
 
-            <a href="votechallenge.html">
-              <div className="card2">
-                <img src="images/vote-challenge-img-mob.png"/>
-              </div>
-            </a>
+              <a>
+                <div className="card2">
+                  <img src="images/vote-challenge-img-mob.png" />
+                </div>
+              </a>
+            </Link>
           </div>
 
           <div className="col-sm-12 mb-1 mt-1">
-
-            <a href="thechallenge.html">
-              <div className="card2">
-                <img src="images/the-challenge-img-mob.png"/>
-              </div>
-            </a>
+            <Link href="/thechallenge">
+              <a>
+                <div className="card2">
+                  <img src="images/the-challenge-img-mob.png" />
+                </div>
+              </a>
+            </Link>
           </div>
         </div>
 
