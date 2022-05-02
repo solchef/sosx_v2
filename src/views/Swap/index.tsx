@@ -398,7 +398,7 @@ export default function Swap() {
 
   return (
 
-    <div className="container">
+    <div className="container-fluid">
         <div className="row justify-content-center">
           <div className="col-xl-5">
             <div className="card">
