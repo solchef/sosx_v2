@@ -1,4 +1,4 @@
-import Createchallenge from '../views/Createchallenge'
+import Createchallenge from '../views/Games/Createchallenge'
 
 const createchallenge = () => {
   return <Createchallenge />

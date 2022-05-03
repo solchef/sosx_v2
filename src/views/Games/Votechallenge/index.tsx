@@ -1,36 +1,13 @@
 import Link from 'next/link'
 import { } from 'react'
+import NavGame from '../NavGame'
 
 export default function Votechallenge() {
 
 	return (
 		<>
-			<ul className="nav nav-tabs d-flex flex-nowrap nav-justified mb-3">
+			<NavGame />
 
-
-				<li className="nav-item">
-					<Link href="/createchallenge">
-						<a className="nav-link rounded ">Create Challenge</a>
-
-					</Link>
-				</li>
-
-
-				<li className="nav-item">
-					<Link href="/votechallenge">
-						<a className="nav-link active rounded">Vote Challenge</a>
-
-					</Link>
-				</li>
-
-
-				<li className="nav-item">
-					<Link href="/thechallenge">
-						<a className="nav-link rounded">The Challenge</a>
-
-					</Link>
-				</li>
-			</ul>
 			<div className="container-fluid pt-3">
 
 				<div className="row pt-3">
@@ -51,15 +28,17 @@ export default function Votechallenge() {
 									</ul>
 								</div>
 							</div>
-							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
-										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+							<div className="card-footer d-flex flex-column flex-lg-row align-items-md-center align-items-start justify-content-between">
+								<div>
+									<i className="fa-regular fa-heart p-2"></i><span className="fs-12 p-1"
+										id="votes">17</span><span className="fs-12">Votes</span>
+								</div>
+								<button type="button"
+									className="btn btn-primary "><i
+										className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
 							</div>
 						</div>
 					</div>
-
 					<div className="col-xl-4 col-md-6">
 						<div className="card overflow-hidden">
 							<div className="card-header align-items-start border-0">
@@ -77,15 +56,17 @@ export default function Votechallenge() {
 									</ul>
 								</div>
 							</div>
-							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
-										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+							<div className="card-footer d-flex flex-column flex-lg-row align-items-md-center align-items-start justify-content-between">
+								<div>
+									<i className="fa-regular fa-heart p-2"></i><span className="fs-12 p-1"
+										id="votes">17</span><span className="fs-12">Votes</span>
+								</div>
+								<button type="button"
+									className="btn btn-primary "><i
+										className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
 							</div>
 						</div>
 					</div>
-
 					<div className="col-xl-4 col-md-6">
 						<div className="card overflow-hidden">
 							<div className="card-header align-items-start border-0">
@@ -103,15 +84,17 @@ export default function Votechallenge() {
 									</ul>
 								</div>
 							</div>
-							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
-										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+							<div className="card-footer d-flex flex-column flex-lg-row align-items-md-center align-items-start justify-content-between">
+								<div>
+									<i className="fa-regular fa-heart p-2"></i><span className="fs-12 p-1"
+										id="votes">17</span><span className="fs-12">Votes</span>
+								</div>
+								<button type="button"
+									className="btn btn-primary "><i
+										className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
 							</div>
 						</div>
 					</div>
-
 					<div className="col-xl-4 col-md-6">
 						<div className="card overflow-hidden">
 							<div className="card-header align-items-start border-0">
@@ -129,15 +112,17 @@ export default function Votechallenge() {
 									</ul>
 								</div>
 							</div>
-							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
-										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+							<div className="card-footer d-flex flex-column flex-lg-row align-items-md-center align-items-start justify-content-between">
+								<div>
+									<i className="fa-regular fa-heart p-2"></i><span className="fs-12 p-1"
+										id="votes">17</span><span className="fs-12">Votes</span>
+								</div>
+								<button type="button"
+									className="btn btn-primary "><i
+										className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
 							</div>
 						</div>
 					</div>
-
 					<div className="col-xl-4 col-md-6">
 						<div className="card overflow-hidden">
 							<div className="card-header align-items-start border-0">
@@ -155,15 +140,17 @@ export default function Votechallenge() {
 									</ul>
 								</div>
 							</div>
-							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
-										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+							<div className="card-footer d-flex flex-column flex-lg-row align-items-md-center align-items-start justify-content-between">
+								<div>
+									<i className="fa-regular fa-heart p-2"></i><span className="fs-12 p-1"
+										id="votes">17</span><span className="fs-12">Votes</span>
+								</div>
+								<button type="button"
+									className="btn btn-primary "><i
+										className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
 							</div>
 						</div>
 					</div>
-
 					<div className="col-xl-4 col-md-6">
 						<div className="card overflow-hidden">
 							<div className="card-header align-items-start border-0">
@@ -181,15 +168,17 @@ export default function Votechallenge() {
 									</ul>
 								</div>
 							</div>
-							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
-										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+							<div className="card-footer d-flex flex-column flex-lg-row align-items-md-center align-items-start justify-content-between">
+								<div>
+									<i className="fa-regular fa-heart p-2"></i><span className="fs-12 p-1"
+										id="votes">17</span><span className="fs-12">Votes</span>
+								</div>
+								<button type="button"
+									className="btn btn-primary "><i
+										className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
 							</div>
 						</div>
 					</div>
-
 					<div className="col-xl-4 col-md-6">
 						<div className="card overflow-hidden">
 							<div className="card-header align-items-start border-0">
@@ -207,15 +196,17 @@ export default function Votechallenge() {
 									</ul>
 								</div>
 							</div>
-							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
-										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+							<div className="card-footer d-flex flex-column flex-lg-row align-items-md-center align-items-start justify-content-between">
+								<div>
+									<i className="fa-regular fa-heart p-2"></i><span className="fs-12 p-1"
+										id="votes">17</span><span className="fs-12">Votes</span>
+								</div>
+								<button type="button"
+									className="btn btn-primary "><i
+										className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
 							</div>
 						</div>
 					</div>
-
 					<div className="col-xl-4 col-md-6">
 						<div className="card overflow-hidden">
 							<div className="card-header align-items-start border-0">
@@ -233,15 +224,17 @@ export default function Votechallenge() {
 									</ul>
 								</div>
 							</div>
-							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
-										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+							<div className="card-footer d-flex flex-column flex-lg-row align-items-md-center align-items-start justify-content-between">
+								<div>
+									<i className="fa-regular fa-heart p-2"></i><span className="fs-12 p-1"
+										id="votes">17</span><span className="fs-12">Votes</span>
+								</div>
+								<button type="button"
+									className="btn btn-primary "><i
+										className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
 							</div>
 						</div>
 					</div>
-
 					<div className="col-xl-4 col-md-6">
 						<div className="card overflow-hidden">
 							<div className="card-header align-items-start border-0">
@@ -259,14 +252,19 @@ export default function Votechallenge() {
 									</ul>
 								</div>
 							</div>
-							<div className="card-footer align-items-start justify-content-between align-items-center">
-								<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-									id="votes">17</span><span className="fs-12">Votes</span><button type="button"
-										className="btn btn-primary btn-lg float-right"><i
-											className="fa-solid fa-check-to-slot pr-2"></i>Vote</button></li>
+							<div className="card-footer d-flex flex-column flex-lg-row align-items-md-center align-items-start justify-content-between">
+								<div>
+									<i className="fa-regular fa-heart p-2"></i><span className="fs-12 p-1"
+										id="votes">17</span><span className="fs-12">Votes</span>
+								</div>
+								<button type="button"
+									className="btn btn-primary "><i
+										className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
 							</div>
 						</div>
 					</div>
+
+					
 
 				</div>
 			</div>

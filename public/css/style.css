@@ -30776,7 +30776,9 @@ body {
 }
 
 
-
+.height-game {
+height: calc(100vh-320px);
+}
 
 .card2 {
   position: relative;
@@ -32785,7 +32787,19 @@ width: 100%;
 }
 
 
+.content-preloader {
+  animation: roll 0.5s linear;
+  translate: 1s linear ;
 
+}
+@keyframes roll {
+  0% {
+    transform: rotate(30deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 .game-top {
 

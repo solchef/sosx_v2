@@ -41,6 +41,7 @@ import { combineDateAndTime, getFormErrors } from './helpers'
 import { FormState } from './types'
 import { ADMINS, VOTE_THRESHOLD } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
+import NavGame from '../NavGame'
 
 const EasyMde = dynamic(() => import('components/EasyMde'), {
   ssr: false,
@@ -306,32 +307,7 @@ const CreateGame = () => {
     // </Container>
 
     <>
-<ul className="nav nav-tabs d-flex flex-nowrap nav-justified mb-3">
-
-
-				<li className="nav-item">
-                <Link href="/createchallenge">
-					<a className="nav-link active rounded ">Create Challenge</a>
-				
-                </Link>
-                </li>
-               
-
-				<li className="nav-item">
-                <Link href="/votechallenge">
-					<a className="nav-link  rounded">Vote Challenge</a>
-				
-                </Link>
-                </li>
-                
-
-				<li className="nav-item">
-                <Link href="/thechallenge">
-					<a className="nav-link rounded">The Challenge</a>
-				
-                </Link>
-                </li>
-			</ul>
+          <NavGame/>
 		 
             <div className="container-fluid pt-3">
               <div className="row justify-content-center">
