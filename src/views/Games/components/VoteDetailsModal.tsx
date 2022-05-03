@@ -30,11 +30,12 @@ const VoteDetailsModal: React.FC<VoteDetailsModalProps> = ({ block, onDismiss })
   }
 
   return (
-    <Modal title={t('Voting Power')} onDismiss={handleDismiss} headerBackground={theme.colors.gradients.cardHeader}>
-      <Box mb="24px" width="320px">
+    <Modal title={t('Voting Power')} onDismiss={handleDismiss} headerBackground={theme.colors.gradients.cardHeader} style={{backgroundColor:"black"}}>
+      <div   >
         {isLoading ? (
           <Flex height="450px" alignItems="center" justifyContent="center">
-            <Spinner size={80} />
+            {/* <Spinner size={80} /> */}
+            <img src='/utils/icons/loader.gif' />
           </Flex>
         ) : (
           <>
@@ -53,7 +54,7 @@ const VoteDetailsModal: React.FC<VoteDetailsModalProps> = ({ block, onDismiss })
             </Button>
           </>
         )}
-      </Box>
+      </div>
     </Modal>
   )
 }
