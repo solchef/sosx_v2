@@ -1,36 +1,13 @@
 import { } from 'react'
 import Link from 'next/link'
+import NavGame from '../NavGame'
 
 export default function Thechallenge() {
 
 	return (
 		<>
-			<ul className="nav nav-tabs d-flex flex-nowrap nav-justified mb-3">
+			<NavGame />
 
-
-				<li className="nav-item">
-					<Link href="/createchallenge">
-						<a className="nav-link rounded ">Create Challenge</a>
-
-					</Link>
-				</li>
-
-
-				<li className="nav-item">
-					<Link href="/votechallenge">
-						<a className="nav-link rounded">Vote Challenge</a>
-
-					</Link>
-				</li>
-
-
-				<li className="nav-item">
-					<Link href="/thechallenge">
-						<a className="nav-link active rounded">The Challenge</a>
-
-					</Link>
-				</li>
-			</ul>
 			<div className="container-fluid">
 				<div className="card p-3">
 					<div className="row d-flex flex-row justify-content-between">
@@ -211,13 +188,13 @@ export default function Thechallenge() {
 
 							<ul className="nav3 nav3-tabs nav3-justified mb-3">
 								<li className="nav3-item">
-									<a className="nav3-link active font-weight-bold" href="#lvl1">Level 1</a>
+									<a className="nav3-link active font-weight-bold rounded" href="#lvl1">Level 1</a>
 								</li>
 								<li className="nav3-item">
-									<a className="nav3-link font-weight-bold" href="#lvl2">Level 2</a>
+									<a className="nav3-link font-weight-bold rounded" href="#lvl2">Level 2</a>
 								</li>
 								<li className="nav3-item">
-									<a className="nav3-link font-weight-bold" href="#lvl3">Level 3</a>
+									<a className="nav3-link font-weight-bold rounded" href="#lvl3">Level 3</a>
 								</li>
 							</ul>
 

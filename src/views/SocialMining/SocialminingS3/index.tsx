@@ -1,39 +1,13 @@
 import { } from 'react'
 import Link from 'next/link';
+import NavMining from '../NavMining';
 
 export default function SocialminingS3() {
 
     return (
         <>
-       <ul className="nav2 nav2-tabs nav2-justified mb-3">
-                <li className="nav2-item">
-                    <Link href="/x-mining">
+                <NavMining/>
 
-                        <a className="nav2-link rounded ">Steps</a>
-                    </Link>
-
-                </li>
-                <li className="nav2-item">
-                    <Link href="/socialmining-s1">
-
-                        <a className="nav2-link rounded">Copy</a>
-                    </Link>
-
-                </li>
-                <li className="nav2-item">
-                    <Link href="/socialmining-s2">
-
-                        <a className="nav2-link rounded">Affiliate</a>
-                    </Link>
-
-                </li>
-                <li className="nav2-item">
-                    <Link href="/socialmining-s3">
-
-                        <a className="nav2-link rounded active">Redeem</a>
-                    </Link>
-                </li>
-            </ul>
             <div className="container-fluid pt-3">
 
                 <div className="card p-3 mt-3">
