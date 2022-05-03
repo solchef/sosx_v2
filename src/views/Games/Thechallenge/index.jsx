@@ -1,41 +1,18 @@
 import { } from 'react'
 import Link from 'next/link'
+import NavGame from '../NavGame'
 
 export default function Thechallenge() {
 
 	return (
 		<>
-			<ul className="nav nav-tabs d-flex flex-nowrap nav-justified mb-3">
+			<NavGame />
 
-
-				<li className="nav-item">
-					<Link href="/createchallenge">
-						<a className="nav-link rounded ">Create Challenge</a>
-
-					</Link>
-				</li>
-
-
-				<li className="nav-item">
-					<Link href="/votechallenge">
-						<a className="nav-link rounded">Vote Challenge</a>
-
-					</Link>
-				</li>
-
-
-				<li className="nav-item">
-					<Link href="/thechallenge">
-						<a className="nav-link active rounded">The Challenge</a>
-
-					</Link>
-				</li>
-			</ul>
 			<div className="container-fluid">
 				<div className="card p-3">
-					<div className="row d-flex justify-content-between">
+					<div className="row d-flex flex-row justify-content-between">
 
-						<div>
+						<div className="p-2">
 							<div className="feature-box">
 								<div className="feature-icon mobile-hide-card ">
 									<img src="images/prize-pool-icon.png" style={{ width: '100%' }} />
@@ -48,7 +25,7 @@ export default function Thechallenge() {
 							</div>
 						</div>
 
-						<div>
+						<div className="p-2">
 							<div className="feature-box">
 								<div className="feature-icon mobile-hide-card ">
 									<img src="images/submission-date-icon.png" style={{ width: '100%' }} />
@@ -62,7 +39,7 @@ export default function Thechallenge() {
 						</div>
 
 
-						<div>
+						<div className="p-2">
 							<div className="feature-box">
 								<div className="feature-text">
 									<span className="main-pink fs-22 font-weight-bold">The Challenge will End soon</span>
@@ -72,7 +49,7 @@ export default function Thechallenge() {
 							</div>
 						</div>
 
-						<div>
+						<div className="p-2">
 							<div className="feature-box float-right">
 								<div className="feature-text">
 									<button className="btn btn-primary">Upload Video Here</button>
@@ -84,7 +61,7 @@ export default function Thechallenge() {
 				</div>
 
 				<div className="row">
-					<div className="col-sm-8">
+					<div className="col-12 d-flex flex-column  col-xl-7 justify-content-around">
 						<div className="card3 overflow-hidden">
 							<div className="card-header align-items-start border-0">
 								<div>
@@ -111,7 +88,7 @@ export default function Thechallenge() {
 							</div>
 						</div>
 
-						<div className="card3">
+						<div className="card3 ">
 							<div className="card3-header border-0">
 								<div className="row">
 									<div className="col-sm-12">
@@ -123,7 +100,7 @@ export default function Thechallenge() {
 
 							<div className="card3-body">
 								<div className="row">
-									<div className="col-sm-3">
+									<div className="col-md-3 col-sm-6">
 										<div className="videos">
 											<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 												class="video">
@@ -140,7 +117,7 @@ export default function Thechallenge() {
 										<span className="fs-12 float-right">06/12/22</span>
 									</div>
 
-									<div className="col-sm-3">
+									<div className="col-md-3 col-sm-6">
 										<div className="videos">
 											<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 												class="video">
@@ -157,7 +134,7 @@ export default function Thechallenge() {
 										<span className="fs-12 float-right">06/12/22</span>
 									</div>
 
-									<div className="col-sm-3">
+									<div className="col-md-3 col-sm-6">
 										<div className="videos">
 											<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 												class="video">
@@ -174,7 +151,7 @@ export default function Thechallenge() {
 										<span className="fs-12 float-right">06/12/22</span>
 									</div>
 
-									<div className="col-sm-3 pb-2">
+									<div className="col-md-3 col-sm-6 pb-2">
 										<div className="videos">
 											<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 												class="video">
@@ -200,7 +177,7 @@ export default function Thechallenge() {
 						</div>
 					</div>
 
-					<div className="col-sm-4">
+					<div className=" col-12 col-xl-5">
 						<div className="card3 overflow-hidden">
 							<div className="card3-header align-items-start border-0 justify-content-between">
 								<div>
@@ -211,13 +188,13 @@ export default function Thechallenge() {
 
 							<ul className="nav3 nav3-tabs nav3-justified mb-3">
 								<li className="nav3-item">
-									<a className="nav3-link active font-weight-bold" href="#lvl1">Level 1</a>
+									<a className="nav3-link active font-weight-bold rounded" href="#lvl1">Level 1</a>
 								</li>
 								<li className="nav3-item">
-									<a className="nav3-link font-weight-bold" href="#lvl2">Level 2</a>
+									<a className="nav3-link font-weight-bold rounded" href="#lvl2">Level 2</a>
 								</li>
 								<li className="nav3-item">
-									<a className="nav3-link font-weight-bold" href="#lvl3">Level 3</a>
+									<a className="nav3-link font-weight-bold rounded" href="#lvl3">Level 3</a>
 								</li>
 							</ul>
 

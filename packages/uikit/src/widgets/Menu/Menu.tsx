@@ -135,7 +135,7 @@ const Menu: React.FC<NavProps> = ({
       case '/stake':
         return "Stake";
 
-      case '/x-game':
+      case '/xgame':
         return "Game";
 
       case '/referrals':
@@ -162,12 +162,13 @@ const Menu: React.FC<NavProps> = ({
         return;
     }
   }
-const [preloader,setPreloader ] = useState(false);
+const [preloader,setPreloader ] = useState(true);
   useEffect(() => {
     setPreloader(true);
+
     setTimeout(() => {
       setPreloader(false);
-    }, 22);
+    }, 1000);
     
     
   }
@@ -269,11 +270,11 @@ const [preloader,setPreloader ] = useState(false);
           </Link>
         </li>
 
-        <li className={router.pathname == "/x-game" ? "mm-active" : ""}>
-          <Link href="/x-game">
+        <li className={router.pathname == "/xgame" ? "mm-active" : ""}>
+          <Link href="/xgame">
             <a>
               <i className="fa fa-gamepad"></i>
-              <span className="nav-text ">X-Game</span>
+              <span className="nav-text ">XGame</span>
             </a>
           </Link>
         </li>
@@ -362,12 +363,12 @@ const [preloader,setPreloader ] = useState(false);
 
             </li>
 
-            <li className={router.pathname == "/x-game" ? "mm-active" : ""}>
-              <Link href="/x-game">
+            <li className={router.pathname == "/xgame" ? "mm-active" : ""}>
+              <Link href="/xgame">
 
                 <a>
                   <i className="fa fa-gamepad"></i>
-                  <span className="nav-text">X-Game</span>
+                  <span className="nav-text">XGame</span>
                 </a>
               </Link>
 
@@ -444,11 +445,11 @@ const [preloader,setPreloader ] = useState(false);
           </ul>
         </div>
       </div>
-      <div className="content-body">
+      <div className= {`content-body ${preloader?'content-preloader':''}`}>
        
         {children}
       </div>
-      {/* <div className=  {`preloader ${preloader?'preloaderr':''}`}></div> */}
+   
 
       <div className="footer">
         <div className="copyright">

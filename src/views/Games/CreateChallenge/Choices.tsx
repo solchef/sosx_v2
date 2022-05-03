@@ -27,42 +27,48 @@ const Choices: React.FC<ChoicesProps> = ({ choices, onChange }) => {
   return (
 
     <>
-         
-            <h4 className="p-2">Rules</h4>
-                      <div className="input-group  justify-content-between">
-                          {choices.map(({ id, value }, index) => {
-                                    const handleTextInput = (newValue: string) => {
-                                      const newChoices = [...choices]
-                                      const choiceIndex = newChoices.findIndex((newChoice) => newChoice.id === id)
 
-                                      newChoices[choiceIndex].value = newValue
+      <h4 className="p-2">Rules</h4>
+      <div className="row">
+        <div className="input-group col-9">
+          {choices.map(({ id, value }, index) => {
+            const handleTextInput = (newValue: string) => {
+              const newChoices = [...choices]
+              const choiceIndex = newChoices.findIndex((newChoice) => newChoice.id === id)
 
-                                      onChange(newChoices)
-                                    }
+              newChoices[choiceIndex].value = newValue
 
-                                    const handleRemove = () => {
-                                      onChange(choices.filter((newPrevChoice) => newPrevChoice.id !== id))
-                                    }
+              onChange(newChoices)
+            }
 
-                                    return (
-                                      <Choice
-                                        key={id}
-                                        scale="lg"
-                                        onTextInput={handleTextInput}
-                                        placeholder={t('Input choice text')}
-                                        value={value}
-                                        onRemove={index > 1 ? handleRemove : undefined}
-                                      />
-                                    )
-                                  })}
+            const handleRemove = () => {
+              onChange(choices.filter((newPrevChoice) => newPrevChoice.id !== id))
+            }
+
+            return (
+              <Choice
+                key={id}
+                scale="lg"
+                onTextInput={handleTextInput}
+                placeholder={t('Input choice text')}
+                value={value}
+                onRemove={index > 1 ? handleRemove : undefined}
+              />
+            )
+          })}
 
 
-                         <div className="input-group-btn">
-                          <button onClick={addChoice} disabled={!hasMinimumChoices} type="button" className="btn btn-primary" ng-click="addArtistChoice()"><span
-                              className="glyphicon glyphicon-plus mb-3"></span> <i
-                              className="fa fa-plus mr-1"></i>Add Rule</button>
-                        </div>
-                      </div>
+
+        </div>
+        <div className="input-group-btn col-3">
+          <button onClick={addChoice} disabled={!hasMinimumChoices} type="button" className="btn btn-primary" ng-click="addArtistChoice()"><span
+            className="glyphicon glyphicon-plus mb-3"></span> <i
+              className="fa fa-plus mr-1"></i>Add Rule</button>
+        </div>
+
+      </div>
+
+
     </>
   )
 }

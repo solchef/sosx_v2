@@ -23,6 +23,7 @@ import { combineDateAndTime, getFormErrors } from './helpers'
 import { FormState } from './types'
 import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
+import NavGame from '../NavGame'
 
 
 const EasyMde = dynamic(() => import('components/EasyMde'), {
@@ -148,6 +149,7 @@ const CreateChallenge = () => {
 
   return (
     <>
+<<<<<<< HEAD
         <ul className="nav nav-tabs d-flex flex-nowrap nav-justified mb-3">
 
 
@@ -166,6 +168,23 @@ const CreateChallenge = () => {
                         </Link>
                         </li>
                         
+=======
+          <NavGame/>
+		 
+            <div className="container-fluid pt-3">
+              <div className="row justify-content-center">
+                <div className="col-xl-7">
+                  <div className="card">
+                    <div className="card-header border-0 pb-0 justify-content-between">
+                      <h4 className="fs-18">Create Challenge</h4>
+                    </div>
+                    <div className="card-body">
+
+                    <form onSubmit={handleSubmit}>
+                        <div className="row mb-3">
+                          {/* <input className="input1" type="text" id="fname" name="firstname"
+                            placeholder="Challenge Title Here"/> */}
+>>>>>>> 1ba936510d071a92ff3857f2c46750f193a08349
 
                 <li className="nav-item">
                         <Link href="/thechallenge">
