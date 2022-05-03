@@ -8,28 +8,28 @@ const NavGame =()=>{
 
     return (
 
-        <ul className="nav nav-tabs d-flex flex-nowrap nav-justified mb-3">
+        <ul className="nav nav-tabs d-flex justify-content-around flex-nowrap nav-justified nav-game-color mb-3">
 
 
-        <li className="nav-item">
+        <li className="nav2-item">
           <Link href="/createchallenge">
-            <a className={`nav-link ${router.pathname == '/createchallenge'? 'active' :''} rounded`}>Create Challenge</a>
+            <a className={`nav-link ${router.pathname == '/createchallenge'? 'active nav-content' :''} rounded`}>Create Challenge</a>
 
           </Link>
         </li>
 
 
-        <li className="nav-item">
+        <li className="nav2-item">
           <Link href="/votechallenge">
-            <a className={`nav-link ${ router.pathname ==  '/votechallenge'? 'active' :''} rounded`}>Vote Challenge</a>
+            <a className={`nav-link ${ router.pathname ==  '/votechallenge'? 'active nav-content' :''} rounded`}>Vote Challenge</a>
 
           </Link>
         </li>
 
 
-        <li className="nav-item">
+        <li className="nav2-item">
           <Link href="/thechallenge">
-            <a className={`nav-link ${router.pathname == '/thechallenge' ? 'active' :''} rounded`}>The Challenge</a>
+            <a className={`nav-link ${router.pathname == '/thechallenge' ? 'active nav-content' :''} rounded`}>The Challenge</a>
 
           </Link>
         </li>

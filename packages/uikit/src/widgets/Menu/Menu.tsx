@@ -136,7 +136,13 @@ const Menu: React.FC<NavProps> = ({
         return "Stake";
 
       case '/xgame':
-        return "Game";
+        return "XGame";
+        case '/createchallenge':
+        return "XGame";
+        case '/votechallenge':
+        return "XGame";
+        case '/thechallenge':
+        return "XGame";
 
       case '/referrals':
         return "Referrals";
@@ -269,7 +275,7 @@ const [preloader,setPreloader ] = useState(true);
           </Link>
         </li>
 
-        <li className={router.pathname == "/xgame" ? "mm-active" : ""}>
+        <li className={router.pathname == "/xgame" || router.pathname == "/createchallenge"|| router.pathname == "/votechallenge" ||router.pathname == "/thechallenge"  ? "mm-active" : ""}>
           <Link href="/xgame">
             <a>
               <i className="fa fa-gamepad"></i>
@@ -362,7 +368,7 @@ const [preloader,setPreloader ] = useState(true);
 
             </li>
 
-            <li className={router.pathname == "/xgame" ? "mm-active" : ""}>
+            <li className={router.pathname == "/xgame" || router.pathname == "/createchallenge"|| router.pathname == "/votechallenge" ||router.pathname == "/thechallenge" ? "mm-active" : ""}>
               <Link href="/xgame">
 
                 <a>

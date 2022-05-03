@@ -5,6 +5,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { InlineShareButtons } from 'sharethis-reactjs';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 import Link from 'next/link';
+import NavMining from './NavMining';
 
 export default function SocialMining() {
 
@@ -78,35 +79,7 @@ export default function SocialMining() {
 
     return (
         <>
- <ul className="nav2 nav2-tabs nav2-justified mb-3">
-                <li className="nav2-item">
-                    <Link href="/x-mining">
-
-                        <a className="nav2-link rounded active">Steps</a>
-                    </Link>
-
-                </li>
-                <li className="nav2-item">
-                    <Link href="/socialmining-s1">
-
-                        <a className="nav2-link rounded">Copy</a>
-                    </Link>
-
-                </li>
-                <li className="nav2-item">
-                    <Link href="/socialmining-s2">
-
-                        <a className="nav2-link rounded">Affiliate</a>
-                    </Link>
-
-                </li>
-                <li className="nav2-item">
-                    <Link href="/socialmining-s3">
-
-                        <a className="nav2-link rounded">Redeem</a>
-                    </Link>
-                </li>
-            </ul>
+                <NavMining/>
 
 
             <div className="pt-3">
