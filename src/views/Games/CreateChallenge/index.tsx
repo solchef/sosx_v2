@@ -1,17 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState, useMemo } from 'react'
 import {
-  AutoRenewIcon,
-  Box,
-  Breadcrumbs,
   Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Flex,
-  Heading,
-  Input,
-  LinkExternal,
-  Text,
   useModal,
 } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
@@ -21,32 +10,26 @@ import { useInitialBlock } from 'state/block/hooks'
 import { SnapshotCommand } from 'state/types'
 import useToast from 'hooks/useToast'
 import useWeb3Provider from 'hooks/useActiveWeb3React'
-import { getBscScanLink } from 'utils'
-import truncateHash from 'utils/truncateHash'
 import { signMessage } from 'utils/web3React'
 import { useTranslation } from 'contexts/Localization'
-import Container from 'components/Layout/Container'
-import { DatePicker, TimePicker, DatePickerPortal } from 'views/Voting/components/DatePicker'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import ReactMarkdown from 'components/ReactMarkdown'
-import { PageMeta } from 'components/Layout/Page'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { sendSnapshotData, Message, generateMetaData, generatePayloadData } from '../helpers'
-import Layout from '../components/Layout'
-import { FormErrors, Label, SecondaryLabel } from './styles'
+import { FormErrors } from './styles'
 import Choices, { Choice, makeChoice, MINIMUM_CHOICES } from './Choices'
 import { combineDateAndTime, getFormErrors } from './helpers'
 import { FormState } from './types'
-import { ADMINS, VOTE_THRESHOLD } from '../config'
+import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
+
 
 const EasyMde = dynamic(() => import('components/EasyMde'), {
   ssr: false,
 })
 
-const CreateGame = () => {
+const CreateChallenge = () => {
   const [state, setState] = useState<FormState>({
     name: '',
     body: '',
@@ -164,265 +147,113 @@ const CreateGame = () => {
   }, [initialBlock, setState])
 
   return (
-    // <Container py="40px">
-    //   <PageMeta />
-    //   <Box mb="48px">
-    //     <Breadcrumbs>
-    //       <Link href="/">{t('Home')}</Link>
-    //       <Link href="/voting">{t('Voting')}</Link>
-    //       <Text>{t('Make a Proposal')}</Text>
-    //     </Breadcrumbs>
-    //   </Box>
-    //   <form onSubmit={handleSubmit}>
-    //     <Layout>
-    //       <Box>
-    //         <Box mb="24px">
-    //           <Label htmlFor="name">{t('Title')}</Label>
-    //           <Input id="name" name="name" value={name} scale="lg" onChange={handleChange} required />
-    //           {formErrors.name && fieldsState.name && <FormErrors errors={formErrors.name} />}
-    //         </Box>
-    //         <Box mb="24px">
-    //           <Label htmlFor="body">{t('Content')}</Label>
-    //           <Text color="textSubtle" mb="8px">
-    //             {t('Tip: write in Markdown!')}
-    //           </Text>
-    //           <EasyMde
-    //             id="body"
-    //             name="body"
-    //             onTextChange={handleEasyMdeChange}
-    //             value={body}
-    //             options={options}
-    //             required
-    //           />
-    //           {formErrors.body && fieldsState.body && <FormErrors errors={formErrors.body} />}
-    //         </Box>
-    //         {body && (
-    //           <Box mb="24px">
-    //             <Card>
-    //               <CardHeader>
-    //                 <Heading as="h3" scale="md">
-    //                   {t('Preview')}
-    //                 </Heading>
-    //               </CardHeader>
-    //               <CardBody p="0" px="24px">
-    //                 <ReactMarkdown>{body}</ReactMarkdown>
-    //               </CardBody>
-    //             </Card>
-    //           </Box>
-    //         )}
-    //         <Choices choices={choices} onChange={handleChoiceChange} />
-    //         {formErrors.choices && fieldsState.choices && <FormErrors errors={formErrors.choices} />}
-    //       </Box>
-    //       <Box>
-    //         <Card>
-    //           <CardHeader>
-    //             <Heading as="h3" scale="md">
-    //               {t('Actions')}
-    //             </Heading>
-    //           </CardHeader>
-    //           <CardBody>
-    //             <Box mb="24px">
-    //               <SecondaryLabel>{t('Start Date')}</SecondaryLabel>
-    //               <DatePicker
-    //                 name="startDate"
-    //                 onChange={handleDateChange('startDate')}
-    //                 selected={startDate}
-    //                 placeholderText="YYYY/MM/DD"
-    //               />
-    //               {formErrors.startDate && fieldsState.startDate && <FormErrors errors={formErrors.startDate} />}
-    //             </Box>
-    //             <Box mb="24px">
-    //               <SecondaryLabel>{t('Start Time')}</SecondaryLabel>
-    //               <TimePicker
-    //                 name="startTime"
-    //                 onChange={handleDateChange('startTime')}
-    //                 selected={startTime}
-    //                 placeholderText="00:00"
-    //               />
-    //               {formErrors.startTime && fieldsState.startTime && <FormErrors errors={formErrors.startTime} />}
-    //             </Box>
-    //             <Box mb="24px">
-    //               <SecondaryLabel>{t('End Date')}</SecondaryLabel>
-    //               <DatePicker
-    //                 name="endDate"
-    //                 onChange={handleDateChange('endDate')}
-    //                 selected={endDate}
-    //                 placeholderText="YYYY/MM/DD"
-    //               />
-    //               {formErrors.endDate && fieldsState.endDate && <FormErrors errors={formErrors.endDate} />}
-    //             </Box>
-    //             <Box mb="24px">
-    //               <SecondaryLabel>{t('End Time')}</SecondaryLabel>
-    //               <TimePicker
-    //                 name="endTime"
-    //                 onChange={handleDateChange('endTime')}
-    //                 selected={endTime}
-    //                 placeholderText="00:00"
-    //               />
-    //               {formErrors.endTime && fieldsState.endTime && <FormErrors errors={formErrors.endTime} />}
-    //             </Box>
-    //             {account && (
-    //               <Flex alignItems="center" mb="8px">
-    //                 <Text color="textSubtle" mr="16px">
-    //                   {t('Creator')}
-    //                 </Text>
-    //                 <LinkExternal href={getBscScanLink(account, 'address')}>{truncateHash(account)}</LinkExternal>
-    //               </Flex>
-    //             )}
-    //             <Flex alignItems="center" mb="16px">
-    //               <Text color="textSubtle" mr="16px">
-    //                 {t('Snapshot')}
-    //               </Text>
-    //               <LinkExternal href={getBscScanLink(snapshot, 'block')}>{snapshot}</LinkExternal>
-    //             </Flex>
-    //             {account ? (
-    //               <>
-    //                 <Button
-    //                   type="submit"
-    //                   width="100%"
-    //                   isLoading={isLoading}
-    //                   endIcon={isLoading ? <AutoRenewIcon spin color="currentColor" /> : null}
-    //                   disabled={!isEmpty(formErrors)}
-    //                   mb="16px"
-    //                 >
-    //                   {t('Publish')}
-    //                 </Button>
-    //                 <Text color="failure" as="p" mb="4px">
-    //                   {t('You need at least %count% voting power to publish a proposal.', { count: VOTE_THRESHOLD })}{' '}
-    //                 </Text>
-    //                 <Button scale="sm" type="button" variant="text" onClick={onPresentVoteDetailsModal} p={0}>
-    //                   {t('Check voting power')}
-    //                 </Button>
-    //               </>
-    //             ) : (
-    //               <ConnectWalletButton width="100%" type="button" />
-    //             )}
-    //           </CardBody>
-    //         </Card>
-    //       </Box>
-    //     </Layout>
-    //   </form>
-    //   <DatePickerPortal />
-    // </Container>
-
     <>
-<ul className="nav nav-tabs d-flex flex-nowrap nav-justified mb-3">
+        <ul className="nav nav-tabs d-flex flex-nowrap nav-justified mb-3">
 
 
-				<li className="nav-item">
-                <Link href="/createchallenge">
-					<a className="nav-link active rounded ">Create Challenge</a>
-				
-                </Link>
-                </li>
-               
-
-				<li className="nav-item">
-                <Link href="/votechallenge">
-					<a className="nav-link  rounded">Vote Challenge</a>
-				
-                </Link>
-                </li>
+                <li className="nav-item">
+                        <Link href="/createchallenge">
+                  <a className="nav-link active rounded ">Create Challenge</a>
                 
+                        </Link>
+                        </li>
+                      
 
-				<li className="nav-item">
-                <Link href="/thechallenge">
-					<a className="nav-link rounded">The Challenge</a>
-				
-                </Link>
-                </li>
-			</ul>
-		 
-            <div className="container-fluid pt-3">
-              <div className="row justify-content-center">
-                <div className="col-xl-7">
-                  <div className="card">
-                    <div className="card-header border-0 pb-0 justify-content-between">
-                      <h4 className="fs-18">Create Challenge</h4>
-                    </div>
-                    <div className="card-body">
+                <li className="nav-item">
+                        <Link href="/votechallenge">
+                  <a className="nav-link  rounded">Vote Challenge</a>
+                
+                        </Link>
+                        </li>
+                        
 
-                    <form onSubmit={handleSubmit}>
-                        <div className="row mb-3">
-                          {/* <input className="input1" type="text" id="fname" name="firstname"
-                            placeholder="Challenge Title Here"/> */}
+                <li className="nav-item">
+                        <Link href="/thechallenge">
+                  <a className="nav-link rounded">The Challenge</a>
+                
+                        </Link>
+                        </li>
+              </ul>
+            
+                    <div className="container-fluid pt-3">
+                      <div className="row justify-content-center">
+                        <div className="col-xl-7">
+                          <div className="card">
+                            <div className="card-header border-0 pb-0 justify-content-between">
+                              <h4 className="fs-18">Create Challenge</h4>
+                            </div>
+                            <div className="card-body">
 
-                             <input id="name" type="text" name="name" value={name} className="input1" placeholder="Challenge Title"  onChange={handleChange} required />
-                             <label className="mx-3">
-                             {formErrors.name && fieldsState.name && <FormErrors errors={formErrors.name} />}
-                             </label>
-                        </div>
-                        <div className="row">
-                          {/* <textarea id="subject" name="subject"
-                            placeholder="Challenge description here..." style={{height:'200px'}}></textarea> */}
-                 
-                    <div className='m-3'  style={{width:"-webkit-fill-available"}}>
-                      {/* @ts-ignore */}
-                      <EasyMde
-                        id="body"
-                        name="body"
-                        onTextChange={handleEasyMdeChange}
-                        value={body}
-                        options={options}
-                        required
-                        />
-                      {formErrors.body && fieldsState.body && <FormErrors errors={formErrors.body} />}
-                    </div>
-                        {/* {body && (
-                          <div mb="24px">
-                            <Card>
-                              <CardHeader>
-                                <Heading as="h3" scale="md">
-                                  {t('Preview')}
-                                </Heading>
-                              </CardHeader>
-                              <CardBody p="0" px="24px">
-                                <ReactMarkdown>{body}</ReactMarkdown>
-                              </CardBody>
-                            </Card>
+                            <form onSubmit={handleSubmit}>
+                                <div className="row mb-3">
+                                    <input id="name" type="text" name="name" value={name} className="input1" placeholder="Challenge Title"  onChange={handleChange} required />
+                                    <label className="mx-3">
+                                    {formErrors.name && fieldsState.name && <FormErrors errors={formErrors.name} />}
+                                    </label>
+                                </div>
+                                <div className="row">
+                              <div className='m-3'  style={{width:"-webkit-fill-available"}}>
+                                {/* @ts-ignore */}
+                                <EasyMde
+                                  id="body"
+                                  name="body"
+                                  onTextChange={handleEasyMdeChange}
+                                  value={body}
+                                  options={options}
+                                  required
+                                  />
+                              {formErrors.body && fieldsState.body && <FormErrors errors={formErrors.body} />}
+                            </div>
+                                {/* {body && (
+                                  <div mb="24px">
+                                    <Card>
+                                      <CardHeader>
+                                        <Heading as="h3" scale="md">
+                                          {t('Preview')}
+                                        </Heading>
+                                      </CardHeader>
+                                      <CardBody p="0" px="24px">
+                                        <ReactMarkdown>{body}</ReactMarkdown>
+                                      </CardBody>
+                                    </Card>
+                                  </div>
+                                )} */}
+                            </div>
+
+                              <Choices choices={choices} onChange={handleChoiceChange} />
+                              {formErrors.choices && fieldsState.choices && <FormErrors errors={formErrors.choices} />}
+
+                              {account ? (
+                          <>
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary btn-lg w-100 mt-4"
+                                  disabled={!isEmpty(formErrors)}>
+                                  Submit
+                                </button>
+                                <p color="failure" >
+                                {'You need at least %count% voting power to publish a proposal'}
+                                
+                                </p>
+                                <button  type="button"  onClick={onPresentVoteDetailsModal} >
+                                  {t('Check voting power')}
+                                </button>
+                          </>
+                        ) : (
+                          <ConnectWalletButton width="100%" type="button" />
+                        )}
+
+                              </form>
+
+                            </div>
                           </div>
-                        )} */}
-                     </div>
+                        </div>
 
-                       <Choices choices={choices} onChange={handleChoiceChange} />
-                      {formErrors.choices && fieldsState.choices && <FormErrors errors={formErrors.choices} />}
-
-                      {account ? (
-                  <>
-                    <button
-                      type="submit"
-                      className="btn btn-primary btn-lg w-100 mt-4"
-                      isLoading={isLoading}
-                      endIcon={isLoading ? <AutoRenewIcon spin color="currentColor" /> : null}
-                      disabled={!isEmpty(formErrors)}
-                      mb="16px">
-                      Submit
-                    </button>
-                    <Text color="failure" as="p" mb="4px">
-                      {t('You need at least %count% voting power to publish a proposal.', { count: VOTE_THRESHOLD })}{' '}
-                    </Text>
-                    <Button scale="sm" type="button" variant="text" onClick={onPresentVoteDetailsModal} p={0}>
-                      {t('Check voting power')}
-                    </Button>
-                  </>
-                ) : (
-                  <ConnectWalletButton width="100%" type="button" />
-                )}
-                   
-                      {/* <button type="button" className="btn btn-primary btn-lg w-100 mt-4">Submit</button> */}
-
-
-                      </form>
-
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
 </>
 
   )
 }
 
-export default CreateGame
+export default CreateChallenge
