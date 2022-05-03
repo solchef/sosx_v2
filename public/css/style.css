@@ -32788,16 +32788,16 @@ width: 100%;
 
 
 .content-preloader {
-  animation: roll 0.5s linear;
-  translate: 1s linear ;
+  animation: roll 2s alternate;
 
 }
 @keyframes roll {
   0% {
-    transform: rotate(30deg);
+    transform: translateX(0);
   }
+ 
   100% {
-    transform: rotate(360deg);
+    transform: translateX(150%);
   }
 }
 

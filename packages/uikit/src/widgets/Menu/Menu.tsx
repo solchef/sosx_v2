@@ -169,8 +169,7 @@ const [preloader,setPreloader ] = useState(true);
     setTimeout(() => {
       setPreloader(false);
     }, 1000);
-    
-    
+
   }
   ,[children])
   return (
