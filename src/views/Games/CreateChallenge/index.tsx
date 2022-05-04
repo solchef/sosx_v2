@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState, useMemo } from 'react'
+import React,{ ChangeEvent, FormEvent, useEffect, useState, useMemo } from 'react'
 import {
   Button,
   useModal,
@@ -24,11 +24,25 @@ import { FormState } from './types'
 import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
 import NavGame from '../NavGame'
+import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 
-
+let ipfs: IPFSHTTPClient | undefined;
+  try {
+    ipfs = create({
+      // url: "http://127.0.0.1:5002",
+      url: "https://ipfs.infura.io:5001/api/v0",
+      
+    });
+  } catch (error) {
+    console.error("IPFS error ", error);
+    ipfs = undefined;
+  }
+// const ipfs = create()
 const EasyMde = dynamic(() => import('components/EasyMde'), {
   ssr: false,
 })
+
+
 
 const CreateChallenge = () => {
   const [state, setState] = useState<FormState>({
@@ -52,9 +66,13 @@ const CreateChallenge = () => {
   const [onPresentVoteDetailsModal] = useModal(<VoteDetailsModal block={state.snapshot} />)
   const { name, body, choices, startDate, startTime, endDate, endTime, snapshot } = state
   const formErrors = getFormErrors(state, t)
+  const [challenges, setChallenges] = useState<{ cid: CID; path: string }[]>([]);
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
+
+    const form = evt.target as HTMLFormElement;
+    
 
     try {
       setIsLoading(true)
@@ -76,17 +94,27 @@ const CreateChallenge = () => {
           type: 'single-choice',
         },
       })
+    
+      
 
       const sig = await signMessage(connector, library, account, proposal)
 
       if (sig) {
-        const msg: Message = { address: account, msg: proposal, sig }
+        // const msg: Message = { address: account, msg: proposal, sig }
 
+        const result = await (ipfs as IPFSHTTPClient).add(proposal);
+        setChallenges([
+        ...challenges,
+        {
+          cid: result.cid,
+          path: result.path,
+        },
+      ]);
         // Save proposal to snapshot
-        const data = await sendSnapshotData(msg)
+        // const data = await sendSnapshotData(msg)
 
         // Redirect user to newly created proposal page
-        push(`/voting/proposal/${data.ipfsHash}`)
+        // push(`/voting/proposal/${result.cid}`)
 
         toastSuccess(t('Proposal created!'))
       } else {
@@ -97,6 +125,9 @@ const CreateChallenge = () => {
       console.error(error)
       setIsLoading(false)
     }
+
+    form.reset();
+    console.log('Challenges: ', challenges);
   }
 
   const updateValue = (key: string, value: string | Choice[] | Date) => {
@@ -148,8 +179,8 @@ const CreateChallenge = () => {
   }, [initialBlock, setState])
 
   return (
+    
     <>
-<<<<<<< HEAD
         <ul className="nav nav-tabs d-flex flex-nowrap nav-justified mb-3">
 
 
@@ -168,23 +199,6 @@ const CreateChallenge = () => {
                         </Link>
                         </li>
                         
-=======
-          <NavGame/>
-		 
-            <div className="container-fluid pt-3">
-              <div className="row justify-content-center">
-                <div className="col-xl-7">
-                  <div className="card">
-                    <div className="card-header border-0 pb-0 justify-content-between">
-                      <h4 className="fs-18">Create Challenge</h4>
-                    </div>
-                    <div className="card-body">
-
-                    <form onSubmit={handleSubmit}>
-                        <div className="row mb-3">
-                          {/* <input className="input1" type="text" id="fname" name="firstname"
-                            placeholder="Challenge Title Here"/> */}
->>>>>>> 1ba936510d071a92ff3857f2c46750f193a08349
 
                 <li className="nav-item">
                         <Link href="/thechallenge">
@@ -247,7 +261,8 @@ const CreateChallenge = () => {
                                 <button
                                   type="submit"
                                   className="btn btn-primary btn-lg w-100 mt-4"
-                                  disabled={!isEmpty(formErrors)}>
+                                  // disabled={!isEmpty(formErrors)}
+                                  >
                                   Submit
                                 </button>
                                 <p color="failure" >
