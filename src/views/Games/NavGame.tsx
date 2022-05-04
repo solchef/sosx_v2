@@ -1,41 +1,32 @@
 import Link from "next/link";
 import router, { useRouter } from "next/router";
 
-const NavGame =()=>{
+const NavGame = () => {
 
 
-  
-
-    return (
-
-        <ul className="nav nav-tabs d-flex justify-content-around flex-nowrap nav-justified nav-game-color mb-3">
 
 
-        <li className="nav2-item">
-          <Link href="/createchallenge">
-            <a className={`nav-link ${router.pathname == '/createchallenge'? 'active nav-content' :''} rounded`}>Create Challenge</a>
-
-          </Link>
-        </li>
+  return (
 
 
-        <li className="nav2-item">
-          <Link href="/votechallenge">
-            <a className={`nav-link ${ router.pathname ==  '/votechallenge'? 'active nav-content' :''} rounded`}>Vote Challenge</a>
 
-          </Link>
-        </li>
+<div className="ml-1 d-flex justify-content-center align-items-center">
+<div id="steps">
+<Link href="/createchallenge">
+        <div className={`step ${router.pathname === '/createchallenge' ? 'active' : 'done'} `} data-desc="Create Challenge">1</div>
+    </Link>
+    <Link href="/votechallenge">
+
+        <div className={`step ${router.pathname === '/votechallenge' ? 'active' : ''} ${router.pathname === '/thechallenge' ? 'done' : ''}`} data-desc="Vote Challenge">2</div>
+    </Link>
+    <Link href="/thechallenge">
+        <div className={`step ${router.pathname === '/thechallenge' ? 'active' : ''} `} data-desc="The Challenge">4</div>
+    </Link>
+</div>
+</div>
 
 
-        <li className="nav2-item">
-          <Link href="/thechallenge">
-            <a className={`nav-link ${router.pathname == '/thechallenge' ? 'active nav-content' :''} rounded`}>The Challenge</a>
-
-          </Link>
-        </li>
-      </ul>
-
-    )
+  )
 
 }
 

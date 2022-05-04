@@ -72,10 +72,10 @@ export default function Referral() {
 
       </div>
 
-<div className="container-fluid d-flex flex-column flex-lg-row justify-content-between">
+<div className="container-fluid d-flex mt-5 flex-column flex-lg-row justify-content-between ">
         <Link href="/createchallenge">
           <a>
-            <div className="card-game m-2 card-game-1">
+            <div className="card-game mt-5 card-game-1">
               Create Challenge
             </div>
           </a>
@@ -83,14 +83,14 @@ export default function Referral() {
         <Link href="/votechallenge">
 
           <a>
-            <div className="card-game m-2 card-game-2 card-game-1">
+            <div className="card-game mt-5 card-game-2 card-game-1">
               Vote Challenge
             </div>
           </a>
         </Link>
         <Link href="/thechallenge">
           <a>
-            <div className="card-game m-2 card-game-3 card-game-1">
+            <div className="card-game mt-5 card-game-3 card-game-1">
               The Challenge
             </div>
           </a>

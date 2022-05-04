@@ -1,12 +1,11 @@
 import Link from 'next/link'
 import { } from 'react'
-import NavGame from '../NavGame'
 
 export default function Votechallenge() {
 
 	return (
 		<>
-			<NavGame />
+
 
 			<div className="container-fluid pt-3">
 

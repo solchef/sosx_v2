@@ -2,41 +2,26 @@ import Link from "next/link";
 import router, { useRouter } from "next/router";
 
 const NavMining = () => {
-
-
-
-
+    console.log(router.pathname)
     return (
 
-        <ul className="nav2 nav2-tabs nav2-justified mb-3">
-        <li className="nav2-item">
-            <Link href="/x-mining">
+        <div className="ml-5 d-flex justify-content-center align-items-center">
+            <div id="steps">
+                <Link href="/x-mining">
+                    <div className={`step ${router.pathname === '/x-mining' ? 'active' : 'done'} `} data-desc="Steps">1</div>
+                </Link>
+                <Link href="/socialmining-s1">
 
-                <a className={`nav2-link rounded ${ router.pathname == '/x-mining'? 'active nav-content' :'' }`}>Steps</a>
-            </Link>
-
-        </li>
-        <li className="nav2-item">
-            <Link href="/socialmining-s1">
-
-                <a className={`nav2-link rounded ${ router.pathname == '/socialmining-s1'? 'active nav-content' :'' }`}>Copy</a>
-            </Link>
-
-        </li>
-        <li className="nav2-item">
-            <Link href="/socialmining-s2">
-
-                <a className={`nav2-link rounded ${ router.pathname == '/socialmining-s2'? 'active nav-content' :'' }`}>Affiliate</a>
-            </Link>
-
-        </li>
-        <li className="nav2-item">
-            <Link href="/socialmining-s3">
-
-                <a className={`nav2-link rounded ${ router.pathname == '/socialmining-s3'? 'active nav-content' :'' }`}>Redeem</a>
-            </Link>
-        </li>
-    </ul>
+                    <div className={`step ${router.pathname === '/socialmining-s1' ? 'active' : ''} ${router.pathname === '/socialmining-s3' ? 'done' : ''} ${router.pathname === '/socialmining-s2' ? 'done' : ''}`} data-desc="Copy">2</div>
+                </Link>
+                <Link href="/socialmining-s2">
+                    <div className={`step ${router.pathname === '/socialmining-s2' ? 'active' : ''} ${router.pathname === '/socialmining-s3' ? 'done' : ''}`} data-desc="Affiliate">3</div>
+                </Link>
+                <Link href="/socialmining-s3">
+                    <div className={`step ${router.pathname === '/socialmining-s3' ? 'active' : ''} `} data-desc="Redeem">4</div>
+                </Link>
+            </div>
+        </div>
 
 
     )
