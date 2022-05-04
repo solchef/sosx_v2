@@ -1,9 +1,18 @@
-import { } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import NavGame from '../NavGame'
+import IpfsComponent from './ipfs'
+import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 
 export default function Thechallenge() {
-
+   const init = async () => {
+	   const node = await create('https://ipfs.infura.io:5001/api/v0')
+	   console.log(await node.version())
+	   const a = await node.add('https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png')
+	   console.log(a)
+   }
+   init()
+	
 	return (
 		<>
 			<NavGame />
@@ -52,7 +61,10 @@ export default function Thechallenge() {
 						<div className="p-2">
 							<div className="feature-box float-right">
 								<div className="feature-text">
-									<button className="btn btn-primary">Upload Video Here</button>
+									<form>
+										<input type="text" />
+									<button className="btn btn-primary" type='submit'>Upload Video Here</button>
+									</form>
 
 								</div>
 							</div>
@@ -168,8 +180,7 @@ export default function Thechallenge() {
 										<span className="fs-12 float-right">06/12/22</span>
 									</div>
 									<div className="col-sm-12">
-										<span className="fs-14 float-right pt-3 sub-blue font-weight-bold">Watch All Videos
-											></span>
+										<span className="fs-14 float-right pt-3 sub-blue font-weight-bold">Watch All Videos</span>
 									</div>
 
 								</div>
@@ -334,6 +345,7 @@ export default function Thechallenge() {
 					</div>
 				</div>
 			</div>
+			{/* <IpfsComponent /> */}
 		</>
 	)
 }
