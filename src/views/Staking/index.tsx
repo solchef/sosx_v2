@@ -65,7 +65,7 @@ export default function Staking() {
 							<div className="card-header border-0 pb-0">
 								<h4 className="fs-18">Stake SOSX</h4>
 							</div>
-							<div className="card-body">
+							<div className="card-body p-0 d-flex flex-column justify-content-between ">
 								<div className="bg-dark rounded">
 									<div className="d-flex justify-content-between align-items-center pb-1">
 									</div>
@@ -108,16 +108,16 @@ export default function Staking() {
 										</div>
 									</div>
 								</div>
-								<div className="d-flex justify-content-between">
-									<button type="button" className="btn btn-primary text-nowrap mr-1 btn-lg w-100 mt-3">Stake Approve</button>
-									<button type="button" className="btn btn-primary text-nowrap btn-lg w-100 mt-3">Stake Stick</button>
+								<div className="d-flex justify-content-between align-items-end">
+									<button type="button" className="btn btn-primary text-nowrap mr-1 w-100 mt-3">Stake Approve</button>
+									<button type="button" className="btn btn-primary text-nowrap w-100 mt-3">Stake Stick</button>
 								</div>
 							</div>
 						</div>
 					</div>
 
 					<div className="col-xl-4">
-						<div className="card">
+						<div className="card  d-flex flex-column justify-content-between ">
 							<div className="card-header border-0 p-0">
 								<h4 className="fs-18">Staking Rewards</h4>
 							</div>
@@ -141,12 +141,12 @@ export default function Staking() {
 							</div>
 
 
-							<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Claim Rewards</button>
+							<button type="button" className="btn btn-primary  w-100 ">Claim Rewards</button>
 						</div>
 					</div>
 
 					<div className="col-xl-4">
-						<div className="card ">
+						<div className="card  d-flex flex-column justify-content-between ">
 							<div className="card-header border-0 pb-0">
 								<div col-3>
 
