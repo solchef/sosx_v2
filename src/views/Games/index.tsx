@@ -72,74 +72,85 @@ export default function Referral() {
 
       </div>
 
-      <div className="container-fluid height-game">
-        <div className="row mobile-hide-card">
+<div className="container-fluid d-flex mt-5 flex-column flex-lg-row justify-content-between ">
+        <Link href="/createchallenge">
+          <a>
+            <div className="card-game mt-5 card-game-1">
+              Create Challenge
+            </div>
+          </a>
+        </Link>
+        <Link href="/votechallenge">
+
+          <a>
+            <div className="card-game mt-5 card-game-2 card-game-1">
+              Vote Challenge
+            </div>
+          </a>
+        </Link>
+        <Link href="/thechallenge">
+          <a>
+            <div className="card-game mt-5 card-game-3 card-game-1">
+              The Challenge
+            </div>
+          </a>
+        </Link>
+      </div>
+{/*       
+
+      <div className="container d-flex flex-column justify-content-around mobile-show-card">
+        <Link href="/createchallenge">
+          <a>
+            <div className="card-game mr-3 card-game-1">
+              Create Challenge
+            </div>
+          </a>
+        </Link>
+        <Link href="/votechallenge">
+
+          <a>
+            <div className="card-game mr-3 card-game-2 card-game-1">
+              Vote Challenge
+            </div>
+          </a>
+        </Link>
+        <Link href="/thechallenge">
+          <a>
+            <div className="card-game card-game-3 card-game-1">
+              The Challenge
+            </div>
+          </a>
+        </Link>
+      </div> */}
+
+
+      {/* <div className="row mobile-hide-card">
           <div className="col-sm-4 pb-3 pt-3">
-            <Link href="/createchallenge">
-              <a>
+            
                 <div className="card2 h-100 w-100 overflow-hidden ">
                   <img src="images/create-challenge-img.png" />
                 </div>
-              </a>
-            </Link>
+            
           </div>
 
           <div className="col-sm-4 pb-3 pt-3">
-            <Link href="/votechallenge">
-
-              <a>
+          
                 <div className="card2 h-100 w-100 overflow-hidden ">
                   <img src="images/vote-challenge-img.png" />
                 </div>
-              </a>
-            </Link>
+      
           </div>
 
           <div className="col-sm-4 pb-3 pt-3">
-            <Link href="/thechallenge">
-              <a>
+         
                 <div className="card2 h-100 w-100 overflow-hidden ">
                   <img src="images/the-challenge-img.png" />
                 </div>
-              </a>
-            </Link>
+         
           </div>
-        </div>
+        </div> */}
 
-        <div className="row mobile-show-card">
-          <div className="col-sm-12 mb-1 mt-1">
-            <Link href="/createchallenge">
-              <a>
-                <div className="card2">
-                  <img src="images/create-challenge-img-mob.png" />
-                </div>
-              </a>
-            </Link>
-          </div>
 
-          <div className="col-sm-12 mb-1 mt-1">
-            <Link href="/votechallenge">
-
-              <a>
-                <div className="card2">
-                  <img src="images/vote-challenge-img-mob.png" />
-                </div>
-              </a>
-            </Link>
-          </div>
-
-          <div className="col-sm-12 mb-1 mt-1">
-            <Link href="/thechallenge">
-              <a>
-                <div className="card2">
-                  <img src="images/the-challenge-img-mob.png" />
-                </div>
-              </a>
-            </Link>
-          </div>
-        </div>
-
-      </div>
 
 
     </>
