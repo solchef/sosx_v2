@@ -26,23 +26,15 @@ import VoteDetailsModal from '../components/VoteDetailsModal'
 import NavGame from '../NavGame'
 import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 
-let ipfs: IPFSHTTPClient | undefined;
-  try {
-    ipfs = create({
-      // url: "http://127.0.0.1:5002",
-      url: "https://ipfs.infura.io:5001/api/v0",
-      
-    });
-  } catch (error) {
-    console.error("IPFS error ", error);
-    ipfs = undefined;
-  }
+const server = create({
+  url: "http://127.0.0.1:5001",
+  
+});
+
 // const ipfs = create()
 const EasyMde = dynamic(() => import('components/EasyMde'), {
   ssr: false,
-})
-
-
+  })
 
 const CreateChallenge = () => {
   const [state, setState] = useState<FormState>({
@@ -100,16 +92,38 @@ const CreateChallenge = () => {
       const sig = await signMessage(connector, library, account, proposal)
 
       if (sig) {
-        // const msg: Message = { address: account, msg: proposal, sig }
+        const forIPFS = JSON.stringify({
+          ...generatePayloadData(),
+          type: SnapshotCommand.PROPOSAL,
+          signiture: sig.toString(),
+          payload: {
+            name,
+            body,
+            snapshot,
+            start: combineDateAndTime(startDate, startTime),
+            end: combineDateAndTime(endDate, endTime),
+            choices: choices
+              .filter((choice) => choice.value)
+              .map((choice) => {
+                return choice.value
+              }),
+            metadata: generateMetaData(),
+            type: 'single-choice',
+          },
+        }, null, 2)
 
-        const result = await (ipfs as IPFSHTTPClient).add(proposal);
-        setChallenges([
-        ...challenges,
-        {
-          cid: result.cid,
-          path: result.path,
-        },
-      ]);
+        const challengeName = `challenge` + `-${name.replaceAll(' ', '-')}`
+        await server.files.mkdir(`/${challengeName}`)
+        await server.files.mkdir(`/${challengeName}/votes`)
+        await server.files.write(`/challenge` + `-${name.replaceAll(' ', '-')}/challenge.json`, forIPFS, {create: true})
+      //   const result = await (ipfs as IPFSHTTPClient).add(proposal);
+      //   setChallenges([
+      //   ...challenges,
+      //   {
+      //     cid: result.cid,
+      //     path: result.path,
+      //   },
+      // ]);
         // Save proposal to snapshot
         // const data = await sendSnapshotData(msg)
 
