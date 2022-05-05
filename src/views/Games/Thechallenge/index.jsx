@@ -93,7 +93,7 @@ export default function Thechallenge() {
 
 								<div className="card3-body">
 									<div className="row">
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -110,7 +110,7 @@ export default function Thechallenge() {
 											<span className="fs-12 float-right">06/12/22</span>
 										</div>
 
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -127,7 +127,7 @@ export default function Thechallenge() {
 											<span className="fs-12 float-right">06/12/22</span>
 										</div>
 
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -144,7 +144,7 @@ export default function Thechallenge() {
 											<span className="fs-12 float-right">06/12/22</span>
 										</div>
 
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -178,7 +178,7 @@ export default function Thechallenge() {
 
 								<div className="card3-body">
 									<div className="row">
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -195,7 +195,7 @@ export default function Thechallenge() {
 											<span className="fs-12 float-right">06/12/22</span>
 										</div>
 
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -212,7 +212,7 @@ export default function Thechallenge() {
 											<span className="fs-12 float-right">06/12/22</span>
 										</div>
 
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -229,7 +229,7 @@ export default function Thechallenge() {
 											<span className="fs-12 float-right">06/12/22</span>
 										</div>
 
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -249,7 +249,7 @@ export default function Thechallenge() {
 
 									</div>
 									<div className="row">
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -266,7 +266,7 @@ export default function Thechallenge() {
 											<span className="fs-12 float-right">06/12/22</span>
 										</div>
 
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -283,7 +283,7 @@ export default function Thechallenge() {
 											<span className="fs-12 float-right">06/12/22</span>
 										</div>
 
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
@@ -300,7 +300,7 @@ export default function Thechallenge() {
 											<span className="fs-12 float-right">06/12/22</span>
 										</div>
 
-										<div className=" col">
+										<div className=" col-12 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													class="video">
