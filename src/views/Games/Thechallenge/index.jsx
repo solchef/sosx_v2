@@ -169,7 +169,7 @@ export default function Thechallenge() {
 									</div>
 									<div className="col-sm-12">
 										<span className="fs-14 float-right pt-3 sub-blue font-weight-bold">Watch All Videos
-											></span>
+											</span>
 									</div>
 
 								</div>
