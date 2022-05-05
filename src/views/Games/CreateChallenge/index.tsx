@@ -172,7 +172,7 @@ const CreateChallenge = () => {
                                 <EasyMde
                                   id="body"
                                   name="body"
-                                  onTextChange={handleEasyMdeChange
+                                  onTextChange={handleEasyMdeChange}
                                   value={body}
                                   options={options}
                                   required
