@@ -4,7 +4,7 @@ import NavGame from '../NavGame'
 import challenges from '../CreateChallenge'
 
 export default function Votechallenge() {
-
+	
 	return (
 		<>
 			<NavGame />

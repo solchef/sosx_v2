@@ -1,8 +1,133 @@
-import { } from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import NavGame from '../NavGame'
+import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
+
+const server = create({
+	host: 'localhost',
+	port: 5001,
+	protocol: 'http',
+	headers: {
+
+	}
+  })
 
 export default function Thechallenge() {
+	const [images, setImages] = React.useState<{ cid: CID; path: string }[]>([]);
+	useEffect(() => {
+		const getData = async () => {
+			for await (const file of server.files.ls('/')) {
+				console.log(file.cid)
+					
+					// console.log(res)
+					// const body = await res.body.getReader()
+					// console.log(body)
+					// console.log(await fetch(`http://localhost:8080/ipfs/${file.cid}`))
+				}
+			  }
+			  getData()
+		})
+		// console.log(server.)
+	
+	const [fileHash, setFileHash] = React.useState(null)
+	const [error, setError] = React.useState(null)
+	
+	const saveToIpfsWithFilename = async ([file]) => {
+		const fileDetails = {
+		//   path: file.name,
+		  path: `/data/${file.name}`,
+		  content: file
+		}
+	
+		const options = {
+		  wrapWithDirectory: true,
+		  progress: (prog) => console.log(`received: ${prog}`)
+		}
+	
+		try {
+		  const added = await server.add(fileDetails, options)
+		  console.log(added)
+	
+		  setFileHash(added.cid.toString())
+		} catch (err) {
+		  setError(err)
+		}
+	  }
+	
+	
+	const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const form = event.target as HTMLFormElement;
+		const files = (form[0] as HTMLInputElement).files;
+	
+		if (!files || files.length === 0) {
+		  return alert("No files selected");
+		}
+	
+		const file = files[0];
+		// const fileDetails = {
+		// 	// path: file.name,
+		//     path: `${file}`,
+		// 	content: file
+		//   }
+	  
+		//   const options = {
+		// 	wrapWithDirectory: true,
+		// 	progress: (prog) => console.log(`received: ${prog}`)
+		//   }
+
+		// // upload files
+		// const adding = await saveToIpfsWithFilename([file])
+		// console.log(adding)
+		// saveToIpfsWithFilename([file1])
+
+		const result = await server.add(file)
+		// await server.files.mkdir('/challenge3')
+		// await server.files.mkdir('/challenge4')
+		// await server.files.mkdir('/challenge5')
+		await server.files.cp('/challenge.json', '/challenge1/challenge.json');
+
+		await server.files.write('/challenge1/challenge.json', new TextEncoder().encode('{"address":"0x82E4BBE89C62063eCe92423F56A016fEE715eF3a","sig":"0x64934f279a18d548a759789b16ca8db73ba2a506e9a7416f33831c6a6a52c7104e2a921ed96f7f260ae40715a5499f3a62c00cee085bfa74d505a0b0b5a4655d1c","data":{"domain":{"name":"snapshot","version":"0.1.4"},"types":{"Vote":[{"name":"from","type":"address"},{"name":"space","type":"string"},{"name":"timestamp","type":"uint64"},{"name":"proposal","type":"string"},{"name":"choice","type":"uint32"},{"name":"metadata","type":"string"}]},"message":{"space":"cake.eth","proposal":"Qmdmrk52jog3KnV6igiUEkEAGjx5vdn6jxk2MEQ8WoMzJh","choice":1,"metadata":"{}","from":"0x82E4BBE89C62063eCe92423F56A016fEE715eF3a","timestamp":1651758254}}}'))
+
+
+		// await server.files.touch('/boost.json')
+
+		// await server.files.flush('/')
+
+		//  await server.files.touch('/boost2.json', {
+		//    mtime: new Date('May 23, 2014 14:45:14 -0700')
+	    //   })
+
+		
+
+
+		console.log(server.bases.listBases)
+		
+	
+		const uniquePaths = new Set([
+		  ...images.map((image) => image.path),
+		  result.path,
+		]);
+		const uniqueImages = [...uniquePaths.values()]
+		  .map((path) => {
+			return [
+			  ...images,
+			  {
+				cid: result.cid,
+				path: result.path,
+			  },
+			].find((image) => image.path === path);
+		  });
+	
+		  // @ts-ignore
+		setImages(uniqueImages);
+	
+		form.reset();
+
+
+	  };
+	
+	  console.log("images ", images);
 
 	return (
 		<>
@@ -98,12 +223,43 @@ export default function Thechallenge() {
 								</div>
 							</div>
 
+
 							<div className="card3-body">
 								<div className="row">
+
+								{images.map((image, index) => (
+				  				<>
+
+								<div className="col-md-3 col-sm-6">
+										<div className="videos">
+										<video
+										width="200px"
+										height="400px"
+										style={{margin: "100px"}}
+											// alt={`Uploaded #${index + 1}`}
+											src={"http://localhost:8080/ipfs/" + image.path}
+											//   src={"https://ipfs.infura.io/ipfs/" + image.path}
+											// style={{ width: "400px", margin: "15px", height: "400px" }}
+											key={image.cid.toString() + index}
+											autoPlay
+											loop
+										/>
+										</div>
+										<h4 className="fs-14 mb-0">Previous Winners</h4>
+										<p className="fs-12 success">@challenger {index + 1}</p>
+
+										<span className="justify-content-between fs-12"><i
+											className="fa-regular fa-eye pr-1"></i>100</span>
+										<span className="fs-12 float-right">06/12/22</span>
+									</div>
+								</>
+
+								))}
+
 									<div className="col-md-3 col-sm-6">
 										<div className="videos">
 											<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-												class="video">
+												className="video">
 												<span></span>
 												<img src="images/video-banner-1.png" alt="Video1" />
 												<div className="play-btn"></div>
@@ -113,14 +269,14 @@ export default function Thechallenge() {
 										<p className="fs-12 success">@challenger 1</p>
 
 										<span className="justify-content-between fs-12"><i
-											class="fa-regular fa-eye pr-1"></i>100</span>
+											className="fa-regular fa-eye pr-1"></i>100</span>
 										<span className="fs-12 float-right">06/12/22</span>
 									</div>
 
 									<div className="col-md-3 col-sm-6">
 										<div className="videos">
 											<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-												class="video">
+												className="video">
 												<span></span>
 												<img src="images/video-banner-2.png" alt="Video1" />
 												<div className="play-btn"></div>
@@ -130,14 +286,14 @@ export default function Thechallenge() {
 										<p className="fs-12 success">@challenger 1</p>
 
 										<span className="justify-content-between fs-12"><i
-											class="fa-regular fa-eye pr-1"></i>100</span>
+											className="fa-regular fa-eye pr-1"></i>100</span>
 										<span className="fs-12 float-right">06/12/22</span>
 									</div>
 
 									<div className="col-md-3 col-sm-6">
 										<div className="videos">
 											<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-												class="video">
+												className="video">
 												<span></span>
 												<img src="images/video-banner-3.png" alt="Video1" />
 												<div className="play-btn"></div>
@@ -147,14 +303,14 @@ export default function Thechallenge() {
 										<p className="fs-12 success">@challenger 1</p>
 
 										<span className="justify-content-between fs-12"><i
-											class="fa-regular fa-eye pr-1"></i>100</span>
+											className="fa-regular fa-eye pr-1"></i>100</span>
 										<span className="fs-12 float-right">06/12/22</span>
 									</div>
 
 									<div className="col-md-3 col-sm-6 pb-2">
 										<div className="videos">
 											<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-												class="video">
+												className="video">
 												<span></span>
 												<img src="images/video-banner-4.png" alt="Video1" />
 												<div className="play-btn"></div>
@@ -164,7 +320,7 @@ export default function Thechallenge() {
 										<p className="fs-12 success">@challenger 1</p>
 
 										<span className="justify-content-between fs-12"><i
-											class="fa-regular fa-eye pr-1"></i>100</span>
+											className="fa-regular fa-eye pr-1"></i>100</span>
 										<span className="fs-12 float-right">06/12/22</span>
 									</div>
 									<div className="col-sm-12">
@@ -207,7 +363,7 @@ export default function Thechallenge() {
 										<div className="ml-1">
 
 											<span
-												class="mb-1 card-small-text text-white trader-name">a43UgcUk768...</span>
+												className="mb-1 card-small-text text-white trader-name">a43UgcUk768...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 25,004,214,12 </span>
@@ -222,7 +378,7 @@ export default function Thechallenge() {
 										<div className="ml-1">
 
 											<span
-												class="mb-1 card-small-text text-white trader-name">l24OadkIj232...</span>
+												className="mb-1 card-small-text text-white trader-name">l24OadkIj232...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 23,415,765.01 </span>
@@ -237,7 +393,7 @@ export default function Thechallenge() {
 										<div className="ml-1">
 
 											<span
-												class="mb-1 card-small-text text-white trader-name">l00LoHgA909...</span>
+												className="mb-1 card-small-text text-white trader-name">l00LoHgA909...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 21,110,143.12 </span>
@@ -252,7 +408,7 @@ export default function Thechallenge() {
 										<div className="ml-1">
 
 											<span
-												class="mb-1 card-small-text text-white trader-name">g43KjkOo334...</span>
+												className="mb-1 card-small-text text-white trader-name">g43KjkOo334...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 20,221,321.13 </span>
@@ -267,7 +423,7 @@ export default function Thechallenge() {
 										<div className="ml-1">
 
 											<span
-												class="mb-1 card-small-text text-white trader-name">p33HuhOp561...</span>
+												className="mb-1 card-small-text text-white trader-name">p33HuhOp561...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 19,000,231.00 </span>
@@ -282,7 +438,7 @@ export default function Thechallenge() {
 										<div className="ml-1">
 
 											<span
-												class="mb-1 card-small-text text-white trader-name">y51LkpLh710...</span>
+												className="mb-1 card-small-text text-white trader-name">y51LkpLh710...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 18,142,554,98 </span>
@@ -296,7 +452,7 @@ export default function Thechallenge() {
 										<div className="ml-1">
 
 											<span
-												class="mb-1 card-small-text text-white trader-name">t45PolYy421...</span>
+												className="mb-1 card-small-text text-white trader-name">t45PolYy421...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 15,441,214,04 </span>
@@ -310,7 +466,7 @@ export default function Thechallenge() {
 										<div className="ml-1">
 
 											<span
-												class="mb-1 card-small-text text-white trader-name">t43JjKFd509...</span>
+												className="mb-1 card-small-text text-white trader-name">t43JjKFd509...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 14,142,554,98 </span>
@@ -324,7 +480,7 @@ export default function Thechallenge() {
 										<div className="ml-1">
 
 											<span
-												class="mb-1 card-small-text text-white trader-name">d12FacUg142...</span>
+												className="mb-1 card-small-text text-white trader-name">d12FacUg142...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 13,142,554,98 </span>
@@ -334,6 +490,24 @@ export default function Thechallenge() {
 					</div>
 				</div>
 			</div>
+			{server && (
+          <>
+            <form onSubmit={onSubmitHandler}>
+              <input name="file" type="file" />
+              <button type="submit">Upload File</button>
+            </form>
+          </>
+        )}
+
+        {!server && (
+          <p>Not connected to IPFS</p>
+        )}
 		</>
 	)
 }
+
+
+
+
+
+
