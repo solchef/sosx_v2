@@ -7,7 +7,7 @@ export default function Faq() {
 
 
             <div className="section">
-                    <h3 className="section-heading">Frequenty Asked Question (FAQ)</h3>
+                    <h5 className="section-heading">Frequenty Asked Question (FAQ)</h5>
                     <p className="p-main">Everything you need to know about SOSX is just one click away.</p>
 
                     <div className="faq-list">

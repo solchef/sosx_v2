@@ -148,10 +148,9 @@ const CreateChallenge = () => {
 
   return (
     <>
-       <NavGame/>
             
-                    <div className="container-fluid pt-3">
-                      <div className="row justify-content-center">
+                    <div className="container-fluid">
+                      <div className="row">
                         <div className="col-xl-7">
                           <div className="card">
                             <div className="card-header border-0 pb-0 justify-content-between">
@@ -224,8 +223,28 @@ const CreateChallenge = () => {
                             </div>
                           </div>
                         </div>
+                            <div className="col-5">
+                            <div className="card-header align-items-start border-0">
+									<div>
+										<h4 className="fs-20 mb-3">Today's Challenge</h4>
+										<span className="fs-12 font-weight-bold success">@challengecreator-1</span>
 
-                      </div>
+										<h4 className="fs-18 mb-0 pb-2">Challenge Title</h4>
+										<span className="fs-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+											do
+											eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
+											suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
+											vel
+											facilisis. </span>
+										<h4 className="fs-12 text-white pt-3">Rules</h4>
+										<ul className="fs-12">
+											<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
+											<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
+										</ul>
+									</div>
+								</div>
+                            </div>
+                        </div>
                     </div>
 </>
 

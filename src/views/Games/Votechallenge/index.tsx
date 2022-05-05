@@ -1,14 +1,10 @@
 import Link from 'next/link'
 import { } from 'react'
-import NavGame from '../NavGame'
-import challenges from '../CreateChallenge'
 
 export default function Votechallenge() {
 
 	return (
 		<>
-			<NavGame />
- 		<div> 
 			<div className="container-fluid pt-3">
 
 				<div className="row pt-3">
