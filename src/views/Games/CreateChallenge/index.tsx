@@ -1,6 +1,5 @@
-import React,{ ChangeEvent, FormEvent, useEffect, useState, useMemo } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState, useMemo } from 'react'
 import {
-  Button,
   useModal,
 } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
@@ -24,7 +23,7 @@ import { FormState } from './types'
 import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
 import NavGame from '../NavGame'
-import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
+import { create } from 'ipfs-http-client'
 
 const server = create({
   url: "http://127.0.0.1:5001",
@@ -58,13 +57,9 @@ const CreateChallenge = () => {
   const [onPresentVoteDetailsModal] = useModal(<VoteDetailsModal block={state.snapshot} />)
   const { name, body, choices, startDate, startTime, endDate, endTime, snapshot } = state
   const formErrors = getFormErrors(state, t)
-  const [challenges, setChallenges] = useState<{ cid: CID; path: string }[]>([]);
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-
-    const form = evt.target as HTMLFormElement;
-    
 
     try {
       setIsLoading(true)
@@ -86,8 +81,6 @@ const CreateChallenge = () => {
           type: 'single-choice',
         },
       })
-    
-      
 
       const sig = await signMessage(connector, library, account, proposal)
 
@@ -128,7 +121,7 @@ const CreateChallenge = () => {
         // const data = await sendSnapshotData(msg)
 
         // Redirect user to newly created proposal page
-        // push(`/voting/proposal/${result.cid}`)
+        // push(`/voting/proposal/${data.ipfsHash}`)
 
         toastSuccess(t('Proposal created!'))
       } else {
@@ -139,9 +132,6 @@ const CreateChallenge = () => {
       console.error(error)
       setIsLoading(false)
     }
-
-    form.reset();
-    console.log('Challenges: ', challenges);
   }
 
   const updateValue = (key: string, value: string | Choice[] | Date) => {
@@ -193,37 +183,10 @@ const CreateChallenge = () => {
   }, [initialBlock, setState])
 
   return (
-    
     <>
-        <ul className="nav nav-tabs d-flex flex-nowrap nav-justified mb-3">
-
-
-                <li className="nav-item">
-                        <Link href="/createchallenge">
-                  <a className="nav-link active rounded ">Create Challenge</a>
-                
-                        </Link>
-                        </li>
-                      
-
-                <li className="nav-item">
-                        <Link href="/votechallenge">
-                  <a className="nav-link  rounded">Vote Challenge</a>
-                
-                        </Link>
-                        </li>
-                        
-
-                <li className="nav-item">
-                        <Link href="/thechallenge">
-                  <a className="nav-link rounded">The Challenge</a>
-                
-                        </Link>
-                        </li>
-              </ul>
             
-                    <div className="container-fluid pt-3">
-                      <div className="row justify-content-center">
+                    <div className="container-fluid">
+                      <div className="row">
                         <div className="col-xl-7">
                           <div className="card">
                             <div className="card-header border-0 pb-0 justify-content-between">
@@ -296,8 +259,28 @@ const CreateChallenge = () => {
                             </div>
                           </div>
                         </div>
+                            <div className="col-5">
+                            <div className="card-header align-items-start border-0">
+									<div>
+										<h4 className="fs-20 mb-3">Today's Challenge</h4>
+										<span className="fs-12 font-weight-bold success">@challengecreator-1</span>
 
-                      </div>
+										<h4 className="fs-18 mb-0 pb-2">Challenge Title</h4>
+										<span className="fs-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+											do
+											eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
+											suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
+											vel
+											facilisis. </span>
+										<h4 className="fs-12 text-white pt-3">Rules</h4>
+										<ul className="fs-12">
+											<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
+											<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
+										</ul>
+									</div>
+								</div>
+                            </div>
+                        </div>
                     </div>
 </>
 

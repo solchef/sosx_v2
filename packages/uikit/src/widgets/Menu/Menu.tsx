@@ -135,8 +135,14 @@ const Menu: React.FC<NavProps> = ({
       case '/stake':
         return "Stake";
 
-      case '/xgame':
-        return "Game";
+      case '/thechallenge':
+        return "XGame";
+        case '/createchallenge':
+        return "XGame";
+        case '/votechallenge':
+        return "XGame";
+        case '/thechallenge':
+        return "XGame";
 
       case '/referrals':
         return "Referrals";
@@ -169,8 +175,7 @@ const [preloader,setPreloader ] = useState(true);
     setTimeout(() => {
       setPreloader(false);
     }, 1000);
-    
-    
+
   }
   ,[children])
   return (
@@ -270,8 +275,8 @@ const [preloader,setPreloader ] = useState(true);
           </Link>
         </li>
 
-        <li className={router.pathname == "/xgame" ? "mm-active" : ""}>
-          <Link href="/xgame">
+        <li className={router.pathname == "/thechallenge" || router.pathname == "/createchallenge"|| router.pathname == "/votechallenge" ||router.pathname == "/thechallenge"  ? "mm-active" : ""}>
+          <Link href="/thechallenge">
             <a>
               <i className="fa fa-gamepad"></i>
               <span className="nav-text ">XGame</span>
@@ -363,8 +368,8 @@ const [preloader,setPreloader ] = useState(true);
 
             </li>
 
-            <li className={router.pathname == "/xgame" ? "mm-active" : ""}>
-              <Link href="/xgame">
+            <li className={router.pathname == "/thechallenge" || router.pathname == "/createchallenge"|| router.pathname == "/votechallenge" ||router.pathname == "/thechallenge" ? "mm-active" : ""}>
+              <Link href="/thechallenge">
 
                 <a>
                   <i className="fa fa-gamepad"></i>
