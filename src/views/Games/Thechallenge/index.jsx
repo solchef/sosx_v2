@@ -317,7 +317,6 @@ export default function Thechallenge() {
 											<span className="fs-12 float-right">06/12/22</span>
 										</div>
 
-
 									</div>
 									<div className="col-sm-12 d-flex mt-3">
 										<button className="btn btn-primary mx-auto">Load More</button>

@@ -5,8 +5,6 @@ export default function Votechallenge() {
 
 	return (
 		<>
-
-
 			<div className="container-fluid pt-3">
 
 				<div className="row pt-3">
@@ -16,7 +14,7 @@ export default function Votechallenge() {
 								<div>
 									<span className="fs-12 font-weight-bold success">@challengecreator-1</span>
 
-									<h4 className="fs-18 mb-0 pb-2">Challenge Title</h4>
+									<h4 className="fs-18 mb-0 pb-2"></h4>
 									<span className="fs-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 										eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
 										suspendisse ultrices gravida. </span>
@@ -266,6 +264,8 @@ export default function Votechallenge() {
 					
 
 				</div>
+			</div>
+
 			</div>
 		</>
 	)
