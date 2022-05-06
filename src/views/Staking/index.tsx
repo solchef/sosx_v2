@@ -1,6 +1,8 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import useToast from 'hooks/useToast'
+import { useStakingContract } from 'hooks/useContract'
+import { getStakingContract } from 'utils/contractHelpers'
 
 
 const BorderCard = styled.div`
@@ -18,6 +20,21 @@ export default function Staking() {
 	const [hasReferral, setHasReferral] = useState([]);
 	const [totalAmountStaked, setTotalAmountStaked] = useState(0);
 	const [numberOfActiveStake, setNumberOfActiveStake] = useState(0);
+
+
+	useEffect(()=> {
+
+		const referral = async () => {
+			const contract = getStakingContract();
+			console.log(contract);
+
+		}
+
+
+		referral();
+		
+		
+	});
 
 
 	return (

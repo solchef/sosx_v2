@@ -148,7 +148,6 @@ const CreateChallenge = () => {
 
   return (
     <>
-            
                     <div className="container-fluid">
                       <div className="row">
                         <div className="col-xl-7">
