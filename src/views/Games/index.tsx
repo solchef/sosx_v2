@@ -42,12 +42,12 @@ export default function Game() {
 				<div className="row">
 					<div className="col-12 col-sm-6 col-lg-7 col-xl-8">
 						<div className="row">
-							<div className="card3 col-12 text-center align-items-center col-xl-6 rounded-0 d-flex flex-column justify-content-between align-items-start">
+							<div className="card3 col-12 text-center  col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center">
 
 
-								<div className="feature-box">
-									<div className="feature-icon mobile-hide-card ">
-										<img src="images/prize-pool-icon.png" style={{ width: '30px', height: '30px' }} />
+								<div className="feature-box p-0">
+									<div className="pt-4 pr-4 mobile-hide-card ">
+										<img src="images/prize-pool-icon.png" style={{ width: '40px', height: '40px' }} />
 									</div>
 									<div className="feature-text">
 										<span className="main-pink fs-14 font-weight-bold">Prize Pool</span>
@@ -57,9 +57,9 @@ export default function Game() {
 								</div>
 
 
-								<div className="feature-box">
-									<div className="feature-icon mobile-hide-card ">
-										<img src="images/submission-date-icon.png" style={{ width: '30px', height: '30px' }} />
+								<div className="feature-box p-0">
+									<div className="pt-4 pr-4 mobile-hide-card ">
+										<img src="images/submission-date-icon.png" style={{ width: '40px', height: '40px' }} />
 									</div>
 									<div className="feature-text">
 										<span className="main-pink fs-14 d-block font-weight-bold">Time Left </span>
@@ -78,15 +78,15 @@ export default function Game() {
 
 
 
-								<div className="feature-box">
+								<div className="feature-box p-0">
 									<div className="feature-text">
-										<button className="btn m-2 btn-primary">Upload Video Here</button>
+										<button className="btn btn-primary">Upload Video Here</button>
 
 									</div>
 								</div>
 
 							</div>
-							<div className=" p-0 col-12  col-xl-6 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
+							<div className=" p-0 col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
 								<div className="card-header align-items-start border-0">
 									<div>
 										<h4 className="fs-20 mb-3">Today's Challenge</h4>
@@ -106,7 +106,7 @@ export default function Game() {
 										</ul>
 									</div>
 								</div>
-								<div className="card-footer align-items-start justify-content-between align-items-center">
+								<div className="p-3 align-items-start justify-content-between align-items-center">
 									<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
 										id="votes">17</span><span className="fs-12">Votes</span></li>
 								</div>
@@ -371,11 +371,11 @@ export default function Game() {
 					</div>
 					<div className="col-12 col-sm-6 col-lg-5 col-xl-4">
 						<div className="card3 overflow-hidden">
-							<div className="card3-header align-items-start border-0 justify-content-between">
+							<div className="card3-header">
 
 								<h4 className="fs-20 mx-auto">DAOX</h4>
 							</div>
-							<div className="d-flex justify-content-center p-3 flex-column">
+							<div className="d-flex flex-column p-3 ">
 								<Link href="/createchallenge">
 
 									<button className="btn btn-primary">Create Challenge</button>
@@ -419,7 +419,7 @@ export default function Game() {
 										<div className="ml-1">
 
 											<span
-												className="mb-1 card-small-text text-white trader-name">a43UgcUk768...</span>
+												className="mb-1 card-small-text text-white trader-name">a4U...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 25,004,214,12 </span>
@@ -434,7 +434,7 @@ export default function Game() {
 										<div className="ml-1">
 
 											<span
-												className="mb-1 card-small-text text-white trader-name">l24OadkIj232...</span>
+												className="mb-1 card-small-text text-white trader-name">l24a...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 23,415,765.01 </span>
@@ -449,7 +449,7 @@ export default function Game() {
 										<div className="ml-1">
 
 											<span
-												className="mb-1 card-small-text text-white trader-name">l00LoHgA909...</span>
+												className="mb-1 card-small-text text-white trader-name">l0L...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 21,110,143.12 </span>
@@ -464,7 +464,7 @@ export default function Game() {
 										<div className="ml-1">
 
 											<span
-												className="mb-1 card-small-text text-white trader-name">g43KjkOo334...</span>
+												className="mb-1 card-small-text text-white trader-name">g4K...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 20,221,321.13 </span>
@@ -479,7 +479,7 @@ export default function Game() {
 										<div className="ml-1">
 
 											<span
-												className="mb-1 card-small-text text-white trader-name">p33HuhOp561...</span>
+												className="mb-1 card-small-text text-white trader-name">p3H...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 19,000,231.00 </span>
@@ -494,7 +494,7 @@ export default function Game() {
 										<div className="ml-1">
 
 											<span
-												className="mb-1 card-small-text text-white trader-name">y51LkpLh710...</span>
+												className="mb-1 card-small-text text-white trader-name">y5L...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 18,142,554,98 </span>
@@ -508,7 +508,7 @@ export default function Game() {
 										<div className="ml-1">
 
 											<span
-												className="mb-1 card-small-text text-white trader-name">t45PolYy421...</span>
+												className="mb-1 card-small-text text-white trader-name">t4P...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 15,441,214,04 </span>
@@ -522,7 +522,7 @@ export default function Game() {
 										<div className="ml-1">
 
 											<span
-												className="mb-1 card-small-text text-white trader-name">t43JjKFd509...</span>
+												className="mb-1 card-small-text text-white trader-name">t4J...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 14,142,554,98 </span>
@@ -536,7 +536,7 @@ export default function Game() {
 										<div className="ml-1">
 
 											<span
-												className="mb-1 card-small-text text-white trader-name">d12FacUg142...</span>
+												className="mb-1 card-small-text text-white trader-name">d1F...</span>
 										</div>
 									</div>
 									<span><i className="fa fa-wallet"></i> 13,142,554,98 </span>
