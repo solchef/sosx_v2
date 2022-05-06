@@ -1,7 +1,8 @@
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { create } from 'ipfs-http-client'
 import {concat} from 'uint8arrays'
+import { useRouter } from 'next/router'
+import Link from 'next/link';
 
 const server = create({
   url: "http://127.0.0.1:5001",
@@ -67,9 +68,12 @@ export default function Votechallenge() {
 									<i className="fa-regular fa-heart p-2"></i><span className="fs-12 p-1"
 										id="votes">17</span><span className="fs-12">Votes</span>
 								</div>
-								<button type="button"
-									className="btn btn-primary "><i
-										className="fa-solid fa-check-to-slot pr-2"></i>Votte</button>
+								<Link href={`/challenge/[${camp.payload.name}]`} as={"/challenge/"+camp.payload.name} > 
+								<a className="btn btn-primary">
+								<i className="fa-solid fa-check-to-slot pr-2"></i>
+									Details
+								</a>
+								</Link>
 							</div>
 						</div>
 					</div>
