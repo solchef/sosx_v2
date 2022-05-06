@@ -1,9 +1,9 @@
-import { } from 'react'
 import Link from 'next/link';
 import NavMining from '../NavMining';
 
-export default function SocialminingS3() {
 
+export default function SocialminingS3() {
+   
     return (
         <>
                 <NavMining/>
@@ -30,6 +30,7 @@ export default function SocialminingS3() {
                                 <form action="/action_page.php">
                                     <div className="row mb-3">
                                         <input className="input1" type="text" id="fname" name="firstname"
+                                            value="0x684A4e50De4ff380E70DB03D7B61a4111395326a" readOnly
                                             placeholder="Metamask Wallet Address" />
                                     </div>
                                 </form>

@@ -265,8 +265,6 @@ export default function Votechallenge() {
 
 				</div>
 			</div>
-
-			</div>
 		</>
 	)
 }

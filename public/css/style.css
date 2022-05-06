@@ -31174,7 +31174,7 @@ background-color: #ff00cc;
 }
 
 
-.postimg img {width: 100%;border-radius: 10px;/* padding: 5px; */box-shadow: rgb(255 61 215 / 25%) 0px 5px 25px;}
+.postimg img {width: 100%;border-radius: 10px;/* padding: 5px; */}
 
 
 .postimg {
@@ -32520,7 +32520,7 @@ width: 100%;
   width: 300px;
   border-radius: 10px;
   /* padding: 5px; */
-  box-shadow: rgb(255 61 215 / 25%) 0px 5px 25px;
+
 }
 
 
@@ -32949,4 +32949,13 @@ background-image: url("../images/create-challenge-img.png");
 
 .step.active:after {
   color: #73b5e8;
+}
+
+
+/* social Mining S1 */
+
+.img-soc {
+  height:100%;
+  width:auto;
+  max-width:400px;
 }
