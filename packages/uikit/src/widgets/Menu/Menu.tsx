@@ -137,11 +137,11 @@ const Menu: React.FC<NavProps> = ({
 
       case '/xgame':
         return "XGame";
-        case '/createchallenge':
+      case '/createchallenge':
         return "XGame";
-        case '/votechallenge':
+      case '/votechallenge':
         return "XGame";
-        case '/xgame':
+      case '/xgame':
         return "XGame";
 
       case '/referrals':
@@ -168,7 +168,7 @@ const Menu: React.FC<NavProps> = ({
         return;
     }
   }
-const [preloader,setPreloader ] = useState(true);
+  const [preloader, setPreloader] = useState(true);
   useEffect(() => {
     setPreloader(true);
 
@@ -177,7 +177,7 @@ const [preloader,setPreloader ] = useState(true);
     }, 1000);
 
   }
-  ,[children])
+    , [children])
   return (
     // <MenuContext.Provider value={{ linkComponent }}>
     //   <Wrapper>
@@ -257,97 +257,88 @@ const [preloader,setPreloader ] = useState(true);
           </nav>
         </div>
       </div>
-      <ul className="mobile-nav d-flex flex-column" id="menu">
-       <div className="d-flex mt-3 justify-content-around">
-       <li className={router.pathname == "/" ? "mm-active" : ""}>
-          <Link href="/">
-            <a>
-              <i className="fa fa-repeat active"></i>
-              <span className="nav-text">Swap</span>
-            </a>
-          </Link>
-        </li>
-        <li className={router.pathname == "/stake" ? "mm-active" : ""}>
-          <Link href="/stake">
-            <a>
-              <i className="fa fa-coins"></i>
-              <span className="nav-text">Staking</span>
-            </a>
-          </Link>
-        </li>
-
-        <li className={router.pathname == "/xgame" || router.pathname == "/createchallenge"|| router.pathname == "/votechallenge" ||router.pathname == "/xgame"  ? "mm-active" : ""}>
-          <Link href="/xgame">
-            <a>
-              <i className="fa fa-gamepad"></i>
-              <span className="nav-text ">XGame</span>
-            </a>
-          </Link>
-        </li>
-        <li className={router.pathname == "/referrals" ? "mm-active" : ""}>
-          <Link href="/referrals">
-            <a>
-              <i className="fa fa-bullhorn"></i>
-              <span className="nav-text">Affiliate</span>
-            </a>
-          </Link>
-        </li>
-
+      <ul className="mobile-nav d-flex" id="menu">
         
-       </div>
+          <li className={router.pathname == "/" ? "mm-active" : ""}>
+            <Link href="/">
+              <a>
+                <i className="fa fa-repeat active"></i>
+              </a>
+            </Link>
+          </li>
+          <li className={router.pathname == "/stake" ? "mm-active" : ""}>
+            <Link href="/stake">
+              <a>
+                <i className="fa fa-coins"></i>
+              </a>
+            </Link>
+          </li>
 
-  <div className="d-flex mt-3 justify-content-between">
-  <li className={router.pathname == "/adspace" ? "mm-active" : ""}>
-          <Link href="/adspace">
-            <a>
-              <i className="fa fa-briefcase"></i>
-              <span className="nav-text ">Ad Space</span>
-            </a>
-          </Link>
-        </li>
-  <li className={router.pathname == "/x-mining" || router.pathname == "/socialmining-s1" || router.pathname == "/socialmining-s2" || router.pathname == "/socialmining-s3" ? "mm-active" : ""}>
-          <Link href="/x-mining">
-            <a>
-              <i className="fa fa-users"></i>
-              <span className="nav-text ">Social Mining</span>
-            </a>
-          </Link>
-        </li>
-        <li>
-          <Link href="#">
+          <li className={router.pathname == "/xgame" || router.pathname == "/createchallenge" || router.pathname == "/votechallenge" || router.pathname == "/xgame" ? "mm-active" : ""}>
+            <Link href="/xgame">
+              <a>
+                <i className="fa fa-gamepad"></i>
+              </a>
+            </Link>
+          </li>
+          <li className={router.pathname == "/referrals" ? "mm-active" : ""}>
+            <Link href="/referrals">
+              <a>
+                <i className="fa fa-bullhorn"></i>
+              </a>
+            </Link>
+          </li>
 
-            <a>
-              <i className="fa fa-images"></i>
-              <span className="nav-text comingsoon">NFT</span>
-            </a>
-          </Link>
 
-        </li>
+     
 
-        <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
+       
+          <li className={router.pathname == "/adspace" ? "mm-active" : ""}>
+            <Link href="/adspace">
+              <a>
+                <i className="fa fa-briefcase"></i>
+              </a>
+            </Link>
+          </li>
+          <li className={router.pathname == "/x-mining" || router.pathname == "/socialmining-s1" || router.pathname == "/socialmining-s2" || router.pathname == "/socialmining-s3" ? "mm-active" : ""}>
+            <Link href="/x-mining">
+              <a>
+                <i className="fa fa-users"></i>
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="#">
 
-          <Link href="/aboutsosx">
+              <a>
+                <i className="fa fa-images"></i>
+              </a>
+            </Link>
 
-            <a>
-              <img src="/utils/images/xlogo.png" style={{ width: '12px', height: '12px' }} />
-              <span className="nav-text pl-3">About SOSX</span>
-            </a>
-          </Link>
+          </li>
 
-        </li>
+          <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
 
-        <li className={router.pathname == "/faq" ? "mm-active" : ""}>
+            <Link href="/aboutsosx">
 
-          <Link href="/faq">
+              <a>
+                <img src="/utils/images/xlogo.png" style={{ width: '12px', height: '12px' }} />
+              </a>
+            </Link>
 
-            <a>
-              <i className="fa-solid fa-circle-question"></i>
-              <span className="nav-text">FAQ</span>
-            </a>
-          </Link>
+          </li>
 
-        </li>
-  </div>
+          <li className={router.pathname == "/faq" ? "mm-active" : ""}>
+
+            <Link href="/faq">
+
+              <a>
+                <i className="fa-solid fa-circle-question"></i>
+              </a>
+            </Link>
+
+          </li>
+     
 
       </ul>
       <div className="deznav mobile-hide">
@@ -373,7 +364,7 @@ const [preloader,setPreloader ] = useState(true);
 
             </li>
 
-            <li className={router.pathname == "/xgame" || router.pathname == "/createchallenge"|| router.pathname == "/votechallenge" ||router.pathname == "/xgame" ? "mm-active" : ""}>
+            <li className={router.pathname == "/xgame" || router.pathname == "/createchallenge" || router.pathname == "/votechallenge" || router.pathname == "/xgame" ? "mm-active" : ""}>
               <Link href="/xgame">
 
                 <a>
@@ -455,11 +446,11 @@ const [preloader,setPreloader ] = useState(true);
           </ul>
         </div>
       </div>
-      <div className= {`content-body ${preloader?'content-preloader':''}`}>
-       
+      <div className={`content-body ${router.pathname == "/xgame" ? "" : "size-child"}  ${preloader ? 'content-preloader' : ''}`}>
+
         {children}
       </div>
-   
+
 
       <div className="footer">
         <div className="copyright">
