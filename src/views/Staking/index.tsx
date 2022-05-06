@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import useToast from 'hooks/useToast'
 import { useStakingContract } from 'hooks/useContract'
 import { getStakingContract } from 'utils/contractHelpers'
+import { useWeb3React } from '@web3-react/core'
+import { Web3Provider } from '@ethersproject/providers'
+import { Contract } from '@ethersproject/contracts'
 
 
 const BorderCard = styled.div`
@@ -20,19 +23,24 @@ export default function Staking() {
 	const [hasReferral, setHasReferral] = useState([]);
 	const [totalAmountStaked, setTotalAmountStaked] = useState(0);
 	const [numberOfActiveStake, setNumberOfActiveStake] = useState(0);
-
+	const contract = useStakingContract();
+	const { account, active, library} = useWeb3React<Web3Provider>()
 
 	useEffect(()=> {
 
-		const referral = async () => {
-			const contract = getStakingContract();
-			console.log(contract);
+	
+			// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
+		
 
+		const referral = async () => {
+			console.log(await contract.owner());
+			// const erc20 = new Contract('addressContract', '', library.getSigner());
+
+			// console.log(erc20)
+			
 		}
 
-
 		referral();
-		
 		
 	});
 
@@ -82,7 +90,7 @@ export default function Staking() {
 							<div className="card-header border-0 pb-0">
 								<h4 className="fs-18">Stake SOSX</h4>
 							</div>
-							<div className="card-body p-0 d-flex flex-column justify-content-between ">
+							<div className="card-body">
 								<div className="bg-dark rounded">
 									<div className="d-flex justify-content-between align-items-center pb-1">
 									</div>
@@ -95,7 +103,7 @@ export default function Staking() {
 									<div className="d-flex justify-content-between align-items-center pb-1">
 									</div>
 									<div className="d-flex justify-content-between align-items-center">
-										<select value={stakingClass} onChange={(e) => setStakingClass(e.target)} >
+										<select value={stakingClass} onChange={(e) => setStakingClass(e.target.value)} >
 											<option hidden>Select Duration </option>
 											<option value={1}>3 </option>
 											<option value={2}>6 </option>
@@ -125,16 +133,16 @@ export default function Staking() {
 										</div>
 									</div>
 								</div>
-								<div className="d-flex justify-content-between align-items-end">
-									<button type="button" className="btn btn-primary text-nowrap mr-1 w-100 mt-3">Stake Approve</button>
-									<button type="button" className="btn btn-primary text-nowrap w-100 mt-3">Stake Stick</button>
+								<div className="d-flex justify-content-between">
+									<button type="button" className="btn btn-primary text-nowrap mr-1 btn-lg w-100 mt-3">Approve</button>
+									<button type="button" className="btn btn-primary text-nowrap btn-lg w-100 mt-3">Stake</button>
 								</div>
 							</div>
 						</div>
 					</div>
 
 					<div className="col-xl-4">
-						<div className="card  d-flex flex-column justify-content-between ">
+						<div className="card">
 							<div className="card-header border-0 p-0">
 								<h4 className="fs-18">Staking Rewards</h4>
 							</div>
@@ -158,12 +166,12 @@ export default function Staking() {
 							</div>
 
 
-							<button type="button" className="btn btn-primary  w-100 ">Claim Rewards</button>
+							<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Claim Rewards</button>
 						</div>
 					</div>
 
 					<div className="col-xl-4">
-						<div className="card  d-flex flex-column justify-content-between ">
+						<div className="card ">
 							<div className="card-header border-0 pb-0">
 								<div col-3>
 
