@@ -1,13 +1,14 @@
-import { } from 'react'
+import { useRouter } from "next/router";
 
-export default function Voting() {
-
+export default function Challenge() {
+    const router = useRouter()
+    const { name } = router.query
     return (
         <div className="voting container-fluid">
             <div className="row">
                 <div className="col-9">
                     <div className='text-muted font-weight-bold h4'>
-                        <h1 className='h1 font-weight-bold'>CAKE Staking Proposal</h1>
+                        <h1 className='h1 font-weight-bold'>{name}</h1>
 
                         <p>I propose that for over 500 CAKE staked in any syrup Pool 100 CAKE needs to<br />
                             be staked in the Locked CAKE Pool.<br />
