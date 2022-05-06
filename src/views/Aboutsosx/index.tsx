@@ -90,7 +90,7 @@ export default function Aboutsosx() {
                             to the SOCIAL MINING ad space.
                         </p>
                         <a href="https://socialx.io/oxgame.html">
-                            <button type="button" className="btn btn-primary btn-lg mt-4">View OX Game Rules</button>
+                            <button type="button" className="btn btn-primary btn-lg mt-4 ">View OX Game Rules</button>
                         </a>
                     </div>
                 </div>

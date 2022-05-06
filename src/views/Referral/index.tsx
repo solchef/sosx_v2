@@ -153,7 +153,7 @@ export default function Referral() {
         <div className="col-md-4">
           <div className="card">
             <div>
-              <img src="images/step1-referrallink.png"/>
+              <img src="images/step1-referrallink.png" />
               <span className="main-pink">Step 1</span>
               <h4 className="pt-2 pb-2">Get a referral link</h4>
               <p>Connect a wallet & generate your referral link in the
@@ -164,7 +164,7 @@ export default function Referral() {
 
         <div className="col-md-4">
           <div className="card">
-            <img src="images/step2invitefriend-img.png"/>
+            <img src="images/step2invitefriend-img.png" />
             <span className="main-pink">Step 2</span>
             <h4 className="pt-2 pb-2">Invite friends</h4>
             <p>Invite your friends & register with your referral link.</p>
@@ -174,7 +174,7 @@ export default function Referral() {
 
         <div className="col-md-4">
           <div className="card">
-            <img src="images/step3earnsosx-img.png"/>
+            <img src="images/step3earnsosx-img.png" />
             <span className="main-pink">Step 3</span>
             <h4 className="pt-2 pb-2">Earn SOSX</h4>
             <p>Receive a referral rewards from your friends’ earnings.
@@ -238,20 +238,20 @@ export default function Referral() {
             <div className="card-body">
               <div className="bg-dark rounded">
                 <div className="d-flex justify-content-between align-items-center">
-                  <span>{`${account ? 'https://socialx.io?ref='+account.replace(/(.{13})..+/, "$1…")   : ''}  : `} </span>
+                  <span>{`${account ? 'https://socialx.io?ref=' + account.replace(/(.{13})..+/, "$1…") : ''}  : `} </span>
                   <div className="float-right d-flex">
-                  <li className="nav-item pr-2">
-                           <CopyToClipboard
-                            text={`https://socialx.io?ref=${account}`}
-                            onCopy={() => setCopied(true)} > 
-                                {/* <Button variant="outlined"><Trans i18nKey="referral_panel.copyButton" /></Button> */}
-                                <a  className="nav-link" data-toggle="modal"><i className="fa-regular fa-clone" /></a>
-                                
-                          </CopyToClipboard>
-                          {copied ? <span style={{color: 'red'}}>Copied.</span> : null}
-                  
-                  </li>
-                    
+                    <li className="nav-item pr-2">
+                      <CopyToClipboard
+                        text={`https://socialx.io?ref=${account}`}
+                        onCopy={() => setCopied(true)} >
+                        {/* <Button variant="outlined"><Trans i18nKey="referral_panel.copyButton" /></Button> */}
+                        <a className="nav-link" data-toggle="modal"><i className="fa-regular fa-clone" /></a>
+
+                      </CopyToClipboard>
+                      {copied ? <span style={{ color: 'red' }}>Copied.</span> : null}
+
+                    </li>
+
                     <li className="nav-item "><a href="#" className="nav-link" data-toggle="modal">
                       <i className="fa-solid fa-share-from-square"></i></a></li>
                   </div>
@@ -278,10 +278,10 @@ export default function Referral() {
             <div className="col">
               <div className="card h-auto">
                 <div className="card-body">
-                  <img src="images/swapcoin-referral.svg"  className="referral-rewards"/>
+                  <img src="images/swapcoin-referral.svg" className="referral-rewards" />
                   <span className="main-pink">Social Mining Referral</span>
                   <h4 className="pt-2 pb-2">{viewReferralReward}  SOSX</h4>
-                  <button type="button" className="btn btn-primary btn-lg">Withdraw</button>
+                  <button type="button" className="btn btn-primary">Withdraw</button>
                 </div>
               </div>
             </div>
@@ -289,10 +289,10 @@ export default function Referral() {
             <div className="col">
               <div className="card h-auto">
                 <div className="card-body">
-                  <img src="images/swapcoin-referral.svg" className="referral-rewards"/>
+                  <img src="images/swapcoin-referral.svg" className="referral-rewards" />
                   <span className="main-pink">Staking Referral</span>
                   <h4 className="pt-2 pb-2">{viewReferralReward} SOSX</h4>
-                  <button type="button" className="btn btn-primary btn-lg">Withdraw</button>
+                  <button type="button" className="btn btn-primary">Withdraw</button>
                 </div>
               </div>
             </div>
@@ -302,45 +302,45 @@ export default function Referral() {
 
       <div className="wrapper">
         <div className="tabs">
-        <div className="tab">
+          <div className="tab">
             <input type="radio" name="css-tabs" id="tab-1" checked className="tab-switch" />
             <label htmlFor="tab-1" className="tab-label">Referral List</label>
 
             <div className="tab-content">
               <h4>Referral List</h4>
-              <span>All your referral friends in one place.</span>
+              <p className="fs-12 pt-1 pb-1"> All your referral friends in one place.</p>
 
 
               <div className="row pb-3">
                 <div className="col-xl-12">
-                  <div className="d-flex justify-content-between">
+                  <div className="row">
 
-                    <div className="col-xl-2">
+                    <div className="col">
                       <p className="main-pink">Date</p>
                       <p>05/25/2022, 23:20:04 </p>
                       <p>05/25/2022, 23:20:04 </p>
                     </div>
 
-                    <div className="col-xl-2">
+                    <div className="col">
                       <p className="main-pink">Wallet Address</p>
                       <p>fds24fGz1R...</p>
                       <p>fds24fGz1R...</p>
                     </div>
 
-                    <div className="col-xl-3">
+                    <div className="col">
                       <p className="main-pink">Mining Rewards</p>
                       <p>20,512.55 SOSX</p>
                       <p>20,512.55 SOSX</p>
                     </div>
 
-                    <div className="col-xl-3">
+                    <div className="col">
                       <p className="main-pink">Staking Rewards</p>
                       <p>10,412.12 SOSX</p>
                       <p>10,412.12 SOSX</p>
 
                     </div>
 
-                    <div className="col-xl-2">
+                    <div className="col">
                       <p className="main-pink">Total Earned</p>
                       <p>30,924.67</p>
                       <p>30,924.67</p>
@@ -395,91 +395,91 @@ export default function Referral() {
 
           </div>
           <div className="tab">
-            <input type="radio" name="css-tabs" id="tab-2" className="tab-switch"/>
-              <label htmlFor="tab-2" className="tab-label">Social Mining</label>
-              <div className="tab-content">
-                <h4 className="fs-18 mb-0">Social Mining Reward History</h4>
-                <span className="fs-14">All your Swaps referral rewards are listed below</span>
+            <input type="radio" name="css-tabs" id="tab-2" className="tab-switch" />
+            <label htmlFor="tab-2" className="tab-label">Social Mining</label>
+            <div className="tab-content">
+              <h4 className="fs-18 mb-0">Social Mining Reward History</h4>
+              <p className="fs-12 pt-1 pb-1">All your Swaps referral rewards are listed below</p>
 
 
-                <div className="row">
-                  <div className="col-xl-12">
-                    <div className="d-flex justify-content-between">
+              <div className="row">
+                <div className="col-xl-12">
+                  <div className="row">
 
-                      <div className="col-xl-3">
-                        <p className="main-pink">Date</p>
-                        <p>05/25/2022, 23:20:04 </p>
-                      </div>
-                      <div className="col-xl-2">
-                        <p className="main-pink">Wallet Address</p>
-                        <p>fds24fGz1R...</p>
-                      </div>
+                    <div className="col">
+                      <p className="main-pink">Date</p>
+                      <p>05/25/2022, 23:20:04 </p>
+                    </div>
+                    <div className="col">
+                      <p className="main-pink">Wallet Address</p>
+                      <p>fds24fGz1R...</p>
+                    </div>
 
-                      <div className="col-xl-2">
-                        <p className="main-pink">Mining Rewards</p>
-                        <p>105,231.41 SOSX</p>
-                      </div>
+                    <div className="col">
+                      <p className="main-pink">Mining Rewards</p>
+                      <p>105,231.41 SOSX</p>
+                    </div>
 
-                      <div className="col-xl-2">
-                        <p className="main-pink">Your Earnings</p>
-                        <p>10,523.14</p>
+                    <div className="col">
+                      <p className="main-pink">Your Earnings</p>
+                      <p>10,523.14</p>
 
-                      </div>
+                    </div>
 
-                      <div className="col-xl-2">
-                        <p className="main-pink">Status</p>
-                        <p>Claimed</p>
-                      </div>
+                    <div className="col">
+                      <p className="main-pink">Status</p>
+                      <p>Claimed</p>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
 
 
-      <div className="tab">
-            <input type="radio" name="css-tabs" id="tab-3" className="tab-switch"/>
-              <label htmlFor="tab-3" className="tab-label">Staking</label>
-              <div className="tab-content">
+          <div className="tab">
+            <input type="radio" name="css-tabs" id="tab-3" className="tab-switch" />
+            <label htmlFor="tab-3" className="tab-label">Staking</label>
+            <div className="tab-content">
 
-                <h4 className="fs-18 mb-0">Staking Reward History</h4>
-                <span className="fs-14">All your Staking referral rewards are listed below</span>
+              <h4 className="fs-18 ">Staking Reward History</h4>
+              <p className="fs-12 pt-1 pb-1">All your Staking referral rewards are listed below</p>
 
 
-                <div className="row">
-                  <div className="col-xl-12">
-                    <div className="d-flex justify-content-between">
+              <div className="row">
+                <div className="col-xl-12">
+                  <div className="row">
 
-                      <div className="col-xl-3">
-                        <p className="main-pink">Date</p>
-                        <p>05/25/2022, 23:20:04 </p>
-                      </div>
-                      <div className="col-xl-2">
-                        <p className="main-pink">Wallet Address</p>
-                        <p>fds24fGz1R...</p>
-                      </div>
+                    <div className="col">
+                      <p className="main-pink">Date</p>
+                      <p>05/25/2022, 23:20:04 </p>
+                    </div>
+                    <div className="col">
+                      <p className="main-pink">Wallet Address</p>
+                      <p>fds24fGz1R...</p>
+                    </div>
 
-                      <div className="col-xl-2">
-                        <p className="main-pink">Staking Rewards</p>
-                        <p>105,231.41 SOSX</p>
-                      </div>
+                    <div className="col">
+                      <p className="main-pink">Staking Rewards</p>
+                      <p>105,231.41 SOSX</p>
+                    </div>
 
-                      <div className="col-xl-2">
-                        <p className="main-pink">Your Earnings</p>
-                        <p>10,523.14</p>
+                    <div className="col">
+                      <p className="main-pink">Your Earnings</p>
+                      <p>10,523.14</p>
 
-                      </div>
+                    </div>
 
-                      <div className="col-xl-2">
-                        <p className="main-pink">Status</p>
-                        <p>Claimed</p>
-                      </div>
+                    <div className="col">
+                      <p className="main-pink">Status</p>
+                      <p>Claimed</p>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
-         
+
         </div>
       </div>
 

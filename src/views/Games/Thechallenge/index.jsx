@@ -1,6 +1,12 @@
 import { } from 'react'
-import Link from 'next/link'
 
+<<<<<<< HEAD
+export default function Votechallenge() {
+return (
+    <></>
+)
+}
+=======
 export default function Thechallenge() {
 
 	return (
@@ -511,3 +517,4 @@ export default function Thechallenge() {
 		</>
 	)
 }
+>>>>>>> 1a9e15d345afaaeb0dd06a0dcc2ea2969e0f9ea3
