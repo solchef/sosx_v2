@@ -4,6 +4,7 @@ export default function Voting() {
 
     return (
         <div className="voting container-fluid">
+            back
             <div className="row">
                 <div className="col-9">
                     <div className='text-muted font-weight-bold h4'>
