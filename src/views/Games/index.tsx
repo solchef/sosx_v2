@@ -42,12 +42,12 @@ export default function Game() {
 				<div className="row">
 					<div className="col-12 col-sm-6 col-lg-7 col-xl-8">
 						<div className="row">
-							<div className="card3 col-12 text-center align-items-center  col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-start">
+							<div className="card3 col-12 text-center  col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center">
 
 
-								<div className="feature-box">
-									<div className="feature-icon mobile-hide-card ">
-										<img src="images/prize-pool-icon.png" style={{ width: '30px', height: '30px' }} />
+								<div className="feature-box p-0">
+									<div className="pt-4 pr-4 mobile-hide-card ">
+										<img src="images/prize-pool-icon.png" style={{ width: '40px', height: '40px' }} />
 									</div>
 									<div className="feature-text">
 										<span className="main-pink fs-14 font-weight-bold">Prize Pool</span>
@@ -57,9 +57,9 @@ export default function Game() {
 								</div>
 
 
-								<div className="feature-box">
-									<div className="feature-icon mobile-hide-card ">
-										<img src="images/submission-date-icon.png" style={{ width: '30px', height: '30px' }} />
+								<div className="feature-box p-0">
+									<div className="pt-4 pr-4 mobile-hide-card ">
+										<img src="images/submission-date-icon.png" style={{ width: '40px', height: '40px' }} />
 									</div>
 									<div className="feature-text">
 										<span className="main-pink fs-14 d-block font-weight-bold">Time Left </span>
@@ -78,9 +78,9 @@ export default function Game() {
 
 
 
-								<div className="feature-box">
+								<div className="feature-box p-0">
 									<div className="feature-text">
-										<button className="btn m-2 btn-primary">Upload Video Here</button>
+										<button className="btn btn-primary">Upload Video Here</button>
 
 									</div>
 								</div>
@@ -106,7 +106,7 @@ export default function Game() {
 										</ul>
 									</div>
 								</div>
-								<div className="card-footer align-items-start justify-content-between align-items-center">
+								<div className="p-3 align-items-start justify-content-between align-items-center">
 									<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
 										id="votes">17</span><span className="fs-12">Votes</span></li>
 								</div>
@@ -371,11 +371,11 @@ export default function Game() {
 					</div>
 					<div className="col-12 col-sm-6 col-lg-5 col-xl-4">
 						<div className="card3 overflow-hidden">
-							<div className="card3-header align-items-start border-0 justify-content-between">
+							<div className="card3-header">
 
 								<h4 className="fs-20 mx-auto">DAOX</h4>
 							</div>
-							<div className="d-flex justify-content-center p-3 flex-column">
+							<div className="d-flex flex-column p-3 ">
 								<Link href="/createchallenge">
 
 									<button className="btn btn-primary">Create Challenge</button>

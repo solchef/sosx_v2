@@ -30004,13 +30004,19 @@ span#counter {
   .rtl .float-lg-none {
     float: none !important; } }
 @media (min-width: 1200px) {
+
   .rtl .float-xl-left {
     float: right !important; }
   .rtl .float-xl-right {
     float: left !important; }
   .rtl .float-xl-none {
     float: none !important; } }
-@media (min-width: 1440) {
+    @media (min-width: 1600px) {
+      .size-child {
+        padding:200px;
+      }
+    }
+@media (min-width: 1440px) {
   .rtl .float-xxl-left {
     float: right !important; }
   .rtl .float-xxl-right {
