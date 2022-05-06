@@ -135,13 +135,13 @@ const Menu: React.FC<NavProps> = ({
       case '/stake':
         return "Stake";
 
-      case '/thechallenge':
+      case '/xgame':
         return "XGame";
         case '/createchallenge':
         return "XGame";
         case '/votechallenge':
         return "XGame";
-        case '/thechallenge':
+        case '/xgame':
         return "XGame";
 
       case '/referrals':
@@ -257,8 +257,9 @@ const [preloader,setPreloader ] = useState(true);
           </nav>
         </div>
       </div>
-      <ul className="mobile-nav" id="menu">
-        <li className={router.pathname == "/" ? "mm-active" : ""}>
+      <ul className="mobile-nav d-flex flex-column" id="menu">
+       <div className="d-flex mt-3 justify-content-around">
+       <li className={router.pathname == "/" ? "mm-active" : ""}>
           <Link href="/">
             <a>
               <i className="fa fa-repeat active"></i>
@@ -275,8 +276,8 @@ const [preloader,setPreloader ] = useState(true);
           </Link>
         </li>
 
-        <li className={router.pathname == "/thechallenge" || router.pathname == "/createchallenge"|| router.pathname == "/votechallenge" ||router.pathname == "/thechallenge"  ? "mm-active" : ""}>
-          <Link href="/thechallenge">
+        <li className={router.pathname == "/xgame" || router.pathname == "/createchallenge"|| router.pathname == "/votechallenge" ||router.pathname == "/xgame"  ? "mm-active" : ""}>
+          <Link href="/xgame">
             <a>
               <i className="fa fa-gamepad"></i>
               <span className="nav-text ">XGame</span>
@@ -292,7 +293,11 @@ const [preloader,setPreloader ] = useState(true);
           </Link>
         </li>
 
-        <li className={router.pathname == "/adspace" ? "mm-active" : ""}>
+        
+       </div>
+
+  <div className="d-flex mt-3 justify-content-between">
+  <li className={router.pathname == "/adspace" ? "mm-active" : ""}>
           <Link href="/adspace">
             <a>
               <i className="fa fa-briefcase"></i>
@@ -300,8 +305,7 @@ const [preloader,setPreloader ] = useState(true);
             </a>
           </Link>
         </li>
-
-        <li className={router.pathname == "/x-mining" || router.pathname == "/socialmining-s1" || router.pathname == "/socialmining-s2" || router.pathname == "/socialmining-s3" ? "mm-active" : ""}>
+  <li className={router.pathname == "/x-mining" || router.pathname == "/socialmining-s1" || router.pathname == "/socialmining-s2" || router.pathname == "/socialmining-s3" ? "mm-active" : ""}>
           <Link href="/x-mining">
             <a>
               <i className="fa fa-users"></i>
@@ -343,6 +347,7 @@ const [preloader,setPreloader ] = useState(true);
           </Link>
 
         </li>
+  </div>
 
       </ul>
       <div className="deznav mobile-hide">
@@ -368,8 +373,8 @@ const [preloader,setPreloader ] = useState(true);
 
             </li>
 
-            <li className={router.pathname == "/thechallenge" || router.pathname == "/createchallenge"|| router.pathname == "/votechallenge" ||router.pathname == "/thechallenge" ? "mm-active" : ""}>
-              <Link href="/thechallenge">
+            <li className={router.pathname == "/xgame" || router.pathname == "/createchallenge"|| router.pathname == "/votechallenge" ||router.pathname == "/xgame" ? "mm-active" : ""}>
+              <Link href="/xgame">
 
                 <a>
                   <i className="fa fa-gamepad"></i>

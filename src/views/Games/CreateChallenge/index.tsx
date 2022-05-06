@@ -23,7 +23,12 @@ import { FormState } from './types'
 import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
 import NavGame from '../NavGame'
+import { create } from 'ipfs-http-client'
 
+const server = create({
+  url: "http://127.0.0.1:5001",
+  
+});
 
 const EasyMde = dynamic(() => import('components/EasyMde'), {
   ssr: false,
@@ -79,13 +84,30 @@ const CreateChallenge = () => {
       const sig = await signMessage(connector, library, account, proposal)
 
       if (sig) {
-        const msg: Message = { address: account, msg: proposal, sig }
+        const forIPFS = JSON.stringify({
+          ...generatePayloadData(),
+          type: SnapshotCommand.PROPOSAL,
+          signiture: sig.toString(),
+          payload: {
+            name,
+            body,
+            snapshot,
+            start: combineDateAndTime(startDate, startTime),
+            end: combineDateAndTime(endDate, endTime),
+            choices: choices
+              .filter((choice) => choice.value)
+              .map((choice) => {
+                return choice.value
+              }),
+            metadata: generateMetaData(),
+            type: 'single-choice',
+          },
+        }, null, 2)
 
-        // Save proposal to snapshot
-        const data = await sendSnapshotData(msg)
-
-        // Redirect user to newly created proposal page
-        push(`/voting/proposal/${data.ipfsHash}`)
+        const challengeName = `challenge` + `-${name.replaceAll(' ', '-')}`
+        await server.files.mkdir(`/${challengeName}`)
+        await server.files.mkdir(`/${challengeName}/votes`)
+        await server.files.write(`/${challengeName}/challenge.json`, forIPFS, {create: true})
 
         toastSuccess(t('Proposal created!'))
       } else {

@@ -5,7 +5,7 @@ const NavMining = () => {
     console.log(router.pathname)
     return (
 
-        <div className="ml-5 d-flex justify-content-center align-items-center">
+        <div className="mx-auto d-flex justify-content-center align-items-center">
             <div id="steps">
                 <Link href="/x-mining">
                     <div className={`step ${router.pathname === '/x-mining' ? 'active' : 'done'} `} data-desc="Steps">1</div>

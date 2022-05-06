@@ -1,7 +1,43 @@
 import Link from 'next/link'
-import { } from 'react'
+import { useEffect } from 'react'
+import { create } from 'ipfs-http-client'
+import {concat} from 'uint8arrays'
+
+const server = create({
+  url: "http://127.0.0.1:5001",
+  
+});
 
 export default function Votechallenge() {
+
+	useEffect(() => {
+		const getChallenges = async () => {
+		 const getData = async () => {
+		
+		  let chunks=[]
+		  for await (const file of server.files.ls('/')) {
+		   for await (const one of server.files.ls(`/${file.name}`)) {
+			
+		  if (one.name==='challenge.json') {
+		   console.log(one.type)
+		   for await (const chunk of server.cat(one.cid)) {
+			chunks.push(chunk);
+			 }
+			 
+			 const data = concat(chunks)
+			 const decodedData = JSON.parse(new TextDecoder().decode(data).toString());
+			 console.log(decodedData)
+			}
+		  
+		   }
+		   }
+			}
+			getData()
+		  
+		   }
+		   getChallenges()
+		  
+		})
 
 	return (
 		<>
@@ -264,8 +300,6 @@ export default function Votechallenge() {
 					
 
 				</div>
-			</div>
-
 			</div>
 		</>
 	)
