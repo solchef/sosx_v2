@@ -1,5 +1,9 @@
 import { ChangeEvent, FormEvent, useEffect, useState, useMemo } from 'react'
 import {
+  Card,
+  CardBody,
+  CardHeader,
+  Heading,
   useModal,
 } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
@@ -23,7 +27,8 @@ import { FormState } from './types'
 import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
 import NavGame from '../NavGame'
-import { create } from 'ipfs-http-client'
+import { CID, create } from 'ipfs-http-client'
+import { Editor } from 'react-draft-wysiwyg';
 
 const server = create({
   url: "http://127.0.0.1:5001",
@@ -47,6 +52,7 @@ const CreateChallenge = () => {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [fieldsState, setFieldsState] = useState<{ [key: string]: boolean }>({})
+  const [images, setImages] = useState<{ cid: CID; path: string }[]>([]);
   const { t } = useTranslation()
   const { account } = useWeb3React()
   const initialBlock = useInitialBlock()
@@ -62,7 +68,7 @@ const CreateChallenge = () => {
 
     try {
       setIsLoading(true)
-      const proposal = JSON.stringify({
+      const challenge = JSON.stringify({
         ...generatePayloadData(),
         type: SnapshotCommand.PROPOSAL,
         payload: {
@@ -81,7 +87,7 @@ const CreateChallenge = () => {
         },
       })
 
-      const sig = await signMessage(connector, library, account, proposal)
+      const sig = await signMessage(connector, library, account, challenge)
 
       if (sig) {
         const forIPFS = JSON.stringify({
@@ -109,7 +115,7 @@ const CreateChallenge = () => {
         await server.files.mkdir(`/${challengeName}/votes`)
         await server.files.write(`/${challengeName}/challenge.json`, forIPFS, {create: true})
 
-        toastSuccess(t('Proposal created!'))
+        toastSuccess(t('challenge created!'))
       } else {
         toastError(t('Error'), t('Unable to sign payload'))
       }
@@ -118,6 +124,33 @@ const CreateChallenge = () => {
       console.error(error)
       setIsLoading(false)
     }
+  }
+
+  const uploadVideo = async (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const files = (form[0] as HTMLInputElement).files;
+
+    if (!files || files.length === 0) {
+      return alert("No files selected");
+    }
+  
+    const file = files[0];
+    // upload files
+    const result = await server.add(file);
+    await server.files.
+  
+    // @ts-ignore
+    setImages([
+      ...images,
+      {
+        cid: result.cid,
+        path: result.path,
+      },
+    ]);
+  
+    form.reset();
+
   }
 
   const updateValue = (key: string, value: string | Choice[] | Date) => {
@@ -170,6 +203,11 @@ const CreateChallenge = () => {
 
   return (
     <>
+    <form onSubmit={uploadVideo}>
+              <input name="file" type="file" />
+
+              <button type="submit">Upload File</button>
+            </form>
                     <div className="container-fluid">
                       <div className="row">
                         <div className="col-xl-7">
@@ -197,10 +235,11 @@ const CreateChallenge = () => {
                                   options={options}
                                   required
                                   />
+                                 {/* <MDEditor height={200} value={value} onChange={setValue} /> */}
                               {formErrors.body && fieldsState.body && <FormErrors errors={formErrors.body} />}
                             </div>
-                                {/* {body && (
-                                  <div mb="24px">
+                                {body && (
+                                  <div >
                                     <Card>
                                       <CardHeader>
                                         <Heading as="h3" scale="md">
@@ -208,11 +247,11 @@ const CreateChallenge = () => {
                                         </Heading>
                                       </CardHeader>
                                       <CardBody p="0" px="24px">
-                                        <ReactMarkdown>{body}</ReactMarkdown>
+                                        {/* <ReactMarkdown>{body}</ReactMarkdown> */}
                                       </CardBody>
                                     </Card>
-                                  </div>
-                                )} */}
+                                      </div>
+                                )} 
                             </div>
 
                               <Choices choices={choices} onChange={handleChoiceChange} />
@@ -228,7 +267,7 @@ const CreateChallenge = () => {
                                   Submit
                                 </button>
                                 <p color="failure" >
-                                {'You need at least %count% voting power to publish a proposal'}
+                                {'You need at least %count% voting power to publish a challenge'}
                                 
                                 </p>
                                 <button  type="button"  onClick={onPresentVoteDetailsModal} >

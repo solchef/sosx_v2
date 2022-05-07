@@ -39,6 +39,9 @@ debug.log*
 
 **/config/abi/types
 
+yarn.lock
+package-lock.json
+
 
 # Sentry
 .sentryclirc

@@ -1,8 +1,186 @@
-<<<<<<< HEAD:src/views/Games/Voting/index.tsx
-import Link from 'next/link'
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { create } from 'ipfs-http-client'
+import { useEffect, useState } from "react";
+import { concat } from "uint8arrays";
+import React, { FormEvent } from 'react'
+import { signMessage } from 'utils/web3React'
+import { useWeb3React } from '@web3-react/core'
+import useWeb3Provider from 'hooks/useActiveWeb3React'
+import { useTranslation } from 'contexts/Localization'
+import useToast from 'hooks/useToast'
+import { generatePayloadData } from "views/Games/helpers";
+import Link from "next/link";
 
-export default function Voting() {
+const server = create({
+    url: "http://127.0.0.1:5001",
+    
+});
+
+export default function Challenge() {
+    const router = useRouter()
+    const { name } = router.query
+    const [challenge, setChallenge] = useState<any[]>([]);
+    const [votesList, setVotesList] = useState([]);
+    const { account } = useWeb3React()
+    const { library, connector } = useWeb3Provider()
+    const { toastSuccess, toastError } = useToast()
+    const { t } = useTranslation()
+
+    useEffect(() => {
+        getData();
+    }, [name]);
+
+    let challengeName = `challenge-${name}` 
+    const getData = async () => {
+        if (name) {
+                let challenge = [];
+                for await (const resultPart of server.files.ls("/")) {
+                    let challengeJson;
+                    let vote;
+                    let votesList = []
+                
+                    if (resultPart.name === challengeName) {
+                        for await (const cha of server.files.ls(`/${resultPart.name}`)) {
+                            const chunks = [];
+
+                            if (cha.name == 'challenge.json') {
+                            for await (const chunk of server.cat(cha.cid)) {
+                                chunks.push(chunk);
+                                }
+                                const data = concat(chunks);
+                                challengeJson = JSON.parse(
+                                new TextDecoder().decode(data).toString()
+                                );
+                            }
+                            if (cha.name == 'votes') {
+                                for await (const vote of server.files.ls(`/${resultPart.name}/votes`)) {
+                                    votesList.push(vote.name.slice(0, -5))
+                                }
+                            } 
+                            setVotesList(votesList)
+                        }
+                        let challengeData = {
+                            challenge: challengeJson,
+                            votes: vote
+                        }
+                        challenge.push(challengeData);
+                    }
+                }
+                setChallenge(challenge);
+        } 
+    }
+
+    const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+        evt.preventDefault()
+
+        const vote = JSON.stringify({
+            ...generatePayloadData(),
+            address:account,
+            data: {
+                domain: {
+                    name: 'snapshot',
+                    version: '0.1.4'
+                },
+                types: {
+                    Vote: [
+                        {
+                            name: "from",
+                            type: "address"
+                        },
+                        {
+                            name: "space",
+                            type: "string"
+                        },
+                        {
+                            name: "timestamp",
+                            type: "uint64"
+                        },
+                        {
+                            name: "challenge",
+                            type: "string"
+                        },
+                        {
+                            name: "choice",
+                            type: "uint32"
+                        },
+                        {
+                            name: "metadata",
+                            type: "string"
+                        }
+
+                    ]
+                },
+                message: {
+                    space: "SOSX",
+                    challenge: `${challengeName}`,
+                    choice: 1,
+                    metadata: '{}',
+                    from: account,
+                    timestamp: Date.now()
+                }
+            }
+        })
+
+        const sig = await signMessage(connector, library, account, vote)
+        
+        if (sig) {
+            const forIPFS =  JSON.stringify({
+                ...generatePayloadData(),
+                address: account,
+                sig: sig.toString(),
+                data: {
+                    domain: {
+                        name: 'snapshot',
+                        version: '0.1.4'
+                    },
+                    types: {
+                        Vote: [
+                            {
+                                name: "from",
+                                type: "address"
+                            },
+                            {
+                                name: "space",
+                                type: "string"
+                            },
+                            {
+                                name: "timestamp",
+                                type: "uint64"
+                            },
+                            {
+                                name: "proposal",
+                                type: "string"
+                            },
+                            {
+                                name: "choice",
+                                type: "uint32"
+                            },
+                            {
+                                name: "metadata",
+                                type: "string"
+                            }
+
+                        ]
+                    },
+                    message: {
+                        space: "sosx",
+                        challenge: '',
+                        choice: 1,
+                        metadata: '{}',
+                        from: account,
+                        timestamp: Date.now()
+                    }
+                }
+            }, null, 2)
+            
+            await server.files.write(`/challenge-${name}/votes/${account}.json`, forIPFS, {create: true})
+            toastSuccess(t('Vote created!'))
+        } else {
+            toastError(t('Error'), t('Unable to sign payload'))
+        }
+
+    }
+
     const ReadMore = ({ children }) => {
         const text = children;
         const [isReadMore, setIsReadMore] = useState(true);
@@ -19,162 +197,94 @@ export default function Voting() {
             </p>
         );
     };
-=======
-import { useRouter } from "next/router";
->>>>>>> 2628ba9c72dd443025a995e0488c67507a6c804d:src/pages/challenge/[name].tsx
 
-export default function Challenge() {
-    const router = useRouter()
-    const { name } = router.query
+
     return (
-<<<<<<< HEAD:src/views/Games/Voting/index.tsx
         <div className="container-fluid">
-            <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/votechallenge'> Back   </Link>     </p>
+            <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/votechallenge'> Back   </Link> </p>
+             {challenge[0] && (
             <div className="ml-2 row">
                 <div className="col-12 overflow-auto col-lg-8">
                     <div className='text-muted font-weight-bold'>
-                        <h1 className='font-weight-bold'>CAKE Staking Proposal</h1>
-                        <div className='p-3 d-flex'>
+                        <h1 className='font-weight-bold'>{name}</h1>
+                        {/* <div className='p-3 d-flex'>
                             <img className='mr-2' width='25px' height='25px' src='images/btc.png' />
                             <p>             PancakeSwap
                                 by
                                 0x3799...4861</p>
-                        </div>
+                        </div> */}
                         <ReadMore>
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf df  
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf df  
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfdssssssssss fdsf df  
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf df  
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf df  
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf df  
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf df  
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf df  
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf df  
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf df  
-                            Gelengthlenrer ffdd dfffds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf dfds fdsf df  
+                            {challenge[0].challenge.payload.body}
                         </ReadMore>
 
-=======
-        <div className="voting container-fluid">
-            <div className="row">
-                <div className="col-9">
-                    <div className='text-muted font-weight-bold h4'>
-                        <h1 className='h1 font-weight-bold'>{name}</h1>
-
-                        <p>I propose that for over 500 CAKE staked in any syrup Pool 100 CAKE needs to<br />
-                            be staked in the Locked CAKE Pool.<br />
-                            For example:<br />
-                            ● 501 to 1000 staked then 100 staked to the Locked Pool<br />
-                            ● 1001 to 1500 staked then 200 staked to the Locked Pool<br />
-                            ● 1501 to 2000 staked then 300 staked to the Locked Pool and so on.....<br />
-                            The CAKE staked in the Locked Pool needs to be locked for at least 10 weeks.</p>
-                        <p>Benefit is it will help stabilize the price of CAKE and would be fair to all participants.</p>
->>>>>>> 2628ba9c72dd443025a995e0488c67507a6c804d:src/pages/challenge/[name].tsx
 
                     </div>
 
                     <div className="row pb-5 pt-5">
                         <div className=" col-11">
-                        
 
-                                <a href="#" className="btn btn-primary w-25 font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Vote This Challenge</a>
+
+                        <form onSubmit={handleSubmit}>
+                            {votesList.includes(account) ? (
+                                <button disabled className="btn btn-primary w-25 font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>You already voted</button>
+                                ) : (
+                                <button className="btn btn-primary w-25 font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Vote This Challenge</button>
+                            )}
+                        </form>
 
                         </div>
                     </div>
 
-                    <div className="row pt-1">
+
+                </div>
+                
+                <div className="col-12 col-lg-4">
+                    <div className="row">
                         <div className="card border col-11">
-                            <h5 className="card-header font-weight-bold ">Votes</h5>
-<<<<<<< HEAD:src/views/Games/Voting/index.tsx
+                            <h5 className=" border-bottom font-weight-bold p-1">Information</h5>
+
+
+                            <div className="row p-1">
+                                <div className="col-6">network	</div>
+                                <div className="col-6">{challenge[0].challenge.payload.metadata.network}</div>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="card border col-11">
+                            <h5 className="font-weight-bold ">Current results
+                            </h5>
+                            <div className="row p-2">
+                                <div className="col-6">The Votes	</div>
+                                <div className="col-6">{votesList.length} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row ">
+                        <div className="card border col-11">
+                            <h5 className="card-header font-weight-bold ">{votesList.length} Votes</h5>
 
 
                             <table className="table font-weight-bold ">
                                 <tbody>
+                                {votesList.map((vote, index) => 
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td className='text-white text-right'>Jacob</td>
+                                        <th scope="row">{index + 1}</th>
+                                        <td className='text-white text-right'>{vote}</td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td className='text-white text-right'>Jacob</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td className='text-white text-right'>Jacob</td>
-                                    </tr>
+                                )}
                                 </tbody>
                             </table>
 
 
-=======
-                            <div className="card-body">
-
-                                <table className="table font-weight-bold ">
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td className='text-white text-right'>Jacob</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td className='text-white text-right'>Jacob</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td className='text-white text-right'>Jacob</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                            </div>
                         </div>
                     </div>
-
-
-
-                </div>
-                <div className="col-3">
-                    <div className="row">
-                        <div className="card border col-12">
-                            <h5 className=" border-bottom font-weight-bold p-1">Information</h5>
-                          
-
-                               <div className="row p-1">
-                                   <div className="col-6">Strategie(s)	</div>
-                                   <div className="col-6">Jacob 	</div>
-                               </div>
-                               <div className="row p-1">
-                                   <div className="col-6">Strategie(s)	</div>
-                                   <div className="col-6">Jacob 	</div>
-                               </div>
-                               <div className="row p-1">
-                                   <div className="col-6">Strategie(s)	</div>
-                                   <div className="col-6">Jacob 	</div>
-                               </div>
-                               <div className="row p-1">
-                                   <div className="col-6">Strategie(s)	</div>
-                                   <div className="col-6">Jacob 	</div>
-                               </div>
-
-                       
-                        </div>
-                    </div>
-                    <div className="row pt-5">
-                        <div className="card border col-12">
-                            <h5 className="card-header font-weight-bold ">Current results
-                            </h5>
-                            <div className="card-body">
-
-
-
-                            </div>
->>>>>>> 2628ba9c72dd443025a995e0488c67507a6c804d:src/pages/challenge/[name].tsx
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
+             )}
         </div>
     )
 }
