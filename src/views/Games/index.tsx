@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from 'next/link'
+import { useMediaPredicate } from "react-media-hook";
 
 export default function Game() {
 	const [partyTime, setPartyTime] = useState(false);
@@ -7,6 +8,7 @@ export default function Game() {
 	const [hours, setHours] = useState(0);
 	const [minutes, setMinutes] = useState(0);
 	const [seconds, setSeconds] = useState(0);
+	const [key, setKey] = useState("chart");
 
 	useEffect(() => {
 		const target = new Date("05/15/2022 23:59:59");
@@ -35,14 +37,18 @@ export default function Game() {
 		}, 1000);
 		return () => clearInterval(interval);
 	}, []);
+	const biggerThan1200 = useMediaPredicate("(min-width: 1200px) and (max-width: 1300px)");
+	const biggerThan576 = useMediaPredicate("(min-width: 576px) and (max-width: 625px)");
+
 	return (
 		<>
 
-			<div className="container-fluid">
+			<div className="game container-fluid">
 				<div className="row">
 					<div className="col-12 col-sm-6 col-lg-7 col-xl-8">
 						<div className="row">
-							<div className="card3 col-12 text-center  col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center">
+							<div className={`card3 col-12 text-center ${biggerThan1200 && "p-0"}
+ col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
 
 
 								<div className="feature-box p-0">
@@ -79,7 +85,7 @@ export default function Game() {
 
 
 								<div className="feature-box p-0">
-									<div className="feature-text">
+									<div className="feature-text m-3">
 										<button className="btn btn-primary">Upload Video Here</button>
 
 									</div>
@@ -99,7 +105,7 @@ export default function Game() {
 											suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
 											vel
 											facilisis. </span>
-										<h4 className="fs-12 text-white pt-3">Rules</h4>
+										<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
 										<ul className="fs-12">
 											<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
 											<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
@@ -116,14 +122,14 @@ export default function Game() {
 						<div className="row">
 
 
-							<div className="card3 ">
+							<div className="card3  p-3">
 
 								<div className="row d-flex justify-content-between p-4 align-items-end">
 									<div>
 										<h4 className="fs-20">Previous Winners</h4>
 										<span className="fs-14">Watch the previous Winners</span>
 									</div>
-									<div className="ml-auto ">
+									<div className="ml-auto pt-3 ">
 										<span className="fs-14 sub-blue font-weight-bold">Watch All Videos
 										</span>
 									</div>
@@ -207,7 +213,7 @@ export default function Game() {
 									<div>
 										<h4 className="fs-20">All Submission</h4>
 									</div>
-									<div className="ml-auto ">
+									<div className="ml-auto pt-3 ">
 										<span className="fs-14 sub-blue font-weight-bold">Watch All Videos
 										</span>
 									</div>
@@ -398,7 +404,12 @@ export default function Game() {
 								</div>
 							</div>
 
-							<ul className="nav3 nav3-tabs nav3-justified mb-3">
+
+					
+
+
+
+							<ul className="nav3 nav-rank nav3-tabs butten nav3-justified mb-3">
 								<li className="nav3-item">
 									<a className="nav3-link active font-weight-bold rounded text-nowrap" href="#lvl1">Level 1</a>
 								</li>
@@ -410,7 +421,7 @@ export default function Game() {
 								</li>
 							</ul>
 
-							<div className="card3-body">
+							<div className={`card3-body ranking ${biggerThan576 && "p-0"} ${biggerThan1200 && "p-0"}`}>
 								<a className="blueprint-header-display trader-display">
 									<div className="d-flex align-items-center">
 										<span className="text-white mr-3 fs-16 font-w600">1</span>
@@ -546,8 +557,9 @@ export default function Game() {
 
 					</div>
 				</div>
-
 			</div>
+
+	
 		</>
 	)
 }

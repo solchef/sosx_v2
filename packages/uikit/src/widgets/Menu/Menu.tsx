@@ -410,13 +410,14 @@ const Menu: React.FC<NavProps> = ({
             </li>
 
             <li className={router.pathname == "#" ? "mm-active" : ""}>
-              <Link href="#">
+       
 
                 <a>
                   <i className="fa fa-images"></i>
-                  <span className="nav-text comingsoon">NFT</span>
+                  <span className="nav-text">NFT</span>
+                  <small style={{fontSize:'14px'}} className="ml-1 text-warning">coming soon </small>
                 </a>
-              </Link>
+            
 
             </li>
 
