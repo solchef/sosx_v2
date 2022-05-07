@@ -12283,9 +12283,9 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       background-color: #fff;
       top: 5rem;
       height: calc(100% - 80px); } }
-  @media only screen and (max-width: 1400px) {
-    .deznav {
-      width: 18rem; } }
+
+     
+  
   .deznav .deznav-scroll {
     position: relative;
     height: 100%; }
@@ -32965,3 +32965,15 @@ background-image: url("../images/create-challenge-img.png");
   width:auto;
   max-width:400px;
 }
+
+@media (min-width: 769px)  and (max-width: 1100px) {
+   .card3-body.ranking{
+    padding: 0px;
+  }
+  .nav3-tabs.nav-rank .nav3-link {
+    padding: 6px;
+  }
+  .blueprint-header-display span {
+    font-size: 11px;
+  }
+  }
