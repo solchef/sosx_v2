@@ -237,6 +237,7 @@ export default function Challenge() {
 
 
                 </div>
+                
                 <div className="col-12 col-lg-4">
                     <div className="row">
                         <div className="card border col-11">
