@@ -87,8 +87,8 @@ export default function Staking() {
 
 					<div className="col-xl-4">
 						<div className="card ">
-							<div className="card-header border-0 pb-0">
-								<h4 className="fs-18">Stake SOSX</h4>
+							<div className="card-header border-0 pt-0">
+								<h4 className="fs-18 ">Stake SOSX</h4>
 							</div>
 							<div className="card-body">
 								<div className="bg-dark rounded">
@@ -103,7 +103,11 @@ export default function Staking() {
 									<div className="d-flex justify-content-between align-items-center pb-1">
 									</div>
 									<div className="d-flex justify-content-between align-items-center">
+<<<<<<< HEAD
+										<select value={stakingClass} >
+=======
 										<select value={stakingClass} onChange={(e) => setStakingClass(e.target.value)} >
+>>>>>>> 2628ba9c72dd443025a995e0488c67507a6c804d
 											<option hidden>Select Duration </option>
 											<option value={1}>3 </option>
 											<option value={2}>6 </option>
@@ -171,8 +175,13 @@ export default function Staking() {
 					</div>
 
 					<div className="col-xl-4">
+<<<<<<< HEAD
+						<div className="card  d-flex flex-column justify-content-between ">
+							<div className="card-header border-0 p-2">
+=======
 						<div className="card ">
 							<div className="card-header border-0 pb-0">
+>>>>>>> 2628ba9c72dd443025a995e0488c67507a6c804d
 								<div col-3>
 
 									<div className="token-balance-icon mb-3">
