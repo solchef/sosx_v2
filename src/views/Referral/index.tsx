@@ -229,9 +229,9 @@ export default function Referral() {
 
 
 
-      <div className="row">
-        <div className="col-12">
-          <div className="card h-auto">
+      <div className="row p-2">
+        <div className="col-12 p-1  col-xl-7">
+          <div className="card  h-100">
             <div className="card-header border-0 pb-0">
               <h4>My Referral Link</h4>
             </div>
@@ -273,26 +273,26 @@ export default function Referral() {
           </div>
         </div>
 
-        <div className="col-12">
+        <div className="col-12 col-xl-5">
           <div className="row">
-            <div className="col">
-              <div className="card h-auto">
-                <div className="card-body">
-                  <img src="images/swapcoin-referral.svg" className="referral-rewards" />
+            <div className="col-6  p-1 col-xl-12">
+              <div className="card  h-100">
+                <div className="card-body ">
+                  <img src="images/swapcoin-referral.svg" className="pt-3 referral-rewards" />
                   <span className="main-pink">Social Mining Referral</span>
-                  <h4 className="pt-2 pb-2">{viewReferralReward}  SOSX</h4>
-                  <button type="button" className="btn btn-primary">Withdraw</button>
+                  <h4 className="pt-3 pb-3">{viewReferralReward}  SOSX</h4>
+                  <button type="button" className="mt-1 btn btn-primary">Withdraw</button>
                 </div>
               </div>
             </div>
 
-            <div className="col">
-              <div className="card h-auto">
-                <div className="card-body">
-                  <img src="images/swapcoin-referral.svg" className="referral-rewards" />
+            <div className="col-6 p-1  col-xl-12">
+              <div className="card h-100">
+                <div className="card-body ">
+                  <img src="images/swapcoin-referral.svg" className="pt-3 referral-rewards" />
                   <span className="main-pink">Staking Referral</span>
-                  <h4 className="pt-2 pb-2">{viewReferralReward} SOSX</h4>
-                  <button type="button" className="btn btn-primary">Withdraw</button>
+                  <h4 className="pt-3 pb-3">{viewReferralReward} SOSX</h4>
+                  <button type="button" className="mt-1 btn btn-primary">Withdraw</button>
                 </div>
               </div>
             </div>
@@ -300,7 +300,7 @@ export default function Referral() {
         </div>
       </div>
 
-      <div className="wrapper">
+      <div className="wrapper mt-2">
         <div className="tabs">
           <div className="tab">
             <input type="radio" name="css-tabs" id="tab-1" checked className="tab-switch" />

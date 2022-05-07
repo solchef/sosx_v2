@@ -76,8 +76,7 @@ export const sendSnapshotData = async (message: Message) => {
   }
 
   const data = await response.json()
-  return data;
-  
+  return data
 }
 
 export const getVotingPower = async (account: string, poolAddresses: string[], blockNumber?: number) => {

@@ -5,4 +5,3 @@ const xgame = () => {
 }
 
 export default xgame;
-  

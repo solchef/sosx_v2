@@ -398,8 +398,8 @@ export default function Swap() {
 
   return (
 
-    <div className="container-fluid">
-        <div className="row justify-content-center">
+    <div className="container-fluid" style={{height:'calc(100vh)'}}>
+        <div className="row  m-auto justify-content-center">
           <div className="col-xl-5">
             <div className="card">
               <div className="card-header border-0 pb-0 justify-content-between">

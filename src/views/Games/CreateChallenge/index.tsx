@@ -1,5 +1,6 @@
-import { ChangeEvent, FormEvent, useEffect, useState, useMemo } from 'react'
+import React,{ ChangeEvent, FormEvent, useEffect, useState, useMemo } from 'react'
 import {
+  Button,
   useModal,
 } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
@@ -23,16 +24,25 @@ import { FormState } from './types'
 import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
 import NavGame from '../NavGame'
-import { create } from 'ipfs-http-client'
+import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 
-const server = create({
-  url: "http://127.0.0.1:5001",
-  
-});
-
+let ipfs: IPFSHTTPClient | undefined;
+  try {
+    ipfs = create({
+      // url: "http://127.0.0.1:5002",
+      url: "https://ipfs.infura.io:5001/api/v0",
+      
+    });
+  } catch (error) {
+    console.error("IPFS error ", error);
+    ipfs = undefined;
+  }
+// const ipfs = create()
 const EasyMde = dynamic(() => import('components/EasyMde'), {
   ssr: false,
 })
+
+
 
 const CreateChallenge = () => {
   const [state, setState] = useState<FormState>({
@@ -56,9 +66,13 @@ const CreateChallenge = () => {
   const [onPresentVoteDetailsModal] = useModal(<VoteDetailsModal block={state.snapshot} />)
   const { name, body, choices, startDate, startTime, endDate, endTime, snapshot } = state
   const formErrors = getFormErrors(state, t)
+  const [challenges, setChallenges] = useState<{ cid: CID; path: string }[]>([]);
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
+
+    const form = evt.target as HTMLFormElement;
+    
 
     try {
       setIsLoading(true)
@@ -80,34 +94,27 @@ const CreateChallenge = () => {
           type: 'single-choice',
         },
       })
+    
+      
 
       const sig = await signMessage(connector, library, account, proposal)
 
       if (sig) {
-        const forIPFS = JSON.stringify({
-          ...generatePayloadData(),
-          type: SnapshotCommand.PROPOSAL,
-          signiture: sig.toString(),
-          payload: {
-            name,
-            body,
-            snapshot,
-            start: combineDateAndTime(startDate, startTime),
-            end: combineDateAndTime(endDate, endTime),
-            choices: choices
-              .filter((choice) => choice.value)
-              .map((choice) => {
-                return choice.value
-              }),
-            metadata: generateMetaData(),
-            type: 'single-choice',
-          },
-        }, null, 2)
+        // const msg: Message = { address: account, msg: proposal, sig }
 
-        const challengeName = `challenge` + `-${name.replaceAll(' ', '-')}`
-        await server.files.mkdir(`/${challengeName}`)
-        await server.files.mkdir(`/${challengeName}/votes`)
-        await server.files.write(`/${challengeName}/challenge.json`, forIPFS, {create: true})
+        const result = await (ipfs as IPFSHTTPClient).add(proposal);
+        setChallenges([
+        ...challenges,
+        {
+          cid: result.cid,
+          path: result.path,
+        },
+      ]);
+        // Save proposal to snapshot
+        // const data = await sendSnapshotData(msg)
+
+        // Redirect user to newly created proposal page
+        // push(`/voting/proposal/${result.cid}`)
 
         toastSuccess(t('Proposal created!'))
       } else {
@@ -118,6 +125,9 @@ const CreateChallenge = () => {
       console.error(error)
       setIsLoading(false)
     }
+
+    form.reset();
+    console.log('Challenges: ', challenges);
   }
 
   const updateValue = (key: string, value: string | Choice[] | Date) => {
@@ -169,7 +179,10 @@ const CreateChallenge = () => {
   }, [initialBlock, setState])
 
   return (
+    
     <>
+
+            
                     <div className="container-fluid">
                       <div className="row">
                         <div className="col-xl-7">
