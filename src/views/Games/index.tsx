@@ -8,6 +8,7 @@ export default function Game() {
 	const [hours, setHours] = useState(0);
 	const [minutes, setMinutes] = useState(0);
 	const [seconds, setSeconds] = useState(0);
+	const [key, setKey] = useState("chart");
 
 	useEffect(() => {
 		const target = new Date("05/15/2022 23:59:59");
@@ -403,6 +404,11 @@ export default function Game() {
 								</div>
 							</div>
 
+
+					
+
+
+
 							<ul className="nav3 nav-rank nav3-tabs butten nav3-justified mb-3">
 								<li className="nav3-item">
 									<a className="nav3-link active font-weight-bold rounded text-nowrap" href="#lvl1">Level 1</a>
@@ -551,8 +557,9 @@ export default function Game() {
 
 					</div>
 				</div>
-
 			</div>
+
+	
 		</>
 	)
 }
