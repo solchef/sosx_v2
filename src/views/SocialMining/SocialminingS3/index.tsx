@@ -15,7 +15,7 @@ export default function SocialminingS3() {
 
   const handlePost = async (e) => {
     e.preventDefault();
-
+    const reward=localStorage.getItem("reward");
     // reset error and message
     setError('');
     setMessage('');
@@ -27,6 +27,7 @@ export default function SocialminingS3() {
     let post = {
       email_address,
       socialpostlink,
+      reward,
         createdAt: new Date().toISOString(),
     };
     console.log(post)

@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState , createContext } from 'react'
+import { Link as reactLink} from 'react-router-dom';
 import Link from 'next/link';
 import NavMining from '../NavMining';
+import SocialminingS3 from '../SocialminingS3';
 
 const socialMedias = [
     { name: 'twitter', addres: 'https://twitter', reward: '500' },
@@ -8,16 +10,20 @@ const socialMedias = [
     { name: 'tiktok', addres: 'https://tiktok', reward: '600' }
 ];
 
+
 export default function SocialminingS1() {
     const [media, setMedia] = useState(socialMedias[0])
     const [copySuccess, setCopySuccess] = useState('');
-
+    const [reward, setReward]=useState('')
     const toggleMenu = (event, type) => {
+
+        setReward(type)
         event.stopPropagation();
         socialMedias.map(socialMedia => socialMedia.name==type ? setMedia(socialMedia) :'');
         setCopySuccess('')
     };
-
+    console.log(reward)
+    localStorage.setItem('reward', reward)
     return (
         <>
 
@@ -32,10 +38,6 @@ export default function SocialminingS1() {
                                 <img className="img-soc" src="images/post18.jpeg" />
                             </div>
                         </div>
-
-
-
-
                         <div className="col-lg-7 pl-3 pt-3">
                             <h3 className="pr-3 pb-3">Post image &amp; caption on to your social media.</h3>
                             <div className="reward-box mr-3">
@@ -45,14 +47,23 @@ export default function SocialminingS1() {
                             </div>
                             <p className="pt-3 text-white pb-3">CAPTION:
 
-                                <a onClick={(e) => toggleMenu(e, "twitter")} className={` btn btn-dark mr-2 ml-2 ${media.name== "twitter" ? "bg-success" : ""}`}
+                                <a onClick={(e) => {
+                                    toggleMenu(e, "twitter")
+                                    setReward('500')
+                                }} className={` btn btn-dark mr-2 ml-2 ${media.name== "twitter" ? "bg-success" : ""}`}
                                     id="twitter-toggle" >Twitter</a>
 
-                                <a onClick={(e) => toggleMenu(e, "instagram")}
+                                <a onClick={(e) => {
+                                    toggleMenu(e, "instagram")
+                                    setReward('200')
+                                }}
                                     className={` mr-2 ml-2 btn btn-dark ${media.name== "instagram"? "bg-success" : ""}`}
                                     id="instagram-toggle">instagram</a>
 
-                                <a onClick={(e) => toggleMenu(e, "tiktok")}
+                                <a onClick={(e) => {
+                                    toggleMenu(e, "tiktok")
+                                    setReward('600')
+                                }}
                                     className={` mr-2 ml-2 btn btn-dark ${media.name== "tiktok"? "bg-success" : ""}`}
                                     id="tiktok-toggle">tiktok</a>
 
@@ -111,14 +122,16 @@ export default function SocialminingS1() {
                                 <button className="btn btn-outline-primary mr-2 mb-3">Back</button>
                             </a>
                         </Link>
-                        <Link href="/socialmining-s2">
+                        <Link href="/socialmining-s2" >
                             <a>
                                 <button className="btn btn-primary mr-3 mb-3">Continue</button>
+                               
                             </a>
                         </Link>
                     </div>
                 </div>
             </div>
+          
         </>
     )
 }
