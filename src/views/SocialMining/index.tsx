@@ -51,7 +51,6 @@ export default function SocialMining() {
                                 'twitter',
                                 'whatsapp',
                                 'facebook',
-
                             ],
                             padding: 12,          // padding within buttons (INTEGER)
                             radius: 4,            // the corner radius on each button (INTEGER)
@@ -82,7 +81,7 @@ export default function SocialMining() {
                 <NavMining/>
 
 
-            <div className="pt-3">
+            <div className="pt-3 pb-0">
 
 
                 <div className="row pt-3">

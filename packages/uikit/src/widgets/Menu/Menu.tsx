@@ -151,7 +151,7 @@ const Menu: React.FC<NavProps> = ({
         return "Adspace";
 
       case '/x-mining':
-        return "X-mining";
+        return "Social Mining";
 
       case '/aboutsosx':
         return "Aboutsosx";
@@ -159,14 +159,15 @@ const Menu: React.FC<NavProps> = ({
       case '/faq':
         return "Faq";
       case '/socialmining-s1':
-        return "Socialmining";
+        return "Social Mining";
       case '/socialmining-s2':
-        return "Socialmining";
+        return "Social Mining";
       case '/socialmining-s3':
-        return "Socialmining";
+        return "Social Mining";
       default:
         return;
     }
+    
   }
   const [preloader, setPreloader] = useState(true);
   useEffect(() => {
@@ -447,7 +448,7 @@ const Menu: React.FC<NavProps> = ({
           </ul>
         </div>
       </div>
-      <div className={`content-body ${router.pathname == "/xgame" ? "" : "size-child"}  ${preloader ? 'content-preloader' : ''}`}>
+      <div className={`content-body ${preloader ? 'content-preloader' : ''}`}>
 
         {children}
       </div>

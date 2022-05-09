@@ -8,7 +8,7 @@ export default function SocialminingS3() {
         <>
                 <NavMining/>
 
-            <div className="container-fluid pt-3">
+            <div className="container-fluid pt-3 pb-0">
 
                 <div className="card p-3 mt-3">
                     <div className="row">

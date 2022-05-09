@@ -71,7 +71,7 @@ export default function SocialminingS2(props) {
 
 
 
-			<div className="container-fluid pt-3">
+			<div className="container-fluid pt-3 pb-0">
 
 
 				<div className="row pt-3">

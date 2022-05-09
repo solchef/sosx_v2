@@ -159,7 +159,6 @@ export default function Challenge() {
                                 name: "metadata",
                                 type: "string"
                             }
-
                         ]
                     },
                     message: {
@@ -174,11 +173,10 @@ export default function Challenge() {
             }, null, 2)
             
             await server.files.write(`/challenge-${name}/votes/${account}.json`, forIPFS, {create: true})
-            toastSuccess(t('Vote created!'))
+            toastSuccess(t('You have voted for the challenge!'))
         } else {
             toastError(t('Error'), t('Unable to sign payload'))
         }
-
     }
 
     const ReadMore = ({ children }) => {
@@ -201,7 +199,7 @@ export default function Challenge() {
 
     return (
         <div className="container-fluid">
-            <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/votechallenge'> Back   </Link> </p>
+            <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/votechallenge'> Back </Link> </p>
              {challenge[0] && (
             <div className="ml-2 row">
                 <div className="col-12 overflow-auto col-lg-8">
@@ -223,7 +221,6 @@ export default function Challenge() {
                     <div className="row pb-5 pt-5">
                         <div className=" col-11">
 
-
                         <form onSubmit={handleSubmit}>
                             {votesList.includes(account) ? (
                                 <button disabled className="btn btn-primary w-25 font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>You already voted</button>
@@ -234,7 +231,6 @@ export default function Challenge() {
 
                         </div>
                     </div>
-
 
                 </div>
                 
