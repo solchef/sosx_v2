@@ -159,10 +159,11 @@ export default function Staking() {
 							<p className="success mb-0 fs-12">Unlocked</p>
 							<h4 className="mb-0 font-w600  fs-18 pb-2">{numberOfActiveStake}</h4>
 							<div className="progress mt-4 mb-4">
-								<div className="progress-bar bg-success" aria-valuenow="85" aria-valuemin="0"
-									aria-valuemax="100" style={{ width: '85%', height: '30px' }} role="progressbar">
+
+								<div className="progress-bar bg-success"  >
 									<span className="sr-only">85% Complete (success)</span>
 								</div>
+								
 							</div>
 
 

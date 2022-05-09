@@ -173,7 +173,8 @@ export default function Challenge() {
             }, null, 2)
             
             await server.files.write(`/challenge-${name}/votes/${account}.json`, forIPFS, {create: true})
-            toastSuccess(t('You have voted for the challenge!'))
+            toastSuccess(t('Vote created!'))
+            getData()
         } else {
             toastError(t('Error'), t('Unable to sign payload'))
         }
@@ -223,7 +224,7 @@ export default function Challenge() {
 
                         <form onSubmit={handleSubmit}>
                             {votesList.includes(account) ? (
-                                <button disabled className="btn btn-primary w-25 font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>You already voted</button>
+                                <button disabled className="btn btn-primary w-25 font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Voted</button>
                                 ) : (
                                 <button className="btn btn-primary w-25 font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Vote This Challenge</button>
                             )}
