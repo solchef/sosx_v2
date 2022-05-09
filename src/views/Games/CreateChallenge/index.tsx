@@ -203,11 +203,11 @@ const CreateChallenge = () => {
 
   return (
     <>
-    <form onSubmit={uploadVideo}>
+    {/* <form onSubmit={uploadVideo}>
               <input name="file" type="file" />
 
               <button type="submit">Upload File</button>
-            </form>
+            </form> */}
                     <div className="container-fluid">
                       <div className="row">
                         <div className="col-xl-7">
@@ -266,10 +266,7 @@ const CreateChallenge = () => {
                                   >
                                   Submit
                                 </button>
-                                <p color="failure" >
-                                {'You need at least %count% voting power to publish a challenge'}
-                                
-                                </p>
+                                <p>  {'You need at least %count% voting power to publish a challenge'}  </p>
                                 <button  type="button"  onClick={onPresentVoteDetailsModal} >
                                   {t('Check voting power')}
                                 </button>
