@@ -11,6 +11,7 @@ import useToast from 'hooks/useToast'
 import { generatePayloadData } from "views/Games/helpers";
 import Link from "next/link";
 import { useMediaPredicate } from "react-media-hook";
+import Image from "next/image"
 
 const server = create({
     url: "http://127.0.0.1:5001",
@@ -213,12 +214,12 @@ export default function Challenge() {
                     <div className="col-12 col-lg-8">
                         <div className='text-muted font-weight-bold'>
                             <h1 className='font-weight-bold'>{name}</h1>
-                            {/* <div className='p-3 d-flex'>
-                            <img className='mr-2' width='25px' height='25px' src='images/btc.png' />
+                            <div className='p-3 d-flex'>
+                            <Image width='24px' height='24px' src="/images/btcc.png" />
                             <p>             PancakeSwap
                                 by
                                 0x3799...4861</p>
-                        </div> */}
+                        </div>
                             <ReadMore>
                                 {challenge[0].challenge.payload.body}
                             </ReadMore>
@@ -243,19 +244,17 @@ export default function Challenge() {
 
                         <div className="row">
                             <div className="card border col-11">
-                                <h5 className="card-header font-weight-bold ">{votesList.length} Votes</h5>
+                                <h5 className="card-header font-weight-bold ">{votesList.length} Votes </h5>
 
 
-                                <table className="table font-weight-bold ">
-                                    <tbody>
-                                        {votesList.map((vote, index) =>
-                                            <tr>
-                                                <th scope="row">{index + 1}</th>
-                                                <td className='text-white text-right'>{vote}</td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </table>
+                                {votesList.map((vote, index) =>
+                                    <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+
+                                        <div> {index + 1}</div>
+                                        <div className="ml-auto text-white" >{vote}</div>
+                                    </div>
+                                )}
+
 
 
                             </div>
@@ -268,10 +267,31 @@ export default function Challenge() {
                                 <h5 className=" border-bottom font-weight-bold p-1">Information</h5>
 
 
-                                <div className="row p-1">
-                                    <div className="col-6">network	</div>
-                                    <div className="col-6">{challenge[0].challenge.payload.metadata.network}</div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >network	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
                                 </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >IPFS	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >Voting system 	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >Start date	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >End date	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >Snapshot	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+
 
 
                             </div>
@@ -280,16 +300,18 @@ export default function Challenge() {
                             <div className="card border col-11">
                                 <h5 className="font-weight-bold ">Current results
                                 </h5>
-                                <div className="row p-2">
-                                    <div className="col-6">The Votes	</div>
-                                    <div className="col-6">{votesList.length} </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >The Votes	</div>
+                                    <div className="ml-auto text-white" >{votesList.length} </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
 
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     )
 }
