@@ -67,3 +67,4 @@ export const getPredictionsContract = (signer?: Signer | Provider) => {
 
 
 
+

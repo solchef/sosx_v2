@@ -28,12 +28,12 @@ import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
 import NavGame from '../NavGame'
 import { CID, create } from 'ipfs-http-client'
-import { Editor } from 'react-draft-wysiwyg';
 
 const server = create({
   url: "http://127.0.0.1:5001",
   
 });
+
 
 const EasyMde = dynamic(() => import('components/EasyMde'), {
   ssr: false,
@@ -65,7 +65,7 @@ const CreateChallenge = () => {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-
+    
     try {
       setIsLoading(true)
       const challenge = JSON.stringify({
