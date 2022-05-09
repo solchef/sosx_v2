@@ -272,7 +272,7 @@ export default function Challenge() {
                                 {votesList.map((vote, index) => 
                                     <tr>
                                         <th scope="row">{index + 1}</th>
-                                        <td className='text-white text-right'>{vote}</td>
+                                        <td className='text-white text-right'>{`${String(vote).slice(0, 5)}...${String(vote).slice(-5)}`}</td>
                                     </tr>
                                 )}
                                 </tbody>
