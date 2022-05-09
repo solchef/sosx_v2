@@ -24,24 +24,24 @@ export default function Staking() {
 	const [totalAmountStaked, setTotalAmountStaked] = useState(0);
 	const [numberOfActiveStake, setNumberOfActiveStake] = useState(0);
 	const contract = useStakingContract();
-	const { account, active, library} = useWeb3React<Web3Provider>()
+	const { account, active, library } = useWeb3React<Web3Provider>()
 
-	useEffect(()=> {
+	useEffect(() => {
 
-	
-			// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
-		
+
+		// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
+
 
 		const referral = async () => {
 			console.log(await contract.owner());
 			// const erc20 = new Contract('addressContract', '', library.getSigner());
 
 			// console.log(erc20)
-			
+
 		}
 
 		referral();
-		
+
 	});
 
 
@@ -103,11 +103,11 @@ export default function Staking() {
 									<div className="d-flex justify-content-between align-items-center pb-1">
 									</div>
 									<div className="d-flex justify-content-between align-items-center">
-<<<<<<< HEAD
+
 										<select value={stakingClass} >
-=======
-										<select value={stakingClass} onChange={(e) => setStakingClass(e.target.value)} >
->>>>>>> 2628ba9c72dd443025a995e0488c67507a6c804d
+
+											{/* <select value={stakingClass} onChange={(e) => setStakingClass(e.target.value)} > */}
+
 											<option hidden>Select Duration </option>
 											<option value={1}>3 </option>
 											<option value={2}>6 </option>
@@ -175,13 +175,12 @@ export default function Staking() {
 					</div>
 
 					<div className="col-xl-4">
-<<<<<<< HEAD
+
 						<div className="card  d-flex flex-column justify-content-between ">
 							<div className="card-header border-0 p-2">
-=======
-						<div className="card ">
-							<div className="card-header border-0 pb-0">
->>>>>>> 2628ba9c72dd443025a995e0488c67507a6c804d
+
+								{/* <div className="card ">
+							<div className="card-header border-0 pb-0"> */}
 								<div col-3>
 
 									<div className="token-balance-icon mb-3">
