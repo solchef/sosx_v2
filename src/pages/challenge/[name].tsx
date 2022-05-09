@@ -212,8 +212,8 @@ export default function Challenge() {
                 <div className="ml-2 row">
                     <div className="col-12 col-lg-8">
                         <div className='text-muted font-weight-bold'>
-                            <h1 className='font-weight-bold'>{name}</h1>
-                            <div className='p-3 d-flex'>
+                            <h1 className='font-weight-bold mb-2'>{name}</h1>
+                            <div className='pb-2 d-flex'>
                                 <img className='mr-1' width='24px' height='24px' src="images/btcc.png" />
                                 <p>             PancakeSwap
                                     by
@@ -221,6 +221,7 @@ export default function Challenge() {
                             </div>
                             <ReadMore>
                                 {challenge[0].challenge.payload.body}
+
                             </ReadMore>
 
 
@@ -250,6 +251,7 @@ export default function Challenge() {
                                     <div className="row d-flex justify-content-between pl-4 pr-4 pt-3">
 
                                         <div> {index + 1}</div>
+                                        <div className="ml-auto text-white"> level</div>
                                         <div className="ml-auto text-white" >{vote}</div>
                                     </div>
                                 )}
@@ -290,9 +292,6 @@ export default function Challenge() {
                                     <div >Snapshot	</div>
                                     <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
                                 </div>
-
-
-
                             </div>
                         </div>
                         <div className="row">
