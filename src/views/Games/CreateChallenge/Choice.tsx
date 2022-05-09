@@ -20,7 +20,7 @@ const Choice: React.FC<ChoiceProps> = ({ onRemove, onTextInput, ...props }) => {
 
   return (
     <div className='d-flex w-100' > 
-      <input  id="rulename" onChange={handleChange} type="text" ng-modal="artist1"  className="inputrule mb-3 "
+      <input  id="rulename" onChange={handleChange} type="text" ng-modal="artist1"  className="inputrule  w-100 mb-3 "
                           placeholder="Enter Rule" />
       {onRemove && (
         <div >

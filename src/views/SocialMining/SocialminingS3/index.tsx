@@ -15,7 +15,7 @@ export default function SocialminingS3() {
 
   const handlePost = async (e) => {
     e.preventDefault();
-
+    const reward=localStorage.getItem("reward");
     // reset error and message
     setError('');
     setMessage('');
@@ -27,6 +27,7 @@ export default function SocialminingS3() {
     let post = {
       email_address,
       socialpostlink,
+      reward,
         createdAt: new Date().toISOString(),
     };
     console.log(post)
@@ -56,7 +57,7 @@ export default function SocialminingS3() {
     <>
       <NavMining />
       <form onSubmit={handlePost}>
-      <div className="container-fluid pt-3 pb-0">
+      <div className="container-fluid pt-3">
         <div className="card p-3 mt-3">
           <div className="row">
             <div className="col-lg-6">
@@ -106,6 +107,7 @@ export default function SocialminingS3() {
                   </div>
                 </div>
                 {/* <button value="submit">Save</button> */}
+             
             </div>
 
             <div className="col-lg-6">

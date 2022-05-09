@@ -3,6 +3,7 @@ import NavMining from '../NavMining';
 import { useState,useRef } from 'react'
 import { InlineShareButtons } from 'sharethis-reactjs';
 import {Popover, Overlay,Button,Tooltip } from 'react-bootstrap';
+import { useMediaPredicate } from "react-media-hook";
 
 
 export default function SocialminingS2(props) {
@@ -11,8 +12,13 @@ export default function SocialminingS2(props) {
 	const [show, setShow] = useState(false);
 	const target = useRef(null);
 
-	return (
-		<>
+ 
+    const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+
+  return (
+
+    <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
 		<Overlay target={target.current} show={show} placement="right">
         {({ placement, arrowProps, show: _show, popper, ...props }) => (
           <div
@@ -155,6 +161,6 @@ export default function SocialminingS2(props) {
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
