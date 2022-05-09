@@ -32961,7 +32961,7 @@ background-image: url("../images/create-challenge-img.png");
 .img-soc {
   height:100%;
   width:auto;
-  max-width:400px;
+  max-width:450px;
 }
 
 @media (min-width: 769px)  and (max-width: 1100px) {
@@ -32975,24 +32975,11 @@ background-image: url("../images/create-challenge-img.png");
     font-size: 11px;
   }
   }
-  @media (min-width: 1800px) {
-    .size-child-swap {
-      padding:1000px !important;
-    }
-    .size-child-stake {
-      padding:200px;
-    }
-  }
-  @media (min-width: 576px) and (max-width: 768px) {
-    .size-child-swap {
-      padding:85px !important;
-    }
 
-  }
 
-  @media (min-width: 1050px) and (max-width: 1800px) {
+  @media (min-width: 900px) and  (max-width: 1200px) {
     .size-child-swap {
-      padding:170px !important;
-    }
+      padding-right:100px !important;
+      padding-left:100px !important;    }
    
   }

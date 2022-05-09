@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link';
 import NavMining from '../NavMining';
+import { useMediaPredicate } from "react-media-hook";
 
 const socialMedias = [
     { name: 'twitter', addres: 'https://twitter', reward: '500' },
@@ -18,25 +19,26 @@ export default function SocialminingS1() {
         setCopySuccess('')
     };
 
-    return (
-        <>
+ 
+    const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
+  return (
+
+    <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
             <NavMining />
 
             <div className="container-fluid mt-3">
 
                 <div className="card">
                     <div className="row">
-                        <div className="col-lg-5 col-12">
-                            <div className="postimg m-3">
+                        <div className="col-xl-5 col-12">
+                            <div className="postimg mt-5">
                                 <img className="img-soc" src="images/post18.jpeg" />
                             </div>
                         </div>
 
-
-
-
-                        <div className="col-lg-7 pl-3 pt-3">
+                        <div className="col-xl-7 pl-3 pt-3">
                             <h3 className="pr-3 pb-3">Post image &amp; caption on to your social media.</h3>
                             <div className="reward-box mr-3">
                                 <i className="fab fa-facebook-f pr-2"></i><i className="fab fa-twitter pr-1"></i> <i
@@ -119,6 +121,6 @@ export default function SocialminingS1() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

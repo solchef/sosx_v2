@@ -1,11 +1,18 @@
 import Link from 'next/link';
 import NavMining from '../NavMining';
+import { useMediaPredicate } from "react-media-hook";
 
 
 export default function SocialminingS3() {
    
-    return (
-        <>
+  
+ 
+    const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+
+  return (
+
+    <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
                 <NavMining/>
 
             <div className="container-fluid pt-3">
@@ -92,6 +99,6 @@ export default function SocialminingS3() {
                 </div>
             </div>
 
-        </>
+        </div>
     )
 }

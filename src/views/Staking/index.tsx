@@ -6,6 +6,7 @@ import { getStakingContract } from 'utils/contractHelpers'
 import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 import { Contract } from '@ethersproject/contracts'
+import { useMediaPredicate } from "react-media-hook";
 
 
 const BorderCard = styled.div`
@@ -44,10 +45,12 @@ export default function Staking() {
 
 	});
 
+	const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
 	return (
 		<>
-			<div className="container-fluid">
+			<div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
 
 
 				<div className="row">
