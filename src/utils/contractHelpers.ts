@@ -65,5 +65,3 @@ export const getPredictionsContract = (signer?: Signer | Provider) => {
   return getContract(predictionsAbi, getPredictionsAddress(), signer) as unknown as Predictions
 }
 
-
-

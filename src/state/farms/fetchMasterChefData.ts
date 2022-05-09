@@ -4,14 +4,14 @@ import { multicallv2 } from 'utils/multicall'
 import { SerializedFarmConfig } from '../../config/constants/types'
 import { SerializedFarm } from '../types'
 import { getMasterChefAddress } from '../../utils/addressHelpers'
-import { getMasterchefContract } from '../../utils/contractHelpers'
+// import { getMasterchefContract } from '../../utils/contractHelpers'
 
 const masterChefAddress = getMasterChefAddress()
-const masterChefContract = getMasterchefContract()
+// const masterChefContract = getMasterchefContract()
 
 export const fetchMasterChefFarmPoolLength = async () => {
-  const poolLength = await masterChefContract.poolLength()
-  return poolLength
+  // const poolLength = await masterChefContract.poolLength()
+  // return poolLength
 }
 
 const masterChefFarmCalls = (farm: SerializedFarm) => {
