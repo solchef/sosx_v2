@@ -34,13 +34,13 @@ export default function Challenge() {
     const getData = async () => {
         if (name) {
                 let challenge = [];
-                for await (const resultPart of server.files.ls("/")) {
+                for await (const resultPart of server.files.ls("/challenges")) {
                     let challengeJson;
                     let vote;
                     let votesList = []
                 
                     if (resultPart.name === challengeName) {
-                        for await (const cha of server.files.ls(`/${resultPart.name}`)) {
+                        for await (const cha of server.files.ls(`/challenges/${resultPart.name}`)) {
                             const chunks = [];
 
                             if (cha.name == 'challenge.json') {
@@ -53,7 +53,7 @@ export default function Challenge() {
                                 );
                             }
                             if (cha.name == 'votes') {
-                                for await (const vote of server.files.ls(`/${resultPart.name}/votes`)) {
+                                for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes`)) {
                                     votesList.push(vote.name.slice(0, -5))
                                 }
                             } 
@@ -173,7 +173,7 @@ export default function Challenge() {
                 }
             }, null, 2)
             
-            await server.files.write(`/challenge-${name}/votes/${account}.json`, forIPFS, {create: true})
+            await server.files.write(`/challenges/challenge-${name}/votes/${account}.json`, forIPFS, {create: true})
             toastSuccess(t('Vote created!'))
             getData()
         } else {

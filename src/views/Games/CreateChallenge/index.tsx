@@ -23,6 +23,12 @@ import VoteDetailsModal from '../components/VoteDetailsModal'
 import NavGame from '../NavGame'
 import { CID, create } from 'ipfs-http-client'
 import ReactMarkdown from 'react-markdown'
+// import MDEditor from './MDEdit,or'
+
+// const MDEditor = dynamic(
+//   () => import("@uiw/react-md-editor"),
+//   { ssr: false }
+// );
 
 const server = create({
   url: "http://127.0.0.1:5001",
@@ -106,12 +112,12 @@ const CreateChallenge = () => {
         }, null, 2)
 
         const challengeName = `challenge` + `-${name.replaceAll(' ', '-')}`
-        await server.files.mkdir(`/${challengeName}`)
-        await server.files.mkdir(`/${challengeName}/votes`)
-        await server.files.write(`/${challengeName}/challenge.json`, forIPFS, {create: true})
+        await server.files.mkdir(`/challenges/${challengeName}`)
+        await server.files.mkdir(`/challenges/${challengeName}/votes`)
+        await server.files.write(`/challenges/${challengeName}/challenge.json`, forIPFS, {create: true})
 
         toastSuccess(t('challenge created!'))
-        router.push(`challenge/${name}`)
+        router.push(`challenge/${name.replaceAll(' ', '-')}`)
       } else {
         toastError(t('Error'), t('Unable to sign payload'))
       }
@@ -200,15 +206,15 @@ const CreateChallenge = () => {
 
   //////////////////////////////////////////
   // Priview
-
+  const str = `Omar`
 
   return (
     <>
-    <form onSubmit={uploadVideo}>
+    {/* <form onSubmit={uploadVideo}>
               <input name="file" type="file" />
 
               <button type="submit">Upload File</button>
-            </form>
+            </form> */}
                     <div className="container-fluid">
                       <div className="row">
                         <div className="col-xl-7">
@@ -236,7 +242,8 @@ const CreateChallenge = () => {
                                   options={options}
                                   required
                                   />
-                                 {/* <MDEditor height={200} value={value} onChange={setValue} /> */}
+                                 {/* <MDEditor height={200} value={str} /> */}
+                                 {/* <MDEditor /> */}
                               {formErrors.body && fieldsState.body && <FormErrors errors={formErrors.body} />}
                             </div>
                                 {body && (
@@ -296,9 +303,9 @@ const CreateChallenge = () => {
 										</ul>
 									</div>
 								</div>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+            </div>
+          </div>
                     
 </>
 

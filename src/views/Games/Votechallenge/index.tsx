@@ -10,18 +10,18 @@ const server = create({
 export default function Votechallenge() {
 	const [challenges, setChallenges] = useState<any[]>([]);
 	const obj = {};
-  
+
 	useEffect(() => {
 	  const getData = async () => {
 	  let challenges = [];
-		for await (const resultPart of server.files.ls("/")) {
+		for await (const resultPart of server.files.ls("/challenges")) {
 		  let challenge;
 		  let vote;
   
-		  for await (const cha of server.files.ls(`/${resultPart.name}`)) {
+		  for await (const cha of server.files.ls(`/challenges/${resultPart.name}`)) {
 			  const chunks = [];
 			  if (cha.name == 'votes') {
-				  let votes = await server.files.stat(`/${resultPart.name}/votes`)
+				  let votes = await server.files.stat(`/challenges/${resultPart.name}/votes`)
 				  vote = votes.blocks;
 			  } 
   
@@ -55,7 +55,7 @@ export default function Votechallenge() {
         <div className="row pt-3">
           {challenges.length > 0 ? (
             <>
-              {challenges.map((camp) => (
+              {challenges.sort((a, b) => a.votes - b.votes).reverse().map((camp) => (
                     
                     <div className="col-xl-4 col-md-6">
                       <div className="card overflow-hidden">
@@ -86,7 +86,7 @@ export default function Votechallenge() {
                             </span>
                             <span className="fs-12">Votes</span>
                           </div>
-                          <Link href={`/challenge/${camp.challenge.payload.name}`}>
+                          <Link href={`/challenge/${String(camp.challenge.payload.name).replaceAll(' ', '-')}`}>
                           <button type="button" className="btn btn-primary ">
                             <i className="fa-solid fa-check-to-slot pr-2"></i>Details
                           </button>
