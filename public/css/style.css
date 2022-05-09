@@ -12111,7 +12111,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   }
   @media only screen and (max-width: 1400px) {
     .content-body {
-      margin-left: 18rem; } }
+      margin-left: 14rem; } }
 
 .bell img {
   -webkit-animation: ring 8s .7s ease-in-out infinite;
@@ -30011,11 +30011,9 @@ span#counter {
     float: left !important; }
   .rtl .float-xl-none {
     float: none !important; } }
-    @media (min-width: 1600px) {
-      .size-child {
-        padding:200px;
-      }
-    }
+
+
+
 @media (min-width: 1440px) {
   .rtl .float-xxl-left {
     float: right !important; }
@@ -32976,4 +32974,25 @@ background-image: url("../images/create-challenge-img.png");
   .blueprint-header-display span {
     font-size: 11px;
   }
+  }
+  @media (min-width: 1800px) {
+    .size-child-swap {
+      padding:1000px !important;
+    }
+    .size-child-stake {
+      padding:200px;
+    }
+  }
+  @media (min-width: 576px) and (max-width: 768px) {
+    .size-child-swap {
+      padding:85px !important;
+    }
+
+  }
+
+  @media (min-width: 1050px) and (max-width: 1800px) {
+    .size-child-swap {
+      padding:170px !important;
+    }
+   
   }

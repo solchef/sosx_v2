@@ -447,7 +447,7 @@ const Menu: React.FC<NavProps> = ({
           </ul>
         </div>
       </div>
-      <div className={`content-body ${router.pathname == "/xgame" ? "" : "size-child"}  ${preloader ? 'content-preloader' : ''}`}>
+      <div className={`content-body ${preloader ? 'content-preloader' : ''}`}>
 
         {children}
       </div>
