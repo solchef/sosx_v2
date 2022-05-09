@@ -11,7 +11,6 @@ import useToast from 'hooks/useToast'
 import { generatePayloadData } from "views/Games/helpers";
 import Link from "next/link";
 import { useMediaPredicate } from "react-media-hook";
-import Image from "next/image"
 
 const server = create({
     url: "http://127.0.0.1:5001",
@@ -215,11 +214,11 @@ export default function Challenge() {
                         <div className='text-muted font-weight-bold'>
                             <h1 className='font-weight-bold'>{name}</h1>
                             <div className='p-3 d-flex'>
-                            <Image width='24px' height='24px' src="/images/btcc.png" />
-                            <p>             PancakeSwap
-                                by
-                                0x3799...4861</p>
-                        </div>
+                                <img className='mr-1' width='24px' height='24px' src="images/btcc.png" />
+                                <p>             PancakeSwap
+                                    by
+                                    0x3799...4861</p>
+                            </div>
                             <ReadMore>
                                 {challenge[0].challenge.payload.body}
                             </ReadMore>
@@ -244,11 +243,11 @@ export default function Challenge() {
 
                         <div className="row">
                             <div className="card border col-11">
-                                <h5 className="card-header font-weight-bold ">{votesList.length} Votes </h5>
+                                <h5 className="card-header p-0 pb-3 font-weight-bold ">{votesList.length} 	&nbsp;	&nbsp;Votes </h5>
 
 
                                 {votesList.map((vote, index) =>
-                                    <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div className="row d-flex justify-content-between pl-4 pr-4 pt-3">
 
                                         <div> {index + 1}</div>
                                         <div className="ml-auto text-white" >{vote}</div>
