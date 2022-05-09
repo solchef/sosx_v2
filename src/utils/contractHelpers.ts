@@ -27,7 +27,7 @@ import type {
   PancakeProfile,
   Masterchef,
   PointCenterIfo,
-  Staking,
+  // Staking,
 } from 'config/abi/types'
 import { useWeb3React } from '@web3-react/core'
 
@@ -36,29 +36,29 @@ const getContract = (abi: any, address: string, signer?: Signer | Provider) => {
   return new Contract(address, abi, signerOrProvider)
 }
 
-const { account, library } = useWeb3React<Provider>()
+// const { account, library } = useWeb3React<Provider>()
 
 
 
-export const getPointCenterIfoContract = (signer?: Signer | Provider) => {
-  return getContract(pointCenterIfo, getPointCenterIfoAddress(), signer) as PointCenterIfo
-}
-export const getCakeContract = (signer?: Signer | Provider) => {
-  return getContract(cakeAbi, tokens.cake.address, signer) as Cake
-}
-export const getProfileContract = (signer?: Signer | Provider) => {
-  return getContract(profileABI, getPancakeProfileAddress(), signer) as PancakeProfile
-}
+// export const getPointCenterIfoContract = (signer?: Signer | Provider) => {
+//   return getContract(pointCenterIfo, getPointCenterIfoAddress(), signer) as PointCenterIfo
+// }
+// export const getCakeContract = (signer?: Signer | Provider) => {
+//   return getContract(cakeAbi, tokens.cake.address, signer) as Cake
+// }
+// export const getProfileContract = (signer?: Signer | Provider) => {
+//   return getContract(profileABI, getPancakeProfileAddress(), signer) as PancakeProfile
+// }
 
 
-export const getMasterchefContract = (signer?: Signer | Provider) => {
-  return getContract(masterChef, getMasterChefAddress(), signer) as Masterchef
-}
+// export const getMasterchefContract = (signer?: Signer | Provider) => {
+//   return getContract(masterChef, getMasterChefAddress(), signer) as Masterchef
+// }
 
 
 
 export const getStakingContract = (signer?: Signer | Provider) => {
-  return getContract(sosxStakingAbi, getstakingContractAddress(), signer) as Staking;
+  // return getContract(sosxStakingAbi, getstakingContractAddress(), signer) as Staking;
 }
 
 export const getPredictionsContract = (signer?: Signer | Provider) => {
