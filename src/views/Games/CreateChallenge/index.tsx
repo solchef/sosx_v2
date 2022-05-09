@@ -1,11 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState, useMemo } from 'react'
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Heading,
-  useModal,
-} from '@pancakeswap/uikit'
+import { CardBody, useModal } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
 import times from 'lodash/times'
 import isEmpty from 'lodash/isEmpty'
@@ -28,7 +22,7 @@ import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
 import NavGame from '../NavGame'
 import { CID, create } from 'ipfs-http-client'
-import { Editor } from 'react-draft-wysiwyg';
+import ReactMarkdown from 'react-markdown'
 
 const server = create({
   url: "http://127.0.0.1:5001",
@@ -40,6 +34,7 @@ const EasyMde = dynamic(() => import('components/EasyMde'), {
 })
 
 const CreateChallenge = () => {
+  const router = useRouter();
   const [state, setState] = useState<FormState>({
     name: '',
     body: '',
@@ -116,6 +111,7 @@ const CreateChallenge = () => {
         await server.files.write(`/${challengeName}/challenge.json`, forIPFS, {create: true})
 
         toastSuccess(t('challenge created!'))
+        router.push(`challenge/${name}`)
       } else {
         toastError(t('Error'), t('Unable to sign payload'))
       }
@@ -201,6 +197,11 @@ const CreateChallenge = () => {
     }
   }, [initialBlock, setState])
 
+
+  //////////////////////////////////////////
+  // Priview
+
+
   return (
     <>
     <form onSubmit={uploadVideo}>
@@ -240,16 +241,12 @@ const CreateChallenge = () => {
                             </div>
                                 {body && (
                                   <div >
-                                    <Card>
-                                      <CardHeader>
-                                        <Heading as="h3" scale="md">
-                                          {t('Preview')}
-                                        </Heading>
-                                      </CardHeader>
+                                    {/* <Card> */}
+
                                       <CardBody p="0" px="24px">
-                                        {/* <ReactMarkdown>{body}</ReactMarkdown> */}
+                                        <ReactMarkdown>{body}</ReactMarkdown>
                                       </CardBody>
-                                    </Card>
+                                    {/* </Card> */}
                                       </div>
                                 )} 
                             </div>
@@ -287,25 +284,22 @@ const CreateChallenge = () => {
                             <div className="card-header align-items-start border-0">
 									<div>
 										<h4 className="fs-20 mb-3">Today's Challenge</h4>
-										<span className="fs-12 font-weight-bold success">@challengecreator-1</span>
+										<span className="fs-12 font-weight-bold success">{ account ? `${String(account).slice(0, 5)}...${String(account).slice(-5)}` : `Connect wallet`}</span>
 
-										<h4 className="fs-18 mb-0 pb-2">Challenge Title</h4>
-										<span className="fs-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-											do
-											eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-											suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
-											vel
-											facilisis. </span>
+										<h4 className="fs-18 mb-0 pb-2" id='displayTitle'>{name ? name : "Challenge Title"}</h4>
+										<span className="fs-12">{body} </span>
 										<h4 className="fs-12 text-white pt-3">Rules</h4>
 										<ul className="fs-12">
-											<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
-											<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
+                      {choices.map((choice) => 
+											<li><i className="fa-solid fa-check pr-2"></i>{choice.value}</li>
+                      )}
 										</ul>
 									</div>
 								</div>
                             </div>
                         </div>
                     </div>
+                    
 </>
 
   )
