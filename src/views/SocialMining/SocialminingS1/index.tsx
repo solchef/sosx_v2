@@ -15,7 +15,7 @@ export default function SocialminingS1() {
     const toggleMenu = (event, type) => {
         event.stopPropagation();
         socialMedias.map(socialMedia => socialMedia.name==type ? setMedia(socialMedia) :'');
-     
+        setCopySuccess('')
     };
 
     return (
