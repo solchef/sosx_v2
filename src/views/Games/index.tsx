@@ -43,10 +43,10 @@ export default function Game() {
 	return (
 		<>
 
-			<div className="game container-fluid">
-				<div className="row">
-					<div className="col-12 col-sm-6 col-lg-7 col-xl-8">
-						<div className="row">
+			<div className="game size-child-game container-fluid">
+				<div className="row m-1">
+					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 m-0">
+						<div className="row m-0">
 							<div className={`card3 col-12 text-center ${biggerThan1200 && "p-0"}
  col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
 
@@ -55,7 +55,7 @@ export default function Game() {
 									<div className="pt-4 pr-4 mobile-hide-card ">
 										<img src="images/prize-pool-icon.png" style={{ width: '40px', height: '40px' }} />
 									</div>
-									<div className="feature-text">
+									<div className="feature-text  mt-2">
 										<span className="main-pink fs-14 font-weight-bold">Prize Pool</span>
 										<h3 className="fs-40">$1,000.00</h3>
 
@@ -92,10 +92,10 @@ export default function Game() {
 								</div>
 
 							</div>
-							<div className=" p-0 col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
+							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
 								<div className="card-header align-items-start border-0">
 									<div>
-										<h4 className="fs-20 mb-3">Today's Challenge</h4>
+										<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
 										<span className="fs-12 font-weight-bold success">@challengecreator-1</span>
 
 										<h4 className="fs-18 mb-0 pb-2">Challenge Title</h4>
@@ -119,10 +119,10 @@ export default function Game() {
 							</div>
 						</div>
 
-						<div className="row">
+						<div className="row m-0">
 
 
-							<div className="card3  p-3">
+							<div className="card3 p-3">
 
 								<div className="row d-flex justify-content-between p-4 align-items-end">
 									<div>
@@ -375,7 +375,7 @@ export default function Game() {
 
 						</div>
 					</div>
-					<div className="col-12 col-sm-6 col-lg-5 col-xl-4">
+					<div className="col-12 col-sm-6 col-lg-5 col-xl-4 m-0">
 						<div className="card3 overflow-hidden">
 							<div className="card3-header">
 
@@ -384,7 +384,7 @@ export default function Game() {
 							<div className="d-flex flex-column p-3 ">
 								<Link href="/createchallenge">
 
-									<button className="btn btn-primary">Create Challenge</button>
+									<button className="btn btn-success">Create Challenge</button>
 								</Link>
 
 								<Link href="/votechallenge">
@@ -405,11 +405,11 @@ export default function Game() {
 							</div>
 
 
-					
 
 
 
-							<ul className="nav3 nav-rank nav3-tabs butten nav3-justified mb-3">
+
+							<ul className="nav3  p-2 nav-rank nav3-tabs butten nav3-justified mb-3">
 								<li className="nav3-item">
 									<a className="nav3-link active font-weight-bold rounded text-nowrap" href="#lvl1">Level 1</a>
 								</li>
@@ -559,7 +559,7 @@ export default function Game() {
 				</div>
 			</div>
 
-	
+
 		</>
 	)
 }

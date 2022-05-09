@@ -1,3 +1,4 @@
+import { useMediaPredicate } from "react-media-hook";
 import Link from "next/link";
 import NavMining from "../NavMining";
 import axios from "axios";
@@ -7,6 +8,10 @@ import router from 'next/router';
 export default function SocialminingS3() {
   //    const posts = axios('http://localhost:3001/api/posts')
   //    console.log(posts)
+  
+      const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+
 
   const [email_address, setEmailAdrress] = useState("");
   const [socialpostlink, setsocialpostlink] = useState("");
@@ -54,7 +59,7 @@ export default function SocialminingS3() {
 };
 
   return (
-    <>
+    <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
       <NavMining />
       <form onSubmit={handlePost}>
       <div className="container-fluid pt-3">
@@ -174,19 +179,7 @@ export default function SocialminingS3() {
               </a>
             </Link>
 
-           
-                <button
-                  value="submit"
-                  className="btn btn-primary mr-3 mb-3"
-                  onClick={() => router.replace('/x-mining')}
-                >
-                  Claim Your Tokens
-                </button>
-             
-          </div>
         </div>
-      </div>
-      </form>
-    </>
-  );
+    )
 }
+

@@ -30,7 +30,7 @@ const Choices: React.FC<ChoicesProps> = ({ choices, onChange }) => {
 
       <h4 className="p-2">Rules</h4>
       <div className="row">
-        <div className="input-group col-9">
+        <div className="input-group col-8">
           {choices.map(({ id, value }, index) => {
             const handleTextInput = (newValue: string) => {
               const newChoices = [...choices]
@@ -60,7 +60,7 @@ const Choices: React.FC<ChoicesProps> = ({ choices, onChange }) => {
 
 
         </div>
-        <div className="input-group-btn col-3">
+        <div className="input-group-btn col-4">
           <button onClick={addChoice} disabled={!hasMinimumChoices} type="button" className="btn btn-primary" ng-click="addArtistChoice()"><span
             className="glyphicon glyphicon-plus mb-3"></span> <i
               className="fa fa-plus mr-1"></i>Add Rule</button>

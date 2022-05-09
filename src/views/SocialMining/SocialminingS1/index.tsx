@@ -2,6 +2,7 @@ import { useEffect, useState , createContext } from 'react'
 import { Link as reactLink} from 'react-router-dom';
 import Link from 'next/link';
 import NavMining from '../NavMining';
+import { useMediaPredicate } from "react-media-hook";
 import SocialminingS3 from '../SocialminingS3';
 
 const socialMedias = [
@@ -19,70 +20,72 @@ export default function SocialminingS1() {
 
         setReward(type)
         event.stopPropagation();
-        socialMedias.map(socialMedia => socialMedia.name==type ? setMedia(socialMedia) :'');
+        socialMedias.map(socialMedia => socialMedia.name == type ? setMedia(socialMedia) : '');
         setCopySuccess('')
     };
+
+
+    const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+    const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+
     console.log(reward)
     localStorage.setItem('reward', reward)
     return (
-        <>
 
+        <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
             <NavMining />
 
             <div className="container-fluid mt-3">
 
                 <div className="card">
-                    <div className="row">
-                        <div className="col-lg-5 col-12">
-                            <div className="postimg m-3">
-                                <img className="img-soc" src="images/post18.jpeg" />
+                    <div className="row align-items-center">
+                        <div className="col-xl-5  align-items-center col-12">
+                            <div className=" img-soc align-items-center mx-auto ">
+
+
+
                             </div>
                         </div>
-                        <div className="col-lg-7 pl-3 pt-3">
+
+                        <div className="col-xl-7 pl-3 pt-3">
                             <h3 className="pr-3 pb-3">Post image &amp; caption on to your social media.</h3>
                             <div className="reward-box mr-3">
                                 <i className="fab fa-facebook-f pr-2"></i><i className="fab fa-twitter pr-1"></i> <i
                                     className="fab fa-tiktok pr-2"></i>
                                 <span>Reward = {media.reward} SOSX</span>
                             </div>
-                            <p className="pt-3 text-white pb-3">CAPTION:
+                       
+                                <p className="pt-3 pl-1 text-white pb-3">CAPTION:
+<div className="pt-2 pl-2 row">
+                                    <a onClick={(e) => toggleMenu(e, "twitter")} className={` btn btn-dark mr-2 ml-2 ${media.name == "twitter" ? "bg-success" : ""}`}
+                                        id="twitter-toggle" >Twitter</a>
 
-                                <a onClick={(e) => {
-                                    toggleMenu(e, "twitter")
-                                    setReward('500')
-                                }} className={` btn btn-dark mr-2 ml-2 ${media.name== "twitter" ? "bg-success" : ""}`}
-                                    id="twitter-toggle" >Twitter</a>
+                                    <a onClick={(e) => toggleMenu(e, "instagram")}
+                                        className={` mr-2 ml-2 btn btn-dark ${media.name == "instagram" ? "bg-success" : ""}`}
+                                        id="instagram-toggle">instagram</a>
 
-                                <a onClick={(e) => {
-                                    toggleMenu(e, "instagram")
-                                    setReward('200')
-                                }}
-                                    className={` mr-2 ml-2 btn btn-dark ${media.name== "instagram"? "bg-success" : ""}`}
-                                    id="instagram-toggle">instagram</a>
+                                    <a onClick={(e) => toggleMenu(e, "tiktok")}
+                                        className={` mr-2 ml-2 btn btn-dark ${media.name == "tiktok" ? "bg-success" : ""}`}
+                                        id="tiktok-toggle">tiktok</a>
+</div>
+                                </p>
+                        
 
-                                <a onClick={(e) => {
-                                    toggleMenu(e, "tiktok")
-                                    setReward('600')
-                                }}
-                                    className={` mr-2 ml-2 btn btn-dark ${media.name== "tiktok"? "bg-success" : ""}`}
-                                    id="tiktok-toggle">tiktok</a>
-
-                            </p>
                             <div className="postcaption" id="myCaption">
-                                <p style={{ display: media.name== "twitter"? "" : "none" }}>
+                                <p style={{ display: media.name == "twitter" ? "" : "none" }}>
                                     SOSX relaunching new SOSX Token next week 🚀<br /><br />
                                     Join twitter for updates: <br />
                                     {media.addres}
                                 </p>
 
-                                <p style={{ display: media.name== "instagram"? "" : "none" }}>
+                                <p style={{ display: media.name == "instagram" ? "" : "none" }}>
                                     SOSX relaunching new SOSX Token next week 🚀<br /><br />
                                     Join instagram for updates: <br />
                                     {media.addres}
 
                                 </p>
 
-                                <p style={{  display: media.name== "tiktok"? "" : "none" }}>
+                                <p style={{ display: media.name == "tiktok" ? "" : "none" }}>
                                     SOSX relaunching new SOSX Token next week 🚀<br /><br />
                                     Join tiktok for updates: <br />
                                     {media.addres}
@@ -131,7 +134,6 @@ export default function SocialminingS1() {
                     </div>
                 </div>
             </div>
-          
-        </>
+        </div>
     )
 }

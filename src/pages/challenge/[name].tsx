@@ -10,10 +10,11 @@ import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
 import { generatePayloadData } from "views/Games/helpers";
 import Link from "next/link";
+import { useMediaPredicate } from "react-media-hook";
 
 const server = create({
     url: "http://127.0.0.1:5001",
-    
+
 });
 
 export default function Challenge() {
@@ -30,7 +31,7 @@ export default function Challenge() {
         getData();
     }, [name]);
 
-    let challengeName = `challenge-${name}` 
+    let challengeName = `challenge-${name}`
     const getData = async () => {
         if (name) {
                 let challenge = [];
@@ -46,11 +47,6 @@ export default function Challenge() {
                             if (cha.name == 'challenge.json') {
                             for await (const chunk of server.cat(cha.cid)) {
                                 chunks.push(chunk);
-                                }
-                                const data = concat(chunks);
-                                challengeJson = JSON.parse(
-                                new TextDecoder().decode(data).toString()
-                                );
                             }
                             if (cha.name == 'votes') {
                                 for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes`)) {
@@ -59,15 +55,22 @@ export default function Challenge() {
                             } 
                             setVotesList(votesList)
                         }
-                        let challengeData = {
-                            challenge: challengeJson,
-                            votes: vote
+                        if (cha.name == 'votes') {
+                            for await (const vote of server.files.ls(`/${resultPart.name}/votes`)) {
+                                votesList.push(vote.name.slice(0, -5))
+                            }
                         }
-                        challenge.push(challengeData);
+                        setVotesList(votesList)
                     }
+                    let challengeData = {
+                        challenge: challengeJson,
+                        votes: vote
+                    }
+                    challenge.push(challengeData);
                 }
-                setChallenge(challenge);
-        } 
+            }
+            setChallenge(challenge);
+        }
     }
 
     const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
@@ -75,7 +78,7 @@ export default function Challenge() {
 
         const vote = JSON.stringify({
             ...generatePayloadData(),
-            address:account,
+            address: account,
             data: {
                 domain: {
                     name: 'snapshot',
@@ -122,9 +125,9 @@ export default function Challenge() {
         })
 
         const sig = await signMessage(connector, library, account, vote)
-        
+
         if (sig) {
-            const forIPFS =  JSON.stringify({
+            const forIPFS = JSON.stringify({
                 ...generatePayloadData(),
                 address: account,
                 sig: sig.toString(),
@@ -200,29 +203,35 @@ export default function Challenge() {
     };
 
 
+    const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+    const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+
     return (
-        <div className="container-fluid">
+
+        <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
+
             <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/votechallenge'> Back   </Link> </p>
-             {challenge[0] && (
-            <div className="ml-2 row">
-                <div className="col-12 overflow-auto col-lg-8">
-                    <div className='text-muted font-weight-bold'>
-                        <h1 className='font-weight-bold'>{name}</h1>
-                        {/* <div className='p-3 d-flex'>
-                            <img className='mr-2' width='25px' height='25px' src='images/btc.png' />
-                            <p>             PancakeSwap
-                                by
-                                0x3799...4861</p>
-                        </div> */}
-                        <ReadMore>
-                            {challenge[0].challenge.payload.body}
-                        </ReadMore>
+            {challenge[0] && (
+                <div className="ml-2 row">
+                    <div className="col-12 col-lg-8">
+                        <div className='text-muted font-weight-bold'>
+                            <h1 className='font-weight-bold mb-2'>{name}</h1>
+                            <div className='pb-2 d-flex'>
+                                <img className='mr-1' width='24px' height='24px' src="images/btcc.png" />
+                                <p>             PancakeSwap
+                                    by
+                                    0x3799...4861</p>
+                            </div>
+                            <ReadMore>
+                                {challenge[0].challenge.payload.body}
+
+                            </ReadMore>
 
 
-                    </div>
+                        </div>
 
-                    <div className="row pb-5 pt-5">
-                        <div className=" col-11">
+                        <div className="row pb-5 pt-5">
+                            <div className=" text-nowrap p-0 col-5">
 
 
                         <form onSubmit={handleSubmit}>
@@ -233,36 +242,35 @@ export default function Challenge() {
                             )}
                         </form>
 
-                        </div>
-                    </div>
-
-
-                </div>
-                
-                <div className="col-12 col-lg-4">
-                    <div className="row">
-                        <div className="card border col-11">
-                            <h5 className=" border-bottom font-weight-bold p-1">Information</h5>
-
-
-                            <div className="row p-1">
-                                <div className="col-6">network	</div>
-                                <div className="col-6">{challenge[0].challenge.payload.metadata.network}</div>
                             </div>
-                           
-
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="card border col-11">
-                            <h5 className="font-weight-bold ">Current results
-                            </h5>
-                            <div className="row p-2">
-                                <div className="col-6">The Votes	</div>
-                                <div className="col-6">{votesList.length} </div>
+
+                        <div className="row">
+                            <div className="card border col-11">
+                                <h5 className="card-header p-0 pb-3 font-weight-bold ">{votesList.length} 	&nbsp;	&nbsp;Votes </h5>
+
+
+                                {votesList.map((vote, index) =>
+                                    <div className="row d-flex justify-content-between pl-4 pr-4 pt-3">
+
+                                        <div> {index + 1}</div>
+                                        <div className="ml-auto text-white"> level</div>
+                                        <div className="ml-auto text-white" >{vote}</div>
+                                    </div>
+                                )}
+
+
+
                             </div>
                         </div>
                     </div>
+<!-- includeAllPages -->
+
+                    <div className="col-12 col-lg-4">
+                        <div className="row">
+                            <div className="card border col-11">
+                                <h5 className=" border-bottom font-weight-bold p-1">Information</h5>
+<!-- =======
                     <div className="row ">
                         <div className="card border col-11">
                             <h5 className="card-header font-weight-bold ">{votesList.length} Votes</h5>
@@ -270,22 +278,59 @@ export default function Challenge() {
 
                             <table className="table font-weight-bold ">
                                 <tbody>
-                                {votesList.map((vote, index) => 
+<!--                                 {votesList.map((vote, index) => 
                                     <tr>
                                         <th scope="row">{index + 1}</th>
                                         <td className='text-white text-right'>{`${String(vote).slice(0, 5)}...${String(vote).slice(-5)}`}</td>
                                     </tr>
-                                )}
-                                </tbody>
+                                )} -->
+<!--                                 </tbody>
                             </table>
+ -->
 
 
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >network	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >IPFS	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >Voting system 	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >Start date	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >End date	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >Snapshot	</div>
+                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="card border col-11">
+                                <h5 className="font-weight-bold ">Current results
+                                </h5>
+                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                    <div >The Votes	</div>
+                                    <div className="ml-auto text-white" >{votesList.length} </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
-             )}
-        </div>
+                </div>
+            )
+            }
+        </div >
     )
 }

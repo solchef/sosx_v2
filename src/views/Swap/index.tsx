@@ -65,6 +65,7 @@ import PriceChartContainer from './components/Chart/PriceChartContainer'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 import CurrencyInputHeader from './components/CurrencyInputHeader'
 import { ItemImage } from 'views/Nft/market/components/Filters/ListFilter/styles'
+import { useMediaPredicate } from "react-media-hook";
 
 const Label = styled(Text)`
   font-size: 12px;
@@ -396,10 +397,15 @@ export default function Swap() {
     }
   }, [hasAmount, refreshBlockNumber])
 
+
+
+  const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+
   return (
 
-    <div className="container-fluid size-child" style={{height:'calc(100vh)'}}>
-        <div className="row  m-auto justify-content-center">
+    <div  style={{height:'calc(100vh)'}} className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
+        <div className="row  size-child-swap m-auto justify-content-center">
           <div className="col-xl-5">
             <div className="card">
               <div className="card-header border-0 pb-0 justify-content-between">

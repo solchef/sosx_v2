@@ -32,7 +32,7 @@ import ReactMarkdown from 'react-markdown'
 
 const server = create({
   url: "http://127.0.0.1:5001",
-  
+
 });
 
 const EasyMde = dynamic(() => import('components/EasyMde'), {
@@ -136,21 +136,21 @@ const CreateChallenge = () => {
     if (!files || files.length === 0) {
       return alert("No files selected");
     }
-  
+
     const file = files[0];
     // upload files
     const result = await server.add(file);
     await server.files.
-  
-    // @ts-ignore
-    setImages([
-      ...images,
-      {
-        cid: result.cid,
-        path: result.path,
-      },
-    ]);
-  
+
+      // @ts-ignore
+      setImages([
+        ...images,
+        {
+          cid: result.cid,
+          path: result.path,
+        },
+      ]);
+
     form.reset();
 
   }
@@ -209,106 +209,105 @@ const CreateChallenge = () => {
   const str = `Omar`
 
   return (
-    <>
-    {/* <form onSubmit={uploadVideo}>
-              <input name="file" type="file" />
 
-              <button type="submit">Upload File</button>
-            </form> */}
-                    <div className="container-fluid">
-                      <div className="row">
-                        <div className="col-xl-7">
-                          <div className="card">
-                            <div className="card-header border-0 pb-0 justify-content-between">
-                              <h4 className="fs-18">Create Challenge</h4>
-                            </div>
-                            <div className="card-body">
+      <div className="container-fluid">
+            <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/xgame'> Back   </Link> </p>
 
-                            <form onSubmit={handleSubmit}>
-                                <div className="row mb-3">
-                                    <input id="name" type="text" name="name" value={name} className="input1" placeholder="Challenge Title"  onChange={handleChange} required />
-                                    <label className="mx-3">
-                                    {formErrors.name && fieldsState.name && <FormErrors errors={formErrors.name} />}
-                                    </label>
-                                </div>
-                                <div className="row">
-                              <div className='m-3'  style={{width:"-webkit-fill-available"}}>
-                                {/* @ts-ignore */}
-                                <EasyMde
-                                  id="body"
-                                  name="body"
-                                  onTextChange={handleEasyMdeChange}
-                                  value={body}
-                                  options={options}
-                                  required
-                                  />
-                                 {/* <MDEditor height={200} value={str} /> */}
-                                 {/* <MDEditor /> */}
-                              {formErrors.body && fieldsState.body && <FormErrors errors={formErrors.body} />}
-                            </div>
-                                {body && (
-                                  <div >
-                                    {/* <Card> */}
+        <form onSubmit={uploadVideo}>
+          <input className='mb-4' name="file" type="file" />
 
-                                      <CardBody p="0" px="24px">
-                                        <ReactMarkdown>{body}</ReactMarkdown>
-                                      </CardBody>
-                                    {/* </Card> */}
-                                      </div>
-                                )} 
-                            </div>
+          <button className='mb-4 p-2' type="submit">Upload File</button>
+        </form>
+        <div className="row">
+          <div className="col-xl-7">
+            <div className="card">
+              <div className="card-header border-0 pb-0 justify-content-between">
+                <h4 className="fs-18">Create Challenge</h4>
+              </div>
+              <div className="card-body">
 
-                              <Choices choices={choices} onChange={handleChoiceChange} />
-                              {formErrors.choices && fieldsState.choices && <FormErrors errors={formErrors.choices} />}
+                <form onSubmit={handleSubmit}>
+                  <div className="row mb-3">
+                    <input id="name" type="text" name="name" value={name} className="input1" placeholder="Challenge Title" onChange={handleChange} required />
+                    <label className="mx-3">
+                      {formErrors.name && fieldsState.name && <FormErrors errors={formErrors.name} />}
+                    </label>
+                  </div>
+                  <div className="row">
+                    <div className='m-3' style={{ width: "-webkit-fill-available" }}>
+                      {/* @ts-ignore */}
+                      <EasyMde
+                        id="body"
+                        name="body"
+                        onTextChange={handleEasyMdeChange}
+                        value={body}
+                        options={options}
+                        required
+                      />
+                      {/* <MDEditor height={200} value={value} onChange={setValue} /> */}
+                      {formErrors.body && fieldsState.body && <FormErrors errors={formErrors.body} />}
+                    </div>
+                    {body && (
+                      <div >
+                        <Card>
+                          <CardHeader>
+                            <Heading as="h3" scale="md">
+                              {t('Preview')}
+                            </Heading>
+                          </CardHeader>
+                          <CardBody p="0" px="24px">
+                            {/* <ReactMarkdown>{body}</ReactMarkdown> */}
+                          </CardBody>
+                        </Card>
+                      </div>
+                    )}
+                  </div>
 
-                              {account ? (
-                          <>
-                                <button
-                                  type="submit"
-                                  className="btn btn-primary btn-lg w-100 mt-4"
-                                  // disabled={!isEmpty(formErrors)}
-                                  >
-                                  Submit
-                                </button>
-                                <p color="failure" >
-                                {'You need at least %count% voting power to publish a challenge'}
-                                
-                                </p>
-                                <button  type="button"  onClick={onPresentVoteDetailsModal} >
-                                  {t('Check voting power')}
-                                </button>
-                          </>
-                        ) : (
-                          <ConnectWalletButton width="100%" type="button" />
-                        )}
+                  <Choices choices={choices} onChange={handleChoiceChange} />
+                  {formErrors.choices && fieldsState.choices && <FormErrors errors={formErrors.choices} />}
 
-                              </form>
+                  {account ? (
+                    <>
+                      <button
+                        type="submit"
+                        className="btn btn-primary btn-lg w-100 mt-4"
+                      // disabled={!isEmpty(formErrors)}
+                      >
+                        Submit
+                      </button>
+                      <p className='  mt-2' color="failure" >
+                        {'You need at least %count% voting power to publish a challenge'}
 
-                            </div>
-                          </div>
-                        </div>
-                            <div className="col-5">
-                            <div className="card-header align-items-start border-0">
-									<div>
-										<h4 className="fs-20 mb-3">Today's Challenge</h4>
-										<span className="fs-12 font-weight-bold success">{ account ? `${String(account).slice(0, 5)}...${String(account).slice(-5)}` : `Connect wallet`}</span>
+                      </p>
+                      <button className='p-2 mt-2' type="button" onClick={onPresentVoteDetailsModal} >
+                        {t('Check voting power')}
+                      </button>
+                    </>
+                  ) : (
+                    <ConnectWalletButton width="100%" type="button" />
+                  )}
 
-										<h4 className="fs-18 mb-0 pb-2" id='displayTitle'>{name ? name : "Challenge Title"}</h4>
-										<span className="fs-12">{body} </span>
-										<h4 className="fs-12 text-white pt-3">Rules</h4>
-										<ul className="fs-12">
-                      {choices.map((choice) => 
-											<li><i className="fa-solid fa-check pr-2"></i>{choice.value}</li>
-                      )}
-										</ul>
-									</div>
-								</div>
+                </form>
+
               </div>
             </div>
           </div>
-                    
-</>
+          <div className="col-xl-5">
+            <div className="card-header align-items-start border-0">
+              <div>
+                <h4 className="fs-18">Challenge Lorem</h4>
+                <p  >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do
+                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
+                  suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
+                  vel
+                  facilisis. </p>
 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   )
 }
 

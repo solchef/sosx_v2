@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMediaPredicate } from "react-media-hook";
 
 const menus = {
     showA: false,
@@ -30,15 +31,19 @@ export default function Faq() {
         });
       };
 
-    return (
-        <div className="container-fluid pt-3">
+      const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+      const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+  
+      return (
 
+        <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
+         
 
             <div className="section">
                     <h5 className="section-heading">Frequenty Asked Question (FAQ)</h5>
                     <p className="p-main">Everything you need to know about SOSX is just one click away.</p>
 
-                    <div className="faq-list container-fluid row">
+                    <div className="faq-list row">
 
 
 
