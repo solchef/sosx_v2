@@ -1,11 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState, useMemo } from 'react'
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Heading,
-  useModal,
-} from '@pancakeswap/uikit'
+import { CardBody, useModal } from '@pancakeswap/uikit'
 import { useWeb3React } from '@web3-react/core'
 import times from 'lodash/times'
 import isEmpty from 'lodash/isEmpty'
@@ -28,7 +22,13 @@ import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
 import NavGame from '../NavGame'
 import { CID, create } from 'ipfs-http-client'
-import { Editor } from 'react-draft-wysiwyg';
+import ReactMarkdown from 'react-markdown'
+// import MDEditor from './MDEdit,or'
+
+// const MDEditor = dynamic(
+//   () => import("@uiw/react-md-editor"),
+//   { ssr: false }
+// );
 
 const server = create({
   url: "http://127.0.0.1:5001",
@@ -40,6 +40,7 @@ const EasyMde = dynamic(() => import('components/EasyMde'), {
 })
 
 const CreateChallenge = () => {
+  const router = useRouter();
   const [state, setState] = useState<FormState>({
     name: '',
     body: '',
@@ -111,11 +112,12 @@ const CreateChallenge = () => {
         }, null, 2)
 
         const challengeName = `challenge` + `-${name.replaceAll(' ', '-')}`
-        await server.files.mkdir(`/${challengeName}`)
-        await server.files.mkdir(`/${challengeName}/votes`)
-        await server.files.write(`/${challengeName}/challenge.json`, forIPFS, { create: true })
+        await server.files.mkdir(`/challenges/${challengeName}`)
+        await server.files.mkdir(`/challenges/${challengeName}/votes`)
+        await server.files.write(`/challenges/${challengeName}/challenge.json`, forIPFS, {create: true})
 
         toastSuccess(t('challenge created!'))
+        router.push(`challenge/${name.replaceAll(' ', '-')}`)
       } else {
         toastError(t('Error'), t('Unable to sign payload'))
       }
@@ -200,6 +202,11 @@ const CreateChallenge = () => {
       }))
     }
   }, [initialBlock, setState])
+
+
+  //////////////////////////////////////////
+  // Priview
+  const str = `Omar`
 
   return (
 

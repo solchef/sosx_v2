@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState , createContext } from 'react'
+import { Link as reactLink} from 'react-router-dom';
 import Link from 'next/link';
 import NavMining from '../NavMining';
 import { useMediaPredicate } from "react-media-hook";
+import SocialminingS3 from '../SocialminingS3';
 
 const socialMedias = [
     { name: 'twitter', addres: 'https://twitter', reward: '500' },
@@ -9,11 +11,14 @@ const socialMedias = [
     { name: 'tiktok', addres: 'https://tiktok', reward: '600' }
 ];
 
+
 export default function SocialminingS1() {
     const [media, setMedia] = useState(socialMedias[0])
     const [copySuccess, setCopySuccess] = useState('');
-
+    const [reward, setReward]=useState('')
     const toggleMenu = (event, type) => {
+
+        setReward(type)
         event.stopPropagation();
         socialMedias.map(socialMedia => socialMedia.name == type ? setMedia(socialMedia) : '');
         setCopySuccess('')
@@ -23,6 +28,8 @@ export default function SocialminingS1() {
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
     const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
+    console.log(reward)
+    localStorage.setItem('reward', reward)
     return (
 
         <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
@@ -63,6 +70,7 @@ export default function SocialminingS1() {
 </div>
                                 </p>
                         
+
                             <div className="postcaption" id="myCaption">
                                 <p style={{ display: media.name == "twitter" ? "" : "none" }}>
                                     SOSX relaunching new SOSX Token next week 🚀<br /><br />
@@ -117,9 +125,10 @@ export default function SocialminingS1() {
                                 <button className="btn btn-outline-primary mr-2 mb-3">Back</button>
                             </a>
                         </Link>
-                        <Link href="/socialmining-s2">
+                        <Link href="/socialmining-s2" >
                             <a>
                                 <button className="btn btn-primary mr-3 mb-3">Continue</button>
+                               
                             </a>
                         </Link>
                     </div>

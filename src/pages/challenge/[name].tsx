@@ -34,24 +34,26 @@ export default function Challenge() {
     let challengeName = `challenge-${name}`
     const getData = async () => {
         if (name) {
-            let challenge = [];
-            for await (const resultPart of server.files.ls("/")) {
-                let challengeJson;
-                let vote;
-                let votesList = []
+                let challenge = [];
+                for await (const resultPart of server.files.ls("/challenges")) {
+                    let challengeJson;
+                    let vote;
+                    let votesList = []
+                
+                    if (resultPart.name === challengeName) {
+                        for await (const cha of server.files.ls(`/challenges/${resultPart.name}`)) {
+                            const chunks = [];
 
-                if (resultPart.name === challengeName) {
-                    for await (const cha of server.files.ls(`/${resultPart.name}`)) {
-                        const chunks = [];
-
-                        if (cha.name == 'challenge.json') {
+                            if (cha.name == 'challenge.json') {
                             for await (const chunk of server.cat(cha.cid)) {
                                 chunks.push(chunk);
                             }
-                            const data = concat(chunks);
-                            challengeJson = JSON.parse(
-                                new TextDecoder().decode(data).toString()
-                            );
+                            if (cha.name == 'votes') {
+                                for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes`)) {
+                                    votesList.push(vote.name.slice(0, -5))
+                                }
+                            } 
+                            setVotesList(votesList)
                         }
                         if (cha.name == 'votes') {
                             for await (const vote of server.files.ls(`/${resultPart.name}/votes`)) {
@@ -173,9 +175,10 @@ export default function Challenge() {
                     }
                 }
             }, null, 2)
-
-            await server.files.write(`/challenge-${name}/votes/${account}.json`, forIPFS, { create: true })
+            
+            await server.files.write(`/challenges/challenge-${name}/votes/${account}.json`, forIPFS, {create: true})
             toastSuccess(t('Vote created!'))
+            getData()
         } else {
             toastError(t('Error'), t('Unable to sign payload'))
         }
@@ -231,13 +234,13 @@ export default function Challenge() {
                             <div className=" text-nowrap p-0 col-5">
 
 
-                                <form onSubmit={handleSubmit}>
-                                    {votesList.includes(account) ? (
-                                        <button disabled className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>You already voted</button>
-                                    ) : (
-                                        <button className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Vote This Challenge</button>
-                                    )}
-                                </form>
+                        <form onSubmit={handleSubmit}>
+                            {votesList.includes(account) ? (
+                                <button disabled className="btn btn-primary w-25 font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Voted</button>
+                                ) : (
+                                <button className="btn btn-primary w-25 font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Vote This Challenge</button>
+                            )}
+                        </form>
 
                             </div>
                         </div>
@@ -261,11 +264,29 @@ export default function Challenge() {
                             </div>
                         </div>
                     </div>
+<!-- includeAllPages -->
 
                     <div className="col-12 col-lg-4">
                         <div className="row">
                             <div className="card border col-11">
                                 <h5 className=" border-bottom font-weight-bold p-1">Information</h5>
+<!-- =======
+                    <div className="row ">
+                        <div className="card border col-11">
+                            <h5 className="card-header font-weight-bold ">{votesList.length} Votes</h5>
+
+
+                            <table className="table font-weight-bold ">
+                                <tbody>
+<!--                                 {votesList.map((vote, index) => 
+                                    <tr>
+                                        <th scope="row">{index + 1}</th>
+                                        <td className='text-white text-right'>{`${String(vote).slice(0, 5)}...${String(vote).slice(-5)}`}</td>
+                                    </tr>
+                                )} -->
+<!--                                 </tbody>
+                            </table>
+ -->
 
 
                                 <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">

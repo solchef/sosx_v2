@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link'
 import { useEffect, useState } from "react";
 import { create } from "ipfs-http-client";
 import { concat } from "uint8arrays";
