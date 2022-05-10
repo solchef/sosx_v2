@@ -159,9 +159,9 @@ export default function Game() {
 
 			<div className="game size-child-game container-fluid">
 				<div className="row m-1">
-					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 m-0">
-						<div className="row m-0">
-							<div className={`card3 col-12 text-center ${biggerThan1200 && 
+					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 ">
+						<div className="row ">
+							<div className={`card3 col-3 m-2 text-center ${biggerThan1200 && 
 								"p-0"} col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
 
 
@@ -201,29 +201,29 @@ export default function Game() {
 									</div>
 								</div> 
 								<Modal show={show} onHide={handleClose} centered>
-								<div className="card">
-								<form onSubmit={videoLink}>
-								<div className="form-group row">
-									<div className="col-sm-10">
-									<input type="file" className="form-control" id="filevideo" placeholder="Upload Video" />
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)}/>
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} />
-									</div>
-								</div>
-								<button className="btn btn-primary">Upload Video Here</button>
+								<div className="d-flex flex-column justify-content-between p-2">
+									<form onSubmit={videoLink}>
+								
+									
+									<input type="file" className="form-control fs-14 pb-3" id="filevideo" placeholder="Upload Video" />
+									
+									
+									<input type="text" className="form-control fs-14" id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+							
+									
+									<input type="text" className="form-control fs-14" id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)}/>
+							
+									
+									<input type="text" className="form-control fs-14" id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} />
+								
+								
+								<button className="btn p-1 mt-2 btn-primary">Upload Video Here</button>
 								</form>
 								</div>
 								</Modal>
 
 							</div>
-							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
+							<div className=" p-0  ml-3 col-6 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
 								<div className="card-header align-items-start border-0">
 										{todayChallenge.length > 0 ? (
 											<>
