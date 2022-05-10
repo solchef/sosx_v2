@@ -502,22 +502,17 @@ export default function Challenge() {
                             <h1 className='font-weight-bold mb-2'>{name}</h1>
                             <div className='pb-2 d-flex'>
                                 <img className='mr-1' width='24px' height='24px' src="/utils/images/xlogo-black.b90261b2.svg" />
-                                <p>             PancakeSwap
+                                <p>PancakeSwap
                                     by
                                     0x3799...4861</p>
                             </div>
                             <ReadMore>
                                 {challenge[0].challenge.payload.body}
-
                             </ReadMore>
-
-
                         </div>
 
                         <div className="row pb-5 pt-5">
                             <div className=" text-nowrap p-0 col-5">
-
-
                                 <form onSubmit={handleSubmit}>
                                     {votesList.includes(account) ? (
                                         <button disabled className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>You already voted</button>
@@ -525,7 +520,6 @@ export default function Challenge() {
                                         <button className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Vote This Challenge</button>
                                     )}
                                 </form>
-
                             </div>
                         </div>
 

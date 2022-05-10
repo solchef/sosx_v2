@@ -96,6 +96,11 @@ const config = {
         permanent: true,
       },
       {
+        source: '/game-staking',
+        destination: '/game-staking',
+        permanent: true,
+      },
+      {
         source: '/syrup',
         destination: '/pools',
         permanent: true,

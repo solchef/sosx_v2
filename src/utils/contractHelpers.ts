@@ -55,10 +55,8 @@ export const getMasterchefContract = (signer?: Signer | Provider) => {
   // return getContract(masterChef, getMasterChefAddress(), signer) as Masterchef
 }
 
-
-
 export const getStakingContract = (signer?: Signer | Provider) => {
-  // return getContract(sosxStakingAbi, getstakingContractAddress(), signer) as Staking;
+  return getContract(sosxStakingAbi, getstakingContractAddress(), signer);
 }
 
 export const getPredictionsContract = (signer?: Signer | Provider) => {

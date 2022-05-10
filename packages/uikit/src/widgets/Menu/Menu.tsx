@@ -135,6 +135,9 @@ const Menu: React.FC<NavProps> = ({
       case '/stake':
         return "Stake";
 
+      case '/daostaking':
+        return "Stake";
+
       case '/xgame':
         return "XGame";
       case '/createchallenge':
@@ -167,7 +170,7 @@ const Menu: React.FC<NavProps> = ({
       default:
         return;
     }
-    
+
   }
   const [preloader, setPreloader] = useState(true);
   useEffect(() => {
@@ -231,7 +234,7 @@ const Menu: React.FC<NavProps> = ({
 
     <>
       <div className="nav-header">
-        <a href="index.html" className="brand-logo">
+        <a href="#" className="brand-logo">
           <img className="logo-abbr" src="/utils/images/xlogo-black.b90261b2.svg" alt="" />
         </a>
       </div>
@@ -269,6 +272,14 @@ const Menu: React.FC<NavProps> = ({
           </li>
           <li className={router.pathname == "/stake" ? "mm-active" : ""}>
             <Link href="/stake">
+              <a>
+                <i className="fa fa-coins"></i>
+              </a>
+            </Link>
+          </li>
+
+          <li className={router.pathname == "/daostaking" ? "mm-active" : ""}>
+            <Link href="/daostaking">
               <a>
                 <i className="fa fa-coins"></i>
               </a>
@@ -360,6 +371,16 @@ const Menu: React.FC<NavProps> = ({
                 <a>
                   <i className="fa fa-coins"></i>
                   <span className="nav-text">Staking</span>
+                </a>
+              </Link>
+
+            </li>
+
+            <li className={router.pathname == "/daostaking" ? "mm-active" : ""}>
+              <Link href="/daostaking">
+                <a>
+                  <i className="fa fa-coins"></i>
+                  <span className="nav-text">DAO Staking</span>
                 </a>
               </Link>
 
