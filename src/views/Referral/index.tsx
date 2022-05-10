@@ -22,6 +22,8 @@ import get from 'lodash/get'
 import { Contract } from '@ethersproject/contracts';
 import { Web3Provider } from '@ethersproject/providers';
 import { useMediaPredicate } from "react-media-hook";
+import BigNumber from "big-number"
+import useActiveWeb3React from 'hooks/useActiveWeb3React';
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -31,17 +33,114 @@ const BorderCard = styled.div`
 
 
 export default function Referral() {
+
+  const contract = useStakingContract();
   const [referralCount, setReferralCount] = useState(0);
   const [viewReferralReward, setViewReferralReward] = useState(0);
   const [referrals, setReferrals] = useState([]);
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const { callWithGasPrice } = useCallWithGasPrice()
-  const { account, active, library } = useWeb3React<Web3Provider>()
+  const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+  const { account } = useActiveWeb3React();
 
 
   // const account = "dd"
-  const contract = useStakingContract();
+
+
+
+  useEffect(() => {
+
+    fetchReferral();
+  }, [])
+
+
+
+
+  const fetchReferral = async() => {
+
+    let countreferrals = await contract.getReferralCount();
+    // console.log(referralCount);
+    // this.setState({referralCount:countreferrals})
+    setReferralCount(Number(countreferrals));
+      
+      contract.getCurrentReferrals().then( (result) => {
+          // console.log("Fetched Referrals")
+          // console.log(result)  
+
+          if(result.length == 0){
+              result = null;
+          }
+          setReferrals(result);
+          fetchTotalReward();
+
+      }).catch( (err) => {
+          console.log("Unable to list  current referrals; " + err)
+      });       
+       
+  }
+
+
+  const fetchTotalReward = async() => {
+
+    // console.log(account)
+      contract.calculateRewardReferral().then((rawResult) => {
+
+          console.log("TotalReward:" + rawResult)
+
+          let decimals = BigNumber(10).power(18);
+          let realAmount = BigNumber(rawResult).divide(decimals);
+
+         setViewReferralReward(realAmount.toString());
+
+      }).catch( (err) => {
+          console.log(err)
+      });
+
+      if(referrals === null || referrals.length === 0){
+          // console.log("No referrals present")
+          return;
+      }
+  
+  
+  }
+
+
+  // const fetchStakeReward = async() => {
+  //     this.state.contractInstance.methods.calculateRewardReferral(this.state.referrals[0]).call().then( (rawResult) => {
+  //         console.log(rawResult)
+  //     }).catch( (err) => {
+  //         console.log("Unable to calculate")
+  //     });
+  // }
+
+
+ const  withdrawReferralReward = async() => {
+     
+      setLoading(true);
+
+      contract.withdrawReferralReward({ from: account }).then( (rawResult) => {
+
+          console.log(rawResult)
+
+          let result = Boolean(rawResult)
+
+          if(result){
+              console.log("Reward successfully withdrawed");
+          }else{
+              console.log("The POT is exhausted!!!!")
+          }
+
+          fetchTotalReward();
+          fetchReferral();
+          setLoading(false)
+      }).catch( (err) => {
+          console.log("There was an error : " + err)
+          setLoading(false)
+
+      });
+  }
 
 
   let popover = (
@@ -99,62 +198,7 @@ export default function Referral() {
     </OverlayTrigger>
   );
 
-
-
-
-
-  const fetchReferral = async () => {
-
-    // contract.methods.getCurrentReferrals().call().then( (result) => {
-
-    //     console.log(result);
-    // });
-    console.log(library)
-
-    console.log('get')
-
-    if (!(active && account && library)) return
-    const contract = new Contract('0xee52def4a2683e68ba8aecda8219004c4af376df', sosxStakingAbi, library.getSigner());
-    //  erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
-    console.log(contract)
-    console.log(await contract.getAllAccount())
-
-    let res = await contract.getCurrentStakeAmount(10).catch('error', console.error)
-
-
-    // this.state.contractInstance.methods.getCurrentReferrals().call().then( (result) => {
-    //     console.log("Fetched Referrals")
-    //     console.log(result)
-
-    //     if(result.length == 0){
-    //         result = null;
-    //     }
-
-    //     this.setState({referrals: result}, () => {
-    //         this.fetchTotalReward();
-    //     });
-    // }).catch( (err) => {
-    //     console.log("Unable to list active stake; " + err)
-    // });       
-
-  }
-
-  useEffect(() => {
-
-    fetchReferral();
-  }, [])
-
-
-  const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
-	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-
   return (
-
-
-
-
-
-
 
 <div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
  
