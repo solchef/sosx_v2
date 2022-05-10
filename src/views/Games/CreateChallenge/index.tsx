@@ -115,6 +115,7 @@ const CreateChallenge = () => {
         const challengeName = `challenge` + `-${name.replaceAll(' ', '-')}`
         await server.files.mkdir(`/challenges/${challengeName}`)
         await server.files.mkdir(`/challenges/${challengeName}/votes`)
+        await server.files.mkdir(`/challenges/${challengeName}/videos`)
         await server.files.write(`/challenges/${challengeName}/challenge.json`, forIPFS, {create: true})
 
         toastSuccess(t('challenge created!'))
