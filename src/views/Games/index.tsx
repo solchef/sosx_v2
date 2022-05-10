@@ -30,6 +30,8 @@ export default function Game() {
 	const [voters, setVoters] = useState([])
 	const [todayChallenge, setTodayChallenge] = useState([]);
 	const contract = useStakingContract();
+	const [videos, setVideos] = useState([])
+	const [challenges, setChallenges] = useState<any[]>([]);
 
 
 	useEffect(() => {
@@ -71,7 +73,6 @@ export default function Game() {
 			let fileContent;
 
 			for await (const cha of server.files.ls(`/vid/${videoFile.name}`)) {
-				console.log(cha)
 				const chunks = [];
 
 					for await (const chunk of server.cat(cha.cid)) {
@@ -116,14 +117,11 @@ export default function Game() {
 			challenges.push(challengeData);
 		}
 
-		console.log('first', challenges.sort((a, b) => a.votes - b.votes).reverse()[0])
-		setTodayChallenge(challenges.sort((a, b) => a.votes - b.votes).reverse()[0]);
+		setChallenges(challenges);
 		setVideos(finalData);
 	};
 
-	if (todayChallenge.length > 0) {
-		console.log(todayChallenge[0].challenge.payload.name)
-	}
+	const todayChallenge = challenges.sort((a, b) => a.votes - b.votes).reverse()[0]
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		const form = event.target as HTMLFormElement;
@@ -144,8 +142,9 @@ export default function Game() {
 			video: url
 		}, null, 2)
 
+		const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
 		const fileName = `video-${videoTitle.replace(' ', '-')}`
-		await server.files.write(`/vid/${fileName}`, data, {create: true})
+		await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, {create: true})
 		toastSuccess(t('Video Uploaded!'))
 		form.reset()
 		handleClose()
@@ -264,39 +263,41 @@ export default function Game() {
 								</Modal>
 
 							</div>
-							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
-								<div className="card-header align-items-start border-0">
-										{todayChallenge.length > 0 ? (
-											<>
-											<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
-											<span className="fs-12 font-weight-bold success">@challengecreator-1</span>
-											{console.log(todayChallenge[0].challenge.payload.name)}
-											<h4 className="fs-18 mb-0 pb-2">{todayChallenge[0].challenge.payload.name}</h4>
-											<span className="fs-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-												do
-												eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-												suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
-												vel
-												facilisis. </span>
-											<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
-											<ul className="fs-12">
-												<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
-												<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
-											</ul>
-											<div className="p-3 align-items-start justify-content-between align-items-center">
-											<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-												id="votes">{todayChallenge[0].votes}</span><span className="fs-12">Votes</span></li>
-											</div>
-											</>
-										) : (
-											<p>Loading</p>
-										)}
-										
-								</div>
-								
-							</div>
-						</div>
 
+							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
+									{todayChallenge ? (
+										<>
+										<div className="card-header align-items-start border-0">
+									<div>
+										<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
+										<h4 className="fs-18 mb-0 pb-2">{todayChallenge.challenge.payload.name}</h4>
+										<span className="fs-12">{todayChallenge.challenge.payload.body} </span>
+										<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
+										{todayChallenge.challenge.payload.choices.map((element) => (
+										<ul className="fs-12">
+											<li>
+												<i className="fa-solid fa-check pr-2"></i>
+												{element}
+											</li>
+										</ul>
+									))}
+									</div>
+
+								</div>
+								<div className="p-3 align-items-start justify-content-between align-items-center">
+									<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+										id="votes">{todayChallenge.votes}</span><span className="fs-12">Votes</span></li>
+								</div>
+										</>
+									) : (
+										<p>Loading</p>
+									)}
+								
+
+							</div>
+							
+							
+						</div>
 						<div className="row m-0">
 
 
