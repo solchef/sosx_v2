@@ -42,8 +42,8 @@ const config = {
         // your project has type errors.s
         // !! WARN !!
         ignoreBuildErrors: true,
+
     },
-    ignoreBuildErrors: true,
 
     // webpack5: false,
 
