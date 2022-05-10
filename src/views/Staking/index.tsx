@@ -85,6 +85,14 @@ export default function Staking() {
     }
 
 
+		const handleStake = async() => {
+
+				
+		}
+
+
+
+
 	return (
 		<>
 			<div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
@@ -95,7 +103,7 @@ export default function Staking() {
 						<div className="card overflow-hidden ">
 							<h4>10,000,000,000</h4>
 							<span className="pt-1 pb-1">Total supply
-</span>
+				</span>
 						</div>
 					</div>
 					<div className="col-sm-3 col-6">
