@@ -200,8 +200,8 @@ export default function Game() {
 				<div className="row m-1">
 					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 m-0">
 						<div className="row m-0">
-							<div className={`card3 col-12 text-center ${biggerThan1200 && 
-								"p-0"} col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
+						<div className={`card3 col-12 text-center ${biggerThan1200 && "p-0"}
+ col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
 
 
 								<div className="feature-box p-0">
@@ -407,7 +407,6 @@ export default function Game() {
 
 					</div>
 				</div>
-			</div>
 			</div>
 		</>
 	)
