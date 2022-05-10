@@ -235,7 +235,7 @@ const Menu: React.FC<NavProps> = ({
     <>
       <div className="nav-header">
         <a href="#" className="brand-logo">
-          <img className="logo-abbr" src="/utils/images/xlogo-black.b90261b2.svg" alt="" />
+          <img className="logo-abbr" src="/images/xlogo-black.b90261b2.svg" alt="" />
         </a>
       </div>
 
@@ -334,7 +334,7 @@ const Menu: React.FC<NavProps> = ({
             <Link href="/aboutsosx">
 
               <a>
-                <img src="/utils/images/xlogo.png" style={{ width: '12px', height: '12px' }} />
+                <img src="/images/xlogo.png" style={{ width: '12px', height: '12px' }} />
               </a>
             </Link>
 
@@ -447,7 +447,7 @@ const Menu: React.FC<NavProps> = ({
               <Link href="/aboutsosx">
 
                 <a>
-                  <img src="/utils/images/xlogo.png" style={{ width: '12px', height: '12px' }} />
+                  <img src="/images/xlogo.png" style={{ width: '12px', height: '12px' }} />
                   <span className="nav-text pl-3">About SOSX</span>
                 </a>
               </Link>

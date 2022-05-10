@@ -389,7 +389,7 @@ export default function Game() {
 
 											<a className="blueprint-header-display trader-display">
 											<div className="d-flex align-items-center">
-												<span className="text-white mr-3 fs-16 font-w600">{i}</span>
+												<span className="text-white mr-3 fs-16 font-w600">{i+1}</span>
 												<img className="blueprint-img-sm rounded-circle"
 													src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
 												<div className="ml-1">
