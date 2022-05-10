@@ -1,6 +1,15 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from 'next/link'
 import { useMediaPredicate } from "react-media-hook";
+import { create } from "ipfs-http-client";
+import useToast from "hooks/useToast";
+import { useTranslation } from 'contexts/Localization'
+import { Modal } from "react-bootstrap";
+
+const server = create({
+	url: "http://127.0.0.1:5001",
+  
+});
 
 export default function Game() {
 	const [partyTime, setPartyTime] = useState(false);
@@ -9,6 +18,8 @@ export default function Game() {
 	const [minutes, setMinutes] = useState(0);
 	const [seconds, setSeconds] = useState(0);
 	const [key, setKey] = useState("chart");
+	const { toastSuccess } = useToast()
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		const target = new Date("05/15/2022 23:59:59");
@@ -37,6 +48,29 @@ export default function Game() {
 		}, 1000);
 		return () => clearInterval(interval);
 	}, []);
+
+	const uploadVideo = async (evt: FormEvent<HTMLFormElement>) => {
+		evt.preventDefault();
+		const form = event.target as HTMLFormElement;
+		const files = (form[0] as HTMLInputElement).files;
+	
+		if (!files || files.length === 0) {
+		//   await server.files.write()
+		}
+		const file = files[0];
+		const result = await server.add(file);
+		const videoName = `file-${file.name.replaceAll(' ', '-')}`
+		await server.files.write(`/videos/${videoName}`, new TextEncoder().encode(result.cid.toString()), {create: true})
+		toastSuccess(t('Video Uploaded!'))
+		form.reset()
+		handleClose()
+		window.open(`http://localhost:8080/ipfs/${result.cid.toString()}`, "_blank")
+	}
+
+	const [show, setShow] = useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);	  
+	
 	const biggerThan1200 = useMediaPredicate("(min-width: 1200px) and (max-width: 1300px)");
 	const biggerThan576 = useMediaPredicate("(min-width: 576px) and (max-width: 625px)");
 
@@ -86,10 +120,41 @@ export default function Game() {
 
 								<div className="feature-box p-0">
 									<div className="feature-text m-3">
-										<button className="btn btn-primary">Upload Video Here</button>
+										<a onClick={handleShow} className="btn btn-primary">Upload Video Here</a>
 
 									</div>
+								</div> 
+								<Modal show={show} onHide={handleClose} centered>
+								<form onSubmit={uploadVideo}>
+								<div className="form-group row">
+									<div className="col-sm-10">
+									<input type="url" className="form-control" id="tiktok" placeholder="TikTok" />
+									</div>
 								</div>
+								<div className="form-group row">
+									<div className="col-sm-10">
+									<input type="url" className="form-control" id="youtube" placeholder="YouTube" />
+									</div>
+								</div>
+								<div className="form-group row">
+									<div className="col-sm-10">
+									<input type="url" className="form-control" id="instagram" placeholder="Instagram" />
+									</div>
+								</div>
+								<div className="form-group row">
+									<div className="col-sm-10">
+									<input type="url" className="form-control" id="twitter" placeholder="Twitter" />
+									</div>
+								</div>
+
+								<hr />
+								OR
+								<hr />
+										<input className='mb-4' name="file" type="file" accept="video/*" />
+										<div>choose only one link or upload</div>
+										<button className="btn btn-primary">Upload Video Here</button>
+										</form>
+								</Modal>
 
 							</div>
 							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
@@ -223,6 +288,7 @@ export default function Game() {
 
 								<div className="card3-body">
 									<div className="row">
+
 										<div className=" col-12 p-2 col-md">
 											<div className="videos">
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
