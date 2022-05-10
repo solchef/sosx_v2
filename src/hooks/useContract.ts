@@ -89,7 +89,7 @@ export const useERC20 = (address: string, withSignerIfPossible = true) => {
  * @see https://docs.openzeppelin.com/contracts/3.x/api/token/erc721
  */
 export const useERC721 = (address: string) => {
-  const { library } = useActiveWeb3React()
+  const { library } = useActiveWeb3React();
   return useMemo(() => getErc721Contract(address, library.getSigner()), [address, library])
 }
 
@@ -191,6 +191,7 @@ export const useIfoPoolContract = () => {
 
 export const useStakingContract = () => {
   const { library } = useActiveWeb3React()
+  console.log(library.getSigner())
   return useMemo(() => getStakingContract(library.getSigner()), [library])
 }
 

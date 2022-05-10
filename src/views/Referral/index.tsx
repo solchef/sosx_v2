@@ -33,10 +33,7 @@ export default function Referral() {
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const { account } = useActiveWeb3React();
 
-
   // const account = "dd"
-
-
 
   useEffect(() => {
 
@@ -44,11 +41,10 @@ export default function Referral() {
   }, [])
 
 
-
-
   const fetchReferral = async() => {
 
     let countreferrals = await contract.getReferralCount();
+   
     // console.log(referralCount);
     // this.setState({referralCount:countreferrals})
     setReferralCount(Number(countreferrals));
@@ -56,12 +52,36 @@ export default function Referral() {
       contract.getCurrentReferrals().then( (result) => {
           // console.log("Fetched Referrals")
           // console.log(result)  
-
           if(result.length == 0){
               result = null;
           }
-          setReferrals(result);
+          console.log(result);
+
           fetchTotalReward();
+
+          let referralData = [];
+          let total = 0;
+
+          for (let i = 0; i < referralCount; i++) {
+
+             contract.calculateRewardReferral(result[i]).then(reward => {
+
+                let data = {
+                  address: result[i],
+                  amount: Number(reward/10 ** 18).toFixed(2)
+                }
+                total  =  + Number(reward/10 ** 18).toFixed(2);
+                referralData.push(data);
+                   // console.log(referralData)
+                  setReferrals(referralData);
+                  setViewReferralReward(total);
+
+             });
+            // console.log(element)
+       
+
+          }
+
 
       }).catch( (err) => {
           console.log("Unable to list  current referrals; " + err)
@@ -69,28 +89,26 @@ export default function Referral() {
        
   }
 
-
   const fetchTotalReward = async() => {
 
-    // console.log(account)
-      contract.calculateRewardReferral().then((rawResult) => {
+    // console.log(contract)
+    //   contract.calculateTotalRewardReferral().then((rawResult) => {
 
-          console.log("TotalReward:" + rawResult)
+    //       console.log("TotalReward:" + rawResult)
 
-          let decimals = BigNumber(10).power(18);
-          let realAmount = BigNumber(rawResult).divide(decimals);
+    //       let decimals = BigNumber(10).power(18);
+    //       let realAmount = BigNumber(rawResult).divide(decimals);
 
-         setViewReferralReward(realAmount.toString());
+    //      setViewReferralReward(realAmount.toString());
 
-      }).catch( (err) => {
-          console.log(err)
-      });
+    //   }).catch( (err) => {
+    //       console.log(err)
+    //   });
 
-      if(referrals === null || referrals.length === 0){
-          // console.log("No referrals present")
-          return;
-      }
-  
+    //   if(referrals === null || referrals.length === 0){
+    //       // console.log("No referrals present")
+    //       return;
+    //   }
   
   }
 
@@ -280,7 +298,7 @@ export default function Referral() {
        <div className="card-body">
          <div className="bg-dark rounded">
            <div className="d-flex justify-content-between align-items-center">
-             <span>https://socialx.io?ref=997346fb74d12345389e716...</span>
+             <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span>
              <div className="float-right d-flex">
              <li className="nav-item pr-2">
                <CopyToClipboard
@@ -323,7 +341,7 @@ export default function Referral() {
              <img src="images/swapcoin-referral.svg" className="referral-rewards"/>
              <span className="main-pink">Social Mining Referral</span>
              <h4>{viewReferralReward} SOSX</h4>
-             <button type="button" className="btn btn-primary btn-lg">Withdraw</button>
+             <button type="button" className="btn btn-primary btn-lg" disabled>Withdraw</button>
            </div>
          </div>
        </div>
@@ -334,17 +352,13 @@ export default function Referral() {
              <img src="images/swapcoin-referral.svg" className="referral-rewards"/>
              <span className="main-pink">Staking Referral</span>
              <h4>{viewReferralReward} SOSX</h4>
-             <button type="button" className="btn btn-primary btn-lg">Withdraw</button>
+             <button type="button" className="btn btn-primary btn-lg" onClick={withdrawReferralReward}>Withdraw</button>
            </div>
          </div>
        </div>
      </div>
    </div>
  </div>
-
-
-
-
 
  <div className="wrapper">
    <div className="tabs">
@@ -361,38 +375,62 @@ export default function Referral() {
              <div className="d-flex justify-content-between">
 
                <div className="col-xl-2">
-                 <p className="main-pink">Date</p>
-                 <p>05/25/2022, 23:20:04 </p>
-                 <p>05/25/2022, 23:20:04 </p>
-               </div>
-
-               <div className="col-xl-2">
                  <p className="main-pink">Wallet Address</p>
-                 <p>fds24fGz1R...</p> 
-                 <p>fds24fGz1R...</p>
+              
                </div>
 
                <div className="col-xl-3">
                  <p className="main-pink">Mining Rewards</p>
-                 <p>20,512.55 SOSX</p>
-                 <p>20,512.55 SOSX</p>
+        
                </div>
 
                <div className="col-xl-3">
                  <p className="main-pink">Staking Rewards</p>
-                 <p>10,412.12 SOSX</p>
-                 <p>10,412.12 SOSX</p>
+       
 
                </div>
 
                <div className="col-xl-2">
                  <p className="main-pink">Total Earned</p>
-                 <p>30,924.67</p>
-                 <p>30,924.67</p>
+        
                </div>
              </div>
            </div>
          </div>
+
+        {referrals.map(ref => 
+
+             <div className="row pb-3">
+               
+             <div className="col-xl-12">
+               <div className="d-flex justify-content-between">
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
+                
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">0</p>
+          
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">
+                     {ref.amount}
+                   </p>
+         
+  
+                 </div>
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.amount}</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+        )}
+
        </div>
 
        <div className="tab-content">
@@ -403,38 +441,62 @@ export default function Referral() {
            <div className="col-xl-12">
              <div className="d-flex justify-content-between">
 
+               <div className="col-xl-2">
+                 <p className="main-pink">Wallet Address</p>
+              
+               </div>
+
                <div className="col-xl-3">
-                 <span className="success fs-12 ">Date</span> <br/>
-                 <span className="text-white fs-12">05/25/2022, 23:20:04 </span> <br/>
-                 <span className="text-white fs-12">05/25/2022, 23:20:04 </span>
-               </div>
-               <div className="col-xl-2">
-                 <span className="success fs-12 ">Wallet Address</span> <br/>
-                 <span className="text-white fs-12">fds24fGz1R...</span> <br/>
-                 <span className="text-white fs-12">fds24fGz1R...</span>
+                 <p className="main-pink">Mining Rewards</p>
+        
                </div>
 
-               <div className="col-xl-2">
-                 <span className="success fs-12 ">Mining Rewards Earned</span> <br/>
-                 <span className="text-white fs-12">20,512.55 SOSX</span> <br/>
-                 <span className="text-white fs-12">20,512.55 SOSX</span>
-               </div>
-
-               <div className="col-xl-2">
-                 <span className="success fs-12 ">Staking Rewards Earned</span> <br/>
-                 <span className="text-white fs-12">10,412.12 SOSX</span> <br/>
-                 <span className="text-white fs-12">10,412.12 SOSX</span>
+               <div className="col-xl-3">
+                 <p className="main-pink">Staking Rewards</p>
+       
 
                </div>
 
                <div className="col-xl-2">
-                 <span className="success fs-12 ">Total Earned</span> <br/>
-                 <span className="text-white fs-12">30,924.67</span> <br/>
-                 <span className="text-white fs-12">30,924.67</span>
+                 <p className="main-pink">Total Earned</p>
+        
                </div>
              </div>
            </div>
          </div>
+
+        {referrals.map(ref => 
+
+             <div className="row pb-3">
+               
+             <div className="col-xl-12">
+               <div className="d-flex justify-content-between">
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
+                
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">0</p>
+          
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">
+                     {ref.amount}
+                   </p>
+         
+  
+                 </div>
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.amount}</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+        )}
        </div>
 
      </div>
@@ -442,89 +504,144 @@ export default function Referral() {
        <input type="radio" name="css-tabs" id="tab-2" className="tab-switch"/>
        <label htmlFor="tab-2" className="tab-label">Social Mining</label>
        <div className="tab-content">
-         <h4 className="fs-18 mb-0">Social Mining Reward History</h4>
-         <span className="fs-14">All your Swaps referral rewards are listed below</span>
+         <h4>Referral List</h4>
+         <span>All your referral friends in one place.</span>
          <hr/>
-         <div className="row">
+         <div className="row pb-3">
            <div className="col-xl-12">
              <div className="d-flex justify-content-between">
 
-               <div className="col-xl-3">
-                 <p className="main-pink">Date</p>
-                 <p>05/25/2022, 23:20:04 </p>
-               </div>
                <div className="col-xl-2">
                  <p className="main-pink">Wallet Address</p>
-                 <p>fds24fGz1R...</p>
+              
                </div>
 
-               <div className="col-xl-2">
+               <div className="col-xl-3">
                  <p className="main-pink">Mining Rewards</p>
-                 <p>105,231.41 SOSX</p>
+        
+               </div>
+
+               <div className="col-xl-3">
+                 <p className="main-pink">Staking Rewards</p>
+       
+
                </div>
 
                <div className="col-xl-2">
-                 <p className="main-pink">Your Earnings</p>
-                 <p>10,523.14</p>
-
-               </div>
-
-               <div className="col-xl-2">
-                 <p className="main-pink">Status</p>
-                 <p>Claimed</p>
+                 <p className="main-pink">Total Earned</p>
+        
                </div>
              </div>
            </div>
          </div>
+
+        {referrals.map(ref => 
+
+             <div className="row pb-3">
+               
+             <div className="col-xl-12">
+               <div className="d-flex justify-content-between">
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
+                
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">0</p>
+          
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">
+                     {ref.amount}
+                   </p>
+         
+  
+                 </div>
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.amount}</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+        )}
+
        </div>
      </div>
      <div className="tab">
        <input type="radio" name="css-tabs" id="tab-3" className="tab-switch"/>
        <label htmlFor="tab-3" className="tab-label">Staking</label>
        <div className="tab-content">
-
-         <h4 className="fs-18 mb-0">Staking Reward History</h4>
-         <span className="fs-14">All your Staking referral rewards are listed below</span>
+         <h4>Referral List</h4>
+         <span>All your referral friends in one place.</span>
          <hr/>
-         <div className="row">
+         <div className="row pb-3">
            <div className="col-xl-12">
              <div className="d-flex justify-content-between">
 
-               <div className="col-xl-3">
-                 <p className="main-pink">Date</p>
-                 <p>05/25/2022, 23:20:04 </p>
-               </div>
                <div className="col-xl-2">
                  <p className="main-pink">Wallet Address</p>
-                 <p>fds24fGz1R...</p>
+              
                </div>
 
-               <div className="col-xl-2">
+               <div className="col-xl-3">
+                 <p className="main-pink">Mining Rewards</p>
+        
+               </div>
+
+               <div className="col-xl-3">
                  <p className="main-pink">Staking Rewards</p>
-                 <p>105,231.41 SOSX</p>
-               </div>
-
-               <div className="col-xl-2">
-                 <p className="main-pink">Your Earnings</p>
-                 <p>10,523.14</p>
+       
 
                </div>
 
                <div className="col-xl-2">
-                 <p className="main-pink">Status</p>
-                 <p>Claimed</p>
+                 <p className="main-pink">Total Earned</p>
+        
                </div>
              </div>
            </div>
          </div>
+
+        {referrals.map(ref => 
+
+             <div className="row pb-3">
+               
+             <div className="col-xl-12">
+               <div className="d-flex justify-content-between">
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
+                
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">0</p>
+          
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">
+                     {ref.amount}
+                   </p>
+         
+  
+                 </div>
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.amount}</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+        )}
+
        </div>
      </div>
    </div>
  </div>
-
-
-
-
 
 
 </div>
