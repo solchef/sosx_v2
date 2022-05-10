@@ -197,9 +197,9 @@ export default function Game() {
 
 			<div className="game size-child-game container-fluid">
 				<div className="row m-1">
-					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 m-0">
-						<div className="row m-0">
-							<div className={`card3 col-12 text-center ${biggerThan1200 && 
+					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 ">
+						<div className="row ">
+							<div className={`card3 col-3 m-2 text-center ${biggerThan1200 && 
 								"p-0"} col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
 
 
@@ -239,57 +239,57 @@ export default function Game() {
 									</div>
 								</div> 
 								<Modal show={show} onHide={handleClose} centered>
-								<form onSubmit={videoLink}>
-								<div className="form-group row">
-									<div className="col-sm-10">
-									<input type="file" className="form-control" id="filevideo" placeholder="Upload Video" />
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)}/>
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} />
-									</div>
-								</div>
-								<button className="btn btn-primary">Upload Video Here</button>
+								<div className="d-flex flex-column justify-content-between p-2">
+									<form onSubmit={videoLink}>
+								
+									
+									<input type="file" className="form-control fs-14 pb-3" id="filevideo" placeholder="Upload Video" />
+									
+									
+									<input type="text" className="form-control fs-14" id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+							
+									
+									<input type="text" className="form-control fs-14" id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)}/>
+							
+									
+									<input type="text" className="form-control fs-14" id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} />
+								
+								
+								<button className="btn p-1 mt-2 btn-primary">Upload Video Here</button>
 								</form>
+								</div>
 								</Modal>
 
 							</div>
 
-							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
-									{todayChallenge ? (
-										<>
-										<div className="card-header align-items-start border-0">
-									<div>
-										<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
-										<h4 className="fs-18 mb-0 pb-2">{todayChallenge.challenge.payload.name}</h4>
-										<span className="fs-12">{todayChallenge.challenge.payload.body} </span>
-										<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
-										{todayChallenge.challenge.payload.choices.map((element) => (
-										<ul className="fs-12">
-											<li>
-												<i className="fa-solid fa-check pr-2"></i>
-												{element}
-											</li>
-										</ul>
-									))}
-									</div>
-
-								</div>
-								<div className="p-3 align-items-start justify-content-between align-items-center">
-									<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-										id="votes">{todayChallenge.votes}</span><span className="fs-12">Votes</span></li>
-								</div>
-										</>
-									) : (
-										<p>Loading</p>
-									)}
+							<div className=" p-0  ml-3 col-6 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
+								<div className="card-header align-items-start border-0">
+										{todayChallenge.length > 0 ? (
+											<>
+											<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
+											<span className="fs-12 font-weight-bold success">@challengecreator-1</span>
+											{console.log(todayChallenge[0].challenge.payload.name)}
+											<h4 className="fs-18 mb-0 pb-2">{todayChallenge[0].challenge.payload.name}</h4>
+											<span className="fs-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+												do
+												eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
+												suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
+												vel
+												facilisis. </span>
+											<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
+											<ul className="fs-12">
+												<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
+												<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
+											</ul>
+											<div className="p-3 align-items-start justify-content-between align-items-center">
+											<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+												id="votes">{todayChallenge[0].votes}</span><span className="fs-12">Votes</span></li>
+											</div>
+											</>
+										) : (
+											<p>Loading</p>
+										)}
 								
-
 							</div>
 							
 							
@@ -303,10 +303,7 @@ export default function Game() {
 									<div>
 										<h4 className="fs-20">All Submission</h4>
 									</div>
-									<div className="ml-auto pt-3 ">
-										<span className="fs-14 sub-blue font-weight-bold">Watch All Videos
-										</span>
-									</div>
+								
 								</div>
 
 
