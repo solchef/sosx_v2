@@ -223,7 +223,8 @@ export default function DaoStaking() {
 						</div>
 					</div>
 				</div>
-				<div className="row">
+			</div>
+			<div className="row">
 
 					<div className="col-xl-4">
 						<div className="card ">

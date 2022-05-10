@@ -14,14 +14,20 @@ import { useMediaPredicate } from "react-media-hook";
 import BigNumber from "big-number"
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
 
+
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
   border-radius: 16px;
   padding: 16px;
 `
 
-
+const tabs = [
+  { name: 'list' },
+  { name: 'mining' },
+  { name: 'staking'}
+];
 export default function Referral() {
+  const [tab, setTab] = useState(tabs[0])
 
   const contract = useStakingContract();
   const [referralCount, setReferralCount] = useState(0);
@@ -33,8 +39,14 @@ export default function Referral() {
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const { account } = useActiveWeb3React();
+  const [key, setKey] = useState("chart");
 
   // const account = "dd"
+  const toggleTab = (event, type) => {
+    event.stopPropagation();
+    tabs.map(tabb => tabb.name == type ? setTab(tabb) : '');
+    
+};
 
   useEffect(() => {
 
@@ -216,8 +228,8 @@ export default function Referral() {
        <div className=' mt-2'>
          <img className='p-3' src="images/step1-referrallink.png"/>
          <span className="main-pink">Step 1</span>
-         <h4>Get a referral link</h4>
-         <p>Connect a wallet & generate your referral link in the
+         <h4 className='fs-16 font-weight-bold'>Get a referral link</h4>
+         <p className='pt-2'>Connect a wallet & generate your referral link in the
            Referral section.</p>
        </div>
      </div>
@@ -227,8 +239,8 @@ export default function Referral() {
      <div className="card">
        <img className='p-3' src="images/step2invitefriend-img.png"/>
        <span className="main-pink">Step 2</span>
-       <h4>Invite friends</h4>
-       <p>Invite your friends & register with your referral link.</p>
+       <h4 className='fs-16 font-weight-bold'>Invite friends</h4>
+       <p className='pt-2'>Invite your friends & register with your referral link.</p>
      </div>
    </div>
 
@@ -237,8 +249,8 @@ export default function Referral() {
      <div className="card">
        <img className='p-3' src="images/step3earnsosx-img.png"/>
        <span className="main-pink">Step 3</span>
-       <h4>Earn SOSX</h4>
-       <p>Receive a referral rewards from your friends’ earnings.
+       <h4 className='fs-16 font-weight-bold'>Earn SOSX</h4>
+       <p className='pt-2'>Receive a referral rewards from your friends’ earnings.
        </p>
      </div>
    </div>
@@ -249,41 +261,41 @@ export default function Referral() {
    <div className="col-sm-4 col-6 col-xl-2">
      <div className="card overflow-hidden">
        <p className="pb-2">Total Friends</p>
-       <h4>{referralCount}</h4>
+       <h4 className='fs-16 font-weight-bold'>{referralCount}</h4>
      </div>
    </div>
    <div className="col-sm-4 col-6 col-xl-2">
      <div className="card overflow-hidden">
        <p className="pb-2">Total Earned</p>
-       <h4>{viewReferralReward}</h4>
+       <h4 className='fs-16 font-weight-bold'>{viewReferralReward}</h4>
      </div>
    </div>
 
    <div className="col-sm-4 col-6 col-xl-2">
      <div className="card overflow-hidden">
        <p className="pb-2">Mining Friends</p>
-       <h4>{referralCount}</h4>
+       <h4 className='fs-16 font-weight-bold'>{referralCount}</h4>
      </div>
    </div>
 
    <div className="col-sm-4 col-6 col-xl-2">
      <div className="card overflow-hidden">
        <p className="pb-2">Mining Earned</p>
-       <h4>{viewReferralReward}</h4>
+       <h4 className='fs-16 font-weight-bold'>{viewReferralReward}</h4>
      </div>
    </div>
 
    <div className="col-sm-4 col-6 col-xl-2">
      <div className="card overflow-hidden">
        <p className="pb-2">Staking Friends</p>
-       <h4>0</h4>
+       <h4 className='fs-16 font-weight-bold'>0</h4>
      </div>
    </div>
 
    <div className="col-sm-4 col-6 col-xl-2">
      <div className="card overflow-hidden">
        <p className="pb-2">Staking Earned</p>
-       <h4>0</h4>
+       <h4 className='fs-16 font-weight-bold'>0</h4>
      </div>
    </div>
  </div>
@@ -293,13 +305,13 @@ export default function Referral() {
  <div className="row font-weight-bold">
    <div className="col-xl-6">
      <div className="card h-auto">
-       <div className="card-header border-0 pb-0">
-         <h4 className='font-weight-bold' >My Referral Link</h4>
+       <div className="card-header pl-1  border-0 pb-0">
+         <h4 className='fs-18 font-weight-bold' >My Referral Link</h4>
        </div>
        <div className="card-body">
          <div className="bg-dark rounded">
            <div className="d-flex justify-content-between align-items-center">
-             <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span>
+             {/* <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span> */}
              <div className="float-right d-flex">
              <li className="nav-item pr-2">
                <CopyToClipboard
@@ -318,17 +330,20 @@ export default function Referral() {
              </div>
            </div>
          </div>
-         <div className="bg-dark pt-4 rounded">
-           <h4>You will get</h4>
-           <div className='font-weight-bold d-flex justify-content-between pt-2'>
+         <div className="card-header border-0 pl-0 pb-0">
+         <h4 className='fs-18 font-weight-bold' >You will get</h4>
+       </div>
+         <div className="bg-dark rounded">
+          
+           <div className='font-weight-bold d-flex justify-content-between '>
              <div>
-               <p>Social Mining</p>
-               <h3 className='pt-3 font-weight-bold'> 25%</h3>
+               <p className='text-success' >Social Mining</p>
+               <h3 className='font-weight-bold'> 25%</h3>
              </div>
 
-             <div>
-             <p>Staking </p>
-             <h3 className='pt-3 font-weight-bold'> 10%</h3>
+             <div className='mx-auto'>
+             <p className='text-success'>Staking </p>
+             <h3 className='font-weight-bold'> 10%</h3>
              </div>
            </div>
          </div>
@@ -338,26 +353,26 @@ export default function Referral() {
 
    <div className="col-xl-6">
      <div className="row">
-       <div className="col-md-12 col-6">
-         <div className="card p-1 pl-2 h-auto">
+       <div className="col-md-12 p-2 col-6">
+         <div className="card m-0 p-3 h-auto">
            <div className="card-body">
-             <img src="images/swapcoin-referral.svg" className="p-2 referral-rewards"/>
+             <img src="images/swapcoin-referral.svg" className="pb-2 pl-2 pr-2 pt-1 referral-rewards"/>
              <span className="main-pink">Social Mining Referral</span>
 
-             <h4 className='pt-2'>{viewReferralReward} SOSX</h4>
-             <button type="button" className="btn btn-primary mt-3 ">Withdraw</button>
+             <h4 className='fs-18 font-weight-bold pt-2 pb-2'>{viewReferralReward} SOSX</h4>
+             <button style={{    padding: "0.338rem 1rem"}}  type="button" className="btn btn-primary  ">Withdraw</button>
            </div>
          </div>
        </div>
 
-       <div className="col-md-12 col-6">
-         <div className="card  p-1 pl-2 h-auto">
+       <div className="col-md-12 p-2 col-6">
+         <div className="card m-0  p-3  h-auto">
            <div className="card-body">
-             <img src="images/swapcoin-referral.svg" className="p-2 referral-rewards"/>
+             <img src="images/swapcoin-referral.svg" className="pb-2 pl-2 pr-2 pt-1 referral-rewards"/>
              <span className="main-pink">Staking Referral</span>
              
-             <h4 className='pt-2' >{viewReferralReward} SOSX</h4>
-             <button type="button" className="btn btn-primary mt-3  ">Withdraw</button>
+             <h4 className='fs-18 pt-2 font-weight-bold pb-2' >{viewReferralReward} SOSX</h4>
+             <button style={{padding: "0.338rem 1rem"}}  type="button" className="btn btn-primary ">Withdraw</button>
 
            </div>
          </div>
@@ -369,11 +384,11 @@ export default function Referral() {
  <div className="wrapper">
    <div className="tabs">
      <div className="tab">
-       <input type="radio" name="css-tabs" id="tab-1" checked className="tab-switch"/>
-       <label htmlFor="tab-1" className="tab-label">Referral List</label>
+     {tab.name =="list"?         <input type="radio" name="css-tabs" checked id="tab-1"  className="tab-switch"/> :''}
+       <label onClick={(e) => toggleTab(e, "list")} htmlFor="tab-1" className="tab-label">Referral List</label>
 
        <div className="tab-content">
-         <h4>Referral List</h4>
+         <h4 className='fs-16 font-weight-bold'>Referral List</h4>
          <span>All your referral friends in one place.</span>
          <hr/>
          <div className="row pb-3">
@@ -437,7 +452,7 @@ export default function Referral() {
        </div>
 
        <div className="tab-content">
-         <h4 className="fs-18 mb-0">Referral List</h4>
+         <h4 className="fs-18 fs-18 mb-0">Referral List</h4>
          <span className="fs-14">All your referral friends in one place.</span>
          <hr/>
          <div className="row pb-3">
@@ -504,10 +519,10 @@ export default function Referral() {
 
      </div>
      <div className="tab">
-       <input type="radio" name="css-tabs" id="tab-2" className="tab-switch"/>
-       <label htmlFor="tab-2" className="tab-label">Social Mining</label>
+     {tab.name =="mining"?  <input type="radio" name="css-tabs" checked id="tab-2" className="tab-switch"/>:''} 
+       <label onClick={(e) => toggleTab(e, "mining")} htmlFor="tab-2" className="tab-label">Social Mining</label>
        <div className="tab-content">
-         <h4>Referral List</h4>
+         <h4 className='fs-16 font-weight-bold'>Referral List</h4>
          <span>All your referral friends in one place.</span>
          <hr/>
          <div className="row pb-3">
@@ -574,10 +589,10 @@ export default function Referral() {
        </div>
      </div>
      <div className="tab">
-       <input type="radio" name="css-tabs" id="tab-3" className="tab-switch"/>
-       <label htmlFor="tab-3" className="tab-label">Staking</label>
+     {tab.name =="staking"?     <input type="radio" name="css-tabs" checked id="tab-3" className="tab-switch"/> :''}
+       <label onClick={(e) => toggleTab(e, "staking")} htmlFor="tab-3" className="tab-label">Staking</label>
        <div className="tab-content">
-         <h4>Referral List</h4>
+         <h4 className='fs-16 font-weight-bold'>Referral List</h4>
          <span>All your referral friends in one place.</span>
          <hr/>
          <div className="row pb-3">
@@ -645,6 +660,19 @@ export default function Referral() {
      </div>
    </div>
  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </div>

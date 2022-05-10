@@ -63,9 +63,9 @@ export default function Votechallenge() {
 		};
 		getData();
 	}, []);
-	
+
 	console.log("challenges", challenges);
-		
+
 	const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
@@ -73,64 +73,66 @@ export default function Votechallenge() {
 
 		<div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
 
-      <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/xgame'> Back </Link> </p>
+			<p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/xgame'> Back </Link> </p>
 			{challenges.length > 0 ? (
 
 
-			<div className="row pt-3">
-				{challenges.sort((a, b) => a.votes - b.votes).reverse().map((camp) => (
+				<div className="row pt-3">
+					{challenges.sort((a, b) => a.votes - b.votes).reverse().map((camp) => (
 
-					<div className="col-xl-4 col-md-6">
-						<div className="card p-0 overflow-hidden">
-							<div className="card-header  align-items-start border-0">
-								<div>
-									<span className="fs-12 font-weight-bold success">
-										{/* {camp.challenge.payload.metadata.strategies[0].params.address} */}
-									</span>
+						<div className="col-12 col-xl-4 col-md-6">
+							<div className="card p-0 overflow-hidden">
+								<div className="card-body p-3 align-items-start border-0">
+									<div>
+										<span className="fs-12 font-weight-bold success">
+											{/* {camp.challenge.payload.metadata.strategies[0].params.address} */}
+										</span>
 
-									<ReadMore size="35" css="fs-18 pb-2 pt-3">
-										{camp.challenge.payload.name}
-									</ReadMore>
+										<ReadMore size="35" css="fs-18 pb-2 pt-3">
+											{camp.challenge.payload.name}
+										</ReadMore>
 
-									<ReadMore size="150" css="fs-14 pt-2">
-										{camp.challenge.payload.body}
-									</ReadMore>
+										<ReadMore size="150" css="fs-14 pt-2">
+											{camp.challenge.payload.body}
+										</ReadMore>
 
-									<h4 className="fs-12 text-white pt-3">Rules</h4>
-									{camp.challenge.payload.choices.map((element) => (
-										<ul className="fs-12">
-											<li>
-												<i className="fa-solid fa-check pr-2"></i>
-												{element}
-											</li>
-										</ul>
-									))}
+
+									</div>
 								</div>
-							</div>
-
-							<div className="d-flex card-body flex-column p-3 flex-lg-row align-items-md-center align-items-start justify-content-between">
-								<div>
-									<i className="fa-regular fa-heart p-2"></i>
-									<span className="fs-12 p-1" id="votes">
-										{camp.votes}
-									</span>
-									<span className="fs-12">Votes</span>
+								<div className='card-footer  pt-0 foot-card border-0'>
+									<div>
+										<h4 className="fs-12 text-white">Rules</h4>
+										{camp.challenge.payload.choices.map((element) => (
+											<ul className="fs-12">
+												<li>
+													<i className="fa-solid fa-check pr-2"></i>
+													{element}
+												</li>
+											</ul>
+										))}
+									</div>
+									<div className="align-items-center d-flex justify-content-between ">
+										<div>
+											<i className="fa-regular fa-heart p-2"></i>
+											<span className="fs-12 p-1" id="votes">
+												{camp.votes}
+											</span>
+											<span className="fs-12">Votes</span>
+										</div>
+										<Link href={`/challenge/${camp.challenge.payload.name}`}>
+											<button type="button" className="btn btn-primary ">
+												<i className="fa-solid fa-check-to-slot pr-2"></i>Details
+											</button>
+										</Link>
+									</div>
 								</div>
 
-							</div>
-							<div className="card-footer pt-0 foot-card border-0 ">
-								<Link href={`/challenge/${camp.challenge.payload.name}`}>
-									<button type="button" className="btn btn-primary ">
-										<i className="fa-solid fa-check-to-slot pr-2"></i>Details
-									</button>
-								</Link>
 							</div>
 						</div>
-					</div>
-				))}
+					))}
 
-			</div>
-			
+				</div>
+
 			) : (
 				<p>No Challenges</p>
 			)}
