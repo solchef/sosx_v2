@@ -545,49 +545,56 @@ export default function Challenge() {
                         </div>
                     </div>
 
-                    <div className="col-12 col-lg-4">
-                        <div className="row">
-                            <div className="card border col-11">
-                                <h5 className=" border-bottom font-weight-bold p-1">Information</h5>
+                    <div className="col-11 col-lg-4">
+                        <div className="row mx-auto">
+                            <div style={{fontSize:'90%'}} className="card border p-0 col-11 col-md-12 col-xl-11">
+                                <h5 className=" border-bottom font-weight-bold pl-2 pt-3 pb-3 ">Information</h5>
+                                <div className="card-body p-4">
 
-
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
-                                    <div >network	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                <div className="row d-flex font-weight-bold justify-content-between p-0">
+                                    <div >Strategie(s)	</div>
+                                    <div className="ml-auto text-white" > <img style={{width:'26px'}} src="/utils/images/xlogo-black.b90261b2.svg" /></div>
                                 </div>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
                                     <div >IPFS	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                    <div className="ml-auto text-white" > <div className="ml-auto text-white" ><a href="#"> #QmUzzeT <i className="fa-solid fa-arrow-up-right-from-square"></i> </a></div></div>
                                 </div>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
                                     <div >Voting system 	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                    <div className="ml-auto text-white  fa-12" >Single choice voting</div>
                                 </div>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
                                     <div >Start date	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                    <div className="ml-auto text-white" >May 9, 2022, 6:00 PM</div>
                                 </div>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
                                     <div >End date	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                    <div className="ml-auto text-white" >May 10, 2022, 12:00 AM</div>
                                 </div>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
+                                <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
                                     <div >Snapshot	</div>
+                                    <div className="ml-auto text-white" > <div className="ml-auto text-white" ><a href="#"> #QmUzzeT <i className="fa-solid fa-arrow-up-right-from-square"></i> </a></div></div>
+                                </div>
+                                <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
+                                    <div >Network</div>
                                     <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="card border col-11">
-                                <h5 className="font-weight-bold ">Current results
-                                </h5>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
-                                    <div >The Votes	</div>
-                                    <div className="ml-auto text-white" >{votesList.length} </div>
-                                </div>
-
                             </div>
                         </div>
+                        <div className="row mx-auto">
+                            <div style={{fontSize:'90%'}} className="card border p-0 col-11 col-md-12 col-xl-11">
+                                <h5 className=" border-bottom font-weight-bold pl-2 pt-3 pb-3 ">Current results</h5>
+                                <div className="card-body p-4">
+
+                                <div className="row d-flex font-weight-bold justify-content-between p-0">
+                                    <div >The Votes	</div>
+                                    <div className="ml-auto text-white" > {votesList.length} </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+             
                     </div>
 
                 </div>
