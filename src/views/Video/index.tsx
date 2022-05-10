@@ -18,13 +18,23 @@ export default function Video() {
                             <source src="https://vjs.zencdn.net/v/oceans.mp4" type='video/mp4' />
                             <source src="https://vjs.zencdn.net/v/oceans.webm" type='video/webm' />
                         </video>
-                        <h4 className='pt-4'>NameNameNameNameNameNameName</h4>
-                        <h5 className='pt-3 text-muted pb-3'>22/01/2022</h5>
-                        <button style={{ width: 'fit-content' }} type="button" className="btn btn-success">Uploade</button>
-                       <div className='pt-3 d-flex justify-content-between'>
+                        <p> <h5 className='pt-3 text-muted pb-3'> Upload Time22/01/2022</h5></p>
+                        <h4 className='pt-4'>Challenge: pancake Bunnys</h4>
+                        <p>
+                            Good afternoon ! Create a burn staking pool so that the price of the token also grows, maybe the cake community will also want this and will invest the cake. You are burning too few coins and putting too much into circulation, so the price of the token will not grow.
+                        </p>
 
-                       <button style={{ width: 'fit-content' }} type="button" className="btn btn-secondary">Tiktok</button>
-                        <button style={{ width: 'fit-content' }} type="button" className="btn mx-auto btn-danger">youtube</button>
+                        <ul> <b>Rules</b>
+                            <li>Rule 1 for the Game</li>
+                            <li>Rule 1 for the Game</li>
+                        </ul>
+
+                        <ul>Social Links
+                            <li>  <a href='#'>Tiktok: https://tiktok.com</a> </li>
+                          
+                        </ul>
+                       
+                       <div className='pt-3 d-flex justify-content-between'>
 
                        </div>
      
