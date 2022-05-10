@@ -26,12 +26,12 @@ export default function Video() {
                             Good afternoon ! Create a burn staking pool so that the price of the token also grows, maybe the cake community will also want this and will invest the cake. You are burning too few coins and putting too much into circulation, so the price of the token will not grow.
                         </p>
 
-                        <ul className='fs-16 text-white'> <b>Rules</b>
+                        <ul className='fs-16 pt-3 text-white'> <b>Rules</b>
                             <li>Rule 1 for the Game</li>
                             <li>Rule 1 for the Game</li>
                         </ul>
 
-                        <ul className='fs-16 text-white'>Social Links
+                        <ul className='fs-16 pt-3 text-white'>Social Links
                             <li>  <a href='#'>Tiktok: https://tiktok.com</a> </li>
                           
                         </ul>
@@ -44,6 +44,7 @@ export default function Video() {
                     </div>
                 </div>
                 <div className="col-lg-4 col-12">
+                    <h4 className='pb-4 fs-20'> Challange Other Video</h4>
                     <div className="row pb-4 d-flex flex-nowrap ">
                         <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
                         <div className='p-1 pl-2'>

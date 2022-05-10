@@ -201,6 +201,7 @@ export default function Game() {
 									</div>
 								</div> 
 								<Modal show={show} onHide={handleClose} centered>
+								<div className="card">
 								<form onSubmit={videoLink}>
 								<div className="form-group row">
 									<div className="col-sm-10">
@@ -218,6 +219,7 @@ export default function Game() {
 								</div>
 								<button className="btn btn-primary">Upload Video Here</button>
 								</form>
+								</div>
 								</Modal>
 
 							</div>
@@ -264,10 +266,7 @@ export default function Game() {
 									<div>
 										<h4 className="fs-20">All Submission</h4>
 									</div>
-									<div className="ml-auto pt-3 ">
-										<span className="fs-14 sub-blue font-weight-bold">Watch All Videos
-										</span>
-									</div>
+								
 								</div>
 
 
