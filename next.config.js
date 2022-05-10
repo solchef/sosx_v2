@@ -28,7 +28,7 @@ const config = {
   experimental: {
     scrollRestoration: true,
   },
-  basePath: '/utils',
+  basePath: '/',
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
@@ -115,4 +115,4 @@ const config = {
 }
 
 
-module.exports = withBundleAnalyzer(withSentryConfig(config, sentryWebpackPluginOptions))
+module.exports = withBundleAnalyzer()
