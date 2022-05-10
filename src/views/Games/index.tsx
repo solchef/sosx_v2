@@ -28,9 +28,7 @@ export default function Game() {
 	const [videos, setVideos] = useState([]);
 	const [displayLevel, setDisplayLevel] = useState(1);
 	const [voters, setVoters] = useState([])
-	const [todayChallenge, setTodayChallenge] = useState([]);
 	const contract = useStakingContract();
-	const [videos, setVideos] = useState([])
 	const [challenges, setChallenges] = useState<any[]>([]);
 
 
@@ -64,8 +62,11 @@ export default function Game() {
 
 	useEffect(() => {
 		loadDaoLevels();
-		// getData();
 	}, []);
+
+	useEffect(() => {
+		getData();
+	}, [])
 
 	useEffect(() => {
 		getVideo();
