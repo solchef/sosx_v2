@@ -62,7 +62,7 @@ export default function Game() {
 
 	useEffect(() => {
 		loadDaoLevels();
-		// getData();
+		getData();
 	}, []);
 
 	const getData = async () => {
@@ -407,6 +407,7 @@ export default function Game() {
 				</div>
 			</div>
 
+		</div>
 
 		</>
 	)
