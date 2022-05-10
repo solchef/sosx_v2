@@ -26,7 +26,7 @@ export default function Game() {
 	const [youtubeURL, setYoutubeURL] = useState('')
 	const [tiktokURL, setTiktokURL] = useState('')
 	const [displayLevel, setDisplayLevel] = useState(1);
-	const [voters, setVoters] = useState([]);
+	const [voters, setVoters] = useState([])
 	const [videos, setVideos] = useState([])
 	const contract = useStakingContract();
 	const [challenges, setChallenges] = useState<any[]>([]);
@@ -62,34 +62,12 @@ export default function Game() {
 
 	useEffect(() => {
 		loadDaoLevels();
-	}, []);
-
-	useEffect(() => {
 		getData();
-	}, [])
+	}, []);
 
 
 
 	const getData = async () => {
-		let finalData = [];
-		for await (const videoFile of server.files.ls("/vid")) {
-			let fileContent;
-
-			for await (const cha of server.files.ls(`/vid/${videoFile.name}`)) {
-				const chunks = [];
-
-					for await (const chunk of server.cat(cha.cid)) {
-						chunks.push(chunk);
-					}
-					const data = concat(chunks);
-					fileContent = JSON.parse(
-						new TextDecoder().decode(data).toString()
-					);
-			}
-
-			finalData.push(fileContent);
-		}
-
 		let challenges = [];
 		for await (const resultPart of server.files.ls("/challenges")) {
 			let challenge;
@@ -121,10 +99,29 @@ export default function Game() {
 		}
 
 		setChallenges(challenges);
-		setVideos(finalData);
 	};
-
 	const todayChallenge = challenges.sort((a, b) => a.votes - b.votes).reverse()[0]
+
+	const getVideo = async () => {
+		let finalData = [];
+
+		if (todayChallenge) {
+			for await (const videoFile of server.files.ls(`/challenges/${String(`challenge-${todayChallenge.challenge.payload.name}`).replaceAll(' ', '-')}/videos`)) {
+			let fileContent;
+			const chunks = [];
+			for await (const chunk of server.cat(videoFile.cid)) {
+				chunks.push(chunk);
+			}
+			const data = concat(chunks);
+				fileContent = JSON.parse(
+					new TextDecoder().decode(data).toString()	
+			);
+			finalData.push(fileContent);
+		}
+		setVideos(finalData);
+		}
+	}
+
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		const form = event.target as HTMLFormElement;
@@ -199,7 +196,6 @@ export default function Game() {
 
 	return (
 		<>
-
 			<div className="game size-child-game container-fluid">
 				<div className="row m-1">
 					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 m-0">
@@ -412,8 +408,7 @@ export default function Game() {
 					</div>
 				</div>
 			</div>
-
-
+			</div>
 		</>
 	)
 }
