@@ -386,30 +386,25 @@ export default function Game() {
 
 							<div className={`card3-body ranking ${biggerThan576 && "p-0"} ${biggerThan1200 && "p-0"}`}>
 								
-							{voters.sort((a, b) => a.amount - b.amount).map((voter) => 
+							{voters.sort((a, b) => b.amount - a.amount).map((voter, i) => 
 									<>
 										{voter.level == displayLevel &&  
 
 											<a className="blueprint-header-display trader-display">
 											<div className="d-flex align-items-center">
-												<span className="text-white mr-3 fs-16 font-w600">1</span>
+												<span className="text-white mr-3 fs-16 font-w600">{i}</span>
 												<img className="blueprint-img-sm rounded-circle"
 													src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
 												<div className="ml-1">
-
 													<span
 														className="mb-1 card-small-text text-white trader-name">{voter.address.replace(/(.{10})..+/, "$1…")}</span>
 												</div>
 												</div>
 											<span><i className="fa fa-wallet"></i> {voter.amount} </span>
 											</a>
-										
 										}
-									
 									</>
-									
-							
-							)}
+						    	)}
 							
 							</div>
 						</div>
