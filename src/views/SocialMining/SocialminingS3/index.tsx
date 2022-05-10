@@ -57,16 +57,16 @@ export default function SocialminingS3() {
     <>
       <NavMining />
       <form onSubmit={handlePost}>
-      <div className="container-fluid pt-3">
+      <div className="card-social container-fluid pt-3">
         <div className="card p-3 mt-3">
           <div className="row">
             <div className="col-lg-6">
               
                 <div className="card-body">
-                  <h3 className="text-white font-weight-semibold">
+                  <h3 className="text-white font-weight-bold">
                     CLAIM YOUR DAILY SOCIALX TOKEN REWARDS.
                   </h3>
-                  <p className="text-white pr-3 mb-3 mt-3">
+                  <p className="text-white fs-16 pr-3 mb-3 mt-3">
                     Please provide your metamask wallet, and a direct URL link
                     to the post you shared. The transfer is not immediate as
                     they get individually reviewed and might come in bulk.
@@ -112,10 +112,10 @@ export default function SocialminingS3() {
 
             <div className="col-lg-6">
               <div className="card-body">
-                <h3 className="main-pink font-weight-semibold">
+                <p className="main-pink fs-22  font-weight-bold">
                   GET PAID FOR LIFE!
-                </h3>
-                <p className="text-white pr-3 mb-3 mt-3">
+                </p>
+                <p className="text-white fs-16 pr-3 mb-3 mt-3">
                   Rewards are automatic and instant with no staking required.
                   This resolves the issue of locking up finances in hopes of a
                   better interest rate. Rewards are dependent on network trading

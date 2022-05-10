@@ -13,7 +13,7 @@
 
 // const server = create({
 //     url: "http://127.0.0.1:5001",
-    
+
 // });
 
 // export default function Challenge() {
@@ -38,7 +38,7 @@
 //                     let challengeJson;
 //                     let vote;
 //                     let votesList = []
-                
+
 //                     if (resultPart.name === challengeName) {
 //                         for await (const cha of server.files.ls(`/${resultPart.name}`)) {
 //                             const chunks = [];
@@ -122,7 +122,7 @@
 //         })
 
 //         const sig = await signMessage(connector, library, account, vote)
-        
+
 //         if (sig) {
 //             const forIPFS =  JSON.stringify({
 //                 ...generatePayloadData(),
@@ -171,7 +171,7 @@
 //                     }
 //                 }
 //             }, null, 2)
-            
+
 //             await server.files.write(`/challenge-${name}/votes/${account}.json`, forIPFS, {create: true})
 //             toastSuccess(t('Vote created!'))
 //             getData()
@@ -234,7 +234,7 @@
 //                     </div>
 
 //                 </div>
-                
+
 //                 <div className="col-12 col-lg-4">
 //                     <div className="row">
 //                         <div className="card border col-11">
@@ -245,7 +245,7 @@
 //                                 <div className="col-6">network	</div>
 //                                 <div className="col-6">{challenge[0].challenge.payload.metadata.network}</div>
 //                             </div>
-                           
+
 
 //                         </div>
 //                     </div>
@@ -317,175 +317,176 @@ export default function Challenge() {
     const { t } = useTranslation()
 
     useEffect(() => {
-                getData();
-            }, [name]);
+         getData();
+     }, [name]);
         
-            let challengeName = `challenge-${name}` 
-            const getData = async () => {
-                if (name) {
-                        let challenge = [];
-                        for await (const resultPart of server.files.ls("/challenges")) {
-                            let challengeJson;
-                            let vote;
-                            let votesList = []
-                        
-                            if (resultPart.name === challengeName) {
-                                for await (const cha of server.files.ls(`/challenges/${resultPart.name}`)) {
-                                    const chunks = [];
-        
-                                    if (cha.name == 'challenge.json') {
-                                    for await (const chunk of server.cat(cha.cid)) {
-                                        chunks.push(chunk);
-                                        }
-                                        const data = concat(chunks);
-                                        challengeJson = JSON.parse(
-                                        new TextDecoder().decode(data).toString()
-                                        );
-                                    }
-                                    if (cha.name == 'votes') {
-                                        for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes`)) {
-                                            votesList.push(vote.name.slice(0, -5))
-                                        }
-                                    } 
-                                    setVotesList(votesList)
+    let challengeName = `challenge-${name}` 
+    const getData = async () => {
+        if (name) {
+                let challenge = [];
+                for await (const resultPart of server.files.ls("/challenges")) {
+                    let challengeJson;
+                    let vote;
+                    let votesList = []
+
+                    if (resultPart.name === challengeName) {
+                        for await (const cha of server.files.ls(`/challenges/${resultPart.name}`)) {
+                            const chunks = [];
+
+                            if (cha.name == 'challenge.json') {
+                            for await (const chunk of server.cat(cha.cid)) {
+                                chunks.push(chunk);
                                 }
-                                let challengeData = {
-                                    challenge: challengeJson,
-                                    votes: vote
-                                }
-                                challenge.push(challengeData);
+                                const data = concat(chunks);
+                                challengeJson = JSON.parse(
+                                new TextDecoder().decode(data).toString()
+                                );
                             }
-                        }
-                        setChallenge(challenge);
-                } 
-            }
-        
-            const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
-                evt.preventDefault()
-        
-                const vote = JSON.stringify({
-                    ...generatePayloadData(),
-                    address:account,
-                    data: {
-                        domain: {
-                            name: 'snapshot',
-                            version: '0.1.4'
-                        },
-                        types: {
-                            Vote: [
-                                {
-                                    name: "from",
-                                    type: "address"
-                                },
-                                {
-                                    name: "space",
-                                    type: "string"
-                                },
-                                {
-                                    name: "timestamp",
-                                    type: "uint64"
-                                },
-                                {
-                                    name: "challenge",
-                                    type: "string"
-                                },
-                                {
-                                    name: "choice",
-                                    type: "uint32"
-                                },
-                                {
-                                    name: "metadata",
-                                    type: "string"
+                            if (cha.name == 'votes') {
+                                for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes`)) {
+                                    votesList.push(vote.name.slice(0, -5))
                                 }
-        
-                            ]
-                        },
-                        message: {
-                            space: "SOSX",
-                            challenge: `${challengeName}`,
-                            choice: 1,
-                            metadata: '{}',
-                            from: account,
-                            timestamp: Date.now()
+                            } 
+                            setVotesList(votesList)
                         }
+                        let challengeData = {
+                            challenge: challengeJson,
+                            votes: vote
+                        }
+                        challenge.push(challengeData);
                     }
-                })
-        
-                const sig = await signMessage(connector, library, account, vote)
-                
-                if (sig) {
-                    const forIPFS =  JSON.stringify({
-                        ...generatePayloadData(),
-                        address: account,
-                        sig: sig.toString(),
-                        data: {
-                            domain: {
-                                name: 'snapshot',
-                                version: '0.1.4'
-                            },
-                            types: {
-                                Vote: [
-                                    {
-                                        name: "from",
-                                        type: "address"
-                                    },
-                                    {
-                                        name: "space",
-                                        type: "string"
-                                    },
-                                    {
-                                        name: "timestamp",
-                                        type: "uint64"
-                                    },
-                                    {
-                                        name: "proposal",
-                                        type: "string"
-                                    },
-                                    {
-                                        name: "choice",
-                                        type: "uint32"
-                                    },
-                                    {
-                                        name: "metadata",
-                                        type: "string"
-                                    }
-                                ]
-                            },
-                            message: {
-                                space: "sosx",
-                                challenge: '',
-                                choice: 1,
-                                metadata: '{}',
-                                from: account,
-                                timestamp: Date.now()
-                            }
+                }
+                setChallenge(challenge);
+        } 
+    }
+
+    const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+        evt.preventDefault()
+
+        const vote = JSON.stringify({
+            ...generatePayloadData(),
+            address: account,
+            data: {
+                domain: {
+                    name: 'snapshot',
+                    version: '0.1.4'
+                },
+                types: {
+                    Vote: [
+                        {
+                            name: "from",
+                            type: "address"
+                        },
+                        {
+                            name: "space",
+                            type: "string"
+                        },
+                        {
+                            name: "timestamp",
+                            type: "uint64"
+                        },
+                        {
+                            name: "challenge",
+                            type: "string"
+                        },
+                        {
+                            name: "choice",
+                            type: "uint32"
+                        },
+                        {
+                            name: "metadata",
+                            type: "string"
                         }
-                    }, null, 2)
-                    
-                    await server.files.write(`/challenges/challenge-${name}/votes/${account}.json`, forIPFS, {create: true})
-                    toastSuccess(t('Vote created!'))
-                    getData()
-                } else {
-                    toastError(t('Error'), t('Unable to sign payload'))
+
+                    ]
+                },
+                message: {
+                    space: "SOSX",
+                    challenge: `${challengeName}`,
+                    choice: 1,
+                    metadata: '{}',
+                    from: account,
+                    timestamp: Date.now()
                 }
             }
-        
-            const ReadMore = ({ children }) => {
-                const text = children;
-                const [isReadMore, setIsReadMore] = useState(true);
-                const toggleReadMore = () => {
-                    setIsReadMore(!isReadMore);
-                };
-                console.log(text.length)
-                return (
-                    <p className="text">
-                        {isReadMore ? text.slice(0, 600) : text}
-                        <a style={{ cursor: 'pointer', color: '#ff00cc' }} onClick={toggleReadMore} className="ml-2 read-or-hide">
-                            {text.length > text.slice(0, 600).length ? (isReadMore ? "...Read more" : " Show less") : ''}
-                        </a>
-                    </p>
-                );
-            };
+        })
+
+        const sig = await signMessage(connector, library, account, vote)
+
+        if (sig) {
+            const forIPFS =  JSON.stringify({
+                ...generatePayloadData(),
+                address: account,
+                sig: sig.toString(),
+                data: {
+                    domain: {
+                        name: 'snapshot',
+                        version: '0.1.4'
+                    },
+                    types: {
+                        Vote: [
+                            {
+                                name: "from",
+                                type: "address"
+                            },
+                            {
+                                name: "space",
+                                type: "string"
+                            },
+                            {
+                                name: "timestamp",
+                                type: "uint64"
+                            },
+                            {
+                                name: "proposal",
+                                type: "string"
+                            },
+                            {
+                                name: "choice",
+                                type: "uint32"
+                            },
+                            {
+                                name: "metadata",
+                                type: "string"
+                            }
+                        ]
+                    },
+                    message: {
+                        space: "sosx",
+                        challenge: '',
+                        choice: 1,
+                        metadata: '{}',
+                        from: account,
+                        timestamp: Date.now()
+                    }
+                }
+            }, null, 2)
+
+
+            await server.files.write(`/challenge-${name}/votes/${account}.json`, forIPFS, { create: true })
+            toastSuccess(t('Vote created!'))
+            getData()
+        } else {
+            toastError(t('Error'), t('Unable to sign payload'))
+        }
+    }
+
+    const ReadMore = ({ children }) => {
+        const text = children;
+        const [isReadMore, setIsReadMore] = useState(true);
+        const toggleReadMore = () => {
+            setIsReadMore(!isReadMore);
+        };
+        console.log(text.length)
+        return (
+            <p className="text">
+                {isReadMore ? text.slice(0, 600) : text}
+                <a style={{ cursor: 'pointer', color: '#ff00cc' }} onClick={toggleReadMore} className="ml-2 read-or-hide">
+                    {text.length > text.slice(0, 600).length ? (isReadMore ? "...Read more" : " Show less") : ''}
+                </a>
+            </p>
+        );
+    };
 
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
     const biggest1400 = useMediaPredicate("(max-width: 1400px)");
@@ -497,7 +498,7 @@ export default function Challenge() {
             <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/votechallenge'> Back   </Link> </p>
             {challenge[0] && (
                 <div className="ml-2 row">
-                    <div className="col-12 col-lg-8">
+                    <div className="col-12 col-lg-8 p-0">
                         <div className='text-muted font-weight-bold'>
                             <h1 className='font-weight-bold mb-2'>{name}</h1>
                             <div className='pb-2 d-flex'>
@@ -523,71 +524,76 @@ export default function Challenge() {
                             </div>
                         </div>
 
-                        <div className="row">
-                            <div className="card border col-11">
-                                <h5 className="card-header p-0 pb-3 font-weight-bold ">{votesList.length} 	&nbsp;	&nbsp;Votes </h5>
+                        <div className="row mx-auto ">
+                            <div className="card border p-0 col-11">
+                                <h5 className=" border-bottom fs-16 font-weight-bold pl-3 pt-3 pb-3 ">{votesList.length} 	&nbsp;	&nbsp;Votes</h5>
 
+                                <table className="table text-white">
+                                    {votesList.map((vote, index) =>
+                                        <tr>
+                                            <td className="border-0 pb-0" > {index + 1}</td>
+                                            <td className="border-0 pb-0" >level 1</td>
+                                            {/* <td className="border-0 pb-0" >{vote.slice(5, 13)}</td> */}
+                                            <td className="border-0 pb-0" >0x3799...4861</td>
+                                        </tr>
+                                    )}
 
-                                {votesList.map((vote, index) =>
-                                    <div className="row d-flex justify-content-between pl-4 pr-4 pt-3">
-
-                                        <div> {index + 1}</div>
-                                        <div className="ml-auto text-white"> level 1</div>
-                                        {/* <div className="ml-auto text-white" >{vote.slice(5, 13)}</div> */}
-
-                                        <div className="ml-auto text-white" >0x3799...4861</div>
-                                    </div>
-                                )}
-
-
+                                </table>
 
                             </div>
                         </div>
                     </div>
 
-                    <div className="col-12 col-lg-4">
-                        <div className="row">
-                            <div className="card border col-11">
-                                <h5 className=" border-bottom font-weight-bold p-1">Information</h5>
+                    <div className="col-11 p-0 col-lg-4">
+                        <div className="row mx-auto">
+                            <div style={{ fontSize: '80%' }} className="card border p-0 col-11 col-md-12 col-xl-11">
+                                <h5 className=" border-bottom fs-16 font-weight-bold pl-2 pt-3 pb-3 ">Information</h5>
+                                <div className="card-body p-4">
 
-
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
-                                    <div >network	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
-                                </div>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
-                                    <div >IPFS	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
-                                </div>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
-                                    <div >Voting system 	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
-                                </div>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
-                                    <div >Start date	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
-                                </div>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
-                                    <div >End date	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
-                                </div>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
-                                    <div >Snapshot	</div>
-                                    <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                    <div className="row d-flex font-weight-bold justify-content-between p-0">
+                                        <div >Strategie(s)	</div>
+                                        <div className="ml-auto text-white" > <img style={{ width: '26px' }} src="/utils/images/xlogo-black.b90261b2.svg" /></div>
+                                    </div>
+                                    <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
+                                        <div >IPFS	</div>
+                                        <div className="ml-auto text-white" > <div className="ml-auto text-white" ><a href="#"> #QmUzzeT <i className="fa-solid fa-arrow-up-right-from-square"></i> </a></div></div>
+                                    </div>
+                                    <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
+                                        <div >Voting system 	</div>
+                                        <div className="ml-auto text-white  fa-12" >Single choice voting</div>
+                                    </div>
+                                    <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
+                                        <div >Start date	</div>
+                                        <div className="ml-auto text-white" >May 9, 2022, 6:00 PM</div>
+                                    </div>
+                                    <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
+                                        <div >End date	</div>
+                                        <div className="ml-auto text-white" >May 10, 2022, 12:00 AM</div>
+                                    </div>
+                                    <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
+                                        <div >Snapshot	</div>
+                                        <div className="ml-auto text-white" > <div className="ml-auto text-white" ><a href="#"> #QmUzzeT <i className="fa-solid fa-arrow-up-right-from-square"></i> </a></div></div>
+                                    </div>
+                                    <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
+                                        <div >Network</div>
+                                        <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="card border col-11">
-                                <h5 className="font-weight-bold ">Current results
-                                </h5>
-                                <div className="row d-flex justify-content-between pl-3 pr-3 pt-3">
-                                    <div >The Votes	</div>
-                                    <div className="ml-auto text-white" >{votesList.length} </div>
-                                </div>
+                        <div className="row mx-auto">
+                            <div style={{ fontSize: '90%' }} className="card border p-0 col-11 col-md-12 col-xl-11">
+                                <h5 className=" border-bottom fs-16 font-weight-bold pl-2 pt-3 pb-3 ">Current results</h5>
+                                <div className="card-body p-4">
 
+                                    <div className="row d-flex font-weight-bold justify-content-between p-0">
+                                        <div >The Votes	</div>
+                                        <div className="ml-auto text-white" > {votesList.length} </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                     </div>
 
                 </div>

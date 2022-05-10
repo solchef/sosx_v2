@@ -30,6 +30,7 @@ export default function SocialminingS1() {
     };
 
 
+    const wImg576 = useMediaPredicate("(min-width:  576px)");
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
     const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
@@ -44,12 +45,11 @@ export default function SocialminingS1() {
 
                 <div className="card">
                     <div className="row align-items-center">
-                        <div className="col-xl-5  align-items-center col-12">
-                            <div className=" img-soc align-items-center mx-auto ">
+                        <div className="col-xl-5 mx-auto align-items-center col-12">
+                           
+                                
+                             <img className={`${wImg576 && "img-soc"} rounded w-auto p-0`} src={`${media.name== "tiktok" ? 'images/post15.jpeg' : media.name== "twitter" ? 'images/post18.jpeg' : 'images/post18.jpeg' }`} />
 
-                             <img className="img-soc" src={`${media.name== "tiktok" ? 'images/post15.jpeg' : media.name== "twitter" ? 'images/post18.jpeg' : 'images/post18.jpeg' }`} />
-
-                            </div>
                         </div>
 
                         <div className="col-xl-7 pl-3 pt-3">

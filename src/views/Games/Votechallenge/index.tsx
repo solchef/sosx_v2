@@ -11,7 +11,7 @@ const server = create({
 export default function Votechallenge() {
 	const [challenges, setChallenges] = useState<any[]>([]);
 
-	const ReadMore = ({ children,size ,css }) => {
+	const ReadMore = ({ children, size, css }) => {
 		const text = children;
 		const [isReadMore, setIsReadMore] = useState(true);
 
@@ -72,8 +72,10 @@ export default function Votechallenge() {
 	return (
 
 		<div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
-            <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/xgame'> Back </Link> </p>
+
+      <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/xgame'> Back </Link> </p>
 			{challenges.length > 0 ? (
+
 
 			<div className="row pt-3">
 				{challenges.sort((a, b) => a.votes - b.votes).reverse().map((camp) => (
@@ -86,13 +88,13 @@ export default function Votechallenge() {
 										{/* {camp.challenge.payload.metadata.strategies[0].params.address} */}
 									</span>
 
-										<ReadMore size="35" css="fs-18 pb-2 pt-3">
-											{camp.challenge.payload.name}
-										</ReadMore>
+									<ReadMore size="35" css="fs-18 pb-2 pt-3">
+										{camp.challenge.payload.name}
+									</ReadMore>
 
-										<ReadMore size="150" css="fs-14 pt-2">
-											{camp.challenge.payload.body}
-										</ReadMore>
+									<ReadMore size="150" css="fs-14 pt-2">
+										{camp.challenge.payload.body}
+									</ReadMore>
 
 									<h4 className="fs-12 text-white pt-3">Rules</h4>
 									{camp.challenge.payload.choices.map((element) => (
@@ -106,7 +108,7 @@ export default function Votechallenge() {
 								</div>
 							</div>
 
-							<div className="d-flex flex-column p-3 flex-lg-row align-items-md-center align-items-start justify-content-between">
+							<div className="d-flex card-body flex-column p-3 flex-lg-row align-items-md-center align-items-start justify-content-between">
 								<div>
 									<i className="fa-regular fa-heart p-2"></i>
 									<span className="fs-12 p-1" id="votes">
@@ -114,13 +116,15 @@ export default function Votechallenge() {
 									</span>
 									<span className="fs-12">Votes</span>
 								</div>
+
+							</div>
+							<div className="card-footer pt-0 foot-card border-0 ">
 								<Link href={`/challenge/${camp.challenge.payload.name}`}>
 									<button type="button" className="btn btn-primary ">
 										<i className="fa-solid fa-check-to-slot pr-2"></i>Details
 									</button>
 								</Link>
 							</div>
-
 						</div>
 					</div>
 				))}
