@@ -502,7 +502,7 @@ export default function Challenge() {
                         <div className='text-muted font-weight-bold'>
                             <h1 className='font-weight-bold mb-2'>{name}</h1>
                             <div className='pb-2 d-flex'>
-                                <img className='mr-1' width='24px' height='24px' src="/images/xlogo-black.b90261b2.svg" />
+                                <img className='mr-1' width='24px' height='24px' src="/utils/images/xlogo-black.b90261b2.svg" />
                                 <p>PancakeSwap
                                     by
                                     0x3799...4861</p>
@@ -552,7 +552,7 @@ export default function Challenge() {
 
                                     <div className="row d-flex font-weight-bold justify-content-between p-0">
                                         <div >Strategie(s)	</div>
-                                        <div className="ml-auto text-white" > <img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" /></div>
+                                        <div className="ml-auto text-white" > <img style={{ width: '26px' }} src="/utils/images/xlogo-black.b90261b2.svg" /></div>
                                     </div>
                                     <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
                                         <div >IPFS	</div>
