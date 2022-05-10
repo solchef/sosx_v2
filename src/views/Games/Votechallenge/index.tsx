@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { create } from "ipfs-http-client";
 import { concat } from "uint8arrays";
 import { useMediaPredicate } from "react-media-hook";
@@ -10,7 +10,6 @@ const server = create({
 
 export default function Votechallenge() {
 	const [challenges, setChallenges] = useState<any[]>([]);
-	const obj = {};
 
 	const ReadMore = ({ children,size ,css }) => {
 		const text = children;
@@ -31,14 +30,14 @@ export default function Votechallenge() {
 	useEffect(() => {
 		const getData = async () => {
 			let challenges = [];
-			for await (const resultPart of server.files.ls("/")) {
+			for await (const resultPart of server.files.ls("/challenges")) {
 				let challenge;
 				let vote;
 
-				for await (const cha of server.files.ls(`/${resultPart.name}`)) {
+				for await (const cha of server.files.ls(`/challenges/${resultPart.name}`)) {
 					const chunks = [];
 					if (cha.name == 'votes') {
-						let votes = await server.files.stat(`/${resultPart.name}/votes`)
+						let votes = await server.files.stat(`/challenges/${resultPart.name}/votes`)
 						vote = votes.blocks;
 					}
 
@@ -64,9 +63,9 @@ export default function Votechallenge() {
 		};
 		getData();
 	}, []);
-
+	
 	console.log("challenges", challenges);
-
+		
 	const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
@@ -74,9 +73,10 @@ export default function Votechallenge() {
 
 		<div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
             <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/xgame'> Back </Link> </p>
+			{challenges.length > 0 ? (
 
 			<div className="row pt-3">
-				{challenges.map((camp) => (
+				{challenges.sort((a, b) => a.votes - b.votes).reverse().map((camp) => (
 
 					<div className="col-xl-4 col-md-6">
 						<div className="card p-0 overflow-hidden">
@@ -124,7 +124,12 @@ export default function Votechallenge() {
 						</div>
 					</div>
 				))}
+
 			</div>
+			
+			) : (
+				<p>No Challenges</p>
+			)}
 		</div>
 	);
 }
