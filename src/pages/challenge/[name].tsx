@@ -317,47 +317,47 @@ export default function Challenge() {
     const { t } = useTranslation()
 
     useEffect(() => {
-        getData();
-    }, [name]);
-
-    let challengeName = `challenge-${name}`
+         getData();
+     }, [name]);
+        
+    let challengeName = `challenge-${name}` 
     const getData = async () => {
         if (name) {
-            let challenge = [];
-            for await (const resultPart of server.files.ls("/")) {
-                let challengeJson;
-                let vote;
-                let votesList = []
+                let challenge = [];
+                for await (const resultPart of server.files.ls("/challenges")) {
+                    let challengeJson;
+                    let vote;
+                    let votesList = []
 
-                if (resultPart.name === challengeName) {
-                    for await (const cha of server.files.ls(`/${resultPart.name}`)) {
-                        const chunks = [];
+                    if (resultPart.name === challengeName) {
+                        for await (const cha of server.files.ls(`/challenges/${resultPart.name}`)) {
+                            const chunks = [];
 
-                        if (cha.name == 'challenge.json') {
+                            if (cha.name == 'challenge.json') {
                             for await (const chunk of server.cat(cha.cid)) {
                                 chunks.push(chunk);
-                            }
-                            const data = concat(chunks);
-                            challengeJson = JSON.parse(
+                                }
+                                const data = concat(chunks);
+                                challengeJson = JSON.parse(
                                 new TextDecoder().decode(data).toString()
-                            );
-                        }
-                        if (cha.name == 'votes') {
-                            for await (const vote of server.files.ls(`/${resultPart.name}/votes`)) {
-                                votesList.push(vote.name.slice(0, -5))
+                                );
                             }
+                            if (cha.name == 'votes') {
+                                for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes`)) {
+                                    votesList.push(vote.name.slice(0, -5))
+                                }
+                            } 
+                            setVotesList(votesList)
                         }
-                        setVotesList(votesList)
+                        let challengeData = {
+                            challenge: challengeJson,
+                            votes: vote
+                        }
+                        challenge.push(challengeData);
                     }
-                    let challengeData = {
-                        challenge: challengeJson,
-                        votes: vote
-                    }
-                    challenge.push(challengeData);
                 }
-            }
-            setChallenge(challenge);
-        }
+                setChallenge(challenge);
+        } 
     }
 
     const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
@@ -414,7 +414,7 @@ export default function Challenge() {
         const sig = await signMessage(connector, library, account, vote)
 
         if (sig) {
-            const forIPFS = JSON.stringify({
+            const forIPFS =  JSON.stringify({
                 ...generatePayloadData(),
                 address: account,
                 sig: sig.toString(),
@@ -461,6 +461,7 @@ export default function Challenge() {
                     }
                 }
             }, null, 2)
+
 
             await server.files.write(`/challenge-${name}/votes/${account}.json`, forIPFS, { create: true })
             toastSuccess(t('Vote created!'))

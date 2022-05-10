@@ -6,6 +6,7 @@ import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 import { useMediaPredicate } from "react-media-hook";
 import BigNumber from "big-number"
+import axios from 'axios'
 
 
 const BorderCard = styled.div`
@@ -36,10 +37,27 @@ export default function Staking() {
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 	const biggest576 = useMediaPredicate("(max-width: 576px)");
 
-	useEffect(() => {
 
-		// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
+  useEffect(() => {
 
+	const [price, setPrice] = useState(Number);
+	const [marketCap, setMarketCap] = useState(Number);
+	
+	const getSOSXPrice = async () => {
+		const getSOSXValue = await axios.get(
+		  "https://api.pancakeswap.info/api/v2/tokens/0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF",
+		  {}
+		);
+		setPrice(parseFloat(getSOSXValue.data.data.price))
+		setMarketCap(parseFloat(getSOSXValue.data.data.price_BNB))
+	  };
+	  useEffect(() => {
+		getSOSXPrice();
+	  }, []);
+	useEffect(()=> {
+	
+			// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
+		
 		const stakingDetails = async () => {
 			// I am setting the staking data that needs to be displayed on thwe UI
 
@@ -190,29 +208,29 @@ export default function Staking() {
 		<div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
 
 
-			<div className="row">
-				<div className="col-sm-3 col-6">
-					<div className="card overflow-hidden ">
-						<h4>10,000,000,000</h4>
-						<span className="pt-1 pb-1">Total supply
-						</span>
+				<div className="row">
+					<div className="col-sm-3 col-6">
+						<div className="card overflow-hidden ">
+							<h4>10,000,000,000</h4>
+							<span className="pt-1 pb-1">Total supply
+				</span>
+						</div>
 					</div>
-				</div>
-				<div className="col-sm-3 col-6">
-					<div className="card overflow-hidden">
-						<h4>$109.819</h4>
-						<span className="pt-1 pb-1">Market Cap</span>
+					<div className="col-sm-3 col-6">
+						<div className="card overflow-hidden">
+							<h4>${marketCap.toFixed(8)}</h4>
+							<span className="pt-1 pb-1">Market Cap</span>
+						</div>
 					</div>
-				</div>
-				<div className="col-sm-3 col-6">
-					<div className="card overflow-hidden">
-						<h4>$0.00019501</h4>
-						<span className="pt-1 pb-1">Price</span>
-						{/* <div className="daily-avr warning fs-12">
+					<div className="col-sm-3 col-6">
+						<div className="card overflow-hidden">
+							<h4>${price.toFixed(8)}</h4>
+							<span className="pt-1 pb-1">Price</span>
+							{/* <div className="daily-avr warning fs-12">
 								<i className="fa fa-chevron-down"></i> 0.5% 7D
 							</div> */}
+						</div>
 					</div>
-				</div>
 
 				<div className="col-sm-3 col-6">
 					<div className="card overflow-hidden">
