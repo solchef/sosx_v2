@@ -46,19 +46,11 @@ class MyDocument extends Document {
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet"></link>
-          {/* <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&amp;display=swap" rel="stylesheet" />
-          <link rel="shortcut icon" href="/favicon.ico" />
-          <link rel="apple-touch-icon" href="/logo.png" />
-          <link rel="manifest" href="/manifest.json" /> */}
 
-          {/* <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-          <meta name="viewport" content="width=device-width,initial-scale=1"/> */}
-          {/* <title>Ditto Token - A token that change and adjust to any market conditions</title> */}
-
-          <link rel="icon" type="image/png" sizes="16x16" href="/utils/images/favicon.png" />
-          <link href="/utils/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
-          <link href="/utils/css/style.css" rel="stylesheet" />
-          <link rel="stylesheet" type="text/css" href="/utils/css/faq.css" />
+          <link rel="icon" type="image/png" sizes="16x16" href="https://socialx.io/img/fav/favicon-96x96.png" />
+          <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+          <link href="/css/style.css" rel="stylesheet" />
+          <link rel="stylesheet" type="text/css" href="/css/faq.css" />
 
           <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet" />
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"

@@ -25,7 +25,6 @@ export default function Game() {
 	const [videoTitle, setVideoTitle] = useState('')
 	const [youtubeURL, setYoutubeURL] = useState('')
 	const [tiktokURL, setTiktokURL] = useState('')
-	const [videos, setVideos] = useState([]);
 	const [displayLevel, setDisplayLevel] = useState(1);
 	const [voters, setVoters] = useState([])
 	const contract = useStakingContract();
@@ -73,6 +72,25 @@ export default function Game() {
 	});
 
 	const getData = async () => {
+		let finalData = [];
+		for await (const videoFile of server.files.ls("/vid")) {
+			let fileContent;
+
+			for await (const cha of server.files.ls(`/vid/${videoFile.name}`)) {
+				const chunks = [];
+
+					for await (const chunk of server.cat(cha.cid)) {
+						chunks.push(chunk);
+					}
+					const data = concat(chunks);
+					fileContent = JSON.parse(
+						new TextDecoder().decode(data).toString()
+					);
+			}
+
+			finalData.push(fileContent);
+		}
+
 		let challenges = [];
 		for await (const resultPart of server.files.ls("/challenges")) {
 			let challenge;
@@ -104,32 +122,10 @@ export default function Game() {
 		}
 
 		setChallenges(challenges);
+		setVideos(finalData);
 	};
 
-
-	const getVideo = async () => {
-		let finalData = [];
-
-		if (todayChallenge) {
-			for await (const videoFile of server.files.ls(`/challenges/${String(`challenge-${todayChallenge.challenge.payload.name}`).replaceAll(' ', '-')}/videos`)) {
-			let fileContent;
-			const chunks = [];
-			for await (const chunk of server.cat(videoFile.cid)) {
-				chunks.push(chunk);
-			}
-			const data = concat(chunks);
-				fileContent = JSON.parse(
-					new TextDecoder().decode(data).toString()	
-			);
-			finalData.push(fileContent);
-		}
-		setVideos(finalData);
-		}
-	}
-
-
 	const todayChallenge = challenges.sort((a, b) => a.votes - b.votes).reverse()[0]
-
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		const form = event.target as HTMLFormElement;
@@ -151,7 +147,7 @@ export default function Game() {
 		}, null, 2)
 
 		const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
-		const fileName = `video-${videoTitle.replaceAll(' ', '-')}`
+		const fileName = `video-${videoTitle.replace(' ', '-')}`
 		await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, {create: true})
 		toastSuccess(t('Video Uploaded!'))
 		form.reset()
@@ -175,11 +171,9 @@ export default function Game() {
 				let voters = [];
 				for (let i = 0; i < daoList.length; i++) {
 					let voter_address = daoList[i];
-					let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
+					let total_stake = await contract.getVoterTotalStakeAmount(voter_address)
 					// console.log(total_stake);
 					total_stake = Number(total_stake/ 10 **18);
-				     
-
 					let data = {
 						address:voter_address,
 						amount: total_stake,
@@ -209,9 +203,9 @@ export default function Game() {
 
 			<div className="game size-child-game container-fluid">
 				<div className="row m-1">
-					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 m-0">
-						<div className="row m-0">
-							<div className={`card3 col-12 text-center ${biggerThan1200 && 
+					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 ">
+						<div className="row ">
+							<div className={`card3 col-3 m-2 text-center ${biggerThan1200 && 
 								"p-0"} col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
 
 
@@ -251,57 +245,57 @@ export default function Game() {
 									</div>
 								</div> 
 								<Modal show={show} onHide={handleClose} centered>
-								<form onSubmit={videoLink}>
-								<div className="form-group row">
-									<div className="col-sm-10">
-									<input type="file" className="form-control" id="filevideo" placeholder="Upload Video" />
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)}/>
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} />
-									</div>
-								</div>
-								<button className="btn btn-primary">Upload Video Here</button>
+								<div className="d-flex flex-column justify-content-between p-2">
+									<form onSubmit={videoLink}>
+								
+									
+									<input type="file" className="form-control fs-14 pb-3" id="filevideo" placeholder="Upload Video" />
+									
+									
+									<input type="text" className="form-control fs-14" id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+							
+									
+									<input type="text" className="form-control fs-14" id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)}/>
+							
+									
+									<input type="text" className="form-control fs-14" id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} />
+								
+								
+								<button className="btn p-1 mt-2 btn-primary">Upload Video Here</button>
 								</form>
+								</div>
 								</Modal>
 
 							</div>
 
-							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
-									{todayChallenge ? (
-										<>
-										<div className="card-header align-items-start border-0">
-									<div>
-										<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
-										<h4 className="fs-18 mb-0 pb-2">{todayChallenge.challenge.payload.name}</h4>
-										<span className="fs-12">{todayChallenge.challenge.payload.body} </span>
-										<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
-										{todayChallenge.challenge.payload.choices.map((element) => (
-										<ul className="fs-12">
-											<li>
-												<i className="fa-solid fa-check pr-2"></i>
-												{element}
-											</li>
-										</ul>
-									))}
-									</div>
-
-								</div>
-								<div className="p-3 align-items-start justify-content-between align-items-center">
-									<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-										id="votes">{todayChallenge.votes}</span><span className="fs-12">Votes</span></li>
-								</div>
-										</>
-									) : (
-										<p>Loading</p>
-									)}
+							<div className=" p-0  ml-3 col-6 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
+								<div className="card-header align-items-start border-0">
+										{todayChallenge.length > 0 ? (
+											<>
+											<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
+											<span className="fs-12 font-weight-bold success">@challengecreator-1</span>
+											{console.log(todayChallenge[0].challenge.payload.name)}
+											<h4 className="fs-18 mb-0 pb-2">{todayChallenge[0].challenge.payload.name}</h4>
+											<span className="fs-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+												do
+												eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
+												suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
+												vel
+												facilisis. </span>
+											<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
+											<ul className="fs-12">
+												<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
+												<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
+											</ul>
+											<div className="p-3 align-items-start justify-content-between align-items-center">
+											<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+												id="votes">{todayChallenge[0].votes}</span><span className="fs-12">Votes</span></li>
+											</div>
+											</>
+										) : (
+											<p>Loading</p>
+										)}
 								
-
 							</div>
 							
 							
@@ -315,10 +309,7 @@ export default function Game() {
 									<div>
 										<h4 className="fs-20">All Submission</h4>
 									</div>
-									<div className="ml-auto pt-3 ">
-										<span className="fs-14 sub-blue font-weight-bold">Watch All Videos
-										</span>
-									</div>
+								
 								</div>
 
 
@@ -401,7 +392,7 @@ export default function Game() {
 
 											<a className="blueprint-header-display trader-display">
 											<div className="d-flex align-items-center">
-												<span className="text-white mr-3 fs-16 font-w600">{i}</span>
+												<span className="text-white mr-3 fs-16 font-w600">{i+1}</span>
 												<img className="blueprint-img-sm rounded-circle"
 													src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
 												<div className="ml-1">
