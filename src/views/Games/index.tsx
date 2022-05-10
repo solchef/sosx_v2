@@ -67,26 +67,11 @@ export default function Game() {
 		// getData();
 	}, []);
 
+	useEffect(() => {
+		getVideo();
+	});
+
 	const getData = async () => {
-		let finalData = [];
-		for await (const videoFile of server.files.ls("/vid")) {
-			let fileContent;
-
-			for await (const cha of server.files.ls(`/vid/${videoFile.name}`)) {
-				const chunks = [];
-
-					for await (const chunk of server.cat(cha.cid)) {
-						chunks.push(chunk);
-					}
-					const data = concat(chunks);
-					fileContent = JSON.parse(
-						new TextDecoder().decode(data).toString()
-					);
-			}
-
-			finalData.push(fileContent);
-		}
-
 		let challenges = [];
 		for await (const resultPart of server.files.ls("/challenges")) {
 			let challenge;
@@ -118,10 +103,32 @@ export default function Game() {
 		}
 
 		setChallenges(challenges);
-		setVideos(finalData);
 	};
 
+
+	const getVideo = async () => {
+		let finalData = [];
+
+		if (todayChallenge) {
+			for await (const videoFile of server.files.ls(`/challenges/${String(`challenge-${todayChallenge.challenge.payload.name}`).replaceAll(' ', '-')}/videos`)) {
+			let fileContent;
+			const chunks = [];
+			for await (const chunk of server.cat(videoFile.cid)) {
+				chunks.push(chunk);
+			}
+			const data = concat(chunks);
+				fileContent = JSON.parse(
+					new TextDecoder().decode(data).toString()	
+			);
+			finalData.push(fileContent);
+		}
+		setVideos(finalData);
+		}
+	}
+
+
 	const todayChallenge = challenges.sort((a, b) => a.votes - b.votes).reverse()[0]
+
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		const form = event.target as HTMLFormElement;
@@ -143,7 +150,7 @@ export default function Game() {
 		}, null, 2)
 
 		const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
-		const fileName = `video-${videoTitle.replace(' ', '-')}`
+		const fileName = `video-${videoTitle.replaceAll(' ', '-')}`
 		await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, {create: true})
 		toastSuccess(t('Video Uploaded!'))
 		form.reset()
