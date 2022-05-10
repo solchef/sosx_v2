@@ -477,13 +477,13 @@ export default function Game() {
 
 							<ul className="nav3  p-2 nav-rank nav3-tabs butten nav3-justified mb-3">
 								<li className="nav3-item">
-									<a className="nav3-link active font-weight-bold rounded text-nowrap" href="#lvl1">Level 1</a>
+									<a className="nav3-link active pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap" href="#lvl1">Level 1</a>
 								</li>
 								<li className="nav3-item">
-									<a className="nav3-link font-weight-bold rounded text-nowrap" href="#lvl2">Level 2</a>
+									<a className="nav3-link font-weight-bold pl-1 pr-1 pt-2 pb-2 rounded text-nowrap" href="#lvl2">Level 2</a>
 								</li>
 								<li className="nav3-item">
-									<a className="nav3-link font-weight-bold rounded text-nowrap" href="#lvl3">Level 3</a>
+									<a className="nav3-link font-weight-bold pl-1 pr-1 pt-2 pb-2 rounded text-nowrap" href="#lvl3">Level 3</a>
 								</li>
 							</ul>
 

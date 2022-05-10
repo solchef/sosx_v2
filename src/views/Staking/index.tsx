@@ -244,9 +244,9 @@ export default function Staking() {
 			<div className="row">
 
 				<div className="col-xl-4">
-					<div className="card ">
-						<div className="card-header border-0 pt-0">
-							<h4 className="fs-18 ">Stake SOSX</h4>
+					<div className="card">
+						<div className="card-header pl-0 border-0 pt-0">
+							<h4 className="fs-18  ">Stake SOSX</h4>
 						</div>
 
 
