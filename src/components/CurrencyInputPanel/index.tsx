@@ -107,14 +107,14 @@ export default function CurrencyInputPanel({
 
     <div className="bg-dark p-3 rounded">
                   <div className="d-flex justify-content-between align-items-center">
-                    <span className="success fs-12">{label}</span>
+                    <span className="text-success  fs-12">{label}</span>
                     {/* <span className="success fs-14 "> */}
                     {/* <Text onClick={onMax} color="success" fontSize="12px" style={{ display: 'inline', cursor: 'pointer' }}>
                     {!hideBalance && !!currency
                       ? t('Balance: %balance%', { balance: selectedCurrencyBalance?.toSignificant(6) ?? t('Loading') })
                       : ' -'}
                   </Text> */}
-                  <span onClick={onMax} className="success fs-12 ">
+                  <span onClick={onMax} className="text-success fs-12 ">
                         {!hideBalance && !!currency
                       ? t('Balance: %balance%', { balance: selectedCurrencyBalance?.toSignificant(6) ?? t('Loading') })
                       : ' -'}

@@ -214,7 +214,7 @@ export default function Referral() {
    <div className="col-md-4 col-4">
      <div className="card">
        <div className=' mt-2'>
-         <img src="images/step1-referrallink.png"/>
+         <img className='p-3' src="images/step1-referrallink.png"/>
          <span className="main-pink">Step 1</span>
          <h4>Get a referral link</h4>
          <p>Connect a wallet & generate your referral link in the
@@ -225,7 +225,7 @@ export default function Referral() {
 
    <div className="col-md-4 col-4">
      <div className="card">
-       <img src="images/step2invitefriend-img.png"/>
+       <img className='p-3' src="images/step2invitefriend-img.png"/>
        <span className="main-pink">Step 2</span>
        <h4>Invite friends</h4>
        <p>Invite your friends & register with your referral link.</p>
@@ -235,7 +235,7 @@ export default function Referral() {
 
    <div className="col-md-4 col-4">
      <div className="card">
-       <img src="images/step3earnsosx-img.png"/>
+       <img className='p-3' src="images/step3earnsosx-img.png"/>
        <span className="main-pink">Step 3</span>
        <h4>Earn SOSX</h4>
        <p>Receive a referral rewards from your friends’ earnings.
@@ -290,11 +290,11 @@ export default function Referral() {
 
 
 
- <div className="row">
+ <div className="row font-weight-bold">
    <div className="col-xl-6">
      <div className="card h-auto">
        <div className="card-header border-0 pb-0">
-         <h4>My Referral Link</h4>
+         <h4 className='font-weight-bold' >My Referral Link</h4>
        </div>
        <div className="card-body">
          <div className="bg-dark rounded">
@@ -318,16 +318,18 @@ export default function Referral() {
              </div>
            </div>
          </div>
-         <div className="bg-dark p-4 rounded">
+         <div className="bg-dark pt-4 rounded">
            <h4>You will get</h4>
-           <div>
+           <div className='font-weight-bold d-flex justify-content-between pt-2'>
              <div>
                <p>Social Mining</p>
-               <h3> 25%</h3>
+               <h3 className='pt-3 font-weight-bold'> 25%</h3>
              </div>
 
+             <div>
              <p>Staking </p>
-             <h3> 10%</h3>
+             <h3 className='pt-3 font-weight-bold'> 10%</h3>
+             </div>
            </div>
          </div>
        </div>
@@ -337,23 +339,26 @@ export default function Referral() {
    <div className="col-xl-6">
      <div className="row">
        <div className="col-md-12 col-6">
-         <div className="card h-auto">
+         <div className="card p-1 pl-2 h-auto">
            <div className="card-body">
-             <img src="images/swapcoin-referral.svg" className="referral-rewards"/>
+             <img src="images/swapcoin-referral.svg" className="p-2 referral-rewards"/>
              <span className="main-pink">Social Mining Referral</span>
-             <h4>{viewReferralReward} SOSX</h4>
-             <button type="button" className="btn btn-primary btn-lg" disabled>Withdraw</button>
+
+             <h4 className='pt-2'>{viewReferralReward} SOSX</h4>
+             <button type="button" className="btn btn-primary mt-3 ">Withdraw</button>
            </div>
          </div>
        </div>
 
        <div className="col-md-12 col-6">
-         <div className="card h-auto">
+         <div className="card  p-1 pl-2 h-auto">
            <div className="card-body">
-             <img src="images/swapcoin-referral.svg" className="referral-rewards"/>
+             <img src="images/swapcoin-referral.svg" className="p-2 referral-rewards"/>
              <span className="main-pink">Staking Referral</span>
-             <h4>{viewReferralReward} SOSX</h4>
-             <button type="button" className="btn btn-primary btn-lg" onClick={withdrawReferralReward}>Withdraw</button>
+             
+             <h4 className='pt-2' >{viewReferralReward} SOSX</h4>
+             <button type="button" className="btn btn-primary mt-3  ">Withdraw</button>
+
            </div>
          </div>
        </div>

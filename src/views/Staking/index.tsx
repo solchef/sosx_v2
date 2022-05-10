@@ -9,6 +9,7 @@ import BigNumber from "big-number"
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { MaxUint256 } from '@ethersproject/constants'
 import { calculateGasMargin } from 'utils'
+import axios from 'axios'
 
 
 const BorderCard = styled.div`
@@ -17,7 +18,7 @@ const BorderCard = styled.div`
   padding: 16px;
 `
 
-export default function Staking() {
+export default function DaoStaking() {
 
 	const contract = useStakingContract();
 	const {account} = useActiveWeb3React();
@@ -40,7 +41,20 @@ export default function Staking() {
 	const [loading, setLoading] = useState(false);
 	const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-
+	const [price, setPrice] = useState(Number);
+	const [marketCap, setMarketCap] = useState(Number);
+	
+	const getSOSXPrice = async () => {
+		const getSOSXValue = await axios.get(
+		  "https://api.pancakeswap.info/api/v2/tokens/0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF",
+		  {}
+		);
+		setPrice(parseFloat(getSOSXValue.data.data.price))
+		setMarketCap(parseFloat(getSOSXValue.data.data.price_BNB))
+	  };
+	  useEffect(() => {
+		getSOSXPrice();
+	  }, []);
 	useEffect(()=> {
 	
 			// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
@@ -168,13 +182,8 @@ export default function Staking() {
 
 				toastError("token allowance not yet set");
 			}
-
-		
 	
 		}
-
-
-
 
 	return (
 		<>
@@ -190,13 +199,13 @@ export default function Staking() {
 					</div>
 					<div className="col-sm-3 col-6">
 						<div className="card overflow-hidden">
-							<h4>$109.819</h4>
+							<h4>${marketCap.toFixed(8)}</h4>
 							<span className="pt-1 pb-1">Market Cap</span>
 						</div>
 					</div>
 					<div className="col-sm-3 col-6">
 						<div className="card overflow-hidden">
-							<h4>$0.00019501</h4>
+							<h4>${price.toFixed(8)}</h4>
 							<span className="pt-1 pb-1">Price</span>
 							{/* <div className="daily-avr warning fs-12">
 								<i className="fa fa-chevron-down"></i> 0.5% 7D
@@ -437,11 +446,5 @@ export default function Staking() {
 		</>
 	)
 }
-function callWithGasPrice(tokenContract: Contract, arg1: string, arg2: any[], arg3: { gasLimit: any }) {
-	throw new Error('Function not implemented.')
-}
 
-function estimatedGas(estimatedGas: any): any {
-	throw new Error('Function not implemented.')
-}
 

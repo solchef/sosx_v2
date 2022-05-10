@@ -129,33 +129,6 @@ const CreateChallenge = () => {
     }
   }
 
-  const uploadVideo = async (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const files = (form[0] as HTMLInputElement).files;
-
-    if (!files || files.length === 0) {
-      return alert("No files selected");
-    }
-
-    const file = files[0];
-    // upload files
-    const result = await server.add(file);
-    await server.files.
-
-      // @ts-ignore
-      setImages([
-        ...images,
-        {
-          cid: result.cid,
-          path: result.path,
-        },
-      ]);
-
-    form.reset();
-
-  }
-
   const updateValue = (key: string, value: string | Choice[] | Date) => {
     setState((prevState) => ({
       ...prevState,
@@ -204,21 +177,11 @@ const CreateChallenge = () => {
     }
   }, [initialBlock, setState])
 
-
-  //////////////////////////////////////////
-  // Priview
-  const str = `Omar`
-
   return (
 
       <div className="container-fluid">
             <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/xgame'> Back   </Link> </p>
 
-        <form onSubmit={uploadVideo}>
-          <input className='mb-4' name="file" type="file" />
-
-          <button className='mb-4 p-2' type="submit">Upload File</button>
-        </form>
         <div className="row">
           <div className="col-xl-7">
             <div className="card">

@@ -77,7 +77,7 @@ export default function SocialminingS2(props) {
 
 
 
-			<div className="container-fluid pt-3 pb-0">
+			<div className="card-social container-fluid pt-3 pb-0">
 
 
 				<div className="row pt-3">
@@ -90,13 +90,13 @@ export default function SocialminingS2(props) {
 					<div className="row">
 						<div className="col-lg-6">
 							<div className="card-header border-0">
-								<h3>MY REFERRAL LINK</h3>
+								<h3 className='font-weight-bold'>MY REFERRAL LINK</h3>
 								<span className="text-success"> {copySuccess}</span>
 							</div>
 							<div className="card-body">
-								<div className="bg-dark rounded">
-									<div className="d-flex justify-content-between align-items-center">
-										<span>https://socialx.io?ref=997346fb74d12345389e716...</span>
+								<div className="bg-dark p-0  rounded">
+									<div className="d-flex p-2 justify-content-between align-items-center">
+										<p className='fs-14'>https://socialx.io?ref=997346fb74d12345389e716...</p>
 										<div className="float-right d-flex">
 											<li onClick={() => {
 												navigator.clipboard.writeText('https://socialx.io?ref=997346fb74d12345389e716...')
@@ -113,23 +113,25 @@ export default function SocialminingS2(props) {
 									</div>
 								</div>
 								<div className="bg-dark rounded">
-									<h4>You will get</h4>
-									<div>
+									<span className='font-weight-bold'>You will get</span>
+									<div className='d-flex justify-content-between'>
 										<div>
-											<p>Social Mining</p>
-											<h3> 25%</h3>
+											<p className='pt-2 font-weight-bold'>Social Mining</p>
+											<h3 className='font-weight-bold pt-2' > 25%</h3>
 										</div>
-
-										<p>Staking </p>
-										<h3> 10%</h3>
+											<div>
+											<p className='pt-2 font-weight-bold'>Staking </p>
+										<h3 className='font-weight-bold pt-2' > 10%</h3>
+											</div>
+										
 									</div>
 								</div>
 							</div>
 						</div>
 						<div className="col-lg-6 pl-3 pt-3">
-							<h3 className="pr-3 pb-3 font-weight-semibold">5 MINS A DAY + 30 DAYS =
-								1000X PROFITS!</h3>
-							<p className="text-white pr-3 mb-3">
+							<p className="fs-22 main-pink">5 MINS A DAY + 30 DAYS =
+								1000X PROFITS!</p>
+							<p className="text-white pt-2 fs-16 pr-3 mb-3">
 								If one individual attempts to recruit a minimum of one person a day,
 								that person commits to the same experiment; we have calculated that a
 								single identity can be the connection between 536,870,912 individuals

@@ -56,7 +56,7 @@ export default function Faq() {
                             </div>
                             <div  style={mystyle(showA)}
                             className="faq-header ">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     <a href="https://pancakeswap.finance/swap">
                                         https://pancakeswap.finance.. </a> MetaMask & TrustWallet - *MetaMask
                                     most
@@ -74,7 +74,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showB)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     Binance Smart Chain Network
                                 </div>
                             </div>
@@ -87,7 +87,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showC)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     <p>1. Create a metamask wallet</p>
                                     <p>2. Add the BSC network</p>
                                     <p>3. Transfer BNB into Metamask</p>
@@ -112,7 +112,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showD)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     Yes, anyone can record them selves for the challenge videos. But to participate
                                     in the
                                     challenge
@@ -132,7 +132,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showE)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     Yes, the whole point of our social mining system is to make Crypto and SOSX
                                     token availble
                                     even to
@@ -150,7 +150,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showF)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     Yes, you can get paid 25% on all social mining rewards and 10% on all staking
                                     rewards from
                                     your affiliates.
@@ -167,7 +167,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showG)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     You can sell your SOSX on <a
                                         href="https://pancakeswap.finance/swap">https://pancakeswap... </a>
                                     or <a href="https://socialx.io/">socialx.io</a> swap
@@ -182,7 +182,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showH)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     No, the fee’s are exactly what power the whole SOSX gaming pool and rewards
                                     system.
                                 </div>
@@ -196,7 +196,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showI)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     Each tier has an x amount you must hold and stake to gain access to the Dao
                                     Governance to
                                     participate
@@ -212,7 +212,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showJ)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     SOSX pays in 8 different ways. Visit this link for details
                                 </div>
                             </div>
@@ -225,7 +225,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showK)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     Socialx has locked majority of it’s liquidity with a third party LP locker
                                     Unicrypt for
                                     6 month periods at a time. This insures our investors a safe investment and no
@@ -247,7 +247,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showL)} className="faq-header">
-                                <div className="faq-title p-1 hug">
+                                <div className="text-white p-1 hug">
                                     <p>Once you send out your affiliate link to someone they must at least do 1 of
                                         the 2 to
                                         register on your
