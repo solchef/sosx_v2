@@ -9708,9 +9708,7 @@ a {
         max-width: 35px; } }
   .nav-header .logo-compact {
     display: none; }
-  @media only screen and (max-width: 1400px) {
-    .nav-header {
-      width: 18rem; } }
+
   .nav-header .brand-logo {
     display: flex;
     height: 100%;
@@ -9741,7 +9739,7 @@ a {
 
 @media only screen and (max-width: 1199px) {
   .nav-header {
-    width: 5rem;
+    width: 217px;
     height: 5rem; }
     .nav-header .brand-title {
       display: none; } }
@@ -10029,7 +10027,7 @@ svg.pulse-svg {
     @media only screen and (max-width: 767px) {
       .header-left .dashboard_bar {
         font-size: 20px; } }
-    @media only screen and (max-width: 575px) {
+    @media only screen and (max-width: 790px) {
       .header-left .dashboard_bar {
         display: none; } }
   .header-left input {
@@ -12389,7 +12387,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 
 @media only screen and (max-width: 1199px) {
   .nav-header {
-    width: 5rem; } }
+    width: 217px; } }
 
 @media (max-width: 767px) {
   .brand-title {
@@ -32957,15 +32955,16 @@ background-image: url("../images/create-challenge-img.png");
 /* social Mining S1 */
 
 .img-soc {
-  height:470px;
-  width:auto;
-  max-width:450px;
+  width: auto !important;
+  max-width: 350px !important;
+  
   border-radius: 10px;
-  background-image: url("../images/post18.jpeg");
-  background-size:cover;
-  background-repeat: no-repeat;
-}
 
+}
+.card-social p {
+  font-size: 14px;
+  line-height: 30px;
+}
 @media (min-width: 769px)  and (max-width: 1100px) {
    .card3-body.ranking{
     padding: 0px;
@@ -32978,10 +32977,6 @@ background-image: url("../images/create-challenge-img.png");
   }
   }
 
-
-  @media (min-width: 900px) and  (max-width: 1200px) {
-    .size-child-swap {
-      padding-right:100px !important;
-      padding-left:100px !important;    }
-   
+  .foot-card {
+    background-color:transparent !important;
   }
