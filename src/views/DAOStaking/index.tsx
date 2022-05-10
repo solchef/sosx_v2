@@ -55,7 +55,7 @@ export default function DaoStaking() {
 	  useEffect(() => {
 		getSOSXPrice();
 	  }, []);
-	  
+
 	useEffect(()=> {
 			// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
 		const stakingDetails = async () => {
@@ -227,7 +227,7 @@ export default function DaoStaking() {
 					<div className="col-xl-4">
 						<div className="card ">
 							<div className="card-header border-0 pt-0">
-								<h4 className="fs-18 ">Stake SOSX</h4>
+								<h4 className="fs-18 ">Stake SOSX for Voting</h4>
 							</div>
 
 							<div>
@@ -238,7 +238,7 @@ export default function DaoStaking() {
 												
 												</span><span className="text-white fs-18">SOSX</span></div>
 										</div>
-										<div className="bg-dark p-3 mb-3 rounded">
+										{/* <div className="bg-dark p-3 mb-3 rounded">
 											<div className="d-flex justify-content-between align-items-center">
 											<span>
 												<select className="form-control  select-special"
@@ -260,7 +260,7 @@ export default function DaoStaking() {
 											</span>
 											<span className="text-white fs-18">Months</span>
 											</div>
-										</div>
+										</div> */}
 										<div className="bg-dark p-3 rounded">
 											<div className="d-flex justify-content-between">
 											<div className="small2">
@@ -311,38 +311,27 @@ export default function DaoStaking() {
 					<div className="col-xl-4">
 						<div className="card ">
 							<div className="card-header border-0 p-0">
-								<h4 className="fs-18">Staking Summary</h4>
+								<h4 className="fs-18">Voting Power</h4>
 							</div>
 
 							<div className="card-body">
 									<div className='pt-4'>
 										<div className="d-flex justify-content-between">
-											<p className="success mb-0 fs-12">Total SOSX Staked</p>
+											<p className="success mb-0 fs-12">Voting Power</p>
 											<h4 className="mb-0 font-w600  fs-24 pb-3">{totalAmountStaked / 10 ** 18}</h4>
 										</div>
 										<div className="d-flex justify-content-between">
-											<p className="success mb-0 fs-12">Active Stakes</p>
+											<p className="success mb-0 fs-12">DAO Level</p>
 											<h4 className="mb-0 font-w600  fs-24 pb-3">{numberOfActiveStake}</h4>
 										</div>
-										<div className="d-flex justify-content-between">
-											<p className="success mb-0 fs-12">Has Referral</p>
-											<h6 className="mb-0 font-w600  fs-24 pb-2">
-												
-													{hasReferral ? (
-														'Yes'
-													) : (
-														<b> No</b>
-													)}
-									        	
-									    	</h6>
-										</div>
+									
 									</div>
-									<div className="d-flex justify-content-between">
+									{/* <div className="d-flex justify-content-between">
 										<p className="success mb-0 fs-12">Show Archived</p>
 										<span className="MuiSwitch-root mb-0 font-w600  fs-24 pb-3"><span className="MuiButtonBase-root MuiIconButton-root jss5 MuiSwitch-switchBase MuiSwitch-colorSecondary" aria-disabled="false"><span className="MuiIconButton-label"><input className="jss8 MuiSwitch-input" type="checkbox" defaultValue="false" /><span className="MuiSwitch-thumb" /></span><span className="MuiTouchRipple-root" /></span><span className="MuiSwitch-track" /></span>
-									</div>
+									</div> */}
 
-									<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Refresh Summarry</button>
+									<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Refresh Level</button>
 							</div>
 
 						
