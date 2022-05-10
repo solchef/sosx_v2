@@ -136,7 +136,7 @@ const Menu: React.FC<NavProps> = ({
         return "Stake";
 
       case '/daostaking':
-        return "Stake";
+        return "Dao Staking";
 
       case '/xgame':
         return "XGame";

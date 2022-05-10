@@ -55,10 +55,9 @@ export default function DaoStaking() {
 	  useEffect(() => {
 		getSOSXPrice();
 	  }, []);
+	  
 	useEffect(()=> {
-	
 			// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
-		
 		const stakingDetails = async () => {
 			// I am setting the staking data that needs to be displayed on thwe UI
 
