@@ -463,7 +463,7 @@ export default function Challenge() {
             }, null, 2)
 
 
-            await server.files.write(`/challenge-${name}/votes/${account}.json`, forIPFS, { create: true })
+            await server.files.write(`/challenges/challenge-${name}/votes/${account}.json`, forIPFS, { create: true })
             toastSuccess(t('Vote created!'))
             getData()
         } else {

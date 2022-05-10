@@ -38,8 +38,6 @@ export default function Staking() {
 	const biggest576 = useMediaPredicate("(max-width: 576px)");
 
 
-  useEffect(() => {
-
 	const [price, setPrice] = useState(Number);
 	const [marketCap, setMarketCap] = useState(Number);
 	
@@ -51,6 +49,7 @@ export default function Staking() {
 		setPrice(parseFloat(getSOSXValue.data.data.price))
 		setMarketCap(parseFloat(getSOSXValue.data.data.price_BNB))
 	  };
+	
 	  useEffect(() => {
 		getSOSXPrice();
 	  }, []);
