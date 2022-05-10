@@ -6,6 +6,7 @@ import useToast from "hooks/useToast";
 import { useTranslation } from 'contexts/Localization'
 import { Modal } from "react-bootstrap";
 import { concat } from "uint8arrays";
+import { useStakingContract, useSosxContract} from 'hooks/useContract'
 
 const server = create({
 	url: "http://127.0.0.1:5001",
@@ -24,8 +25,11 @@ export default function Game() {
 	const [videoTitle, setVideoTitle] = useState('')
 	const [youtubeURL, setYoutubeURL] = useState('')
 	const [tiktokURL, setTiktokURL] = useState('')
+	const [displayLevel, setDisplayLevel] = useState(1);
+	const [voters, setVoters] = useState([])
+	const contract = useStakingContract();
 	const [videos, setVideos] = useState([])
-	const [todayChallenge, setTodayChallenge] = useState([]);
+	const [challenges, setChallenges] = useState<any[]>([]);
 
 
 	useEffect(() => {
@@ -57,7 +61,8 @@ export default function Game() {
 	}, []);
 
 	useEffect(() => {
-		getData();
+		loadDaoLevels();
+		// getData();
 	}, []);
 
 	const getData = async () => {
@@ -66,7 +71,6 @@ export default function Game() {
 			let fileContent;
 
 			for await (const cha of server.files.ls(`/vid/${videoFile.name}`)) {
-				console.log(cha)
 				const chunks = [];
 
 					for await (const chunk of server.cat(cha.cid)) {
@@ -111,14 +115,11 @@ export default function Game() {
 			challenges.push(challengeData);
 		}
 
-		console.log('first', challenges.sort((a, b) => a.votes - b.votes).reverse()[0])
-		setTodayChallenge(challenges.sort((a, b) => a.votes - b.votes).reverse()[0]);
+		setChallenges(challenges);
 		setVideos(finalData);
 	};
 
-	if (todayChallenge.length > 0) {
-		console.log(todayChallenge[0].challenge.payload.name)
-	}
+	const todayChallenge = challenges.sort((a, b) => a.votes - b.votes).reverse()[0]
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		const form = event.target as HTMLFormElement;
@@ -139,20 +140,57 @@ export default function Game() {
 			video: url
 		}, null, 2)
 
+		const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
 		const fileName = `video-${videoTitle.replace(' ', '-')}`
-		await server.files.write(`/vid/${fileName}`, data, {create: true})
+		await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, {create: true})
 		toastSuccess(t('Video Uploaded!'))
 		form.reset()
 		handleClose()
 		getData()
 	}
 
+
+	
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);	  
 	
 	const biggerThan1200 = useMediaPredicate("(min-width: 1200px) and (max-width: 1300px)");
 	const biggerThan576 = useMediaPredicate("(min-width: 576px) and (max-width: 625px)");
+
+
+		const loadDaoLevels = async()=>{
+				let daoList = await contract.getAllAccount();
+				console.log(daoList);
+				let voters = [];
+				for (let i = 0; i < daoList.length; i++) {
+					let voter_address = daoList[i];
+					let total_stake = await contract.getVoterTotalStakeAmount(voter_address)
+					// console.log(total_stake);
+					total_stake = Number(total_stake/ 10 **18);
+					let data = {
+						address:voter_address,
+						amount: total_stake,
+						level: getLevel(total_stake)
+					}
+
+					voters.push(data);
+				}
+
+				setVoters(voters);
+				console.log(voters);
+		}
+
+	 const getLevel = (amount) => {
+		console.log(process.env.NEXT_PUBLIC_LEVEL1)
+		
+		if(amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2){ return 1; }
+
+		if(amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3){ return 2; }
+
+		if(amount >= process.env.NEXT_PUBLIC_LEVEL3){ return 1; }
+
+	 }
 
 	return (
 		<>
@@ -223,6 +261,7 @@ export default function Game() {
 								</Modal>
 
 							</div>
+
 							<div className=" p-0  ml-3 col-6 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
 								<div className="card-header align-items-start border-0">
 										{todayChallenge.length > 0 ? (
@@ -250,17 +289,15 @@ export default function Game() {
 										) : (
 											<p>Loading</p>
 										)}
-										
-								</div>
 								
 							</div>
+							
+							
 						</div>
-
 						<div className="row m-0">
 
 
 							<div className="card3 p-3">
-
 
 								<div className="row d-flex justify-content-between p-4 align-items-end">
 									<div>
@@ -325,153 +362,44 @@ export default function Game() {
 							</div>
 
 
-
-
-
+						  
 
 							<ul className="nav3  p-2 nav-rank nav3-tabs butten nav3-justified mb-3">
 								<li className="nav3-item">
-									<a className="nav3-link active pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap" href="#lvl1">Level 1</a>
+									<a className={`nav3-link ${displayLevel == 1 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap` } href="#" onClick={() => setDisplayLevel(1)}>Level 1</a>
 								</li>
 								<li className="nav3-item">
-									<a className="nav3-link font-weight-bold pl-1 pr-1 pt-2 pb-2 rounded text-nowrap" href="#lvl2">Level 2</a>
+									<a className={`nav3-link ${displayLevel == 2 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap` } href="#" onClick={() => setDisplayLevel(2)}>Level 2</a>
 								</li>
 								<li className="nav3-item">
-									<a className="nav3-link font-weight-bold pl-1 pr-1 pt-2 pb-2 rounded text-nowrap" href="#lvl3">Level 3</a>
+									<a className={`nav3-link ${displayLevel == 3 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap` } href="#" onClick={() => setDisplayLevel(3)}>Level 3</a>
 								</li>
 							</ul>
 
+
+
 							<div className={`card3-body ranking ${biggerThan576 && "p-0"} ${biggerThan1200 && "p-0"}`}>
-								<a className="blueprint-header-display trader-display">
-									<div className="d-flex align-items-center">
-										<span className="text-white mr-3 fs-16 font-w600">1</span>
-										<img className="blueprint-img-sm rounded-circle"
-											src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-										<div className="ml-1">
+								
+							{voters.sort((a, b) => b.amount - a.amount).map((voter, i) => 
+									<>
+										{voter.level == displayLevel &&  
 
-											<span
-												className="mb-1 card-small-text text-white trader-name">a4U...</span>
-										</div>
-									</div>
-									<span><i className="fa fa-wallet"></i> 25,004,214,12 </span>
-								</a>
-
-
-								<a className="blueprint-header-display trader-display">
-									<div className="d-flex align-items-center">
-										<span className="text-white mr-3 fs-16 font-w600">2</span>
-										<img className="blueprint-img-sm rounded-circle"
-											src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-										<div className="ml-1">
-
-											<span
-												className="mb-1 card-small-text text-white trader-name">l24a...</span>
-										</div>
-									</div>
-									<span><i className="fa fa-wallet"></i> 23,415,765.01 </span>
-								</a>
-
-
-								<a className="blueprint-header-display trader-display">
-									<div className="d-flex align-items-center">
-										<span className="text-white mr-3 fs-20 font-w600">3</span>
-										<img className="blueprint-img-sm rounded-circle"
-											src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-										<div className="ml-1">
-
-											<span
-												className="mb-1 card-small-text text-white trader-name">l0L...</span>
-										</div>
-									</div>
-									<span><i className="fa fa-wallet"></i> 21,110,143.12 </span>
-								</a>
-
-
-								<a className="blueprint-header-display trader-display">
-									<div className="d-flex align-items-center">
-										<span className="text-white mr-3 fs-16 font-w600">4</span>
-										<img className="blueprint-img-sm rounded-circle"
-											src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-										<div className="ml-1">
-
-											<span
-												className="mb-1 card-small-text text-white trader-name">g4K...</span>
-										</div>
-									</div>
-									<span><i className="fa fa-wallet"></i> 20,221,321.13 </span>
-								</a>
-
-
-								<a className="blueprint-header-display trader-display">
-									<div className="d-flex align-items-center">
-										<span className="text-white mr-3 fs-16 font-w600">5</span>
-										<img className="blueprint-img-sm rounded-circle"
-											src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-										<div className="ml-1">
-
-											<span
-												className="mb-1 card-small-text text-white trader-name">p3H...</span>
-										</div>
-									</div>
-									<span><i className="fa fa-wallet"></i> 19,000,231.00 </span>
-								</a>
-
-
-								<a className="blueprint-header-display trader-display">
-									<div className="d-flex align-items-center">
-										<span className="text-white mr-3 fs-16 font-w600">6</span>
-										<img className="blueprint-img-sm rounded-circle"
-											src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-										<div className="ml-1">
-
-											<span
-												className="mb-1 card-small-text text-white trader-name">y5L...</span>
-										</div>
-									</div>
-									<span><i className="fa fa-wallet"></i> 18,142,554,98 </span>
-								</a>
-
-								<a className="blueprint-header-display trader-display">
-									<div className="d-flex align-items-center">
-										<span className="text-white mr-3 fs-16 font-w600">7</span>
-										<img className="blueprint-img-sm rounded-circle"
-											src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-										<div className="ml-1">
-
-											<span
-												className="mb-1 card-small-text text-white trader-name">t4P...</span>
-										</div>
-									</div>
-									<span><i className="fa fa-wallet"></i> 15,441,214,04 </span>
-								</a>
-
-								<a className="blueprint-header-display trader-display">
-									<div className="d-flex align-items-center">
-										<span className="text-white mr-3 fs-16 font-w600">8</span>
-										<img className="blueprint-img-sm rounded-circle"
-											src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-										<div className="ml-1">
-
-											<span
-												className="mb-1 card-small-text text-white trader-name">t4J...</span>
-										</div>
-									</div>
-									<span><i className="fa fa-wallet"></i> 14,142,554,98 </span>
-								</a>
-
-								<a className="blueprint-header-display trader-display">
-									<div className="d-flex align-items-center">
-										<span className="text-white mr-3 fs-16 font-w600">9</span>
-										<img className="blueprint-img-sm rounded-circle"
-											src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-										<div className="ml-1">
-
-											<span
-												className="mb-1 card-small-text text-white trader-name">d1F...</span>
-										</div>
-									</div>
-									<span><i className="fa fa-wallet"></i> 13,142,554,98 </span>
-								</a>
+											<a className="blueprint-header-display trader-display">
+											<div className="d-flex align-items-center">
+												<span className="text-white mr-3 fs-16 font-w600">{i}</span>
+												<img className="blueprint-img-sm rounded-circle"
+													src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
+												<div className="ml-1">
+													<span
+														className="mb-1 card-small-text text-white trader-name">{voter.address.replace(/(.{10})..+/, "$1…")}</span>
+												</div>
+												</div>
+											<span><i className="fa fa-wallet"></i> {voter.amount} </span>
+											</a>
+										}
+									</>
+						    	)}
+							
 							</div>
 						</div>
 
