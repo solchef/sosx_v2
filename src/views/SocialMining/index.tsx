@@ -6,7 +6,6 @@ import { InlineShareButtons } from 'sharethis-reactjs';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 import Link from 'next/link';
 import NavMining from './NavMining';
-import { useMediaPredicate } from "react-media-hook";
 
 export default function SocialMining() {
 
@@ -16,14 +15,7 @@ export default function SocialMining() {
 
     const Navigation = (props) => {
 
-
-
-  const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
-  const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-
-return (
-
-  <div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
+        return (
             <ul className="nav nav-tabs nav-justified mb-3">
                 <li className="nav-item">
                     <a className={`nav-link ${props.stage == 0 && 'active'}`}>Steps</a>
@@ -38,7 +30,6 @@ return (
                     <a onClick={props.onClick} className={`nav-link ${props.stage == 3 && 'active'}`}>Redeem</a>
                 </li>
             </ul>
-            </div>
         )
     }
 
@@ -82,7 +73,6 @@ return (
             <a className="nav-link" data-toggle="modal"><i className="fa-solid fa-share-from-square" /></a>
         </OverlayTrigger>
     );
-
 
 
     return (

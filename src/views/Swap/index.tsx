@@ -269,7 +269,7 @@ export default function Swap() {
         setSwapState({ attemptingTxn: false, tradeToConfirm, swapErrorMessage: undefined, txHash: hash })
       })
       .catch((error) => {
-        setSwapState({
+        setSwapState({  
           attemptingTxn: false,
           tradeToConfirm,
           swapErrorMessage: error.message,
@@ -560,10 +560,7 @@ export default function Swap() {
                     )}
                     {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
                   </Box>
-
-                 
-
-
+                  
                 {/* 
                     <div className="transaction-box pt-3 pb-3 pr-2 pl-2">
                       <div className="small2">

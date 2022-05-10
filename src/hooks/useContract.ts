@@ -33,6 +33,7 @@ import {
   getErc721CollectionContract,
   getBunnySpecialXmasContract,
   getStakingContract,
+  getSosxContract,
 } from 'utils/contractHelpers'
 import { getMulticallAddress } from 'utils/addressHelpers'
 import { VaultKey } from 'state/types'
@@ -193,6 +194,12 @@ export const useStakingContract = () => {
   const { library } = useActiveWeb3React()
   console.log(library.getSigner())
   return useMemo(() => getStakingContract(library.getSigner()), [library])
+}
+
+export const useSosxContract = () => {
+  const { library } = useActiveWeb3React()
+  console.log(library.getSigner())
+  return useMemo(() => getSosxContract(library.getSigner()), [library])
 }
 
 export const usePredictionsContract = () => {

@@ -8,6 +8,7 @@ import { FacebookIcon, TwitterIcon } from "react-share";
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useStakingContract } from 'hooks/useContract';
+
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice';
 import { useMediaPredicate } from "react-media-hook";
 import BigNumber from "big-number"
@@ -439,10 +440,7 @@ export default function Referral() {
                    <p className="text-white fs-12">
                      {ref.amount}
                    </p>
-         
-  
                  </div>
-  
                  <div className="col-xl-2">
                    <p className="text-white fs-12">{ref.amount}</p>
                  </div>
