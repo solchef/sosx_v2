@@ -6,21 +6,9 @@ import {
 } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
 import { Popover, OverlayTrigger } from 'react-bootstrap';
-import { withSnackbar } from "notistack";
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import sosxStakingAbi from 'config/abi/sosxABI.json'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { useWeb3React } from '@web3-react/core';
 import { useStakingContract } from 'hooks/useContract';
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice';
-import get from 'lodash/get'
-import { Contract } from '@ethersproject/contracts';
-import { Web3Provider } from '@ethersproject/providers';
 import { useMediaPredicate } from "react-media-hook";
 import BigNumber from "big-number"
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
