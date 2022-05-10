@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import useToast from 'hooks/useToast'
-import { useStakingContract } from 'hooks/useContract'
+import { useStakingContract, useSosxContract} from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 import { useMediaPredicate } from "react-media-hook";
 import BigNumber from "big-number"
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { MaxUint256 } from '@ethersproject/constants'
+import { calculateGasMargin } from 'utils'
 
 
 const BorderCard = styled.div`
@@ -14,10 +17,12 @@ const BorderCard = styled.div`
   padding: 16px;
 `
 
-export default function Staking() {
-
+export default function DaoStaking() {
 
 	const contract = useStakingContract();
+	const {account} = useActiveWeb3React();
+	const tokenContract = useSosxContract();
+	const [balance, setUserBalace] = useState(0);
 	const { toastError } = useToast()
 	const [stakingClass, setStakingClass] = useState(1);
 	const [stakingInterest, setStakingInterest] = useState(0);
@@ -31,6 +36,7 @@ export default function Staking() {
 	const [allowanceValue, setAllowanceValue] = useState(0);
 	const [activateStake, setActivatestake] = useState(true);
 	const [showDetails, setShowDetails] = useState(-1);
+	const [insufficientBalance, setInsufficientBalance] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
@@ -49,8 +55,11 @@ export default function Staking() {
 			referral ? setReferralAddress(await contract.getMyReferral()) : setReferralAddress("0x0000000000000000000000000000000000000001");
 			let activeStakes = await contract.getActiveStakeCount();
 			setNumberOfActiveStake(Number(activeStakes));
+			let balance = await tokenContract.balanceOf(account);
+			balance = Number(balance / 10 ** 18);
+			setUserBalace(balance);
 			// setHasReferral(referral)
-			console.log(referralAddress)
+			// console.log(referralAddress)
 
 			
 			
@@ -58,7 +67,7 @@ export default function Staking() {
 		stakingDetails();
 		listUserStaking();
 		
-	},[]);
+	},[account]);
 
 	const listUserStaking = async() => {
 
@@ -83,7 +92,7 @@ export default function Staking() {
 			
         }
 
-		console.log(list)
+		// console.log(list)
 
 		setActiveStakes(list);
 
@@ -94,6 +103,13 @@ export default function Staking() {
         
         let _amountToStake = Number(event.target.value)
 
+		if(_amountToStake > balance){
+
+			setInsufficientBalance(true)
+		}else{
+			setInsufficientBalance(false)
+		}
+
         let decimals = BigNumber(10).pow(18)
 
         let result = BigNumber(_amountToStake).multiply(decimals)
@@ -101,8 +117,8 @@ export default function Staking() {
 
         // let finalAmount = this.web3.utils.toBN(result.toString())
         let finalAmount = result;
-        console.log(_amountToStake)
-        console.log(allowanceValue)
+        // console.log(_amountToStake)
+        // console.log(allowanceValue)
         if(_amountToStake > allowanceValue){
             setActivatestake(false);
         }else{
@@ -117,7 +133,7 @@ export default function Staking() {
         let interest =  compoundInterest(p,t,r,n);
 
      
-        // this.setState({stakingInterest:interest})
+        // this.setState({stakingInterest:interest})  
 
 		setamountToStake(_amountToStake)
         setStakingInterest(Number(interest));
@@ -128,67 +144,37 @@ export default function Staking() {
         //    amount = amount.toFixed(2)
         //    const interest = amount - p;
            return amount.toFixed(2);
+
         };
 
-
 		const handleSubmit = async() => {
-	
-			// this.checkAllowance().then( () => {
-			// 	// console.log(this.state.allowanceValue)
-			// 	if(this.state.amountToStake > this.state.allowanceValue){
-	
-			// 		let final =  this.web3.utils.toWei(this.state.amountToStake.toString(), 'ether');
-			// 		this.setState({loading:true});
-			// 		this.state.tokenInstance.approve(this.state.stakingAddress, final, {from: this.state.account}).then( (response) => {
-			// 			// console.log(response);
-			// 				this.setState({
-			// 					hasAllowance: true,
-			// 					activateStake:true
-			// 				}, () => {
-			// 					this.props.enqueueSnackbar("Approved, You can now stake", {
-			// 						variant: 'success',
-			// 						anchorOrigin: {
-			// 							vertical: 'bottom',
-			// 							horizontal: 'left',
-			// 						},
-			// 					});
-			// 				})
-					 
-			// 			this.setState({loading: false})
-					  
-			// 		}).catch( (err) =>{
-			// 			console.log(err);
-			// 			this.setState({loading: false})
-			// 		});
-					
-			// 		return;
-					
-			// 	}
-		
-			// 	// console.log(this.state.tokenBalance)
-			// 	if(this.state.amountToStake > this.state.tokenBalance){
-			// 		this.props.enqueueSnackbar(<Trans i18nKey="staking_form.errorInsufficientFunds" />, {
-			// 			variant: 'error',
-			// 			anchorOrigin: {
-			// 				vertical: 'bottom',
-			// 				horizontal: 'left',
-			// 			},
-			// 		});
-			// 		return
-			// 	}
-		
-			// 	this.activateStake();
-			// });
+			
+			console.log(balance);
+			if(amountToStake > balance){
+				toastError("Insufficient Balance");
+			}	
+			// console.log(tokenContract);
+			let allowance = await tokenContract.allowance(account,contract.address);
+			allowance = Number(allowance / 10 ** 18 );
+
+			if(amountToStake < allowance){
+				setLoading(true);
+				await contract.stakeToken((amountToStake * (10 ** 18)).toString(), referralAddress, stakingClass );
+				setActivatestake(true)
+				setLoading(false);
+				listUserStaking();
+				
+			}else{
+
+				toastError("token allowance not yet set");
+			}
 	
 		}
-
-
 
 
 	return (
 		<>
 			<div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
-
 
 				<div className="row">
 					<div className="col-sm-3 col-6">
@@ -253,9 +239,7 @@ export default function Staking() {
 														const r = Number(e.target.value) == 1 ? 0.29 : Number(e.target.value) == 2 ? 0.64 : 1.45;
 														const n = 12;
 														setStakingInterest(Number(compoundInterest(p,t,r,n)))
-													
 													}
-												
 												}>
 												<option value={1}>3 </option>
 												<option value={2}>6 </option>
@@ -281,91 +265,34 @@ export default function Staking() {
 											</div>
 											</div>
 										</div>
-
-										{/* <div className="d-flex justify-content-between"><button type="button" className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3" disabled>Approve</button><button type="button" className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3">Stake</button></div>
-										</div> */}
-
+									<>
+								
 								{activateStake ? 
-                                       
                                        <div className="d-flex justify-content-between">
- 
                                                      <button type="button"
                                                       onClick={handleSubmit}
-                                                     className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3">
+                                                      className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
+												      disabled={insufficientBalance || activateStake}>
                                                         {loading ?  'Approving...' : 'Approve'} 
-                                             
                                              </button>
-                                             <button type="button" className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3" disabled>Stake</button>
-                                           
+											<button 
+											 type="button" className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3" disabled={insufficientBalance || activateStake}>Stake</button>
                                     </div>
                                      :
-                                     
                                      <div className="d-flex justify-content-between">
-                                          <button type="button" className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3" disabled>Approve</button>
+                                          <button type="button" className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3" disabled={insufficientBalance || !activateStake}>Approve</button>
                                              <button type="button"
+											    disabled={insufficientBalance || activateStake}
                                                  onClick={handleSubmit}
                                                  className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3">
                                                  {loading ?  'Staking..' : 'Stake'}
                                          </button>
-                                    
-                                        
                                     </div>
                                  }
+								</>
+							</div>
+							</div>
 
-
-								 	</div>
-									</div>
-
-							{/* <div className="card-body">
-								<div className="bg-dark rounded">
-									<div className="d-flex justify-content-between align-items-center pb-1">
-									</div>
-									<div className="d-flex justify-content-between align-items-center">
-										<span> </span>
-										<span>SOSX</span>
-									</div>
-								</div>
-								<div className="bg-dark rounded">
-									<div className="d-flex justify-content-between align-items-center pb-1">
-									</div>
-									<div className="d-flex justify-content-between align-items-center">
-										<select value={stakingClass} 
-										  onChange={(e) => setStakingClass(Number(e.target.value))} 
-										>
-											<option hidden>Select Duration</option>
-											<option value={1}>3 </option>
-											<option value={2}>6 </option>
-											<option value={3}>12 </option>
-										</select>
-									</div>
-								</div>
-								<div className="bg-dark rounded">
-									<div className="d-flex justify-content-between">
-										<div className="small2">
-											<div className="success mr-1">Reward Interest: </div>
-											<div className="d-flex align-items-center">
-												<p></p>
-											</div>
-										</div>
-										<div className="small2">
-											<div className="success mr-1">Reward APY </div>
-											<div className="d-flex align-items-center">
-												<p>0%</p>
-											</div>
-										</div>
-										<div className="small2">
-											<div className="success mr-1">Estimated Rewards </div>
-											<div className="d-flex text-nowrap align-items-center">
-												<p>{(Number(amountToStake) * (stakingClass == 1 ? 3 : stakingClass == 2 ? 64 : 145))} SBOOST</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div className="d-flex justify-content-between">
-									<button type="button" className="btn btn-primary text-nowrap mr-1 btn-lg w-100 mt-3">Approve</button>
-									<button type="button" className="btn btn-primary text-nowrap btn-lg w-100 mt-3">Stake</button>
-								</div>
-							</div> */}
 						</div>
 					</div>
 
@@ -506,3 +433,11 @@ export default function Staking() {
 		</>
 	)
 }
+function callWithGasPrice(tokenContract: Contract, arg1: string, arg2: any[], arg3: { gasLimit: any }) {
+	throw new Error('Function not implemented.')
+}
+
+function estimatedGas(estimatedGas: any): any {
+	throw new Error('Function not implemented.')
+}
+

@@ -82,6 +82,11 @@ export const getstakingContractAddress = () => {
   return "0xab1EffDe3241545a26e1597BDf3A0E2724AB9924";
 }
 
+export const getSosxContractAddress = () => {
+  return "0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF";
+}
+
+
 export const getBunnySpecialXmasAddress = () => {
   return getAddress(addresses.bunnySpecialXmas)
 }

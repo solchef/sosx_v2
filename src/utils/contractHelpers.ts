@@ -10,6 +10,7 @@ import {
   getMasterChefAddress,
   getPointCenterIfoAddress,
   getstakingContractAddress,
+  getSosxContractAddress,
   getPredictionsAddress,
 } from 'utils/addressHelpers'
 
@@ -18,6 +19,7 @@ import cakeAbi from 'config/abi/cake.json'
 import pointCenterIfo from 'config/abi/pointCenterIfo.json'
 import masterChef from 'config/abi/masterchef.json'
 import sosxStakingAbi from 'config/abi/sosxABI.json'
+import sosxTokenABI from 'config/abi/sosxTokenABI.json'
 import predictionsAbi from 'config/abi/predictions.json'
 
 // Types
@@ -57,6 +59,10 @@ export const getMasterchefContract = (signer?: Signer | Provider) => {
 
 export const getStakingContract = (signer?: Signer | Provider) => {
   return getContract(sosxStakingAbi, getstakingContractAddress(), signer);
+}
+
+export const getSosxContract = (signer?: Signer | Provider) => {
+  return getContract(sosxTokenABI, getSosxContractAddress(), simpleRpcProvider);
 }
 
 export const getPredictionsContract = (signer?: Signer | Provider) => {
