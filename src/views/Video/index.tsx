@@ -23,7 +23,7 @@ export default function Video() {
                         <button style={{ width: 'fit-content' }} type="button" className="btn btn-success">Uploade</button>
                        <div className='pt-3 d-flex justify-content-between'>
 
-                       <button style={{ width: 'fit-content' }} type="button" className="btn btn-success">Tiktok</button>
+                       <button style={{ width: 'fit-content' }} type="button" className="btn btn-secondary">Tiktok</button>
                         <button style={{ width: 'fit-content' }} type="button" className="btn mx-auto btn-danger">youtube</button>
 
                        </div>
