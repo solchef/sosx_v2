@@ -63,10 +63,13 @@ export default function Game() {
 	useEffect(() => {
 		loadDaoLevels();
 		getData();
+		getVideo()
 	}, []);
 
 
-
+	useEffect(() => {
+		loadDaoLevels();
+	}, []);
 	const getData = async () => {
 		let challenges = [];
 		for await (const resultPart of server.files.ls("/challenges")) {
@@ -100,6 +103,7 @@ export default function Game() {
 
 		setChallenges(challenges);
 	};
+	
 	const todayChallenge = challenges.sort((a, b) => a.votes - b.votes).reverse()[0]
 
 	const getVideo = async () => {
@@ -200,8 +204,7 @@ export default function Game() {
 				<div className="row m-1">
 					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 m-0">
 						<div className="row m-0">
-						<div className={`card3 col-12 text-center ${biggerThan1200 && "p-0"}
- col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
+						<div className={`card3 col-12 text-center ${biggerThan1200 && "p-0"} col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
 
 
 								<div className="feature-box p-0">
@@ -261,36 +264,39 @@ export default function Game() {
 
 							</div>
 							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
-								<div className="card-header align-items-start border-0">
-										{todayChallenge > 0 ? (
-											<>
-											<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
-											<span className="fs-12 font-weight-bold success">@challengecreator-1</span>
-											{console.log(todayChallenge[0].challenge.payload.name)}
-											<h4 className="fs-18 mb-0 pb-2">{todayChallenge[0].challenge.payload.name}</h4>
-											<span className="fs-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-												do
-												eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-												suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
-												vel
-												facilisis. </span>
-											<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
-											<ul className="fs-12">
-												<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
-												<li><i className="fa-solid fa-check pr-2"></i>Lorem ipsum dolor sit amet.</li>
-											</ul>
-											<div className="p-3 align-items-start justify-content-between align-items-center">
-											<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-												id="votes">{todayChallenge[0].votes}</span><span className="fs-12">Votes</span></li>
-											</div>
-											</>
-										) : (
-											<p>Loading</p>
-										)}
-										
+								{console.log(todayChallenge)}
+							{todayChallenge ? (
+										<>
+										<div className="card-header align-items-start border-0">
+									<div>
+										<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
+										<h4 className="fs-18 mb-0 pb-2">{todayChallenge.challenge.payload.name}</h4>
+										<span className="fs-12">{todayChallenge.challenge.payload.body} </span>
+										<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
+										{todayChallenge.challenge.payload.choices.map((element) => (
+										<ul className="fs-12">
+											<li>
+												<i className="fa-solid fa-check pr-2"></i>
+												{element}
+											</li>
+										</ul>
+									))}
+									</div>
+
 								</div>
+								<div className="p-3 align-items-start justify-content-between align-items-center">
+									<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+										id="votes">{todayChallenge.votes}</span><span className="fs-12">Votes</span></li>
+								</div>
+										</>
+									) : (
+										<p>Loading</p>
+									)}
 								
+
 							</div>
+							
+							
 						</div>
 
 						<div className="row m-0">

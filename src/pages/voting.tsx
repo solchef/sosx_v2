@@ -1,4 +1,4 @@
-import Voting from '../views/Games/Voting'
+import Voting from '../views/Games/Votechallenge'
 
 const voting = () => {
   return <Voting />
