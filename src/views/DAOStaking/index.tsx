@@ -73,8 +73,6 @@ export default function DaoStaking() {
 			setUserBalace(balance);
 			// setHasReferral(referral)
 			// console.log(referralAddress)
-
-			
 			
 		}
 		stakingDetails();
