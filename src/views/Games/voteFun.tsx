@@ -9,7 +9,7 @@ import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
 
 const server = create({
-	url: "http://127.0.0.1:5001",
+	url: "https://ipfs.socialx.io",
 	
   });
 

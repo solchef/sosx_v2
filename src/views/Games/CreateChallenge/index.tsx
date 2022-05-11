@@ -20,9 +20,11 @@ import { combineDateAndTime, getFormErrors } from './helpers'
 import { FormState } from './types'
 import { ADMINS } from '../config'
 import VoteDetailsModal from '../components/VoteDetailsModal'
-import NavGame from '../NavGame'
-import { CID, create } from 'ipfs-http-client'
-import ReactMarkdown from 'react-markdown'
+import NavGame from '../NavGame';
+import { CID, create } from 'ipfs-http-client';
+import ReactMarkdown from 'react-markdown';
+import { useMediaPredicate } from 'react-media-hook';
+import { useStakingContract } from 'hooks/useContract';
 // import MDEditor from './MDEdit,or'
 
 // const MDEditor = dynamic(
@@ -31,7 +33,7 @@ import ReactMarkdown from 'react-markdown'
 // );
 
 const server = create({
-  url: "http://127.0.0.1:5001",
+  url: "https://ipfs.socialx.io",
 
 });
 
@@ -53,6 +55,7 @@ const CreateChallenge = () => {
     snapshot: 0,
   })
   const [isLoading, setIsLoading] = useState(false)
+  const [ votingLevel, setVotingLevel] = useState(0)
   const [fieldsState, setFieldsState] = useState<{ [key: string]: boolean }>({})
   const [images, setImages] = useState<{ cid: CID; path: string }[]>([]);
   const { t } = useTranslation()
@@ -61,13 +64,20 @@ const CreateChallenge = () => {
   const { push } = useRouter()
   const { library, connector } = useWeb3Provider()
   const { toastSuccess, toastError } = useToast()
-  const [onPresentVoteDetailsModal] = useModal(<VoteDetailsModal block={state.snapshot} />)
   const { name, body, choices, startDate, startTime, endDate, endTime, snapshot } = state
   const formErrors = getFormErrors(state, t)
+  const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+	const contract = useStakingContract();
+  const [onPresentVoteDetailsModal] = useModal(<VoteDetailsModal block={state.snapshot} />)
+
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
     
+    if(votingLevel >= 2){
+
+   
     try {
       setIsLoading(true)
       const challenge = JSON.stringify({
@@ -79,13 +89,15 @@ const CreateChallenge = () => {
           snapshot,
           start: combineDateAndTime(startDate, startTime),
           end: combineDateAndTime(endDate, endTime),
-          choices: choices
+          creator: account,
+          created: new Date(),
+          rules: choices
             .filter((choice) => choice.value)
             .map((choice) => {
               return choice.value
             }),
           metadata: generateMetaData(),
-          type: 'single-choice',
+          type: 'challenge-with-rules',
         },
       })
 
@@ -102,13 +114,15 @@ const CreateChallenge = () => {
             snapshot,
             start: combineDateAndTime(startDate, startTime),
             end: combineDateAndTime(endDate, endTime),
+            creator: account,
+            created: new Date(),
             choices: choices
               .filter((choice) => choice.value)
               .map((choice) => {
                 return choice.value
               }),
             metadata: generateMetaData(),
-            type: 'single-choice',
+            type: 'challenge-with-rules',
           },
         }, null, 2)
 
@@ -125,9 +139,13 @@ const CreateChallenge = () => {
       }
     } catch (error) {
       toastError(t('Error'), (error as Error)?.message)
-      console.error(error)
+      // console.error(error)
       setIsLoading(false)
     }
+
+  }else{
+         toastError('Errorr', 'You need at least level2 DAO ranking to create challenge');
+  }
   }
 
   const updateValue = (key: string, value: string | Choice[] | Date) => {
@@ -170,6 +188,7 @@ const CreateChallenge = () => {
   }, [account])
 
   useEffect(() => {
+    userVotingLevel()
     if (initialBlock > 0) {
       setState((prevState) => ({
         ...prevState,
@@ -178,20 +197,35 @@ const CreateChallenge = () => {
     }
   }, [initialBlock, setState])
 
+
+  const userVotingLevel = async() => {
+
+    let amount = await contract.getVoterTotalStakeAmount(account);
+    amount = amount / (10**18);
+    let level = getLevel(amount);
+    setVotingLevel(level);
+  }
+
+  const getLevel = (amount) => {
+      // console.log(process.env.NEXT_PUBLIC_LEVEL1)
+      if(amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2){ return 1; }
+      if(amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3){ return 2; }
+      if(amount >= process.env.NEXT_PUBLIC_LEVEL3){ return 3; }
+	 }
+
   return (
 
-      <div className="container-fluid">
-            <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/xgame'> Back   </Link> </p>
-
+    <div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
+            <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/xgame'> Back </Link> </p>
+          <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-xl-7">
             <div className="card">
-              <div className="card-header border-0 pb-0 justify-content-between">
-                <h4 className="fs-18">Create Challenge</h4>
+              <div className=" border-0 p-2 ">
+                <h1 className="fs-18">Create Challenge</h1>
               </div>
               <div className="card-body">
-
-                <form onSubmit={handleSubmit}>
+             
                   <div className="row mb-3">
                     <input id="name" type="text" name="name" value={name} className="input1" placeholder="Challenge Title" onChange={handleChange} required />
                     <label className="mx-3">
@@ -212,23 +246,20 @@ const CreateChallenge = () => {
                       {/* <MDEditor height={200} value={value} onChange={setValue} /> */}
                       {formErrors.body && fieldsState.body && <FormErrors errors={formErrors.body} />}
                     </div>
-                    {body && (
-                      <div >
-                        {/* <Card>
-                          <CardHeader>
-                            <Heading as="h3" scale="md">
-                              {t('Preview')}
-                            </Heading>
-                          </CardHeader>
-                          <CardBody p="0" px="24px"> */}
-                            {/* <ReactMarkdown>{body}</ReactMarkdown> */}
-                          {/* </CardBody>
-                        </Card> */}
-                      </div>
-                    )}
+
                   </div>
 
-                  <Choices choices={choices} onChange={handleChoiceChange} />
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-5">
+          <div className='card'>
+          <div className=" border-0 p-2 ">
+                <h1 className="fs-18">Rules</h1>
+              </div>
+              <div>
+              <div className='card-body mx-3'>
+              <Choices choices={choices} onChange={handleChoiceChange} />
                   {formErrors.choices && fieldsState.choices && <FormErrors errors={formErrors.choices} />}
 
                   {account ? (
@@ -240,38 +271,32 @@ const CreateChallenge = () => {
                       >
                         Submit
                       </button>
-                      <p className='  mt-2' color="failure" >
-                        {'You need at least %count% voting power to publish a challenge'}
+                      <div className="text-center">
 
-                      </p>
-                      <button className='p-2 mt-2' type="button" onClick={onPresentVoteDetailsModal} >
-                        {t('Check voting power')}
-                      </button>
+                         {votingLevel < 2 &&
+                               <p className='mt-2 text-danger'>
+                                  You need at least level2 DAO ranking to create challenge
+                              </p>
+                         }
+                          
+                          {/* <a className='p-2 mt-3' type="a" onClick={onPresentVoteDetailsModal} >
+                             {t('Check voting power')}
+                          </a> */}
+                      </div>
+                    
                     </>
                   ) : (
                     <ConnectWalletButton width="100%" type="button" />
                   )}
 
-                </form>
-
               </div>
             </div>
-          </div>
-          <div className="col-xl-5">
-            <div className="card-header align-items-start border-0">
-              <div>
-                <h4 className="fs-18">Challenge Lorem</h4>
-                <p  >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                  suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus
-                  vel
-                  facilisis. </p>
-
-              </div>
+           
             </div>
           </div>
+          
         </div>
+        </form>
       </div>
   )
 }

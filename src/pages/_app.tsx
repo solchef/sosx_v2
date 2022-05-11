@@ -2,7 +2,7 @@ import { ResetCSS } from '@pancakeswap/uikit'
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
 import BigNumber from 'bignumber.js'
-import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
+// import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
 import FixedSubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
 import { ToastListener } from 'contexts/ToastsContext'
 import useEagerConnect from 'hooks/useEagerConnect'
@@ -72,7 +72,7 @@ function MyApp(props: AppProps) {
           <Updaters />
           <ResetCSS />
           <GlobalStyle />
-          <GlobalCheckClaimStatus excludeLocations={[]} />
+          {/* <GlobalCheckClaimStatus excludeLocations={[]} /> */}
           <PersistGate loading={null} persistor={persistor}>
             <App {...props} />
           </PersistGate>

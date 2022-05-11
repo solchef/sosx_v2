@@ -42,7 +42,7 @@ export const generateMetaData = () => {
   return {
     plugins: {},
     network: 56,
-    strategies: [{ name: 'cake', params: { symbol: 'CAKE', address: tokens.cake.address, decimals: 18 } }],
+    strategies: [{ name: 'SOCIALX', params: { symbol: 'SOSX', address: '0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF', decimals: 18 } }],
   }
 }
 
