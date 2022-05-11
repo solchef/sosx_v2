@@ -183,58 +183,11 @@ const Menu: React.FC<NavProps> = ({
   }
     , [children])
   return (
-    // <MenuContext.Provider value={{ linkComponent }}>
-    //   <Wrapper>
-    //     <FixedContainer showMenu={showMenu} height={totalTopMenuHeight}>
-    //       <StyledNav>
-    //         <Flex>
-    //           <Logo isDark={isDark} href={homeLink?.href ?? "/"} />
-    //           {!isMobile && <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />}
-    //         </Flex>
-    //         <Flex alignItems="center" height="100%">
-
-
-    //           {globalMenu} {userMenu}
-    //         </Flex>
-    //       </StyledNav>
-    //     </FixedContainer>
-    //     {subLinks && (
-    //       <Flex justifyContent="space-around">
-    //         <SubMenuItems items={subLinksWithoutMobile} mt={`${totalTopMenuHeight + 1}px`} activeItem={activeSubItem} />
-
-    //         {subLinksMobileOnly?.length > 0 && (
-    //           <SubMenuItems
-    //             items={subLinksMobileOnly}
-    //             mt={`${totalTopMenuHeight + 1}px`}
-    //             activeItem={activeSubItem}
-    //             isMobileOnly
-    //           />
-    //         )}
-    //       </Flex>
-    //     )}
-    //     <BodyWrapper mt={!subLinks ? `${totalTopMenuHeight + 1}px` : "0"}>
-    //       {/* <Inner isPushed={false} showMenu={showMenu}> */}
-    //         {children}
-    //         {/* <Footer
-    //           items={footerLinks}
-    //           isDark={isDark}
-    //           toggleTheme={toggleTheme}
-    //           langs={langs}
-    //           setLang={setLang}
-    //           currentLang={currentLang}
-    //           cakePriceUsd={cakePriceUsd}
-    //           buyCakeLabel={buyCakeLabel}
-    //           mb={[`${MOBILE_MENU_HEIGHT}px`, null, "0px"]}
-    //         /> */}
-    //       {/* </Inner> */}
-    //     </BodyWrapper>
-    //     {isMobile && <BottomNav items={links} activeItem={activeItem} activeSubItem={activeSubItem} />}
-    //   </Wrapper>
-    // </MenuContext.Provider>
+  
 
     <>
       <div className="nav-header">
-        <a href="#" className="brand-logo">
+        <a href="https://socialx.io" className="brand-logo">
           <img className="logo-abbr" src="/images/xlogo-black.b90261b2.svg" alt="" />
         </a>
       </div>
@@ -261,6 +214,7 @@ const Menu: React.FC<NavProps> = ({
           </nav>
         </div>
       </div>
+
       <ul className="mobile-nav d-flex" id="menu">
         
           <li className={router.pathname == "/" ? "mm-active" : ""}>
@@ -300,10 +254,6 @@ const Menu: React.FC<NavProps> = ({
               </a>
             </Link>
           </li>
-
-
-     
-
        
           <li className={router.pathname == "/adspace" ? "mm-active" : ""}>
             <Link href="/adspace">
@@ -475,11 +425,11 @@ const Menu: React.FC<NavProps> = ({
       </div>
 
 
-      <div className="footer">
+      {/* <div className="footer">
         <div className="copyright">
           <p>Copyright © <a href="https://socialx.io/" target="_blank">SocialX</a> 2022</p>
         </div>
-      </div>
+      </div> */}
 
     </>
 

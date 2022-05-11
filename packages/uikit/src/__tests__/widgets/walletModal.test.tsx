@@ -647,22 +647,8 @@ it("renders ConnectModal correctly", () => {
           <div
             class="c20"
           >
-            <p
-              class="c21"
-              color="textSubtle"
-            >
-              Haven’t got a crypto wallet yet?
-            </p>
-            <a
-              class="c22"
-              href="https://docs.pancakeswap.finance/get-started/connection-guide"
-              rel="noreferrer noopener"
-              scale="md"
-              target="_blank"
-              width="100%"
-            >
-              Learn How to Connect
-            </a>
+            
+            
           </div>
         </div>
       </div>
