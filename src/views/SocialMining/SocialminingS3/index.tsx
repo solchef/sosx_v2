@@ -38,7 +38,7 @@ export default function SocialminingS3() {
     };
     console.log(post)
     // save the post
-    let response = await fetch('/utils/api/posts', {
+    let response = await fetch('/api/posts', {
         method: 'POST',
         body: JSON.stringify(post),
     });
@@ -114,11 +114,12 @@ const onReCAPTCHAChange = async (captchaCode) => {
                   <div className="row mb-3">
                     <input
                       className="input1"
-                      type="text"
+                      type="email"
                       name="title"
                       onChange={(e) => setEmailAdrress(e.target.value)}
                       value={email_address}
                       placeholder="E-mail Address"
+                      required
                     />
                   </div>
 
@@ -142,6 +143,7 @@ const onReCAPTCHAChange = async (captchaCode) => {
                       onChange={(e) => setsocialpostlink(e.target.value)}
                       value={socialpostlink}
                       placeholder="Post Link"
+                      required
                     />
                   </div>
                 </div>
