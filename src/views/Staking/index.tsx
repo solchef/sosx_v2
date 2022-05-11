@@ -227,7 +227,7 @@ export default function DaoStaking() {
 
 					<div className="col-xl-4">
 						<div className="card ">
-							<div className="card-header border-0 pt-0">
+							<div className="card-header border-0 pl-0 pt-0">
 								<h4 className="fs-18 ">Stake SOSX</h4>
 							</div>
 
@@ -278,10 +278,12 @@ export default function DaoStaking() {
 											</div>
 											</div>
 										</div>
-									<>
+									
+							</div>
+							<>
 								
 								{activateStake ? 
-                                       <div className="d-flex justify-content-between">
+                                       <div className="d-flex card-footer pt-0 pb-0 foot-card border-0 justify-content-between">
                                                      <button type="button"
                                                       onClick={handleSubmit}
                                                       className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
@@ -292,7 +294,7 @@ export default function DaoStaking() {
 											 type="button" className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3" disabled={insufficientBalance || activateStake}>Stake</button>
                                     </div>
                                      :
-                                     <div className="d-flex justify-content-between">
+                                     <div className="d-flex card-footer pt-0 pb-0  foot-card border-0 justify-content-between">
                                           <button type="button" className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3" disabled={insufficientBalance || !activateStake}>Approve</button>
                                              <button type="button"
 											    disabled={insufficientBalance || activateStake}
@@ -304,7 +306,6 @@ export default function DaoStaking() {
                                  }
 								</>
 							</div>
-							</div>
 
 						</div>
 					</div>
@@ -315,7 +316,7 @@ export default function DaoStaking() {
 								<h4 className="fs-18">Staking Summary</h4>
 							</div>
 
-							<div className="card-body">
+							<div className="card-body flex-column d-flex justify-content-between">
 									<div className='pt-4'>
 										<div className="d-flex justify-content-between">
 											<p className="success mb-0 fs-12">Total SOSX Staked</p>
@@ -342,10 +343,12 @@ export default function DaoStaking() {
 										<p className="success mb-0 fs-12">Show Archived</p>
 										<span className="MuiSwitch-root mb-0 font-w600  fs-24 pb-3"><span className="MuiButtonBase-root MuiIconButton-root jss5 MuiSwitch-switchBase MuiSwitch-colorSecondary" aria-disabled="false"><span className="MuiIconButton-label"><input className="jss8 MuiSwitch-input" type="checkbox" defaultValue="false" /><span className="MuiSwitch-thumb" /></span><span className="MuiTouchRipple-root" /></span><span className="MuiSwitch-track" /></span>
 									</div>
-
-									<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Refresh Summarry</button>
+													
 							</div>
+							<div className="card-footer pt-0 pb-0 foot-card border-0">
+									<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Refresh Summarry</button>
 
+										</div>
 						
 						</div>
 					</div>
