@@ -163,7 +163,7 @@ export default function Game() {
 		toastSuccess(t('Video Uploaded!'))
 		form.reset()
 		handleClose()
-		getData()
+		getVideo()
 	}
 
 
