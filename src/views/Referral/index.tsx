@@ -28,7 +28,8 @@ const tabs = [
 ];
 export default function Referral() {
   const [tab, setTab] = useState(tabs[0])
-
+  const { account } = useActiveWeb3React()
+  const [userAccount, setUserAccount] = useState('');
   const contract = useStakingContract();
   const [referralCount, setReferralCount] = useState(0);
   const [viewReferralReward, setViewReferralReward] = useState(0);
@@ -38,7 +39,6 @@ export default function Referral() {
   const { callWithGasPrice } = useCallWithGasPrice()
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-  const { account } = useActiveWeb3React();
   const [key, setKey] = useState("chart");
    
   // const account = "dd"
@@ -48,8 +48,10 @@ export default function Referral() {
 
   };
 
+  console.log(account);
+
   useEffect(() => {
-console.log("hello")
+// console.log("hello")
     fetchReferral();
     const getaccountDetails = async() => {
     let post = {
@@ -328,8 +330,8 @@ getaccountDetails();
        <div className="card-body">
          <div className="bg-dark rounded">
            <div className="d-flex justify-content-between align-items-center">
-             {/* <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span> */}
-              <span>https://socialx.io?ref={account}</span>
+             <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span>
+              {/* <span>https://socialx.io?ref={account}</span> */}
              <div className="float-right d-flex">
              <li className="nav-item pr-2">
                <CopyToClipboard

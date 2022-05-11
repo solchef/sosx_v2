@@ -72,13 +72,18 @@ export default function DaoStaking() {
 			let balance = await tokenContract.balanceOf(account);
 			balance = Number(balance / 10 ** 18);
 			setUserBalace(balance);
+			let allowance = await tokenContract.allowance(account,contract.address);
+			allowance = allowance.toString()
+			// const amount = BigNumber.from(allowance)
+			// console.log(amount)
+			setAllowanceValue(allowance);
 			// setHasReferral(referral)
 			// console.log(referralAddress)
 			
 		}
 		
 		stakingDetails();
-		listUserStaking();
+		// listUserStaking();
 		
 	},[account]);
 
@@ -89,7 +94,7 @@ export default function DaoStaking() {
         for(let i=0; i < numberOfActiveStake; i++){
 
 			let stakeInstance = await contract.getStakeInfo(i);
-
+			
 			let instance = {
 				amount: Number(stakeInstance[0] / 10 ** 18),
 				isWithdrawed: Boolean(stakeInstance[1]),
@@ -101,6 +106,7 @@ export default function DaoStaking() {
 				periodElapsed: await contract.calculatePeriods(i)
 			}
 
+	
             list.push(instance);
 			
         }
@@ -112,7 +118,7 @@ export default function DaoStaking() {
     }
 
 
-	const handleAmountChange = (event) => {
+	const handleAmountChange = async(event) => {
         
         let _amountToStake = Number(event.target.value)
 
@@ -125,14 +131,18 @@ export default function DaoStaking() {
 
         let decimals = BigNumber(10).pow(18)
 
-        let result = BigNumber(_amountToStake).multiply(decimals)
+        let result = BigNumber(_amountToStake).multiply(decimals);
         // console.log(result.toString())
+	
 
         // let finalAmount = this.web3.utils.toBN(result.toString())
-        let finalAmount = result;
+        // let finalAmount = result;
         // console.log(_amountToStake)
-        // console.log(allowanceValue)
-        if(_amountToStake > allowanceValue){
+        console.log(allowanceValue)
+		console.log(result)
+		// console.log(allowanceValue)
+        if(allowanceValue != 0 ){
+
             setActivatestake(false);
         }else{
             setActivatestake(true);
@@ -162,17 +172,13 @@ export default function DaoStaking() {
 
 		const handleSubmit = async() => {
 			
-			// console.log(balance);
+			console.log(allowanceValue);
 			if(amountToStake < balance){
-			
-			// console.log(tokenContract);
-
-			let allowance = await tokenContract.allowance(account,contract.address);
-			allowance = BigInt(allowance / 10 ** 18 );
-
-			if(BigInt(amountToStake) < allowance){
+				let final = BigNumber(amountToStake).multiply(18);
+			// console.log(allowanceValue.toString().length);
+			if(allowanceValue.toString().length > 50){
 				setLoading(true);
-				await contract.stakeToken((amountToStake * (10 ** 18)).toString(), referralAddress, stakingClass );
+				await contract.stakeToken(final, referralAddress, stakingClass );
 				setActivatestake(true);
 				setLoading(false);
 				listUserStaking();
@@ -293,17 +299,18 @@ export default function DaoStaking() {
                                                      <button type="button"
                                                       onClick={handleSubmit}
                                                       className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
-												      disabled={insufficientBalance || activateStake}>
+												    //   disabled={insufficientBalance || activateStake}
+													  >
                                                         {loading ?  'Approving...' : 'Approve'} 
                                              </button>
 											<button 
-											 type="button" className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3" disabled={insufficientBalance || activateStake}>Stake</button>
+											 type="button" className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3" disabled>Stake</button>
                                     </div>
                                      :
                                      <div className="d-flex card-footer pt-0 pb-0  foot-card border-0 justify-content-between">
-                                          <button type="button" className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3" disabled={insufficientBalance || !activateStake}>Approve</button>
+                                          <button type="button" className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3" disabled>Approve</button>
                                              <button type="button"
-											    disabled={insufficientBalance || activateStake}
+											    // disabled={insufficientBalance || activateStake}
                                                  onClick={handleSubmit}
                                                  className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3">
                                                  {loading ?  'Staking..' : 'Stake'}
