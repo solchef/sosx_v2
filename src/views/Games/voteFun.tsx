@@ -12,7 +12,6 @@ const server = create({
 	url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
 });
 
-
 export default function Thechallenge() {
 	const { account } = useWeb3React()
 	const { library, connector } = useWeb3Provider()
