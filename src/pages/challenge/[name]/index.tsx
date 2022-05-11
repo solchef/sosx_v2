@@ -29,6 +29,7 @@ export default function Challenge() {
     const { toastSuccess, toastError } = useToast()
     const { t } = useTranslation()
     const contract = useStakingContract();
+	const [voters, setVoters] = useState([])
 
     useEffect(() => {
         getData();
@@ -90,6 +91,23 @@ export default function Challenge() {
     const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
 
+        let daoList = await contract.getAllAccount();
+        console.log(daoList)
+        let voters = [];
+        for (let i = 0; i < daoList.length; i++) {
+            let voter_address = daoList[i];
+            let total_stake = await contract.getVoterTotalStakeAmount(voter_address)
+            // console.log(total_stake);
+            total_stake = Number(total_stake/ 10 **18);
+            let voterData = {
+                address:voter_address,
+                amount: total_stake,
+                level: getLevel(total_stake)
+            }
+
+            voters.push(voterData);
+        }
+
         const vote = JSON.stringify({
             ...generatePayloadData(),
             address: account,
@@ -138,7 +156,8 @@ export default function Challenge() {
                     metadata: '{}',
                     from: account,
                     timestamp: Date.now()
-                }
+                },
+                data: voters
             }
         })
 
@@ -189,7 +208,8 @@ export default function Challenge() {
                         metadata: '{}',
                         from: account,
                         timestamp: Date.now()
-                    }
+                    },
+                    data: voters
                 }
             }, null, 2)
 
