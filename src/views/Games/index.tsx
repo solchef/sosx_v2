@@ -121,7 +121,6 @@ export default function Game() {
 		setVideos(finalData);
 		}
 	}
-	getVideo();
 	
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
@@ -209,9 +208,12 @@ export default function Game() {
 
 	 }
 
-	loadDaoLevels()
-	getData()
-	getVideo()
+	useEffect(() => {
+		loadDaoLevels()
+		getData()
+		getVideo()
+	},[]);
+
 	return (
 		<>
 			<div className="game size-child-game container-fluid">
