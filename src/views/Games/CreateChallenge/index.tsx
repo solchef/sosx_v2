@@ -33,9 +33,9 @@ import { useStakingContract } from 'hooks/useContract';
 // );
 
 const server = create({
-  url: "https://ipfs.socialx.io",
-
+	url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
 });
+
 
 
 const EasyMde = dynamic(() => import('components/EasyMde'), {

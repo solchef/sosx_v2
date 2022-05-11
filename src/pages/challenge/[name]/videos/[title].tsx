@@ -4,9 +4,9 @@ import { useEffect } from 'react'
 import { useMediaPredicate } from "react-media-hook";
 
 const server = create({
-    url: "https://ipfs.socialx.io",
-
+	url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
 });
+
 
 export default function Video() {
     const router = useRouter()
