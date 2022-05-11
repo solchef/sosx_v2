@@ -248,7 +248,9 @@ export default function Challenge() {
 
 
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+    const biggerThan1200 = useMediaPredicate("(min-width: 1200px)");
     const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+    const fixD = useMediaPredicate("(min-width: 1200px) and (max-width: 1350px)");
 
     return (
 
@@ -258,9 +260,9 @@ export default function Challenge() {
             {challenge[0] && (
                 <div className="row mx-auto">
 
-                    <div className="col-12 pr-0 col-xl-8 ">
+                    <div className="col-12 col-xl-8 ">
                         <div className="row mx-auto">
-                            <div className="card col-11 col-md-12 col-xl-11">
+                            <div className="card p-3 col-12">
 
                                 <div className="card-body">
                                     <div className='text-muted font-weight-bold'>
@@ -304,13 +306,13 @@ export default function Challenge() {
 
                         <div className="row mx-auto ">
                            
-                                <div className="card col-11 col-md-12 col-xl-11">
-                                    <h5 className="  fs-16 font-weight-bold pl-3 pt-3 pb-3 ">{votesList.length} 	&nbsp;	&nbsp;Votes</h5>
+                                <div className="card p-3 col-12">
+                                    <h5 className="  fs-16 font-weight-bold ">{votesList.length} 	&nbsp;Votes</h5>
 
                                     <table className="table text-white">
                                         {votesList.map((vote, index) =>
                                             <tr>
-                                                <td className="border-0 pb-0" > {index + 1}</td>
+                                                <td className="border-0 pl-0 pb-0" > {index + 1}</td>
                                                 <td className="border-0 pb-0">Level {vote.level}</td>
                                                 <td className="border-0 pb-0">{vote.name.replace(/(.{15})..+/, "$1…")}</td>
                                             </tr>
@@ -323,13 +325,13 @@ export default function Challenge() {
                         </div>
                     </div>
 
-                    <div className="col-12 pr-0 col-xl-4">
-                        <div className="row mx-auto p-1 ">
-                            <div style={{ fontSize: '80%' }} className="card  p-0 col-11 col-md-12 col-xl-11">
-                                <h5 className=" fs-16 font-weight-bold pl-2 pt-3 pb-3 ">Details</h5>
-                                <div className="card-body p-4">
+                    <div className={`col-12 ${biggerThan1200 && 'pr-0 pl-0'} col-xl-4`}>
+                        <div className="row mx-auto ">
+                            <div style={{ fontSize: '80%' }} className={`  card ${fixD && 'p-1'} col-12`}>
+                                <h5 className=" fs-16 font-weight-bold pb-2">Details</h5>
+                                <div className="card-body p-0">
 
-                                    <div className="row mx-auto d-flex font-weight-bold justify-content-between p-0">
+                                    <div className="row mx-auto d-flex font-weight-bold justify-content-between ">
                                         <div >X-Games Challenge</div>
                                         <div className="ml-auto text-white" > <img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" /></div>
                                     </div>
@@ -351,7 +353,7 @@ export default function Challenge() {
                                         <div>Voting Stage	</div>
                                         <div className="ml-auto text-white">1</div>
                                     </div>
-                                    <div className="row mx-auto d-flex font-weight-bold pt-2 justify-content-between p-0">
+                                    <div className="row  pb-2 mx-auto d-flex font-weight-bold pt-2 justify-content-between p-0">
                                         <div >Creator	</div>
                                         <div className="ml-auto text-white" > <div className="ml-auto text-white" ><a href={`https://bscscan.com/address/${challenge[0].challenge.payload.creator}`} target="_blank"> {challenge[0].challenge.payload.creator.replace(/(.{15})..+/, "$1…")} <i className="fa-solid fa-arrow mx-auto-up-right-from-square"></i> </a></div></div>
                                     </div>
@@ -363,11 +365,11 @@ export default function Challenge() {
                             </div>
                         </div>
                         <div className="row mx-auto">
-                            <div style={{ fontSize: '90%' }} className="card p-1 col-11 col-md-12 col-xl-11">
-                                <h5 className=" fs-16 font-weight-bold pl-2 pt-3 pb-3 ">Current results</h5>
-                                <div className="card-body p-4">
+                            <div style={{ fontSize: '90%' }} className="card col-12">
+                                <h5 className=" fs-16 font-weight-bold pb-2 ">Current results</h5>
+                                <div className="card-body ">
 
-                                    <div className="row mx-auto d-flex font-weight-bold justify-content-between p-0">
+                                    <div className="row mx-auto d-flex font-weight-bold justify-content-between">
                                         <div >The Votes	</div>
                                         <div className="ml-auto text-white" > {votesList.length} </div>
                                     </div>
