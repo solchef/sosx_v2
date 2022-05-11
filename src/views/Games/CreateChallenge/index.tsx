@@ -33,7 +33,7 @@ import { useStakingContract } from 'hooks/useContract';
 // );
 
 const server = create({
-  url: "http://127.0.0.1:5001",
+  url: "https://ipfs.socialx.io",
 
 });
 
