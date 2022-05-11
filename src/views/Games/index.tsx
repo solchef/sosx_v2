@@ -13,6 +13,7 @@ const server = create({
 	url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
 });
 
+
 export default function Game() {
 	const [partyTime, setPartyTime] = useState(false);
 	const [days, setDays] = useState(0);
