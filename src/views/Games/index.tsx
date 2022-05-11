@@ -8,9 +8,9 @@ import { Modal } from "react-bootstrap";
 import { concat } from "uint8arrays";
 import { useStakingContract, useSosxContract} from 'hooks/useContract'
 
+
 const server = create({
-	url: "https://ipfs.socialx.io",
-  
+	url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
 });
 
 export default function Game() {
@@ -125,6 +125,7 @@ export default function Game() {
 		setVideos(finalData);
 		}
 	}
+	getVideo();
 
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
@@ -133,7 +134,7 @@ export default function Game() {
 		const file = files[0];
 
 		if (!files || files.length === 0) {
-			// console.log('NO')
+			console.log('NO')
 		}
 
 		const IPFSFile = await server.add(file)
@@ -167,11 +168,11 @@ export default function Game() {
 
 		const loadDaoLevels = async()=>{
 				let daoList = await contract.getAllAccount();
-				// console.log(daoList);
+				console.log(daoList);
 				let voters = [];
 				for (let i = 0; i < daoList.length; i++) {
 					let voter_address = daoList[i];
-					let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
+					let total_stake = await contract.getVoterTotalStakeAmount(voter_address)
 					// console.log(total_stake);
 					total_stake = Number(total_stake/ 10 **18);
 					let data = {
@@ -184,17 +185,17 @@ export default function Game() {
 				}
 
 				setVoters(voters);
-				// console.log(voters);
+				console.log(voters);
 		}
 
 	 const getLevel = (amount) => {
-		// console.log(process.env.NEXT_PUBLIC_LEVEL1)
+		console.log(process.env.NEXT_PUBLIC_LEVEL1)
 		
 		if(amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2){ return 1; }
 
 		if(amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3){ return 2; }
 
-		if(amount >= process.env.NEXT_PUBLIC_LEVEL3){ return 3; }
+		if(amount >= process.env.NEXT_PUBLIC_LEVEL3){ return 1; }
 
 	 }
 
@@ -204,7 +205,8 @@ export default function Game() {
 				<div className="row m-1">
 					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 m-0">
 						<div className="row m-0">
-						<div className={`card3 col-12 text-center ${biggerThan1200 && "p-0"} col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
+							<div className={`card3 col-12 text-center ${biggerThan1200 && 
+								"p-0"} col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
 
 
 								<div className="feature-box p-0">
@@ -264,7 +266,6 @@ export default function Game() {
 
 							</div>
 							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
-								{/* {console.log(todayChallenge)} */}
 							{todayChallenge ? (
 										<>
 										<div className="card-header align-items-start border-0">

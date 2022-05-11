@@ -16,9 +16,9 @@ import { useMediaPredicate } from "react-media-hook";
 import { useStakingContract } from "hooks/useContract";
 
 const server = create({
-    url: "https://ipfs.socialx.io",
-
+	url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
 });
+
 
 export default function Challenge() {
     const router = useRouter()
