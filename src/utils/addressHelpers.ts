@@ -74,9 +74,8 @@ export const getBunnySpecialLotteryAddress = () => {
   return getAddress(addresses.bunnySpecialLottery)
 }
 export const getstakingContractAddress = () => {
-  return "0xEEa2bF1308aAB8D2222A2036Bbebc405A6001532";
+  return "0x229EDaEc0f6fa541222A2f6F8a9825e13FD11756";
 }
-
 
 // export const getstakingContractAddress = () => {
 //   return "0xab1EffDe3241545a26e1597BDf3A0E2724AB9924";
@@ -87,7 +86,7 @@ export const getstakingContractAddress = () => {
 // }
 
 export const getSosxContractAddress = () => {
-  return "0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF";
+  return "0xaD0c583B2c84b84f017DedBD74c645EFBAb2597b";
 }
 
 export const getBunnySpecialXmasAddress = () => {

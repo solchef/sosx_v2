@@ -64,7 +64,7 @@ import SwapWarningModal from './components/SwapWarningModal'
 import PriceChartContainer from './components/Chart/PriceChartContainer'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 import CurrencyInputHeader from './components/CurrencyInputHeader'
-import { ItemImage } from 'views/Nft/market/components/Filters/ListFilter/styles'
+// import { ItemImage } from 'views/Nft/market/components/Filters/ListFilter/styles'
 import { useMediaPredicate } from "react-media-hook";
 
 const Label = styled(Text)`

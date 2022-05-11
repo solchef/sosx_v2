@@ -74,10 +74,9 @@ export default function DaoStaking() {
 			setUserBalace(balance);
 			// setHasReferral(referral)
 			// console.log(referralAddress)
-
-			
 			
 		}
+		
 		stakingDetails();
 		listUserStaking();
 		
@@ -160,29 +159,32 @@ export default function DaoStaking() {
            return amount.toFixed(2);
 
         };
+		
 
 		const handleSubmit = async() => {
 			
 			console.log(balance);
-			if(amountToStake > balance){
+			if(amountToStake < balance){
 				toastError("Insufficient Balance");
-			}	
+			}
+
 			// console.log(tokenContract);
+
 			let allowance = await tokenContract.allowance(account,contract.address);
 			allowance = Number(allowance / 10 ** 18 );
 
-			if(amountToStake < allowance){
+			// if(amountToStake < allowance){
 				setLoading(true);
 				await contract.stakeToken((amountToStake * (10 ** 18)).toString(), referralAddress, stakingClass );
-				setActivatestake(true)
+				setActivatestake(true);
 				setLoading(false);
 				listUserStaking();
 				
-			}else{
+			// }else{
 
-				toastError("token allowance not yet set");
-			}
-	
+			// 	toastError("token allowance not yet set");
+			// }
+			
 		}
 
 	return (
@@ -231,14 +233,15 @@ export default function DaoStaking() {
 								<h4 className="fs-18 ">Stake SOSX</h4>
 							</div>
 
-							<div>
-										<div className="card-body">
-										<div className="bg-dark mb-3 p-3 rounded">
-											<div className="d-flex justify-content-between align-items-center"><span>
-												<input type="text" className="form-control" required onChange={(e) => handleAmountChange(e)} defaultValue={0} />
-												
-												</span><span className="text-white fs-18">SOSX</span></div>
-										</div>
+							 <div>
+							
+								<div className="card-body">
+								<div className="bg-dark mb-3 p-3 rounded">
+									<div className="d-flex justify-content-between align-items-center"><span>
+										<input type="text" className="form-control" required onChange={(e) => handleAmountChange(e)} defaultValue={0} />
+										
+										</span><span className="text-white fs-18">SOSX</span></div>
+								</div>
 										<div className="bg-dark p-3 mb-3 rounded">
 											<div className="d-flex justify-content-between align-items-center">
 											<span>
@@ -346,7 +349,7 @@ export default function DaoStaking() {
 													
 							</div>
 							<div className="card-footer pt-0 pb-0 foot-card border-0">
-									<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Refresh Summarry</button>
+									<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Refresh Summary</button>
 
 										</div>
 						

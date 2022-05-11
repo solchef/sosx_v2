@@ -55,9 +55,10 @@ export default function DaoStaking() {
 	  useEffect(() => {
 		getSOSXPrice();
 	  }, []);
-
 	useEffect(()=> {
+	
 			// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
+		
 		const stakingDetails = async () => {
 			// I am setting the staking data that needs to be displayed on thwe UI
 
@@ -71,14 +72,18 @@ export default function DaoStaking() {
 			let balance = await tokenContract.balanceOf(account);
 			balance = Number(balance / 10 ** 18);
 			setUserBalace(balance);
+			let allowance = await tokenContract.allowance(account,contract.address);
+			allowance = allowance.toString()
+			// const amount = BigNumber.from(allowance)
+			// console.log(amount)
+			setAllowanceValue(allowance);
 			// setHasReferral(referral)
 			// console.log(referralAddress)
-
-			
 			
 		}
+		
 		stakingDetails();
-		listUserStaking();
+		// listUserStaking();
 		
 	},[account]);
 
@@ -89,7 +94,7 @@ export default function DaoStaking() {
         for(let i=0; i < numberOfActiveStake; i++){
 
 			let stakeInstance = await contract.getStakeInfo(i);
-
+			
 			let instance = {
 				amount: Number(stakeInstance[0] / 10 ** 18),
 				isWithdrawed: Boolean(stakeInstance[1]),
@@ -101,6 +106,7 @@ export default function DaoStaking() {
 				periodElapsed: await contract.calculatePeriods(i)
 			}
 
+	
             list.push(instance);
 			
         }
@@ -112,7 +118,7 @@ export default function DaoStaking() {
     }
 
 
-	const handleAmountChange = (event) => {
+	const handleAmountChange = async(event) => {
         
         let _amountToStake = Number(event.target.value)
 
@@ -125,14 +131,18 @@ export default function DaoStaking() {
 
         let decimals = BigNumber(10).pow(18)
 
-        let result = BigNumber(_amountToStake).multiply(decimals)
+        let result = BigNumber(_amountToStake).multiply(decimals);
         // console.log(result.toString())
+	
 
         // let finalAmount = this.web3.utils.toBN(result.toString())
-        let finalAmount = result;
+        // let finalAmount = result;
         // console.log(_amountToStake)
-        // console.log(allowanceValue)
-        if(_amountToStake > allowanceValue){
+        console.log(allowanceValue)
+		console.log(result)
+		// console.log(allowanceValue)
+        if(allowanceValue != 0 ){
+
             setActivatestake(false);
         }else{
             setActivatestake(true);
@@ -145,7 +155,6 @@ export default function DaoStaking() {
 
         let interest =  compoundInterest(p,t,r,n);
 
-     
         // this.setState({stakingInterest:interest})  
 
 		setamountToStake(_amountToStake)
@@ -159,29 +168,32 @@ export default function DaoStaking() {
            return amount.toFixed(2);
 
         };
+		
 
 		const handleSubmit = async() => {
 			
-			console.log(balance);
-			if(amountToStake > balance){
-				toastError("Insufficient Balance");
-			}	
-			// console.log(tokenContract);
-			let allowance = await tokenContract.allowance(account,contract.address);
-			allowance = Number(allowance / 10 ** 18 );
-
-			if(amountToStake < allowance){
+			console.log(allowanceValue);
+			if(amountToStake < balance){
+				let final = BigNumber(amountToStake).multiply(18);
+			// console.log(allowanceValue.toString().length);
+			if(allowanceValue.toString().length > 50){
 				setLoading(true);
 				await contract.stakeToken((amountToStake * (10 ** 18)).toString(), referralAddress, stakingClass );
-				setActivatestake(true)
+				setActivatestake(true);
 				setLoading(false);
 				listUserStaking();
 				
 			}else{
-
-				toastError("token allowance not yet set");
+				const tx = await tokenContract.populateTransaction.approve(contract.address, MaxUint256);
+				let signer = contract.signer;
+				signer.sendTransaction(tx);
+			// 	toastError("token allowance not yet set");
+	     		listUserStaking();
 			}
-	
+		}else{
+			toastError("Insufficient Balance");
+		}
+			
 		}
 
 	return (
@@ -227,18 +239,19 @@ export default function DaoStaking() {
 					<div className="col-xl-4">
 						<div className="card ">
 							<div className="card-header border-0 pl-0 pt-0">
-								<h4 className="fs-18 ">Stake SOSX for Voting</h4>
+								<h4 className="fs-18 ">Stake SOSX</h4>
 							</div>
 
-							<div>
-										<div className="card-body">
-										<div className="bg-dark mb-3 p-3 rounded">
-											<div className="d-flex justify-content-between align-items-center"><span>
-												<input type="text" className="form-control" required onChange={(e) => handleAmountChange(e)} defaultValue={0} />
-												
-												</span><span className="text-white fs-18">SOSX</span></div>
-										</div>
-										{/* <div className="bg-dark p-3 mb-3 rounded">
+							 <div>
+							
+								<div className="card-body">
+								<div className="bg-dark mb-3 p-3 rounded">
+									<div className="d-flex justify-content-between align-items-center"><span>
+										<input type="text" className="form-control" required onChange={(e) => handleAmountChange(e)} defaultValue={0} />
+										
+										</span><span className="text-white fs-18">SOSX</span></div>
+								</div>
+										<div className="bg-dark p-3 mb-3 rounded">
 											<div className="d-flex justify-content-between align-items-center">
 											<span>
 												<select className="form-control  select-special"
@@ -260,7 +273,7 @@ export default function DaoStaking() {
 											</span>
 											<span className="text-white fs-18">Months</span>
 											</div>
-										</div> */}
+										</div>
 										<div className="bg-dark p-3 rounded">
 											<div className="d-flex justify-content-between">
 											<div className="small2">
@@ -277,7 +290,7 @@ export default function DaoStaking() {
 											</div>
 											</div>
 										</div>
-						
+									
 							</div>
 							<>
 								
@@ -286,17 +299,18 @@ export default function DaoStaking() {
                                                      <button type="button"
                                                       onClick={handleSubmit}
                                                       className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
-												      disabled={insufficientBalance || activateStake}>
+												    //   disabled={insufficientBalance || activateStake}
+													  >
                                                         {loading ?  'Approving...' : 'Approve'} 
                                              </button>
 											<button 
-											 type="button" className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3" disabled={insufficientBalance || activateStake}>Stake</button>
+											 type="button" className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3" disabled>Stake</button>
                                     </div>
                                      :
-                                     <div className="d-flex card-footer pt-0 pb-0 foot-card border-0 justify-content-between">
-                                          <button type="button" className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3" disabled={insufficientBalance || !activateStake}>Approve</button>
+                                     <div className="d-flex card-footer pt-0 pb-0  foot-card border-0 justify-content-between">
+                                          <button type="button" className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3" disabled>Approve</button>
                                              <button type="button"
-											    disabled={insufficientBalance || activateStake}
+											    // disabled={insufficientBalance || activateStake}
                                                  onClick={handleSubmit}
                                                  className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3">
                                                  {loading ?  'Staking..' : 'Stake'}
@@ -312,31 +326,42 @@ export default function DaoStaking() {
 					<div className="col-xl-4">
 						<div className="card ">
 							<div className="card-header border-0 p-0">
-								<h4 className="fs-18">Voting Power</h4>
+								<h4 className="fs-18">Staking Summary</h4>
 							</div>
 
-							<div className="card-body">
+							<div className="card-body flex-column d-flex justify-content-between">
 									<div className='pt-4'>
 										<div className="d-flex justify-content-between">
-											<p className="success mb-0 fs-12">Voting Power</p>
+											<p className="success mb-0 fs-12">Total SOSX Staked</p>
 											<h4 className="mb-0 font-w600  fs-24 pb-3">{totalAmountStaked / 10 ** 18}</h4>
 										</div>
 										<div className="d-flex justify-content-between">
-											<p className="success mb-0 fs-12">DAO Level</p>
+											<p className="success mb-0 fs-12">Active Stakes</p>
 											<h4 className="mb-0 font-w600  fs-24 pb-3">{numberOfActiveStake}</h4>
 										</div>
-									
+										<div className="d-flex justify-content-between">
+											<p className="success mb-0 fs-12">Has Referral</p>
+											<h6 className="mb-0 font-w600  fs-24 pb-2">
+												
+													{hasReferral ? (
+														'Yes'
+													) : (
+														<b> No</b>
+													)}
+									        	
+									    	</h6>
+										</div>
 									</div>
-									{/* <div className="d-flex justify-content-between">
+									<div className="d-flex justify-content-between">
 										<p className="success mb-0 fs-12">Show Archived</p>
 										<span className="MuiSwitch-root mb-0 font-w600  fs-24 pb-3"><span className="MuiButtonBase-root MuiIconButton-root jss5 MuiSwitch-switchBase MuiSwitch-colorSecondary" aria-disabled="false"><span className="MuiIconButton-label"><input className="jss8 MuiSwitch-input" type="checkbox" defaultValue="false" /><span className="MuiSwitch-thumb" /></span><span className="MuiTouchRipple-root" /></span><span className="MuiSwitch-track" /></span>
-									</div> */}
-									
-								
+									</div>
+													
 							</div>
 							<div className="card-footer pt-0 pb-0 foot-card border-0">
-									<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Refresh Level</button>
-									</div>
+									<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Refresh Summarry</button>
+
+										</div>
 						
 						</div>
 					</div>

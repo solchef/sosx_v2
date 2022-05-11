@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import useToast from 'hooks/useToast'
 import {
   FacebookShareButton, TwitterShareButton, TelegramShareButton, EmailShareButton, WhatsappShareButton, WhatsappIcon, TelegramIcon
 } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-import { Popover, OverlayTrigger } from 'react-bootstrap';
+import { Popover, OverlayTrigger, Modal } from 'react-bootstrap';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useStakingContract } from 'hooks/useContract';
 
@@ -28,7 +28,8 @@ const tabs = [
 ];
 export default function Referral() {
   const [tab, setTab] = useState(tabs[0])
-
+  const { account } = useActiveWeb3React()
+  const [userAccount, setUserAccount] = useState('');
   const contract = useStakingContract();
   const [referralCount, setReferralCount] = useState(0);
   const [viewReferralReward, setViewReferralReward] = useState(0);
@@ -38,9 +39,8 @@ export default function Referral() {
   const { callWithGasPrice } = useCallWithGasPrice()
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-  const { account } = useActiveWeb3React();
   const [key, setKey] = useState("chart");
-
+   
   // const account = "dd"
   const toggleTab = (event, type) => {
     event.stopPropagation();
@@ -48,9 +48,29 @@ export default function Referral() {
 
   };
 
-  useEffect(() => {
+  console.log(account);
 
+  useEffect(() => {
+// console.log("hello")
     fetchReferral();
+    const getaccountDetails = async() => {
+    let post = {
+      viewReferralReward,
+      account,
+      createdAt: new Date().toISOString(),
+  };
+  // save the post
+  let response =await fetch('/api/account', {
+      method: 'POST',
+      body: JSON.stringify(post),
+  });
+
+  // get the data
+  let data = await response.json();
+console.log(data)
+}
+getaccountDetails();  
+ 
   }, [])
 
 
@@ -211,476 +231,461 @@ export default function Referral() {
     </Popover>
   );
 
-  const ShareComponent = () => (
-    <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-      <a className="nav-link" data-toggle="modal"><i className="fa-solid fa-share-from-square" /></a>
-    </OverlayTrigger>
-  );
+  const [show , setShow] = useState(false);
+  // const ShareComponent = () => (
+    
+  // );
 
   return (
 
-    <div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
-
-      <div className="row">
-
-        <div className="col-md-4 col-4">
-          <div className="card">
-            <div className=' mt-2'>
-              <img className='p-3' src="images/step1-referrallink.png" />
-              <span className="main-pink">Step 1</span>
-              <h4 className='fs-16 font-weight-bold'>Get a referral link</h4>
-              <p className='pt-2'>Connect a wallet & generate your referral link in the
-                Referral section.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-md-4 col-4">
-          <div className="card">
-            <img className='p-3' src="images/step2invitefriend-img.png" />
-            <span className="main-pink">Step 2</span>
-            <h4 className='fs-16 font-weight-bold'>Invite friends</h4>
-            <p className='pt-2'>Invite your friends & register with your referral link.</p>
-          </div>
-        </div>
-
-
-        <div className="col-md-4 col-4">
-          <div className="card">
-            <img className='p-3' src="images/step3earnsosx-img.png" />
-            <span className="main-pink">Step 3</span>
-            <h4 className='fs-16 font-weight-bold'>Earn SOSX</h4>
-            <p className='pt-2'>Receive a referral rewards from your friends’ earnings.
-            </p>
-          </div>
-        </div>
-      </div>
-
-
-      <div className="row">
-        <div className="col-sm-4 col-6 col-xl-2">
-          <div className="card overflow-hidden">
-            <p className="pb-2">Total Friends</p>
-            <h4 className='fs-16 font-weight-bold'>{referralCount}</h4>
-          </div>
-        </div>
-        <div className="col-sm-4 col-6 col-xl-2">
-          <div className="card overflow-hidden">
-            <p className="pb-2">Total Earned</p>
-            <h4 className='fs-16 font-weight-bold'>{viewReferralReward}</h4>
-          </div>
-        </div>
-
-        <div className="col-sm-4 col-6 col-xl-2">
-          <div className="card overflow-hidden">
-            <p className="pb-2">Mining Friends</p>
-            <h4 className='fs-16 font-weight-bold'>{referralCount}</h4>
-          </div>
-        </div>
-
-        <div className="col-sm-4 col-6 col-xl-2">
-          <div className="card overflow-hidden">
-            <p className="pb-2">Mining Earned</p>
-            <h4 className='fs-16 font-weight-bold'>{viewReferralReward}</h4>
-          </div>
-        </div>
-
-        <div className="col-sm-4 col-6 col-xl-2">
-          <div className="card overflow-hidden">
-            <p className="pb-2">Staking Friends</p>
-            <h4 className='fs-16 font-weight-bold'>0</h4>
-          </div>
-        </div>
-
-        <div className="col-sm-4 col-6 col-xl-2">
-          <div className="card overflow-hidden">
-            <p className="pb-2">Staking Earned</p>
-            <h4 className='fs-16 font-weight-bold'>0</h4>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div className="row font-weight-bold">
-        <div className="col-xl-6">
-          <div className="card h-auto">
-            <div className="card-header pl-1  border-0 pb-0">
-              <h4 className='fs-18 font-weight-bold' >My Referral Link</h4>
-            </div>
-            <div className="card-body">
-              <div className="bg-dark rounded">
-                <div className="d-flex justify-content-between align-items-center">
-                  {/* <span className='fs-14'>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span> */}
-                  <div className="float-right d-flex">
-                    <li className="nav-item pr-2">
-                      <CopyToClipboard
-                        text={`https://socialx.io?ref=${account}`}
-                        onCopy={() => setCopied(true)} >
-                        {/* <Button variant="outlined"><Trans i18nKey="referral_panel.copyButton" /></Button> */}
-                        <a className="nav-link" data-toggle="modal"><i className="fa-regular fa-clone" /></a>
-
-                      </CopyToClipboard>
-                      {copied ? <span style={{ color: 'red' }}>Copied.</span> : null}
-
-                    </li>
-
-                    <li className="nav-item "><a href="#" className="nav-link" data-toggle="modal">
-                      <i className="fa-solid fa-share-from-square"></i></a></li>
-                  </div>
-                </div>
-              </div>
-              <div className="card-header border-0 pl-0 pb-0">
-              </div>
-              <div className="bg-dark rounded d-flex justify-content-between">
-                <div className="d-flex flex-column justify-content-start">
-                  <h4 className='fs-18 font-weight-bold' >You will get</h4>
-                  <p  className='fs-28 text-success mt-2 font-weight-bold' >35%</p>
-                </div>
-                <div className="d-flex flex-column justify-content-center align-items-center">
-                  <p className='fs-28 text-success font-weight-bold' ><i className="fa-solid fa-angles-right"></i></p>
-                </div>
-
-                <div className='font-weight-bold d-flex flex-column align-items-start pr-5 justify-content-between '>
-                  <div>
-                    <p className='text-muted' >Social Mining</p>
-                    <h3 className='font-weight-bold'> 25%</h3>
-                  </div>
-
-                  <div className=''>
-                    <p className='text-muted'>Staking </p>
-                    <h3 className='font-weight-bold'> 10%</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-xl-6">
-          <div className="row">
-            <div className="col-md-12 p-2 pl-3 pr-3 col-6">
-              <div className="card m-0 p-3 h-auto">
-                <div className="card-body">
-                  <img src="images/swapcoin-referral.svg" className="pb-2 pl-2 pr-2 pt-1 referral-rewards" />
-                  <span className="main-pink">Social Mining Referral</span>
-
-                  <h4 className='fs-18 font-weight-bold pb-2'>{viewReferralReward} SOSX</h4>
-                  <button style={{ padding: "0.338rem 1rem" }} type="button" className="btn btn-primary  ">Withdraw</button>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-12 p-2 pr-3 pl3 col-6">
-              <div className="card m-0  p-3  h-auto">
-                <div className="card-body">
-                  <img src="images/swapcoin-referral.svg" className="pb-2 pl-2 pr-2 pt-1 referral-rewards" />
-                  <span className="main-pink">Staking Referral</span>
-
-                  <h4 className='fs-18  font-weight-bold pb-2' >{viewReferralReward} SOSX</h4>
-                  <button style={{ padding: "0.338rem 1rem" }} type="button" className="btn btn-primary ">Withdraw</button>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="wrapper">
-        <div className="tabs">
-          <div className="tab">
-            {tab.name == "list" ? <input type="radio" name="css-tabs" checked id="tab-1" className="tab-switch" /> : ''}
-            <label onClick={(e) => toggleTab(e, "list")} htmlFor="tab-1" className="tab-label">Referral List</label>
-
-            <div className="tab-content">
-              <h4 className='fs-16 font-weight-bold'>Referral List</h4>
-              <span>All your referral friends in one place.</span>
-              <hr />
-              <div className="row pb-3">
-                <div className="col-xl-12">
-                  <div className="d-flex justify-content-between">
-
-                    <div className="col-xl-2">
-                      <p className="main-pink">Wallet Address</p>
+<div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
+ 
+ <div className="row">
+
+   <div className="col-md-4 col-4">
+     <div className="card">
+       <div className=' mt-2'>
+         <img className='p-3' src="images/step1-referrallink.png"/>
+         <span className="main-pink">Step 1</span>
+         <h4 className='fs-16 font-weight-bold'>Get a referral link</h4>
+         <p className='pt-2'>Connect a wallet & generate your referral link in the
+           Referral section.</p>
+       </div>
+     </div>
+   </div>
+
+   <div className="col-md-4 col-4">
+     <div className="card">
+       <img className='p-3' src="images/step2invitefriend-img.png"/>
+       <span className="main-pink">Step 2</span>
+       <h4 className='fs-16 font-weight-bold'>Invite friends</h4>
+       <p className='pt-2'>Invite your friends & register with your referral link.</p>
+     </div>
+   </div>
+
+
+   <div className="col-md-4 col-4">
+     <div className="card">
+       <img className='p-3' src="images/step3earnsosx-img.png"/>
+       <span className="main-pink">Step 3</span>
+       <h4 className='fs-16 font-weight-bold'>Earn SOSX</h4>
+       <p className='pt-2'>Receive a referral rewards from your friends’ earnings.
+       </p>
+     </div>
+   </div>
+ </div>
+
+
+ <div className="row">
+   <div className="col-sm-4 col-6 col-xl-2">
+     <div className="card overflow-hidden">
+       <p className="pb-2">Total Friends</p>
+       <h4 className='fs-16 font-weight-bold'>{referralCount}</h4>
+     </div>
+   </div>
+   <div className="col-sm-4 col-6 col-xl-2">
+     <div className="card overflow-hidden">
+       <p className="pb-2">Total Earned</p>
+       <h4 className='fs-16 font-weight-bold'>{viewReferralReward}</h4>
+     </div>
+   </div>
+
+   <div className="col-sm-4 col-6 col-xl-2">
+     <div className="card overflow-hidden">
+       <p className="pb-2">Mining Friends</p>
+       <h4 className='fs-16 font-weight-bold'>{referralCount}</h4>
+     </div>
+   </div>
+
+   <div className="col-sm-4 col-6 col-xl-2">
+     <div className="card overflow-hidden">
+       <p className="pb-2">Mining Earned</p>
+       <h4 className='fs-16 font-weight-bold'>{viewReferralReward}</h4>
+     </div>
+   </div>
+
+   <div className="col-sm-4 col-6 col-xl-2">
+     <div className="card overflow-hidden">
+       <p className="pb-2">Staking Friends</p>
+       <h4 className='fs-16 font-weight-bold'>0</h4>
+     </div>
+   </div>
+
+   <div className="col-sm-4 col-6 col-xl-2">
+     <div className="card overflow-hidden">
+       <p className="pb-2">Staking Earned</p>
+       <h4 className='fs-16 font-weight-bold'>0</h4>
+     </div>
+   </div>
+ </div>
+
+
+
+ <div className="row font-weight-bold">
+   <div className="col-xl-6">
+     <div className="card h-auto">
+       <div className="card-header pl-1  border-0 pb-0">
+         <h4 className='fs-18 font-weight-bold' >My Referral Link</h4>
+       </div>
+       <div className="card-body">
+         <div className="bg-dark rounded">
+           <div className="d-flex justify-content-between align-items-center">
+             <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span>
+              {/* <span>https://socialx.io?ref={account}</span> */}
+             <div className="float-right d-flex">
+             <li className="nav-item pr-2">
+               <CopyToClipboard
+                 text={`https://socialx.io?ref=${account}`}
+                 onCopy={() => setCopied(true)} >
+                 {/* <Button variant="outlined"><Trans i18nKey="referral_panel.copyButton" /></Button> */}
+                 <a className="nav-link" data-toggle="modal"><i className="fa-regular fa-clone" /></a>
+
+               </CopyToClipboard>
+               {copied ? <span style={{ color: 'red' }}>Copied.</span> : null}
+
+             </li>
+
+             <OverlayTrigger show={show} trigger="click" placement="right" overlay={popover}>
+             <li className="nav-item "><a onClick={() => setShow(!show)} className="nav-link" data-toggle="modal" >
+              <i className="fa-solid fa-share-from-square"></i></a></li>
+            </OverlayTrigger>
+             </div>
+           </div>
+         </div>
+        
+       
+       
+         <div className="card-header border-0 pl-0 pb-0">
+         <h4 className='fs-18 font-weight-bold' >You will get</h4>
+       </div>
+         <div className="bg-dark rounded">
+          
+           <div className='font-weight-bold d-flex justify-content-between '>
+             <div>
+               <p className='text-success' >Social Mining</p>
+               <h3 className='font-weight-bold'> 25%</h3>
+             </div>
+
+             <div className='mx-auto'>
+             <p className='text-success'>Staking </p>
+             <h3 className='font-weight-bold'> 10%</h3>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+   <div className="col-xl-6">
+     <div className="row">
+       <div className="col-md-12 p-2 col-6">
+         <div className="card m-0 p-3 h-auto">
+           <div className="card-body">
+             <img src="images/swapcoin-referral.svg" className="pb-2 pl-2 pr-2 pt-1 referral-rewards"/>
+             <span className="main-pink">Social Mining Referral</span>
+
+             <h4 className='fs-18 font-weight-bold pt-2 pb-2'>{viewReferralReward} SOSX</h4>
+             <button style={{    padding: "0.338rem 1rem"}}  type="button" className="btn btn-primary  ">Withdraw</button>
+           </div>
+         </div>
+       </div>
+
+       <div className="col-md-12 p-2 col-6">
+         <div className="card m-0  p-3  h-auto">
+           <div className="card-body">
+             <img src="images/swapcoin-referral.svg" className="pb-2 pl-2 pr-2 pt-1 referral-rewards"/>
+             <span className="main-pink">Staking Referral</span>
+             
+             <h4 className='fs-18 pt-2 font-weight-bold pb-2' >{viewReferralReward} SOSX</h4>
+             <button style={{padding: "0.338rem 1rem"}}  type="button" className="btn btn-primary ">Withdraw</button>
+
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <div className="wrapper">
+   <div className="tabs">
+     <div className="tab">
+     {tab.name =="list"?         <input type="radio" name="css-tabs" checked id="tab-1"  className="tab-switch"/> :''}
+       <label onClick={(e) => toggleTab(e, "list")} htmlFor="tab-1" className="tab-label">Referral List</label>
+
+       <div className="tab-content">
+         <h4 className='fs-16 font-weight-bold'>Referral List</h4>
+         <span>All your referral friends in one place.</span>
+         <hr/>
+         <div className="row pb-3">
+           <div className="col-xl-12">
+             <div className="d-flex justify-content-between">
+
+               <div className="col-xl-2">
+                 <p className="main-pink">Wallet Address</p>
+              
+               </div>
+
+               <div className="col-xl-3">
+                 <p className="main-pink">Mining Rewards</p>
+        
+               </div>
+
+               <div className="col-xl-3">
+                 <p className="main-pink">Staking Rewards</p>
+       
+
+               </div>
+
+               <div className="col-xl-2">
+                 <p className="main-pink">Total Earned</p>
+        
+               </div>
+             </div>
+           </div>
+         </div>
+
+        {referrals.map(ref => 
+
+             <div className="row pb-3">
+               
+             <div className="col-xl-12">
+               <div className="d-flex justify-content-between">
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
+                
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">0</p>
+          
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">
+                     {ref.amount}
+                   </p>
+                 </div>
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.amount}</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+        )}
+
+       </div>
+
+       <div className="tab-content">
+         <h4 className="fs-18 fs-18 mb-0">Referral List</h4>
+         <span className="fs-14">All your referral friends in one place.</span>
+         <hr/>
+         <div className="row pb-3">
+           <div className="col-xl-12">
+             <div className="d-flex justify-content-between">
+
+               <div className="col-xl-2">
+                 <p className="main-pink">Wallet Address</p>
+              
+               </div>
+
+               <div className="col-xl-3">
+                 <p className="main-pink">Mining Rewards</p>
+        
+               </div>
+
+               <div className="col-xl-3">
+                 <p className="main-pink">Staking Rewards</p>
+       
+
+               </div>
+
+               <div className="col-xl-2">
+                 <p className="main-pink">Total Earned</p>
+        
+               </div>
+             </div>
+           </div>
+         </div>
+
+        {referrals.map(ref => 
+
+             <div className="row pb-3">
+               
+             <div className="col-xl-12">
+               <div className="d-flex justify-content-between">
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
+                
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">0</p>
+          
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">
+                     {ref.amount}
+                   </p>
+         
+  
+                 </div>
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.amount}</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+        )}
+       </div>
+
+     </div>
+     <div className="tab">
+     {tab.name =="mining"?  <input type="radio" name="css-tabs" checked id="tab-2" className="tab-switch"/>:''} 
+       <label onClick={(e) => toggleTab(e, "mining")} htmlFor="tab-2" className="tab-label">Social Mining</label>
+       <div className="tab-content">
+         <h4 className='fs-16 font-weight-bold'>Social Mining</h4>
+         <span>All your referral friends in one place.</span>
+         <hr/>
+         <div className="row pb-3">
+           <div className="col-xl-12">
+             <div className="d-flex justify-content-between">
+
+               <div className="col-xl-2">
+                 <p className="main-pink">Wallet Address</p>
+              
+               </div>
+
+               <div className="col-xl-3">
+                 <p className="main-pink">Mining Rewards</p>
+        
+               </div>
+
+               <div className="col-xl-3">
+                 <p className="main-pink">Staking Rewards</p>
+       
+
+               </div>
+
+               <div className="col-xl-2">
+                 <p className="main-pink">Total Earned</p>
+        
+               </div>
+             </div>
+           </div>
+         </div>
+
+        {referrals.map(ref => 
+
+             <div className="row pb-3">
+               
+             <div className="col-xl-12">
+               <div className="d-flex justify-content-between">
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
+                
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">0</p>
+          
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">
+                     {ref.amount}
+                   </p>
+         
+  
+                 </div>
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.amount}</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+        )}
+
+       </div>
+     </div>
+     <div className="tab">
+     {tab.name =="staking"?     <input type="radio" name="css-tabs" checked id="tab-3" className="tab-switch"/> :''}
+       <label onClick={(e) => toggleTab(e, "staking")} htmlFor="tab-3" className="tab-label">Staking</label>
+       <div className="tab-content">
+         <h4 className='fs-16 font-weight-bold'>Staking</h4>
+         <span>All your referral friends in one place.</span>
+         <hr/>
+         <div className="row pb-3">
+           <div className="col-xl-12">
+             <div className="d-flex justify-content-between">
+
+               <div className="col-xl-2">
+                 <p className="main-pink">Wallet Address</p>
+              
+               </div>
+
+               <div className="col-xl-3">
+                 <p className="main-pink">Mining Rewards</p>
+        
+               </div>
+
+               <div className="col-xl-3">
+                 <p className="main-pink">Staking Rewards</p>
+       
+
+               </div>
+
+               <div className="col-xl-2">
+                 <p className="main-pink">Total Earned</p>
+        
+               </div>
+             </div>
+           </div>
+         </div>
+
+        {referrals.map(ref => 
+
+             <div className="row pb-3">
+               
+             <div className="col-xl-12">
+               <div className="d-flex justify-content-between">
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
+                
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">0</p>
+          
+                 </div>
+  
+                 <div className="col-xl-3">
+                   <p className="text-white fs-12">
+                     {ref.amount}
+                   </p>
+         
+  
+                 </div>
+  
+                 <div className="col-xl-2">
+                   <p className="text-white fs-12">{ref.amount}</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+        )}
+
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
 
-                    </div>
-
-                    <div className="col-xl-3">
-                      <p className="main-pink">Mining Rewards</p>
-
-                    </div>
-
-                    <div className="col-xl-3">
-                      <p className="main-pink">Staking Rewards</p>
-
-
-                    </div>
-
-                    <div className="col-xl-2">
-                      <p className="main-pink">Total Earned</p>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {referrals.map(ref =>
-
-                <div className="row pb-3">
-
-                  <div className="col-xl-12">
-                    <div className="d-flex justify-content-between">
-
-                      <div className="col-xl-2">
-                        <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
-
-                      </div>
-
-                      <div className="col-xl-3">
-                        <p className="text-white fs-12">0</p>
-
-                      </div>
-
-                      <div className="col-xl-3">
-                        <p className="text-white fs-12">
-                          {ref.amount}
-                        </p>
-                      </div>
-                      <div className="col-xl-2">
-                        <p className="text-white fs-12">{ref.amount}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-            </div>
-
-            <div className="tab-content">
-              <h4 className="fs-18 fs-18 mb-0">Referral List</h4>
-              <span className="fs-14">All your referral friends in one place.</span>
-              <hr />
-              <div className="row pb-3">
-                <div className="col-xl-12">
-                  <div className="d-flex justify-content-between">
-
-                    <div className="col-xl-2">
-                      <p className="main-pink">Wallet Address</p>
-
-                    </div>
-
-                    <div className="col-xl-3">
-                      <p className="main-pink">Mining Rewards</p>
-
-                    </div>
-
-                    <div className="col-xl-3">
-                      <p className="main-pink">Staking Rewards</p>
-
-
-                    </div>
-
-                    <div className="col-xl-2">
-                      <p className="main-pink">Total Earned</p>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {referrals.map(ref =>
-
-                <div className="row pb-3">
-
-                  <div className="col-xl-12">
-                    <div className="d-flex justify-content-between">
-
-                      <div className="col-xl-2">
-                        <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
-
-                      </div>
-
-                      <div className="col-xl-3">
-                        <p className="text-white fs-12">0</p>
-
-                      </div>
-
-                      <div className="col-xl-3">
-                        <p className="text-white fs-12">
-                          {ref.amount}
-                        </p>
-
-
-                      </div>
-
-                      <div className="col-xl-2">
-                        <p className="text-white fs-12">{ref.amount}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-          </div>
-          <div className="tab">
-            {tab.name == "mining" ? <input type="radio" name="css-tabs" checked id="tab-2" className="tab-switch" /> : ''}
-            <label onClick={(e) => toggleTab(e, "mining")} htmlFor="tab-2" className="tab-label">Social Mining</label>
-            <div className="tab-content">
-              <h4 className='fs-16 font-weight-bold'>Referral List</h4>
-              <span>All your referral friends in one place.</span>
-              <hr />
-              <div className="row pb-3">
-                <div className="col-xl-12">
-                  <div className="d-flex justify-content-between">
-
-                    <div className="col-xl-2">
-                      <p className="main-pink">Wallet Address</p>
-
-                    </div>
-
-                    <div className="col-xl-3">
-                      <p className="main-pink">Mining Rewards</p>
-
-                    </div>
-
-                    <div className="col-xl-3">
-                      <p className="main-pink">Staking Rewards</p>
-
-
-                    </div>
-
-                    <div className="col-xl-2">
-                      <p className="main-pink">Total Earned</p>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {referrals.map(ref =>
-
-                <div className="row pb-3">
-
-                  <div className="col-xl-12">
-                    <div className="d-flex justify-content-between">
-
-                      <div className="col-xl-2">
-                        <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
-
-                      </div>
-
-                      <div className="col-xl-3">
-                        <p className="text-white fs-12">0</p>
-
-                      </div>
-
-                      <div className="col-xl-3">
-                        <p className="text-white fs-12">
-                          {ref.amount}
-                        </p>
-
-
-                      </div>
-
-                      <div className="col-xl-2">
-                        <p className="text-white fs-12">{ref.amount}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-            </div>
-          </div>
-          <div className="tab">
-            {tab.name == "staking" ? <input type="radio" name="css-tabs" checked id="tab-3" className="tab-switch" /> : ''}
-            <label onClick={(e) => toggleTab(e, "staking")} htmlFor="tab-3" className="tab-label">Staking</label>
-            <div className="tab-content">
-              <h4 className='fs-16 font-weight-bold'>Referral List</h4>
-              <span>All your referral friends in one place.</span>
-              <hr />
-              <div className="row pb-3">
-                <div className="col-xl-12">
-                  <div className="d-flex justify-content-between">
-
-                    <div className="col-xl-2">
-                      <p className="main-pink">Wallet Address</p>
-
-                    </div>
-
-                    <div className="col-xl-3">
-                      <p className="main-pink">Mining Rewards</p>
-
-                    </div>
-
-                    <div className="col-xl-3">
-                      <p className="main-pink">Staking Rewards</p>
-
-
-                    </div>
-
-                    <div className="col-xl-2">
-                      <p className="main-pink">Total Earned</p>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {referrals.map(ref =>
-
-                <div className="row pb-3">
-
-                  <div className="col-xl-12">
-                    <div className="d-flex justify-content-between">
-
-                      <div className="col-xl-2">
-                        <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
-
-                      </div>
-
-                      <div className="col-xl-3">
-                        <p className="text-white fs-12">0</p>
-
-                      </div>
-
-                      <div className="col-xl-3">
-                        <p className="text-white fs-12">
-                          {ref.amount}
-                        </p>
-
-
-                      </div>
-
-                      <div className="col-xl-2">
-                        <p className="text-white fs-12">{ref.amount}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
   )
 }

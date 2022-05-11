@@ -3,6 +3,9 @@ import NavMining from "../NavMining";
 import axios from "axios";
 import { useState } from "react";
 import router from 'next/router';
+import Head from "next/head";
+import ReCAPTCHA from "react-google-recaptcha";
+import React from "react";
 
 export default function SocialminingS3() {
   //    const posts = axios('http://localhost:3001/api/posts')
@@ -12,9 +15,12 @@ export default function SocialminingS3() {
   const [socialpostlink, setsocialpostlink] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-
+  const [email, setEmail] = React.useState("");
+  const recaptchaRef = React.useRef(null);
+  
   const handlePost = async (e) => {
     e.preventDefault();
+    recaptchaRef.current.execute();
     const reward=localStorage.getItem("reward");
     // reset error and message
     setError('');
@@ -32,7 +38,7 @@ export default function SocialminingS3() {
     };
     console.log(post)
     // save the post
-    let response = await fetch('/utils/api/posts', {
+    let response = await fetch('/api/posts', {
         method: 'POST',
         body: JSON.stringify(post),
     });
@@ -52,6 +58,39 @@ export default function SocialminingS3() {
         return setError(data.message);
     }
 };
+const onReCAPTCHAChange = async (captchaCode) => {
+  // If the reCAPTCHA code is null or undefined indicating that
+  // the reCAPTCHA was expired then return early
+  if (!captchaCode) {
+    return;
+  }
+  try {
+    const response = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify({ email, captcha: captchaCode }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      // If the response is ok than show the success alert
+      alert("Email registered successfully");
+    } else {
+      // Else throw an error with the message returned
+      // from the API
+      const error = await response.json();
+      throw new Error(error.message)
+    }
+  } catch (error) {
+    alert("Something went wrong");
+  } finally {
+    // Reset the reCAPTCHA when the request has failed or succeeeded
+    // so that it can be executed again if user submits another email.
+    recaptchaRef.current.reset();
+    setEmail("");
+  }
+};
+
 
   return (
     <>
@@ -75,11 +114,12 @@ export default function SocialminingS3() {
                   <div className="row mb-3">
                     <input
                       className="input1"
-                      type="text"
+                      type="email"
                       name="title"
                       onChange={(e) => setEmailAdrress(e.target.value)}
                       value={email_address}
                       placeholder="E-mail Address"
+                      required
                     />
                   </div>
 
@@ -103,6 +143,7 @@ export default function SocialminingS3() {
                       onChange={(e) => setsocialpostlink(e.target.value)}
                       value={socialpostlink}
                       placeholder="Post Link"
+                      required
                     />
                   </div>
                 </div>
@@ -123,7 +164,13 @@ export default function SocialminingS3() {
                   the more holders will receive.
                 </p>
 
-                <div
+                <ReCAPTCHA
+              ref={recaptchaRef}
+              size="normal"
+              sitekey="6Lc920sdAAAAAPWFtqUUzsVEG3m6-FI9JrgaPydB"
+              onChange={onReCAPTCHAChange}
+            />
+                {/* <div
                   className="g-recaptcha"
                   data-sitekey="6Lc920sdAAAAAPWFtqUUzsVEG3m6-FI9JrgaPydB"
                 >
@@ -156,7 +203,7 @@ export default function SocialminingS3() {
                     ></textarea>
                   </div>
                   <iframe style={{ display: "none" }}></iframe>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
