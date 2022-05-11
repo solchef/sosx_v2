@@ -340,7 +340,7 @@ export default function Game() {
                                     <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white "> CHALLENGE </span>
 
 
-                                    <span className="fs-14 pt-2 text-white">LOREM LOREM LOREM LOREM LOREM </span>
+                                    <span className="fs-14 pt-2 text-white">Create a new challenge to be voted</span>
 									<Link href="/createchallenge">
                                     <button type="button" className="btn mt-3 mb-2 btn-success">Create Now</button>
 									</Link>
@@ -362,7 +362,7 @@ export default function Game() {
                                     <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white "> CHALLENGE </span>
 
 
-                                    <span className="fs-14 pt-2 text-white">LOREM LOREM LOREM LOREM LOREM </span>
+                                    <span className="fs-14 pt-2 text-white">Vote challenges created by DAO members </span>
 									<Link href="/votechallenge">
                                     <button type="button" className="btn mt-3 mb-2 btn-success">Vote Now</button>
 									</Link>
@@ -543,7 +543,13 @@ export default function Game() {
 										)}
 									</div>
 								) : (
-									<p>No Videos</p>
+									// <p>No Videos</p>
+									<div className="row">
+										<div className="justify-center">
+										<p>No Videos</p>
+
+										</div>
+									</div>
 								)}
                                
                             </div>
