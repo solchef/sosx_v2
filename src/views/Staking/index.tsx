@@ -349,7 +349,7 @@ export default function DaoStaking() {
 													
 							</div>
 							<div className="card-footer pt-0 pb-0 foot-card border-0">
-									<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Refresh Summarry</button>
+									<button type="button" className="btn btn-primary btn-lg w-100 mt-5">Refresh Summary</button>
 
 										</div>
 						

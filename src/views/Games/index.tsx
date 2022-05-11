@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from 'next/link'
 import { useMediaPredicate } from "react-media-hook";
 import { create } from "ipfs-http-client";
@@ -30,7 +30,9 @@ export default function Game() {
 	const [videos, setVideos] = useState([])
 	const contract = useStakingContract();
 	const [challenges, setChallenges] = useState<any[]>([]);
-
+	const videoElem = useRef();
+	const videoInput = useRef();
+	const [imgSrc, setImgSrc] = useState('');
 
 	useEffect(() => {
 		const target = new Date("05/15/2022 23:59:59");
@@ -61,15 +63,9 @@ export default function Game() {
 	}, []);
 
 	useEffect(() => {
-		loadDaoLevels();
-		getData();
-		getVideo()
+
 	}, []);
 
-
-	useEffect(() => {
-		loadDaoLevels();
-	}, []);
 	const getData = async () => {
 		let challenges = [];
 		for await (const resultPart of server.files.ls("/challenges")) {
@@ -126,12 +122,26 @@ export default function Game() {
 		}
 	}
 	getVideo();
-
+	
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		const form = event.target as HTMLFormElement;
 		const files = (form[0] as HTMLInputElement).files;
 		const file = files[0];
+
+		// const canvas = document.createElement("canvas");
+		// canvas
+		//   .getContext("2d")
+		//   .drawImage(
+		// 	videoElem.current,
+		// 	0,
+		// 	0,
+		// 	120,
+		// 	120
+		//   );
+	
+		// setImgSrc(canvas.toDataURL());
+		// console.log(imgSrc)
 
 		if (!files || files.length === 0) {
 			console.log('NO')
@@ -144,7 +154,8 @@ export default function Game() {
 			title: videoTitle,
 			youtube: youtubeURL,
 			tiktok: tiktokURL,
-			video: url
+			video: url,
+			// thumbnail: imgSrc 
 		}, null, 2)
 
 		const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
@@ -157,7 +168,6 @@ export default function Game() {
 	}
 
 
-	
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);	  
@@ -166,27 +176,27 @@ export default function Game() {
 	const biggerThan576 = useMediaPredicate("(min-width: 576px) and (max-width: 625px)");
 
 
-		const loadDaoLevels = async()=>{
-				let daoList = await contract.getAllAccount();
-				console.log(daoList);
-				let voters = [];
-				for (let i = 0; i < daoList.length; i++) {
-					let voter_address = daoList[i];
-					let total_stake = await contract.getVoterTotalStakeAmount(voter_address)
-					// console.log(total_stake);
-					total_stake = Number(total_stake/ 10 **18);
-					let data = {
-						address:voter_address,
-						amount: total_stake,
-						level: getLevel(total_stake)
-					}
+	const loadDaoLevels = async()=>{
+		let daoList = await contract.getAllAccount();
+		console.log(daoList);
+		let voters = [];
+		for (let i = 0; i < daoList.length; i++) {
+			let voter_address = daoList[i];
+			let total_stake = await contract.getVoterTotalStakeAmount(voter_address)
+			// console.log(total_stake);
+			total_stake = Number(total_stake/ 10 **18);
+			let data = {
+				address:voter_address,
+				amount: total_stake,
+				level: getLevel(total_stake)
+			}
 
-					voters.push(data);
-				}
-
-				setVoters(voters);
-				console.log(voters);
+			voters.push(data);
 		}
+
+		setVoters(voters);
+		console.log(voters);
+	}
 
 	 const getLevel = (amount) => {
 		console.log(process.env.NEXT_PUBLIC_LEVEL1)
@@ -199,6 +209,9 @@ export default function Game() {
 
 	 }
 
+	loadDaoLevels()
+	getData()
+	getVideo()
 	return (
 		<>
 			<div className="game size-child-game container-fluid">
@@ -245,23 +258,17 @@ export default function Game() {
 									</div>
 								</div> 
 								<Modal show={show} onHide={handleClose} centered>
-								<form onSubmit={videoLink}>
-								<div className="form-group row">
-									<div className="col-sm-10">
-									<input type="file" className="form-control" id="filevideo" placeholder="Upload Video" />
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)}/>
-									</div>
-									<div className="col-sm-10">
-									<input type="text" className="form-control" id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} />
-									</div>
-								</div>
-								<button className="btn btn-primary">Upload Video Here</button>
-								</form>
+									<form onSubmit={videoLink}>
+										<input style={{cursor: 'pointer'}} type="file" className="form-control fs-16 m-2" id="filevideo" placeholder="Upload Video" required/>
+										<div className="form-group d-flex justify-content-between flex-column p-2">
+											<input type="text" className="form-control fs-16 " id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+											<input type="text" className="form-control fs-16 " id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />  
+											<input type="text" className="form-control fs-16 " id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} required/>
+										</div>
+										<div>
+										<button className="btn btn-primary">Submit</button>
+										</div>
+									</form>
 								</Modal>
 
 							</div>
@@ -321,8 +328,26 @@ export default function Game() {
 									<div className="row">
 									{videos.length > 0 ? (
 										<div>
-											{videos.map((video) => 
-												<iframe width="auto" height="auto" src={video.video} title="YouTube video player"  allow="accelerometer; clipboard-write; encrypted-media; gyroscope;"></iframe>
+											{videos.map((video) =>
+											<>
+												<div className=" col-12 p-2 col-md">
+												<div className="videos">
+													<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
+														className="video">
+														<span></span>
+														<img src={`${video.video}#t=0.1`} alt="Video1" />
+														<div className="play-btn"></div>
+													</a>
+												</div>
+												<h4 className="fs-14 mb-0">Previous Winners</h4>
+												<p className="fs-12 success">@challenger 1</p>
+	
+												<span className="justify-content-between fs-12"><i
+													className="fa-regular fa-eye pr-1"></i>100</span>
+												<span className="fs-12 float-right">06/12/22</span>
+											</div>
+											</>
+												// <iframe width="auto" height="auto" src={video.video} title="YouTube video player"  allow="accelerometer; clipboard-write; encrypted-media; gyroscope;"></iframe>
 											)}
 										</div>
 									) : (
@@ -415,6 +440,7 @@ export default function Game() {
 					</div>
 				</div>
 			</div>
+			<canvas id="canvas" style={{display: 'none'}}></canvas><br/><br/>
 		</>
 	)
 }
