@@ -20,7 +20,7 @@ export default function SocialminingS3() {
   
   const handlePost = async (e) => {
     e.preventDefault();
-    // recaptchaRef.current.execute();
+    recaptchaRef.current.execute();
     const reward=localStorage.getItem("reward");
     // reset error and message
     setError('');
