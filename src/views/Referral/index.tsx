@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import useToast from 'hooks/useToast'
 import {
   FacebookShareButton, TwitterShareButton, TelegramShareButton, EmailShareButton, WhatsappShareButton, WhatsappIcon, TelegramIcon
 } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-import { Popover, OverlayTrigger } from 'react-bootstrap';
+import { Popover, OverlayTrigger, Modal } from 'react-bootstrap';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useStakingContract } from 'hooks/useContract';
 
@@ -40,7 +40,7 @@ export default function Referral() {
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const { account } = useActiveWeb3React();
   const [key, setKey] = useState("chart");
-
+   
   // const account = "dd"
   const toggleTab = (event, type) => {
     event.stopPropagation();
@@ -49,8 +49,26 @@ export default function Referral() {
 };
 
   useEffect(() => {
-
+console.log("hello")
     fetchReferral();
+    const getaccountDetails = async() => {
+    let post = {
+      viewReferralReward,
+      account,
+      createdAt: new Date().toISOString(),
+  };
+  // save the post
+  let response =await fetch('/api/account', {
+      method: 'POST',
+      body: JSON.stringify(post),
+  });
+
+  // get the data
+  let data = await response.json();
+console.log(data)
+}
+getaccountDetails();  
+ 
   }, [])
 
 
@@ -211,11 +229,10 @@ export default function Referral() {
     </Popover>
   );
 
-  const ShareComponent = () => (
-    <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-      <a className="nav-link" data-toggle="modal"><i className="fa-solid fa-share-from-square" /></a>
-    </OverlayTrigger>
-  );
+  const [show , setShow] = useState(false);
+  // const ShareComponent = () => (
+    
+  // );
 
   return (
 
@@ -312,6 +329,7 @@ export default function Referral() {
          <div className="bg-dark rounded">
            <div className="d-flex justify-content-between align-items-center">
              {/* <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span> */}
+              <span>https://socialx.io?ref={account}</span>
              <div className="float-right d-flex">
              <li className="nav-item pr-2">
                <CopyToClipboard
@@ -325,11 +343,16 @@ export default function Referral() {
 
              </li>
 
-             <li className="nav-item "><a href="#" className="nav-link" data-toggle="modal">
-               <i className="fa-solid fa-share-from-square"></i></a></li>
+             <OverlayTrigger show={show} trigger="click" placement="right" overlay={popover}>
+             <li className="nav-item "><a onClick={() => setShow(!show)} className="nav-link" data-toggle="modal" >
+              <i className="fa-solid fa-share-from-square"></i></a></li>
+            </OverlayTrigger>
              </div>
            </div>
          </div>
+        
+       
+       
          <div className="card-header border-0 pl-0 pb-0">
          <h4 className='fs-18 font-weight-bold' >You will get</h4>
        </div>
@@ -522,7 +545,7 @@ export default function Referral() {
      {tab.name =="mining"?  <input type="radio" name="css-tabs" checked id="tab-2" className="tab-switch"/>:''} 
        <label onClick={(e) => toggleTab(e, "mining")} htmlFor="tab-2" className="tab-label">Social Mining</label>
        <div className="tab-content">
-         <h4 className='fs-16 font-weight-bold'>Referral List</h4>
+         <h4 className='fs-16 font-weight-bold'>Social Mining</h4>
          <span>All your referral friends in one place.</span>
          <hr/>
          <div className="row pb-3">
@@ -592,7 +615,7 @@ export default function Referral() {
      {tab.name =="staking"?     <input type="radio" name="css-tabs" checked id="tab-3" className="tab-switch"/> :''}
        <label onClick={(e) => toggleTab(e, "staking")} htmlFor="tab-3" className="tab-label">Staking</label>
        <div className="tab-content">
-         <h4 className='fs-16 font-weight-bold'>Referral List</h4>
+         <h4 className='fs-16 font-weight-bold'>Staking</h4>
          <span>All your referral friends in one place.</span>
          <hr/>
          <div className="row pb-3">
