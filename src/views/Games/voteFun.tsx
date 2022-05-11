@@ -9,9 +9,9 @@ import { useTranslation } from 'contexts/Localization'
 import useToast from 'hooks/useToast'
 
 const server = create({
-	url: "https://ipfs.socialx.io",
-	
-  });
+	url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
+});
+
 
 export default function Thechallenge() {
 	const { account } = useWeb3React()

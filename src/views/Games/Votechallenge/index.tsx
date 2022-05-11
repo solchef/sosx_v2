@@ -5,8 +5,9 @@ import { concat } from "uint8arrays";
 import { useMediaPredicate } from "react-media-hook";
 
 const server = create({
-	url: "https://ipfs.socialx.io",
+	url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
 });
+
 
 export default function Votechallenge() {
 	const [challenges, setChallenges] = useState<any[]>([]);
