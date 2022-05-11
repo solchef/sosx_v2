@@ -209,7 +209,7 @@ export default function Game() {
 
 	 }
 
-	// loadDaoLevels()
+	loadDaoLevels()
 	getData()
 	getVideo()
 	return (
