@@ -281,8 +281,10 @@ export default function Game() {
 
                 {/*start Challange*/}
                 <div className={`col-12 col-lg-6  ${biggerThan1650 && 'col-xl-7'}  ${biggerThan1800 && 'col-xl-6 '} ${littleThan1200 && 'mb-3'}`}>
-				{todayChallenge ? (
+				
                     <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="d-flex rounded m-0 h-100  p-3 pl-4 text-white flex-column">
+					{todayChallenge ? (
+						<>
                         <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white mt-2">THIS WEEK CHALLENGE </span>
                         <span style={{ fontWeight: '1000 ', fontSize: '18px' }} className="text-white pt-3">{todayChallenge.challenge.payload.name} </span>
 
@@ -307,6 +309,7 @@ export default function Game() {
                             <span className="text-muted pb-1">Details:</span>
                             <p className="fs-14">{todayChallenge.challenge.payload.body}</p>
                         </div>
+
                         <div className="d-flex flex-column pt-3">
                             <span className="text-muted pb-1">Roles:</span>
 							{todayChallenge.challenge.payload.choices.map((element) => 
@@ -316,10 +319,18 @@ export default function Game() {
 								</div>
 							)}
                         </div>
-                    </div>
-				) : (
-					<p>Loading</p>
+
+						</>
+
+						) : (
+							<div className="mx-auto my-auto">
+								<p>Loading</p>
+							</div>
+					
 				)}
+
+                    </div>
+			
 
 
 
