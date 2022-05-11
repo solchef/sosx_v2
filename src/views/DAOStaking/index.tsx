@@ -59,8 +59,6 @@ export default function DaoStaking() {
 	useEffect(()=> {
 			// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
 		const stakingDetails = async () => {
-			// I am setting the staking data that needs to be displayed on thwe UI
-
 			let stakeAmount = await contract.getTotalStakeAmount();
 			setTotalAmountStaked(stakeAmount);
 			let referral = Boolean(await contract.hasReferral());
@@ -71,11 +69,9 @@ export default function DaoStaking() {
 			let balance = await tokenContract.balanceOf(account);
 			balance = Number(balance / 10 ** 18);
 			setUserBalace(balance);
-			// setHasReferral(referral)
-			// console.log(referralAddress)
-			
+
 		}
-		stakingDetails();
+		// stakingDetails();
 		listUserStaking();
 		
 	},[account]);
@@ -160,12 +156,13 @@ export default function DaoStaking() {
 
 		const handleSubmit = async() => {
 			
-			console.log(balance);
+			// console.log(account);
 			if(amountToStake > balance){
 				toastError("Insufficient Balance");
 			}	
 			// console.log(tokenContract);
 			let allowance = await tokenContract.allowance(account,contract.address);
+			console.log(allowance)
 			allowance = Number(allowance / 10 ** 18 );
 
 			if(amountToStake < allowance){
@@ -282,7 +279,8 @@ export default function DaoStaking() {
                                                      <button type="button"
                                                       onClick={handleSubmit}
                                                       className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
-												      disabled={insufficientBalance || activateStake}>
+												      disabled={insufficientBalance || !activateStake}
+													  >
                                                         {loading ?  'Approving...' : 'Approve'} 
                                              </button>
 											<button 

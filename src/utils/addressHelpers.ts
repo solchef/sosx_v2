@@ -86,7 +86,7 @@ export const getstakingContractAddress = () => {
 // }
 
 export const getSosxContractAddress = () => {
-  return "0x229EDaEc0f6fa541222A2f6F8a9825e13FD11756";
+  return "0xaD0c583B2c84b84f017DedBD74c645EFBAb2597b";
 }
 
 export const getBunnySpecialXmasAddress = () => {
