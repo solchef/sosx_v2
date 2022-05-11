@@ -24,7 +24,7 @@ const BorderCard = styled.div`
 const tabs = [
   { name: 'list' },
   { name: 'mining' },
-  { name: 'staking'}
+  { name: 'staking' }
 ];
 export default function Referral() {
   const [tab, setTab] = useState(tabs[0])
@@ -37,7 +37,7 @@ export default function Referral() {
   const [copied, setCopied] = useState(false);
   const { callWithGasPrice } = useCallWithGasPrice()
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
-	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+  const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const { account } = useActiveWeb3React();
   const [key, setKey] = useState("chart");
    
@@ -45,8 +45,8 @@ export default function Referral() {
   const toggleTab = (event, type) => {
     event.stopPropagation();
     tabs.map(tabb => tabb.name == type ? setTab(tabb) : '');
-    
-};
+
+  };
 
   useEffect(() => {
 console.log("hello")
@@ -72,55 +72,55 @@ getaccountDetails();
   }, [])
 
 
-  const fetchReferral = async() => {
+  const fetchReferral = async () => {
 
     let countreferrals = await contract.getReferralCount();
-   
+
     // console.log(referralCount);
     // this.setState({referralCount:countreferrals})
     setReferralCount(Number(countreferrals));
-      
-      contract.getCurrentReferrals().then( (result) => {
-          // console.log("Fetched Referrals")
-          // console.log(result)  
-          if(result.length == 0){
-              result = null;
+
+    contract.getCurrentReferrals().then((result) => {
+      // console.log("Fetched Referrals")
+      // console.log(result)  
+      if (result.length == 0) {
+        result = null;
+      }
+      console.log(result);
+
+      fetchTotalReward();
+
+      let referralData = [];
+      let total = 0;
+
+      for (let i = 0; i < referralCount; i++) {
+
+        contract.calculateRewardReferral(result[i]).then(reward => {
+
+          let data = {
+            address: result[i],
+            amount: Number(reward / 10 ** 18).toFixed(2)
           }
-          console.log(result);
+          total = + Number(reward / 10 ** 18).toFixed(2);
+          referralData.push(data);
+          // console.log(referralData)
+          setReferrals(referralData);
+          setViewReferralReward(total);
 
-          fetchTotalReward();
-
-          let referralData = [];
-          let total = 0;
-
-          for (let i = 0; i < referralCount; i++) {
-
-             contract.calculateRewardReferral(result[i]).then(reward => {
-
-                let data = {
-                  address: result[i],
-                  amount: Number(reward/10 ** 18).toFixed(2)
-                }
-                total  =  + Number(reward/10 ** 18).toFixed(2);
-                referralData.push(data);
-                   // console.log(referralData)
-                  setReferrals(referralData);
-                  setViewReferralReward(total);
-
-             });
-            // console.log(element)
-       
-
-          }
+        });
+        // console.log(element)
 
 
-      }).catch( (err) => {
-          console.log("Unable to list  current referrals; " + err)
-      });       
-       
+      }
+
+
+    }).catch((err) => {
+      console.log("Unable to list  current referrals; " + err)
+    });
+
   }
 
-  const fetchTotalReward = async() => {
+  const fetchTotalReward = async () => {
 
     // console.log(contract)
     //   contract.calculateTotalRewardReferral().then((rawResult) => {
@@ -140,7 +140,7 @@ getaccountDetails();
     //       // console.log("No referrals present")
     //       return;
     //   }
-  
+
   }
 
 
@@ -153,30 +153,30 @@ getaccountDetails();
   // }
 
 
- const  withdrawReferralReward = async() => {
-     
-      setLoading(true);
+  const withdrawReferralReward = async () => {
 
-      contract.withdrawReferralReward({ from: account }).then( (rawResult) => {
+    setLoading(true);
 
-          console.log(rawResult)
+    contract.withdrawReferralReward({ from: account }).then((rawResult) => {
 
-          let result = Boolean(rawResult)
+      console.log(rawResult)
 
-          if(result){
-              console.log("Reward successfully withdrawed");
-          }else{
-              console.log("The POT is exhausted!!!!")
-          }
+      let result = Boolean(rawResult)
 
-          fetchTotalReward();
-          fetchReferral();
-          setLoading(false)
-      }).catch( (err) => {
-          console.log("There was an error : " + err)
-          setLoading(false)
+      if (result) {
+        console.log("Reward successfully withdrawed");
+      } else {
+        console.log("The POT is exhausted!!!!")
+      }
 
-      });
+      fetchTotalReward();
+      fetchReferral();
+      setLoading(false)
+    }).catch((err) => {
+      console.log("There was an error : " + err)
+      setLoading(false)
+
+    });
   }
 
 
@@ -683,21 +683,7 @@ getaccountDetails();
      </div>
    </div>
  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
+
   )
 }
