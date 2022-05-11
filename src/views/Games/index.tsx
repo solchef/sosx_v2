@@ -6,7 +6,7 @@ import useToast from "hooks/useToast";
 import { useTranslation } from 'contexts/Localization'
 import { Modal } from "react-bootstrap";
 import { concat } from "uint8arrays";
-import { useStakingContract, useSosxContract} from 'hooks/useContract'
+import { useStakingContract, useSosxContract } from 'hooks/useContract'
 
 
 const server = create({
@@ -100,7 +100,7 @@ export default function Game() {
 
 		setChallenges(challenges);
 	};
-	
+
 	const todayChallenge = challenges.sort((a, b) => a.votes - b.votes).reverse()[0]
 
 	const getVideo = async () => {
@@ -108,22 +108,23 @@ export default function Game() {
 
 		if (todayChallenge) {
 			for await (const videoFile of server.files.ls(`/challenges/${String(`challenge-${todayChallenge.challenge.payload.name}`).replaceAll(' ', '-')}/videos`)) {
-			let fileContent;
-			const chunks = [];
-			for await (const chunk of server.cat(videoFile.cid)) {
-				chunks.push(chunk);
-			}
-			const data = concat(chunks);
+				let fileContent;
+				const chunks = [];
+				for await (const chunk of server.cat(videoFile.cid)) {
+					chunks.push(chunk);
+				}
+				const data = concat(chunks);
 				fileContent = JSON.parse(
-					new TextDecoder().decode(data).toString()	
-			);
-			finalData.push(fileContent);
-		}
-		setVideos(finalData);
+					new TextDecoder().decode(data).toString()
+				);
+				finalData.push(fileContent);
+			}
+			setVideos(finalData);
 		}
 	}
 	
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
+
 		evt.preventDefault();
 		const form = event.target as HTMLFormElement;
 		const files = (form[0] as HTMLInputElement).files;
@@ -160,33 +161,31 @@ export default function Game() {
 
 		const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
 		const fileName = `video-${videoTitle.replace(' ', '-')}`
-		await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, {create: true})
+		await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, { create: true })
 		toastSuccess(t('Video Uploaded!'))
 		form.reset()
 		handleClose()
 		getVideo()
 	}
-
-
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);	  
-	
+	const handleShow = () => setShow(true);
+
 	const biggerThan1200 = useMediaPredicate("(min-width: 1200px) and (max-width: 1300px)");
 	const biggerThan576 = useMediaPredicate("(min-width: 576px) and (max-width: 625px)");
 
 
-	const loadDaoLevels = async()=>{
+	const loadDaoLevels = async () => {
 		let daoList = await contract.getAllAccount();
-		console.log(daoList);
+		// console.log(daoList);
 		let voters = [];
 		for (let i = 0; i < daoList.length; i++) {
 			let voter_address = daoList[i];
-			let total_stake = await contract.getVoterTotalStakeAmount(voter_address)
+			let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
 			// console.log(total_stake);
-			total_stake = Number(total_stake/ 10 **18);
+			total_stake = Number(total_stake / 10 ** 18);
 			let data = {
-				address:voter_address,
+				address: voter_address,
 				amount: total_stake,
 				level: getLevel(total_stake)
 			}
@@ -195,19 +194,20 @@ export default function Game() {
 		}
 
 		setVoters(voters);
-		console.log(voters);
 	}
 
 	 const getLevel = (amount) => {
 		console.log(process.env.NEXT_PUBLIC_LEVEL1)
 		
-		if(amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2){ return 1; }
+		if (amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2) { return 1; }
 
-		if(amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3){ return 2; }
+		if (amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3) { return 2; }
 
 		if(amount >= process.env.NEXT_PUBLIC_LEVEL3){ return 1; }
 
-	 }
+		if (amount >= process.env.NEXT_PUBLIC_LEVEL3) { return 3; }
+
+	}
 
 	useEffect(() => {
 		loadDaoLevels()
@@ -221,8 +221,8 @@ export default function Game() {
 				<div className="row m-1">
 					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 m-0">
 						<div className="row m-0">
-							<div className={`card3 col-12 text-center ${biggerThan1200 && 
-								"p-0"} col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
+						<div className={`card3 col-12 text-center ${biggerThan1200 && "p-0"} col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
+
 
 
 								<div className="feature-box p-0">
@@ -259,6 +259,7 @@ export default function Game() {
 									<div className="feature-text m-3">
 										<a onClick={handleShow} className="btn btn-primary">Upload Video Here</a>
 									</div>
+
 								</div> 
 								<Modal show={show} onHide={handleClose} centered>
 									<form onSubmit={videoLink}>
@@ -274,40 +275,47 @@ export default function Game() {
 									</form>
 								</Modal>
 
+
+
+
+
+
+
 							</div>
 							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
+
 							{todayChallenge ? (
 										<>
 										<div className="card-header align-items-start border-0">
-									<div>
-										<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
-										<h4 className="fs-18 mb-0 pb-2">{todayChallenge.challenge.payload.name}</h4>
-										<span className="fs-12">{todayChallenge.challenge.payload.body} </span>
-										<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
-										{todayChallenge.challenge.payload.choices.map((element) => (
-										<ul className="fs-12">
-											<li>
-												<i className="fa-solid fa-check pr-2"></i>
-												{element}
-											</li>
-										</ul>
-									))}
-									</div>
+											<div>
+												<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
+												<h4 className="fs-18 mb-0 pb-2">{todayChallenge.challenge.payload.name}</h4>
+												<span className="fs-12">{todayChallenge.challenge.payload.body} </span>
+												<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
+												{todayChallenge.challenge.payload.choices.map((element) => (
+													<ul className="fs-12">
+														<li>
+															<i className="fa-solid fa-check pr-2"></i>
+															{element}
+														</li>
+													</ul>
+												))}
+											</div>
 
-								</div>
-								<div className="p-3 align-items-start justify-content-between align-items-center">
-									<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-										id="votes">{todayChallenge.votes}</span><span className="fs-12">Votes</span></li>
-								</div>
-										</>
-									) : (
-										<p>Loading</p>
-									)}
-								
+										</div>
+										<div className="p-3 align-items-start justify-content-between align-items-center">
+											<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
+												id="votes">{todayChallenge.votes}</span><span className="fs-12">Votes</span></li>
+										</div>
+									</>
+								) : (
+									<p>Loading</p>
+								)}
+
 
 							</div>
-							
-							
+
+
 						</div>
 
 						<div className="row m-0">
@@ -329,6 +337,7 @@ export default function Game() {
 
 								<div className="card3-body">
 									<div className="row">
+
 									{videos.length > 0 ? (
 										<div>
 											{videos.map((video) =>
@@ -399,44 +408,44 @@ export default function Game() {
 							</div>
 
 
-						  
+
 
 							<ul className="nav3  p-2 nav-rank nav3-tabs butten nav3-justified mb-3">
 								<li className="nav3-item">
-									<a className={`nav3-link ${displayLevel == 1 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap` } href="#" onClick={() => setDisplayLevel(1)}>Level 1</a>
+									<a className={`nav3-link ${displayLevel == 1 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap`} href="#" onClick={() => setDisplayLevel(1)}>Level 1</a>
 								</li>
 								<li className="nav3-item">
-									<a className={`nav3-link ${displayLevel == 2 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap` } href="#" onClick={() => setDisplayLevel(2)}>Level 2</a>
+									<a className={`nav3-link ${displayLevel == 2 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap`} href="#" onClick={() => setDisplayLevel(2)}>Level 2</a>
 								</li>
 								<li className="nav3-item">
-									<a className={`nav3-link ${displayLevel == 3 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap` } href="#" onClick={() => setDisplayLevel(3)}>Level 3</a>
+									<a className={`nav3-link ${displayLevel == 3 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap`} href="#" onClick={() => setDisplayLevel(3)}>Level 3</a>
 								</li>
 							</ul>
 
 
 
 							<div className={`card3-body ranking ${biggerThan576 && "p-0"} ${biggerThan1200 && "p-0"}`}>
-								
-							{voters.sort((a, b) => a.amount - b.amount).map((voter, i) => 
+
+								{voters.sort((a, b) => a.amount - b.amount).map((voter, i) =>
 									<>
-										{voter.level == displayLevel &&  
+										{voter.level == displayLevel &&
 
 											<a className="blueprint-header-display trader-display">
-											<div className="d-flex align-items-center">
-												<span className="text-white mr-3 fs-16 font-w600">{}</span>
-												<img className="blueprint-img-sm rounded-circle"
-													src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-												<div className="ml-1">
-													<span
-														className="mb-1 card-small-text text-white trader-name">{voter.address.replace(/(.{10})..+/, "$1…")}</span>
+												<div className="d-flex align-items-center">
+													<span className="text-white mr-3 fs-16 font-w600">{ }</span>
+													<img className="blueprint-img-sm rounded-circle"
+														src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
+													<div className="ml-1">
+														<span
+															className="mb-1 card-small-text text-white trader-name">{voter.address.replace(/(.{10})..+/, "$1…")}</span>
+													</div>
 												</div>
-												</div>
-											<span><i className="fa fa-wallet"></i> {voter.amount} </span>
+												<span><i className="fa fa-wallet"></i> {voter.amount} </span>
 											</a>
 										}
 									</>
-						    	)}
-							
+								)}
+
 							</div>
 						</div>
 
