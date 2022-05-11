@@ -1,7 +1,10 @@
 import { create } from 'ipfs-http-client';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useMediaPredicate } from "react-media-hook";
+import { concat } from "uint8arrays";
+import Link from "next/link";
+
 
 const server = create({
 	url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
@@ -10,167 +13,97 @@ const server = create({
 
 export default function Video() {
     const router = useRouter()
-    const {title} = router.query
-    
-    // useEffect(() => {
-    //     getData();
-    // }, [title]);
+    const { name, title } = router.query
+    const [videos, setVideos] = useState<any[]>([]);
+    const [selectedVideo, setSelectedVideo] = useState([]);
 
-    // const getData = async () => {
-    //     if (name) {
-    //         let challenge = [];
-    //         for await (const resultPart of server.files.ls("/challenges")) {
-    //             let challengeJson;
-    //             let vote;
-    //             let votesList = []
+    useEffect(() => {
+        getData();
+    }, [title]);
 
-    //             if (resultPart.name === challengeName) {
-    //                 for await (const cha of server.files.ls(`/challenges/${resultPart.name}`)) {
-    //                     const chunks = [];
+    const getData = async () => {
+        if (title && name) {
+            let videos = [];
+            let selectedVideo = [];
+            for await (const video of server.files.ls(`/challenges/challenge-${name}/videos`)) {
+                let videoJson;
+                const chunks = [];
 
-    //                     if (cha.name == 'challenge.json') {
-    //                         for await (const chunk of server.cat(cha.cid)) {
-    //                             chunks.push(chunk);
-    //                         }
-    //                         const data = concat(chunks);
-    //                         challengeJson = JSON.parse(
-    //                             new TextDecoder().decode(data).toString()
-    //                         );
-    //                     }
-    //                     if (cha.name == 'votes') {
-    //                         for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes`)) {
-    //                             votesList.push(vote.name.slice(0, -5))
-    //                         }
-    //                     }
-    //                     setVotesList(votesList)
-    //                 }
-    //                 let challengeData = {
-    //                     challenge: challengeJson,
-    //                     votes: vote
-    //                 }
-    //                 challenge.push(challengeData);
-    //             }
-    //         }
-    //         setChallenge(challenge);
-    //     }
-    // }
+                for await (const chunk of server.cat(video.cid)) {
+                    chunks.push(chunk);
+                }
+                const data = concat(chunks);
+                videoJson = JSON.parse(
+                    new TextDecoder().decode(data).toString()
+                );
 
-    // let challengeName = `challenge-${name}`
+                if (videoJson.title === title) {
+                    selectedVideo.push(videoJson)
+                } else {
+                    videos.push(videoJson);
+                }
 
-    // const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
-    // const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-    // return (
-    //     <div className="container-fluid" >
-    //         <div className="row">
-    //             <div className="col-lg-8 col-12 mb-5">
-    //                 <div className='d-flex flex-column justify-content-between'>
+            }
+            setVideos(videos)
+            setSelectedVideo(selectedVideo)
+        }
 
-    //                     <video id="my_video_1"
-    //                         controls preload="none" width="auto" height="auto" data-setup='{}'
-    //                         poster='http://video-js.zencoder.com/oceans-clip.jpg'>
-    //                         <source src="https://vjs.zencdn.net/v/oceans.mp4" type='video/mp4' />
-    //                         <source src="https://vjs.zencdn.net/v/oceans.webm" type='video/webm' />
-    //                     </video>
-    //                     <p> <h5 className='pt-3 text-muted pb-3'> Upload Time22/01/2022</h5></p>
-    //                     <h4 className='pt-4'>Challenge: pancake Bunnys</h4>
-    //                     <p>
-    //                         {title}
-    //                         Good afternoon ! Create a burn staking pool so that the price of the token also grows, maybe the cake community will also want this and will invest the cake. You are burning too few coins and putting too much into circulation, so the price of the token will not grow.
-    //                     </p>
+    }
 
-    //                     <ul> <b>Rules</b>
-    //                         <li>Rule 1 for the Game</li>
-    //                         <li>Rule 1 for the Game</li>
-    //                     </ul>
+    const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+    const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+    return (
+        <div className="container-fluid" >
+            <div className="row">
+                <div className="col-lg-8 col-12 mb-5">
+                    <div className='d-flex flex-column justify-content-between'>
+                        {selectedVideo[0] && (
+                            <>
+                            <video id="my_video_1"
+                            controls preload="none" width="auto" height="auto" data-setup='{}'
+                            poster='http://video-js.zencoder.com/oceans-clip.jpg'>
+                            <source src={`${selectedVideo[0].video}`} type='video/mp4' />
+                            </video>
 
-    //                     <ul>Social Links
-    //                         <li>  <a href='#'>Tiktok: https://tiktok.com</a> </li>
-                          
-    //                     </ul>
-                       
-    //                    <div className='pt-3 d-flex justify-content-between'>
+                            <p> <h5 className='pt-3 text-muted pb-3'> Upload Time22/01/2022</h5></p>
+                            <h4 className='pt-4'>Challenge: {name}</h4>
+                            <p>
+                            body                    
+                            </p>
+                            <ul> <b>Rules</b>
+                                <li>Rule 1 for the Game</li>
+                                <li>Rule 1 for the Game</li>
+                            </ul>
 
-    //                    </div>
-     
+                            <ul>Social Links
+                                {selectedVideo[0].tiktok ? <li><a href='#'>Tiktok: {selectedVideo[0].tiktok}</a> </li> : ''}
+                                {selectedVideo[0].youtube ? <li><a href='#'>Tiktok: {selectedVideo[0].youtube}</a> </li> : ''}
+                            
+                            </ul>
 
-    //                 </div>
-    //             </div>
-    //             <div className="col-lg-4 col-12">
-    //                 <div className="row pb-4 d-flex flex-nowrap ">
-    //                     <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
-    //                     <div className='p-1 pl-2'>
-    //                         <h4>Title </h4>
-    //                         <h4 className='text-muted'>Tuesday, 10 May 2022 </h4>
+                            <div className='pt-3 d-flex justify-content-between'>
 
-    //                     </div>
-    //                 </div>
-    //                 <div className="row pb-4 d-flex flex-nowrap ">
-    //                     <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
-    //                     <div className='p-1 pl-2'>
-    //                         <h4>Title </h4>
-    //                         <h4 className='text-muted'>Tuesday, 10 May 2022 </h4>
+                            </div>
+                            </>
+                        )}
+                    </div>
 
-    //                     </div>
-    //                 </div>
-    //                 <div className="row pb-4 d-flex flex-nowrap ">
-    //                     <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
-    //                     <div className='p-1 pl-2'>
-    //                         <h4>Title </h4>
-    //                         <h4 className='text-muted'>Tuesday, 10 May 2022 </h4>
+                </div>
+                <div className="col-lg-4 col-12">
+                    {videos.map((video) => 
+                        <a href={`/challenge/${name}/videos/${video.title}`}>
+                            <div className="row pb-4 d-flex flex-nowrap ">
+                            <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
+                            <div className='p-1 pl-2'>
+                                <h4>{video.title} </h4>
+                                <h4 className='text-muted'>Tuesday, 10 May 2022 </h4>
 
-    //                     </div>
-    //                 </div>
-    //                 <div className="row pb-4 d-flex flex-nowrap ">
-    //                     <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
-    //                     <div className='p-1 pl-2'>
-    //                         <h4>Title </h4>
-    //                         <h4 className='text-muted'>Tuesday, 10 May 2022 </h4>
-
-    //                     </div>
-    //                 </div>
-    //                 <div className="row pb-4 d-flex flex-nowrap ">
-    //                     <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
-    //                     <div className='p-1 pl-2'>
-    //                         <h4>Title </h4>
-    //                         <h4 className='text-muted'>Tuesday, 10 May 2022 </h4>
-
-    //                     </div>
-    //                 </div>
-    //                 <div className="row pb-4 d-flex flex-nowrap ">
-    //                     <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
-    //                     <div className='p-1 pl-2'>
-    //                         <h4>Title </h4>
-    //                         <h4 className='text-muted'>Tuesday, 10 May 2022 </h4>
-
-    //                     </div>
-    //                 </div>
-    //                 <div className="row pb-4 d-flex flex-nowrap ">
-    //                     <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
-    //                     <div className='p-1 pl-2'>
-    //                         <h4>Title </h4>
-    //                         <h4 className='text-muted'>Tuesday, 10 May 2022 </h4>
-
-    //                     </div>
-    //                 </div>
-    //                 <div className="row pb-4 d-flex flex-nowrap ">
-    //                     <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
-    //                     <div className='p-1 pl-2'>
-    //                         <h4>Title </h4>
-    //                         <h4 className='text-muted'>Tuesday, 10 May 2022 </h4>
-
-    //                     </div>
-    //                 </div>
-    //                 <div className="row pb-4 d-flex flex-nowrap ">
-    //                     <img style={{ width: '168px' }} src="images/video-banner-3.png" alt="Video1" />
-    //                     <div className='p-1 pl-2'>
-    //                         <h4>Title </h4>
-    //                         <h4 className='text-muted'>Tuesday, 10 May 2022 </h4>
-
-    //                     </div>
-    //                 </div>
-  
-    //             </div>
-    //         </div>
-    //     </div>
-    // )
+                            </div>
+                            </div>
+                        </a>
+                    )}
+                </div>
+            </div>
+        </div>
+    )
 }
