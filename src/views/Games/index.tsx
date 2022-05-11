@@ -6,7 +6,7 @@ import useToast from "hooks/useToast";
 import { useTranslation } from 'contexts/Localization'
 import { Modal } from "react-bootstrap";
 import { concat } from "uint8arrays";
-import { useStakingContract, useSosxContract} from 'hooks/useContract'
+import { useStakingContract, useSosxContract } from 'hooks/useContract'
 
 
 const server = create({
@@ -100,7 +100,7 @@ export default function Game() {
 
 		setChallenges(challenges);
 	};
-	
+
 	const todayChallenge = challenges.sort((a, b) => a.votes - b.votes).reverse()[0]
 
 	const getVideo = async () => {
@@ -108,22 +108,23 @@ export default function Game() {
 
 		if (todayChallenge) {
 			for await (const videoFile of server.files.ls(`/challenges/${String(`challenge-${todayChallenge.challenge.payload.name}`).replaceAll(' ', '-')}/videos`)) {
-			let fileContent;
-			const chunks = [];
-			for await (const chunk of server.cat(videoFile.cid)) {
-				chunks.push(chunk);
-			}
-			const data = concat(chunks);
+				let fileContent;
+				const chunks = [];
+				for await (const chunk of server.cat(videoFile.cid)) {
+					chunks.push(chunk);
+				}
+				const data = concat(chunks);
 				fileContent = JSON.parse(
-					new TextDecoder().decode(data).toString()	
-			);
-			finalData.push(fileContent);
-		}
-		setVideos(finalData);
+					new TextDecoder().decode(data).toString()
+				);
+				finalData.push(fileContent);
+			}
+			setVideos(finalData);
 		}
 	}
 	
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
+
 		evt.preventDefault();
 		const form = event.target as HTMLFormElement;
 		const files = (form[0] as HTMLInputElement).files;
@@ -160,33 +161,35 @@ export default function Game() {
 
 		const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
 		const fileName = `video-${videoTitle.replace(' ', '-')}`
-		await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, {create: true})
+		await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, { create: true })
 		toastSuccess(t('Video Uploaded!'))
 		form.reset()
 		handleClose()
-		getData()
+		getVideo()
 	}
-
-
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);	  
-	
-	const biggerThan1200 = useMediaPredicate("(min-width: 1200px) and (max-width: 1300px)");
-	const biggerThan576 = useMediaPredicate("(min-width: 576px) and (max-width: 625px)");
+	const handleShow = () => setShow(true);
 
 
-	const loadDaoLevels = async()=>{
+    const littleThan1200 = useMediaPredicate(" (max-width: 1200px)");
+    const biggerThan2000 = useMediaPredicate(" (min-width: 2000px)");
+    const biggerThan1800 = useMediaPredicate(" (min-width: 1800px)");
+    const biggerThan1650 = useMediaPredicate(" (max-width: 1650px)");
+    const littThan1650 = useMediaPredicate(" (min-width: 1650px)");
+
+
+	const loadDaoLevels = async () => {
 		let daoList = await contract.getAllAccount();
-		console.log(daoList);
+		// console.log(daoList);
 		let voters = [];
 		for (let i = 0; i < daoList.length; i++) {
 			let voter_address = daoList[i];
-			let total_stake = await contract.getVoterTotalStakeAmount(voter_address)
+			let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
 			// console.log(total_stake);
-			total_stake = Number(total_stake/ 10 **18);
+			total_stake = Number(total_stake / 10 ** 18);
 			let data = {
-				address:voter_address,
+				address: voter_address,
 				amount: total_stake,
 				level: getLevel(total_stake)
 			}
@@ -195,19 +198,20 @@ export default function Game() {
 		}
 
 		setVoters(voters);
-		console.log(voters);
 	}
 
 	 const getLevel = (amount) => {
 		console.log(process.env.NEXT_PUBLIC_LEVEL1)
 		
-		if(amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2){ return 1; }
+		if (amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2) { return 1; }
 
-		if(amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3){ return 2; }
+		if (amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3) { return 2; }
 
 		if(amount >= process.env.NEXT_PUBLIC_LEVEL3){ return 1; }
 
-	 }
+		if (amount >= process.env.NEXT_PUBLIC_LEVEL3) { return 3; }
+
+	}
 
 	useEffect(() => {
 		loadDaoLevels()
@@ -217,233 +221,408 @@ export default function Game() {
 
 	return (
 		<>
-			<div className="game size-child-game container-fluid">
-				<div className="row m-1">
-					<div className="col-12 col-sm-6 col-lg-7 col-xl-8 m-0">
-						<div className="row m-0">
-							<div className={`card3 col-12 text-center ${biggerThan1200 && 
-								"p-0"} col-xl-5 rounded-0 d-flex flex-column justify-content-between align-items-center`}>
+        <div className="container-fluid">
+            <div className="row ">
+                {/*start Time with prize pool */}
+                <div className={`col-12  col-lg ${biggerThan1800 && 'col-xl-3'} ${littleThan1200 && 'mb-3'}`}>
+                    <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="d-flex p-3 m-0 h-100 rounded justify-content-start flex-column  ">
+                        <div className="d-flex align-items-center mt-2 mb-3 justify-content-start">
+                            <div className="d-flex align-items-between">
+
+                                <img src="images/submission-date-icon.png" style={{ width: '24px', height: '24px' }} />
+
+                                <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white pl-2">TIME REMAINING </span>
+
+                            </div>
+
+                            <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 mx-auto pr-1 fs-14 pt-0 pb-0 mr-3 text-white"> Stage</p>
+                        </div>
+                        <div className="clock mb-3 pr-2 pl-2 pb-2">
+                            <div className="d-flex justify-content-start" id="countdown">
+                                <div className="d-flex justify-content-start align-items-center">
 
 
-								<div className="feature-box p-0">
-									<div className="pt-4 pr-4 mobile-hide-card ">
-										<img src="images/prize-pool-icon.png" style={{ width: '40px', height: '40px' }} />
-									</div>
-									<div className="feature-text  mt-2">
-										<span className="main-pink fs-14 font-weight-bold">Prize Pool</span>
-										<h3 className="fs-40">$1,000.00</h3>
+                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >01</span>days</p>
+                                    <p className="li"><span className="" >:</span></p>
+                                </div>
 
-									</div>
+                                <div className="d-flex justify-content-start align-items-center">
+
+                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >01</span>Hours</p>
+                                    <p className="li"><span className="" >:</span></p>
+                                </div>
+                                <div className="d-flex justify-content-start align-items-center">
+
+                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >22</span>Minutes</p>
+                                    <p className="li"><span className="" >:</span></p>
+                                </div>
+
+                                <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }}>33</span>Seconds</p>
+                            </div>
+                        </div>
+                        <div className="d-flex mb-3 mt-2 align-items-center">
+
+                            <img src="images/prize-pool-icon.png" style={{ width: '24px', height: '24px' }} />
+
+                            <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white pl-2">PRIZE POOL</span>
+
+                        </div>
+                        <span style={{ fontWeight: '1000 ', fontSize: '60px' }} className="mb-3 main-pink">$ 1,000.00
+                        </span>
+                        <span className="text-muted mb-3 fs-12">et! Possimus ea repudi?repudndae in? fdfsd  dfssfds
+                        </span>
+                        <a  onClick={handleShow} className="btn pt-1 pb-1 btn-primary">Upload Video</a>
+                    </div>
+                </div>
+
+
+                {/*end Time with prize pool */}
+
+
+                {/*start Challange*/}
+                <div className={`col-12 col-lg-6  ${biggerThan1650 && 'col-xl-7'}  ${biggerThan1800 && 'col-xl-6 '} ${littleThan1200 && 'mb-3'}`}>
+				{todayChallenge ? (
+                    <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="d-flex rounded m-0 h-100  p-3 pl-4 text-white flex-column">
+                        <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white mt-2">THIS WEEK CHALLENGE </span>
+                        <span style={{ fontWeight: '1000 ', fontSize: '18px' }} className="text-white pt-3">{todayChallenge.challenge.payload.name} </span>
+
+                        <div className="pt-3 main-pink">
+                            <i className="fa-regular fa-heart pr-3"></i>
+
+                            <span>{todayChallenge.votes} votes</span>
+                        </div>
+                        <div className="d-flex align-items-center pt-3">
+                            <span>Creator</span>
+                            <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 pr-1 pt-0 pb-0 ml-3 fs-14 text-white"> Level 3</p>
+
+                        </div>
+
+                        <div className="d-flex align-items-center pt-3">
+                            <img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
+
+                            <span className="ml-3">{String(todayChallenge.challenge.payload.creator).slice(0, 5)}...{String(todayChallenge.challenge.payload.creator).slice(-5)}</span>
+                        </div>
+
+                        <div className="d-flex flex-column pt-3">
+                            <span className="text-muted pb-1">Details:</span>
+                            <p className="fs-14">{todayChallenge.challenge.payload.body}</p>
+                        </div>
+                        <div className="d-flex flex-column pt-3">
+                            <span className="text-muted pb-1">Roles:</span>
+							{todayChallenge.challenge.payload.choices.map((element) => 
+								<div className="d-flex align-items-center">
+								<i className="fa-solid fa-check pr-2 main-pink"></i>
+								<p className="fs-12">{element}</p>
 								</div>
+							)}
+                        </div>
+                    </div>
+				) : (
+					<p>Loading</p>
+				)}
 
 
-								<div className="feature-box p-0">
-									<div className="pt-4 pr-4 mobile-hide-card ">
-										<img src="images/submission-date-icon.png" style={{ width: '40px', height: '40px' }} />
-									</div>
-									<div className="feature-text">
-										<span className="main-pink fs-14 d-block font-weight-bold">Time Left </span>
-										<div className="clock">
-											<div id="countdown">
-												<p className="li"><span >{days}</span>days</p>
-												<p className="li"><span >{hours}</span>Hours</p>
-												<p className="li"><span >{minutes}</span>Minutes</p>
-												<p className="li"><span >{seconds}</span>Seconds</p>
-											</div>
-										</div>
 
-									</div>
-								</div>
 
-								<div className="feature-box p-0">
-									<div className="feature-text m-3">
-										<a onClick={handleShow} className="btn btn-primary">Upload Video Here</a>
-									</div>
-								</div> 
-								<Modal show={show} onHide={handleClose} centered>
-									<form onSubmit={videoLink}>
-										<input style={{cursor: 'pointer'}} type="file" className="form-control fs-16 m-2" id="filevideo" placeholder="Upload Video" required/>
-										<div className="form-group d-flex justify-content-between flex-column p-2">
-											<input type="text" className="form-control fs-16 " id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
-											<input type="text" className="form-control fs-16 " id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />  
-											<input type="text" className="form-control fs-16 " id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} required/>
-										</div>
-										<div>
-										<button className="btn btn-primary">Submit</button>
-										</div>
-									</form>
-								</Modal>
 
-							</div>
-							<div className=" p-0  col-12  col-xl-7 rounded-0 d-flex flex-column justify-content-between card3 overflow-hidden">
-							{todayChallenge ? (
+                </div>
+                {/*end Challange*/}
+
+
+
+                <div className={`col-12 col-lg ${littleThan1200 && 'mb-3'}`}>
+                    <div className="row">
+                    <div className={`col-5 ${biggerThan1800 && 'col-xl-12'} ${biggerThan1650 && 'mt-5'} ${littThan1650 && 'col-xl-12'}`}>
+                        <div style={{ backgroundColor: 'rgb(17 17 22)' }} className=" row m-0 p-0 h-auto rounded">
+                            <div className="col-12 col-lg-6">
+                                <div className="d-flex flex-column">
+                                    <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white pt-3 ">Create </span>
+                                    <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white "> CHALLENGE </span>
+
+
+                                    <span className="fs-14 pt-2 text-white">LOREM LOREM LOREM LOREM LOREM </span>
+									<Link href="/createchallenge">
+                                    <button type="button" className="btn mt-3 mb-2 btn-success">Create Now</button>
+									</Link>
+                                </div>
+
+                            </div>
+                            <div className="col-12 col-lg-6">
+                                <img src="images/createchallenge-img.png" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className={`col-5 ${biggerThan1800 && 'col-xl-12'} ${littThan1650 && 'col-xl-12'}`}>
+
+                        <div style={{ backgroundColor: 'rgb(17 17 22)' }} className={` row m-0 mt-5 p-0 rounded ${littleThan1200 && '  '}`}>
+                            <div className="col-12 col-lg-6">
+                                <div className="d-flex flex-column">
+                                    <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white pt-3 ">Vote </span>
+                                    <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white "> CHALLENGE </span>
+
+
+                                    <span className="fs-14 pt-2 text-white">LOREM LOREM LOREM LOREM LOREM </span>
+									<Link href="/votechallenge">
+                                    <button type="button" className="btn mt-3 mb-2 btn-success">Vote Now</button>
+									</Link>
+                                </div>
+
+                            </div>
+                            <div className="col-12 col-lg-6">
+                                <img src="images/votechallenge-img.png" />
+
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                 
+
+                </div>
+
+
+
+            </div>
+            <div className="row mt-3">
+                <div className="col-12 col-xl-9">
+					
+                    <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="rounded" >
+                        <div className="d-flex mb-2 flex-column">
+
+                            {/* <div className="d-flex justify-content-between  mb-2  align-items-center">
+
+                                <p className="text-white  font-weight-bold" style={{ fontWeight: '1000 ', fontSize: '22px' }} >MOST VIEWED CHALLENGES <span className="main-pink">7 DAY</span></p>
+                                <button type="button" className="btn pl-2 pt-1 pb-1 pr-2 btn-success font-weight-bold ">View All</button>
+
+                            </div> */}
+
+                            <div className="row ">
+
+
+
+
+
+
+
+
+
+
+
+                                {/* <div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
+                                    <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
+                                        className="video">
+                                        <span>
+                                            <div className="text-white d-flex pt-3">
+                                                <img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
+
+                                                <p className=" ml-2 fs-12" >Oxfwd...ds3</p>
+                                            </div>
+                                        </span>
+                                        <img src="images/video-banner-1.png" alt="Video1" />
+                                        <div className="play-btn"></div>
+                                        <div className="text-white view-vid">
+
+                                            <div className="pt-3 d-flex align-items-center">
+                                                <i className="fa-regular fa-heart pr-2"></i>
+
+                                                <p>251 votes</p>
+                                            </div>
+                                        </div>
+
+                                    </a>
+                                    <style jsx>{`
+											.view-vid {
+												position: absolute;
+												bottom:7px;
+												left:5px;
+											}
+											
+										`}</style>
+								</div> */}
+
+
+                            </div>
+                        </div>
+
+                        {/* <div className="d-flex mb-2 flex-column">
+
+                            <div className="d-flex justify-content-between  mb-2  align-items-center">
+
+                                <p className="text-white  font-weight-bold" style={{ fontWeight: '1000 ', fontSize: '22px' }} >MOST VIEWED CHALLENGES <span className="main-pink">7 DAY</span></p>
+                                <button type="button" className="btn pl-2 pt-1 pb-1 pr-2 btn-success font-weight-bold ">View All</button>
+
+                            </div>
+
+                            <div className="row">
+
+
+                                <div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
+                                    <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
+                                        className="video">
+                                        <span>
+                                            <div className="text-white d-flex pt-3">
+                                                <img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
+
+                                                <p className=" ml-2 fs-12" >Oxfwd...ds3</p>
+                                            </div>
+                                        </span>
+                                        <img src="images/video-banner-1.png" alt="Video1" />
+                                        <div className="play-btn"></div>
+                                        <div className="text-white view-vid">
+
+                                            <div className="pt-3 d-flex align-items-center">
+                                                <i className="fa-regular fa-heart pr-2"></i>
+
+                                                <p>251 votes</p>
+                                            </div>
+                                        </div>
+
+                                    </a>
+                                    <style jsx>{`
+												.view-vid {
+													position: absolute;
+													bottom:7px;
+													left:5px;
+												}
+												
+											`}</style>
+															</div>
+
+
+                            </div>
+                        </div> */}
+
+                        <div className="d-flex mb-2 flex-column">
+
+                            <div className="d-flex justify-content-between  mb-2  align-items-center">
+
+                                <p className="text-white  font-weight-bold" style={{ fontWeight: '1000 ', fontSize: '22px' }} >MOST VIEWED CHALLENGES <span className="main-pink">7 DAY</span></p>
+                                <button type="button" className="btn pl-2 pt-1 pb-1 pr-2 btn-success font-weight-bold ">View All</button>
+
+                            </div>
+
+                            <div className="row">
+
+								{videos.length > 0 ? (
+									<div>
+										{videos.map((video) =>
 										<>
-										<div className="card-header align-items-start border-0">
-									<div>
-										<h4 className="fs-20  mt-2 mb-3">Today's Challenge</h4>
-										<h4 className="fs-18 mb-0 pb-2">{todayChallenge.challenge.payload.name}</h4>
-										<span className="fs-12">{todayChallenge.challenge.payload.body} </span>
-										<h4 className="fs-12 p-1 text-white pt-3">Rules</h4>
-										{todayChallenge.challenge.payload.choices.map((element) => (
-										<ul className="fs-12">
-											<li>
-												<i className="fa-solid fa-check pr-2"></i>
-												{element}
-											</li>
-										</ul>
-									))}
-									</div>
+ 									<div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
+										<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
+											className="video">
+												{console.log(video)}
+											<span>
+												<div className="text-white d-flex pt-3">
+													<img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
 
-								</div>
-								<div className="p-3 align-items-start justify-content-between align-items-center">
-									<li><i className="fa-regular fa-heart pr-2"></i><span className="fs-12 pr-1"
-										id="votes">{todayChallenge.votes}</span><span className="fs-12">Votes</span></li>
-								</div>
-										</>
-									) : (
-										<p>Loading</p>
-									)}
-								
-
-							</div>
-							
-							
-						</div>
-
-						<div className="row m-0">
-
-
-							<div className="card3 p-3">
-
-								<div className="row d-flex justify-content-between p-4 align-items-end">
-									<div>
-										<h4 className="fs-20">All Submission</h4>
-									</div>
-									<div className="ml-auto pt-3 ">
-										<span className="fs-14 sub-blue font-weight-bold">Watch All Videos
-										</span>
-									</div>
-								</div>
-
-
-
-								<div className="card3-body">
-									<div className="row">
-									{videos.length > 0 ? (
-										<div>
-											{videos.map((video) =>
-											<>
-												<div className=" col-12 p-2 col-md">
-												<div className="videos">
-													<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-														className="video">
-														<span></span>
-														<img src={`${video.video}#t=0.1`} alt="Video1" />
-														<div className="play-btn"></div>
-													</a>
+													<p className=" ml-2 fs-12" >Oxfwd...ds3</p>
 												</div>
-												<h4 className="fs-14 mb-0">Previous Winners</h4>
-												<p className="fs-12 success">@challenger 1</p>
-	
-												<span className="justify-content-between fs-12"><i
-													className="fa-regular fa-eye pr-1"></i>100</span>
-												<span className="fs-12 float-right">06/12/22</span>
+											</span>
+											<img src="images/video-banner-1.png" alt="Video1" />
+											<div className="play-btn"></div>
+											<div className="text-white view-vid">
+
+												<div className="pt-3 d-flex align-items-center">
+													<i className="fa-regular fa-heart pr-2"></i>
+
+													<p>251 votes</p>
+												</div>
 											</div>
-											</>
-												// <iframe width="auto" height="auto" src={video.video} title="YouTube video player"  allow="accelerometer; clipboard-write; encrypted-media; gyroscope;"></iframe>
-											)}
+
+										</a>
+                                    <style jsx>{`
+										.view-vid {
+											position: absolute;
+											bottom:7px;
+											left:5px;
+										}
+										
+									`}</style>
 										</div>
-									) : (
-										<p>No Videos</p>
-									)}
-
+										</>
+										)}
 									</div>
-									<div className="col-sm-12 d-flex mt-3">
-										<button className="btn btn-primary mx-auto">Load More</button>
-
-									</div>
-								</div>
-							</div>
-
-
-
-						</div>
-					</div>
-					<div className="col-12 col-sm-6 col-lg-5 col-xl-4 m-0">
-						<div className="card3 overflow-hidden">
-							<div className="card3-header">
-
-								<h4 className="fs-20 mx-auto">DAOX</h4>
-							</div>
-							<div className="d-flex flex-column p-3 ">
-								<Link href="/createchallenge">
-
-									<button className="btn btn-success">Create Challenge</button>
-								</Link>
-
-								<Link href="/votechallenge">
-
-									<button className="btn btn-primary mt-2">Vote Challenge</button>
-								</Link>
-
-							</div>
+								) : (
+									<p>No Videos</p>
+								)}
+                               
+                            </div>
+                        </div>
+                    </div>
 
 
 
-
-							<div className="card3-header align-items-start border-0 justify-content-between">
-								<div>
-									<h4 className="fs-20 mx-auto">Ranking</h4>
-									<span className="fs-12 text-nowrap">This Week's Top SOSX Token Holders</span>
-								</div>
-							</div>
-
-
-						  
-
-							<ul className="nav3  p-2 nav-rank nav3-tabs butten nav3-justified mb-3">
-								<li className="nav3-item">
-									<a className={`nav3-link ${displayLevel == 1 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap` } href="#" onClick={() => setDisplayLevel(1)}>Level 1</a>
-								</li>
-								<li className="nav3-item">
-									<a className={`nav3-link ${displayLevel == 2 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap` } href="#" onClick={() => setDisplayLevel(2)}>Level 2</a>
-								</li>
-								<li className="nav3-item">
-									<a className={`nav3-link ${displayLevel == 3 && 'active'} pl-1 pr-1 pt-2 pb-2 font-weight-bold rounded text-nowrap` } href="#" onClick={() => setDisplayLevel(3)}>Level 3</a>
-								</li>
-							</ul>
+                </div>
+                {/*Start Ranking*/}
+                <div className="col-12 col-xl-3">
+                    <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="rounded overflow-hidden">
 
 
 
-							<div className={`card3-body ranking ${biggerThan576 && "p-0"} ${biggerThan1200 && "p-0"}`}>
-								
-							{voters.sort((a, b) => a.amount - b.amount).map((voter, i) => 
+                        <div className="align-items-start border-0 justify-content-start">
+                            <div>
+                                <h4 className="fs-20 font-weight-bold  mx-auto">Ranking</h4>
+                                <span className="fs-12 mt-2 font-weight-bold p-2 text-white text-nowrap">SOSX Top Token Holders</span>
+                            </div>
+                        </div>
+
+
+
+                        <ul className="nav3 nav-rank nav3-tabs butten nav3-justified mb-3">
+                            <li className="nav3-item">
+                                <a className={`nav3-link  pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(1)} >Level 1</a>
+                            </li>
+                            <li className="nav3-item">
+                                <a className={`nav3-link pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(2)} >Level 2</a>
+                            </li>
+                            <li className="nav3-item">
+                                <a className={`nav3-link pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(3)} >Level 3</a>
+                            </li>
+                        </ul>
+
+                        <div className={`card3-body ranking`}>
+
+						{voters.sort((a, b) => a.amount - b.amount).map((voter, i) =>
 									<>
-										{voter.level == displayLevel &&  
+										{voter.level == displayLevel &&
 
 											<a className="blueprint-header-display trader-display">
 											<div className="d-flex align-items-center">
-												<span className="text-white mr-3 fs-16 font-w600">{}</span>
+												<span className="text-white mr-3 fs-16 font-w600">1.</span>
 												<img className="blueprint-img-sm rounded-circle"
 													src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
 												<div className="ml-1">
 													<span
 														className="mb-1 card-small-text text-white trader-name">{voter.address.replace(/(.{10})..+/, "$1…")}</span>
 												</div>
-												</div>
-											<span><i className="fa fa-wallet"></i> {voter.amount} </span>
+											</div>
+											<span> {voter.amount} </span>
 											</a>
+
+
 										}
 									</>
-						    	)}
-							
-							</div>
-						</div>
+								)}
+                        </div>
 
-					</div>
-				</div>
-			</div>
-			<canvas id="canvas" style={{display: 'none'}}></canvas><br/><br/>
-		</>
+                    </div>
+                </div>
+                {/*end Ranking*/}
+				<Modal show={show} onHide={handleClose} centered>
+					<form onSubmit={videoLink}>
+						<input style={{cursor: 'pointer'}} type="file" className="form-control fs-16 m-2" id="filevideo" placeholder="Upload Video" required/>
+						<div className="form-group d-flex justify-content-between flex-column p-2">
+							<input type="text" className="form-control fs-16 " id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+							<input type="text" className="form-control fs-16 " id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />  
+							<input type="text" className="form-control fs-16 " id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} required/>
+						</div>
+						<div>
+						<button className="btn btn-primary">Submit</button>
+						</div>
+					</form>
+				</Modal>
+            </div>
+        </div>
+    </>
 	)
 }

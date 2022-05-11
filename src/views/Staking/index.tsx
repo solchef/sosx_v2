@@ -190,7 +190,7 @@ export default function Staking() {
 			// console.log(allowanceValue.toString().length);
 			if(allowanceValue.toString().length > 50){
 				setLoading(true);
-				await contract.stakeToken(final.toString(), referralAddress, stakingClass );
+				await contract.stakeToken((amountToStake * (10 ** 18)).toString(), referralAddress, stakingClass );
 				setActivatestake(true);
 				setLoading(false);
 				listUserStaking();
