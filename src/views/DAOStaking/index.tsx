@@ -39,6 +39,7 @@ export default function DaoStaking() {
 	const [showDetails, setShowDetails] = useState(-1);
 	const [insufficientBalance, setInsufficientBalance] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [loadingData, setLoadingData] = useState(false);
 	const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 	const [price, setPrice] = useState(Number);
@@ -55,37 +56,27 @@ export default function DaoStaking() {
 	  useEffect(() => {
 		getSOSXPrice();
 	  }, []);
-	useEffect(()=> {
-	
-			// erc20.transfer(toAddress,parseEther(amount)).catch('error', console.error)
-		
-		const stakingDetails = async () => {
-			// I am setting the staking data that needs to be displayed on thwe UI
 
-			let stakeAmount = await contract.getTotalStakeAmount();
-			setTotalAmountStaked(stakeAmount);
-			let referral = Boolean(await contract.hasReferral());
-			referral ? setHasReferral(true) : setHasReferral(false);
-			referral ? setReferralAddress(await contract.getMyReferral()) : setReferralAddress("0x0000000000000000000000000000000000000001");
-			let activeStakes = await contract.getActiveStakeCount();
-			setNumberOfActiveStake(Number(activeStakes));
-			let balance = await tokenContract.balanceOf(account);
-			balance = Number(balance / 10 ** 18);
-			setUserBalace(balance);
-			let allowance = await tokenContract.allowance(account,contract.address);
-			allowance = allowance.toString()
-			// const amount = BigNumber.from(allowance)
-			// console.log(amount)
-			setAllowanceValue(allowance);
-			// setHasReferral(referral)
-			// console.log(referralAddress)
-			
-		}
+
+
+	const stakingDetails = async () => {
+		// I am setting the staking data that needs to be displayed on thwe UI
+
+		let stakeAmount = await contract.getTotalStakeAmount();
+		setTotalAmountStaked(stakeAmount);
+		let referral = Boolean(await contract.hasReferral());
+		referral ? setHasReferral(true) : setHasReferral(false);
+		referral ? setReferralAddress(await contract.getMyReferral()) : setReferralAddress("0x0000000000000000000000000000000000000001");
+		let activeStakes = await contract.getActiveStakeCount();
+		setNumberOfActiveStake(Number(activeStakes));
+		let balance = await tokenContract.balanceOf(account);
+		balance = Number(balance / 10 ** 18);
+		setUserBalace(balance);
+		let allowance = await tokenContract.allowance(account,contract.address);
+		allowance = allowance.toString()
+		setAllowanceValue(allowance);
 		
-		stakingDetails();
-		// listUserStaking();
-		
-	},[account]);
+	}
 
 	const listUserStaking = async() => {
 
@@ -94,28 +85,45 @@ export default function DaoStaking() {
         for(let i=0; i < numberOfActiveStake; i++){
 
 			let stakeInstance = await contract.getStakeInfo(i);
-			
-			let instance = {
-				amount: Number(stakeInstance[0] / 10 ** 18),
-				isWithdrawed: Boolean(stakeInstance[1]),
-				stakeDate:new  Date(stakeInstance[2] * 1000).toLocaleString("en-US", {timeZone: "America/New_York"}), // 8/19/2020, 9:29:51 AM. (date and time in a specific timezone),
-				referral: stakeInstance[3],
-				rewardAmount: Number(stakeInstance[4]),
-				penalty: Number(stakeInstance[5]),
-				stakingClass: await contract.getCurrentStakeClass(i),
-				periodElapsed: await contract.calculatePeriods(i)
-			}
 
-	
-            list.push(instance);
+			// console.log(stakeInstance)
+			if(stakeInstance){
+				let instance = {
+					amount: Number(stakeInstance[0] / 10 ** 18),
+					isWithdrawed: Boolean(stakeInstance[1]),
+					stakeDate:new  Date(stakeInstance[2] * 1000).toLocaleString("en-US", {timeZone: "America/New_York"}),
+					referral: stakeInstance[3],
+					rewardAmount: Number(stakeInstance[4]),
+					penalty: Number(stakeInstance[5]),
+					stakingClass: await contract.getCurrentStakeClass(i),
+					periodElapsed: await contract.calculatePeriods(i)
+				}
+				list.push(instance);
+			}
 			
         }
 
 		// console.log(list)
-
 		setActiveStakes(list);
 
     }
+
+
+
+	useEffect(()=> {
+		
+
+		const loadUI = async() => {
+			setLoadingData(true)
+			await stakingDetails();
+		    await listUserStaking();
+			setLoadingData(false)
+		}
+
+		loadUI();
+	
+	
+},[]);
 
 
 	const handleAmountChange = async(event) => {
@@ -168,7 +176,6 @@ export default function DaoStaking() {
            return amount.toFixed(2);
 
         };
-		
 
 		const handleSubmit = async() => {
 			
@@ -178,7 +185,7 @@ export default function DaoStaking() {
 			// console.log(allowanceValue.toString().length);
 			if(allowanceValue.toString().length > 50){
 				setLoading(true);
-				await contract.stakeToken(final, referralAddress, stakingClass );
+				await contract.stakeToken(final.toString(), referralAddress, stakingClass );
 				setActivatestake(true);
 				setLoading(false);
 				listUserStaking();
@@ -388,6 +395,8 @@ export default function DaoStaking() {
 											<li><span className="justify-content-between success fs-12">Duration</span></li>
 											<li><span className="success fs-12">Amount</span></li>
 										</ul>
+									
+										{/* {loadingData ? <div className='text-center'>Loading Data</div> : ''} */}
 
 									{activeStakes.map((stake,i) => 
 									<>
@@ -395,6 +404,8 @@ export default function DaoStaking() {
 											<li><span className="justify-content-between success fs-12">{stake.stakingClass == 1 ?  3 : stake.stakingClass == 2 ? 6 : 12 } Months</span></li>
 											<li><span className="success fs-12">{stake.amount}</span></li>
 										</ul>
+
+										
 
 										<div style={{display: showDetails == i ? 'block' : 'none'}} className="faq-header">
 										   <div className="bg-dark rounded">

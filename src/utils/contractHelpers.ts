@@ -12,6 +12,7 @@ import {
   getstakingContractAddress,
   getSosxContractAddress,
   getPredictionsAddress,
+  getSosxDaoContractAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -61,8 +62,12 @@ export const getStakingContract = (signer?: Signer | Provider) => {
   return getContract(sosxStakingAbi, getstakingContractAddress(), signer);
 }
 
+export const getDaoStakingContract = (signer?: Signer | Provider) => {
+  return getContract(sosxStakingAbi, getSosxDaoContractAddress(), signer);
+}
+
 export const getSosxContract = (signer?: Signer | Provider) => {
-  return getContract(sosxTokenABI, getSosxContractAddress(), simpleRpcProvider);
+  return getContract(sosxTokenABI, getSosxContractAddress(), signer);
 }
 
 export const getPredictionsContract = (signer?: Signer | Provider) => {
