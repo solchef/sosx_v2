@@ -115,8 +115,13 @@ export default function DaoStaking() {
 
 		const loadUI = async() => {
 			setLoadingData(true)
+			console.log("loading Details")
 			await stakingDetails();
+			console.log("loaded Details")
 		    await listUserStaking();
+			console.log("loaded list")
+
+			console.log(activeStakes)
 			setLoadingData(false)
 		}
 

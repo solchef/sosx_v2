@@ -115,8 +115,13 @@ export default function Staking() {
 
 		const loadUI = async() => {
 			setLoadingData(true)
+			console.log("loading Details")
 			await stakingDetails();
+			console.log("loaded Details")
 		    await listUserStaking();
+			console.log("loaded list")
+
+			console.log(activeStakes)
 			setLoadingData(false)
 		}
 
@@ -396,7 +401,7 @@ export default function Staking() {
 											<li><span className="success fs-12">Amount</span></li>
 										</ul>
 									
-										{/* {loadingData ? <div className='text-center'>Loading Data</div> : ''} */}
+										{loadingData ? <div className='text-center'>Loading Data</div> : ''}
 
 									{activeStakes.map((stake,i) => 
 									<>
