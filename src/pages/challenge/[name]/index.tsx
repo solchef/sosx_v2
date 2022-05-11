@@ -256,11 +256,12 @@ export default function Challenge() {
 
             <p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/votechallenge'> Back to Challenges </Link> </p>
             {challenge[0] && (
-                <div className="ml-2 row">
+                <div className=" row">
 
-                    <div className="col-8 col-lg-8 ">
+                    <div className="col-12 col-lg-8 ">
 
-                            <div className="card">
+                            <div className="row mx-auto">
+                            <div className="card col-12">
 
                                 <div className="card-body">
                                         <div className='text-muted font-weight-bold'>
@@ -271,7 +272,6 @@ export default function Challenge() {
                                             </ReadMore>
 
                                         </div>
-
 
                                         <div className='text-muted font-weight-bold mt-3'>
 
@@ -285,10 +285,10 @@ export default function Challenge() {
 											</ul>
 										))}
 									</div>
-
                                 </div>
+                                
                                 <div className="row pt-5">
-                                    <div className=" text-nowrap col-5">
+                                    <div className=" text-nowrap ">
                                         <form onSubmit={handleSubmit}>
                                             {votesList.find(acc => acc.name == account) ? (
                                                 <button disabled className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>You already voted</button>
@@ -298,13 +298,12 @@ export default function Challenge() {
                                         </form>
                                     </div>
                                 </div>
-                            </div>
+                              </div>
 
-                        <div className="row mx-auto ">
-                            <div className="card border p-0 col-12">
-                                <h5 className=" border-bottom fs-16 font-weight-bold pl-3 pt-3 pb-3 ">{votesList.length} 	&nbsp;	&nbsp;Votes</h5>
+                              <div className="card col-12">
+                                <h5 className=" border-bottom fs-16 font-weight-bold pl-3 pt-3 pb-3 ">{votesList.length} &nbsp;	&nbsp;Votes</h5>
 
-                                <table className="table text-white">
+                                <table className="table text-white tabl">
                                     {votesList.map((vote, index) =>
                                         <tr>
                                             <td className="border-0 pb-0" > {index + 1}</td>
@@ -316,12 +315,13 @@ export default function Challenge() {
                                 </table>
 
                             </div>
-                        </div>
+                            </div>
+                      
                     </div>
 
-                    <div className="col-11 p-0 col-lg-4">
+                    <div className="col-12  col-lg-4">
                         <div className="row mx-auto">
-                            <div style={{ fontSize: '80%' }} className="card border p-0 col-11 col-md-12 col-xl-11">
+                            <div style={{ fontSize: '80%' }} className="card border p-0 col-12 col-md-12 col-xl-12">
                                 <h5 className=" border-bottom fs-16 font-weight-bold pl-2 pt-3 pb-3 ">Details</h5>
                                 <div className="card-body p-4">
 
@@ -335,7 +335,7 @@ export default function Challenge() {
                                     </div> */}
                                     <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
                                         <div >Voting system</div>
-                                        <div className="ml-auto text-white  fa-12">Vote Challenge</div>
+                                        <div className="ml-auto text-white  fa-12">Vote Multiple</div>
                                     </div>
 
                                     <div className="row d-flex font-weight-bold pt-2 justify-content-between p-0">
@@ -359,7 +359,7 @@ export default function Challenge() {
                             </div>
                         </div>
                         <div className="row mx-auto">
-                            <div style={{ fontSize: '90%' }} className="card border p-0 col-11 col-md-12 col-xl-11">
+                            <div style={{ fontSize: '90%' }} className="card border p-0 col-12 col-md-12 col-xl-11">
                                 <h5 className=" border-bottom fs-16 font-weight-bold pl-2 pt-3 pb-3 ">Current results</h5>
                                 <div className="card-body p-4">
 
