@@ -9718,18 +9718,14 @@ a {
     font-size: 1.125rem;
     color: #fff;
     text-decoration: none;
-    padding-left: 50px;
+    padding-left: 30px;
     padding-right: 50px;
     font-weight: 700; }
     [data-sidebar-style="compact"] .nav-header .brand-logo, [data-sidebar-style="mini"] .nav-header .brand-logo {
       padding-left: 0;
       padding-right: 0;
       justify-content: center; }
-    @media only screen and (max-width: 1199px) {
-      .nav-header .brand-logo {
-        padding-left: 0;
-        padding-right: 0;
-        justify-content: center; } }
+
   .nav-header .brand-title {
     margin-left: 5px;
     max-width: 120px;
