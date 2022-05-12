@@ -123,7 +123,7 @@ export default function Votechallenge() {
 									
 									</div>
 
-									 <Link href={`/challenge/${String(camp.challenge.payload.name).replaceAll(' ', '-')}`}>
+									 <Link  href={`/challenge/${String(camp.challenge.payload.name).replaceAll(' ', '-')}`}>
 											<button type="button" className="btn btn-primary ">
 												<i className="fa-solid fa-check-to-slot pr-2"></i>Details
 											</button>
