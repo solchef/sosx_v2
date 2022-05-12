@@ -59,8 +59,6 @@ export default function Game() {
 		// console.log(eventTime)
 		
 
-
-		
 		let leftTime = eventTime - currentTime;
 		let duration = moment.duration(leftTime, 'seconds');
 		let interval = 1000;
