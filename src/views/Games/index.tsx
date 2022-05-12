@@ -7,7 +7,7 @@ import { useTranslation } from 'contexts/Localization'
 import { Modal } from "react-bootstrap";
 import { concat } from "uint8arrays";
 import { useStakingContract, useSosxContract } from 'hooks/useContract'
-
+import moment from "moment";
 
 const server = create({
 	url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
@@ -34,37 +34,38 @@ export default function Game() {
 	const videoElem = useRef();
 	const videoInput = useRef();
 	const [imgSrc, setImgSrc] = useState('');
+	let [targeta ,setTarget] = useState(0);
+
 
 	useEffect(() => {
-		const target = new Date("05/15/2022 23:59:59");
-
+		// const target = moment(1652356856)
+		const target = moment.unix(1652360639)
+		
 		const interval = setInterval(() => {
-			const now = new Date();
-			const difference = target.getTime() - now.getTime();
+			const timeLeft = moment(target.diff(moment()));
+			const formatted = timeLeft.format('HH:mm:ss');
+			console.log(formatted)
+			console.log(target.format('LLL'))
+			console.log(moment().format('LLL'))
+			console.log(moment(target).unix() - moment().unix())
+			
 
-			const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+			// const difference = target - moment().valueOf()
+
+			const d = timeLeft.days()
 			setDays(d);
-
-			const h = Math.floor(
-				(difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-			);
+			const h = timeLeft.hours()
 			setHours(h);
-
-			const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+			const m = timeLeft.minute()
 			setMinutes(m);
-
-			const s = Math.floor((difference % (1000 * 60)) / 1000);
-			setSeconds(s);
-
-			if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
-				setPartyTime(true);
-			}
+			const s = timeLeft.seconds()
+			setSeconds(s); 
+			// if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
+			// 	// setPartyTime(true);
+			// 	// setTarget(new Date())
+			// }
 		}, 1000);
 		return () => clearInterval(interval);
-	}, []);
-
-	useEffect(() => {
-
 	}, []);
 
 	const getData = async () => {
@@ -235,29 +236,29 @@ export default function Game() {
 
                             </div>
 
-                            <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 mx-auto pr-1 fs-14 pt-0 pb-0 mr-3 text-white"> Stage</p>
+                            <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 mx-auto pr-1 fs-14 pt-0 pb-0 mr-3 text-white"> Stage {targeta}</p>
                         </div>
                         <div className="clock mb-3 pr-2 pl-2 pb-2">
                             <div className="d-flex justify-content-start" id="countdown">
                                 <div className="d-flex justify-content-start align-items-center">
 
 
-                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >01</span>days</p>
+                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >{days}</span>days</p>
                                     <p className="li"><span className="" >:</span></p>
                                 </div>
 
                                 <div className="d-flex justify-content-start align-items-center">
 
-                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >01</span>Hours</p>
+                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >{hours}</span>Hours</p>
                                     <p className="li"><span className="" >:</span></p>
                                 </div>
                                 <div className="d-flex justify-content-start align-items-center">
 
-                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >22</span>Minutes</p>
+                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >{minutes}</span>Minutes</p>
                                     <p className="li"><span className="" >:</span></p>
                                 </div>
 
-                                <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }}>33</span>Seconds</p>
+                                <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }}>{seconds}</span>Seconds</p>
                             </div>
                         </div>
                         <div className="d-flex mb-3 mt-2 align-items-center">
@@ -397,100 +398,8 @@ export default function Game() {
                             </div> */}
 
                             <div className="row ">
-
-
-
-
-
-
-
-
-
-
-
-                                {/* <div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
-                                    <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                        className="video">
-                                        <span>
-                                            <div className="text-white d-flex pt-3">
-                                                <img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
-
-                                                <p className=" ml-2 fs-12" >Oxfwd...ds3</p>
-                                            </div>
-                                        </span>
-                                        <img src="images/video-banner-1.png" alt="Video1" />
-                                        <div className="play-btn"></div>
-                                        <div className="text-white view-vid">
-
-                                            <div className="pt-3 d-flex align-items-center">
-                                                <i className="fa-regular fa-heart pr-2"></i>
-
-                                                <p>251 votes</p>
-                                            </div>
-                                        </div>
-
-                                    </a>
-                                    <style jsx>{`
-											.view-vid {
-												position: absolute;
-												bottom:7px;
-												left:5px;
-											}
-											
-										`}</style>
-								</div> */}
-
-
                             </div>
                         </div>
-
-                        {/* <div className="d-flex mb-2 flex-column">
-
-                            <div className="d-flex justify-content-between  mb-2  align-items-center">
-
-                                <p className="text-white  font-weight-bold" style={{ fontWeight: '1000 ', fontSize: '22px' }} >MOST VIEWED CHALLENGES <span className="main-pink">7 DAY</span></p>
-                                <button type="button" className="btn pl-2 pt-1 pb-1 pr-2 btn-success font-weight-bold ">View All</button>
-
-                            </div>
-
-                            <div className="row">
-
-
-                                <div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
-                                    <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                        className="video">
-                                        <span>
-                                            <div className="text-white d-flex pt-3">
-                                                <img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
-
-                                                <p className=" ml-2 fs-12" >Oxfwd...ds3</p>
-                                            </div>
-                                        </span>
-                                        <img src="images/video-banner-1.png" alt="Video1" />
-                                        <div className="play-btn"></div>
-                                        <div className="text-white view-vid">
-
-                                            <div className="pt-3 d-flex align-items-center">
-                                                <i className="fa-regular fa-heart pr-2"></i>
-
-                                                <p>251 votes</p>
-                                            </div>
-                                        </div>
-
-                                    </a>
-                                    <style jsx>{`
-												.view-vid {
-													position: absolute;
-													bottom:7px;
-													left:5px;
-												}
-												
-											`}</style>
-															</div>
-
-
-                            </div>
-                        </div> */}
 
                         <div className="d-flex mb-2 flex-column">
 
@@ -504,7 +413,7 @@ export default function Game() {
                             <div className="row">
 
 								{videos.length > 0 ? (
-									<div>
+									<>
 										{videos.map((video) =>
 										<>
  									<div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
@@ -541,7 +450,7 @@ export default function Game() {
 										</div>
 										</>
 										)}
-									</div>
+									</>
 								) : (
 									<p>No Videos</p>
 								)}
