@@ -10,6 +10,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { MaxUint256 } from '@ethersproject/constants'
 import { calculateGasMargin } from 'utils'
 import axios from 'axios'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 
 
 const BorderCard = styled.div`
@@ -60,75 +61,92 @@ export default function DaoStaking() {
 
 
 	const stakingDetails = async () => {
-		// I am setting the staking data that needs to be displayed on thwe UI
 
-		let stakeAmount = await contract.getTotalStakeAmount();
-		setTotalAmountStaked(stakeAmount);
-		let referral = Boolean(await contract.hasReferral());
-		referral ? setHasReferral(true) : setHasReferral(false);
-		referral ? setReferralAddress(await contract.getMyReferral()) : setReferralAddress("0x0000000000000000000000000000000000000001");
-		let activeStakes = await contract.getActiveStakeCount();
-		setNumberOfActiveStake(Number(activeStakes));
-		let balance = await tokenContract.balanceOf(account);
-		balance = Number(balance / 10 ** 18);
-		setUserBalace(balance);
-		let allowance = await tokenContract.allowance(account,contract.address);
-		allowance = allowance.toString()
-		setAllowanceValue(allowance);
+		contract.getTotalStakeAmount().then(stakeAmount => {
+			setTotalAmountStaked(stakeAmount);
+		
+		});
+
+		contract.hasReferral().then(ref => {
+			ref ? setHasReferral(true) : setHasReferral(false);
+		
+		});
+
+		contract.getMyReferral().then(referral => {
+			referral ? setReferralAddress(referral) : setReferralAddress("0x0000000000000000000000000000000000000001");
+		})
+		
+		
+	    contract.getActiveStakeCount().then(activeStakes => {
+				setNumberOfActiveStake(Number(activeStakes))
+		})
+
+		tokenContract.allowance(account,contract.address).then(allowance => {
+			setAllowanceValue(allowance);
+		})
 		
 	}
 
 	const listUserStaking = async() => {
 
         let list = []
-
         for(let i=0; i < numberOfActiveStake; i++){
 
-			let stakeInstance = await contract.getStakeInfo(i);
+	        await contract.getStakeInfo(i).then(stakeInstance => {
+				contract.getCurrentStakeClass(i).then(period => {
+					  contract.getCurrentStakeClass(i).then(stakeClass => {
+
+						if(stakeInstance){
+							let instance = {
+								amount: Number(stakeInstance[0] / 10 ** 18),
+								isWithdrawed: Boolean(stakeInstance[1]),
+								stakeDate:new  Date(stakeInstance[2] * 1000).toLocaleString("en-US", {timeZone: "America/New_York"}),
+								referral: stakeInstance[3],
+								rewardAmount: Number(stakeInstance[4]),
+								penalty: Number(stakeInstance[5]),
+								stakingClass: period,
+								periodElapsed: stakeClass
+							}
+							list.push(instance);
+
+					  }
+					})
+				
+				}
+			)
+			})
 
 			// console.log(stakeInstance)
-			if(stakeInstance){
-				let instance = {
-					amount: Number(stakeInstance[0] / 10 ** 18),
-					isWithdrawed: Boolean(stakeInstance[1]),
-					stakeDate:new  Date(stakeInstance[2] * 1000).toLocaleString("en-US", {timeZone: "America/New_York"}),
-					referral: stakeInstance[3],
-					rewardAmount: Number(stakeInstance[4]),
-					penalty: Number(stakeInstance[5]),
-					stakingClass: await contract.getCurrentStakeClass(i),
-					periodElapsed: await contract.calculatePeriods(i)
-				}
-				list.push(instance);
-			}
-			
-        }
 
-		// console.log(list)
+		}
+        
 		setActiveStakes(list);
+		// console.log(list)
+		
 
     }
 
-
-
 	useEffect(()=> {
-		
-
-		const loadUI = async() => {
-			setLoadingData(true)
-			console.log("loading Details")
-			await stakingDetails();
-			console.log("loaded Details")
-		    await listUserStaking();
-			console.log("loaded list")
-
-			console.log(activeStakes)
-			setLoadingData(false)
-		}
-
-		loadUI();
+		if(account !== undefined){
+			tokenContract.balanceOf(account).then( bal => {
+				let balance = Number(bal / 10 ** 18);
+				setUserBalace(balance);
+			})
+			
+			const loadUI = async() => {
+				setLoadingData(true)
+				await stakingDetails();
+				await listUserStaking();
+				// console.log(activeStakes)
+				setLoadingData(false)
+			}
+	
+			loadUI();
+		}		
 	
 	
-},[]);
+	
+},[account]);
 
 
 	const handleAmountChange = async(event) => {
@@ -251,7 +269,7 @@ export default function DaoStaking() {
 					<div className="col-xl-4">
 						<div className="card ">
 							<div className="card-header border-0 pl-0 pt-0">
-								<h4 className="fs-18 ">Stake SOSX</h4>
+								<h4 className="fs-18 ">Stake SOSX for Voting Power</h4>
 							</div>
 
 							 <div>
@@ -305,8 +323,9 @@ export default function DaoStaking() {
 									
 							</div>
 							<>
-								
-								{activateStake ? 
+							{account ? 
+									<>
+									{activateStake ? 
                                        <div className="d-flex card-footer pt-0 pb-0 foot-card border-0 justify-content-between">
                                                      <button type="button"
                                                       onClick={handleSubmit}
@@ -329,6 +348,13 @@ export default function DaoStaking() {
                                          </button>
                                     </div>
                                  }
+									</>
+									
+	 								:
+
+								 	<ConnectWalletButton/>
+								}
+										
 								</>
 							</div>
 

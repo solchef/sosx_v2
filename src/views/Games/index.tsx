@@ -284,7 +284,6 @@ export default function Game() {
                     </div>
                 </div>
 
-
                 {/*end Time with prize pool */}
 
 
@@ -417,15 +416,6 @@ export default function Game() {
                             </div> */}
 
                             <div className="row ">
-
-
-
-
-
-
-
-
-
 
 
                                 {/* <div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
@@ -643,21 +633,14 @@ export default function Game() {
 
 					<div className="modal-body">
 					<form onSubmit={videoLink}>
-						
-						{/* <input style={{cursor: 'pointer'}} type="file" className="form-control fs-16 m-2" id="filevideo" placeholder="Upload Video" required/> */}
-						{/* <div className="form-group d-flex justify-content-between flex-column p-2">
-							<input type="text" className="form-control fs-16 " id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
-							<input type="text" className="form-control fs-16 " id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />  
-							<input type="text" className="form-control fs-16 " id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} required/>
-						</div> */}
 
-							<div className="bg-dark p-5 rounded">
-							<div className="form-group row">
-										<div {...getRootProps({className: 'dropzone'})} className="mx-auto">
-												<input {...getInputProps()} />
-												<h1>Click to select files</h1>
-										</div>
-							</div>
+						<div className="bg-dark p-5 rounded">
+						<div className="form-group row">
+									<div {...getRootProps({className: 'dropzone'})} className="mx-auto">
+											<input {...getInputProps()} />
+											<h1>Click to select files</h1>
+									</div>
+						</div>
 						</div>
 						<div className="bg-dark  rounded fs-8">
 									<input type="text" className="form-control fs-20" id="tiktok" placeholder="TikTok link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
