@@ -34,6 +34,7 @@ import {
   getBunnySpecialXmasContract,
   getStakingContract,
   getSosxContract,
+  getDaoStakingContract,
 } from 'utils/contractHelpers'
 import { getMulticallAddress } from 'utils/addressHelpers'
 import { VaultKey } from 'state/types'
@@ -194,6 +195,12 @@ export const useStakingContract = () => {
   const { library } = useActiveWeb3React()
   // console.log(library.getSigner())
   return useMemo(() => getStakingContract(library.getSigner()), [library])
+}
+
+export const useDaoStakingContract = () => {
+  const { library } = useActiveWeb3React()
+  // console.log(library.getSigner())
+  return useMemo(() => getDaoStakingContract(library.getSigner()), [library])
 }
 
 export const useSosxContract = () => {
