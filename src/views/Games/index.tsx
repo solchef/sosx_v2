@@ -4,9 +4,10 @@ import { useMediaPredicate } from "react-media-hook";
 import { create } from "ipfs-http-client";
 import useToast from "hooks/useToast";
 import { useTranslation } from 'contexts/Localization'
-import { Modal } from "react-bootstrap";
+import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { concat } from "uint8arrays";
 import { useStakingContract, useSosxContract } from 'hooks/useContract'
+import {useDropzone} from 'react-dropzone';
 
 
 const server = create({
@@ -34,6 +35,14 @@ export default function Game() {
 	const videoElem = useRef();
 	const videoInput = useRef();
 	const [imgSrc, setImgSrc] = useState('');
+	const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
+
+	const files = acceptedFiles.map(file => (
+		<li key={file.path}>
+		  {file.path} - {file.size} bytes
+		</li>
+	  ));
+	
 
 	useEffect(() => {
 		const target = new Date("05/15/2022 23:59:59");
@@ -626,17 +635,43 @@ export default function Game() {
                 </div>
                 {/*end Ranking*/}
 				<Modal show={show} onHide={handleClose} centered>
+
+					<ModalHeader className="text-dark">
+							  SUBMIT YOUR VIDEO
+							  <CloseButton />
+					</ModalHeader>
+
+					<div className="modal-body">
 					<form onSubmit={videoLink}>
-						<input style={{cursor: 'pointer'}} type="file" className="form-control fs-16 m-2" id="filevideo" placeholder="Upload Video" required/>
-						<div className="form-group d-flex justify-content-between flex-column p-2">
+						
+						{/* <input style={{cursor: 'pointer'}} type="file" className="form-control fs-16 m-2" id="filevideo" placeholder="Upload Video" required/> */}
+						{/* <div className="form-group d-flex justify-content-between flex-column p-2">
 							<input type="text" className="form-control fs-16 " id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
 							<input type="text" className="form-control fs-16 " id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />  
 							<input type="text" className="form-control fs-16 " id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} required/>
+						</div> */}
+
+							<div className="bg-dark p-5 rounded">
+							<div className="form-group row">
+										<div {...getRootProps({className: 'dropzone'})} className="mx-auto">
+												<input {...getInputProps()} />
+												<h1>Click to select files</h1>
+										</div>
+							</div>
 						</div>
-						<div>
-						<button className="btn btn-primary">Submit</button>
+						<div className="bg-dark  rounded fs-8">
+									<input type="text" className="form-control fs-20" id="tiktok" placeholder="TikTok link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+						</div>
+
+						<div className="bg-dark  rounded fs-8">
+								<input type="text" className="form-control fs-20" id="youtube" placeholder="Youtube link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+						</div>
+
+						<div className=" rounded p-2">
+					     	<button className="btn btn-primary w-100">Submit</button>
 						</div>
 					</form>
+					</div>
 				</Modal>
             </div>
         </div>
