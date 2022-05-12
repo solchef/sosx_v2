@@ -330,8 +330,8 @@ getaccountDetails();
        <div className="card-body">
          <div className="bg-dark rounded">
            <div className="d-flex justify-content-between align-items-center">
-             {/* <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span> */}
-              <span>https://socialx.io?ref={account}</span>
+             <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span>
+              {/* <span>https://socialx.io?ref={account}</span> */}
              <div className="float-right d-flex">
              <li className="nav-item pr-2">
                <CopyToClipboard
