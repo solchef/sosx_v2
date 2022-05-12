@@ -12,6 +12,8 @@ import { generatePayloadData } from "views/Games/helpers";
 import Link from "next/link";
 import { useMediaPredicate } from "react-media-hook";
 import { useStakingContract } from "hooks/useContract";
+import ConnectWalletButton from '../../../components/ConnectWalletButton'
+
 
 const server = create({
     url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
@@ -309,11 +311,14 @@ export default function Challenge() {
                                 <div className="row mx-auto pt-5">
                                     <div className="ml-2 text-nowrap ">
                                         <form onSubmit={handleSubmit}>
-                                            {votesList.find(acc => acc.name == account) ? (
+                                            {!account ? (
+                                            <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4"/>
+                    	                        ) :(
+                                            votesList.find(acc => acc.name == account) ? (
                                                 <button disabled className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>You already voted</button>
                                             ) : (
                                                 <button className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Vote This Challenge</button>
-                                            )}
+                                            ))}
                                         </form>
                                     </div>
                                 </div>

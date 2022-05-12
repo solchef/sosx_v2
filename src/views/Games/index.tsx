@@ -6,7 +6,10 @@ import useToast from "hooks/useToast";
 import { useTranslation } from 'contexts/Localization'
 import { Modal } from "react-bootstrap";
 import { concat } from "uint8arrays";
-import { useStakingContract, useSosxContract } from 'hooks/useContract'
+import { useStakingContract, useSosxContract } from 'hooks/useContract';
+import ConnectWalletButton from '../../components/ConnectWalletButton';
+import useActiveWeb3React from 'hooks/useActiveWeb3React';
+
 
 
 const server = create({
@@ -15,6 +18,7 @@ const server = create({
 
 
 export default function Game() {
+	const {account} = useActiveWeb3React();
 	const [partyTime, setPartyTime] = useState(false);
 	const [days, setDays] = useState(0);
 	const [hours, setHours] = useState(0);
@@ -271,7 +275,10 @@ export default function Game() {
                         </span>
                         <span className="text-muted mb-3 fs-12">et! Possimus ea repudi?repudndae in? fdfsd  dfssfds
                         </span>
-                        <a  onClick={handleShow} className="btn pt-1 pb-1 btn-primary">Upload Video</a>
+						{!account ? (
+                     <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4"/>
+                    	) : (<a  onClick={handleShow} className="btn pt-1 pb-1 btn-primary">Upload Video</a>)
+						} 
                     </div>
                 </div>
 
