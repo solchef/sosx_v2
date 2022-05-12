@@ -4,8 +4,9 @@ import { useMediaPredicate } from "react-media-hook";
 import { create } from "ipfs-http-client";
 import useToast from "hooks/useToast";
 import { useTranslation } from 'contexts/Localization'
-import { Modal } from "react-bootstrap";
+import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { concat } from "uint8arrays";
+import {useDropzone} from 'react-dropzone';
 import { useStakingContract, useSosxContract } from 'hooks/useContract';
 import ConnectWalletButton from '../../components/ConnectWalletButton';
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
@@ -38,6 +39,14 @@ export default function Game() {
 	const videoElem = useRef();
 	const videoInput = useRef();
 	const [imgSrc, setImgSrc] = useState('');
+	const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
+
+	const files = acceptedFiles.map(file => (
+		<li key={file.path}>
+		  {file.path} - {file.size} bytes
+		</li>
+	  ));
+	
 
 	useEffect(() => {
 		const target = new Date("05/15/2022 23:59:59");
@@ -282,14 +291,15 @@ export default function Game() {
                     </div>
                 </div>
 
-
                 {/*end Time with prize pool */}
 
 
                 {/*start Challange*/}
                 <div className={`col-12 col-lg-6  ${biggerThan1650 && 'col-xl-7'}  ${biggerThan1800 && 'col-xl-6 '} ${littleThan1200 && 'mb-3'}`}>
-				{todayChallenge ? (
+				
                     <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="d-flex rounded m-0 h-100  p-3 pl-4 text-white flex-column">
+					{todayChallenge ? (
+						<>
                         <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white mt-2">THIS WEEK CHALLENGE </span>
                         <span style={{ fontWeight: '1000 ', fontSize: '18px' }} className="text-white pt-3">{todayChallenge.challenge.payload.name} </span>
 
@@ -314,6 +324,7 @@ export default function Game() {
                             <span className="text-muted pb-1">Details:</span>
                             <p className="fs-14">{todayChallenge.challenge.payload.body}</p>
                         </div>
+
                         <div className="d-flex flex-column pt-3">
                             <span className="text-muted pb-1">Roles:</span>
 							{todayChallenge.challenge.payload.choices.map((element) => 
@@ -323,10 +334,18 @@ export default function Game() {
 								</div>
 							)}
                         </div>
-                    </div>
-				) : (
-					<p>Loading</p>
+
+						</>
+
+						) : (
+							<div className="mx-auto my-auto">
+								<p>Loading</p>
+							</div>
+					
 				)}
+
+                    </div>
+			
 
 
 
@@ -347,7 +366,7 @@ export default function Game() {
                                     <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white "> CHALLENGE </span>
 
 
-                                    <span className="fs-14 pt-2 text-white">LOREM LOREM LOREM LOREM LOREM </span>
+                                    <span className="fs-14 pt-2 text-white">Create a new challenge to be voted</span>
 									<Link href="/createchallenge">
                                     <button type="button" className="btn mt-3 mb-2 btn-success">Create Now</button>
 									</Link>
@@ -369,7 +388,7 @@ export default function Game() {
                                     <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white "> CHALLENGE </span>
 
 
-                                    <span className="fs-14 pt-2 text-white">LOREM LOREM LOREM LOREM LOREM </span>
+                                    <span className="fs-14 pt-2 text-white">Vote challenges created by DAO members </span>
 									<Link href="/votechallenge">
                                     <button type="button" className="btn mt-3 mb-2 btn-success">Vote Now</button>
 									</Link>
@@ -404,15 +423,6 @@ export default function Game() {
                             </div> */}
 
                             <div className="row ">
-
-
-
-
-
-
-
-
-
 
 
                                 {/* <div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
@@ -550,7 +560,13 @@ export default function Game() {
 										)}
 									</div>
 								) : (
-									<p>No Videos</p>
+									// <p>No Videos</p>
+									<div className="row">
+										<div className="justify-center">
+										<p>No Videos</p>
+
+										</div>
+									</div>
 								)}
                                
                             </div>
@@ -616,17 +632,36 @@ export default function Game() {
                 </div>
                 {/*end Ranking*/}
 				<Modal show={show} onHide={handleClose} centered>
+
+					<ModalHeader className="text-dark">
+							  SUBMIT YOUR VIDEO
+							  <CloseButton />
+					</ModalHeader>
+
+					<div className="modal-body">
 					<form onSubmit={videoLink}>
-						<input style={{cursor: 'pointer'}} type="file" className="form-control fs-16 m-2" id="filevideo" placeholder="Upload Video" required/>
-						<div className="form-group d-flex justify-content-between flex-column p-2">
-							<input type="text" className="form-control fs-16 " id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
-							<input type="text" className="form-control fs-16 " id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />  
-							<input type="text" className="form-control fs-16 " id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} required/>
+
+						<div className="bg-dark p-5 rounded">
+						<div className="form-group row">
+									<div {...getRootProps({className: 'dropzone'})} className="mx-auto">
+											<input {...getInputProps()} />
+											<h1>Click to select files</h1>
+									</div>
 						</div>
-						<div>
-						<button className="btn btn-primary">Submit</button>
+						</div>
+						<div className="bg-dark  rounded fs-8">
+									<input type="text" className="form-control fs-20" id="tiktok" placeholder="TikTok link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+						</div>
+
+						<div className="bg-dark  rounded fs-8">
+								<input type="text" className="form-control fs-20" id="youtube" placeholder="Youtube link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+						</div>
+
+						<div className=" rounded p-2">
+					     	<button className="btn btn-primary w-100">Submit</button>
 						</div>
 					</form>
+					</div>
 				</Modal>
             </div>
         </div>
