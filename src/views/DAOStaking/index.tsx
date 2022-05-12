@@ -10,6 +10,8 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { MaxUint256 } from '@ethersproject/constants'
 import { calculateGasMargin } from 'utils'
 import axios from 'axios'
+import ConnectWalletButton from '../../components/ConnectWalletButton'
+
 
 
 const BorderCard = styled.div`
@@ -292,7 +294,10 @@ export default function DaoStaking() {
 										</div>
 									
 							</div>
-							<>
+							
+							{!account ? (
+                     <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4"/>
+                    	) : <>
 								
 								{activateStake ? 
                                        <div className="d-flex card-footer pt-0 pb-0 foot-card border-0 justify-content-between">
@@ -317,7 +322,7 @@ export default function DaoStaking() {
                                          </button>
                                     </div>
                                  }
-								</>
+								</>}
 							</div>
 
 						</div>
