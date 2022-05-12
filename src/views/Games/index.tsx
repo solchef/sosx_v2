@@ -11,6 +11,7 @@ import moment from "moment";
 import ConnectWalletButton from '../../components/ConnectWalletButton';
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
 import {useDropzone} from 'react-dropzone';
+import { TikTok } from "react-tiktok";
 
 
 const server = create({
@@ -22,6 +23,7 @@ export default function Game() {
 	const {account} = useActiveWeb3React();
 	const [partyTime, setPartyTime] = useState(false);
 	const [days, setDays] = useState(0);
+	const { toastError } = useToast()
 	const [hours, setHours] = useState(0);
 	const [minutes, setMinutes] = useState(0);
 	const [seconds, setSeconds] = useState(0);
@@ -43,40 +45,46 @@ export default function Game() {
 
 	const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
 
-	const files = acceptedFiles.map(file => (
-		<li key={file.path}>
-		  {file.path} - {file.size} bytes
-		</li>
-	  ));
+	// const files = acceptedFiles.map(file => (
+	// 	<li key={file.path}>
+	// 	  {file.path} - {file.size} bytes
+	// 	</li>
+	//   ));
 	
+	const calculateTimeLeft = (entryTime) => {
+
+		let eventTime =  moment(entryTime).unix();
+		let currentTime = Number((Math.floor(Date.now() / 1000)).toString());
+		
+		// console.log(eventTime)
+		
+
+
+		
+		let leftTime = eventTime - currentTime;
+		let duration = moment.duration(leftTime, 'seconds');
+		let interval = 1000;
+		if (duration.asSeconds() <= 0) {
+			clearInterval(interval);
+		}
+		duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+		setDays(duration.days());
+		setHours(duration.hours());
+		setMinutes(duration.minutes());
+		setSeconds(duration.seconds()); 
+		// return (duration.days() + 'D:' + duration.hours()+ 'H:' + duration.minutes()+ 'M:' + duration.seconds() + 'S');
+
+	}
 
 	useEffect(() => {
-		// const target = moment(1652356856)
-		const target = moment.unix(1652360639)
-		
+
+		const target = moment.unix(1652386763);
 		const interval = setInterval(() => {
-			const timeLeft = moment(target.diff(moment()));
-			const formatted = timeLeft.format('HH:mm:ss');
-			console.log(formatted)
-			console.log(target.format('LLL'))
-			console.log(moment().format('LLL'))
-			console.log(moment(target).unix() - moment().unix())
 			
 
-			// const difference = target - moment().valueOf()
-
-			const d = timeLeft.days()
-			setDays(d);
-			const h = timeLeft.hours()
-			setHours(h);
-			const m = timeLeft.minute()
-			setMinutes(m);
-			const s = timeLeft.seconds()
-			setSeconds(s); 
-			// if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
-			// 	// setPartyTime(true);
-			// 	// setTarget(new Date())
-			// }
+			 calculateTimeLeft(target)
+	
+		
 		}, 1000);
 		return () => clearInterval(interval);
 	}, []);
@@ -119,7 +127,7 @@ export default function Game() {
 
 	const getVideo = async () => {
 		let finalData = [];
-
+		
 		if (todayChallenge) {
 			for await (const videoFile of server.files.ls(`/challenges/${String(`challenge-${todayChallenge.challenge.payload.name}`).replaceAll(' ', '-')}/videos`)) {
 				let fileContent;
@@ -139,47 +147,54 @@ export default function Game() {
 	
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
 
-		evt.preventDefault();
-		const form = event.target as HTMLFormElement;
-		const files = (form[0] as HTMLInputElement).files;
-		const file = files[0];
+			evt.preventDefault();
+			const form = event.target as HTMLFormElement;
+			// const files = (form[0] as HTMLInputElement).files;
+			// const file = files[0];
 
-		// const canvas = document.createElement("canvas");
-		// canvas
-		//   .getContext("2d")
-		//   .drawImage(
-		// 	videoElem.current,
-		// 	0,
-		// 	0,
-		// 	120,
-		// 	120
-		//   );
-	
-		// setImgSrc(canvas.toDataURL());
-		// console.log(imgSrc)
+			// const canvas = document.createElement("canvas");
+			// canvas
+			//   .getContext("2d")
+			//   .drawImage(	
+			// 	videoElem.current,
+			// 	0,
+			// 	0,
+			// 	120,
+			// 	120
+			//   );
+		
+			// setImgSrc(canvas.toDataURL());
+			// console.log(imgSrc)
 
-		if (!files || files.length === 0) {
-			console.log('NO')
+			// if (!files || files.length === 0) {
+			// 	console.log('NO')
+			// }
+
+			// const IPFSFile = await server.add(file)
+			// const url = `ipfs`
+
+			if(youtubeURL || tiktokURL){
+					
+		
+
+			const data = JSON.stringify({
+				title: youtubeURL,
+				youtube: youtubeURL,
+				tiktok: tiktokURL,
+				// video: url,
+				// thumbnail: imgSrc 
+			}, null, 2)
+
+			const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
+			const fileName = `video-${moment().unix()}`
+			await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, { create: true })
+			// toastSuccess(t('Video Uploaded!'))
+			form.reset()
+			handleClose()
+			getVideo()
+		}else{
+				toastError("One of the video posted links is required");
 		}
-
-		const IPFSFile = await server.add(file)
-		const url = `http://localhost:8080/ipfs/${IPFSFile.cid}`
-
-		const data = JSON.stringify({
-			title: videoTitle,
-			youtube: youtubeURL,
-			tiktok: tiktokURL,
-			video: url,
-			// thumbnail: imgSrc 
-		}, null, 2)
-
-		const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
-		const fileName = `video-${videoTitle.replace(' ', '-')}`
-		await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, { create: true })
-		toastSuccess(t('Video Uploaded!'))
-		form.reset()
-		handleClose()
-		getVideo()
 	}
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
@@ -346,16 +361,10 @@ export default function Game() {
 				)}
 
                     </div>
-			
-
-
 
 
 
                 </div>
-                {/*end Challange*/}
-
-
 
                 <div className={`col-12 col-lg ${littleThan1200 && 'mb-3'}`}>
                     <div className="row">
@@ -445,7 +454,7 @@ export default function Game() {
  									<div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
 										<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 											className="video">
-												{console.log(video)}
+
 											<span>
 												<div className="text-white d-flex pt-3">
 													<img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
@@ -453,14 +462,29 @@ export default function Game() {
 													<p className=" ml-2 fs-12" >Oxfwd...ds3</p>
 												</div>
 											</span>
-											<img src="images/video-banner-1.png" alt="Video1" />
+											
+											{/* {console.log(video)} */}
+												{video.tiktok.length > 2 ?  
+
+													<TikTok  url="https://www.tiktok.com/@scout2015/video/6718335390845095173" />
+																// <></>
+												:
+
+												 <iframe width="" height="" src="https://www.youtube.com/embed/-LAwDM8JKwU" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+														// <></>
+											
+												}
+												{/* <TikTok url="https://www.tiktok.com/@scout2015/video/6718335390845095173" /> */}
+
+
+										
 											<div className="play-btn"></div>
 											<div className="text-white view-vid">
 
 												<div className="pt-3 d-flex align-items-center">
 													<i className="fa-regular fa-heart pr-2"></i>
 
-													<p>251 votes</p>
+													<p>{video.votes}</p>
 												</div>
 											</div>
 
@@ -498,16 +522,12 @@ export default function Game() {
                 <div className="col-12 col-xl-3">
                     <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="rounded overflow-hidden">
 
-
-
                         <div className="align-items-start border-0 justify-content-start">
                             <div>
                                 <h4 className="fs-20 font-weight-bold  mx-auto">Ranking</h4>
                                 <span className="fs-12 mt-2 font-weight-bold p-2 text-white text-nowrap">SOSX Top Token Holders</span>
                             </div>
                         </div>
-
-
 
                         <ul className="nav3 nav-rank nav3-tabs butten nav3-justified mb-3">
                             <li className="nav3-item">
@@ -523,13 +543,13 @@ export default function Game() {
 
                         <div className={`card3-body ranking`}>
 
-						{voters.sort((a, b) => a.amount - b.amount).map((voter, i) =>
-									<>
+						{voters.sort((b, a) => a.amount - b.amount).map((voter, i) =>
+									<>	
 										{voter.level == displayLevel &&
 
 											<a className="blueprint-header-display trader-display">
 											<div className="d-flex align-items-center">
-												<span className="text-white mr-3 fs-16 font-w600">1.</span>
+												<span className="text-white mr-3 fs-16 font-w600">{i + 1}.</span>
 												<img className="blueprint-img-sm rounded-circle"
 													src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
 												<div className="ml-1">
@@ -539,40 +559,29 @@ export default function Game() {
 											</div>
 											<span> {voter.amount} </span>
 											</a>
-
-
 										}
 									</>
 								)}
                         </div>
-
                     </div>
                 </div>
                 {/*end Ranking*/}
 				<Modal show={show} onHide={handleClose} centered>
 
 					<ModalHeader className="text-dark">
-							  SUBMIT YOUR VIDEO
+							  SUBMIT  LINK TO UPLOADED MEDIA
 							  <CloseButton />
 					</ModalHeader>
 
 					<div className="modal-body">
 					<form onSubmit={videoLink}>
 
-						<div className="bg-dark p-5 rounded">
-						<div className="form-group row">
-									<div {...getRootProps({className: 'dropzone'})} className="mx-auto">
-											<input {...getInputProps()} />
-											<h1>Click to select files</h1>
-									</div>
-						</div>
-						</div>
 						<div className="bg-dark  rounded fs-8">
 									<input type="text" className="form-control fs-20" id="tiktok" placeholder="TikTok link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
 						</div>
 
 						<div className="bg-dark  rounded fs-8">
-								<input type="text" className="form-control fs-20" id="youtube" placeholder="Youtube link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+								<input type="text" className="form-control fs-20" id="youtube" placeholder="Youtube link Here" value={youtubeURL} onChange={(e) => setTiktokURL(e.target.value)} />
 						</div>
 
 						<div className=" rounded p-2">
