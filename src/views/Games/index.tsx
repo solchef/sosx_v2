@@ -58,6 +58,9 @@ export default function Game() {
 		
 		// console.log(eventTime)
 		
+
+
+		
 		let leftTime = eventTime - currentTime;
 		let duration = moment.duration(leftTime, 'seconds');
 		let interval = 1000;
@@ -74,7 +77,7 @@ export default function Game() {
 	}
 
 	useEffect(() => {
-		
+
 		const target = moment.unix(1652386763);
 		const interval = setInterval(() => {
 			
