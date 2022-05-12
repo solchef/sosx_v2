@@ -114,7 +114,7 @@ const onReCAPTCHAChange = async (captchaCode) => {
                   <div className="row mb-3">
                     <input
                       className="input1"
-                      type="email"
+                      type="text"
                       name="title"
                       onChange={(e) => setEmailAdrress(e.target.value)}
                       value={email_address}

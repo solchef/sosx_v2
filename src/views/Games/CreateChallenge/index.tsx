@@ -75,7 +75,7 @@ const CreateChallenge = () => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
     
-    if(votingLevel >= 2){
+    if(votingLevel == 0){
 
    
     try {

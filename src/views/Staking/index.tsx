@@ -10,6 +10,8 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { MaxUint256 } from '@ethersproject/constants'
 import { calculateGasMargin } from 'utils'
 import axios from 'axios'
+import ConnectWalletButton from '../../components/ConnectWalletButton'
+
 
 
 const BorderCard = styled.div`
@@ -304,6 +306,10 @@ export default function Staking() {
 										</div>
 									
 							</div>
+
+					{!account ? (
+                     <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4"/>
+                    	) : 
 							<>
 								
 								{activateStake ? 
@@ -329,7 +335,7 @@ export default function Staking() {
                                          </button>
                                     </div>
                                  }
-								</>
+								</>}
 							</div>
 
 						</div>
