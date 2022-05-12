@@ -41,15 +41,7 @@ export default function Game() {
 	const videoElem = useRef();
 	const videoInput = useRef();
 	const [imgSrc, setImgSrc] = useState('');
-  let [targeta ,setTarget] = useState(0);
-
-	const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
-
-	// const files = acceptedFiles.map(file => (
-	// 	<li key={file.path}>
-	// 	  {file.path} - {file.size} bytes
-	// 	</li>
-	//   ));
+ 	let [stage ,setStage] = useState(0);
 	
 	const calculateTimeLeft = (entryTime) => {
 
@@ -57,7 +49,7 @@ export default function Game() {
 		let currentTime = Number((Math.floor(Date.now() / 1000)).toString());
 		
 		// console.log(eventTime)
-		
+
 
 
 		
@@ -72,18 +64,46 @@ export default function Game() {
 		setHours(duration.hours());
 		setMinutes(duration.minutes());
 		setSeconds(duration.seconds()); 
-		// return (duration.days() + 'D:' + duration.hours()+ 'H:' + duration.minutes()+ 'M:' + duration.seconds() + 'S');
-
 	}
 
 	useEffect(() => {
 
-		const target = moment.unix(1652386763);
-		const interval = setInterval(() => {
-			
+		const startTime = moment().unix();
+		// const startTime = moment.unix(1652390481);
+		const endTime = moment.unix(1652394081)
+		// console.log(endTime.quarters())
 
-			 calculateTimeLeft(target)
-	
+		let stageGroups = [];
+		let roundStartTime = 1652394081;
+		// env specify stage durations 1 = 1/2, 2 = 1/2, 3=1, 4=2, 
+		let stage1 = {
+			start: 1652394081,
+			end: 1652394081 + 1 * 30 
+		}
+
+		let stage2 = {
+			start: stage1.end + 1,
+			end: 1652394081 + 1 * 30 
+		}
+
+		let stage3 = {
+			start: stage2.end + 1,
+			end: 1652394081 + 1 * 1
+		}
+
+		let stage4 = {
+			start: stage3.end + 1,
+			end: (stage3.end + 1) + 2 * 1 * 1
+		}
+
+
+        //  let currentStage;   check now and start time of stage and less than endtime 
+		  
+
+		const interval = setInterval(() => {
+		
+			calculateTimeLeft(endTime)
+			setStage(stage++)
 		
 		}, 1000);
 		return () => clearInterval(interval);
@@ -229,9 +249,7 @@ export default function Game() {
 		setVoters(voters);
 	}
 
-	 const getLevel = (amount) => {
-		console.log(process.env.NEXT_PUBLIC_LEVEL1)
-		
+	 const getLevel = (amount) => {		
 		if (amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2) { return 1; }
 
 		if (amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3) { return 2; }
@@ -264,7 +282,7 @@ export default function Game() {
 
                             </div>
 
-                            <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 mx-auto pr-1 fs-14 pt-0 pb-0 mr-3 text-white"> Stage {targeta}</p>
+                            <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 mx-auto pr-1 fs-14 pt-0 pb-0 mr-3 text-white"> Stage {stage}</p>
                         </div>
                         <div className="clock mb-3 pr-2 pl-2 pb-2">
                             <div className="d-flex justify-content-start" id="countdown">
