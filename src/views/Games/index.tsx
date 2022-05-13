@@ -184,33 +184,30 @@ export default function Game() {
 
 
 	const loadDaoLevels = async () => {
+		let daoList = await contract.getAllAccount();
+		daoList = [...new Set(daoList)];
 
-		 contract.getAllAccount().then(daoList => {
-			daoList = [...new Set(daoList)];
-			console.log(daoList)
-			let voters = [];
-				for (let i = 0; i < daoList.length; i++) {
-					console.log(voters.findIndex(vt => vt.address == daoList[i]) != -1)
-					// if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
-						let voter_address = daoList[i];
-						contract.getVoterTotalStakeAmount(voter_address).then(total_stake => {
-								// console.log(total_stake);
-								total_stake = Number(total_stake / 10 ** 18);
-								let data = {
-									address: voter_address,
-									amount: total_stake,
-									level: getLevel(total_stake)
-								}
-								voters.push(data);
-						});
+		console.log(daoList);
+		let voters = [];
+		for (let i = 0; i < daoList.length; i++) {
+			console.log(voters.findIndex(vt => vt.address == daoList[i]) != -1)
+			// if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
+				let voter_address = daoList[i];
+					let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
+					// console.log(total_stake);
+					total_stake = Number(total_stake / 10 ** 18);
+					let data = {
+						address: voter_address,
+						amount: total_stake,
+						level: getLevel(total_stake)
+					}
+					voters.push(data);
 
-					// }
-					
-				}
+			// }
+			
+		}
 
 		setVoters(voters);
-		})
-		
 	}
 
 	 const getLevel = (amount) => {		
@@ -318,7 +315,7 @@ export default function Game() {
 
                                         </div>
                                         <p className="fs-10 text-white">Vote a challenge created by Level 2 & Level 3 Community</p>
-                                        <button type="button" className="btn w-0 text-nowrap p-2 fs-12 mt-3 btn-success">Vote Now</button>
+                                        <button disabled={stage !== 2 && stage !== 3} type="button" className="btn w-0 text-nowrap p-2 fs-12 mt-3 btn-success">Vote Now</button>
 
                                     </div>
                                     <div className="m-0 p-2 col-5 flex-wrap flex-row d-flex align-content-center justify-content-center">
@@ -332,63 +329,62 @@ export default function Game() {
                         }
 
 
-
-
-
-						{/*start Challange*/}
-						
+                        {/*start Challange*/}
                         <div className={`col-xl-8 col-md-12 col-sm-12`}>
                             <div className=" backgroun-dark d-flex rounded  p-4 h-100 text-white flex-column">
-							{todayChallenge ? 
+							{todayChallenge ? (
 							<>
-                                <span className="text-white pt-1 fs-18 d-flex align-items-center pb-1 mb-1"> <img src="images/submission-date-icon.png" width='20px' height='20px' className="mr-2" />THIS WEEK CHALLENGE </span>
-                                <span className="text-white pt-1 fs-22 pb-2 font-weight-bold">{todayChallenge.challenge.payload.name} </span>
 
-                                <div className="d-flex align-items-center">
-                                    <i className="fa-regular main-pink fa-heart mr-2"></i>
+								<span className="text-white pt-1 fs-18 d-flex align-items-center pb-1 mb-1"> <img src="images/submission-date-icon.png" width='20px' height='20px' className="mr-2" />THIS WEEK CHALLENGE </span>
+								<span className="text-white pt-1 fs-22 pb-2 font-weight-bold">{todayChallenge.challenge.payload.name}</span>
 
-                                    <span className="fs-10">{todayChallenge.votes} votes</span>
+								<div className="d-flex align-items-center">
+									<i className="fa-regular main-pink fa-heart mr-2"></i>
+
+									<span className="fs-10">{todayChallenge.votes} votes</span>
 
 
-                                    <img className="ml-3 width-22 fs-22" src="/images/dp.png" />
+									<img className="ml-3 width-22 fs-22" src="/images/dp.png" />
 
-                                    <span className="ml-2 fs-12 font-weight-bold">{String(todayChallenge.challenge.payload.creator).slice(0, 5)}...{String(todayChallenge.challenge.payload.creator).slice(-5)}</span>
+									<span className="ml-2 fs-12 font-weight-bold">{String(todayChallenge.challenge.payload.creator).slice(0, 5)}...{String(todayChallenge.challenge.payload.creator).slice(-5)}</span>
 
-                                    <p className=" ml-3 p-1 fs-10 bg-pink-radius  text-white"> Level 3</p>
+									<p className=" ml-3 p-1 fs-10 bg-pink-radius  text-white"> Level 3</p>
 
-                                </div>
-
-                                <div className="row">
+								</div>
+								<div className="row">
                                     <div className="col-7 d-flex pt-1 pb-1 flex-column ">
                                         <span className="text-muted pb-1 fs-12 mt-3">Details</span>
                                         <p className="fs-12">{todayChallenge.challenge.payload.body}</p>
                                     </div>
                                     <div className="col-5 d-flex pt-1 pb-1 pt-3 flex-column ">
                                         <span className="text-muted pb-3 fs-12">Rules:</span>
-
-								
-							 		  	{todayChallenge.challenge.payload.choices.map((element) => 
-									 
-										  	<div className="d-flex pb-3 align-items-center">
-													<i className="fa-solid fa-check pr-2 main-pink"></i>
-													<p className="fs-12">{element}.</p>
-												</div>
+                                        
+										{todayChallenge.challenge.payload.choices.map((element) => 
+											<div className="d-flex pb-3 align-items-center">
+                                            <i className="fa-solid fa-check pr-2 main-pink"></i>
+                                            <p className="fs-12">{element}</p>
+                                        </div>
 										)}
-                                        <button type="button" className="btn ml-auto btn-primary">Details</button>
+										<Link href={`/challenge/${String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')}`}>
+										<button type="button" className="btn ml-auto btn-primary">Details</button>
+	 									</Link>
+
 
                                     </div>
+
                                 </div>
 								</>
-								:
-								<div className="mx-auto my-auto">
-									<p>Loading</p>
-								</div>			
-							 }
+								) : (
+									<div className="mx-auto my-auto">
+										<p>Loading</p>
+									</div>
+
+								)}
+
                             </div>
 
                         </div>
                         {/*end Challange*/}
-
 
                         {(bet1200and1500 || biggest576) &&
                             
@@ -404,7 +400,7 @@ export default function Game() {
 
                                                 <span className="fs-10 text-white">Challenge will be created by Level 2 & Level 3 Community  </span>
                                             </div>
-                                            <button type="button" className="btn text-nowrap p-1 fs-12 mt-3 btn-success">Create Now</button>
+                                            <button disabled={stage !== 1} type="button" className="btn text-nowrap p-1 fs-12 mt-3 btn-success">Create Now</button>
 
                                         </div>
                                             <img src="images/createchallenge-img.png" width='40%'  />
@@ -422,7 +418,7 @@ export default function Game() {
 
                                             </div>
                                             <p className="fs-10 text-white">Vote a challenge created by Level 2 & Level 3 Community</p>
-                                            <button type="button" disabled className="btn w-0 text-nowrap p-2 fs-12 mt-3 btn-success">Vote Now</button>
+                                            <button disabled={stage !== 2 && stage !== 3} type="button" className="btn w-0 text-nowrap p-2 fs-12 mt-3 btn-success">Vote Now</button>
 
                                         </div>
                                             <img src="images/votechallenge-img.png" width='40%' />
@@ -447,7 +443,7 @@ export default function Game() {
                                     <div className="row">
 									{videos.length > 0 ? (
 									<>
-										{!videos.map((video) =>
+										{videos.map((video) =>
 										<>
 											<div className={`videos m-0 p-3 co-12 col-md-6 col-lg-4 col-xl-3 rounded`}>
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
@@ -520,7 +516,6 @@ export default function Game() {
                                     </div>
 
                                     <div className="row">
-										
                                         <div className={`videos m-0 p-3 co-12 col-md-6 col-lg-4 col-xl-3 rounded`}>
                                             <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
                                                 className="video">
@@ -642,7 +637,6 @@ export default function Game() {
                     </div>
                     {/*end video*/}
                 </div>
-
                 {/*end main*/}
                 <div className={`col-12 ${biggerThan1500 && 'col-xl-3'}`}>
                     {/*Start vote and create*/}
@@ -682,7 +676,9 @@ export default function Game() {
 
                                     </div>
                                     <p className="fs-10 text-white">Vote a challenge created by Level 2 & Level 3 Community</p>
-                                    <button type="button" className="btn w-0 text-nowrap p-2 fs-12 mt-3 btn-success">Vote Now</button>
+									<Link href="/votechallenge">
+                                     <button disabled={stage !== 2 && stage !== 3} type="button" className="btn w-0 text-nowrap p-2 fs-12 mt-3 btn-success">Vote Now</button>
+	 								</Link>
 
                                 </div>
                                 <div className="col-12 m-0 p-2 col-lg-5 flex-wrap flex-row d-flex align-content-center justify-content-center">
@@ -693,9 +689,6 @@ export default function Game() {
                         </div>
                     </div>
                     }
-
-
-
 
                     {/*end vote and create*/}
                     {/*Start Ranking*/}
@@ -709,56 +702,38 @@ export default function Game() {
                                         <span className="fs-12  font-weight-bold text-white text-nowrap">SOSX Top Token Holders</span>
                                     </div>
                                 </div>
-
-								
-								<ul className="nav3 nav-rank nav3-tabs butten nav3-justified mb-3">
-									<li className="nav3-item">
-										<a className={`nav3-link  pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(1)} >Level 1</a>
-									</li>
-									<li className="nav3-item">
-										<a className={`nav3-link pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(2)} >Level 2</a>
-									</li>
-									<li className="nav3-item">
-										<a className={`nav3-link pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(3)} >Level 3</a>
-									</li>
-								</ul>
+                                <ul className="nav3 nav-rank nav3-tabs butten nav3-justified">
+                                    <li className="nav3-item">
+                                        <a className={`nav3-link  pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(1)} >Level 1</a>
+                                    </li>
+                                    <li className="nav3-item">
+                                        <a className={`nav3-link pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(2)} >Level 2</a>
+                                    </li>
+                                    <li className="nav3-item">
+                                        <a className={`nav3-link pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(3)} >Level 3</a>
+                                    </li>
+                                </ul>
 
                                 <div className={``}>
+								{voters.sort((b, a) => a.amount - b.amount).map((voter, i) =>
+									<>	
+										{voter.level == displayLevel &&
 
-                                    {/* <a className="blueprint-header-display trader-display">
-                                        <div className="d-flex align-items-center">
-                                            <span className="text-white mr-3 fs-16 font-w600">1.</span>
-                                            <img className="blueprint-img-sm rounded-circle"
-                                                src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-                                            <div className="ml-1">
-                                                <span
-                                                    className=" card-small-text text-white trader-name">ddsdsdsdsdsd</span>
-                                            </div>
-                                        </div>
-                                        <span> fdfsdfsdfs </span>
-                                    </a> */}
-
-										{voters.sort((b, a) => a.amount - b.amount).map((voter, i) =>
-											<>	
-												{voter.level == displayLevel &&
-
-													<a className="blueprint-header-display trader-display">
-													<div className="d-flex align-items-center">
-														<span className="text-white mr-3 fs-16 font-w600">{i + 1}.</span>
-														<img className="blueprint-img-sm rounded-circle"
-															src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-														<div className="ml-1">
-															<span
-																className="mb-1 card-small-text text-white trader-name">{voter.address.replace(/(.{10})..+/, "$1…")}</span>
-														</div>
-													</div>
-													<span> {voter.amount} </span>
-													</a>
-												}
-											</>
-										)}
-
-                                  
+											<a className="blueprint-header-display trader-display">
+											<div className="d-flex align-items-center">
+												<span className="text-white mr-3 fs-16 font-w600">{i + 1}.</span>
+												<img className="blueprint-img-sm rounded-circle"
+													src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
+												<div className="ml-1">
+													<span
+														className=" card-small-text text-white trader-name">{voter.address.replace(/(.{10})..+/, "$1…")}</span>
+												</div>
+											</div>
+											<span> {voter.amount} </span>
+											</a>	
+										}
+									</>
+								)}
                                 </div>
 
                             </div>
@@ -770,352 +745,5 @@ export default function Game() {
             </div>
         </div>
     </>
-
-
-
-	// 	<>
-    //     <div className="container-fluid">
-    //         <div className="row ">
-    //             {/*start Time with prize pool */}
-    //             <div className={`col-12  col-lg ${biggerThan1800 && 'col-xl-3'} ${littleThan1200 && 'mb-3'}`}>
-    //                 <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="d-flex p-3 m-0 h-100 rounded justify-content-start flex-column  ">
-    //                     <div className="d-flex align-items-center mt-2 mb-3 justify-content-start">
-    //                         <div className="d-flex align-items-between">
-
-    //                             <img src="images/submission-date-icon.png" style={{ width: '24px', height: '24px' }} />
-
-    //                             <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white pl-2">TIME REMAINING </span>
-
-    //                         </div>
-
-    //                         <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 mx-auto pr-1 fs-14 pt-0 pb-0 mr-3 text-white"> Stage {stage !== 5 ?  stage : "No Challenges for now"}</p>
-    //                     </div>
-    //                     <div className="clock mb-3 pr-2 pl-2 pb-2">
-    //                         <div className="d-flex justify-content-start" id="countdown">
-    //                             <div className="d-flex justify-content-start align-items-center">
-
-
-    //                                 <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >{days}</span>days</p>
-    //                                 <p className="li"><span className="" >:</span></p>
-    //                             </div>
-
-    //                             <div className="d-flex justify-content-start align-items-center">
-
-    //                                 <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >{hours}</span>Hours</p>
-    //                                 <p className="li"><span className="" >:</span></p>
-    //                             </div>
-    //                             <div className="d-flex justify-content-start align-items-center">
-
-    //                                 <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >{minutes}</span>Minutes</p>
-    //                                 <p className="li"><span className="" >:</span></p>
-    //                             </div>
-
-    //                             <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }}>{seconds}</span>Seconds</p>
-    //                         </div>
-    //                     </div>
-    //                     <div className="d-flex mb-3 mt-2 align-items-center">
-
-    //                         <img src="images/prize-pool-icon.png" style={{ width: '24px', height: '24px' }} />
-
-    //                         <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white pl-2">PRIZE POOL</span>
-
-    //                     </div>
-    //                     <span style={{ fontWeight: '1000 ', fontSize: '60px' }} className="mb-3 main-pink">$ 1,000.00
-    //                     </span>
-    //                     <span className="text-muted mb-3 fs-12">et! Possimus ea repudi?repudndae in? fdfsd  dfssfds
-    //                     </span>
-	// 					{!account && stage !== 4 ? (
-    //                  <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4"/>
-    //                 	) : (<button disabled={stage !== 4} onClick={handleShow} className="btn pt-1 pb-1 btn-primary">Upload Video</button>)
-	// 					} 
-    //                 </div>
-    //             </div>
-
-    //             {/*end Time with prize pool */}
-
-
-    //             {/*start Challange*/}
-    //             <div className={`col-12 col-lg-6  ${biggerThan1650 && 'col-xl-7'}  ${biggerThan1800 && 'col-xl-6 '} ${littleThan1200 && 'mb-3'}`}>
-				
-    //                 <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="d-flex rounded m-0 h-100  p-3 pl-4 text-white flex-column">
-	// 				{todayChallenge ? (
-	// 					<>
-    //                     <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white mt-2">THIS WEEK CHALLENGE </span>
-    //                     <span style={{ fontWeight: '1000 ', fontSize: '18px' }} className="text-white pt-3">{todayChallenge.challenge.payload.name} </span>
-
-    //                     <div className="pt-3 main-pink">
-    //                         <i className="fa-regular fa-heart pr-3"></i>
-
-    //                         <span>{todayChallenge.votes} votes</span>
-    //                     </div>
-    //                     <div className="d-flex align-items-center pt-3">
-    //                         <span>Creator</span>
-    //                         <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 pr-1 pt-0 pb-0 ml-3 fs-14 text-white"> Level 3</p>
-
-    //                     </div>
-
-    //                     <div className="d-flex align-items-center pt-3">
-    //                         <img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
-
-    //                         <span className="ml-3">{String(todayChallenge.challenge.payload.creator).slice(0, 5)}...{String(todayChallenge.challenge.payload.creator).slice(-5)}</span>
-    //                     </div>
-
-    //                     <div className="d-flex flex-column pt-3">
-    //                         <span className="text-muted pb-1">Details:</span>
-    //                         <p className="fs-14">{todayChallenge.challenge.payload.body}</p>
-    //                     </div>
-
-    //                     <div className="d-flex flex-column pt-3">
-    //                         <span className="text-muted pb-1">Roles:</span>
-	// 						{todayChallenge.challenge.payload.choices.map((element) => 
-	// 							<div className="d-flex align-items-center">
-	// 							<i className="fa-solid fa-check pr-2 main-pink"></i>
-	// 							<p className="fs-12">{element}</p>
-	// 							</div>
-	// 						)}
-    //                     </div>
-
-	// 					</>
-
-	// 					) : (
-	// 						<div className="mx-auto my-auto">
-	// 							<p>Loading</p>
-	// 						</div>
-					
-	// 			)}
-
-    //                 </div>
-
-
-
-    //             </div>
-
-    //             <div className={`col-12 col-lg ${littleThan1200 && 'mb-3'}`}>
-    //                 <div className="row">
-    //                 <div className={`col-5 ${biggerThan1800 && 'col-xl-12'} ${biggerThan1650 && 'mt-5'} ${littThan1650 && 'col-xl-12'}`}>
-    //                     <div style={{ backgroundColor: 'rgb(17 17 22)' }} className=" row m-0 p-0 h-auto rounded">
-    //                         <div className="col-12 col-lg-6">
-    //                             <div className="d-flex flex-column">
-    //                                 <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white pt-3 ">Create </span>
-    //                                 <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white "> CHALLENGE </span>
-
-
-    //                                 <span className="fs-14 pt-2 text-white">Create a new challenge to be voted</span>
-	// 								<Link href="/createchallenge">
-    //                                 <button disabled={stage !== 1} type="button" className="btn mt-3 mb-2 btn-success">Create Now</button>
-	// 								</Link>
-    //                             </div>
-
-    //                         </div>
-    //                         <div className="col-12 col-lg-6">
-    //                             <img src="images/createchallenge-img.png" />
-
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //                 <div className={`col-5 ${biggerThan1800 && 'col-xl-12'} ${littThan1650 && 'col-xl-12'}`}>
-
-    //                     <div style={{ backgroundColor: 'rgb(17 17 22)' }} className={` row m-0 mt-5 p-0 rounded ${littleThan1200 && '  '}`}>
-    //                         <div className="col-12 col-lg-6">
-    //                             <div className="d-flex flex-column">
-    //                                 <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white pt-3 ">Vote </span>
-    //                                 <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white "> CHALLENGE </span>
-
-
-    //                                 <span className="fs-14 pt-2 text-white">Vote challenges created by DAO members </span>
-	// 								<Link href="/votechallenge">
-    //                                 <button disabled={stage !== 2 && stage !== 3} type="button" className="btn mt-3 mb-2 btn-success">Vote Now</button>
-	// 								</Link>
-    //                             </div>
-
-    //                         </div>
-    //                         <div className="col-12 col-lg-6">
-    //                             <img src="images/votechallenge-img.png" />
-
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //                 </div>
-                 
-
-    //             </div>
-
-
-
-    //         </div>
-    //         <div className="row mt-3">
-    //             <div className="col-12 col-xl-9">
-					
-    //                 <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="rounded" >
-    //                     <div className="d-flex mb-2 flex-column">
-
-    //                         {/* <div className="d-flex justify-content-between  mb-2  align-items-center">
-
-    //                             <p className="text-white  font-weight-bold" style={{ fontWeight: '1000 ', fontSize: '22px' }} >MOST VIEWED CHALLENGES <span className="main-pink">7 DAY</span></p>
-    //                             <button type="button" className="btn pl-2 pt-1 pb-1 pr-2 btn-success font-weight-bold ">View All</button>
-
-    //                         </div> */}
-
-    //                         <div className="row ">
-    //                         </div>
-    //                     </div>
-
-    //                     <div className="d-flex mb-2 flex-column">
-
-    //                         <div className="d-flex justify-content-between  mb-2  align-items-center">
-
-    //                             <p className="text-white  font-weight-bold" style={{ fontWeight: '1000 ', fontSize: '22px' }} >MOST VIEWED CHALLENGES <span className="main-pink">7 DAY</span></p>
-    //                             <button type="button" className="btn pl-2 pt-1 pb-1 pr-2 btn-success font-weight-bold ">View All</button>
-
-    //                         </div>
-
-    //                         <div className="row">
-
-								// {videos.length > 0 ? (
-								// 	<>
-								// 		{videos.map((video) =>
-								// 		<>
- 								// 	<div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
-								// 		<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-								// 			className="video">
-
-								// 			<span>
-								// 				<div className="text-white d-flex pt-3">
-								// 					<img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
-
-								// 					<p className=" ml-2 fs-12" >Oxfwd...ds3</p>
-								// 				</div>
-								// 			</span>
-											
-								// 			{/* {console.log(video)} */}
-								// 				{video.tiktok.length > 2 ?  
-
-								// 					<TikTok  url="https://www.tiktok.com/@scout2015/video/6718335390845095173" />
-								// 								// <></>
-								// 				:
-
-								// 				 <iframe width="" height="" src="https://www.youtube.com/embed/-LAwDM8JKwU" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-								// 						// <></>
-											
-								// 				}
-								// 				{/* <TikTok url="https://www.tiktok.com/@scout2015/video/6718335390845095173" /> */}
-
-
-										
-								// 			<div className="play-btn"></div>
-								// 			<div className="text-white view-vid">
-
-								// 				<div className="pt-3 d-flex align-items-center">
-								// 					<i className="fa-regular fa-heart pr-2"></i>
-
-								// 					<p>{video.votes}</p>
-								// 				</div>
-								// 			</div>
-
-								// 		</a>
-                                //     <style jsx>{`
-								// 		.view-vid {
-								// 			position: absolute;
-								// 			bottom:7px;
-								// 			left:5px;
-								// 		}
-										
-								// 	`}</style>
-								// 		</div>
-								// 		</>
-								// 		)}
-								// 	</>
-								// ) : (
-								// 	// <p>No Videos</p>
-								// 	<div className="row">
-								// 		<div className="justify-center">
-								// 		<p>No Videos</p>
-
-								// 		</div>
-								// 	</div>
-								// )}
-                               
-    //                         </div>
-    //                     </div>
-    //                 </div>
-
-
-
-    //             </div>
-    //             {/*Start Ranking*/}
-    //             <div className="col-12 col-xl-3">
-    //                 <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="rounded overflow-hidden">
-
-    //                     <div className="align-items-start border-0 justify-content-start">
-    //                         <div>
-    //                             <h4 className="fs-20 font-weight-bold  mx-auto">Ranking</h4>
-    //                             <span className="fs-12 mt-2 font-weight-bold p-2 text-white text-nowrap">SOSX Top Token Holders</span>
-    //                         </div>
-    //                     </div>
-
-    //                     <ul className="nav3 nav-rank nav3-tabs butten nav3-justified mb-3">
-    //                         <li className="nav3-item">
-    //                             <a className={`nav3-link  pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(1)} >Level 1</a>
-    //                         </li>
-    //                         <li className="nav3-item">
-    //                             <a className={`nav3-link pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(2)} >Level 2</a>
-    //                         </li>
-    //                         <li className="nav3-item">
-    //                             <a className={`nav3-link pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(3)} >Level 3</a>
-    //                         </li>
-    //                     </ul>
-
-    //                     <div className={`card3-body ranking`}>
-
-	// 					{voters.sort((b, a) => a.amount - b.amount).map((voter, i) =>
-	// 								<>	
-	// 									{voter.level == displayLevel &&
-
-	// 										<a className="blueprint-header-display trader-display">
-	// 										<div className="d-flex align-items-center">
-	// 											<span className="text-white mr-3 fs-16 font-w600">{i + 1}.</span>
-	// 											<img className="blueprint-img-sm rounded-circle"
-	// 												src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-	// 											<div className="ml-1">
-	// 												<span
-	// 													className="mb-1 card-small-text text-white trader-name">{voter.address.replace(/(.{10})..+/, "$1…")}</span>
-	// 											</div>
-	// 										</div>
-	// 										<span> {voter.amount} </span>
-	// 										</a>
-	// 									}
-	// 								</>
-	// 							)}
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //             {/*end Ranking*/}
-	// 			<Modal show={show} onHide={handleClose} centered>
-
-	// 				<ModalHeader className="text-dark">
-	// 						  SUBMIT  LINK TO UPLOADED MEDIA
-	// 						  <CloseButton />
-	// 				</ModalHeader>
-
-	// 				<div className="modal-body">
-	// 				<form onSubmit={videoLink}>
-
-	// 					<div className="bg-dark  rounded fs-8">
-	// 								<input type="text" className="form-control fs-20" id="tiktok" placeholder="TikTok link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
-	// 					</div>
-
-	// 					<div className="bg-dark  rounded fs-8">
-	// 							<input type="text" className="form-control fs-20" id="youtube" placeholder="Youtube link Here" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />
-	// 					</div>
-
-	// 					<div className=" rounded p-2">
-	// 				     	<button className="btn btn-primary w-100">Submit</button>
-	// 					</div>
-	// 				</form>
-	// 				</div>
-	// 			</Modal>
-    //         </div>
-    //     </div>
-    // </>
 	)
 }
