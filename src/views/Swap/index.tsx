@@ -102,8 +102,8 @@ export default function Swap() {
   const [isChartDisplayed, setIsChartDisplayed] = useState(false)
   const { refreshBlockNumber, isLoading } = useRefreshBlockNumberID()
   const [userSlippageTolerance, setUserSlippageTolerance] = useUserSlippageTolerance()
-  const [referedby, setReferrerAddress] = useState('')
-
+  const [referrerAddress, setReferrerAddress] = useState('')
+ let referedby=null;
   
   useEffect(() => {
     setUserChartPreference(isChartDisplayed)
@@ -113,11 +113,14 @@ export default function Swap() {
       // console.log(param)
       if(param){
         setReferrerAddress(param.get('ref')) ;
+        
+        referedby=param.get('ref');
         console.log(referedby);
       //  @ts-ignore
         localStorage.setItem('referral',param.get('ref'))
+        if(referedby!=null){
         getaccountDetails(); 
-      }
+      }}
     // }
  
     setUserSlippageTolerance(3700)
@@ -146,6 +149,7 @@ export default function Swap() {
   const gotrefered=account;
   
   const getaccountDetails = async() => {
+    if(account){
     let post = {
       gotrefered,
       referedby,
@@ -160,6 +164,7 @@ export default function Swap() {
   // get the data
   let data = await response.json();
 console.log(data)
+}
 }
 
 
