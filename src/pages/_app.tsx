@@ -41,6 +41,16 @@ function GlobalHooks() {
   return null
 }
 
+const noOverlayWorkaroundScript = `
+  window.addEventListener('error', event => {
+    event.stopImmediatePropagation()
+  })
+
+  window.addEventListener('unhandledrejection', event => {
+    event.stopImmediatePropagation()
+  })
+`
+
 function MyApp(props: AppProps) {
   const { pageProps } = props
   const store = useStore(pageProps.initialReduxState)
@@ -65,6 +75,7 @@ function MyApp(props: AppProps) {
         <meta name="twitter:card" content="Welcome to the social experiment" />
         <meta name="twitter:title" content="SocialX" />
         <title>SOCIALx</title>
+        {/* {process.env.NODE_ENV !== 'production' && <script dangerouslySetInnerHTML={{ __html: noOverlayWorkaroundScript }} />} */}
       </Head>
       <Providers store={store}>
         <Blocklist>
