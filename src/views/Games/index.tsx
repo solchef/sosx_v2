@@ -13,6 +13,7 @@ import { validLinks } from "utils/validateLink";
 import Masonry from "react-masonry-css";
 import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { cleanNumber } from "utils/amount";
+import { Skeleton } from "../../../packages/uikit/src/components/Skeleton";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -21,7 +22,7 @@ const server = create({
 export default function Game() {
   const { account } = useActiveWeb3React();
   const [days, setDays] = useState(0);
-  const { toastError } = useToast();
+  const { toastError, toastSuccess } = useToast();
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -157,7 +158,12 @@ export default function Game() {
     evt.preventDefault();
     const form = event.target as HTMLFormElement;
 
-    if (!validLinks(youtubeURL, tiktokURL)) {
+    if (!youtubeURL && !tiktokURL) {
+      toastError("One Link Required");
+      return
+    }
+
+    if (validLinks(youtubeURL, tiktokURL) == true) {
       const data = JSON.stringify(
         {
           youtube: youtubeURL,
@@ -178,41 +184,18 @@ export default function Game() {
       );
       form.reset();
       handleClose();
+      toastSuccess("Uploaded")
       getVideo();
     } else {
-      if (validLinks(youtubeURL, tiktokURL) == "One Link Required") {
-        toastError("One Link Required");
-      }
-      if (validLinks(youtubeURL, tiktokURL) == "Invalid Youtube Link")
-        toastError("Invalid Youtube Link");
-      if (validLinks(youtubeURL, tiktokURL) == "Invalid TikTok Link") {
-        toastError("Invalid TikTok Link");
-      }
+      toastError("Not Valid Links");
     }
   };
   const [showDonate, setShowDonate] = useState(false);
   const handleCloseDonate = () => setShowDonate(false);
-  const handleShowDonate= () => setShowDonate(true);
-  
-  const handleSubmitDonate = async () => {
-    // await contract.stakeToken(
-    //   (amountToStake * 10 ** 18).toString(),
-    //   referralAddress,
-    //   stakingClass
-    // );
-    // setActivatestake(true);
-    // setLoading(false);
-    // listUserStaking();
-    //   } else {
-    //     let signer = contract.signer;
-    //     signer.sendTransaction();
-    //     // 	toastError("token allowance not yet set");
-    //   }
-    // } else {
-    //   toastError("Insufficient Balance");
-    // }
-  };
+  const handleShowDonate = () => setShowDonate(true);
 
+  const handleSubmitDonate = async () => {
+  };
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -362,7 +345,8 @@ export default function Game() {
                   </div>
 
                   <span className="text-muted pb-2  fs-12">
-                    Really want this challenge to be done? <a onClick={handleShowDonate}>Donate to pool</a>
+                    Really want this challenge to be done?{" "}
+                    <a onClick={handleShowDonate}>Donate to pool</a>
                   </span>
                   <span className=" fs-28 pt-1 pb-3 font-weight-bold main-pink">
                     $ 1,000.00
@@ -529,8 +513,12 @@ export default function Game() {
                       </div>
                     </>
                   ) : (
-                    <div className="mx-auto my-auto">
-                      <p>Loading</p>
+                    <div className="col-12 col-xl-4 col-md-6">
+                      <Skeleton className="mb-2" width={"60%"} />
+                      <Skeleton className="mb-2" width={"100%"} />
+                      <Skeleton className="mb-2" width={"50%"} />
+                      <Skeleton className="mb-2" width={"80%"} height={100} />
+                      <Skeleton className="mb-2" width={"80%"} />
                     </div>
                   )}
                 </div>
@@ -1078,7 +1066,7 @@ export default function Game() {
                     {voters
                       .sort((b, a) => a.amount - b.amount)
                       .map((voter, i) => (
-                        <>
+                        <span key={i}>
                           {voter.level == displayLevel && (
                             <a className="blueprint-header-display trader-display">
                               <div className="d-flex align-items-center">
@@ -1099,7 +1087,7 @@ export default function Game() {
                               <span> {cleanNumber(voter.amount + "")} </span>
                             </a>
                           )}
-                        </>
+                        </span>
                       ))}
                   </div>
                 </div>
@@ -1140,30 +1128,28 @@ export default function Game() {
               />
             </div>
 
-						<div className=" rounded p-2">
-					     	<button className="btn btn-primary w-100">Submit</button>
-						</div>
-					</form>
-					</div>
-				</Modal>
+            <div className=" rounded p-2">
+              <button className="btn btn-primary w-100">Submit</button>
+            </div>
+          </form>
+        </div>
+      </Modal>
 
-        <Modal show={showDonate} onHide={handleCloseDonate} centered>
+      <Modal show={showDonate} onHide={handleCloseDonate} centered>
+        <ModalHeader className="text-dark">
+          Donate
+          <CloseButton />
+        </ModalHeader>
 
-					<ModalHeader className="text-dark">
-							  Donate
-							  <CloseButton />
-					</ModalHeader>
-
-					<div className="modal-body">
-					<form onSubmit={handleSubmitDonate}>
-					Hi
-						<div className=" rounded p-2">
-					     	<button className="btn btn-primary w-100">Submit</button>
-						</div>
-					</form>
-					</div>
-				</Modal>
-
+        <div className="modal-body">
+          <form onSubmit={handleSubmitDonate}>
+            Hi
+            <div className=" rounded p-2">
+              <button className="btn btn-primary w-100">Submit</button>
+            </div>
+          </form>
+        </div>
+      </Modal>
     </>
   );
 }
