@@ -15,7 +15,7 @@ const sentryWebpackPluginOptions = {
     dryRun: !process.env.SENTRY_AUTH_TOKEN, // Set to true will skip the upload release step
     // https://stackoverflow.com/questions/61011281/next-js-source-maps-with-typescript-on-sentry
     include: '.',
-    ignore: ['node_modules', 'cypress'],
+    ignore: ['node_modules'],
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options.
 }
