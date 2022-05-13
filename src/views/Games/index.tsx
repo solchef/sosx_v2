@@ -184,30 +184,33 @@ export default function Game() {
 
 
 	const loadDaoLevels = async () => {
-		let daoList = await contract.getAllAccount();
-		daoList = [...new Set(daoList)];
 
-		console.log(daoList);
-		let voters = [];
-		for (let i = 0; i < daoList.length; i++) {
-			console.log(voters.findIndex(vt => vt.address == daoList[i]) != -1)
-			// if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
-				let voter_address = daoList[i];
-					let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-					// console.log(total_stake);
-					total_stake = Number(total_stake / 10 ** 18);
-					let data = {
-						address: voter_address,
-						amount: total_stake,
-						level: getLevel(total_stake)
-					}
-					voters.push(data);
+		 contract.getAllAccount().then(daoList => {
+			daoList = [...new Set(daoList)];
+			console.log(daoList)
+			let voters = [];
+				for (let i = 0; i < daoList.length; i++) {
+					console.log(voters.findIndex(vt => vt.address == daoList[i]) != -1)
+					// if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
+						let voter_address = daoList[i];
+						contract.getVoterTotalStakeAmount(voter_address).then(total_stake => {
+								// console.log(total_stake);
+								total_stake = Number(total_stake / 10 ** 18);
+								let data = {
+									address: voter_address,
+									amount: total_stake,
+									level: getLevel(total_stake)
+								}
+								voters.push(data);
+						});
 
-			// }
-			
-		}
+					// }
+					
+				}
 
 		setVoters(voters);
+		})
+		
 	}
 
 	 const getLevel = (amount) => {		
@@ -332,27 +335,24 @@ export default function Game() {
 
 
 
-
-
-
-
-
-                        {/*start Challange*/}
+						{/*start Challange*/}
+						
                         <div className={`col-xl-8 col-md-12 col-sm-12`}>
                             <div className=" backgroun-dark d-flex rounded  p-4 h-100 text-white flex-column">
-
+							{todayChallenge ? 
+							<>
                                 <span className="text-white pt-1 fs-18 d-flex align-items-center pb-1 mb-1"> <img src="images/submission-date-icon.png" width='20px' height='20px' className="mr-2" />THIS WEEK CHALLENGE </span>
-                                <span className="text-white pt-1 fs-22 pb-2 font-weight-bold">Jump over the parlement wall </span>
+                                <span className="text-white pt-1 fs-22 pb-2 font-weight-bold">{todayChallenge.challenge.payload.name} </span>
 
                                 <div className="d-flex align-items-center">
                                     <i className="fa-regular main-pink fa-heart mr-2"></i>
 
-                                    <span className="fs-10">251 votes</span>
+                                    <span className="fs-10">{todayChallenge.votes} votes</span>
 
 
                                     <img className="ml-3 width-22 fs-22" src="/images/dp.png" />
 
-                                    <span className="ml-2 fs-12 font-weight-bold">Oxflaaddswd...1523</span>
+                                    <span className="ml-2 fs-12 font-weight-bold">{String(todayChallenge.challenge.payload.creator).slice(0, 5)}...{String(todayChallenge.challenge.payload.creator).slice(-5)}</span>
 
                                     <p className=" ml-3 p-1 fs-10 bg-pink-radius  text-white"> Level 3</p>
 
@@ -361,31 +361,34 @@ export default function Game() {
                                 <div className="row">
                                     <div className="col-7 d-flex pt-1 pb-1 flex-column ">
                                         <span className="text-muted pb-1 fs-12 mt-3">Details</span>
-                                        <p className="fs-12">Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos. Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id <br /><br />dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos!</p>
+                                        <p className="fs-12">{todayChallenge.challenge.payload.body}</p>
                                     </div>
                                     <div className="col-5 d-flex pt-1 pb-1 pt-3 flex-column ">
                                         <span className="text-muted pb-3 fs-12">Rules:</span>
-                                        <div className="d-flex pb-3 align-items-center">
-                                            <i className="fa-solid fa-check pr-2 main-pink"></i>
-                                            <p className="fs-12">Lorem ipsum dolor sit amet consectetuds.</p>
-                                        </div>
-                                        <div className="d-flex pb-3 align-items-center">
-                                            <i className="fa-solid fa-check pr-2 main-pink"></i>
-                                            <p className="fs-12">Lorem ipsum dolor sit amet consectetuds.</p>
-                                        </div>
-                                        <div className="d-flex pb-3 align-items-center">
-                                            <i className="fa-solid fa-check pr-2 main-pink"></i>
-                                            <p className="fs-12">Lorem ipsum dolor sit amet consectetuds.</p>
-                                        </div>
+
+								
+							 		  	{todayChallenge.challenge.payload.choices.map((element) => 
+									 
+										  	<div className="d-flex pb-3 align-items-center">
+													<i className="fa-solid fa-check pr-2 main-pink"></i>
+													<p className="fs-12">{element}.</p>
+												</div>
+										)}
                                         <button type="button" className="btn ml-auto btn-primary">Details</button>
 
                                     </div>
-
                                 </div>
+								</>
+								:
+								<div className="mx-auto my-auto">
+									<p>Loading</p>
+								</div>			
+							 }
                             </div>
 
                         </div>
                         {/*end Challange*/}
+
 
                         {(bet1200and1500 || biggest576) &&
                             
@@ -444,7 +447,7 @@ export default function Game() {
                                     <div className="row">
 									{videos.length > 0 ? (
 									<>
-										{videos.map((video) =>
+										{!videos.map((video) =>
 										<>
 											<div className={`videos m-0 p-3 co-12 col-md-6 col-lg-4 col-xl-3 rounded`}>
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
@@ -701,20 +704,23 @@ export default function Game() {
                                         <span className="fs-12  font-weight-bold text-white text-nowrap">SOSX Top Token Holders</span>
                                     </div>
                                 </div>
-                                <ul className="nav3 nav-rank nav3-tabs butten nav3-justified">
-                                    <li className="nav3-item">
-                                        <a className={`nav3-link  pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`} href="#" >Level 1</a>
-                                    </li>
-                                    <li className="nav3-item">
-                                        <a className={`nav3-link pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`} href="#" >Level 2</a>
-                                    </li>
-                                    <li className="nav3-item">
-                                        <a className={`nav3-link pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`} href="#" >Level 3</a>
-                                    </li>
-                                </ul>
+
+								
+								<ul className="nav3 nav-rank nav3-tabs butten nav3-justified mb-3">
+									<li className="nav3-item">
+										<a className={`nav3-link  pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(1)} >Level 1</a>
+									</li>
+									<li className="nav3-item">
+										<a className={`nav3-link pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(2)} >Level 2</a>
+									</li>
+									<li className="nav3-item">
+										<a className={`nav3-link pl-1 pr-1 pt-2 pb-2 font-weight-bold text-white rounded text-nowrap`} onClick={() => setDisplayLevel(3)} >Level 3</a>
+									</li>
+								</ul>
 
                                 <div className={``}>
-                                    <a className="blueprint-header-display trader-display">
+
+                                    {/* <a className="blueprint-header-display trader-display">
                                         <div className="d-flex align-items-center">
                                             <span className="text-white mr-3 fs-16 font-w600">1.</span>
                                             <img className="blueprint-img-sm rounded-circle"
@@ -725,43 +731,29 @@ export default function Game() {
                                             </div>
                                         </div>
                                         <span> fdfsdfsdfs </span>
-                                    </a>
-                                    <a className="blueprint-header-display trader-display">
-                                        <div className="d-flex align-items-center">
-                                            <span className="text-white mr-3 fs-16 font-w600">1.</span>
-                                            <img className="blueprint-img-sm rounded-circle"
-                                                src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-                                            <div className="ml-1">
-                                                <span
-                                                    className=" card-small-text text-white trader-name">ddsdsdsdsdsd</span>
-                                            </div>
-                                        </div>
-                                        <span> fdfsdfsdfs </span>
-                                    </a>
-                                    <a className="blueprint-header-display trader-display">
-                                        <div className="d-flex align-items-center">
-                                            <span className="text-white mr-3 fs-16 font-w600">1.</span>
-                                            <img className="blueprint-img-sm rounded-circle"
-                                                src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-                                            <div className="ml-1">
-                                                <span
-                                                    className=" card-small-text text-white trader-name">ddsdsdsdsdsd</span>
-                                            </div>
-                                        </div>
-                                        <span> fdfsdfsdfs </span>
-                                    </a>
-                                    <a className="blueprint-header-display trader-display">
-                                        <div className="d-flex align-items-center">
-                                            <span className="text-white mr-3 fs-16 font-w600">1.</span>
-                                            <img className="blueprint-img-sm rounded-circle"
-                                                src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
-                                            <div className="ml-1">
-                                                <span
-                                                    className=" card-small-text text-white trader-name">ddsdsdsdsdsd</span>
-                                            </div>
-                                        </div>
-                                        <span> fdfsdfsdfs </span>
-                                    </a>
+                                    </a> */}
+
+										{voters.sort((b, a) => a.amount - b.amount).map((voter, i) =>
+											<>	
+												{voter.level == displayLevel &&
+
+													<a className="blueprint-header-display trader-display">
+													<div className="d-flex align-items-center">
+														<span className="text-white mr-3 fs-16 font-w600">{i + 1}.</span>
+														<img className="blueprint-img-sm rounded-circle"
+															src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
+														<div className="ml-1">
+															<span
+																className="mb-1 card-small-text text-white trader-name">{voter.address.replace(/(.{10})..+/, "$1…")}</span>
+														</div>
+													</div>
+													<span> {voter.amount} </span>
+													</a>
+												}
+											</>
+										)}
+
+                                  
                                 </div>
 
                             </div>
