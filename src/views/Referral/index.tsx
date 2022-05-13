@@ -28,6 +28,7 @@ const tabs = [
 ];
 export default function Referral({datasocial}) {
   const [resultsoc, setResultsoc] = useState(datasocial);
+  const [socialData, setsocialData] = useState([])
   const [tab, setTab] = useState(tabs[0])
   const { account } = useActiveWeb3React()
   const [userAccount, setUserAccount] = useState('');
@@ -55,12 +56,10 @@ export default function Referral({datasocial}) {
   useEffect(() => {
 // console.log("hello")
     fetchReferral();
-    
-getaccountDetails();  
-if(!resultsoc){
-  getDataSocialMining();
-}
-}, [])
+    getaccountDetails();  
+    getDataSocialMining();
+
+  }, [])
 
   const getaccountDetails = async() => {
     let post = {
@@ -83,9 +82,10 @@ const getDataSocialMining = async () => {
   const res = await fetch('http://localhost:3000/api/social_mining?referedby=' + account)
   const json = await res.json()
   setResultsoc(json.message);
-  results.push(json.message);
+  setsocialData(json.message);
+  results=(json.message);
   console.log("data is:",json.message)
-  console.log("data2 is:",results)
+  console.log("data2 is:",socialData)
   console.log("resultsoc",resultsoc);
 }
  
@@ -248,7 +248,7 @@ const getDataSocialMining = async () => {
 
   const [show , setShow] = useState(false);
   
-  // console.log(resultsoc.length); 
+  console.log(results.length); 
   return (
 
 <div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
@@ -594,7 +594,8 @@ const getDataSocialMining = async () => {
            </div>
          </div>
          
-        {/* {resultsoc.map(ref => 
+         {socialData.length > 0 ? (
+        resultsoc.map(ref => 
 
              <div className="row pb-3">
                
@@ -622,8 +623,8 @@ const getDataSocialMining = async () => {
                </div>
              </div>
            </div>
-        )} */}
-
+        ) 
+         ):(<p>Data not available</p>)}
        </div>
      </div>
      <div className="tab">

@@ -29,6 +29,7 @@ async function addPost(req, res) {
         // connect to the database
         let { db } = await connectToDatabase();
         // add the post
+        db.collection('social_mining').createIndex({"gotrefered":1},{unique:true});
         await db.collection('social_mining').insertOne(JSON.parse(req.body));
         // return a message
         return res.json({
