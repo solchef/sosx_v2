@@ -79,13 +79,13 @@ export default function Test() {
                         {/*start Challange*/}
 
                         <div className={`backgroun-dark rounded m-0 d-flex p-4 pb-0 h-100 text-white`}>
-                            <div className=" border-right ">
+                            <div className="">
                                 <div className="text-white d-flex align-items-center mb-2">
-                                    <div className={`step  mr-3`} >1</div>
+                                    <div className={`step done mr-3 `} >1</div>
                                     SUBMIT A CHALLENGE
                                 </div>
                                 <div className="text-muted d-flex align-items-center mb-2">
-                                    <div className={`step done mr-3 `} >2</div>
+                                    <div className={`step  mr-3 `} >2</div>
                                     VOTE A CHALLENGE
                                 </div>
                                 <div className="text-muted d-flex align-items-center mb-2">
@@ -100,18 +100,23 @@ export default function Test() {
                                 </p>
                                 <button type="button" className="btn btn-primary">Vote for Challange</button>
                             </div>
+                            <div className="">
+                           
+                            <div className="card-body">
 
-                            <div className={`ml-3`}>
-                                <h4 className="mb-4 font-weight-bold">Find Top 3 Nominees</h4>
-                                  <div className="d-flex mb-4">
-                                  <p className="mr-5">1. Lorem ipsum dolor sit mnis possimus nciunt aperiam ullam earum facilis doloribus pariatur saepe?</p>
-                                    <span>16 votes</span>
-                                  </div>
-                                  <div className="d-flex mb-4">
-                                  <p className="mr-5">2. Lorem ipsumus pariatur saepe?</p>
-                                    <span>16 votes</span>
-                                  </div>
-                              
+
+
+
+<div className="text-muted bg-dark rounded">
+    Challenge Name
+</div>
+
+
+
+<textarea rows={15} cols={200} value="Challenge Rules" className="overflow-auto bg-dark p-3 m-0 rounded text-muted" >
+</textarea>
+
+</div>
                             </div>
                         </div>
 

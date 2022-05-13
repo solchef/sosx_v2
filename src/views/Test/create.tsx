@@ -79,39 +79,75 @@ export default function Test() {
                         {/*start Challange*/}
 
                         <div className={`backgroun-dark rounded m-0 d-flex p-4 pb-0 h-100 text-white`}>
-                            <div className=" border-right ">
+                            <div className="">
                                 <div className="text-white d-flex align-items-center mb-2">
-                                    <div className={`step  mr-3`} >1</div>
+                                    <div className={`step mr-3`} >1</div>
                                     SUBMIT A CHALLENGE
                                 </div>
                                 <div className="text-muted d-flex align-items-center mb-2">
-                                    <div className={`step done mr-3 `} >2</div>
+                                    <div className={`step mr-3 `} >2</div>
                                     VOTE A CHALLENGE
                                 </div>
                                 <div className="text-muted d-flex align-items-center mb-2">
-                                    <div className={`step  mr-3 `} >3</div>
+                                    <div className={`step done mr-3 `} >3</div>
                                     UPLOADE VIDEO
                                 </div>
                                 <p className="fs-14 mb-4 mt-4">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae atque dolores laborum? Earum vitae voluptatibus necessitatibus ullam nemo tempora fugit quos explicabo quis, saepe illum molestias cumque ipsa quas?
                                 </p>
-                                <p className="fs-14 mb-4 mt-4">
-                                    Lorem itempora fugit qupsa quas?
-                                </p>
+
+                                <div className="text-muted m-0 mt-5 mb-5 bg-dark rounded">
+                                    Yotube or Tiktok URL
+                                </div>
                                 <button type="button" className="btn btn-primary">Vote for Challange</button>
                             </div>
 
-                            <div className={`ml-3`}>
-                                <h4 className="mb-4 font-weight-bold">Find Top 3 Nominees</h4>
-                                  <div className="d-flex mb-4">
-                                  <p className="mr-5">1. Lorem ipsum dolor sit mnis possimus nciunt aperiam ullam earum facilis doloribus pariatur saepe?</p>
-                                    <span>16 votes</span>
-                                  </div>
-                                  <div className="d-flex mb-4">
-                                  <p className="mr-5">2. Lorem ipsumus pariatur saepe?</p>
-                                    <span>16 votes</span>
-                                  </div>
-                              
+                            <div className={``}>
+
+                                <div className={`backgroun-dark d-flex rounded  p-4 h-100 ${(biggerThan1500 || bet1200and1500) && 'm-0'} text-white flex-column`}>
+
+                                    <span className="text-white pt-1 fs-18 d-flex align-items-center pb-1 mb-1"> <img src="images/submission-date-icon.png" width='20px' height='20px' className="mr-2" />THIS WEEK CHALLENGE </span>
+                                    <span className="text-white pt-1 fs-22 pb-2 font-weight-bold">Jump over the parlement wall </span>
+
+                                    <div className="d-flex align-items-center">
+                                        <i className="fa-regular main-pink fa-heart mr-2"></i>
+
+                                        <span className="fs-10">251 votes</span>
+
+
+                                        <img className="ml-3 width-22 fs-22" src="/images/dp.png" />
+
+                                        <span className="ml-2 fs-12 font-weight-bold">Oxflaaddswd...1523</span>
+
+                                        <p className=" ml-3 p-1 fs-10 bg-pink-radius  text-white"> Level 3</p>
+
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-7 d-flex pt-1 pb-1 flex-column ">
+                                            <span className="text-muted pb-1 fs-12 mt-3">Details</span>
+                                            <p className="fs-12">Lorem ips hium quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id <br /><br />dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos!</p>
+                                        </div>
+                                        <div className="col-5 d-flex pt-1 pb-1 pt-3 flex-column ">
+                                            <span className="text-muted pb-3 fs-12">Rules:</span>
+                                            <div className="d-flex pb-3 align-items-center">
+                                                <i className="fa-solid fa-check pr-2 main-pink"></i>
+                                                <p className="fs-12">Lorem ipsum dolor sit amet consectetuds.</p>
+                                            </div>
+                                            <div className="d-flex pb-3 align-items-center">
+                                                <i className="fa-solid fa-check pr-2 main-pink"></i>
+                                                <p className="fs-12">Lorem ipsum dolor sit amet consectetuds.</p>
+                                            </div>
+                                            <div className="d-flex pb-3 align-items-center">
+                                                <i className="fa-solid fa-check pr-2 main-pink"></i>
+                                                <p className="fs-12">Lorem ipsum dolor sit amet consectetuds.</p>
+                                            </div>
+                                            <button type="button" className="btn ml-auto btn-primary">Details</button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
