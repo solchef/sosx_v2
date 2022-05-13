@@ -79,7 +79,7 @@ console.log(data)
 }
 const getDataSocialMining = async () => {
   
-  const res = await fetch('http://localhost:3000/api/social_mining?referedby=' + account)
+  const res = await fetch('https://testbed.socialx.io/api/social_mining?referedby=' + account)
   const json = await res.json()
   setResultsoc(json.message);
   setsocialData(json.message);
@@ -709,7 +709,7 @@ export async function getServerSideProps(ctx) {
   // let { DEV_URL, PROD_URL } = process.env;
 
   // request posts from api
-  let response = await fetch(`http://localhost:3000/api/social_mining`);
+  let response = await fetch(`https://testbed.socialx.io/api/social_mining`);
   // extract the data
   let data = await response.json();
 
