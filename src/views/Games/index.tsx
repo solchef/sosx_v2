@@ -190,6 +190,30 @@ export default function Game() {
       }
     }
   };
+  const [showDonate, setShowDonate] = useState(false);
+  const handleCloseDonate = () => setShowDonate(false);
+  const handleShowDonate= () => setShowDonate(true);
+  
+  const handleSubmitDonate = async () => {
+    // await contract.stakeToken(
+    //   (amountToStake * 10 ** 18).toString(),
+    //   referralAddress,
+    //   stakingClass
+    // );
+    // setActivatestake(true);
+    // setLoading(false);
+    // listUserStaking();
+    //   } else {
+    //     let signer = contract.signer;
+    //     signer.sendTransaction();
+    //     // 	toastError("token allowance not yet set");
+    //   }
+    // } else {
+    //   toastError("Insufficient Balance");
+    // }
+  };
+
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -338,7 +362,7 @@ export default function Game() {
                   </div>
 
                   <span className="text-muted pb-2  fs-12">
-                    Really want this challenge to be done? Donate to pool
+                    Really want this challenge to be done? <a onClick={handleShowDonate}>Donate to pool</a>
                   </span>
                   <span className=" fs-28 pt-1 pb-3 font-weight-bold main-pink">
                     $ 1,000.00
@@ -1116,12 +1140,30 @@ export default function Game() {
               />
             </div>
 
-            <div className=" rounded p-2">
-              <button className="btn btn-primary w-100">Submit</button>
-            </div>
-          </form>
-        </div>
-      </Modal>
+						<div className=" rounded p-2">
+					     	<button className="btn btn-primary w-100">Submit</button>
+						</div>
+					</form>
+					</div>
+				</Modal>
+
+        <Modal show={showDonate} onHide={handleCloseDonate} centered>
+
+					<ModalHeader className="text-dark">
+							  Donate
+							  <CloseButton />
+					</ModalHeader>
+
+					<div className="modal-body">
+					<form onSubmit={handleSubmitDonate}>
+					Hi
+						<div className=" rounded p-2">
+					     	<button className="btn btn-primary w-100">Submit</button>
+						</div>
+					</form>
+					</div>
+				</Modal>
+
     </>
   );
 }
