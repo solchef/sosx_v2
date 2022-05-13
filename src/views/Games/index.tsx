@@ -14,6 +14,7 @@ import Masonry from "react-masonry-css";
 import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { cleanNumber } from "utils/amount";
 import { Skeleton } from "../../../packages/uikit/src/components/Skeleton";
+import { is } from "immer/dist/internal";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -92,6 +93,21 @@ export default function Game() {
     }
   }, []);
 
+  const test = async () => {
+    const level1 = [];
+    for await (const resultPart of server.files.ls("/levels")) {
+      let challenge;
+      if (resultPart.name === "level.json") {
+        console.log("level1");
+        for await (const chunk of server.cat(resultPart.cid)) {
+          level1.push(chunk);
+        }
+        const data = concat(level1);
+        challenge = JSON.parse(new TextDecoder().decode(data).toString());
+        setVoters(challenge);
+      }
+    }
+  };
   const getData = async () => {
     let challenges = [];
     for await (const resultPart of server.files.ls("/challenges")) {
@@ -249,7 +265,9 @@ export default function Game() {
 
       // }
     }
-
+    await server.files.write("/levels/level.json", JSON.stringify(voters), {
+      create: true,
+    });
     setVoters(voters);
   };
 
@@ -287,6 +305,7 @@ export default function Game() {
     loadDaoLevels();
     getData();
     getVideo();
+    test();
   }, []);
 
   return (
