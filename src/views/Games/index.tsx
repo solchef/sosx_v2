@@ -11,6 +11,7 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { validLinks } from "utils/validateLink";
 import Masonry from "react-masonry-css";
 import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
+import { cleanNumber } from "utils/amount";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -1069,7 +1070,7 @@ export default function Game() {
                                   </span>
                                 </div>
                               </div>
-                              <span> {voter.amount} </span>
+                              <span> {cleanNumber(voter.amount + "")} </span>
                             </a>
                           )}
                         </>
