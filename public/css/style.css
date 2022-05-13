@@ -527,6 +527,7 @@ textarea {
     font-size: inherit;
     line-height: inherit;
     border: 0px;
+    resize: none !important;
 }
 
 input#rulename {}
@@ -47712,31 +47713,32 @@ a.video span {
 }
 
 .my-masonry-grid {
-  display: -webkit-box;
-  /* Not needed if autoprefixing */
-  display: -ms-flexbox;
-  /* Not needed if autoprefixing */
-  display: flex;
-  margin-left: -30px;
-  /* gutter size offset */
-  width: auto;
+    display: -webkit-box;
+    /* Not needed if autoprefixing */
+    display: -ms-flexbox;
+    /* Not needed if autoprefixing */
+    display: flex;
+    margin-left: -30px;
+    /* gutter size offset */
+    width: auto;
 }
 
 .my-masonry-grid_column {
-  padding-left: 30px;
-  /* gutter size */
-  background-clip: padding-box;
+    padding-left: 30px;
+    /* gutter size */
+    background-clip: padding-box;
 }
 
 
 /* Style your items */
 
 .my-masonry-grid_column>div {
-  /* change div to reference your elements you put in <Masonry> */
-  background: grey;
-  position: relative;
-  margin-bottom: 30px;
+    /* change div to reference your elements you put in <Masonry> */
+    background: grey;
+    position: relative;
+    margin-bottom: 30px;
 }
+
 .game .iframe {
     position: absolute;
     z-index: 99;
@@ -47781,4 +47783,9 @@ a.video span {
         font-size: 6rem !important;
         line-height: 75px !important;
     }
+}
+
+.yel {
+    background-color: #e2c700 !important;
+    border-color: #e2c700 !important;
 }
