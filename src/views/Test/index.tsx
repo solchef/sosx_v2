@@ -7,17 +7,19 @@ export default function Test() {
     const bet1200and1500 = useMediaPredicate("(min-width: 1200px) and (max-width: 1500px)");
     const biggest576 = useMediaPredicate(" (max-width: 576px)");
     const breakpointColumnsObj = {
-      
-     
-       3000:5,
-       2250:4,
+
+
+        3000: 5,
+        2250: 4,
         1850: 3,
-        1500:4,
-        1450:3,
-        950:2,
-        500: 1
-      };
-      
+        1500: 4,
+        1450: 3,
+        1150: 2,
+        850: 1,
+        768: 2,
+        620: 1
+    };
+
     return (<>
         <div className="game container-fluid">
             <div className="row">
@@ -100,6 +102,7 @@ export default function Test() {
 
                                         </div>
                                         <p className="fs-10 text-white">Vote a challenge created by Level 2 & Level 3 Community</p>
+
                                         <button type="button" className="btn w-0 text-nowrap p-2 fs-12 mt-3 btn-success">Vote Now</button>
 
                                     </div>
@@ -223,10 +226,11 @@ export default function Test() {
                                             className="my-masonry-grid mx-auto "
                                             columnClassName="my-masonry-grid_column">
                                             <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
-                                                
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
-                                                    <span>
+                                                <iframe className="position-absolute iframe" width="250" height="400" src="https://www.youtube.com/embed/-LAwDM8JKwU" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+
+                                                <a href=""
+                                                >
+                                                    <span className="details">
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
 
@@ -234,7 +238,7 @@ export default function Test() {
                                                         </div>
                                                     </span>
                                                     <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
+                                                    <div className="text-white details view-vid">
 
                                                         <div className=" d-flex align-items-center">
                                                             <i className="fa-regular fs-12 fa-heart pr-2"></i>
@@ -251,8 +255,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height150  mb-4  rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -278,8 +282,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height150  mb-4   rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -305,8 +309,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -332,8 +336,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height150  mb-4  rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -359,8 +363,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height150  mb-4   rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -386,8 +390,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -413,8 +417,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height150  mb-4  rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -440,8 +444,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height150  mb-4   rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -467,8 +471,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -494,8 +498,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -521,8 +525,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -548,8 +552,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height150  mb-4  rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -575,8 +579,8 @@ export default function Test() {
 
                                             </div>
                                             <div className={`width250  height150  mb-4   rounded`}>
-                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    >
+                                                <a href=""
+                                                >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
