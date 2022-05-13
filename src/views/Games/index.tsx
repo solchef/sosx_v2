@@ -1,17 +1,13 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from 'next/link'
 import { useMediaPredicate } from "react-media-hook";
 import { create } from "ipfs-http-client";
 import useToast from "hooks/useToast";
-import { useTranslation } from 'contexts/Localization'
-import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { concat } from "uint8arrays";
 import { useStakingContract, useSosxContract } from 'hooks/useContract'
 import moment from "moment";
 import ConnectWalletButton from '../../components/ConnectWalletButton';
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
-import {useDropzone} from 'react-dropzone';
-import { TikTok } from "react-tiktok";
 import { validLinks } from "utils/validateLink";
 
 
@@ -445,6 +441,7 @@ export default function Game() {
 									<>
 										{videos.map((video) =>
 										<>
+										<div>
 											<div className={`videos m-0 p-3 co-12 col-md-6 col-lg-4 col-xl-3 rounded`}>
 												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 													className="video">
@@ -455,11 +452,7 @@ export default function Game() {
 															<p className=" ml-2 fs-12" >Oxf...ds3</p>
 														</div>
 													</span>
-													{video.tiktok.length > 2 ?  
-														<TikTok  url="https://www.tiktok.com/@scout2015/video/6718335390845095173" />
-														:
 														<iframe width="" height="" src="https://www.youtube.com/embed/-LAwDM8JKwU" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-													}
 													<div className="play-btn"></div>
 													<div className="text-white view-vid">
 
@@ -476,6 +469,7 @@ export default function Game() {
 
 												</a>
 
+											</div>
 											</div>
 
 										</>
