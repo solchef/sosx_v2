@@ -4,12 +4,14 @@ import { useMediaPredicate } from "react-media-hook";
 import { create } from "ipfs-http-client";
 import useToast from "hooks/useToast";
 import { useTranslation } from 'contexts/Localization'
-import { Modal } from "react-bootstrap";
+import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { concat } from "uint8arrays";
-import { useStakingContract, useSosxContract } from 'hooks/useContract';
+import { useStakingContract, useSosxContract } from 'hooks/useContract'
+import moment from "moment";
 import ConnectWalletButton from '../../components/ConnectWalletButton';
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
-
+import {useDropzone} from 'react-dropzone';
+import { TikTok } from "react-tiktok";
 
 
 const server = create({
@@ -21,6 +23,7 @@ export default function Game() {
 	const {account} = useActiveWeb3React();
 	const [partyTime, setPartyTime] = useState(false);
 	const [days, setDays] = useState(0);
+	const { toastError } = useToast()
 	const [hours, setHours] = useState(0);
 	const [minutes, setMinutes] = useState(0);
 	const [seconds, setSeconds] = useState(0);
@@ -38,37 +41,72 @@ export default function Game() {
 	const videoElem = useRef();
 	const videoInput = useRef();
 	const [imgSrc, setImgSrc] = useState('');
+ 	let [stage ,setStage] = useState(0);
+	
+	const calculateTimeLeft = (entryTime) => {
+
+		let eventTime =  moment(entryTime).unix();
+		let currentTime = Number((Math.floor(Date.now() / 1000)).toString());
+		
+		// console.log(eventTime)
+
+
+
+		
+		let leftTime = eventTime - currentTime;
+		let duration = moment.duration(leftTime, 'seconds');
+		let interval = 1000;
+		if (duration.asSeconds() <= 0) {
+			clearInterval(interval);
+		}
+		duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+		setDays(duration.days());
+		setHours(duration.hours());
+		setMinutes(duration.minutes());
+		setSeconds(duration.seconds()); 
+	}
 
 	useEffect(() => {
-		const target = new Date("05/15/2022 23:59:59");
+
+		const startTime = moment().unix();
+		// const startTime = moment.unix(1652390481);
+		const endTime = moment.unix(1652394081)
+		// console.log(endTime.quarters())
+
+		let stageGroups = [];
+		let roundStartTime = 1652394081;
+		// env specify stage durations 1 = 1/2, 2 = 1/2, 3=1, 4=2, 
+		let stage1 = {
+			start: 1652394081,
+			end: 1652394081 + 1 * 30 
+		}
+
+		let stage2 = {
+			start: stage1.end + 1,
+			end: 1652394081 + 1 * 30 
+		}
+
+		let stage3 = {
+			start: stage2.end + 1,
+			end: 1652394081 + 1 * 1
+		}
+
+		let stage4 = {
+			start: stage3.end + 1,
+			end: (stage3.end + 1) + 2 * 1 * 1
+		}
+
+
+        //  let currentStage;   check now and start time of stage and less than endtime 
+		  
 
 		const interval = setInterval(() => {
-			const now = new Date();
-			const difference = target.getTime() - now.getTime();
-
-			const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-			setDays(d);
-
-			const h = Math.floor(
-				(difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-			);
-			setHours(h);
-
-			const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-			setMinutes(m);
-
-			const s = Math.floor((difference % (1000 * 60)) / 1000);
-			setSeconds(s);
-
-			if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
-				setPartyTime(true);
-			}
+		
+			calculateTimeLeft(endTime)
+			setStage(stage++)
+		
 		}, 1000);
 		return () => clearInterval(interval);
-	}, []);
-
-	useEffect(() => {
-
 	}, []);
 
 	const getData = async () => {
@@ -109,7 +147,7 @@ export default function Game() {
 
 	const getVideo = async () => {
 		let finalData = [];
-
+		
 		if (todayChallenge) {
 			for await (const videoFile of server.files.ls(`/challenges/${String(`challenge-${todayChallenge.challenge.payload.name}`).replaceAll(' ', '-')}/videos`)) {
 				let fileContent;
@@ -129,47 +167,54 @@ export default function Game() {
 	
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
 
-		evt.preventDefault();
-		const form = event.target as HTMLFormElement;
-		const files = (form[0] as HTMLInputElement).files;
-		const file = files[0];
+			evt.preventDefault();
+			const form = event.target as HTMLFormElement;
+			// const files = (form[0] as HTMLInputElement).files;
+			// const file = files[0];
 
-		// const canvas = document.createElement("canvas");
-		// canvas
-		//   .getContext("2d")
-		//   .drawImage(
-		// 	videoElem.current,
-		// 	0,
-		// 	0,
-		// 	120,
-		// 	120
-		//   );
-	
-		// setImgSrc(canvas.toDataURL());
-		// console.log(imgSrc)
+			// const canvas = document.createElement("canvas");
+			// canvas
+			//   .getContext("2d")
+			//   .drawImage(	
+			// 	videoElem.current,
+			// 	0,
+			// 	0,
+			// 	120,
+			// 	120
+			//   );
+		
+			// setImgSrc(canvas.toDataURL());
+			// console.log(imgSrc)
 
-		if (!files || files.length === 0) {
-			console.log('NO')
+			// if (!files || files.length === 0) {
+			// 	console.log('NO')
+			// }
+
+			// const IPFSFile = await server.add(file)
+			// const url = `ipfs`
+
+			if(youtubeURL || tiktokURL){
+					
+		
+
+			const data = JSON.stringify({
+				title: youtubeURL,
+				youtube: youtubeURL,
+				tiktok: tiktokURL,
+				// video: url,
+				// thumbnail: imgSrc 
+			}, null, 2)
+
+			const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
+			const fileName = `video-${moment().unix()}`
+			await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, { create: true })
+			// toastSuccess(t('Video Uploaded!'))
+			form.reset()
+			handleClose()
+			getVideo()
+		}else{
+				toastError("One of the video posted links is required");
 		}
-
-		const IPFSFile = await server.add(file)
-		const url = `http://localhost:8080/ipfs/${IPFSFile.cid}`
-
-		const data = JSON.stringify({
-			title: videoTitle,
-			youtube: youtubeURL,
-			tiktok: tiktokURL,
-			video: url,
-			// thumbnail: imgSrc 
-		}, null, 2)
-
-		const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
-		const fileName = `video-${videoTitle.replace(' ', '-')}`
-		await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, { create: true })
-		toastSuccess(t('Video Uploaded!'))
-		form.reset()
-		handleClose()
-		getVideo()
 	}
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
@@ -204,9 +249,7 @@ export default function Game() {
 		setVoters(voters);
 	}
 
-	 const getLevel = (amount) => {
-		console.log(process.env.NEXT_PUBLIC_LEVEL1)
-		
+	 const getLevel = (amount) => {		
 		if (amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2) { return 1; }
 
 		if (amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3) { return 2; }
@@ -239,29 +282,29 @@ export default function Game() {
 
                             </div>
 
-                            <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 mx-auto pr-1 fs-14 pt-0 pb-0 mr-3 text-white"> Stage</p>
+                            <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 mx-auto pr-1 fs-14 pt-0 pb-0 mr-3 text-white"> Stage {stage}</p>
                         </div>
                         <div className="clock mb-3 pr-2 pl-2 pb-2">
                             <div className="d-flex justify-content-start" id="countdown">
                                 <div className="d-flex justify-content-start align-items-center">
 
 
-                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >01</span>days</p>
+                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >{days}</span>days</p>
                                     <p className="li"><span className="" >:</span></p>
                                 </div>
 
                                 <div className="d-flex justify-content-start align-items-center">
 
-                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >01</span>Hours</p>
+                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >{hours}</span>Hours</p>
                                     <p className="li"><span className="" >:</span></p>
                                 </div>
                                 <div className="d-flex justify-content-start align-items-center">
 
-                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >22</span>Minutes</p>
+                                    <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }} >{minutes}</span>Minutes</p>
                                     <p className="li"><span className="" >:</span></p>
                                 </div>
 
-                                <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }}>33</span>Seconds</p>
+                                <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="li pt-2 pr-3 pb-2 pl-3"><span className="m-0" style={{ fontSize: '40px', fontFamily: 'digital-7' }}>{seconds}</span>Seconds</p>
                             </div>
                         </div>
                         <div className="d-flex mb-3 mt-2 align-items-center">
@@ -282,14 +325,15 @@ export default function Game() {
                     </div>
                 </div>
 
-
                 {/*end Time with prize pool */}
 
 
                 {/*start Challange*/}
                 <div className={`col-12 col-lg-6  ${biggerThan1650 && 'col-xl-7'}  ${biggerThan1800 && 'col-xl-6 '} ${littleThan1200 && 'mb-3'}`}>
-				{todayChallenge ? (
+				
                     <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="d-flex rounded m-0 h-100  p-3 pl-4 text-white flex-column">
+					{todayChallenge ? (
+						<>
                         <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white mt-2">THIS WEEK CHALLENGE </span>
                         <span style={{ fontWeight: '1000 ', fontSize: '18px' }} className="text-white pt-3">{todayChallenge.challenge.payload.name} </span>
 
@@ -314,6 +358,7 @@ export default function Game() {
                             <span className="text-muted pb-1">Details:</span>
                             <p className="fs-14">{todayChallenge.challenge.payload.body}</p>
                         </div>
+
                         <div className="d-flex flex-column pt-3">
                             <span className="text-muted pb-1">Roles:</span>
 							{todayChallenge.challenge.payload.choices.map((element) => 
@@ -323,19 +368,21 @@ export default function Game() {
 								</div>
 							)}
                         </div>
-                    </div>
-				) : (
-					<p>Loading</p>
+
+						</>
+
+						) : (
+							<div className="mx-auto my-auto">
+								<p>Loading</p>
+							</div>
+					
 				)}
 
-
+                    </div>
 
 
 
                 </div>
-                {/*end Challange*/}
-
-
 
                 <div className={`col-12 col-lg ${littleThan1200 && 'mb-3'}`}>
                     <div className="row">
@@ -347,7 +394,7 @@ export default function Game() {
                                     <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white "> CHALLENGE </span>
 
 
-                                    <span className="fs-14 pt-2 text-white">LOREM LOREM LOREM LOREM LOREM </span>
+                                    <span className="fs-14 pt-2 text-white">Create a new challenge to be voted</span>
 									<Link href="/createchallenge">
                                     <button type="button" className="btn mt-3 mb-2 btn-success">Create Now</button>
 									</Link>
@@ -369,7 +416,7 @@ export default function Game() {
                                     <span style={{ fontWeight: '1000 ', fontSize: '22px' }} className="text-white "> CHALLENGE </span>
 
 
-                                    <span className="fs-14 pt-2 text-white">LOREM LOREM LOREM LOREM LOREM </span>
+                                    <span className="fs-14 pt-2 text-white">Vote challenges created by DAO members </span>
 									<Link href="/votechallenge">
                                     <button type="button" className="btn mt-3 mb-2 btn-success">Vote Now</button>
 									</Link>
@@ -404,100 +451,8 @@ export default function Game() {
                             </div> */}
 
                             <div className="row ">
-
-
-
-
-
-
-
-
-
-
-
-                                {/* <div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
-                                    <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                        className="video">
-                                        <span>
-                                            <div className="text-white d-flex pt-3">
-                                                <img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
-
-                                                <p className=" ml-2 fs-12" >Oxfwd...ds3</p>
-                                            </div>
-                                        </span>
-                                        <img src="images/video-banner-1.png" alt="Video1" />
-                                        <div className="play-btn"></div>
-                                        <div className="text-white view-vid">
-
-                                            <div className="pt-3 d-flex align-items-center">
-                                                <i className="fa-regular fa-heart pr-2"></i>
-
-                                                <p>251 votes</p>
-                                            </div>
-                                        </div>
-
-                                    </a>
-                                    <style jsx>{`
-											.view-vid {
-												position: absolute;
-												bottom:7px;
-												left:5px;
-											}
-											
-										`}</style>
-								</div> */}
-
-
                             </div>
                         </div>
-
-                        {/* <div className="d-flex mb-2 flex-column">
-
-                            <div className="d-flex justify-content-between  mb-2  align-items-center">
-
-                                <p className="text-white  font-weight-bold" style={{ fontWeight: '1000 ', fontSize: '22px' }} >MOST VIEWED CHALLENGES <span className="main-pink">7 DAY</span></p>
-                                <button type="button" className="btn pl-2 pt-1 pb-1 pr-2 btn-success font-weight-bold ">View All</button>
-
-                            </div>
-
-                            <div className="row">
-
-
-                                <div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
-                                    <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                        className="video">
-                                        <span>
-                                            <div className="text-white d-flex pt-3">
-                                                <img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
-
-                                                <p className=" ml-2 fs-12" >Oxfwd...ds3</p>
-                                            </div>
-                                        </span>
-                                        <img src="images/video-banner-1.png" alt="Video1" />
-                                        <div className="play-btn"></div>
-                                        <div className="text-white view-vid">
-
-                                            <div className="pt-3 d-flex align-items-center">
-                                                <i className="fa-regular fa-heart pr-2"></i>
-
-                                                <p>251 votes</p>
-                                            </div>
-                                        </div>
-
-                                    </a>
-                                    <style jsx>{`
-												.view-vid {
-													position: absolute;
-													bottom:7px;
-													left:5px;
-												}
-												
-											`}</style>
-															</div>
-
-
-                            </div>
-                        </div> */}
 
                         <div className="d-flex mb-2 flex-column">
 
@@ -511,13 +466,13 @@ export default function Game() {
                             <div className="row">
 
 								{videos.length > 0 ? (
-									<div>
+									<>
 										{videos.map((video) =>
 										<>
  									<div className={`videos pl-3 m-0 p-0 pr-3 pb-3 col-12 col-sm-6 col-lg-4  ${biggerThan2000 && 'col-xl-2'} rounded`}>
 										<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
 											className="video">
-												{console.log(video)}
+
 											<span>
 												<div className="text-white d-flex pt-3">
 													<img style={{ width: '26px' }} src="/images/xlogo-black.b90261b2.svg" />
@@ -525,14 +480,29 @@ export default function Game() {
 													<p className=" ml-2 fs-12" >Oxfwd...ds3</p>
 												</div>
 											</span>
-											<img src="images/video-banner-1.png" alt="Video1" />
+											
+											{/* {console.log(video)} */}
+												{video.tiktok.length > 2 ?  
+
+													<TikTok  url="https://www.tiktok.com/@scout2015/video/6718335390845095173" />
+																// <></>
+												:
+
+												 <iframe width="" height="" src="https://www.youtube.com/embed/-LAwDM8JKwU" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+														// <></>
+											
+												}
+												{/* <TikTok url="https://www.tiktok.com/@scout2015/video/6718335390845095173" /> */}
+
+
+										
 											<div className="play-btn"></div>
 											<div className="text-white view-vid">
 
 												<div className="pt-3 d-flex align-items-center">
 													<i className="fa-regular fa-heart pr-2"></i>
 
-													<p>251 votes</p>
+													<p>{video.votes}</p>
 												</div>
 											</div>
 
@@ -548,9 +518,15 @@ export default function Game() {
 										</div>
 										</>
 										)}
-									</div>
+									</>
 								) : (
-									<p>No Videos</p>
+									// <p>No Videos</p>
+									<div className="row">
+										<div className="justify-center">
+										<p>No Videos</p>
+
+										</div>
+									</div>
 								)}
                                
                             </div>
@@ -564,16 +540,12 @@ export default function Game() {
                 <div className="col-12 col-xl-3">
                     <div style={{ backgroundColor: 'rgb(17 17 22)' }} className="rounded overflow-hidden">
 
-
-
                         <div className="align-items-start border-0 justify-content-start">
                             <div>
                                 <h4 className="fs-20 font-weight-bold  mx-auto">Ranking</h4>
                                 <span className="fs-12 mt-2 font-weight-bold p-2 text-white text-nowrap">SOSX Top Token Holders</span>
                             </div>
                         </div>
-
-
 
                         <ul className="nav3 nav-rank nav3-tabs butten nav3-justified mb-3">
                             <li className="nav3-item">
@@ -589,13 +561,13 @@ export default function Game() {
 
                         <div className={`card3-body ranking`}>
 
-						{voters.sort((a, b) => a.amount - b.amount).map((voter, i) =>
-									<>
+						{voters.sort((b, a) => a.amount - b.amount).map((voter, i) =>
+									<>	
 										{voter.level == displayLevel &&
 
 											<a className="blueprint-header-display trader-display">
 											<div className="d-flex align-items-center">
-												<span className="text-white mr-3 fs-16 font-w600">1.</span>
+												<span className="text-white mr-3 fs-16 font-w600">{i + 1}.</span>
 												<img className="blueprint-img-sm rounded-circle"
 													src=" https://app.hedgeboard.io/userprofiles/default.png" alt="profile" />
 												<div className="ml-1">
@@ -605,28 +577,36 @@ export default function Game() {
 											</div>
 											<span> {voter.amount} </span>
 											</a>
-
-
 										}
 									</>
 								)}
                         </div>
-
                     </div>
                 </div>
                 {/*end Ranking*/}
 				<Modal show={show} onHide={handleClose} centered>
+
+					<ModalHeader className="text-dark">
+							  SUBMIT  LINK TO UPLOADED MEDIA
+							  <CloseButton />
+					</ModalHeader>
+
+					<div className="modal-body">
 					<form onSubmit={videoLink}>
-						<input style={{cursor: 'pointer'}} type="file" className="form-control fs-16 m-2" id="filevideo" placeholder="Upload Video" required/>
-						<div className="form-group d-flex justify-content-between flex-column p-2">
-							<input type="text" className="form-control fs-16 " id="tiktok" placeholder="TikTok" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
-							<input type="text" className="form-control fs-16 " id="youtube" placeholder="YouTube" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />  
-							<input type="text" className="form-control fs-16 " id="title" placeholder="title" value={videoTitle} onChange={(e) => setVideoTitle(e.target.value)} required/>
+
+						<div className="bg-dark  rounded fs-8">
+									<input type="text" className="form-control fs-20" id="tiktok" placeholder="TikTok link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
 						</div>
-						<div>
-						<button className="btn btn-primary">Submit</button>
+
+						<div className="bg-dark  rounded fs-8">
+								<input type="text" className="form-control fs-20" id="youtube" placeholder="Youtube link Here" value={youtubeURL} onChange={(e) => setTiktokURL(e.target.value)} />
+						</div>
+
+						<div className=" rounded p-2">
+					     	<button className="btn btn-primary w-100">Submit</button>
 						</div>
 					</form>
+					</div>
 				</Modal>
             </div>
         </div>

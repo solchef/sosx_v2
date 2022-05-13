@@ -60,6 +60,11 @@
   src: url('../font/digital-7.ttf');
  }
 
+ @font-face{
+  font-family:'poppins-bold';
+  src: url('../font/poppins-bold.ttf');
+ }
+
  
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
@@ -9988,7 +9993,7 @@ svg.pulse-svg {
   top: 0;
   width: 100%; }
 [data-header-position="fixed"] .content-body {
-  padding-top: 7.5rem;
+  padding-top: 5rem;
   padding-bottom: 6.5rem;
   }
   @media only screen and (max-width: 1199px) {
@@ -31031,12 +31036,6 @@ height: calc(100vh-320px);
 
 
 
-      
-
-
-
-
-
 
 
 
@@ -31358,6 +31357,10 @@ transform: translateY(-50%);}
       }
       
     }
+
+  .clock .li span{
+    font-family: 'digital-7', sans-serif;
+  }
     @media (max-width: 991px) {
       .adspace-cmpny-img {
         width: 30% !important;
@@ -31443,13 +31446,18 @@ transform: translateY(-50%);}
  
 
 
+ .clock .body {
+  align-items: center;
+  display: flex;
+}
+
 
 .clock .li {
   display: inline-block;
   font-family: 'digital-7', sans-serif;
-  font-size: .5rem;
+  font-size: 1rem;
   list-style-type: none;
-  padding:  0.6em;
+  padding: 0.9em;
   text-transform: uppercase;
   color: #fff;
   /* margin-top: 12px; */
@@ -31458,11 +31466,162 @@ text-align: center;}
 
 .clock .li span {
   display: block;
-  font-size: 2rem;
+  font-size: 3rem;
   line-height: 30px !important;color: #fff;
+  margin-bottom: 8px !important;
+}
+
+
+.clock .li {
+  display: inline-block;
+  font-family: 'digital-7', sans-serif;
+  font-size: 0.9rem;
+  list-style-type: none;
+  padding:  0.6em;
+  text-transform: uppercase;
+  color: #fff;
+  /* margin-top: 12px; */
+  margin-bottom: 0;
+text-align: center;}
+
+
+@media all and (max-width: 768px) {
+
+  
+  .clock .li {
+      font-family: 'digital-7', sans-serif;
+      font-size: 0.5em;
+      padding: 0.3em;
+      margin-top: -1px;
+  }
+  
+  .clock .li span {
+      font-family: 'digital-7', sans-serif;
+      font-size: 2rem !important;
+      padding: 0px;
+      margin-bottom: -1px !important;
+  }
+
+  .clock{
+    display: flex !important;
+    /* justify-content: center; */
+}
+.digit {
+width: 58px;
+height: 108px;
+margin: 0 -5px;
+position: relative;
+display: inline-block;
+}
+.separator {
+    width: 15px;
+    height: 15px;
+    background: #8a8a8a;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    top: 42px;
+}
+}
+ 
+@media (max-width: 1200px) {
+
+.clock .li {
+  display: inline-block;
+  font-family: 'digital-7', sans-serif;
+  font-size: 0.7rem;
+  list-style-type: none;
+  padding: 0.9em;
+  text-transform: uppercase;
+  color: #fff;
+  /* margin-top: 12px; */
+  margin-bottom: 0;
+  text-align: center;
+
+}
+
+  .clock .li span {
+    display: block;
+    font-size: 3.5rem;
+    line-height: 30px !important;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+}
+@media (max-width: 1400px) {
+
+
+  .clock .li {
+    display: inline-block;
+    font-family: 'digital-7', sans-serif;
+    font-size: 0.7rem;
+    list-style-type: none;
+    padding: 0.9em;
+    text-transform: uppercase;
+    color: #fff;
+    /* margin-top: 12px; */
+    margin-bottom: 0;
+    text-align: center;
+  
+  }
+  
+    .clock .li span {
+      display: block;
+      font-size: 3rem;
+      line-height: 30px !important;
+      color: #fff;
+      margin-bottom: 8px;
+  }
+  }
+@media (max-width: 1100px){ 
+  .clock .li {
+    display: inline-block;
+    font-family: 'digital-7', sans-serif;
+    font-size: 0.7rem;
+    list-style-type: none;
+    padding: 0.9em;
+    text-transform: uppercase;
+    color: #fff;
+    /* margin-top: 12px; */
+    margin-bottom: 0;
+    text-align: center;
+
+  }
+
+    .clock .li span {
+      display: block;
+      font-size: 3.5rem;
+      line-height: 30px !important;
+      color: #fff;
+      margin-bottom: 8px;
+  }
+}
+@media (max-width: 920px) {
+
+  .clock .li {
+    display: inline-block;
+    font-family: 'digital-7', sans-serif;
+    font-size: 0.4rem !important;
+    list-style-type: none;
+    padding: 0.9em;
+    text-transform: uppercase;
+    color: #fff;
+    /* margin-top: 12px; */
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.clock .li span {
+  display: block;
+  font-size: 3rem;
+  line-height: 30px !important;
+  color: #fff;
   margin-bottom: 8px;
 }
 
+
+}
 
 @media all and (max-width: 768px) {
 
@@ -32978,4 +33137,18 @@ background-image: url("../images/create-challenge-img.png");
     background-color:transparent !important;
   }
 
-  
+  .backgroun-dark {
+    background-color: rgb(17 17 22);
+  }
+  .bg-pink-radius {
+    background-color: #f600cc!important;
+    border-radius: 5px!important;
+  }
+  .view-vid {
+    position: absolute;
+    bottom:7px;
+    left:5px;
+    }
+    .width-22{
+      width:22px !important;
+    }
