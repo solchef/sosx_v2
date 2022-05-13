@@ -255,11 +255,11 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 
 
 /*!
- * Bootstrap v4.5.3 (https://getbootstrap.com/)
- * Copyright 2011-2020 The Bootstrap Authors
- * Copyright 2011-2020 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
+* Bootstrap v4.5.3 (https://getbootstrap.com/)
+* Copyright 2011-2020 The Bootstrap Authors
+* Copyright 2011-2020 Twitter, Inc.
+* Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+*/
 
 .success {
     color: #31A745;
@@ -12384,10 +12384,10 @@ a.active {
 
 
 /*
-    .hamburger.is-active {
-      left: 60px;
-    }
-    */
+.hamburger.is-active {
+left: 60px;
+}
+*/
 
 .hamburger.is-active .line:nth-child(1),
 .hamburger.is-active .line:nth-child(3) {
@@ -17062,7 +17062,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     }
     [data-layout="horizontal"] .nav-header .brand-logo {
         /*  padding-left: 0;
-       justify-content: center; */
+ justify-content: center; */
     }
     [data-layout="horizontal"] .header {
         width: 100%;
@@ -31216,7 +31216,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 
 
 /* =============
-   Calendar
+Calendar
 ============= */
 
 .app-fullcalender button {
@@ -41876,7 +41876,7 @@ span#counter {
 
 /*
 ===================================
-    Product detail
+Product detail
 ===================================*/
 
 .produtct-detail-tag {
@@ -42173,7 +42173,7 @@ span#counter {
 
 /*
 ===================================
-    list view
+list view
 ===================================*/
 
 .new-arrival-content .item {
@@ -45324,7 +45324,7 @@ span.nav-text.comingsoon {
 
 
 /*
- CSS for the main interaction
+CSS for the main interaction
 */
 
 .tabset>input[type="radio"] {
@@ -45347,7 +45347,7 @@ span.nav-text.comingsoon {
 
 
 /*
- Styling
+Styling
 */
 
 body {
@@ -45400,7 +45400,7 @@ body {
 
 
 /*
- Demo purposes only
+Demo purposes only
 */
 
 *,
@@ -45614,17 +45614,17 @@ a.video span {
 
 .play-btn::after {
     /*
-        Font Awesome recommends these styles
-        https://fontawesome.com/how-to-use/on-the-web/advanced/css-pseudo-elements
-        */
+  Font Awesome recommends these styles
+  https://fontawesome.com/how-to-use/on-the-web/advanced/css-pseudo-elements
+  */
     display: inline-block;
     font-style: normal;
     font-variant: normal;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     /*
-        Define the font family, weight, and icon
-        */
+  Define the font family, weight, and icon
+  */
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     font-size: 40px;
@@ -46183,7 +46183,7 @@ a.video span {
     }
     .clock .li span {
         font-family: 'digital-7', sans-serif;
-        font-size: 2rem !important;
+        font-size: 3rem !important;
         padding: 0px;
         margin-bottom: -1px !important;
     }
@@ -46231,7 +46231,7 @@ a.video span {
     }
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1200px) {
     .clock .li {
         display: inline-block;
         font-family: 'digital-7', sans-serif;
@@ -46246,7 +46246,7 @@ a.video span {
     }
     .clock .li span {
         display: block;
-        font-size: 3rem;
+        font-size: 5rem;
         line-height: 30px !important;
         color: #fff;
         margin-bottom: 8px;
@@ -46290,7 +46290,7 @@ a.video span {
     }
     .clock .li span {
         display: block;
-        font-size: 3rem;
+        font-size: 2.7rem;
         line-height: 30px !important;
         color: #fff;
         margin-bottom: 8px;
@@ -47704,7 +47704,7 @@ a.video span {
 .view-vid {
     position: absolute;
     bottom: 7px;
-    left: 5px;
+    left: 10px;
 }
 
 .width-22 {
@@ -47712,28 +47712,73 @@ a.video span {
 }
 
 .my-masonry-grid {
-    display: -webkit-box;
-    /* Not needed if autoprefixing */
-    display: -ms-flexbox;
-    /* Not needed if autoprefixing */
-    display: flex;
-    margin-left: -30px;
-    /* gutter size offset */
-    width: auto;
+  display: -webkit-box;
+  /* Not needed if autoprefixing */
+  display: -ms-flexbox;
+  /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -30px;
+  /* gutter size offset */
+  width: auto;
 }
 
 .my-masonry-grid_column {
-    padding-left: 30px;
-    /* gutter size */
-    background-clip: padding-box;
+  padding-left: 30px;
+  /* gutter size */
+  background-clip: padding-box;
 }
 
 
 /* Style your items */
 
 .my-masonry-grid_column>div {
-    /* change div to reference your elements you put in <Masonry> */
-    position: relative;
-    background: grey;
-    margin-bottom: 30px;
+  /* change div to reference your elements you put in <Masonry> */
+  background: grey;
+  position: relative;
+  margin-bottom: 30px;
+}
+.game .iframe {
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    left: 0;
+}
+
+.game .details {
+    z-index: 100;
+}
+
+@media (max-width: 576px) {
+    .clock .li span {
+        font-size: 4.5rem !important;
+        line-height: 75px !important;
+    }
+}
+
+@media (min-width: 1600px) {
+    .clock .li span {
+        font-size: 3.5rem !important;
+        line-height: 75px !important;
+    }
+}
+
+@media (min-width: 1700px) {
+    .clock .li span {
+        font-size: 4rem !important;
+        line-height: 75px !important;
+    }
+}
+
+@media (min-width: 1950px) {
+    .clock .li span {
+        font-size: 5rem !important;
+        line-height: 75px !important;
+    }
+}
+
+@media (min-width: 2170px) {
+    .clock .li span {
+        font-size: 6rem !important;
+        line-height: 75px !important;
+    }
 }

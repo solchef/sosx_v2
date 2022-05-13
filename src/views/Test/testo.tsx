@@ -28,107 +28,178 @@ export default function Test() {
                     <div className="row">
                         {/*start Time with prize pool */}
                         <div className={`col-xl-4 col-sm-6 col-12`}>
-                            <div className="row  backgroun-dark p-3 mt-0 rounded">
-                                <div className="d-flex align-items-center">
+                            <div className=" backgroun-dark d-flex mt-0  p-3 h-100 rounded justify-content-start flex-column  ">
+                                <div className="d-flex pt-2 pb-2 align-items-center">
+
                                     <img src="images/submission-date-icon.png" width='20px' height='20px' />
+
                                     <span className="text-white fs-18  ml-2 ">TIME REMAINING </span>
+
+
                                 </div>
+
+
                                 <p className="fs-12 text-muted">To submit a video competing the stage</p>
-                                <div className="clock  ">
+                                <div className="clock  pt-2 ">
                                     <div className="d-flex justify-content-start" id="countdown">
                                         <div className="d-flex justify-content-start align-items-center">
-                                            <p className="li pr-2 pl-2 pb-0"><span className=" main-pink m-0" >05</span>Hours</p>
+                                            <p className="li pr-2 pl-2 pt-4  pb-0"><span className=" main-pink m-0" >05</span>Hours</p>
                                             <p className="li"><span className="" >:</span></p>
                                         </div>
                                         <div className="d-flex justify-content-start align-items-center">
-                                            <p className="li pr-2 pl-2 pb-0"><span className=" main-pink m-0" >22</span>Minutes</p>
+                                            <p className="li pr-2 pl-2 pt-4  pb-0"><span className=" main-pink m-0" >22</span>Minutes</p>
                                             <p className="li"><span className="" >:</span></p>
                                         </div>
-                                        <p className="li pr-2 pl-2 pb-0"><span className=" main-pink m-0" >33</span>Seconds</p>
+                                        <p className="li pr-2 pl-2 pt-4  pb-0"><span className=" main-pink m-0" >33</span>Seconds</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div className=" row backgroun-dark rounded  ">
-                                <div className="d-flex">
-                                    <div>
-                                        <div className="d-flex pb-1 align-items-center">
+                                <div className="d-flex pt-2 pb-1 mt-3 align-items-center">
 
-                                            <img src="images/prize-pool-icon.png" width='24px' height='24px' />
+                                    <img src="images/prize-pool-icon.png" width='24px' height='24px' />
 
-                                            <span className="text-white fs-18 ml-2 ">PRIZE POOL</span>
+                                    <span className="text-white fs-18 ml-2 ">PRIZE POOL</span>
 
-                                        </div>
-                                        <span className="text-muted pb-2  fs-10">Really want this challenge to be done? Donate to pool
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span className=" fs-22  pb-3 font-weight-bold main-pink">$ 1,000.00
-                                        </span><br />
-                                        <span className=" fs-10  pb-3 font-weight-bold main-pink">sewedweedwqedwe
-                                        </span>
-                                    </div>
                                 </div>
 
+                                <span className="text-muted pb-2  fs-12">Really want this challenge to be done? Donate to pool
+                                </span>
+                                <span className=" fs-28 pt-1 pb-3 font-weight-bold main-pink">$ 1,000.00
+                                </span>
+                                <button type="button" className="btn btn-primary">Upload Video</button>
                             </div>
                         </div>
                         {/*end Time with prize pool */}
 
-                        {/*start Challange*/}
-                        <div className={`col-xl-8 col-md-12 col-sm-12`}>
-                            <div className={`backgroun-dark rounded  p-4 pb-0 h-100 ${(biggerThan1500 || bet1200and1500) && 'm-0'} text-white`}>
+                        {(bet768and1200)
+                            &&
+                            <div className={`col-6 m-0 mt-4 ${bet1200and1500 && 'order-2 row'}`}>
 
-                                <div className="row">
+                                <div className={`col-12    ${bet1200and1500 && 'col-xl-6'}  backgroun-dark ml-2 row mt-0 mb-3 pb-3 pr-2 pl-2 pt-4 h-auto rounded`}>
+
+                                    <div className=" col-7">
+                                        <div className="d-flex flex-column">
+                                            <span className="text-white fs-16 font-weight-bold pb-2">Create <br /> Challenge</span>
 
 
-
-
-
-                                    <div className="col-6">
-                                        <div className="text-white d-flex align-items-center mb-3">
-                                            <div className={`step done mr-3 `} >1</div>
-                                            SUBMIT A CHALLENGE
+                                            <span className="fs-10 text-white">Challenge will be created by Level 2 & Level 3 Community  </span>
                                         </div>
-                                        <div className="text-muted d-flex align-items-center mb-3">
-                                            <div className={`step  mr-3 `} >2</div>
-                                            VOTE A CHALLENGE
-                                        </div>
-                                        <div className="text-muted d-flex align-items-center mb-3">
-                                            <div className={`step  mr-3 `} >3</div>
-                                            UPLOADE VIDEO
-                                        </div>
-                                        <p className="fs-14 mb-4 mt-4">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae atque dolores laborum? Earum vitae voluptatibus necessitatibus ullam nemo tempora fugit quos explicabo quis, saepe illum molestias cumque ipsa quas?
-                                        </p>
-                                        <p className="fs-14 mb-4 mt-4">
-                                            Lorem itempora fugit qupsa quas?
-                                        </p>
-                                        <button type="button" className="btn btn-primary">Submit your challenge</button>
+                                        <button type="button" className="btn text-nowrap ml-auto fs-12 mt-3 btn-success">Create Now</button>
 
                                     </div>
-                                    <div className="col-6">
-                                        <div className="card-body">
+                                    <div className="m-0 p-2 col-5 flex-wrap flex-row d-flex align-content-center justify-content-center">
+                                        <img src="images/createchallenge-img.png" />
 
-
-
-
-                                            <div className="text-muted bg-dark rounded">
-                                                Challenge Name
-                                            </div>
-
-
-
-                                            <textarea rows={14} value="Challenge Rules" className="overflow-auto bg-dark p-3 m-0 rounded text-muted" >
-                                            </textarea>
-
-                                        </div>
                                     </div>
                                 </div>
+                                <div className={`col-12  ${bet1200and1500 && 'col-xl-6'}     backgroun-dark ml-2 row m-0 mb-3 pb-3 pr-2 pl-2 pt-4 h-auto rounded`}>
 
+                                    <div className=" col-7">
+
+                                        <div className="d-flex justify-content-start flex-column">
+                                            <span className="text-white fs-16 font-weight-bold pb-2">Vote <br /> Challenge</span>
+
+
+
+                                        </div>
+                                        <p className="fs-10 text-white">Vote a challenge created by Level 2 & Level 3 Community</p>
+
+                                        <button type="button" className="btn yel w-0 text-nowrap ml-auto fs-12 mt-3 btn-success">Vote Now</button>
+
+                                    </div>
+                                    <div className="m-0 p-2 col-5 flex-wrap flex-row d-flex align-content-center justify-content-center">
+                                        <img src="images/votechallenge-img.png" width='60%' />
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        {/*start Challange*/}
+                        <div className={`col-xl-8 col-md-12 col-sm-12`}>
+                            <div className={`backgroun-dark d-flex rounded  p-4 h-100 ${(biggerThan1500 || bet1200and1500) && 'm-0'} text-white flex-column`}>
+
+                                <span className="text-white pt-1 fs-18 d-flex align-items-center pb-1 mb-1"> <img src="images/submission-date-icon.png" width='20px' height='20px' className="mr-2" />THIS WEEK CHALLENGE </span>
+                                <span className="text-white pt-1 fs-22 pb-2 font-weight-bold">Jump over the parlement wall </span>
+
+                                <div className="d-flex align-items-center">
+                                    <i className="fa-regular main-pink fa-heart mr-2"></i>
+
+                                    <span className="fs-10">251 votes</span>
+
+
+                                    <img className="ml-3 width-22 fs-22" src="/images/dp.png" />
+
+                                    <span className="ml-2 fs-12 font-weight-bold">Oxflaaddswd...1523</span>
+
+                                    <p className=" ml-3 p-1 fs-10 bg-pink-radius  text-white"> Level 3</p>
+
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-7 d-flex pt-1 pb-1 flex-column ">
+                                        <span className="text-muted pb-1 fs-12 mt-3">Details</span>
+                                        <p className="fs-12">Lorem ips hium quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id <br /><br />dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos!</p>
+                                    </div>
+                                    <div className="col-5 d-flex pt-1 pb-1 pt-3 flex-column ">
+                                        <span className="text-muted pb-3 fs-12">Rules:</span>
+                                        <div className="d-flex pb-3 align-items-center">
+                                            <i className="fa-solid fa-check pr-2 main-pink"></i>
+                                            <p className="fs-12">Lorem ipsum dolor sit amet consectetuds.</p>
+                                        </div>
+                                        <div className="d-flex pb-3 align-items-center">
+                                            <i className="fa-solid fa-check pr-2 main-pink"></i>
+                                            <p className="fs-12">Lorem ipsum dolor sit amet consectetuds.</p>
+                                        </div>
+                                        <div className="d-flex pb-3 align-items-center">
+                                            <i className="fa-solid fa-check pr-2 main-pink"></i>
+                                            <p className="fs-12">Lorem ipsum dolor sit amet consectetuds.</p>
+                                        </div>
+                                        <button type="button" className="btn ml-auto btn-primary">Details</button>
+
+                                    </div>
+
+                                </div>
                             </div>
 
                         </div>
                         {/*end Challange*/}
 
+                        {(bet1200and1500 || biggest576) &&
+
+                            <div className="row ">
+                                <div className={`col-10 col-sm-5 m-4 backgroun-dark d-flex rounded`}>
+
+                                    <div className="">
+                                        <div className="d-flex flex-column">
+                                            <span className="text-white fs-16 font-weight-bold pb-2">Create <br /> Challenge</span>
+
+
+                                            <span className="fs-10 text-white">Challenge will be created by Level 2 & Level 3 Community  </span>
+                                        </div>
+                                        <button type="button" className="btn text-nowrap ml-auto fs-12 mt-3 btn-success">Create Now</button>
+
+                                    </div>
+                                    <img src="images/createchallenge-img.png" width='40%' />
+
+
+                                </div>
+                                <div className={`col-10 col-sm-5 m-4 backgroun-dark d-flex rounded`}>
+
+                                    <div className=" ">
+
+                                        <div className="d-flex justify-content-start flex-column">
+                                            <span className="text-white fs-16 font-weight-bold pb-2">Vote <br /> Challenge</span>
+
+
+
+                                        </div>
+                                        <p className="fs-10 text-white">Vote a challenge created by Level 2 & Level 3 Community</p>
+                                        <button type="button" className="btn w-0 yel text-nowrap ml-auto fs-12 mt-3 btn-success">Vote Now</button>
+
+                                    </div>
+                                    <img src="images/votechallenge-img.png" width='20%' />
+                                </div>
+                            </div>
+                        }
                     </div>
                     {/*end header*/}
                     {/*start video*/}
@@ -546,11 +617,58 @@ export default function Test() {
                 </div>
                 {/*end main*/}
                 <div className={`col-12 ${biggerThan1500 && 'col-xl-3'}`}>
+                    {/*Start vote and create*/}
+                    {biggerThan1500 && <div className="row">
+                        <div className={`col-6 ${biggerThan1500 && 'col-xl-12'} `}>
+                            <div className=" backgroun-dark  row mt-0 mb-3 pb-3 pr-2 pl-2 pt-4 h-auto rounded">
+                                <img className="mobile-show" src="images/createchallenge-img.png" />
 
+                                <div className="col-12 col-lg-7">
+                                    <div className="d-flex flex-column">
+                                        <span className="text-white fs-16 font-weight-bold pb-2">Create <br /> Challenge</span>
+
+
+                                        <span className="fs-10 text-white">Challenge will be created by Level 2 & Level 3 Community  </span>
+                                    </div>
+                                    <button type="button" className="btn text-nowrap ml-auto fs-12 mt-3 btn-success">Create Now</button>
+
+                                </div>
+                                <div className="col-12 m-0 p-2 col-lg-5 flex-wrap flex-row d-flex align-content-center justify-content-center">
+                                    <img className="mobile-hide" src="images/createchallenge-img.png" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div className={`col-6 ${biggerThan1500 && 'col-xl-12 mt-3 '} `}>
+                            <div className=" backgroun-dark  row m-0 mb-3 pb-3 pr-2 pl-2 pt-4 h-auto rounded">
+                                <img src="images/votechallenge-img.png" width='60%' className="mobile-show" />
+
+                                <div className="col-12 col-lg-7">
+
+                                    <div className="d-flex justify-content-start flex-column">
+                                        <span className="text-white fs-16 font-weight-bold pb-2">Vote <br /> Challenge</span>
+
+
+
+                                    </div>
+                                    <p className="fs-10 text-white">Vote a challenge created by Level 2 & Level 3 Community</p>
+                                    <button type="button" className="btn w-0 text-nowrap ml-auto fs-12 mt-3 yel btn-success">Vote Now</button>
+
+                                </div>
+                                <div className="col-12 m-0 p-2 col-lg-5 flex-wrap flex-row d-flex align-content-center justify-content-center">
+                                    <img src="images/votechallenge-img.png" width='60%' className="mobile-hide" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+
+                    {/*end vote and create*/}
                     {/*Start Ranking*/}
-                    <div className="row h-100 ">
-                        <div className="col-12 h-100 ">
-                            <div className=" backgroun-dark m-0 h-100 rounded overflow-hidden">
+                    <div className="row">
+                        <div className="col-12">
+                            <div className=" backgroun-dark rounded overflow-hidden">
 
                                 <div className="align-items-start border-0 justify-content-start">
                                     <div>
