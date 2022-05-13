@@ -45588,7 +45588,7 @@ a.video span {
     }
 }
 
-.video .play-btn {
+.play-btn {
     position: absolute;
     max-width: 700px;
     width: 70px;
@@ -45605,8 +45605,8 @@ a.video span {
     transition: color, background-color .2s ease;
 }
 
-.video .play-btn:hover,
-.video .play-btn:focus {
+.play-btn:hover,
+.play-btn:focus {
     color: #000;
     background-color: rgba(255, 255, 255, .8);
     cursor: pointer;
@@ -47733,6 +47733,7 @@ a.video span {
 
 .my-masonry-grid_column>div {
     /* change div to reference your elements you put in <Masonry> */
+    position: relative;
     background: grey;
     margin-bottom: 30px;
 }
