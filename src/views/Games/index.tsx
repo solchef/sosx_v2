@@ -22,36 +22,19 @@ const server = create({
 
 export default function Game() {
 	const {account} = useActiveWeb3React();
-	const [partyTime, setPartyTime] = useState(false);
 	const [days, setDays] = useState(0);
 	const { toastError } = useToast()
 	const [hours, setHours] = useState(0);
 	const [minutes, setMinutes] = useState(0);
 	const [seconds, setSeconds] = useState(0);
-	const [key, setKey] = useState("chart");
-	const { toastSuccess } = useToast()
-	const { t } = useTranslation()
-	const [videoTitle, setVideoTitle] = useState('')
 	const [youtubeURL, setYoutubeURL] = useState('')
 	const [tiktokURL, setTiktokURL] = useState('')
 	const [displayLevel, setDisplayLevel] = useState(1);
 	const [voters, setVoters] = useState([]);
-	
 	const [videos, setVideos] = useState([])
 	const contract = useStakingContract();
 	const [challenges, setChallenges] = useState<any[]>([]);
-	const videoElem = useRef();
-	const videoInput = useRef();
-	const [imgSrc, setImgSrc] = useState('');
-  	let [stage ,setStage] = useState(1);
-
-	const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
-
-	// const files = acceptedFiles.map(file => (
-	// 	<li key={file.path}>
-	// 	  {file.path} - {file.size} bytes
-	// 	</li>
-	//   ));
+  	let [stage ,setStage] = useState(5);
 	
 	const calculateTimeLeft = (entryTime) => {
 
@@ -77,30 +60,34 @@ export default function Game() {
 	}
 
 	useEffect(() => {
-		const roundStartTime = 1652428999 + 10;
+		const roundStartTime = 1652431300 + 10;
 		let stageGroups = [];
 		let stage1 = { start: roundStartTime, end: roundStartTime + (1 * 10) }
 		let stage2 = { start: stage1.end, end: (stage1.end) + (1 * 10)}
 		let stage3 = { start: stage2.end, end: (stage2.end) + (1 * 10) }
 		let stage4 = { start: stage3.end, end: (stage3.end) + (1 * 10) }
+		let stage5 = { start: stage4.end, end: stage1.start}
 
-		stageGroups.push(stage1,stage2,stage3, stage4);
-		const interval = setInterval(() => {
-			let currTime = moment().unix();
-			let checkStage = stageGroups.findIndex(group => group.end > currTime && currTime > group.start);
+		stageGroups.push(stage1,stage2,stage3, stage4, stage5);
+		let current = moment().unix();
+		let check = stageGroups.findIndex(group => group.end > current && current > group.start);
 
-			if(checkStage != -1){
-			  	setStage(checkStage + 1)
-				 calculateTimeLeft(moment.unix(stageGroups[checkStage].end));
-			}
-
-		}, 1000);
-		return () => clearInterval(interval);
-
+		if(check == -1){
+			setStage(5)
+		}else{
+			const interval = setInterval(() => {
+				let currTime = moment().unix();
+				let checkStage = stageGroups.findIndex(group => group.end > currTime && currTime > group.start);
+	
+				if(checkStage != -1){
+					  setStage(checkStage + 1)
+					 calculateTimeLeft(moment.unix(stageGroups[checkStage].end));
+				}
+	
+			}, 1000);
+			return () => clearInterval(interval);
+		}
 	},[]);
-
-
-
 
 	const getData = async () => {
 		let challenges = [];
@@ -164,17 +151,13 @@ export default function Game() {
 
 		if(!validLinks(youtubeURL, tiktokURL)) {
 			const data = JSON.stringify({
-				title: youtubeURL,
 				youtube: youtubeURL,
 				tiktok: tiktokURL,
-				// video: url,
-				// thumbnail: imgSrc 
 			}, null, 2)
 
 			const todayChallengeName = String(todayChallenge.challenge.payload.name).replaceAll(' ', '-')
 			const fileName = `video-${moment().unix()}`
 			await server.files.write(`/challenges/challenge-${todayChallengeName}/videos/${fileName}`, data, { create: true })
-			// toastSuccess(t('Video Uploaded!'))
 			form.reset()
 			handleClose()
 			getVideo()
@@ -229,9 +212,7 @@ export default function Game() {
 		setVoters(voters);
 	}
 
-	 const getLevel = (amount) => {
-		// console.log(process.env.NEXT_PUBLIC_LEVEL1)
-		
+	 const getLevel = (amount) => {		
 		if (amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2) { return 1; }
 
 		if (amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3) { return 2; }
@@ -264,7 +245,7 @@ export default function Game() {
 
                             </div>
 
-                            <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 mx-auto pr-1 fs-14 pt-0 pb-0 mr-3 text-white"> Stage {stage}</p>
+                            <p style={{ backgroundColor: '#f600cc', borderRadius: '10px' }} className="pl-1 mx-auto pr-1 fs-14 pt-0 pb-0 mr-3 text-white"> Stage {stage !== 5 ?  stage : "No Challenges for now"}</p>
                         </div>
                         <div className="clock mb-3 pr-2 pl-2 pb-2">
                             <div className="d-flex justify-content-start" id="countdown">
@@ -300,9 +281,9 @@ export default function Game() {
                         </span>
                         <span className="text-muted mb-3 fs-12">et! Possimus ea repudi?repudndae in? fdfsd  dfssfds
                         </span>
-						{!account ? (
+						{!account && stage !== 4 ? (
                      <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4"/>
-                    	) : (<a  onClick={handleShow} className="btn pt-1 pb-1 btn-primary">Upload Video</a>)
+                    	) : (<button disabled={stage !== 4} onClick={handleShow} className="btn pt-1 pb-1 btn-primary">Upload Video</button>)
 						} 
                     </div>
                 </div>
@@ -378,7 +359,7 @@ export default function Game() {
 
                                     <span className="fs-14 pt-2 text-white">Create a new challenge to be voted</span>
 									<Link href="/createchallenge">
-                                    <button disabled={stage > 1} type="button" className="btn mt-3 mb-2 btn-success">Create Now</button>
+                                    <button disabled={stage !== 1} type="button" className="btn mt-3 mb-2 btn-success">Create Now</button>
 									</Link>
                                 </div>
 
@@ -400,7 +381,7 @@ export default function Game() {
 
                                     <span className="fs-14 pt-2 text-white">Vote challenges created by DAO members </span>
 									<Link href="/votechallenge">
-                                    <button type="button" className="btn mt-3 mb-2 btn-success">Vote Now</button>
+                                    <button disabled={stage !== 2 && stage !== 3} type="button" className="btn mt-3 mb-2 btn-success">Vote Now</button>
 									</Link>
                                 </div>
 
