@@ -520,6 +520,7 @@ export default function Game() {
                                     </div>
 
                                     <div className="row">
+										
                                         <div className={`videos m-0 p-3 co-12 col-md-6 col-lg-4 col-xl-3 rounded`}>
                                             <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
                                                 className="video">
@@ -641,6 +642,7 @@ export default function Game() {
                     </div>
                     {/*end video*/}
                 </div>
+
                 {/*end main*/}
                 <div className={`col-12 ${biggerThan1500 && 'col-xl-3'}`}>
                     {/*Start vote and create*/}
@@ -691,6 +693,9 @@ export default function Game() {
                         </div>
                     </div>
                     }
+
+
+
 
                     {/*end vote and create*/}
                     {/*Start Ranking*/}

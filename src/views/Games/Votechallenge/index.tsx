@@ -90,28 +90,7 @@ export default function Votechallenge() {
       </p>
       {challenges.length > 0 ? (
         <div className="row pt-3">
-          {challenges
-            .sort((a, b) => a.votes - b.votes)
-            .reverse()
-            .map((camp) => (
-              <div className="col-12 col-xl-4 col-md-6">
-                <div className="card p-0 overflow-hidden">
-                  <div className="card-body p-3 align-items-start border-0">
-                    <div>
-                      <span className="fs-12 font-weight-bold success">
-                        {/* {camp.challenge.payload.metadata.strategies[0].params.address} */}
-                      </span>
-
-                      <ReadMore size="35" css="fs-18 pb-2 pt-3">
-                        {camp.challenge.payload.name}
-                      </ReadMore>
-
-	return (
-
-		<div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
-
-			<p className='p-2'><i className="fa-solid fa-arrow-left"></i>  <Link href='/xgame'> Back </Link> </p>
-			{challenges.length > 0 ? (
+      
 
 
 				<div className="row pt-3">
@@ -172,6 +151,7 @@ export default function Votechallenge() {
 					))}
 
 				</div>
+        </div>
 
 			) : (
 				<p>No Challenges</p>
@@ -179,5 +159,4 @@ export default function Votechallenge() {
 		</div>
 	);
 }
-
 
