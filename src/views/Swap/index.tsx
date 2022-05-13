@@ -66,6 +66,7 @@ import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 import CurrencyInputHeader from './components/CurrencyInputHeader'
 // import { ItemImage } from 'views/Nft/market/components/Filters/ListFilter/styles'
 import { useMediaPredicate } from "react-media-hook";
+import { accessSync } from 'fs'
 
 const Label = styled(Text)`
   font-size: 12px;
@@ -101,8 +102,9 @@ export default function Swap() {
   const [isChartDisplayed, setIsChartDisplayed] = useState(false)
   const { refreshBlockNumber, isLoading } = useRefreshBlockNumberID()
   const [userSlippageTolerance, setUserSlippageTolerance] = useUserSlippageTolerance()
+  const [referedby, setReferrerAddress] = useState('')
 
-
+  
   useEffect(() => {
     setUserChartPreference(isChartDisplayed)
     // 
@@ -110,11 +112,14 @@ export default function Swap() {
       let param = new URLSearchParams(window.location.search)
       // console.log(param)
       if(param){
+        setReferrerAddress(param.get('ref')) ;
+        console.log(referedby);
       //  @ts-ignore
         localStorage.setItem('referral',param.get('ref'))
+        getaccountDetails(); 
       }
     // }
-
+ 
     setUserSlippageTolerance(3700)
   }, [isChartDisplayed, setUserChartPreference])
 
@@ -137,6 +142,26 @@ export default function Swap() {
     })
 
   const { account } = useActiveWeb3React()
+
+  const gotrefered=account;
+  
+  const getaccountDetails = async() => {
+    let post = {
+      gotrefered,
+      referedby,
+      createdAt: new Date().toDateString(),
+  };
+  // save the post
+  let response =await fetch('/api/social_mining', {
+      method: 'POST',
+      body: JSON.stringify(post),
+  });
+
+  // get the data
+  let data = await response.json();
+console.log(data)
+}
+
 
   // for expert mode
   const [isExpertMode] = useExpertModeManager()
