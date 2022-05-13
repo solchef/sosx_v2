@@ -202,7 +202,7 @@ const getDataSocialMining = async () => {
       {/* <Popover.Header as="h3">Popover right</Popover.Header> */}
       <Popover.Body>
         <WhatsappShareButton
-          url={"https://socialx.io/"}
+          url={`https://socialx.io?ref=${account}`}
           // quote={"Welcome to the social experiment"}
           // hashtag={"#socialx"}
           // description={"aiueo"}
@@ -214,7 +214,7 @@ const getDataSocialMining = async () => {
         <br /><br />
 
         <TelegramShareButton
-          url={"https://socialx.io/"}
+          url={`https://socialx.io?ref=${account}`}
           // quote={"Welcome to the social experiment"}
           // hashtag={"#socialx"}
           // description={"aiueo"}
@@ -226,7 +226,7 @@ const getDataSocialMining = async () => {
 
 
         <FacebookShareButton
-          url={"https://socialx.io/"}
+          url={`https://socialx.io?ref=${account}`}
           quote={"Welcome to the social experiment"}
           hashtag={"#socialx"}
           // description={"aiueo"}
@@ -236,7 +236,7 @@ const getDataSocialMining = async () => {
         <br /><br />
         <TwitterShareButton
           title={"Welcome to the social experiment"}
-          url={"https://socialx.io"}
+          url={`https://socialx.io?ref=${account}`}
           hashtags={["socialx", "socialx"]}
         >
           <TwitterIcon size={32} round />
