@@ -12,6 +12,7 @@ import { calculateGasMargin } from "utils";
 import axios from "axios";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import web3 from "web3";
+import { cleanNumber } from "utils/amount";
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -384,7 +385,7 @@ export default function DaoStaking() {
                   <div className="d-flex justify-content-between">
                     <p className="success mb-0 fs-12">Total SOSX Staked</p>
                     <h4 className="mb-0 font-w600  fs-24 pb-3">
-                      {totalAmountStaked / 10 ** 18}
+                      {cleanNumber(totalAmountStaked / 10 ** 18 + "")}
                     </h4>
                   </div>
                   <div className="d-flex justify-content-between">
