@@ -22,7 +22,7 @@ const server = create({
 export default function Game() {
   const { account } = useActiveWeb3React();
   const [days, setDays] = useState(0);
-  const { toastError } = useToast();
+  const { toastError, toastSuccess } = useToast();
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -158,7 +158,12 @@ export default function Game() {
     evt.preventDefault();
     const form = event.target as HTMLFormElement;
 
-    if (!validLinks(youtubeURL, tiktokURL)) {
+    if (!youtubeURL && !tiktokURL) {
+      toastError("One Link Required");
+      return
+    }
+
+    if (validLinks(youtubeURL, tiktokURL) == true) {
       const data = JSON.stringify(
         {
           youtube: youtubeURL,
@@ -179,16 +184,10 @@ export default function Game() {
       );
       form.reset();
       handleClose();
+      toastSuccess("Uploaded")
       getVideo();
     } else {
-      if (validLinks(youtubeURL, tiktokURL) == "One Link Required") {
-        toastError("One Link Required");
-      }
-      if (validLinks(youtubeURL, tiktokURL) == "Invalid Youtube Link")
-        toastError("Invalid Youtube Link");
-      if (validLinks(youtubeURL, tiktokURL) == "Invalid TikTok Link") {
-        toastError("Invalid TikTok Link");
-      }
+      toastError("Not Valid Links");
     }
   };
   const [showDonate, setShowDonate] = useState(false);
@@ -196,22 +195,6 @@ export default function Game() {
   const handleShowDonate = () => setShowDonate(true);
 
   const handleSubmitDonate = async () => {
-    // await contract.stakeToken(
-    //   (amountToStake * 10 ** 18).toString(),
-    //   referralAddress,
-    //   stakingClass
-    // );
-    // setActivatestake(true);
-    // setLoading(false);
-    // listUserStaking();
-    //   } else {
-    //     let signer = contract.signer;
-    //     signer.sendTransaction();
-    //     // 	toastError("token allowance not yet set");
-    //   }
-    // } else {
-    //   toastError("Insufficient Balance");
-    // }
   };
 
   const [show, setShow] = useState(false);
