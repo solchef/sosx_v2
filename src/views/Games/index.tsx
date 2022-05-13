@@ -12,6 +12,7 @@ import ConnectWalletButton from '../../components/ConnectWalletButton';
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
 import {useDropzone} from 'react-dropzone';
 import { TikTok } from "react-tiktok";
+import { validLinks } from "utils/validateLink";
 
 
 const server = create({
@@ -158,37 +159,10 @@ export default function Game() {
 	}
 	
 	const videoLink =  async (evt: FormEvent<HTMLFormElement>) => {
+		evt.preventDefault();
+		const form = event.target as HTMLFormElement;
 
-			evt.preventDefault();
-			const form = event.target as HTMLFormElement;
-			// const files = (form[0] as HTMLInputElement).files;
-			// const file = files[0];
-
-			// const canvas = document.createElement("canvas");
-			// canvas
-			//   .getContext("2d")
-			//   .drawImage(	
-			// 	videoElem.current,
-			// 	0,
-			// 	0,
-			// 	120,
-			// 	120
-			//   );
-		
-			// setImgSrc(canvas.toDataURL());
-			// console.log(imgSrc)
-
-			// if (!files || files.length === 0) {
-			// 	console.log('NO')
-			// }
-
-			// const IPFSFile = await server.add(file)
-			// const url = `ipfs`
-
-			if(youtubeURL || tiktokURL){
-					
-		
-
+		if(!validLinks(youtubeURL, tiktokURL)) {
 			const data = JSON.stringify({
 				title: youtubeURL,
 				youtube: youtubeURL,
@@ -204,8 +178,16 @@ export default function Game() {
 			form.reset()
 			handleClose()
 			getVideo()
-		}else{
-				toastError("One of the video posted links is required");
+		} else{
+			if (validLinks(youtubeURL, tiktokURL) == "One Link Required") {
+				toastError("One Link Required");
+			}
+			if (validLinks(youtubeURL, tiktokURL) == "Invalid Youtube Link")
+				toastError("Invalid Youtube Link");
+			if (validLinks(youtubeURL, tiktokURL) == "Invalid TikTok Link") {
+				toastError("Invalid TikTok Link");
+			}
+
 		}
 	}
 	const [show, setShow] = useState(false);
@@ -599,7 +581,7 @@ export default function Game() {
 						</div>
 
 						<div className="bg-dark  rounded fs-8">
-								<input type="text" className="form-control fs-20" id="youtube" placeholder="Youtube link Here" value={youtubeURL} onChange={(e) => setTiktokURL(e.target.value)} />
+								<input type="text" className="form-control fs-20" id="youtube" placeholder="Youtube link Here" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />
 						</div>
 
 						<div className=" rounded p-2">
