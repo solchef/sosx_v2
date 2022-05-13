@@ -10,6 +10,7 @@ import ConnectWalletButton from "../../components/ConnectWalletButton";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { validLinks } from "utils/validateLink";
 import Masonry from "react-masonry-css";
+import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -1134,6 +1135,30 @@ export default function Game() {
           {/*end main*/}
         </div>
       </div>
+      <Modal show={show} onHide={handleClose} centered>
+
+					<ModalHeader className="text-dark">
+							  SUBMIT  LINK TO UPLOADED MEDIA
+							  <CloseButton />
+					</ModalHeader>
+
+					<div className="modal-body">
+					<form onSubmit={videoLink}>
+
+						<div className="bg-dark  rounded fs-8">
+									<input type="text" className="form-control fs-20" id="tiktok" placeholder="TikTok link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
+						</div>
+
+						<div className="bg-dark  rounded fs-8">
+								<input type="text" className="form-control fs-20" id="youtube" placeholder="Youtube link Here" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />
+						</div>
+
+						<div className=" rounded p-2">
+					     	<button className="btn btn-primary w-100">Submit</button>
+						</div>
+					</form>
+					</div>
+				</Modal>
     </>
   );
 }
