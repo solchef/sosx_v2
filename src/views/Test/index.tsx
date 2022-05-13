@@ -7,9 +7,14 @@ export default function Test() {
     const bet1200and1500 = useMediaPredicate("(min-width: 1200px) and (max-width: 1500px)");
     const biggest576 = useMediaPredicate(" (max-width: 576px)");
     const breakpointColumnsObj = {
-        default: 4,
+      
      
-        800: 2,
+       3000:5,
+       2250:4,
+        1850: 3,
+        1500:4,
+        1450:3,
+        950:2,
         500: 1
       };
       
@@ -197,29 +202,30 @@ export default function Test() {
                     {/*start video*/}
                     <div className="row">
                         <div className="col-12 mt-3">
-                            <div className=" backgroun-dark rounded pr-4 pl-4 pb-4 pt-0" >
+                            <div className=" backgroun-dark m-0 rounded  pt-0" >
 
 
 
-                                <div className="col-12 p-0 mt-5">
+                                <div className="col-12 p-0">
 
-                                    <div className="d-flex justify-content-between pb-2 align-items-center">
+                                    <div className="d-flex justify-content-between p-2 align-items-center">
 
                                         <p className="text-white fs-22 font-weight-bold" >All Submissions </p>
                                         <button type="button" className="btn text-nowrap font-weight-bold  p-2 fs-12 mt-2 btn-success">View All</button>
 
                                     </div>
 
-                                    <div className="row mt-2">
+                                    <div className="row mx-auto mt-2">
 
 
                                         <Masonry
                                             breakpointCols={breakpointColumnsObj}
-                                            className="my-masonry-grid"
+                                            className="my-masonry-grid mx-auto "
                                             columnClassName="my-masonry-grid_column">
-                                            <div className={`videos m-0 p-3 height400  mb-4  align-self-stretch rounded`}>
+                                            <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
+                                                
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -227,7 +233,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -245,9 +250,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height150  mb-4  rounded`}>
+                                            <div className={`width250  height150  mb-4  rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -255,7 +260,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -273,9 +277,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height150  mb-4   rounded`}>
+                                            <div className={`width250  height150  mb-4   rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -283,7 +287,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -301,9 +304,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height400  mb-4  align-self-stretch rounded`}>
+                                            <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -311,7 +314,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -329,9 +331,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height150  mb-4  rounded`}>
+                                            <div className={`width250  height150  mb-4  rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -339,7 +341,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -357,9 +358,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height150  mb-4   rounded`}>
+                                            <div className={`width250  height150  mb-4   rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -367,7 +368,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -385,9 +385,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height400  mb-4  align-self-stretch rounded`}>
+                                            <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -395,7 +395,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -413,9 +412,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height150  mb-4  rounded`}>
+                                            <div className={`width250  height150  mb-4  rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -423,7 +422,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -441,9 +439,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height150  mb-4   rounded`}>
+                                            <div className={`width250  height150  mb-4   rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -451,7 +449,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -469,9 +466,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height400  mb-4  align-self-stretch rounded`}>
+                                            <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -479,7 +476,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -497,9 +493,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height150  mb-4  rounded`}>
+                                            <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -507,7 +503,6 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
@@ -525,9 +520,9 @@ export default function Test() {
                                                 </a>
 
                                             </div>
-                                            <div className={`videos m-0 p-3 height150  mb-4   rounded`}>
+                                            <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
                                                 <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-                                                    className="video">
+                                                    >
                                                     <span>
                                                         <div className="text-white d-flex align-items-center pt-1">
                                                             <img className="width-22" src="/images/dp.png" />
@@ -535,7 +530,60 @@ export default function Test() {
                                                             <p className=" ml-2 fs-12" >Oxf...ds3</p>
                                                         </div>
                                                     </span>
-                                                    <img src="images/video-banner-1.png" alt="Video1" />
+                                                    <div className="play-btn"></div>
+                                                    <div className="text-white view-vid">
+
+                                                        <div className=" d-flex align-items-center">
+                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                                                            <p className="fs-10 mr-4">251</p>
+
+
+                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                                                            <p className="fs-10">43,125</p>
+                                                        </div>
+                                                    </div>
+
+                                                </a>
+
+                                            </div>
+                                            <div className={`width250  height150  mb-4  rounded`}>
+                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
+                                                    >
+                                                    <span>
+                                                        <div className="text-white d-flex align-items-center pt-1">
+                                                            <img className="width-22" src="/images/dp.png" />
+
+                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                                                        </div>
+                                                    </span>
+                                                    <div className="play-btn"></div>
+                                                    <div className="text-white view-vid">
+
+                                                        <div className=" d-flex align-items-center">
+                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                                                            <p className="fs-10 mr-4">251</p>
+
+
+                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                                                            <p className="fs-10">43,125</p>
+                                                        </div>
+                                                    </div>
+
+                                                </a>
+
+                                            </div>
+                                            <div className={`width250  height150  mb-4   rounded`}>
+                                                <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
+                                                    >
+                                                    <span>
+                                                        <div className="text-white d-flex align-items-center pt-1">
+                                                            <img className="width-22" src="/images/dp.png" />
+
+                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                                                        </div>
+                                                    </span>
                                                     <div className="play-btn"></div>
                                                     <div className="text-white view-vid">
 
