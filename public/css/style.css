@@ -12663,19 +12663,16 @@ svg.pulse-svg .third-circle {
     width: 100%;
 }
 
-
-
 [data-header-position="fixed"] .content-body {
-  padding-top: 7.5rem;
-  padding-bottom: 6.5rem;
-  }
-  @media only screen and (max-width: 1199px) {
+    padding-top: 7.5rem;
+    padding-bottom: 6.5rem;
+}
+
+@media only screen and (max-width: 1199px) {
     [data-header-position="fixed"] .content-body {
-      padding-top: 5rem; } }
-
-
-
-
+        padding-top: 5rem;
+    }
+}
 
 [data-header-position="fixed"] .deznav {
     margin-top: 0;
