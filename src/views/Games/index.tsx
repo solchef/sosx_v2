@@ -57,7 +57,7 @@ export default function Game() {
 
 	useEffect(() => {
 		
-		const roundStartTime = 1652442565;
+		const roundStartTime = 1652438987;
 
 
 		let stageGroups = [];
