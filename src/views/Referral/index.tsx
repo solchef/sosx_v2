@@ -57,8 +57,10 @@ export default function Referral({datasocial}) {
     fetchReferral();
     
 getaccountDetails();  
-getDataSocialMining();
-  }, [])
+if(!resultsoc){
+  getDataSocialMining();
+}
+}, [])
 
   const getaccountDetails = async() => {
     let post = {
@@ -84,6 +86,7 @@ const getDataSocialMining = async () => {
   results.push(json.message);
   console.log("data is:",json.message)
   console.log("data2 is:",results)
+  console.log("resultsoc",resultsoc);
 }
  
   const fetchReferral = async () => {
@@ -245,7 +248,7 @@ const getDataSocialMining = async () => {
 
   const [show , setShow] = useState(false);
   
-  console.log(resultsoc.length); 
+  // console.log(resultsoc.length); 
   return (
 
 <div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
@@ -590,8 +593,8 @@ const getDataSocialMining = async () => {
              </div>
            </div>
          </div>
-          {console.log(results)}
-        {resultsoc.map(ref => 
+         
+        {/* {resultsoc.map(ref => 
 
              <div className="row pb-3">
                
@@ -600,7 +603,6 @@ const getDataSocialMining = async () => {
   
                  <div className="col-xl-2">
                  <p className="text-white fs-12">{ref.gotrefered.replace(/(.{13})..+/, "$1…")}</p>
-                  
                  </div>
   
                  <div className="col-xl-3">
@@ -620,7 +622,7 @@ const getDataSocialMining = async () => {
                </div>
              </div>
            </div>
-        )}
+        )} */}
 
        </div>
      </div>
