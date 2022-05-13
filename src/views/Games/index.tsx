@@ -34,80 +34,72 @@ export default function Game() {
 	const [youtubeURL, setYoutubeURL] = useState('')
 	const [tiktokURL, setTiktokURL] = useState('')
 	const [displayLevel, setDisplayLevel] = useState(1);
-	const [voters, setVoters] = useState([])
+	const [voters, setVoters] = useState([]);
+	
 	const [videos, setVideos] = useState([])
 	const contract = useStakingContract();
 	const [challenges, setChallenges] = useState<any[]>([]);
 	const videoElem = useRef();
 	const videoInput = useRef();
 	const [imgSrc, setImgSrc] = useState('');
- 	let [stage ,setStage] = useState(0);
+  	let [stage ,setStage] = useState(1);
+
+	const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
+
+	// const files = acceptedFiles.map(file => (
+	// 	<li key={file.path}>
+	// 	  {file.path} - {file.size} bytes
+	// 	</li>
+	//   ));
 	
 	const calculateTimeLeft = (entryTime) => {
 
 		let eventTime =  moment(entryTime).unix();
 		let currentTime = Number((Math.floor(Date.now() / 1000)).toString());
-		
-		// console.log(eventTime)
-
-
-
-		
 		let leftTime = eventTime - currentTime;
 		let duration = moment.duration(leftTime, 'seconds');
 		let interval = 1000;
+
 		if (duration.asSeconds() <= 0) {
 			clearInterval(interval);
 		}
+
 		duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+
 		setDays(duration.days());
 		setHours(duration.hours());
 		setMinutes(duration.minutes());
 		setSeconds(duration.seconds()); 
+
+		return ({min:duration.minutes(), sec: duration.seconds()});
+
 	}
 
 	useEffect(() => {
-
-		const startTime = moment().unix();
-		// const startTime = moment.unix(1652390481);
-		const endTime = moment.unix(1652394081)
-		// console.log(endTime.quarters())
-
+		const roundStartTime = 1652428999 + 10;
 		let stageGroups = [];
-		let roundStartTime = 1652394081;
-		// env specify stage durations 1 = 1/2, 2 = 1/2, 3=1, 4=2, 
-		let stage1 = {
-			start: 1652394081,
-			end: 1652394081 + 1 * 30 
-		}
+		let stage1 = { start: roundStartTime, end: roundStartTime + (1 * 10) }
+		let stage2 = { start: stage1.end, end: (stage1.end) + (1 * 10)}
+		let stage3 = { start: stage2.end, end: (stage2.end) + (1 * 10) }
+		let stage4 = { start: stage3.end, end: (stage3.end) + (1 * 10) }
 
-		let stage2 = {
-			start: stage1.end + 1,
-			end: 1652394081 + 1 * 30 
-		}
-
-		let stage3 = {
-			start: stage2.end + 1,
-			end: 1652394081 + 1 * 1
-		}
-
-		let stage4 = {
-			start: stage3.end + 1,
-			end: (stage3.end + 1) + 2 * 1 * 1
-		}
-
-
-        //  let currentStage;   check now and start time of stage and less than endtime 
-		  
-
+		stageGroups.push(stage1,stage2,stage3, stage4);
 		const interval = setInterval(() => {
-		
-			calculateTimeLeft(endTime)
-			setStage(stage++)
-		
+			let currTime = moment().unix();
+			let checkStage = stageGroups.findIndex(group => group.end > currTime && currTime > group.start);
+
+			if(checkStage != -1){
+			  	setStage(checkStage + 1)
+				 calculateTimeLeft(moment.unix(stageGroups[checkStage].end));
+			}
+
 		}, 1000);
 		return () => clearInterval(interval);
-	}, []);
+
+	},[]);
+
+
+
 
 	const getData = async () => {
 		let challenges = [];
@@ -230,26 +222,34 @@ export default function Game() {
 
 	const loadDaoLevels = async () => {
 		let daoList = await contract.getAllAccount();
-		// console.log(daoList);
+		daoList = [...new Set(daoList)];
+
+		console.log(daoList);
 		let voters = [];
 		for (let i = 0; i < daoList.length; i++) {
-			let voter_address = daoList[i];
-			let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-			// console.log(total_stake);
-			total_stake = Number(total_stake / 10 ** 18);
-			let data = {
-				address: voter_address,
-				amount: total_stake,
-				level: getLevel(total_stake)
-			}
+			console.log(voters.findIndex(vt => vt.address == daoList[i]) != -1)
+			// if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
+				let voter_address = daoList[i];
+					let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
+					// console.log(total_stake);
+					total_stake = Number(total_stake / 10 ** 18);
+					let data = {
+						address: voter_address,
+						amount: total_stake,
+						level: getLevel(total_stake)
+					}
+					voters.push(data);
 
-			voters.push(data);
+			// }
+			
 		}
 
 		setVoters(voters);
 	}
 
-	 const getLevel = (amount) => {		
+	 const getLevel = (amount) => {
+		// console.log(process.env.NEXT_PUBLIC_LEVEL1)
+		
 		if (amount >= process.env.NEXT_PUBLIC_LEVEL1 && amount < process.env.NEXT_PUBLIC_LEVEL2) { return 1; }
 
 		if (amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3) { return 2; }
@@ -396,7 +396,7 @@ export default function Game() {
 
                                     <span className="fs-14 pt-2 text-white">Create a new challenge to be voted</span>
 									<Link href="/createchallenge">
-                                    <button type="button" className="btn mt-3 mb-2 btn-success">Create Now</button>
+                                    <button disabled={stage > 1} type="button" className="btn mt-3 mb-2 btn-success">Create Now</button>
 									</Link>
                                 </div>
 
