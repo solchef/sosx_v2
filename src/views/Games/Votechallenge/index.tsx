@@ -150,8 +150,15 @@ export default function Votechallenge() {
               ))}
           </div>
         </div>
+      ) : loading ? (
+        <div className="col-12 col-xl-4 col-md-6">
+          <Skeleton className="mb-2" width={"40%"} />
+          <Skeleton className="mb-2" width={"90%"} />
+          <Skeleton className="mb-2" width={"30%"} />
+          <Skeleton className="mb-2" width={"70%"} />
+        </div>
       ) : (
-        <p>No Challenges</p>
+        "No Challenge"
       )}
     </div>
   );

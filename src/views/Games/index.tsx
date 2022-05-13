@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { useMediaPredicate } from "react-media-hook";
 import { create } from "ipfs-http-client";
@@ -11,6 +12,7 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { validLinks } from "utils/validateLink";
 import Masonry from "react-masonry-css";
 import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
+import { cleanNumber } from "utils/amount";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -28,6 +30,7 @@ export default function Game() {
   const [displayLevel, setDisplayLevel] = useState(1);
   const [voters, setVoters] = useState([]);
   const [videos, setVideos] = useState([]);
+  const router = useRouter();
   const contract = useStakingContract();
   const [challenges, setChallenges] = useState<any[]>([]);
   let [stage, setStage] = useState(5);
@@ -271,16 +274,14 @@ export default function Game() {
   };
 
   const breakpointColumnsObj = {
-      
-     
-    3000:5,
-    2250:4,
-     1850: 3,
-     1500:4,
-     1450:3,
-     950:2,
-     500: 1
-   };
+    3000: 5,
+    2250: 4,
+    1850: 3,
+    1500: 4,
+    1450: 3,
+    950: 2,
+    500: 1,
+  };
 
   useEffect(() => {
     loadDaoLevels();
@@ -405,7 +406,7 @@ export default function Game() {
                       </div>
                       <Link href="/createchallenge">
                         <button
-                          disabled={stage !== 1}
+                          disabled={stage !== 1 && stage !== 3}
                           type="button"
                           className="btn mt-3 mb-2 btn-success"
                         >
@@ -554,7 +555,7 @@ export default function Game() {
                       </div>
                       <Link href="/createchallenge">
                         <button
-                          disabled={stage !== 1}
+                          disabled={stage !== 1 && stage !== 3}
                           type="button"
                           className="btn mt-3 mb-2 btn-success"
                         >
@@ -577,7 +578,7 @@ export default function Game() {
                         Vote a challenge created by Level 2 & Level 3 Community
                       </p>
                       <button
-                        disabled={stage !== 2 && stage !== 3}
+                        disabled={stage !== 2}
                         type="button"
                         className="btn w-0 text-nowrap p-2 fs-12 mt-3 btn-success"
                       >
@@ -607,395 +608,333 @@ export default function Game() {
                   </div>
 
                   <div className="row mx-auto mt-2">
-
-
-<Masonry
-    breakpointCols={breakpointColumnsObj}
-    className="my-masonry-grid mx-auto "
-    columnClassName="my-masonry-grid_column">
-    <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
-        
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height150  mb-4  rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height150  mb-4   rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height150  mb-4  rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height150  mb-4   rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height150  mb-4  rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height150  mb-4   rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height150  mb-4  rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-    <div className={`width250  height150  mb-4   rounded`}>
-        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-            >
-            <span>
-                <div className="text-white d-flex align-items-center pt-1">
-                    <img className="width-22" src="/images/dp.png" />
-
-                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                </div>
-            </span>
-            <div className="play-btn"></div>
-            <div className="text-white view-vid">
-
-                <div className=" d-flex align-items-center">
-                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                    <p className="fs-10 mr-4">251</p>
-
-
-                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                    <p className="fs-10">43,125</p>
-                </div>
-            </div>
-
-        </a>
-
-    </div>
-</Masonry>
-
-
-</div>
+                    <Masonry
+                      breakpointCols={breakpointColumnsObj}
+                      className="my-masonry-grid mx-auto "
+                      columnClassName="my-masonry-grid_column"
+                    >
+                      <div
+                        className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}
+                      >
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div className={`width250  height150  mb-4  rounded`}>
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div className={`width250  height150  mb-4   rounded`}>
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div
+                        className={`width250  height400  mb-4  align-self-stretch rounded`}
+                      >
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div className={`width250  height150  mb-4  rounded`}>
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div className={`width250  height150  mb-4   rounded`}>
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div
+                        className={`width250  height400  mb-4  align-self-stretch rounded`}
+                      >
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div className={`width250  height150  mb-4  rounded`}>
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div className={`width250  height150  mb-4   rounded`}>
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div
+                        className={`width250  height400  mb-4  align-self-stretch rounded`}
+                      >
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div
+                        className={`width250  height400  mb-4  align-self-stretch rounded`}
+                      >
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div
+                        className={`width250  height400  mb-4  align-self-stretch rounded`}
+                      >
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div className={`width250  height150  mb-4  rounded`}>
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                      <div className={`width250  height150  mb-4   rounded`}>
+                        <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg">
+                          <span>
+                            <div className="text-white d-flex align-items-center pt-1">
+                              <img className="width-22" src="/images/dp.png" />
+
+                              <p className=" ml-2 fs-12">Oxf...ds3</p>
+                            </div>
+                          </span>
+                          <div className="play-btn"></div>
+                          <div className="text-white view-vid">
+                            <div className=" d-flex align-items-center">
+                              <i className="fa-regular fs-12 fa-heart pr-2"></i>
+
+                              <p className="fs-10 mr-4">251</p>
+
+                              <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                              <p className="fs-10">43,125</p>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                    </Masonry>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1026,7 +965,7 @@ export default function Game() {
                       </div>
                       <Link href="/createchallenge">
                         <button
-                          disabled={stage !== 1}
+                          disabled={stage !== 1 && stage !== 3}
                           type="button"
                           className="btn mt-3 mb-2 btn-success"
                         >
@@ -1097,9 +1036,13 @@ export default function Game() {
                     </div>
                   </div>
                   <ul className="nav3 nav-rank nav3-tabs butten nav3-justified">
-                    <li className="nav3-item">
+                    <li className="nav3-item ">
                       <a
-                        className={`nav3-link  pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`} 
+                        className={
+                          displayLevel === 1
+                            ? `nav3-link active pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`
+                            : "nav3-link  pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap"
+                        }
                         onClick={() => setDisplayLevel(1)}
                       >
                         Level 1
@@ -1107,7 +1050,11 @@ export default function Game() {
                     </li>
                     <li className="nav3-item">
                       <a
-                        className={`nav3-link pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`}
+                        className={
+                          displayLevel === 2
+                            ? `nav3-link active pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`
+                            : "nav3-link  pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap"
+                        }
                         onClick={() => setDisplayLevel(2)}
                       >
                         Level 2
@@ -1115,7 +1062,11 @@ export default function Game() {
                     </li>
                     <li className="nav3-item">
                       <a
-                        className={`nav3-link pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`}
+                        className={
+                          displayLevel === 3
+                            ? `nav3-link active pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap`
+                            : "nav3-link  pl-1 pr-1  pb-2 font-weight-bold text-white rounded text-nowrap"
+                        }
                         onClick={() => setDisplayLevel(3)}
                       >
                         Level 3
@@ -1145,7 +1096,7 @@ export default function Game() {
                                   </span>
                                 </div>
                               </div>
-                              <span> {voter.amount} </span>
+                              <span> {cleanNumber(voter.amount + "")} </span>
                             </a>
                           )}
                         </>
@@ -1160,22 +1111,34 @@ export default function Game() {
         </div>
       </div>
       <Modal show={show} onHide={handleClose} centered>
+        <ModalHeader className="text-dark">
+          SUBMIT LINK TO UPLOADED MEDIA
+          <CloseButton />
+        </ModalHeader>
 
-					<ModalHeader className="text-dark">
-							  SUBMIT  LINK TO UPLOADED MEDIA
-							  <CloseButton />
-					</ModalHeader>
+        <div className="modal-body">
+          <form onSubmit={videoLink}>
+            <div className="bg-dark  rounded fs-8">
+              <input
+                type="text"
+                className="form-control fs-20"
+                id="tiktok"
+                placeholder="TikTok link Here"
+                value={tiktokURL}
+                onChange={(e) => setTiktokURL(e.target.value)}
+              />
+            </div>
 
-					<div className="modal-body">
-					<form onSubmit={videoLink}>
-
-						<div className="bg-dark  rounded fs-8">
-									<input type="text" className="form-control fs-20" id="tiktok" placeholder="TikTok link Here" value={tiktokURL} onChange={(e) => setTiktokURL(e.target.value)} />
-						</div>
-
-						<div className="bg-dark  rounded fs-8">
-								<input type="text" className="form-control fs-20" id="youtube" placeholder="Youtube link Here" value={youtubeURL} onChange={(e) => setYoutubeURL(e.target.value)} />
-						</div>
+            <div className="bg-dark  rounded fs-8">
+              <input
+                type="text"
+                className="form-control fs-20"
+                id="youtube"
+                placeholder="Youtube link Here"
+                value={youtubeURL}
+                onChange={(e) => setYoutubeURL(e.target.value)}
+              />
+            </div>
 
 						<div className=" rounded p-2">
 					     	<button className="btn btn-primary w-100">Submit</button>
@@ -1200,6 +1163,7 @@ export default function Game() {
 					</form>
 					</div>
 				</Modal>
+
     </>
   );
 }
