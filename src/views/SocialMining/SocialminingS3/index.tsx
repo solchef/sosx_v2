@@ -6,6 +6,7 @@ import router from 'next/router';
 import Head from "next/head";
 import ReCAPTCHA from "react-google-recaptcha";
 import React from "react";
+import { useMediaPredicate } from "react-media-hook";
 
 export default function SocialminingS3() {
   //    const posts = axios('http://localhost:3001/api/posts')
@@ -17,7 +18,8 @@ export default function SocialminingS3() {
   const [message, setMessage] = useState("");
   const [email, setEmail] = React.useState("");
   const recaptchaRef = React.useRef(null);
-  
+  const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+      const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const handlePost = async (e) => {
     e.preventDefault();
     recaptchaRef.current.execute();
@@ -96,7 +98,7 @@ const onReCAPTCHAChange = async (captchaCode) => {
     <>
       <NavMining />
       <form onSubmit={handlePost}>
-      <div className="card-social container-fluid pt-3">
+      <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
         <div className="card p-3 mt-3">
           <div className="row">
             <div className="col-lg-6">

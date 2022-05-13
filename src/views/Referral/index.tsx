@@ -13,7 +13,7 @@ import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice';
 import { useMediaPredicate } from "react-media-hook";
 import BigNumber from "big-number"
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
-
+import fetch from 'isomorphic-unfetch'
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -26,7 +26,8 @@ const tabs = [
   { name: 'mining' },
   { name: 'staking' }
 ];
-export default function Referral() {
+export default function Referral({datasocial}) {
+  const [resultsoc, setResultsoc] = useState(datasocial);
   const [tab, setTab] = useState(tabs[0])
   const { account } = useActiveWeb3React()
   const [userAccount, setUserAccount] = useState('');
@@ -40,20 +41,28 @@ export default function Referral() {
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const [key, setKey] = useState("chart");
-   
+   let results=[];
+
   // const account = "dd"
   const toggleTab = (event, type) => {
     event.stopPropagation();
     tabs.map(tabb => tabb.name == type ? setTab(tabb) : '');
 
   };
-
-  console.log(account);
+  console.log(resultsoc);
+  // console.log(account);
 
   useEffect(() => {
 // console.log("hello")
     fetchReferral();
-    const getaccountDetails = async() => {
+    
+getaccountDetails();  
+if(!resultsoc){
+  getDataSocialMining();
+}
+}, [])
+
+  const getaccountDetails = async() => {
     let post = {
       viewReferralReward,
       account,
@@ -64,16 +73,22 @@ export default function Referral() {
       method: 'POST',
       body: JSON.stringify(post),
   });
-
+ 
   // get the data
   let data = await response.json();
 console.log(data)
 }
-getaccountDetails();  
+const getDataSocialMining = async () => {
+  
+  const res = await fetch('http://localhost:3000/api/social_mining?referedby=' + account)
+  const json = await res.json()
+  setResultsoc(json.message);
+  results.push(json.message);
+  console.log("data is:",json.message)
+  console.log("data2 is:",results)
+  console.log("resultsoc",resultsoc);
+}
  
-  }, [])
-
-
   const fetchReferral = async () => {
 
     let countreferrals = await contract.getReferralCount();
@@ -86,7 +101,7 @@ getaccountDetails();
       // console.log("Fetched Referrals")
       // console.log(result)  
       if (result.length == 0) {
-        result = null;
+        result = null; 
       }
       console.log(result);
 
@@ -95,7 +110,7 @@ getaccountDetails();
       let referralData = [];
       let total = 0;
 
-      for (let i = 0; i < referralCount; i++) {
+      for (let i = 0; i < referralCount; i++) { 
 
         contract.calculateRewardReferral(result[i]).then(reward => {
 
@@ -228,14 +243,12 @@ getaccountDetails();
           Twitter
         </TwitterShareButton>
       </Popover.Body>
-    </Popover>
+    </Popover> 
   );
 
   const [show , setShow] = useState(false);
-  // const ShareComponent = () => (
-    
-  // );
-
+  
+  // console.log(resultsoc.length); 
   return (
 
 <div className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"}`} >
@@ -455,22 +468,22 @@ getaccountDetails();
                <div className="d-flex justify-content-between">
   
                  <div className="col-xl-2">
-                   <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
+                   <p className="text-white fs-12">1</p>
                 
                  </div>
   
                  <div className="col-xl-3">
-                   <p className="text-white fs-12">0</p>
+                   <p className="text-white fs-12">0</p> 
           
                  </div>
   
                  <div className="col-xl-3">
                    <p className="text-white fs-12">
-                     {ref.amount}
+                     3
                    </p>
-                 </div>
+                 </div> 
                  <div className="col-xl-2">
-                   <p className="text-white fs-12">{ref.amount}</p>
+                   <p className="text-white fs-12">4</p>
                  </div>
                </div>
              </div>
@@ -580,8 +593,8 @@ getaccountDetails();
              </div>
            </div>
          </div>
-
-        {referrals.map(ref => 
+         
+        {/* {resultsoc.map(ref => 
 
              <div className="row pb-3">
                
@@ -589,8 +602,7 @@ getaccountDetails();
                <div className="d-flex justify-content-between">
   
                  <div className="col-xl-2">
-                   <p className="text-white fs-12">{ref.address.replace(/(.{13})..+/, "$1…")}</p>
-                
+                 <p className="text-white fs-12">{ref.gotrefered.replace(/(.{13})..+/, "$1…")}</p>
                  </div>
   
                  <div className="col-xl-3">
@@ -599,20 +611,18 @@ getaccountDetails();
                  </div>
   
                  <div className="col-xl-3">
-                   <p className="text-white fs-12">
-                     {ref.amount}
-                   </p>
+                 <p className="text-white fs-12">0</p>
          
   
                  </div>
   
                  <div className="col-xl-2">
-                   <p className="text-white fs-12">{ref.amount}</p>
+                 <p className="text-white fs-12">0</p>
                  </div>
                </div>
              </div>
            </div>
-        )}
+        )} */}
 
        </div>
      </div>
@@ -691,4 +701,20 @@ getaccountDetails();
 </div>
 
   )
+}
+export async function getServerSideProps(ctx) {
+  // get the current environment
+  // let dev = process.env.NODE_ENV !== 'production';
+  // let { DEV_URL, PROD_URL } = process.env;
+
+  // request posts from api
+  let response = await fetch(`http://localhost:3000/api/social_mining`);
+  // extract the data
+  let data = await response.json();
+
+  return {
+      props: {
+          datasocial: data['message'],
+      },
+  };
 }
