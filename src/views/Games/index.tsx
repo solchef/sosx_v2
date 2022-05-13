@@ -427,81 +427,7 @@ export default function Game() {
                     <div className="row">
                         <div className="col-12 mt-3">
                             <div className=" backgroun-dark rounded p-4" >
-
-                                <div className="col-12 p-0">
-                                    <div className="d-flex justify-content-between  align-items-center">
-
-                                        <p className="text-white fs-22  font-weight-bold" >MOST VIEWED CHALLENGES <span className="main-pink" >7 DAY  <i className="fa-solid main-pink fa-angle-down"></i></span></p>
-                                        <button type="button" className="btn text-nowrap font-weight-bold  p-2 fs-12 mt-2 btn-success">View All</button>
-
-                                    </div>
-
-                                    <div className="row">
-									{videos.length > 0 ? (
-									<>
-										{videos.map((video) =>
-										<>
-										<div>
-											<div className={`videos m-0 p-3 co-12 col-md-6 col-lg-4 col-xl-3 rounded`}>
-												<a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg"
-													className="video">
-													<span>
-														<div className="text-white d-flex align-items-center pt-1">
-															<img className="width-22" src="/images/dp.png" />
-
-															<p className=" ml-2 fs-12" >Oxf...ds3</p>
-														</div>
-													</span>
-														<iframe width="" height="" src="https://www.youtube.com/embed/-LAwDM8JKwU" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-													<div className="play-btn"></div>
-													<div className="text-white view-vid">
-
-														<div className=" d-flex align-items-center">
-															<i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-															<p className="fs-10 mr-4">{video.votes}</p>
-
-
-															<i className="fa-regular fs-12 fa-eye pr-2"></i>
-															<p className="fs-10">43,125</p>
-														</div>
-													</div>
-
-												</a>
-
-											</div>
-											</div>
-
-										</>
-										)}
-									</>
-								) : (
-									<div className="row">
-										<div className="justify-center">
-										<p>No Videos</p>
-
-										</div>
-									</div>
-								)}
-                                       
-                                    </div>
-                                </div>
-
-                                <div className="col-12 p-0 mt-5">
-
-                                    <div className="d-flex justify-content-between pb-2 align-items-center">
-
-                                        <p className="text-white fs-22 font-weight-bold" >Top Winners <span className="main-pink" >7 DAY  <i className="fa-solid main-pink fa-angle-down"></i>  </span></p>
-                                        <button type="button" className="btn text-nowrap font-weight-bold  p-2 fs-12 mt-2 btn-success">View All</button>
-
-                                    </div>
-                                    <div className="row">
-                                    </div>
-
-                                </div>
-
-                                <div className="col-12 p-0 mt-5">
-
+								
                                     <div className="d-flex justify-content-between pb-2 align-items-center">
 
                                         <p className="text-white fs-22 font-weight-bold" >All Submissions </p>
@@ -625,7 +551,6 @@ export default function Game() {
 
 
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
