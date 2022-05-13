@@ -127,7 +127,7 @@ export default function Votechallenge() {
 											</ul>
 										))}
 									</div>
-									<div className="align-items-center d-flex justify-content-between ">
+									<div className="align-items-center d-flex justify-content-between">
 										<div>
 											<i className="fa-regular fa-heart p-2"></i>
 											<span className="fs-12 p-1" id="votes">
