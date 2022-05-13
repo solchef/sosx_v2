@@ -63,17 +63,18 @@ export default function SocialminingS3() {
 const onReCAPTCHAChange = async (captchaCode) => {
   // If the reCAPTCHA code is null or undefined indicating that
   // the reCAPTCHA was expired then return early
-  if (!captchaCode) {
-    return;
-  }
+  // if (!captchaCode) {
+  //   return;
+  // }
   try {
     const response = await fetch("/api/register", {
       method: "POST",
-      body: JSON.stringify({ email, captcha: captchaCode }),
+      body: JSON.stringify({ email, captcha: "dd" }),
       headers: {
         "Content-Type": "application/json",
       },
     });
+
     if (response.ok) {
       // If the response is ok than show the success alert
       alert("Email registered successfully");
@@ -227,7 +228,7 @@ const onReCAPTCHAChange = async (captchaCode) => {
                 <button
                   value="submit"
                   className="btn btn-primary mr-3 mb-3"
-                  onClick={() => router.replace('/x-mining')}
+                  // onClick={() => router.replace('/x-mining')}
                 >
                   Claim Your Tokens
                 </button>
