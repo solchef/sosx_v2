@@ -186,30 +186,33 @@ export default function Game() {
 
 
 	const loadDaoLevels = async () => {
-		let daoList = await contract.getAllAccount();
-		daoList = [...new Set(daoList)];
 
-		console.log(daoList);
-		let voters = [];
-		for (let i = 0; i < daoList.length; i++) {
-			console.log(voters.findIndex(vt => vt.address == daoList[i]) != -1)
-			// if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
-				let voter_address = daoList[i];
-					let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-					// console.log(total_stake);
-					total_stake = Number(total_stake / 10 ** 18);
-					let data = {
-						address: voter_address,
-						amount: total_stake,
-						level: getLevel(total_stake)
-					}
-					voters.push(data);
+		 contract.getAllAccount().then(daoList => {
+			daoList = [...new Set(daoList)];
+			console.log(daoList)
+			let voters = [];
+				for (let i = 0; i < daoList.length; i++) {
+					console.log(voters.findIndex(vt => vt.address == daoList[i]) != -1)
+					// if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
+						let voter_address = daoList[i];
+						contract.getVoterTotalStakeAmount(voter_address).then(total_stake => {
+								// console.log(total_stake);
+								total_stake = Number(total_stake / 10 ** 18);
+								let data = {
+									address: voter_address,
+									amount: total_stake,
+									level: getLevel(total_stake)
+								}
+								voters.push(data);
+						});
 
-			// }
-			
-		}
+					// }
+					
+				}
 
 		setVoters(voters);
+		})
+		
 	}
 
 	 const getLevel = (amount) => {		
