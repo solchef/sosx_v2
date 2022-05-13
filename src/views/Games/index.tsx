@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { useMediaPredicate } from "react-media-hook";
 import { create } from "ipfs-http-client";
@@ -29,6 +30,7 @@ export default function Game() {
   const [displayLevel, setDisplayLevel] = useState(1);
   const [voters, setVoters] = useState([]);
   const [videos, setVideos] = useState([]);
+  const router = useRouter();
   const contract = useStakingContract();
   const [challenges, setChallenges] = useState<any[]>([]);
   let [stage, setStage] = useState(5);
@@ -380,7 +382,7 @@ export default function Game() {
                       </div>
                       <Link href="/createchallenge">
                         <button
-                          disabled={stage !== 1}
+                          disabled={stage !== 1 && stage !== 3}
                           type="button"
                           className="btn mt-3 mb-2 btn-success"
                         >
@@ -529,7 +531,7 @@ export default function Game() {
                       </div>
                       <Link href="/createchallenge">
                         <button
-                          disabled={stage !== 1}
+                          disabled={stage !== 1 && stage !== 3}
                           type="button"
                           className="btn mt-3 mb-2 btn-success"
                         >
@@ -552,7 +554,7 @@ export default function Game() {
                         Vote a challenge created by Level 2 & Level 3 Community
                       </p>
                       <button
-                        disabled={stage !== 2 && stage !== 3}
+                        disabled={stage !== 2}
                         type="button"
                         className="btn w-0 text-nowrap p-2 fs-12 mt-3 btn-success"
                       >
@@ -939,7 +941,7 @@ export default function Game() {
                       </div>
                       <Link href="/createchallenge">
                         <button
-                          disabled={stage !== 1}
+                          disabled={stage !== 1 && stage !== 3}
                           type="button"
                           className="btn mt-3 mb-2 btn-success"
                         >
