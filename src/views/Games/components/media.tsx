@@ -90,11 +90,7 @@ const Media = (props: {todayVideo}) => {
              {video.youtube ? (
                 <iframe className="position-absolute iframe" width="250" height="250" src={`https://www.youtube.com/embed/${video.youtube}`} allow="accelerometer; clipboard-write; encrypted-media; gyroscope;"></iframe>
              ) : (
-<<<<<<< HEAD
               <iframe className="position-absolute iframe" width="250" height="400" src={`https://www.tiktok.com/embed/${video.tiktok}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-=======
-              <iframe className="position-absolute iframe" width="200" height="400" src={`https://www.tiktok.com/embed/${video.tiktok}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
->>>>>>> daede89d850a50936a6e550edc8b7da6d97d8686
              )}
               {/* <a href=""
               >

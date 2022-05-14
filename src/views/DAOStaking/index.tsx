@@ -116,6 +116,15 @@ export default function DaoStaking() {
     // console.log(list)
   };
 
+  const loadUI = async () => {
+    setLoadingData(true);
+    await stakingDetails();
+    await listUserStaking();
+    // console.log(activeStakes)
+    setLoadingData(false);
+  };
+
+
   useEffect(() => {
     if (account !== undefined) {
       tokenContract.balanceOf(account).then((bal) => {
@@ -123,15 +132,8 @@ export default function DaoStaking() {
         setUserBalace(balance);
       });
 
-      const loadUI = async () => {
-        setLoadingData(true);
-        await stakingDetails();
-        await listUserStaking();
-        // console.log(activeStakes)
-        setLoadingData(false);
-      };
-
       loadUI();
+
     }
   }, [account]);
 
@@ -208,9 +210,10 @@ export default function DaoStaking() {
           MaxUint256
         );
         let signer = contract.signer;
-        signer.sendTransaction(tx);
+       await  signer.sendTransaction(tx);
         // 	toastError("token allowance not yet set");
         listUserStaking();
+        loadUI()
       }
     } else {
       toastError("Insufficient Balance");
@@ -277,30 +280,29 @@ export default function DaoStaking() {
           </div>
         </div>
         <div className="row">
-          <div className="col-xl-4">
+        <div className="col-xl-4">
             <div className="card d-flex flex-column h-100">
               <div className="card-header border-0 pl-0 pt-0">
-                <h4 className="fs-18 ">Stake SOSX for Voting Power</h4>
+                <h4 className="fs-18 ">Stake SOSX</h4>
               </div>
-
-
-              <div className="card-body">
-                <div className="bg-dark mb-3 p-3 rounded">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <span>
-                      <input
-                        type="text"
-                        className="form-control"
-                        required
-                        onChange={(e) => handleAmountChange(e)}
-                        defaultValue={0}
-                      />
-                    </span>
-                    <span className="text-white fs-18">SOSX</span>
-                  </div>
-                  {/* <div className="bg-dark p-3 mb-3 rounded">
+                <div className="card-body">
+                  <div className="bg-dark mb-3 p-3 rounded">
                     <div className="d-flex justify-content-between align-items-center">
                       <span>
+                        <input
+                          type="text"
+                          className="form-control"
+                          required
+                          onChange={(e) => handleAmountChange(e)}
+                          defaultValue={0}
+                        />
+                      </span>
+                      <span className="text-white fs-18">SOSX</span>
+                    </div>
+                  </div>
+                  {/* <div className="bg-dark p-3 mb-3 rounded"> */}
+                    {/* <div className="d-flex justify-content-between align-items-center"> */}
+                      {/* <span>
                         <select
                           className="form-control  select-special"
                           onChange={(e) => {
@@ -311,14 +313,14 @@ export default function DaoStaking() {
                               Number(e.target.value) == 1
                                 ? 0.25
                                 : Number(e.target.value) == 2
-                                ? 0.5
-                                : 1;
-                          const r =
-                            Number(e.target.value) == 1
-                              ? 0.29
-                              : Number(e.target.value) == 2
-                                ? 0.64
-                                : 1.45;
+                                  ? 0.5
+                                  : 1;
+                            const r =
+                              Number(e.target.value) == 1
+                                ? 0.29
+                                : Number(e.target.value) == 2
+                                  ? 0.64
+                                  : 1.45;
                             const n = 12;
                             setStakingInterest(
                               Number(compoundInterest(p, t, r, n))
@@ -329,10 +331,10 @@ export default function DaoStaking() {
                           <option value={2}>6 </option>
                           <option value={3}>12 </option>
                         </select>
-                      </span>
-                      <span className="text-white fs-18">Months</span>
-                    </div>
-                  </div> */}
+                      </span> */}
+                      {/* <span className="text-white fs-18">Months</span>
+                    </div> */}
+                  {/* </div> */}
                   <div className="bg-dark p-3 rounded">
                     <div className="d-flex justify-content-between">
                       <div className="small2">
@@ -341,25 +343,23 @@ export default function DaoStaking() {
                           <div className="text-white fs-14"> 29%</div>
                         </div>
                       </div>
-                    </div>
-                    <div className="small2">
-                      <div className="success mr-1">Estimated </div>
-                      <div className="d-flex align-items-center">
-                        <div className="text-white fs-14">
-                          {" "}
-                          {stakingInterest} SOSX
+                      <div className="small2">
+                        <div className="success mr-1">Estimated </div>
+                        <div className="d-flex align-items-center">
+                          <div className="text-white fs-14">
+                            {" "}
+                            {stakingInterest} SOSX
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
               <div className="card-footer pt-0 foot-card  border-0">
                 {account ? (
                   <>
                     {activateStake ? (
-                      <div className="d-flex card-footer pt-0 pb-0 foot-card border-0 justify-content-between">
+                      <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-between">
                         <button
                           type="button"
                           onClick={handleSubmit}
@@ -377,7 +377,7 @@ export default function DaoStaking() {
                         </button>
                       </div>
                     ) : (
-                      <div className="d-flex card-footer pt-0 pb-0  foot-card border-0 justify-content-between">
+                      <div className="d-flex card-footer pt-0 pb-0  foot-card  border-0 justify-content-between">
                         <button
                           type="button"
                           className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
@@ -400,6 +400,7 @@ export default function DaoStaking() {
                   <ConnectWalletButton />
                 )}
               </div>
+
             </div>
           </div>
 
@@ -530,6 +531,7 @@ export default function DaoStaking() {
                             </span>
                           </li>
                         </ul>
+                        
 
                         <div
                           style={{
