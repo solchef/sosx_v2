@@ -63,7 +63,7 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652488803;
+    const roundStartTime = 1652491972;
 
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 10 * 10 };
@@ -317,7 +317,7 @@ export default function Game() {
             <div className="row">
               {/*start Time with prize pool */}
 
-              {stage == 1 && <CreateChallenge />}
+              {/* {stage == 1 && <CreateChallenge />} */}
               {/* {stage == 2 &&   */}
               <>
                 {/*start header*/}
