@@ -309,7 +309,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 
 html {
     font-family: sans-serif;
-    line-height: 1.15;
+    line-height: 1;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -330,8 +330,8 @@ section {
 body {
     margin: 0;
     font-family: "Roboto", sans-serif;
-    font-size: 0.875rem;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 300;
     line-height: 1.5;
     color: #b7b7b7;
     text-align: left;
@@ -655,9 +655,9 @@ h6,
 .h5,
 .h6 {
     margin-bottom: 0.5rem;
-    font-weight: 500;
+    font-weight: 300;
     line-height: 1.2;
-    color: #3d4465;
+    color: #ffffff;
 }
 
 h1,
@@ -667,7 +667,10 @@ h1,
 
 h2,
 .h2 {
-    font-size: 1.875rem;
+    font-size: 30px!important;
+    color: #fff;
+    font-weight: 900;
+    margin-bottom: 0;
 }
 
 h3,
@@ -831,7 +834,7 @@ kbd kbd {
 pre {
     display: block;
     font-size: 87.5%;
-    color: #212529;
+    color: #ffffff;
 }
 
 pre code {
@@ -5210,39 +5213,15 @@ input[type="button"].btn-block {
     color: #fff;
 }
 
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.75rem;
-}
-
 .card h4 {
-    font-size: 20px;
-}
-
-.card p {
-    font-size: 12px;
-    line-height: 1rem;
+    font-size: 18px;
+    font-weight: 300;
 }
 
 .card span {
     font-size: 12px;
     line-height: 1rem;
     color: #fff;
-}
-
-.card img {
-    width: 150px;
-    display: block;
-    margin-left: auto;
-    padding-bottom: 15px;
-    margin-right: auto;
 }
 
 .card>hr {
@@ -11132,14 +11111,6 @@ a.text-dark:focus {
     background: #43c4d3;
 }
 
-body {
-    overflow-x: hidden;
-    height: 100%;
-    position: relative;
-    max-width: 100%;
-    font-size: 1rem;
-}
-
 @media only screen and (max-width: 1400px) {
     body {
         font-size: 0.875rem;
@@ -11147,7 +11118,7 @@ body {
 }
 
 p {
-    line-height: 1.8;
+    line-height: 1.5;
 }
 
 .box-shadow-none {
@@ -11199,7 +11170,7 @@ a.active {
 }
 
 .content-body .container {
-    /* margin-top: 70px; */
+    margin-top: 70px;
 }
 
 .content-body .container-fluid,
@@ -12267,7 +12238,7 @@ a.active {
 }
 
 .nav-header .logo-abbr {
-    max-width: 45px;
+    max-width: 100%;
 }
 
 @media only screen and (max-width: 575px) {
@@ -12465,7 +12436,7 @@ left: 60px;
 }
 
 .header {
-    height: 7.5rem;
+    height: 70px;
     z-index: 1;
     position: relative;
     padding: 0rem;
@@ -12665,8 +12636,10 @@ svg.pulse-svg .third-circle {
 }
 
 [data-header-position="fixed"] .content-body {
-    padding-top: 7.5rem;
+    padding-top: 0px;
     padding-bottom: 6.5rem;
+    margin-top: 53px;
+    height: 100%;
 }
 
 @media only screen and (max-width: 1199px) {
@@ -30594,10 +30567,6 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     font-family: 'Open Sans', sans-serif;
 }
 
-[data-typography="poppins"] {
-    font-family: 'poppins', sans-serif;
-}
-
 [data-typography="roboto"] {
     font-family: 'Roboto', sans-serif;
 }
@@ -30797,25 +30766,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 
 [data-theme-version="dark"] {
     background: #24292d;
-    color: #b7b7b7;
-}
-
-[data-theme-version="dark"] h1,
-[data-theme-version="dark"] h2,
-[data-theme-version="dark"] h3,
-[data-theme-version="dark"] h4,
-[data-theme-version="dark"] h5,
-[data-theme-version="dark"] h6 {
-    color: #fff !important;
-}
-
-[data-theme-version="dark"] h1.text-black,
-[data-theme-version="dark"] h2.text-black,
-[data-theme-version="dark"] h3.text-black,
-[data-theme-version="dark"] h4.text-black,
-[data-theme-version="dark"] h5.text-black,
-[data-theme-version="dark"] h6.text-black {
-    color: #000 !important;
+    /* color: #b7b7b7; */
 }
 
 [data-theme-version="dark"] a.link {
@@ -36971,14 +36922,13 @@ button:focus {
 }
 
 .card {
-    margin-bottom: 1.875rem;
+    margin-bottom: 20px;
     background-color: #fff;
     transition: all .5s ease-in-out;
     position: relative;
     border: 0px solid transparent;
     border-radius: 0.75rem;
     box-shadow: 0px 12px 33px 0px rgba(62, 73, 84, 0.08);
-    height: calc(100% - 30px);
     padding: 20px;
 }
 
@@ -44799,18 +44749,9 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 
 [data-theme-version="dark"] {
     background: #000000;
-    color: #575757;
+    color: #ffffff;
     /* background-image: url(https://images.hdqwalls.com/wallpapers/ghost-in-dark-b1.jpg); */
     /* background-size: cover; */
-}
-
-[data-theme-version="dark"] h1,
-[data-theme-version="dark"] h2,
-[data-theme-version="dark"] h3,
-[data-theme-version="dark"] h4,
-[data-theme-version="dark"] h5,
-[data-theme-version="dark"] h6 {
-    color: #fff !important;
 }
 
 [data-theme-version="dark"] h1.text-black,
@@ -45351,12 +45292,6 @@ CSS for the main interaction
 Styling
 */
 
-body {
-    font: 16px/1.5em "Overpass", "Open Sans", Helvetica, sans-serif;
-    color: #333;
-    font-weight: 300;
-}
-
 .tabset>label {
     position: relative;
     display: inline-block;
@@ -45429,14 +45364,12 @@ textarea {
 select,
 textarea {
     width: 100%;
-    padding: 12px;
-    /* border: 2px solid #6d6d6d; */
+    padding: 15px;
     border-radius: 0.75rem;
     resize: vertical;
-    color: #fff;
-    background-color: #000000;
-    margin-left: 15px;
-    margin-right: 15px;
+    color: #fff!important;
+    background: #000000;
+    margin-bottom: 20px;
 }
 
 .label1 {
@@ -46333,6 +46266,11 @@ a.video span {
     padding: 0px 30px 0px 30px;
     /* margin-top: 140px; */
     margin-bottom: 50px;
+}
+
+.title-icon {
+    width: 20px;
+    margin-right: 10px;
 }
 
 .socialxmedia-about-sec h3 {
@@ -47581,14 +47519,14 @@ a.video span {
 }
 
 .step {
-    width: 40px;
-    height: 40px;
-    background-color: white;
+    width: 30px;
+    height: 30px;
+    background-color: #444444;
     display: inline-block;
     border: 4px solid;
     border-color: transparent;
     border-radius: 50%;
-    color: #cdd0da;
+    color: #6e6e6e;
     font-weight: 600;
     text-align: center;
     line-height: 30px;
@@ -47605,7 +47543,7 @@ a.video span {
 }
 
 .step:first-child {
-    line-height: 35px;
+    line-height: 24px;
 }
 
 .step:nth-child(n+2) {
@@ -47766,7 +47704,7 @@ a.video span {
 
 @media (min-width: 1700px) {
     .clock .li span {
-        font-size: 4rem !important;
+        font-size: 4.5rem !important;
         line-height: 75px !important;
     }
 }
@@ -47788,4 +47726,28 @@ a.video span {
 .yel {
     background-color: #e2c700 !important;
     border-color: #e2c700 !important;
+}
+
+.CodeMirror.cm-s-easymde.CodeMirror-wrap {
+    background-color: #000!important;
+    border: none!important;
+    padding: 15px;
+}
+
+.editor-toolbar i.fa {
+    color: #6e6e6e;
+}
+
+.editor-toolbar {
+    background: #000!important;
+    border: none!important;
+}
+
+.CodeMirror.cm-s-easymde.CodeMirror-wrap {
+    height: 175px!important;
+    color: #fff;
+}
+
+.CodeMirror-cursor {
+    border-left: 1px solid rgb(255 255 255);
 }

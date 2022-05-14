@@ -30,6 +30,7 @@ import { CID, create } from "ipfs-http-client";
 import ReactMarkdown from "react-markdown";
 import { useMediaPredicate } from "react-media-hook";
 import { useStakingContract } from "hooks/useContract";
+import {StageNav} from "../index"
 
 // import MDEditor from './MDEdit,or'
 
@@ -256,81 +257,79 @@ const CreateChallenge = () => {
 
   return (
 
-        <div className={`backgroun-dark rounded  p-4 pb-0 h-100 ${(biggerThan1500 || bet1200and1500) && 'm-0'} text-white`}>
+
+
+
+
+
+    <div className="card">
+    <form onSubmit={handleSubmit}>
+      <div className="row">
+        <div className="col-6">
+        <StageNav stage={1} />
+
+          <p >Submit a challenge that you wish others to
+            perform for money. Challenge must be doable within the next
+            48H and cannot
+            location-specific. Be crazy,
+            be original, but be dea. Challenges can be created by level
+            2 and level 3.</p>
+       
+
+            {account
+            ?
+            <button type="submit" className="btn btn-primary">Submit your challenge</button>
+            :
+            <ConnectWalletButton width="100%" type="button" />
+          }
+        </div>
+        <div className="col-6">
+          <input id="name" type="text" name="name"  value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required />
+
+
+
+
+            {/* @ts-ignore */}
+            <EasyMde
+              id="body"
+              name="body"
+              onTextChange={handleEasyMdeChange}
+              value={body}
+              options={options}
+              required
+            />
+            {formErrors.body && fieldsState.body && (
+              <FormErrors errors={formErrors.body} />
+            )}
+
+
+
+       
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         
+
       
-        <form onSubmit={handleSubmit}>
-        <div className="row">
-
-
-                  <div className="col-6">
-                      <div className="text-white d-flex align-items-center mb-3">
-                          <div className={`step done mr-3 `} >1</div> 
-                          SUBMIT A CHALLENGE
-                      </div>
-                      <div className="text-muted d-flex align-items-center mb-3">
-                          <div className={`step  mr-3 `} >2</div>
-                          VOTE A CHALLENGE
-                      </div>
-                      <div className="text-muted d-flex align-items-center mb-3">
-                          <div className={`step  mr-3 `} >3</div>
-                          UPLOADE VIDEO
-                      </div>
-                      <p className="fs-14 mb-4 mt-4">
-                          Submit a challenge that you wish someone else performed for money.Challenge must be doable within the next 48H and cannot be location specific giving everyone a free fair chance to play. Be crazy, be creative be death free.
-                      </p>
-                      <p className="fs-14 mb-4 mt-4">
-                          Challenge can be created by level 2 and level 3.
-                      </p>
-                      {account
-                      ? 
-                        <button type="submit"  className="btn btn-primary">Submit your challenge</button>
-                        :
-                        <ConnectWalletButton width="100%" type="button" />
-                      }
-
-                  </div>
-
-
-                  <div className="col-6">
-                      <div className="card-body">
-
-                          <div className="text-muted bg-dark rounded">
-                          <input
-                                  id="name"
-                                  type="text"
-                                  name="name"
-                                  value={name}
-                                  className="input1"
-                                  placeholder="Challenge Title"
-                                  onChange={handleChange}
-                                  required
-                                />
-                          </div>
-
-              
-                              {/* @ts-ignore */}
-                                  <EasyMde
-                                    id="body"
-                                    name="body"
-                                    onTextChange={handleEasyMdeChange}
-                                    value={body}
-                                    options={options}
-                                    required
-                                  />
-                                  {formErrors.body && fieldsState.body && (
-                                    <FormErrors errors={formErrors.body} />
-                                  )}
-
-                      </div>
-
-
-                  </div>    
-
-              </div>
-              </form>
-
-              </div>
-
+    
 
 
 

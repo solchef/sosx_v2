@@ -22,6 +22,33 @@ import LoaderDisplay from "./components/loader";
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
+export const StageNav = (props) => {
+  return (
+    <>
+
+
+      <h5 className="step-title mb-2">
+        <div className={`step ${props.stage == 1 && "done"} mr-3 `}>1</div>SUBMIT A CHALLENGE
+      </h5>
+
+
+      <div className="text-muted d-flex align-items-center mb-2">
+        <div className={`step ${props.stage == 2 || props.stage == 3 && "done"
+          } mr-3 `}>2</div>VOTE A CHALLENGE
+      </div>
+
+
+
+      <div className="text-muted d-flex align-items-center mb-2">
+        <div className={`step ${props.stage == 4 && "done"}  mr-3 `}>3</div>UPLOADE VIDEO
+      </div>
+
+
+
+
+    </>
+  );
+};
 
 export default function Game() {
   const { account } = useActiveWeb3React();
@@ -65,7 +92,7 @@ export default function Game() {
     const roundStartTime = 1652517346;
 
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 60 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 600 * 60 };
     let stage2 = { start: stage1.end, end: stage1.end + 60 * 60 };
     let stage3 = { start: stage2.end, end: stage2.end + 60 * 60 };
     let stage4 = { start: stage3.end, end: stage3.end + 60 * 60 };
@@ -150,11 +177,11 @@ export default function Game() {
     .sort((a, b) => a.votes - b.votes)
     .reverse()[0];
 
-    let topThreeChallenges= []
-    const ch = challenges
+  let topThreeChallenges = []
+  const ch = challenges
     .sort((a, b) => a.votes - b.votes)
     .reverse()
-    topThreeChallenges.push(ch[0], ch[1], ch[2])
+  topThreeChallenges.push(ch[0], ch[1], ch[2])
 
   const getVideo = async () => {
     let finalData = [];
@@ -217,7 +244,7 @@ export default function Game() {
   const handleCloseDonate = () => setShowDonate(false);
   const handleShowDonate = () => setShowDonate(true);
 
-  const handleSubmitDonate = async () => {};
+  const handleSubmitDonate = async () => { };
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -287,238 +314,325 @@ export default function Game() {
     test();
   }, []);
 
-  const StageNav = (props) => {
-    return (
-      <>
-        <div className="text-white d-flex align-items-center p-2">
-          <div className={`step ${props.stage == 1 && "done"} mr-3 `}>1</div>
-          SUBMIT A CHALLENGE
-        </div>
-        <div className="text-muted d-flex align-items-center p-2">
-          <div
-            className={`step ${
-              props.stage == 2 || (props.stage == 3 && "done")
-            } mr-3 `}
-          >
-            2
-          </div>
-          VOTE A CHALLENGE
-        </div>
-        <div className="text-muted d-flex align-items-center p-2">
-          <div className={`step ${props.stage == 4 && "done"}  mr-3 `}>3</div>
-          UPLOAD VIDEO
-        </div>
-      </>
-    );
-  };
 
   return (
     <>
       <div className="game container-fluid">
         <div className="row">
-          <div className={`col-12 ${biggerThan1500 && "col-xl-9"}`}>
-            {/*start header*/}
+          <div className="col-lg-9">
             <div className="row">
-              {/*start Time with prize pool */}
-
-              <>
-                {/*start header*/}
-                <div className="d-flex flex-row ">
-                  <TimerDisplay
-                    hours={hours}
-                    minutes={minutes}
-                    seconds={seconds}
-                  />
-
-                  {/*start Challange section*/}
-
-                  {/*checking for stage display here*/}
-                  {stage == 1 && <CreateChallenge />}
-
-                  {stage == 2 && (
-                    <div
-                      className={`backgroun-dark rounded m-0 d-flex p-4 pb-0 h-100 text-white m-3`}
-                    >
-                      <div className="">
-                        <StageNav stage={2} />
-                        <p className="fs-14 mb-4 mt-4">
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Velit beatae atque dolores laborum? Earum vitae
-                          voluptatibus necessitatibus ullam nemo tempora fugit
-                          quos explicabo quis, saepe illum molestias cumque ipsa
-                          quas?
-                        </p>
-                        <p className="fs-14 mb-4 mt-4">
-                          Lorem itempora fugit qupsa quas?
-                        </p>
-
-                        <button type="button" className="btn btn-primary">
-                          Vote for Challange
-                        </button>
-                      </div>
-                      <div className="">
-                        <img src="images/votechallenge-img.png" />
-                      </div>
-                    </div>
-                  )}
-
-                  {stage == 3 && (
-                    <div
-                      className={`backgroun-dark rounded m-0 d-flex p-4 pb-0 h-100 text-white m-3`}
-                    >
-                      <div className=" border-right ">
-                        <StageNav stage={3} />
-                        <p className="fs-14 mb-4 mt-4">
-                          Lorem ipsum dolor sit amet consectetur adipisicing
-                          elit. Velit beatae atque dolores laborum? Earum vitae
-                          voluptatibus necessitatibus ullam nemo tempora fugit
-                          quos explicabo quis, saepe illum molestias cumque ipsa
-                          quas?
-                        </p>
-                        <p className="fs-14 mb-4 mt-4">
-                          Lorem itempora fugit qupsa quas?
-                        </p>
-                        <button type="button" className="btn btn-primary">
-                          Vote for Challange
-                        </button>
-                      </div>
-
-                      <div className={`ml-3`}>
-                        <h4 className="mb-4 font-weight-bold">
-                          Find Top 3 Nominees
-                        </h4>
-                        {topThreeChallenges.map((challenge, index) => 
-                        <div className="d-flex mb-4">
-                        <p className="mr-5">
-                          {index + 1}. {challenge.challenge.payload.name}
-                        </p>
-                        <span>{challenge.votes} votes</span>
-                        </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  {stage == 4 && (
-                    <div
-                      className={`backgroun-dark rounded m-0 d-flex p-4 pb-0 h-100 text-white m-3`}
-                    >
-                      <div className="">
-                        <StageNav stage={4} />
-                        <p className="fs-10 mb-4 mt-4 ">
-                          Here is your challenge. You have 48 hours to complete for the chance to win the prize pool. Challenge must match all criteria listed and submitted to your Youtiube or Tiktok. Anyone can participate.
-                        </p>
+              <div className="col-lg-12">
+                <div className="row">
+                  <div className="col-lg-4">
+                    <TimerDisplay
+                      hours={hours}
+                      minutes={minutes}
+                      seconds={seconds}
+                    />
+                  </div>
+                  <div className="col-lg-8">
+                    <div className="row">
+                      <div className="col-12">
 
 
-                        <form onSubmit={videoLink}>
-                     
-                          <div className="text-muted m-0  bg-dark rounded p-2">
-                            <input
-                              type="text"
-                              className="form-control fs-14"
-                              id="youtube"
-                              placeholder="Youtube or Toktok URL link Here"
-                              value={url}
-                              onChange={(e) => setURL(e.target.value)}
-                            />
+                        {stage == 1 && <CreateChallenge />}
+
+                        {stage == 2 && (
+
+
+
+
+                          <div className="card">
+
+                            <div className="row">
+                              <div className="col-6">
+                                <StageNav stage={2} />
+
+                                <p className="mt-2"> Lorem ipsum dolor sit amet consectetur adipisicing
+                                  elit. Velit beatae atque dolores laborum? Earum vitae
+                                  voluptatibus necessitatibus ullam nemo tempora fugit
+                                  quos explicabo quis, saepe illum molestias cumque ipsa
+                                  quas?</p>
+
+
+                                <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
+
+
+                              </div>
+                              <div className="col-6">
+
+
+                                <img src="images/votechallenge-img.png" />
+
+
+
+                              </div>
+                            </div>
+
                           </div>
 
-                          <button type="submit" className="btn btn-primary mt-3">
-                            Vote for Challange
-                          </button>
-                        </form>
-						
-                      </div>
 
-                      <div className={``}>
 
-						<div className={`backgroun-dark rounded m-0 d-flex  pb-0 h-100 text-white  flex-column`} >
-                          {todayChallenge ? (
-                            <>
-                              <span className="text-white  fs-18 d-flex align-items-center pb-1 mb-1">
-                                {" "}
-                                <img
-                                  src="images/submission-date-icon.png"
-                                  width="20px"
-                                  height="20px"
-                                  className="mr-2"
-                                />
-                                THIS WEEK CHALLENGE{" "}
-                              </span>
-                              <span className="text-white pt-1 fs-18 pb-2 font-weight-bold">
-                                {todayChallenge.challenge.payload.name}{" "}
-                              </span>
 
-                              <div className="d-flex align-items-center">
-                                <i className="fa-regular main-pink fa-heart mr-2"></i>
+                        )}
 
-                                <span className="fs-10">
-                                  {todayChallenge.votes} votes
-                                </span>
+                        {stage == 2 && (
 
-                                <img
-                                  className="ml-3 width-22 fs-22"
-                                  src="/images/dp.png"
-                                />
 
-                                <span className="ml-2 fs-12 font-weight-bold">
-                                  {String(
-                                    todayChallenge.challenge.payload.creator
-                                  ).slice(0, 5)}
-                                  ...
-                                  {String(
-                                    todayChallenge.challenge.payload.creator
-                                  ).slice(-5)}
-                                </span>
 
-                                <p className=" ml-3 p-1 fs-10 bg-pink-radius  text-white">
-                                  {" "}
-                                  Level 3
+
+
+
+
+                          <div className="card">
+
+                            <div className="row">
+                              <div className="col-6">
+                                <StageNav stage={2} />
+
+                                <p className="mt-2"> Lorem ipsum dolor sit amet consectetur adipisicing
+                                  elit. Velit beatae atque dolores laborum? Earum vitae
+                                  voluptatibus necessitatibus ullam nemo tempora fugit
+                                  quos explicabo quis, saepe illum molestias cumque ipsa
+                                  quas?</p>
+
+
+                                <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
+
+
+                              </div>
+                              <div className="col-6 border-left">
+
+
+                                <h4 className="mb-4 font-weight-bold">
+                                  Find Top 3 Nominees
+                                </h4>
+
+
+                                {/* {topThreeChallenges.map((challenge, index) => 
+      <div className="d-flex align-items-center mb-4">
+      <p className="mr-5">
+        {index + 1}. {challenge.challenge.payload.name}
+      </p>
+      <span>{challenge.votes} votes</span>
+      </div>
+      )} */}
+                              </div>
+                            </div>
+
+                          </div>
+
+
+                        )}
+
+                        {stage == 3 && (
+
+
+
+
+
+                          <div className="card">
+
+                            <div className="row">
+                              <div className="col-6">
+                                <StageNav stage={3} />
+
+                                <p className="mt-2 mb-3"> Here is your challenge. You have 48 hours to complete for the chance to win the prize pool. Challenge must match all criteria listed and submitted to your Youtiube or Tiktok. Anyone can participate.
                                 </p>
+
+                                <form onSubmit={videoLink}>
+
+                                  <div className="text-muted m-0 mb-2 bg-dark rounded p-2">
+                                    <input
+                                      type="text"
+                                      className="form-control fs-14"
+                                      id="youtube"
+                                      placeholder="Youtube or Toktok URL link Here"
+                                      value={url}
+                                      onChange={(e) => setURL(e.target.value)}
+                                    />
+                                  </div>
+
+                                  <button type="submit" className="btn btn-primary mt-2">
+                                    Vote for Challange
+                                  </button>
+                                </form>
+
+
                               </div>
+                              <div className="col-6">
 
-                              <div className="row">
-                                <div className="col-12 d-flex pt-1 pb-1 flex-column">
-                                  <span className="text-muted pb-1 fs-12 mt-3">
-                                    Details
-                                  </span>
-                                  <p className="fs-12 " style={{whiteSpace:"break-spaces"}}>
-                                    {todayChallenge.challenge.payload.body}
-                                    {/* Lorem ips hium quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id <br /><br />dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos! */}
-                                  </p>
 
-                                  <Link
-                                    className="mt-3"
-                                    href={`/challenge/${String(
-                                      todayChallenge.challenge.payload.name
-                                    ).replaceAll(" ", "-")}`}
-                                  >
-                                    Details
-                                  </Link>
+                                <div className={`backgroun-dark rounded m-0 d-flex  pb-0 h-100 text-white  flex-column`} >
+                                  {todayChallenge ? (
+                                    <>
+                                      <span className="text-white  fs-18 d-flex align-items-center pb-1 mb-1">
+                                        {" "}
+                                        <img
+                                          src="images/submission-date-icon.png"
+                                          width="20px"
+                                          height="20px"
+                                          className="mr-2"
+                                        />
+                                        THIS WEEK CHALLENGE{" "}
+                                      </span>
+                                      <span className="text-white pt-1 fs-18 pb-2 font-weight-bold">
+                                        {todayChallenge.challenge.payload.name}{" "}
+                                      </span>
+
+                                      <div className="d-flex align-items-center">
+                                        <i className="fa-regular main-pink fa-heart mr-2"></i>
+
+                                        <span className="fs-10">
+                                          {todayChallenge.votes} votes
+                                        </span>
+
+                                        <img
+                                          className="ml-3 width-22 fs-22"
+                                          src="/images/dp.png"
+                                        />
+
+                                        <span className="ml-2 fs-12 font-weight-bold">
+                                          {String(
+                                            todayChallenge.challenge.payload.creator
+                                          ).slice(0, 5)}
+                                          ...
+                                          {String(
+                                            todayChallenge.challenge.payload.creator
+                                          ).slice(-5)}
+                                        </span>
+
+                                        <p className=" ml-3 p-1 fs-10 bg-pink-radius  text-white">
+                                          {" "}
+                                          Level 3
+                                        </p>
+                                      </div>
+
+                                      <div className="row">
+                                        <div className="col-12 d-flex pt-1 pb-1 flex-column">
+                                          <span className="text-muted pb-1 fs-12 mt-3">
+                                            Details
+                                          </span>
+                                          <p className="fs-12 " style={{ whiteSpace: "break-spaces" }}>
+                                            {todayChallenge.challenge.payload.body}
+                                            {/* Lorem ips hium quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id <br /><br />dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos! */}
+                                          </p>
+
+                                          <Link
+                                            className="mt-3"
+                                            href={`/challenge/${String(
+                                              todayChallenge.challenge.payload.name
+                                            ).replaceAll(" ", "-")}`}
+                                          >
+                                            Details
+                                          </Link>
+                                        </div>
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <LoaderDisplay />
+                                  )}
                                 </div>
+
+
+
                               </div>
-                            </>
-                          ) : (
-                            <LoaderDisplay />
-                          )}
-                        </div>
+                            </div>
+
+                          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                       </div>
                     </div>
-                  )}
-                  {/*end Challange*/}
+                  </div>
                 </div>
-              </>
+              </div>
             </div>
-            {/*end header*/}
-
-            <Media />
+            <div className="row">
+              <div className="col-12">
+                <Media />
+              </div>
+            </div>
           </div>
-          {/*end main*/}
-          <Ranking voters={voters} />
-          {/*end main*/}
+          <div className="col-lg-3">
+            <div className="row h-100 ">
+              <div className="col-12 h-100 ">
+
+
+                <Ranking voters={voters} />
+
+
+
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
       <Modal show={showDonate} onHide={handleCloseDonate} centered>
         <ModalHeader className="text-dark">
           Donate
