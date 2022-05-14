@@ -56,6 +56,7 @@ export default function DaoStaking() {
   };
   useEffect(() => {
     getSOSXPrice();
+    listUserStaking();
   }, []);
 
   const stakingDetails = async () => {
@@ -88,16 +89,17 @@ export default function DaoStaking() {
   
   const listUserStaking = async () => {
     let list = [];
-    for (let i = 1; i < numberOfActiveStake; i++) {
+    for (let i = 0; i < numberOfActiveStake; i++) {
       await contract.getStakeInfo(i).then(stakeInstance => {
-         
+
           // if (stakeInstance) {
-            contract.getCurrentStakeClass(i).then(stakeClass => {
-              console.log("here")
-              
-              console.log(i)
+            // contract.getCurrentStakeClass(i).then(stakeClass => {
+              // console.log("here")
+            let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
+             let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
+              // console.log(stakeInstance) 
                 let instance = {
-                  amount: Number(stakeInstance[0] / 10 ** 18),
+                  amount: stakeAmt,
                   isWithdrawed: Boolean(stakeInstance[1]),
                   stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
                     "en-US",
@@ -109,8 +111,9 @@ export default function DaoStaking() {
                   stakingClass: stakeClass,
                   periodElapsed: stakeClass,
                 };
+
                 list.push(instance);
-            })
+            // });
            
           // }
         
@@ -193,15 +196,41 @@ export default function DaoStaking() {
   const handleSubmit = async () => {
     // console.log(allowanceValue);
 
-    if(amountToStake < 1){
-
-      toastError("You Must stake at least one token. Check your input");
-
-      referralAddress;
+    if(allowanceValue > BigInt(1000000000)){
+      // console.log(allowanceValue -  BigInt(1000000000))
+      await listUserStaking()
+      toastError("You Must stake at least one token. ");
+        return;
     }
+
+    
+
+    if(amountToStake < 1){
+      toastError("You Must stake at least one token. Check your input");
+      // referralAddress;
+      return;
+    }
+
+
+    if(stakingClass == 2 && amountToStake < 100000){
+
+
+        toastError("DAO Level 2 required you to stake more than 100000 SOSX");
+      return;
+    }
+
+    if(stakingClass == 3 && amountToStake < 1000000){
+
+
+      toastError("DAO Level 3 required you to stake more than 100000 SOSX");
+    return;
+  }
+
+
+
     if (amountToStake < balance) {
       if (allowanceValue.toString().length > 50) {
-        console.log(referralAddress);
+        // console.log(referralAddress);
         setLoading(true);
         await contract.stakeToken(
           amountToStake + "000000000000000000",
@@ -366,7 +395,7 @@ export default function DaoStaking() {
                 {account ? (
                   <>
                     {activateStake ? (
-                      <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-between">
+                      <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-around">
                         <button
                           type="button"
                           onClick={handleSubmit}
@@ -384,7 +413,7 @@ export default function DaoStaking() {
                         </button>
                       </div>
                     ) : (
-                      <div className="d-flex card-footer pt-0 pb-0  foot-card  border-0 justify-content-between">
+                      <div className="d-flex card-footer pt-0 pb-0  foot-card  border-0 justify-content-around">
                         <button
                           type="button"
                           className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
@@ -487,7 +516,7 @@ export default function DaoStaking() {
                     <ul className="token-balance-list mb-2 mt-2">
                       <li>
                         <span className="justify-content-between success fs-12">
-                          Duration
+                          DAO Level
                         </span>
                       </li>
                       <li>
@@ -509,12 +538,13 @@ export default function DaoStaking() {
                         >
                           <li>
                             <span className="justify-content-between success fs-12">
+                             Level 
                               {stake.stakingClass == 1
-                                ? 3
+                                ? 1
                                 : stake.stakingClass == 2
-                                  ? 6
-                                  : 12}{" "}
-                              Months
+                                  ? 2
+                                  : 3}{" "}
+                              
                             </span>
                           </li>
                           <li>
@@ -592,7 +622,7 @@ export default function DaoStaking() {
                                   {stake.isWithdrawed ? "Yes" : "No"}
                                 </span>
                               </li>
-                              <li>
+                              {/* <li>
                                 <span className="justify-content-between success fs-12">
                                   {" "}
                                   Remaining Period: <br />
@@ -606,7 +636,7 @@ export default function DaoStaking() {
                                   ).toFixed(0)}{" "}
                                   Days
                                 </span>
-                              </li>
+                              </li> */}
                             </ul>
 
                             <ul

@@ -54,8 +54,7 @@ export default function Staking() {
   }, []);
 
 
-
-
+  
   const stakingDetails = async () => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
       setTotalAmountStaked(stakeAmount);
