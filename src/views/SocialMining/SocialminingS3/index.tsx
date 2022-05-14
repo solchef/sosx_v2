@@ -36,7 +36,7 @@ export default function SocialminingS3() {
       email_address,
       socialpostlink,
       reward,
-        createdAt: new Date().toISOString(),
+        createdAt: new Date().toDateString,
     };
     console.log(post)
     // save the post
@@ -167,12 +167,13 @@ const onReCAPTCHAChange = async (captchaCode) => {
                   the more holders will receive.
                 </p>
 
-                <ReCAPTCHA
+                {/* <ReCaptchaV2 sitekey={process.env.REACT_APP_SITE_KEY} /> */}
+                {/* <ReCAPTCHA
               ref={recaptchaRef}
-              size="normal"
+              size="invisible"
               sitekey="6Lc920sdAAAAAPWFtqUUzsVEG3m6-FI9JrgaPydB"
               onChange={onReCAPTCHAChange}
-            />
+            /> */}
                 {/* <div
                   className="g-recaptcha"
                   data-sitekey="6Lc920sdAAAAAPWFtqUUzsVEG3m6-FI9JrgaPydB"
@@ -182,6 +183,7 @@ const onReCAPTCHAChange = async (captchaCode) => {
                       <iframe
                         e-mail_address="reCAPTCHA"
                         src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6Lc920sdAAAAAPWFtqUUzsVEG3m6-FI9JrgaPydB&amp;co=aHR0cHM6Ly9zb2NpYWx4LmlvOjQ0Mw..&amp;hl=en-GB&amp;v=gZWLhEUEJFxEhoT5hpjn2xHK&amp;size=normal&amp;cb=nmrivyw3ltdo"
+                        src="https://www.google.com/recaptcha/api.js"
                         width="304"
                         height="78"
                         role="presentation"

@@ -30,8 +30,7 @@ export default function Game() {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [youtubeURL, setYoutubeURL] = useState("");
-  const [tiktokURL, setTiktokURL] = useState("");
+  const [url, setURL] = useState("");
   const [displayLevel, setDisplayLevel] = useState(1);
   const [voters, setVoters] = useState([]);
   const [videos, setVideos] = useState([]);
@@ -63,7 +62,7 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652513806;
+    const roundStartTime = 1652517346;
 
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 60 * 60 };
@@ -151,6 +150,12 @@ export default function Game() {
     .sort((a, b) => a.votes - b.votes)
     .reverse()[0];
 
+    let topThreeChallenges= []
+    const ch = challenges
+    .sort((a, b) => a.votes - b.votes)
+    .reverse()
+    topThreeChallenges.push(ch[0], ch[1], ch[2])
+
   const getVideo = async () => {
     let finalData = [];
 
@@ -177,16 +182,15 @@ export default function Game() {
     evt.preventDefault();
     const form = event.target as HTMLFormElement;
 
-    if (!youtubeURL && !tiktokURL) {
-      toastError("One Link Required");
+    if (!url) {
+      toastError("Link Required");
       return;
     }
 
-    if (validLinks(youtubeURL, tiktokURL) == true) {
+    if (validLinks(url) == true) {
       const data = JSON.stringify(
         {
-          youtube: youtubeURL,
-          tiktok: tiktokURL,
+          url: url,
         },
         null,
         2
@@ -201,9 +205,9 @@ export default function Game() {
         data,
         { create: true }
       );
-      form.reset();
       handleClose();
       toastSuccess("Uploaded");
+      form.reset();
       getVideo();
     } else {
       toastError("Not Valid Links");
@@ -302,7 +306,7 @@ export default function Game() {
         </div>
         <div className="text-muted d-flex align-items-center p-2">
           <div className={`step ${props.stage == 4 && "done"}  mr-3 `}>3</div>
-          UPLOADE VIDEO
+          UPLOAD VIDEO
         </div>
       </>
     );
@@ -383,20 +387,14 @@ export default function Game() {
                         <h4 className="mb-4 font-weight-bold">
                           Find Top 3 Nominees
                         </h4>
+                        {topThreeChallenges.map((challenge, index) => 
                         <div className="d-flex mb-4">
-                          <p className="mr-5">
-                            1. Lorem ipsum dolor sit mnis possimus nciunt
-                            aperiam ullam earum facilis doloribus pariatur
-                            saepe?
-                          </p>
-                          <span>16 votes</span>
+                        <p className="mr-5">
+                          {index + 1}. {challenge.challenge.payload.name}
+                        </p>
+                        <span>{challenge.votes} votes</span>
                         </div>
-                        <div className="d-flex mb-4">
-                          <p className="mr-5">
-                            2. Lorem ipsumus pariatur saepe?
-                          </p>
-                          <span>16 votes</span>
-                        </div>
+                        )}
                       </div>
                     </div>
                   )}
@@ -420,8 +418,8 @@ export default function Game() {
                               className="form-control fs-14"
                               id="youtube"
                               placeholder="Youtube or Toktok URL link Here"
-                              value={youtubeURL}
-                              onChange={(e) => setYoutubeURL(e.target.value)}
+                              value={url}
+                              onChange={(e) => setURL(e.target.value)}
                             />
                           </div>
 
