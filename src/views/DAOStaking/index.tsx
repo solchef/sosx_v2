@@ -207,6 +207,26 @@ export default function DaoStaking() {
     }
   };
 
+    const getLevel = (amount) => {
+    if (
+      amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
+      amount < process.env.NEXT_PUBLIC_LEVEL2
+    ) {
+      return 1;
+    }
+
+    if (
+      amount >= process.env.NEXT_PUBLIC_LEVEL2 &&
+      amount < process.env.NEXT_PUBLIC_LEVEL3
+    ) {
+      return 2;
+    }
+
+    if (amount >= process.env.NEXT_PUBLIC_LEVEL3) {
+      return 3;
+    }
+  };
+
   return (
     <>
       <div
@@ -377,7 +397,7 @@ export default function DaoStaking() {
           <div className="col-xl-4">
             <div className="card ">
               <div className="card-header border-0 p-0">
-                <h4 className="fs-18">Staking Summary</h4>
+                <h4 className="fs-18">DAO Staking Summary</h4>
               </div>
 
               <div className="card-body flex-column d-flex justify-content-between">
@@ -394,14 +414,23 @@ export default function DaoStaking() {
                       {numberOfActiveStake}
                     </h4>
                   </div>
-                  <div className="d-flex justify-content-between">
+                  {/* <div className="d-flex justify-content-between">
                     <p className="success mb-0 fs-12">Has Referral</p>
                     <h6 className="mb-0 font-w600  fs-24 pb-2">
                       {hasReferral ? "Yes" : <b> No</b>}
                     </h6>
-                  </div>
+                  </div> */}
                 </div>
+
                 <div className="d-flex justify-content-between">
+                    <p className="success mb-0 fs-12">DAO Level</p>
+                    <h4 className="mb-0 font-w600  fs-24 pb-3">
+                      {getLevel(totalAmountStaked)}
+                    </h4>
+                </div>
+
+
+                {/* <div className="d-flex justify-content-between">
                   <p className="success mb-0 fs-12">Show Archived</p>
                   <span className="MuiSwitch-root mb-0 font-w600  fs-24 pb-3">
                     <span
@@ -420,7 +449,7 @@ export default function DaoStaking() {
                     </span>
                     <span className="MuiSwitch-track" />
                   </span>
-                </div>
+                </div> */}
               </div>
               <div className="card-footer pt-0 pb-0 foot-card border-0">
                 <button
