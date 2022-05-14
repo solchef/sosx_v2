@@ -29,13 +29,15 @@ async function addPost(req, res) {
         // connect to the database
         let { db } = await connectToDatabase();
         // add the post
+        db.collection('posts').createIndex({"email_address":1},{unique:true});
+        if(db.collection('posts').find({ "email_address" : { $exists : true, $not : null } })){
         await db.collection('posts').insertOne(JSON.parse(req.body));
         // return a message
         return res.json({
             message: 'Post added successfully',
             success: true,
         });
-    } catch (error) {
+    }} catch (error) {
         // return an error
         return res.json({
             message: new Error(error).message,

@@ -5,7 +5,7 @@ import { InlineShareButtons } from 'sharethis-reactjs';
 import {Popover, Overlay,Button,Tooltip } from 'react-bootstrap';
 import { useMediaPredicate } from "react-media-hook";
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-
+import ConnectWalletButton from '../../../components/ConnectWalletButton'
 
 export default function SocialminingS2(props) {
 	const [copySuccess, setCopySuccess] = useState('');
@@ -95,7 +95,9 @@ export default function SocialminingS2(props) {
 								<span className="text-success"> {copySuccess}</span>
 							</div>
 							<div className="card-body">
+							
 								<div className="bg-dark p-0  rounded">
+								{account ? (
 									<div className="d-flex p-2 justify-content-between align-items-center">
 										<p className='fs-14'>https://socialx.io?ref={account.slice(0, 23)}...</p>
 										{console.log(account)}
@@ -113,7 +115,9 @@ export default function SocialminingS2(props) {
 										
 										</div>
 									</div>
+									):(<p>** CONNECT TO REFER **</p>)}
 								</div>
+							
 								<div className="bg-dark rounded">
 									<span className='font-weight-bold'>You will get</span>
 									<div className='d-flex justify-content-between'>
@@ -155,13 +159,16 @@ export default function SocialminingS2(props) {
 								<button className="btn btn-outline-primary mr-2 mb-3">Back</button>
 							</a>
 						</Link>
+						{account ? (
 						<Link href="/socialmining-s3">
 
 							<a>
 								<button className="btn btn-primary mr-3 mb-3">Continue</button>
 							</a>
 						</Link>
-
+						):(
+							<ConnectWalletButton className="btn btn-primary mr-3 mb-3 "/>
+						)}
 					</div>
 				</div>
 			</div>

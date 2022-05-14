@@ -9,20 +9,17 @@ import React from "react";
 import { useMediaPredicate } from "react-media-hook";
 
 export default function SocialminingS3() {
-  //    const posts = axios('http://localhost:3001/api/posts')
-  //    console.log(posts)
 
   const [email_address, setEmailAdrress] = useState("");
   const [socialpostlink, setsocialpostlink] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  const [email, setEmail] = React.useState("");
   const recaptchaRef = React.useRef(null);
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
       const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const handlePost = async (e) => {
     e.preventDefault();
-    recaptchaRef.current.execute();
+    // recaptchaRef.current.getValue();
     const reward=localStorage.getItem("reward");
     // reset error and message
     setError('');
@@ -36,7 +33,7 @@ export default function SocialminingS3() {
       email_address,
       socialpostlink,
       reward,
-        createdAt: new Date().toDateString,
+        createdAt: new Date().toISOString(),
     };
     console.log(post)
     // save the post
@@ -60,39 +57,39 @@ export default function SocialminingS3() {
         return setError(data.message);
     }
 };
-const onReCAPTCHAChange = async (captchaCode) => {
-  // If the reCAPTCHA code is null or undefined indicating that
-  // the reCAPTCHA was expired then return early
-  // if (!captchaCode) {
-  //   return;
-  // }
-  try {
-    const response = await fetch("/api/register", {
-      method: "POST",
-      body: JSON.stringify({ email, captcha: "dd" }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+// const onReCAPTCHAChange = async (captchaCode) => {
+//   // If the reCAPTCHA code is null or undefined indicating that
+//   // the reCAPTCHA was expired then return early
+//   // if (!captchaCode) {
+//   //   return;
+//   // }
+//   try {
+//     const response = await fetch("/api/register", {
+//       method: "POST",
+//       body: JSON.stringify({ email_address, captcha: captchaCode }),
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
 
-    if (response.ok) {
-      // If the response is ok than show the success alert
-      alert("Email registered successfully");
-    } else {
-      // Else throw an error with the message returned
-      // from the API
-      const error = await response.json();
-      throw new Error(error.message)
-    }
-  } catch (error) {
-    alert("Something went wrong");
-  } finally {
-    // Reset the reCAPTCHA when the request has failed or succeeeded
-    // so that it can be executed again if user submits another email.
-    recaptchaRef.current.reset();
-    setEmail("");
-  }
-};
+//     if (response.ok) {
+//       // If the response is ok than show the success alert
+//       alert("Email registered successfully");
+//     } else {
+//       // Else throw an error with the message returned
+//       // from the API
+//       const error = await response.json();
+//       throw new Error(error.message)
+//     }
+//   } catch (error) {
+//     alert("Something went wrong!!!");
+//   } finally {
+//     // Reset the reCAPTCHA when the request has failed or succeeeded 
+//     // so that it can be executed again if user submits another email.
+//     recaptchaRef.current.reset();
+//     setEmailAdrress("");
+//   }
+// };
 
 
   return (
@@ -167,48 +164,13 @@ const onReCAPTCHAChange = async (captchaCode) => {
                   the more holders will receive.
                 </p>
 
-                {/* <ReCaptchaV2 sitekey={process.env.REACT_APP_SITE_KEY} /> */}
+                
                 {/* <ReCAPTCHA
               ref={recaptchaRef}
-              size="invisible"
-              sitekey="6Lc920sdAAAAAPWFtqUUzsVEG3m6-FI9JrgaPydB"
+              size="normal"
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
               onChange={onReCAPTCHAChange}
             /> */}
-                {/* <div
-                  className="g-recaptcha"
-                  data-sitekey="6Lc920sdAAAAAPWFtqUUzsVEG3m6-FI9JrgaPydB"
-                >
-                  <div style={{ width: "304px", height: " 78px" }}>
-                    <div>
-                      <iframe
-                        e-mail_address="reCAPTCHA"
-                        src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6Lc920sdAAAAAPWFtqUUzsVEG3m6-FI9JrgaPydB&amp;co=aHR0cHM6Ly9zb2NpYWx4LmlvOjQ0Mw..&amp;hl=en-GB&amp;v=gZWLhEUEJFxEhoT5hpjn2xHK&amp;size=normal&amp;cb=nmrivyw3ltdo"
-                        src="https://www.google.com/recaptcha/api.js"
-                        width="304"
-                        height="78"
-                        role="presentation"
-                        name="a-3lwznuebekb5"
-                        frameBorder="0"
-                        scrolling="no"
-                        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"
-                      ></iframe>
-                    </div>
-                    <textarea
-                      id="g-recaptcha-response"
-                      name="g-recaptcha-response"
-                      className="g-recaptcha-response"
-                      style={{
-                        width: "250px",
-                        height: "40px",
-                        border: "1px solid rgb(193, 193, 193)",
-                        margin: "10px 25px",
-                        padding: "0px",
-                        display: "none",
-                      }}
-                    ></textarea>
-                  </div>
-                  <iframe style={{ display: "none" }}></iframe>
-                </div> */}
               </div>
             </div>
           </div>

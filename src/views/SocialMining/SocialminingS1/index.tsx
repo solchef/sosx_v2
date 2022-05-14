@@ -35,7 +35,7 @@ export default function SocialminingS1() {
     const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
     console.log(reward)
-    localStorage.setItem('reward', reward)
+    localStorage.setItem('reward', media.reward)
     return (
 
         <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >

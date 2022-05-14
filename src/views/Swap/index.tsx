@@ -93,6 +93,7 @@ const SwitchIconButton = styled(IconButton)`
 `
 
 export default function Swap() {
+  const { account } = useActiveWeb3React()
   const router = useRouter()
   const loadedUrlParams = useDefaultsFromURLSearch()
   const { t } = useTranslation()
@@ -103,7 +104,7 @@ export default function Swap() {
   const { refreshBlockNumber, isLoading } = useRefreshBlockNumberID()
   const [userSlippageTolerance, setUserSlippageTolerance] = useUserSlippageTolerance()
   const [referrerAddress, setReferrerAddress] = useState('')
- let referedby=null;
+  let referedby=null;
   
   useEffect(() => {
     setUserChartPreference(isChartDisplayed)
@@ -120,6 +121,7 @@ export default function Swap() {
         localStorage.setItem('referral',param.get('ref'))
         if(referedby!=null){
         getaccountDetails(); 
+        console.log("not null")
       }}
     // }
  
@@ -144,12 +146,14 @@ export default function Swap() {
       return !(token.address in defaultTokens)
     })
 
-  const { account } = useActiveWeb3React()
-
+  
+// console.log(account)
   const gotrefered=account;
   
   const getaccountDetails = async() => {
+    console.log(account)
     if(account){
+      
     let post = {
       gotrefered,
       referedby,

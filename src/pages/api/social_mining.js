@@ -30,13 +30,14 @@ async function addPost(req, res) {
         let { db } = await connectToDatabase();
         // add the post
         db.collection('social_mining').createIndex({"gotrefered":1},{unique:true});
+        if(db.collection('social_mining').find({ "gotrefered" : { $exists : true, $not : null } })){
         await db.collection('social_mining').insertOne(JSON.parse(req.body));
         // return a message
         return res.json({
-            message: 'Account details added successfully',
+            message: 'Data details added successfully',
             success: true,
         });
-    } catch (error) {
+    }} catch (error) {
         // return an error
         return res.json({
             message: new Error(error).message,
