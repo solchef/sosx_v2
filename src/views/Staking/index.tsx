@@ -12,26 +12,7 @@ import { calculateGasMargin } from "utils";
 import axios from "axios";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import { cleanNumber } from "utils/amount";
-import ConfirmStakingModal from "./components/ConfirmStakingModal";
-import {
-	Button,
-	Text,
-	ArrowDownIcon,
-	Box,
-	useModal,
-	Flex,
-	IconButton,
-	BottomDrawer,
-	useMatchBreakpoints,
-	ArrowUpDownIcon,
-	Skeleton,
-  } from '@pancakeswap/uikit';
 
-const BorderCard = styled.div`
-  border: solid 1px ${({ theme }) => theme.colors.cardBorder};
-  border-radius: 16px;
-  padding: 16px;
-`;
 
 export default function Staking() {
   const contract = useStakingContract();
@@ -68,6 +49,7 @@ export default function Staking() {
     setMarketCap(parseFloat(getSOSXValue.data.data.price_BNB));
   };
   useEffect(() => {
+    listUserStaking();
     getSOSXPrice();
   }, []);
 
@@ -151,8 +133,9 @@ export default function Staking() {
       };
 
       loadUI();
+      listUserStaking();
     }
-  }, [stakingDetails]);
+  }, []);
 
   const handleAmountChange = async (event) => {
     let _amountToStake = Number(event.target.value);
@@ -231,24 +214,24 @@ export default function Staking() {
   };
 
 
-    const [onPresentConfirmModal] = useModal(
-    <ConfirmStakingModal
-		  //   trade={trade}
-		  //   originalTrade={tradeToConfirm}
-		  //   onAcceptChanges={handleSubmit}
-		  //   attemptingTxn={attemptingTxn}
-		  //   txHash={txHash}
-		  //   recipient={recipient}
-		  //   allowedSlippage={allowedSlippage}
-		  onConfirm={handleSubmit} attemptingTxn={false} recipient={""} allowedSlippage={0} onAcceptChanges={function (): void {
-			  throw new Error("Function not implemented.");
-		  } }    //   swapErrorMessage={swapErrorMessage}
-    //   customOnDismiss={handleConfirmDismiss}
-    />,
-    true,
-    true,
-    'ConfirmStakingModal',
-  )
+  //   const [onPresentConfirmModal] = useModal(
+  //   <ConfirmStakingModal
+	// 	  //   trade={trade}
+	// 	  //   originalTrade={tradeToConfirm}
+	// 	  //   onAcceptChanges={handleSubmit}
+	// 	  //   attemptingTxn={attemptingTxn}
+	// 	  //   txHash={txHash}
+	// 	  //   recipient={recipient}
+	// 	  //   allowedSlippage={allowedSlippage}
+	// 	  onConfirm={handleSubmit} attemptingTxn={false} recipient={""} allowedSlippage={0} onAcceptChanges={function (): void {
+	// 		  throw new Error("Function not implemented.");
+	// 	  } }    //   swapErrorMessage={swapErrorMessage}
+  //   //   customOnDismiss={handleConfirmDismiss}
+  //   />,
+  //   true,
+  //   true,
+  //   'ConfirmStakingModal',
+  // )
 
   return (
     <>
@@ -400,9 +383,8 @@ export default function Staking() {
                           <button
                             type="button"
                             // disabled={insufficientBalance || activateStake}
-                            onClick={() => onPresentConfirmModal()}
-                            className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
-                          >
+                            onClick={() => handleSubmit()}
+                            className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3">
                             {loading ? "Staking.." : "Stake"}
                           </button>
                         </div>

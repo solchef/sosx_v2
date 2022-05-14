@@ -179,7 +179,14 @@ export default function DaoStaking() {
   };
 
   const handleSubmit = async () => {
-    console.log(allowanceValue);
+    // console.log(allowanceValue);
+
+    if(amountToStake < 1){
+
+      toastError("You Must stake at least one token. Check your input");
+
+      referralAddress;
+    }
     if (amountToStake < balance) {
       if (allowanceValue.toString().length > 50) {
         console.log(referralAddress);
