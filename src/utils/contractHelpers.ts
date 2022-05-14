@@ -19,7 +19,8 @@ import {
 import cakeAbi from 'config/abi/cake.json'
 import pointCenterIfo from 'config/abi/pointCenterIfo.json'
 import masterChef from 'config/abi/masterchef.json'
-import sosxStakingAbi from 'config/abi/sosxABI.json'
+import sosxStakingAbi from 'config/abi/sosxStakingAbi.json'
+import sosxDaoStakingAbi from 'config/abi/sosxABI.json'
 import sosxTokenABI from 'config/abi/sosxTokenABI.json'
 import predictionsAbi from 'config/abi/predictions.json'
 
@@ -42,6 +43,9 @@ const getContract = (abi: any, address: string, signer?: Signer | Provider) => {
 // const { account, library } = useWeb3React<Provider>()
 
 
+export const getMulticallContract = (signer?: Signer | Provider) => {
+  // return getContract(pointCenterIfo, getPointCenterIfoAddress(), signer) as PointCenterIfo
+}
 
 export const getPointCenterIfoContract = (signer?: Signer | Provider) => {
   // return getContract(pointCenterIfo, getPointCenterIfoAddress(), signer) as PointCenterIfo
@@ -59,7 +63,7 @@ export const getMasterchefContract = (signer?: Signer | Provider) => {
 }
 
 export const getStakingContract = (signer?: Signer | Provider) => {
-  return getContract(sosxStakingAbi, getstakingContractAddress(), signer);
+  return getContract(sosxDaoStakingAbi, getstakingContractAddress(), signer);
 }
 
 export const getDaoStakingContract = (signer?: Signer | Provider) => {
