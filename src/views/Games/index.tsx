@@ -80,17 +80,19 @@ export default function Game() {
 
     duration = moment.duration(duration.asSeconds() - 1, "seconds");
 
+    console.log(duration)
+
     setDays(duration.days());
     setHours(duration.hours());
     setMinutes(duration.minutes());
     setSeconds(duration.seconds());
 
-    return { min: duration.minutes(), sec: duration.seconds() };
+    return {hour: duration.hours(), min: duration.minutes(), sec: duration.seconds() };
   };
 
   useEffect(() => {
 
-    const roundStartTime = 1652555892;
+    const roundStartTime = 1652557322;
 
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 60 * 60 };
@@ -105,7 +107,7 @@ export default function Game() {
       (group) => group.end > current && current > group.start
     );
 
-    if (check == -1) {
+    if (check == -1 && current > current) {
       setStage(4);
     } else {
       const interval = setInterval(() => {
@@ -374,9 +376,9 @@ export default function Game() {
                                 <p className="mt-2"> Vote for your favorite challenge wich the top 3 will then make it to the Final Challenge round.</p>
                                 <p className="mt-2"> All Levels members are allowed to vote.</p>
 
-
-                                <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
-
+                                <Link href="/votechallenge">
+                                 <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
+                              </Link>
 
                               </div>
                               <div className="col-6">
@@ -406,9 +408,9 @@ export default function Game() {
                                 <p className="mt-2 fs-14"> Vote for the Final Challenge in between the Top 3 </p>
                                 <p className="mt-2 fs-14"> Only Levels 3 members are allowed to vote.</p>
 
-
-                                <button type="submit" className="btn mt-2 mb-auto btn-primary">  Vote for Challange</button>
-
+                                <Link href="/votechallenge">
+                                   <button type="submit" className="btn mt-2 mb-auto btn-primary">  Vote for Challange</button>
+                               </Link>
 
                               </div>
                               <div className="col-6  border-left">
