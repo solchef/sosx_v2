@@ -368,7 +368,7 @@ export default function Game() {
                                         </div>
                                         <div className="text-muted d-flex align-items-center mb-3">
                                             <div className={`step  mr-3 `} >3</div>
-                                            UPLOADE VIDEO
+                                            UPLOAD VIDEO
                                         </div>
                                         <p className="fs-14 mb-4 mt-4">
                                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit beatae atque dolores laborum? Earum vitae voluptatibus necessitatibus ullam nemo tempora fugit quos explicabo quis, saepe illum molestias cumque ipsa quas?
@@ -376,8 +376,9 @@ export default function Game() {
                                         <p className="fs-14 mb-4 mt-4">
                                             Lorem itempora fugit qupsa quas?
                                         </p>
+                                        {account ? (
                                         <button type="button" className="btn btn-primary">Submit your challenge</button>
-
+                                        ):("")}
                                     </div>
                                     <div className="col-6">
                                         <div className="card-body">
@@ -510,12 +511,12 @@ export default function Game() {
                     <p className="text-white fs-22 font-weight-bold">
                       All Submissions{" "}
                     </p>
-                    <button
+                    {/* <button
                       type="button"
                       className="btn text-nowrap font-weight-bold  p-2 fs-12 mt-2 btn-success"
                     >
                       View All
-                    </button>
+                    </button> */}
                   </div>
 
                   <div className="row mx-auto mt-2">

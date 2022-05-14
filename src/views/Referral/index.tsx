@@ -43,8 +43,7 @@ export default function Referral({datasocial}) {
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const [key, setKey] = useState("chart");
-   let results=[];
-
+  var results=[];
   // const account = "dd"
   const toggleTab = (event, type) => {
     event.stopPropagation();
@@ -58,9 +57,8 @@ export default function Referral({datasocial}) {
 // console.log("hello")
     fetchReferral();
     getaccountDetails(); 
-    if(account!=null){ 
-      getDataSocialMining();}  
-
+    getDataSocialMining();
+      
   }, [])  
 
   const getaccountDetails = async() => {
@@ -82,17 +80,19 @@ console.log(data)
 }
   }
 const getDataSocialMining = async () => {
-  
-  const res = await fetch('https://testbed.socialx.io/api/social_mining?referedby=' + account)
+ 
+  const res = await fetch('/api/social_mining?referedby=' + account)
   const json = await res.json()
   setResultsoc(json.message);
   setsocialData(json.message);
-  results=(json.message);
+  results.push(json.message);
+  
+  console.log("results",results);
   console.log("data is:",json.message)
   console.log("data2 is:",socialData)
   console.log("resultsoc",resultsoc);
+
 }
- 
   const fetchReferral = async () => {
 
     let countreferrals = await contract.getReferralCount();
@@ -616,7 +616,7 @@ const getDataSocialMining = async () => {
            </div>
          </div>
          
-         {socialData.length > 0 ? (
+         {(socialData.length) > 0 ? (
         resultsoc.map(ref => 
 
              <div className="row pb-3">
