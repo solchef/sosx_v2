@@ -379,18 +379,20 @@ const getDataSocialMining = async () => {
        
        
          <div className="card-header border-0 pl-0 pb-0">
-         <h4 className='fs-18 font-weight-bold' >You will get</h4>
        </div>
          <div className="bg-dark rounded">
           
-           <div className='font-weight-bold d-flex justify-content-between '>
-             <div>
-               <p className='text-success' >Social Mining</p>
-               <h3 className='font-weight-bold'> 25%</h3>
+           <div className='font-weight-bold align-items-center d-flex justify-content-between '>
+             <div className='d-flex flex-column align-items-center'>
+             <h4 className='fs-18 font-weight-bold' >You will get</h4>
+              <p className='text-success font-weight-bold mt-1 fs-28'>35%</p>
              </div>
+             <i className="fa-solid fs-28 text-success fa-angles-right"></i>
 
-             <div className='mx-auto'>
-             <p className='text-success'>Staking </p>
+             <div>
+             <p className='text-muted' >Social Mining</p>
+               <h3 className='font-weight-bold'> 25%</h3>
+             <p className='text-muted'>Staking </p>
              <h3 className='font-weight-bold'> 10%</h3>
              </div>
            </div>
