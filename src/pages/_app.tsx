@@ -75,7 +75,7 @@ function MyApp(props: AppProps) {
         <meta name="twitter:card" content="Welcome to the social experiment" />
         <meta name="twitter:title" content="SocialX" />
         <title>SOCIALx</title>
-        {/* {process.env.NODE_ENV !== 'production' && <script dangerouslySetInnerHTML={{ __html: noOverlayWorkaroundScript }} />} */}
+        {process.env.NODE_ENV !== 'production' && <script dangerouslySetInnerHTML={{ __html: noOverlayWorkaroundScript }} />}
       </Head>
       <Providers store={store}>
         <Blocklist>
