@@ -74,18 +74,28 @@ export const getBunnySpecialLotteryAddress = () => {
   return getAddress(addresses.bunnySpecialLottery)
 }
 export const getstakingContractAddress = () => {
-  return "0x229EDaEc0f6fa541222A2f6F8a9825e13FD11756";
+  return "0xab1EffDe3241545a26e1597BDf3A0E2724AB9924";
 }
 
 export const getSosxDaoContractAddress = () => {
   return "0x229EDaEc0f6fa541222A2f6F8a9825e13FD11756";
 }
 
+// {testnet}
+// export const getSosxDaoContractAddress = () => {
+
+//   return "0x229EDaEc0f6fa541222A2f6F8a9825e13FD11756";
+// }
+
 export const getSosxContractAddress = () => {
-  return "0xaD0c583B2c84b84f017DedBD74c645EFBAb2597b";
+  return "0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF";
 }
 
 
+// {testnet}
+// export const getSosxContractAddress = () => {
+//   return "0xaD0c583B2c84b84f017DedBD74c645EFBAb2597b";
+// }
 
 export const getBunnySpecialXmasAddress = () => {
   return getAddress(addresses.bunnySpecialXmas)

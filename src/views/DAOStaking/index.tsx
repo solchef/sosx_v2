@@ -488,7 +488,7 @@ export default function DaoStaking() {
                           </li>
                           <li>
                             <span className="success fs-12">
-                              {stake.amount}
+                              {stake.amount.toFixed(3)}
                             </span>
                           </li>
                         </ul>
@@ -512,14 +512,14 @@ export default function DaoStaking() {
                                 <span className="justify-content-between success fs-12">
                                   {" "}
                                   Amount Staked: <br />
-                                  {stake.amount} SOSX
+                                  {stake.amount.toFixed(3)} SOSX
                                 </span>
                               </li>
                               <li>
                                 <span className="justify-content-between success fs-12">
                                   {" "}
                                   Rewards Gained: <br />
-                                  {stake.amount} SOSX{" "}
+                                  {stake.amount.toFixed(3)} SOSX{" "}
                                 </span>
                               </li>
                             </ul>
