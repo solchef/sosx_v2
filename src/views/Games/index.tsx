@@ -39,8 +39,8 @@ export const StageNav = (props) => {
 
 
 
-      <div className="text-muted fs-14 d-flex align-items-center mb-2">
-        <div className={`step ${props.stage == 4 && "done"}  mr-3 `}>3</div>UPLOADE VIDEO
+      <div className="text-muted d-flex align-items-center mb-2">
+        <div className={`step ${props.stage == 4 && "done"}  mr-3 `}>3</div>UPLOAD VIDEO
       </div>
 
 
@@ -89,12 +89,12 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652540253;
+    const roundStartTime = 1652549940;
 
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 10 * 1 };
-    let stage2 = { start: stage1.end, end: stage1.end + 10 * 100 };
-    let stage3 = { start: stage2.end, end: stage2.end + 10 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 60 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + 60 * 100 };
+    let stage3 = { start: stage2.end, end: stage2.end + 60 * 60 };
     let stage4 = { start: stage3.end, end: stage3.end + 60 * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
@@ -105,7 +105,7 @@ export default function Game() {
     );
 
     if (check == -1) {
-      setStage(3);
+      setStage(4);
     } else {
       const interval = setInterval(() => {
         let currTime = moment().unix();
@@ -133,6 +133,12 @@ export default function Game() {
         const data = concat(level1);
         challenge = JSON.parse(new TextDecoder().decode(data).toString());
         setVoters(challenge);
+          challenge.map(voter => {
+            if(voter.address == account){
+              // alert(voter.level)
+                setCurrentLevel(voter.level)
+            }
+          })
       }
     }
   };
@@ -294,7 +300,9 @@ export default function Game() {
         amount: total_stake,
         level: getLevel(total_stake),
       };
-      if (voter_address === account) setCurrentLevel(getLevel(total_stake));
+      // if (voter_address == account) {setCurrentLevel(data.level)};
+
+      // alert(data.level)
       voters.push(data);
 
       // }
@@ -353,15 +361,11 @@ export default function Game() {
                       <div className="col-12 h-100 ">
 
 
-                        {stage == 1 && <CreateChallenge />}
+                        {stage == 1 && <CreateChallenge level={currentLevel} />}
 
                         {stage == 2 && (
 
-
-
-
                           <div className="card h-100">
-
                             <div className="row h-100">
                               <div className="col-12 col-sm-6">
                                 <StageNav stage={2} />
@@ -380,20 +384,15 @@ export default function Game() {
                                 <img className="mobile-hide" width="60%" src="images/votechallenge-img.png" />
 
 
-
                               </div>
                             </div>
 
                           </div>
 
 
-
-
                         )}
 
                         {stage == 3 && (
-
-
 
 
 
@@ -441,10 +440,6 @@ export default function Game() {
 
                         {stage == 4 && (
 
-
-
-
-
                           <div className="card h-100">
 
                             <div className="row h-100">
@@ -479,7 +474,6 @@ export default function Game() {
 
                               </div>
                               <div className="col-12 col-xl-6">
-
 
                                 <div className={`backgroun-dark rounded m-0 d-flex  pb-0 h-100 text-white  flex-column`} >
                                   {todayChallenge ? (
@@ -520,7 +514,7 @@ export default function Game() {
                                           ).slice(-5)}
                                         </span>
 
-                                        <p className=" ml-3 p-1 fs-10 bg-pink-radius  text-white">
+                                        <p className=" ml-3 p-1 fs-10 bg-pink-radius text-white">
                                           {" "}
                                           Level 3
                                         </p>
@@ -562,63 +556,7 @@ export default function Game() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
