@@ -75,9 +75,7 @@ export default function DaoStaking() {
     });
 
 
-
-    
-    contract.getActiveStakeCount().then((activeStakes) => {
+    contract.getStakeCount().then((activeStakes) => {
       setNumberOfActiveStake(Number(activeStakes));
     });
 
@@ -103,6 +101,7 @@ export default function DaoStaking() {
   
   const listUserStaking = async () => {
     let list = [];
+    let count = []
     for (let i = 0; i < numberOfActiveStake; i++) {
       await contract.getStakeInfo(i).then(stakeInstance => {
 
@@ -111,7 +110,8 @@ export default function DaoStaking() {
               // console.log("here")
             let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
              let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
-              // console.log(stakeInstance) 
+              console.log(stakeInstance) 
+              count.push(i)
                 let instance = {
                   amount: stakeAmt,
                   isWithdrawed: Boolean(stakeInstance[1]),
@@ -127,9 +127,12 @@ export default function DaoStaking() {
                 };
 
                 list.push(instance);
+               
+                
             // });
            
           // }
+
         
       });
 
@@ -137,6 +140,11 @@ export default function DaoStaking() {
     }
 
     setActiveStakes(list);
+    console.log(list)
+    console.log(count)
+    // clearTimeout(listTimeOut);
+
+    
     // console.log(list)
   };
 
@@ -206,6 +214,12 @@ export default function DaoStaking() {
     //    const interest = amount - p;
     return amount.toFixed(2);
   };
+
+  // const listTimeOut =  setTimeout(function(){
+  //   // location.reload();
+  //   console.log("trying lo toad agaun")
+  //   listUserStaking()
+  // }, 10000); 
 
   const handleSubmit = async () => {
     // console.log(allowanceValue);
@@ -468,7 +482,7 @@ export default function DaoStaking() {
                   <div className="d-flex justify-content-between">
                     <p className="success mb-0 fs-12">Your DAO Level</p>
                     <h4 className="mb-0 font-w600  fs-24 pb-3">
-                      {totalAmountStaked ? getLevel(totalAmountStaked) : 0}
+                      {totalAmountStaked ? getLevel(totalAmountStaked / 10 ** 18) : 0}
                     </h4>
                 </div>
 
@@ -526,12 +540,13 @@ export default function DaoStaking() {
                     <ul className="token-balance-list mb-2 mt-2">
                       <li>
                         <span className="justify-content-between success fs-12">
-                          DAO Level
+                          Stake Level
                         </span>
                       </li>
                       <li>
                         <span className="success fs-12">Amount</span>
                       </li>
+                      <i className="fa fa-info"></i>
                     </ul>
 
                     {/* {loadingData ? <div className='text-center'>Loading Data</div> : ''} */}
@@ -562,6 +577,7 @@ export default function DaoStaking() {
                               {stake.amount.toFixed(3)}
                             </span>
                           </li>
+                          <i className="fa fa-chevron-down"></i>
                         </ul>
                         
 
@@ -648,30 +664,35 @@ export default function DaoStaking() {
                                 </span>
                               </li> */}
                             </ul>
+                         {!stake.isWithdrawed ? 
+                         
+                         <ul
+                         className="token-balance-list mb-2 mt-2"
 
-                            <ul
-                              className="token-balance-list mb-2 mt-2"
-                              // onClick={() => {
-                              //   showDetails == i
-                              //     ? setShowDetails(-1)
-                              //     : setShowDetails(i);
-                              // }}
-                            >
-                              <li>
-                                <span className="justify-content-between success fs-12">
-                                  <button onClick={() => handleClaim()} className="btn btn-success full-width">
-                                    CLAIM REWARDS
-                                  </button>
-                                </span>
-                              </li>
-                              <li>
-                                <span className="justify-content-between success fs-12">
-                                  <button onClick={() => handleUnstake(i)} className="btn btn-primary">
-                                    UNSTAKE
-                                  </button>
-                                </span>
-                              </li>
-                            </ul>
+                       >
+                         
+                         <li>
+                           <span className="justify-content-between success fs-12">
+                             <button onClick={() => handleClaim()} className="btn btn-success full-width">
+                               CLAIM REWARDS
+                             </button>
+                           </span>
+                         </li>
+                         <li>
+                           <span className="justify-content-between success fs-12">
+                             <button onClick={() => handleUnstake(i)} className="btn btn-primary">
+                               UNSTAKE
+                             </button>
+                           </span>
+                         </li>
+                       </ul>
+
+                       :
+
+                       <p></p>
+                        
+                        }         
+                          
                           </div>
                         </div>
                       </>
