@@ -30,7 +30,7 @@ import { CID, create } from "ipfs-http-client";
 import ReactMarkdown from "react-markdown";
 import { useMediaPredicate } from "react-media-hook";
 import { useStakingContract } from "hooks/useContract";
-import {StageNav} from "../index"
+import { StageNav } from "../index"
 
 // import MDEditor from './MDEdit,or'
 
@@ -263,31 +263,28 @@ const CreateChallenge = () => {
 
 
     <div className="card">
-    <form onSubmit={handleSubmit}>
-      <div className="row">
-        <div className="col-6">
-        <StageNav stage={1} />
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="col-12 col-xl-6">
+            <StageNav stage={1} />
 
-          <p >Submit a challenge that you wish others to
-            perform for money. Challenge must be doable within the next
-            48H and cannot
-            location-specific. Be crazy,
-            be original, but be dea. Challenges can be created by level
-            2 and level 3.</p>
-       
+            <p >Submit a challenge that you wish others to
+              perform for money. Challenge must be doable within the next
+              48H and cannot
+              location-specific. Be crazy,
+              be original, but be dea. Challenges can be created by level
+              2 and level 3.</p>
+
 
             {account
-            ?
-            <button type="submit" className="btn btn-primary">Submit your challenge</button>
-            :
-            <ConnectWalletButton width="100%" type="button" />
-          }
-        </div>
-        <div className="col-6">
-          <input id="name" type="text" name="name"  value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required />
-
-
-
+              ?
+              <button type="submit" className="btn btn-primary">Submit your challenge</button>
+              :
+              <ConnectWalletButton width="100%" type="button" />
+            }
+          </div>
+          <div className="col-12 col-xl-6 pt-2">
+            <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required />
 
             {/* @ts-ignore */}
             <EasyMde
@@ -304,11 +301,11 @@ const CreateChallenge = () => {
 
 
 
-       
+
+          </div>
         </div>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
 
 
 
@@ -326,10 +323,10 @@ const CreateChallenge = () => {
 
 
 
-         
 
-      
-    
+
+
+
 
 
 

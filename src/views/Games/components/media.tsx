@@ -27,7 +27,7 @@ const Media = () => {
     850: 1,
     768: 2,
     620: 1
-};
+  };
   return (
 
 
@@ -45,391 +45,273 @@ const Media = () => {
         <div className="col-12">
 
 
-        <Masonry
-                                            breakpointCols={breakpointColumnsObj}
-                                            className="my-masonry-grid mx-auto "
-                                            columnClassName="my-masonry-grid_column">
-                                            <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
-                                                <iframe className="position-absolute iframe" width="250" height="400" src="https://www.youtube.com/embed/-LAwDM8JKwU" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid mx-auto "
+            columnClassName="my-masonry-grid_column">
+        
+            <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
+              <iframe className="position-absolute iframe" width="250" height="400" src="https://www.youtube.com/embed/b7DrwqoHAGA" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
-                                                <a href=""
-                                                >
-                                                    <span className="details">
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+              <a href=""
+              >
+                <span className="details">
+                  <div className="text-white d-flex align-items-center pt-1">
+                    <img className="width-22" src="/images/dp.png" />
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white details view-vid">
-
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                                                            <p className="fs-10 mr-4">251</p>
-
-
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
-
-                                                </a>
-
-                                            </div>
-                                            <div className={`width250  height150  mb-4  rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                  </div>
+                </span>
+                <div className="play-btn"></div>
+                <div className="text-white details view-vid">
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
-
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+                  <div className=" d-flex align-items-center">
+                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
 
-                                                            <p className="fs-10 mr-4">251</p>
-
-
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
-
-                                                </a>
-
-                                            </div>
-                                            <div className={`width250  height150  mb-4   rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+                    <p className="fs-10 mr-4">251</p>
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                    <p className="fs-10">43,125</p>
+                  </div>
+                </div>
 
-                                                            <p className="fs-10 mr-4">251</p>
-
-
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
-
-                                                </a>
-
-                                            </div>
-                                            <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+              </a>
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
+            </div>
+            <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
+              <iframe className="position-absolute iframe" width="250" height="400" src="https://www.youtube.com/embed/b7DrwqoHAGA" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+              <a href=""
+              >
+                <span className="details">
+                  <div className="text-white d-flex align-items-center pt-1">
+                    <img className="width-22" src="/images/dp.png" />
 
-                                                            <p className="fs-10 mr-4">251</p>
+                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                  </div>
+                </span>
+                <div className="play-btn"></div>
+                <div className="text-white details view-vid">
 
+                  <div className=" d-flex align-items-center">
+                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
 
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
+                    <p className="fs-10 mr-4">251</p>
 
-                                                </a>
 
-                                            </div>
-                                            <div className={`width250  height150  mb-4  rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                    <p className="fs-10">43,125</p>
+                  </div>
+                </div>
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
+              </a>
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+            </div>
+            <div className={`width250  p-3 height250  mb-4  align-self-stretch rounded`}>
+              <iframe className="position-absolute iframe" width="250" height="250" src="https://www.youtube.com/embed/b7DrwqoHAGA" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
-                                                            <p className="fs-10 mr-4">251</p>
+              <a href=""
+              >
+                <span className="details">
+                  <div className="text-white d-flex align-items-center pt-1">
+                    <img className="width-22" src="/images/dp.png" />
 
+                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                  </div>
+                </span>
+                <div className="play-btn"></div>
+                <div className="text-white details view-vid">
 
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
+                  <div className=" d-flex align-items-center">
+                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
 
-                                                </a>
+                    <p className="fs-10 mr-4">251</p>
 
-                                            </div>
-                                            <div className={`width250  height150  mb-4   rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
+                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                    <p className="fs-10">43,125</p>
+                  </div>
+                </div>
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+              </a>
 
-                                                            <p className="fs-10 mr-4">251</p>
+            </div>
+            <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
+              <iframe className="position-absolute iframe" width="250" height="400" src="https://www.youtube.com/embed/b7DrwqoHAGA" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
+              <a href=""
+              >
+                <span className="details">
+                  <div className="text-white d-flex align-items-center pt-1">
+                    <img className="width-22" src="/images/dp.png" />
 
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
+                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                  </div>
+                </span>
+                <div className="play-btn"></div>
+                <div className="text-white details view-vid">
 
-                                                </a>
+                  <div className=" d-flex align-items-center">
+                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
 
-                                            </div>
-                                            <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+                    <p className="fs-10 mr-4">251</p>
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                    <p className="fs-10">43,125</p>
+                  </div>
+                </div>
 
-                                                            <p className="fs-10 mr-4">251</p>
+              </a>
 
+            </div>
+            <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
+              <iframe className="position-absolute iframe" width="250" height="400" src="https://www.youtube.com/embed/b7DrwqoHAGA" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
+              <a href=""
+              >
+                <span className="details">
+                  <div className="text-white d-flex align-items-center pt-1">
+                    <img className="width-22" src="/images/dp.png" />
 
-                                                </a>
+                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                  </div>
+                </span>
+                <div className="play-btn"></div>
+                <div className="text-white details view-vid">
 
-                                            </div>
-                                            <div className={`width250  height150  mb-4  rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+                  <div className=" d-flex align-items-center">
+                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
+                    <p className="fs-10 mr-4">251</p>
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
 
-                                                            <p className="fs-10 mr-4">251</p>
+                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                    <p className="fs-10">43,125</p>
+                  </div>
+                </div>
 
+              </a>
 
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
+            </div>
+            <div className={`width250  p-3 height250  mb-4  align-self-stretch rounded`}>
+              <iframe className="position-absolute iframe" width="250" height="250" src="https://www.youtube.com/embed/b7DrwqoHAGA" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
-                                                </a>
+              <a href=""
+              >
+                <span className="details">
+                  <div className="text-white d-flex align-items-center pt-1">
+                    <img className="width-22" src="/images/dp.png" />
 
-                                            </div>
-                                            <div className={`width250  height150  mb-4   rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                  </div>
+                </span>
+                <div className="play-btn"></div>
+                <div className="text-white details view-vid">
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
+                  <div className=" d-flex align-items-center">
+                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+                    <p className="fs-10 mr-4">251</p>
 
-                                                            <p className="fs-10 mr-4">251</p>
 
+                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                    <p className="fs-10">43,125</p>
+                  </div>
+                </div>
 
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
+              </a>
 
-                                                </a>
+            </div>
+            <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
+              <iframe className="position-absolute iframe" width="250" height="400" src="https://www.youtube.com/embed/b7DrwqoHAGA" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
-                                            </div>
-                                            <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+              <a href=""
+              >
+                <span className="details">
+                  <div className="text-white d-flex align-items-center pt-1">
+                    <img className="width-22" src="/images/dp.png" />
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
+                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                  </div>
+                </span>
+                <div className="play-btn"></div>
+                <div className="text-white details view-vid">
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+                  <div className=" d-flex align-items-center">
+                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
 
-                                                            <p className="fs-10 mr-4">251</p>
+                    <p className="fs-10 mr-4">251</p>
 
 
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
+                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                    <p className="fs-10">43,125</p>
+                  </div>
+                </div>
 
-                                                </a>
+              </a>
 
-                                            </div>
-                                            <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+            </div>
+            <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
+              <iframe className="position-absolute iframe" width="250" height="400" src="https://www.youtube.com/embed/b7DrwqoHAGA" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
+              <a href=""
+              >
+                <span className="details">
+                  <div className="text-white d-flex align-items-center pt-1">
+                    <img className="width-22" src="/images/dp.png" />
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                  </div>
+                </span>
+                <div className="play-btn"></div>
+                <div className="text-white details view-vid">
 
-                                                            <p className="fs-10 mr-4">251</p>
+                  <div className=" d-flex align-items-center">
+                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
 
+                    <p className="fs-10 mr-4">251</p>
 
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
 
-                                                </a>
+                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                    <p className="fs-10">43,125</p>
+                  </div>
+                </div>
 
-                                            </div>
-                                            <div className={`width250  height400  mb-4  align-self-stretch rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+              </a>
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
+            </div>
+            <div className={`width250  p-3 height250  mb-4  align-self-stretch rounded`}>
+              <iframe className="position-absolute iframe" width="250" height="250" src="https://www.youtube.com/embed/b7DrwqoHAGA" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
+              <a href=""
+              >
+                <span className="details">
+                  <div className="text-white d-flex align-items-center pt-1">
+                    <img className="width-22" src="/images/dp.png" />
 
-                                                            <p className="fs-10 mr-4">251</p>
+                    <p className=" ml-2 fs-12" >Oxf...ds3</p>
+                  </div>
+                </span>
+                <div className="play-btn"></div>
+                <div className="text-white details view-vid">
 
+                  <div className=" d-flex align-items-center">
+                    <i className="fa-regular fs-12 fa-heart pr-2"></i>
 
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
+                    <p className="fs-10 mr-4">251</p>
 
-                                                </a>
 
-                                            </div>
-                                            <div className={`width250  height150  mb-4  rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
+                    <i className="fa-regular fs-12 fa-eye pr-2"></i>
+                    <p className="fs-10">43,125</p>
+                  </div>
+                </div>
 
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
+              </a>
 
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                                                            <p className="fs-10 mr-4">251</p>
-
-
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
-
-                                                </a>
-
-                                            </div>
-                                            <div className={`width250  height150  mb-4   rounded`}>
-                                                <a href=""
-                                                >
-                                                    <span>
-                                                        <div className="text-white d-flex align-items-center pt-1">
-                                                            <img className="width-22" src="/images/dp.png" />
-
-                                                            <p className=" ml-2 fs-12" >Oxf...ds3</p>
-                                                        </div>
-                                                    </span>
-                                                    <div className="play-btn"></div>
-                                                    <div className="text-white view-vid">
-
-                                                        <div className=" d-flex align-items-center">
-                                                            <i className="fa-regular fs-12 fa-heart pr-2"></i>
-
-                                                            <p className="fs-10 mr-4">251</p>
-
-
-                                                            <i className="fa-regular fs-12 fa-eye pr-2"></i>
-                                                            <p className="fs-10">43,125</p>
-                                                        </div>
-                                                    </div>
-
-                                                </a>
-
-                                            </div>
-                                        </Masonry>
+            </div>
+          </Masonry>
 
 
         </div>

@@ -337,7 +337,7 @@ export default function Game() {
 
                         {stage == 1 && <CreateChallenge />}
 
-                        {stage ==2 && (
+                        {stage == 2 && (
 
 
 
@@ -345,7 +345,7 @@ export default function Game() {
                           <div className="card">
 
                             <div className="row">
-                              <div className="col-6">
+                              <div className="col-12 col-sm-6">
                                 <StageNav stage={2} />
 
                                 <p className="mt-2"> Lorem ipsum dolor sit amet consectetur adipisicing
@@ -362,7 +362,7 @@ export default function Game() {
                               <div className="col-6">
 
 
-                                <img src="images/votechallenge-img.png" />
+                                <img className="mobile-hide" src="images/votechallenge-img.png" />
 
 
 
@@ -376,9 +376,7 @@ export default function Game() {
 
                         )}
 
-                        {stage == 3 && (
-
-
+                        {stage == 4 && (
 
 
 
@@ -387,7 +385,7 @@ export default function Game() {
                           <div className="card">
 
                             <div className="row">
-                              <div className="col-6">
+                              <div className="col-12 col-sm-6">
                                 <StageNav stage={3} />
 
                                 <p className="mt-2"> Lorem ipsum dolor sit amet consectetur adipisicing
@@ -401,10 +399,10 @@ export default function Game() {
 
 
                               </div>
-                              <div className="col-6 border-left">
+                              <div className="col-12 col-sm-6 border-left">
 
 
-                                <h4 className="mb-4 font-weight-bold">
+                                <h4 className="mb-4 pt-2 font-weight-bold">
                                   Find Top 3 Nominees
                                 </h4>
 
@@ -425,7 +423,7 @@ export default function Game() {
 
                         )}
 
-                        {stage == 4 && (
+                        {stage == 5 && (
 
 
 
@@ -434,7 +432,7 @@ export default function Game() {
                           <div className="card">
 
                             <div className="row">
-                              <div className="col-6">
+                              <div className="col-12 col-xl-6">
                                 <StageNav stage={4} />
 
                                 <p className="mt-2 mb-3"> Here is your challenge. You have 48 hours to complete for the chance to win the prize pool. Challenge must match all criteria listed and submitted to your Youtiube or Tiktok. Anyone can participate.
@@ -460,7 +458,7 @@ export default function Game() {
 
 
                               </div>
-                              <div className="col-6">
+                              <div className="col-12 col-xl-6">
 
 
                                 <div className={`backgroun-dark rounded m-0 d-flex  pb-0 h-100 text-white  flex-column`} >

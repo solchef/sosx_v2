@@ -46884,7 +46884,6 @@ a.video span {
 }
 
 @media (max-width: 768px) {
-    
     .steps-img {
         width: 65px;
         display: block;
@@ -46986,8 +46985,8 @@ a.video span {
         resize: vertical;
         color: #fff;
         background-color: #000000;
-        margin-left: 15px;
-        margin-right: 15px;
+        /* margin-left: 15px; */
+        /* margin-right: 14px; */
         font-size: 12px;
     }
     .nav2-tabs .nav2-link {
@@ -47080,7 +47079,6 @@ a.video span {
         line-height: 1rem;
         color: #fff;
     }
- 
     .card h4 {
         font-size: 9px !important;
     }
