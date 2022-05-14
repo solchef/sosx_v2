@@ -81,7 +81,7 @@ export default function Staking() {
 
   const listUserStaking = async () => {
     let list = [];
-    for (let i = 1; i < numberOfActiveStake; i++) {
+    for (let i = 0; i < numberOfActiveStake; i++) {
       await contract.getStakeInfo(i).then(stakeInstance => {
          
           // if (stakeInstance) {

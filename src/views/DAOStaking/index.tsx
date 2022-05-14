@@ -25,7 +25,7 @@ export default function DaoStaking() {
   const { account } = useActiveWeb3React();
   const tokenContract = useSosxContract();
   const [balance, setUserBalace] = useState(0);
-  const { toastError } = useToast();
+  const { toastError, toastSuccess } = useToast();
   const [stakingClass, setStakingClass] = useState(1);
   const [stakingInterest, setStakingInterest] = useState(0);
   const [amountToStake, setamountToStake] = useState(0);
@@ -85,7 +85,21 @@ export default function DaoStaking() {
       setAllowanceValue(allowance);
     });
   };
+  
+  const handleUnstake = async (stakeID) => {
 
+     const unstake = await contract.returnTokens(0);
+
+     if(unstake){
+       toastSuccess("Successfully sent unstake SOSX transaction, Check balance in your wallet");
+     }
+
+  }
+
+    
+  const handleClaim = async () => {
+
+  }
   
   const listUserStaking = async () => {
     let list = [];
@@ -181,7 +195,7 @@ export default function DaoStaking() {
     let interest = compoundInterest(p, t, r, n);
 
     // this.setState({stakingInterest:interest})
-    console.log(_amountToStake);
+    // console.log(_amountToStake);
     setamountToStake(_amountToStake);
     setStakingInterest(Number(interest));
   };
@@ -196,15 +210,7 @@ export default function DaoStaking() {
   const handleSubmit = async () => {
     // console.log(allowanceValue);
 
-    if(allowanceValue > BigInt(1000000000)){
-      // console.log(allowanceValue -  BigInt(1000000000))
-      await listUserStaking()
-      toastError("You Must stake at least one token. ");
-        return;
-    }
-
-    
-
+ 
     if(amountToStake < 1){
       toastError("You Must stake at least one token. Check your input");
       // referralAddress;
@@ -225,30 +231,34 @@ export default function DaoStaking() {
       toastError("DAO Level 3 required you to stake more than 100000 SOSX");
     return;
   }
-
-
-
+  // console.log()
     if (amountToStake < balance) {
-      if (allowanceValue.toString().length > 50) {
+      if (Number(allowanceValue) > amountToStake) {
         // console.log(referralAddress);
         setLoading(true);
-        await contract.stakeToken(
+      let stake =  await contract.stakeToken(
           amountToStake + "000000000000000000",
           "0x0000000000000000000000000000000000000001",
           stakingClass
         );
-        setActivatestake(true);
-        setLoading(false);
-        listUserStaking();
+      
+        if(stake){
+          setActivatestake(true);
+          setLoading(false);
+          loadUI();
+          toastSuccess("Staking Transaction successfully sent, Check your wallet balance");
+  
+        }else{
+          toastError("Could not stake");
+        } 
       } else {
         const tx = await tokenContract.populateTransaction.approve(
           contract.address,
-          MaxUint256
+          amountToStake + "000000000000000000"
         );
         let signer = contract.signer;
        await  signer.sendTransaction(tx);
         // 	toastError("token allowance not yet set");
-        listUserStaking();
         loadUI()
       }
     } else {
@@ -538,7 +548,7 @@ export default function DaoStaking() {
                         >
                           <li>
                             <span className="justify-content-between success fs-12">
-                             Level 
+                             Level {" "}
                               {stake.stakingClass == 1
                                 ? 1
                                 : stake.stakingClass == 2
@@ -641,22 +651,22 @@ export default function DaoStaking() {
 
                             <ul
                               className="token-balance-list mb-2 mt-2"
-                              onClick={() => {
-                                showDetails == i
-                                  ? setShowDetails(-1)
-                                  : setShowDetails(i);
-                              }}
+                              // onClick={() => {
+                              //   showDetails == i
+                              //     ? setShowDetails(-1)
+                              //     : setShowDetails(i);
+                              // }}
                             >
                               <li>
                                 <span className="justify-content-between success fs-12">
-                                  <button className="btn btn-success full-width">
+                                  <button onClick={() => handleClaim()} className="btn btn-success full-width">
                                     CLAIM REWARDS
                                   </button>
                                 </span>
                               </li>
                               <li>
                                 <span className="justify-content-between success fs-12">
-                                  <button className="btn btn-primary">
+                                  <button onClick={() => handleUnstake(i)} className="btn btn-primary">
                                     UNSTAKE
                                   </button>
                                 </span>
@@ -668,7 +678,7 @@ export default function DaoStaking() {
                     ))}
                   </>
                 ) : (
-                  stakingList
+                    {stakingList}
                 )}
               </div>
             </div>
