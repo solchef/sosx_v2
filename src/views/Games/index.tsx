@@ -89,6 +89,7 @@ export default function Game() {
   };
 
   useEffect(() => {
+
     const roundStartTime = 1652549940;
 
     let stageGroups = [];
@@ -406,7 +407,7 @@ export default function Game() {
                                 <p className="mt-2 fs-14"> Only Levels 3 members are allowed to vote.</p>
 
 
-                                <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
+                                <button type="submit" className="btn mt-2 mb-auto btn-primary">  Vote for Challange</button>
 
 
                               </div>

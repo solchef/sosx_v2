@@ -47666,14 +47666,11 @@ a.video span {
 
 .game .iframe {
     position: absolute;
-    z-index: 99;
     top: 0;
     left: 0;
 }
 
-.game .details {
-    z-index: 100;
-}
+.game .details {}
 
 @media (max-width: 576px) {
     .clock .li span {
