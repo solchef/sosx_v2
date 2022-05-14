@@ -78,7 +78,7 @@ export const getstakingContractAddress = () => {
 }
 
 export const getSosxDaoContractAddress = () => {
-  return "0x229EDaEc0f6fa541222A2f6F8a9825e13FD11756";
+  return "0x1aA0ce82643700b4A554368F286fEF76Dd60Ab72";
 }
 
 // {testnet}
