@@ -33,7 +33,7 @@ export const StageNav = (props) => {
 
 
       <div className="text-muted d-flex align-items-center mb-2">
-        <div className={`step ${props.stage == 2 || props.stage == 3 && "done"
+        <div className={`step ${(props.stage == 2 || props.stage == 3) && "done"
           } mr-3 `}>2</div>VOTE A CHALLENGE
       </div>
 
@@ -89,12 +89,12 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652517346;
+    const roundStartTime = 1652535133;
 
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 600 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 60 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 60 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 10 * 1 };
+    let stage2 = { start: stage1.end, end: stage1.end + 10 * 100 };
+    let stage3 = { start: stage2.end, end: stage2.end + 10 * 60 };
     let stage4 = { start: stage3.end, end: stage3.end + 60 * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
@@ -319,11 +319,11 @@ export default function Game() {
     <>
       <div className="game container-fluid">
         <div className="row">
-          <div className="col-lg-9">
+          <div className={`col-12 ${biggerThan1500 &&' col-lg-9'}`}>
             <div className="row">
               <div className="col-lg-12">
                 <div className="row">
-                  <div className="col-lg-4">
+                  <div className="col-lg-4 col-12">
                     <TimerDisplay
                       hours={hours}
                       minutes={minutes}
@@ -337,7 +337,7 @@ export default function Game() {
 
                         {stage == 1 && <CreateChallenge />}
 
-                        {stage == 2 && (
+                        {stage ==2 && (
 
 
 
@@ -376,7 +376,7 @@ export default function Game() {
 
                         )}
 
-                        {stage == 2 && (
+                        {stage == 3 && (
 
 
 
@@ -388,7 +388,7 @@ export default function Game() {
 
                             <div className="row">
                               <div className="col-6">
-                                <StageNav stage={2} />
+                                <StageNav stage={3} />
 
                                 <p className="mt-2"> Lorem ipsum dolor sit amet consectetur adipisicing
                                   elit. Velit beatae atque dolores laborum? Earum vitae
@@ -425,7 +425,7 @@ export default function Game() {
 
                         )}
 
-                        {stage == 3 && (
+                        {stage == 4 && (
 
 
 
@@ -435,7 +435,7 @@ export default function Game() {
 
                             <div className="row">
                               <div className="col-6">
-                                <StageNav stage={3} />
+                                <StageNav stage={4} />
 
                                 <p className="mt-2 mb-3"> Here is your challenge. You have 48 hours to complete for the chance to win the prize pool. Challenge must match all criteria listed and submitted to your Youtiube or Tiktok. Anyone can participate.
                                 </p>
@@ -618,7 +618,7 @@ export default function Game() {
               </div>
             </div>
           </div>
-          <div className="col-lg-3">
+          <div className={`col-12 ${biggerThan1500 &&' col-lg-3'}`}>
             <div className="row h-100 ">
               <div className="col-12 h-100 ">
 
