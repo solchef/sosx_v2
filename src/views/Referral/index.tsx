@@ -14,6 +14,7 @@ import { useMediaPredicate } from "react-media-hook";
 import BigNumber from "big-number"
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
 import fetch from 'isomorphic-unfetch'
+import ConnectWalletButton from "components/ConnectWalletButton";
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -53,21 +54,23 @@ export default function Referral({datasocial}) {
   console.log(resultsoc);
   // console.log(account);
 
-  useEffect(() => {
+  useEffect(() => { 
 // console.log("hello")
     fetchReferral();
-    getaccountDetails();  
-    getDataSocialMining();
+    getaccountDetails(); 
+    if(account!=null){ 
+      getDataSocialMining();}  
 
-  }, [])
+  }, [])  
 
   const getaccountDetails = async() => {
+    if(account){
     let post = {
       viewReferralReward,
       account,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date().toDateString,
   };
-  // save the post
+  // save the post 
   let response =await fetch('/api/account', {
       method: 'POST',
       body: JSON.stringify(post),
@@ -77,6 +80,7 @@ export default function Referral({datasocial}) {
   let data = await response.json();
 console.log(data)
 }
+  }
 const getDataSocialMining = async () => {
   
   const res = await fetch('http://localhost:3000/api/social_mining?referedby=' + account)
@@ -343,12 +347,10 @@ const getDataSocialMining = async () => {
        <div className="card-body">
          <div className="bg-dark rounded">
            <div className="d-flex justify-content-between align-items-center">
-            {account!=null?  
+            {account!=null?  (
+              <div>
               <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span>
-:
-               ''     }
-            {/* <span>https://socialx.io?ref={account}</span> */}
-             <div className="float-right d-flex">
+              <div className="float-right d-flex">
              <li className="nav-item pr-2">
                <CopyToClipboard
                  text={`https://socialx.io?ref=${account}`}
@@ -366,6 +368,11 @@ const getDataSocialMining = async () => {
               <i className="fa-solid fa-share-from-square"></i></a></li>
             </OverlayTrigger>
              </div>
+             </div>
+             ) :(
+               <p>** Connect to Refer ** </p> )   }
+           
+             
            </div>
          </div>
         
@@ -399,9 +406,17 @@ const getDataSocialMining = async () => {
            <div className="card-body">
              <img src="images/swapcoin-referral.svg" className="pb-2 pl-2 pr-2 pt-1 referral-rewards"/>
              <span className="main-pink">Social Mining Referral</span>
+             {account ? (<div> 
+              <h4 className='fs-18 font-weight-bold pt-2 pb-2'>{viewReferralReward} SOSX</h4>
+              <button style={{    padding: "0.338rem 1rem"}}  type="button" className="btn btn-primary  ">Withdraw</button>
+            </div>):(
+              <div> 
+              <h4 className='fs-18 font-weight-bold pt-2 pb-2'></h4>
+              <ConnectWalletButton style={{    padding: "0.338rem 1rem"}} className="btn btn-primary  "/>
 
-             <h4 className='fs-18 font-weight-bold pt-2 pb-2'>{viewReferralReward} SOSX</h4>
-             <button style={{    padding: "0.338rem 1rem"}}  type="button" className="btn btn-primary  ">Withdraw</button>
+            </div>
+            )}
+            
            </div>
          </div>
        </div>
@@ -412,9 +427,16 @@ const getDataSocialMining = async () => {
              <img src="images/swapcoin-referral.svg" className="pb-2 pl-2 pr-2 pt-1 referral-rewards"/>
              <span className="main-pink">Staking Referral</span>
              
-             <h4 className='fs-18 pt-2 font-weight-bold pb-2' >{viewReferralReward} SOSX</h4>
-             <button style={{padding: "0.338rem 1rem"}}  type="button" className="btn btn-primary ">Withdraw</button>
+             {account ? (<div> 
+              <h4 className='fs-18 font-weight-bold pt-2 pb-2'>{viewReferralReward} SOSX</h4>
+              <button style={{    padding: "0.338rem 1rem"}}  type="button" className="btn btn-primary  ">Withdraw</button>
+            </div>):(
+              <div> 
+              <h4 className='fs-18 font-weight-bold pt-2 pb-2'></h4>
+              <ConnectWalletButton style={{    padding: "0.338rem 1rem"}} className="btn btn-primary  "/>
 
+            </div>
+            )}
            </div>
          </div>
        </div>

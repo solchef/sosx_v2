@@ -67,11 +67,11 @@ export default function SocialminingS1() {
 
                                     <a onClick={(e) => toggleMenu(e, "instagram")}
                                         className={` mr-2 ml-2 btn btn-dark ${media.name == "instagram" ? "bg-success" : ""}`}
-                                        id="instagram-toggle">instagram</a>
+                                        id="instagram-toggle">Instagram</a>
 
                                     <a onClick={(e) => toggleMenu(e, "tiktok")}
                                         className={` mr-2 ml-2 btn btn-dark ${media.name == "tiktok" ? "bg-success" : ""}`}
-                                        id="tiktok-toggle">tiktok</a>
+                                        id="tiktok-toggle">Tiktok</a>
 </div>
                                 </p>
                         
