@@ -17,7 +17,7 @@ const StyledRanking = styled(Box)`
 
 const Ranking = (props) => {
   const { t } = useTranslation()
-
+  let count = 0;
   const [displayLevel, setDisplayLevel] = useState(1);
   const biggerThan1500 = useMediaPredicate("(min-width: 1500px)");
 
@@ -45,11 +45,13 @@ const Ranking = (props) => {
           .sort((b, a) => a.amount - b.amount)
           .map((voter, i) => (
             <span key={i}>
+            
               {voter.level == displayLevel && (
                 <a className="blueprint-header-display trader-display">
                   <div className="d-flex align-items-center">
                     <span className="text-white mr-3 fs-16 font-w600">
-                      {i + 1}.
+                      {console.log(count ++)}
+                      {count }
                     </span>
                     <img
                       className="blueprint-img-sm rounded-circle"
@@ -63,6 +65,7 @@ const Ranking = (props) => {
                     </div>
                   </div>
                   <span> {cleanNumber(voter.amount + "")} </span>
+                  {/* {count ++} */}
                 </a>
               )}
             </span>
