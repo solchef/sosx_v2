@@ -89,7 +89,7 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652535133;
+    const roundStartTime = 1652540253;
 
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 10 * 1 };
@@ -214,15 +214,33 @@ export default function Game() {
       return;
     }
 
-    if (validLinks(url) == true) {
-      const data = JSON.stringify(
-        {
-          url: url,
-        },
-        null,
-        2
-      );
+    let data
+    if (url.search("youtu") != -1) {
+      let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+        let match = url.match(regExp);
+        const valid = (match&&match[7].length==11)? match[7] : false;
+        if (valid !== false) {
+            data = JSON.stringify({
+                youtube: valid
+            })
+        }
+    }
 
+    if (url.search("tiktok") != -1) {
+      if (url.search("tiktok") != -1) {
+        if (url.search("vt") != -1) {
+            return
+        }
+        const index = url.indexOf("video/")
+        data = JSON.stringify({
+          tiktok: url.substring(index + 6, index+25)
+      })
+    } else {
+        return false
+    }
+    }
+
+    if (data !== "") {
       const todayChallengeName = String(
         todayChallenge.challenge.payload.name
       ).replaceAll(" ", "-");
@@ -400,15 +418,19 @@ export default function Game() {
                                   Find Top 3 Nominees
                                 </h4>
 
-
-                                {/* {topThreeChallenges.map((challenge, index) => 
-      <div className="d-flex align-items-center mb-4">
-      <p className="mr-5">
-        {index + 1}. {challenge.challenge.payload.name}
-      </p>
-      <span>{challenge.votes} votes</span>
-      </div>
-      )} */}
+                                {topThreeChallenges[2] ? (
+                                    <>
+                                    {topThreeChallenges.map((challenge, index) => 
+                                      <div className="d-flex mb-4">
+                                      <p className="mr-5">
+                                        {index + 1}. {challenge.challenge.payload.name}
+                                      </p>
+                                      <span>{challenge.votes} votes</span>
+                                      </div>
+                                      )}
+                                    </>
+                                    
+                                  ) : "loading"}
                               </div>
                             </div>
 
@@ -606,7 +628,10 @@ export default function Game() {
             </div>
             <div className="row">
               <div className="col-12">
-                <Media />
+              {stage == 4 && (
+               <Media todayVideo={todayChallenge}/>
+              )}
+                
               </div>
             </div>
           </div>

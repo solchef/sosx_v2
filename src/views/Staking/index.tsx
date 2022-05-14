@@ -13,11 +13,6 @@ import axios from "axios";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import { cleanNumber } from "utils/amount";
 
-const BorderCard = styled.div`
-  border: solid 1px ${({ theme }) => theme.colors.cardBorder};
-  border-radius: 16px;
-  padding: 16px;
-`;
 
 export default function Staking() {
   const contract = useStakingContract();
@@ -54,8 +49,12 @@ export default function Staking() {
     setMarketCap(parseFloat(getSOSXValue.data.data.price_BNB));
   };
   useEffect(() => {
+    listUserStaking();
     getSOSXPrice();
   }, []);
+
+
+
 
   const stakingDetails = async () => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
@@ -83,28 +82,32 @@ export default function Staking() {
 
   const listUserStaking = async () => {
     let list = [];
-    for (let i = 0; i < numberOfActiveStake; i++) {
-      await contract.getStakeInfo(i).then((stakeInstance) => {
-        contract.getCurrentStakeClass(i).then((period) => {
-          contract.getCurrentStakeClass(i).then((stakeClass) => {
-            if (stakeInstance) {
-              let instance = {
-                amount: Number(stakeInstance[0] / 10 ** 18),
-                isWithdrawed: Boolean(stakeInstance[1]),
-                stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
-                  "en-US",
-                  { timeZone: "America/New_York" }
-                ),
-                referral: stakeInstance[3],
-                rewardAmount: Number(stakeInstance[4]),
-                penalty: Number(stakeInstance[5]),
-                stakingClass: period,
-                periodElapsed: stakeClass,
-              };
-              list.push(instance);
-            }
-          });
-        });
+    for (let i = 1; i < numberOfActiveStake; i++) {
+      await contract.getStakeInfo(i).then(stakeInstance => {
+         
+          // if (stakeInstance) {
+            contract.getCurrentStakeClass(i).then(stakeClass => {
+              console.log("here")
+              
+              console.log(i)
+                let instance = {
+                  amount: Number(stakeInstance[0] / 10 ** 18),
+                  isWithdrawed: Boolean(stakeInstance[1]),
+                  stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
+                    "en-US",
+                    { timeZone: "America/New_York" }
+                  ),
+                  referral: stakeInstance[3],
+                  rewardAmount: Number(stakeInstance[4]),
+                  penalty: Number(stakeInstance[5]),
+                  stakingClass: stakeClass,
+                  periodElapsed: stakeClass,
+                };
+                list.push(instance);
+            })
+           
+          // }
+        
       });
 
       // console.log(stakeInstance)
@@ -130,8 +133,9 @@ export default function Staking() {
       };
 
       loadUI();
+      listUserStaking();
     }
-  }, [account]);
+  }, []);
 
   const handleAmountChange = async (event) => {
     let _amountToStake = Number(event.target.value);
@@ -150,8 +154,8 @@ export default function Staking() {
     // let finalAmount = this.web3.utils.toBN(result.toString())
     // let finalAmount = result;
     // console.log(_amountToStake)
-    console.log(allowanceValue);
-    console.log(result);
+    // console.log(allowanceValue);
+    // console.log(result);
     // console.log(allowanceValue)
     if (allowanceValue != 0) {
       setActivatestake(false);
@@ -208,6 +212,26 @@ export default function Staking() {
       toastError("Insufficient Balance");
     }
   };
+
+
+  //   const [onPresentConfirmModal] = useModal(
+  //   <ConfirmStakingModal
+	// 	  //   trade={trade}
+	// 	  //   originalTrade={tradeToConfirm}
+	// 	  //   onAcceptChanges={handleSubmit}
+	// 	  //   attemptingTxn={attemptingTxn}
+	// 	  //   txHash={txHash}
+	// 	  //   recipient={recipient}
+	// 	  //   allowedSlippage={allowedSlippage}
+	// 	  onConfirm={handleSubmit} attemptingTxn={false} recipient={""} allowedSlippage={0} onAcceptChanges={function (): void {
+	// 		  throw new Error("Function not implemented.");
+	// 	  } }    //   swapErrorMessage={swapErrorMessage}
+  //   //   customOnDismiss={handleConfirmDismiss}
+  //   />,
+  //   true,
+  //   true,
+  //   'ConfirmStakingModal',
+  // )
 
   return (
     <>
@@ -612,6 +636,8 @@ export default function Staking() {
           </div>
         </div>
       </div>
+
+	  
     </>
   );
 }
