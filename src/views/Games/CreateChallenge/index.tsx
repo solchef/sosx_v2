@@ -47,7 +47,7 @@ const EasyMde = dynamic(() => import("components/EasyMde"), {
   ssr: false,
 });
 
-const CreateChallenge = () => {
+const CreateChallenge = (props) => {
   const router = useRouter();
   const [state, setState] = useState<FormState>({
     name: "",
@@ -98,8 +98,8 @@ const CreateChallenge = () => {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    if (votingLevel > 1) {
+    console.log(props.level)
+    if (props.level > 1) {
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
@@ -221,17 +221,19 @@ const CreateChallenge = () => {
 
   useEffect(() => {
     userVotingLevel();
-    if (initialBlock > 0) {
-      setState((prevState) => ({
-        ...prevState,
-        snapshot: initialBlock,
-      }));
-    }
-  }, [initialBlock, setState]);
+    // if (initialBlock > 0) {
+    //   setState((prevState) => ({
+    //     ...prevState,
+    //     snapshot: initialBlock,
+    //   }));
+    // }
+  }, []);
 
   const userVotingLevel = async () => {
     let amount = await contract.getVoterTotalStakeAmount(account);
-    amount = amount / 10 ** 18;
+    amount = amount;
+    console.log(amount)
+    alert(amount)
     let level = getLevel(amount);
     setVotingLevel(level);
   };
@@ -256,11 +258,6 @@ const CreateChallenge = () => {
   };
 
   return (
-
-
-
-
-
 
     <div className="card">
       <form onSubmit={handleSubmit}>

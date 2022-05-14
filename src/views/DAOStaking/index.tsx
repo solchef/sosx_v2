@@ -297,7 +297,7 @@ export default function DaoStaking() {
                       <span className="text-white fs-18">SOSX</span>
                     </div>
                   </div>
-                  <div className="bg-dark p-3 mb-3 rounded">
+                  {/* <div className="bg-dark p-3 mb-3 rounded">
                     <div className="d-flex justify-content-between align-items-center">
                       <span>
                         <select
@@ -331,7 +331,7 @@ export default function DaoStaking() {
                       </span>
                       <span className="text-white fs-18">Months</span>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="bg-dark p-3 rounded">
                     <div className="d-flex justify-content-between">
                       <div className="small2">
