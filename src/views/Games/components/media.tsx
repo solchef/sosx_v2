@@ -87,13 +87,12 @@ const Media = (props: {todayVideo}) => {
           <div>
             {videos.map((video) =>
           <div className={`width250  p-3 height400  mb-4  align-self-stretch rounded`}>
-            {console.log(video)}
              {video.youtube ? (
-                <iframe className="position-absolute iframe" width="250" height="400" src={`https://www.youtube.com/embed/${video.youtube}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                <iframe className="position-absolute iframe" width="250" height="250" src={`https://www.youtube.com/embed/${video.youtube}`} allow="accelerometer; clipboard-write; encrypted-media; gyroscope;"></iframe>
              ) : (
-              <iframe className="position-absolute iframe" width="250" height="400" src={`https://www.youtube.com/embed/${video.tiktok}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+              <iframe className="position-absolute iframe" width="200" height="400" src={`https://www.tiktok.com/embed/${video.tiktok}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
              )}
-              <a href=""
+              {/* <a href=""
               >
                 <span className="details">
                   <div className="text-white d-flex align-items-center pt-1">
@@ -116,7 +115,7 @@ const Media = (props: {todayVideo}) => {
                   </div>
                 </div>
 
-              </a>
+              </a> */}
 
             </div>
           )}
