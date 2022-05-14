@@ -89,12 +89,12 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652540253;
+    const roundStartTime = 1652549454;
 
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 10 * 1 };
-    let stage2 = { start: stage1.end, end: stage1.end + 10 * 100 };
-    let stage3 = { start: stage2.end, end: stage2.end + 10 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 1 * 1 };
+    let stage2 = { start: stage1.end, end: stage1.end + 1 * 1 };
+    let stage3 = { start: stage2.end, end: stage2.end + 1 * 1 };
     let stage4 = { start: stage3.end, end: stage3.end + 60 * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
@@ -407,7 +407,7 @@ export default function Game() {
                                 <p className="mt-2 fs-14"> Only Levels 3 members are allowed to vote.</p>
 
 
-                                <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
+                                <button type="submit" className="btn mt-2 mb-auto btn-primary">  Vote for Challange</button>
 
 
                               </div>
