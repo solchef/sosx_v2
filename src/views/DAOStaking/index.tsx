@@ -85,28 +85,35 @@ export default function DaoStaking() {
     });
   };
 
+  
   const listUserStaking = async () => {
     let list = [];
     for (let i = 1; i < numberOfActiveStake; i++) {
-      await contract.getStakeInfo(i).then((stakeInstance) => {
-        contract.getCurrentStakeClass(i).then((stakeClass) => {
-          if (stakeInstance) {
-            let instance = {
-              amount: Number(stakeInstance[0] / 10 ** 18),
-              isWithdrawed: Boolean(stakeInstance[1]),
-              stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
-                "en-US",
-                { timeZone: "America/New_York" }
-              ),
-              referral: stakeInstance[3],
-              rewardAmount: Number(stakeInstance[4]),
-              penalty: Number(stakeInstance[5]),
-              stakingClass: stakeClass,
-              periodElapsed: stakeClass,
-            };
-            list.push(instance);
-          }
-        });
+      await contract.getStakeInfo(i).then(stakeInstance => {
+         
+          // if (stakeInstance) {
+            contract.getCurrentStakeClass(i).then(stakeClass => {
+              console.log("here")
+              
+              console.log(i)
+                let instance = {
+                  amount: Number(stakeInstance[0] / 10 ** 18),
+                  isWithdrawed: Boolean(stakeInstance[1]),
+                  stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
+                    "en-US",
+                    { timeZone: "America/New_York" }
+                  ),
+                  referral: stakeInstance[3],
+                  rewardAmount: Number(stakeInstance[4]),
+                  penalty: Number(stakeInstance[5]),
+                  stakingClass: stakeClass,
+                  periodElapsed: stakeClass,
+                };
+                list.push(instance);
+            })
+           
+          // }
+        
       });
 
       // console.log(stakeInstance)
@@ -283,7 +290,7 @@ export default function DaoStaking() {
         <div className="col-xl-4">
             <div className="card d-flex flex-column h-100">
               <div className="card-header border-0 pl-0 pt-0">
-                <h4 className="fs-18 ">Stake SOSX</h4>
+                <h4 className="fs-18 ">Stake SOSX for DAO Level</h4>
               </div>
                 <div className="card-body">
                   <div className="bg-dark mb-3 p-3 rounded">
@@ -300,9 +307,9 @@ export default function DaoStaking() {
                       <span className="text-white fs-18">SOSX</span>
                     </div>
                   </div>
-                  {/* <div className="bg-dark p-3 mb-3 rounded"> */}
-                    {/* <div className="d-flex justify-content-between align-items-center"> */}
-                      {/* <span>
+                  <div className="bg-dark p-3 mb-3 rounded">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <span>
                         <select
                           className="form-control  select-special"
                           onChange={(e) => {
@@ -327,14 +334,14 @@ export default function DaoStaking() {
                             );
                           }}
                         >
-                          <option value={1}>3 </option>
-                          <option value={2}>6 </option>
-                          <option value={3}>12 </option>
+                          <option value={1}>Level 1 DAO </option>
+                          <option value={2}>Level 2 DAO </option>
+                          <option value={3}>Level 3 DAO </option>
                         </select>
-                      </span> */}
-                      {/* <span className="text-white fs-18">Months</span>
-                    </div> */}
-                  {/* </div> */}
+                      </span>
+                      {/* <span className="text-white fs-18">Months</span> */}
+                    </div>
+                  </div>
                   <div className="bg-dark p-3 rounded">
                     <div className="d-flex justify-content-between">
                       <div className="small2">
@@ -418,56 +425,41 @@ export default function DaoStaking() {
                       {cleanNumber(totalAmountStaked / 10 ** 18 + "")}
                     </h4>
                   </div>
+
                   <div className="d-flex justify-content-between">
-                    <p className="success mb-0 fs-12">Active Stakes</p>
+                    <p className="success mb-0 fs-12">Your DAO Level</p>
                     <h4 className="mb-0 font-w600  fs-24 pb-3">
-                      {numberOfActiveStake}
-                    </h4>
-                  </div>
-                  {/* <div className="d-flex justify-content-between">
-                    <p className="success mb-0 fs-12">Has Referral</p>
-                    <h6 className="mb-0 font-w600  fs-24 pb-2">
-                      {hasReferral ? "Yes" : <b> No</b>}
-                    </h6>
-                  </div> */}
-                </div>
-
-                <div className="d-flex justify-content-between">
-                    <p className="success mb-0 fs-12">DAO Level</p>
-                    <h4 className="mb-0 font-w600  fs-24 pb-3">
-                      {getLevel(totalAmountStaked)}
+                      {totalAmountStaked ? getLevel(totalAmountStaked) : 0}
                     </h4>
                 </div>
 
+                <hr/>
+                 <h5>DAO Membership</h5>
+                    <br/>
+                      <div className="d-flex justify-content-between">
+                        <h6 className=" mb-0 fs-12">Level 1 : Stake between 1 and 100,000 SOSX</h6>
+                      </div>
+                      <br/>
+                      <div className="d-flex justify-content-between">
+                        <h6 className=" mb-0 fs-12">Level 2 : Stake between 100,000 and 1000,000 SOSX</h6>
+                      </div>
 
-                {/* <div className="d-flex justify-content-between">
-                  <p className="success mb-0 fs-12">Show Archived</p>
-                  <span className="MuiSwitch-root mb-0 font-w600  fs-24 pb-3">
-                    <span
-                      className="MuiButtonBase-root MuiIconButton-root jss5 MuiSwitch-switchBase MuiSwitch-colorSecondary"
-                      aria-disabled="false"
-                    >
-                      <span className="MuiIconButton-label">
-                        <input
-                          className="jss8 MuiSwitch-input"
-                          type="checkbox"
-                          defaultValue="false"
-                        />
-                        <span className="MuiSwitch-thumb" />
-                      </span>
-                      <span className="MuiTouchRipple-root" />
-                    </span>
-                    <span className="MuiSwitch-track" />
-                  </span>
-                </div> */}
+                      <br/>
+                      <div className="d-flex justify-content-between">
+                        <h6 className=" mb-0 fs-12">Level 3 : Stake above  100,000 SOSX</h6>
+                      </div>
+                </div>
+
+                   <h6 className=" mb-0 fs-12 text-center">Staking for voting tokens also earn you interest. You can unstake at any time.</h6>
+              
               </div>
               <div className="card-footer pt-0 mx-auto foot-card  border-0">
-                <button
+                {/* <button
                   type="button"
                   className="btn btn-primary btn-lg mt-5"
                 >
                   Refresh Summarry
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
@@ -485,13 +477,13 @@ export default function DaoStaking() {
                   </div>
                 </div>
                 <div className="col-9">
-                  <h4 className="fs-18 pl-3">Staking Details</h4>
+                  <h4 className="fs-18 pl-3">Staking Log</h4>
                 </div>
               </div>
               <div className="card-body">
                 {stakingList.length == 0 ? (
                   <>
-                    <span className="fs-14">Staking Details</span>
+                    <span className="fs-14">Your Stakes</span>
                     <ul className="token-balance-list mb-2 mt-2">
                       <li>
                         <span className="justify-content-between success fs-12">

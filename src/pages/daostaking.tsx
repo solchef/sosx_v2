@@ -1,7 +1,9 @@
 import DaoStaking from "views/DAOStaking";
 
 const DaoStake = () => {
-  return <DaoStaking />
+
+    return <DaoStaking />
+
 }
 
 export default DaoStake;
