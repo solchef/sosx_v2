@@ -317,8 +317,6 @@ export default function Game() {
             <div className="row">
               {/*start Time with prize pool */}
 
-              {/* {stage == 1 && <CreateChallenge />} */}
-              {/* {stage == 2 &&   */}
               <>
                 {/*start header*/}
                 <div className="d-flex flex-row ">
