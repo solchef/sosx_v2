@@ -262,7 +262,7 @@ const CreateChallenge = () => {
 
 
 
-    <div className="card">
+    <div className="card h-100">
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-12 col-xl-6">

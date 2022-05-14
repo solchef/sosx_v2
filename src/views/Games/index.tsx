@@ -27,19 +27,19 @@ export const StageNav = (props) => {
     <>
 
 
-      <h5 className="step-title mb-2">
+      <h5 className="step-title d-flex fs-14 mb-2">
         <div className={`step ${props.stage == 1 && "done"} mr-3 `}>1</div>SUBMIT A CHALLENGE
       </h5>
 
 
-      <div className="text-muted d-flex align-items-center mb-2">
+      <div className="text-muted fs-14 d-flex align-items-center mb-2">
         <div className={`step ${(props.stage == 2 || props.stage == 3) && "done"
           } mr-3 `}>2</div>VOTE A CHALLENGE
       </div>
 
 
 
-      <div className="text-muted d-flex align-items-center mb-2">
+      <div className="text-muted fs-14 d-flex align-items-center mb-2">
         <div className={`step ${props.stage == 4 && "done"}  mr-3 `}>3</div>UPLOADE VIDEO
       </div>
 
@@ -341,16 +341,16 @@ export default function Game() {
             <div className="row">
               <div className="col-lg-12">
                 <div className="row">
-                  <div className="col-lg-4 col-12">
+                  <div className="col-lg-4 mb-4 col-12">
                     <TimerDisplay
                       hours={hours}
                       minutes={minutes}
                       seconds={seconds}
                     />
                   </div>
-                  <div className="col-lg-8">
-                    <div className="row">
-                      <div className="col-12">
+                  <div className="col-lg-8 mb-4">
+                    <div className="row h-100 ">
+                      <div className="col-12 h-100 ">
 
 
                         {stage == 1 && <CreateChallenge />}
@@ -360,9 +360,9 @@ export default function Game() {
 
 
 
-                          <div className="card">
+                          <div className="card h-100">
 
-                            <div className="row">
+                            <div className="row h-100">
                               <div className="col-12 col-sm-6">
                                 <StageNav stage={2} />
 
@@ -397,24 +397,24 @@ export default function Game() {
 
 
 
-                          <div className="card">
+                          <div className="card h-100">
 
-                            <div className="row">
-                              <div className="col-12 col-sm-6">
+                            <div className="row h-100">
+                              <div className="col-6 h-100 ">
                                 <StageNav stage={3} />
 
-                                <p className="mt-2"> Vote for the Final Challenge in between the Top 3 </p>
-                                <p className="mt-2"> Only Levels 3 members are allowed to vote.</p>
+                                <p className="mt-2 fs-14"> Vote for the Final Challenge in between the Top 3 </p>
+                                <p className="mt-2 fs-14"> Only Levels 3 members are allowed to vote.</p>
 
 
                                 <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
 
 
                               </div>
-                              <div className="col-12 col-sm-6 border-left">
+                              <div className="col-6  border-left">
 
 
-                                <h4 className="mb-4 pt-2 font-weight-bold">
+                                <h4 className="mb-4 pt-2  font-weight-bold">
                                   Find Top 3 Nominees
                                 </h4>
 
@@ -422,10 +422,10 @@ export default function Game() {
                                     <>
                                     {topThreeChallenges.map((challenge, index) => 
                                       <div className="d-flex mb-4">
-                                      <p className="mr-5">
+                                      <p className="mr-5 fs-12">
                                         {index + 1}. {challenge.challenge.payload.name}
                                       </p>
-                                      <span>{challenge.votes} votes</span>
+                                      <span className="ml-auto fs-12">{challenge.votes} votes</span>
                                       </div>
                                       )}
                                     </>
@@ -445,13 +445,13 @@ export default function Game() {
 
 
 
-                          <div className="card">
+                          <div className="card h-100">
 
-                            <div className="row">
+                            <div className="row h-100">
                               <div className="col-12 col-xl-6">
                                 <StageNav stage={4} />
 
-                                <p className="mt-2 mb-3"> Here is your challenge. You have 48 hours to complete for the chance to win the prize pool. Challenge must match all criteria listed and submitted to your Youtiube or Tiktok. Anyone can participate.
+                                <p className="mt-2 fs-14 mb-3"> Here is your challenge. You have 48 hours to complete for the chance to win the prize pool. Challenge must match all criteria listed and submitted to your Youtiube or Tiktok. Anyone can participate.
                                 </p>
 
                                 <form onSubmit={videoLink}>
@@ -628,9 +628,9 @@ export default function Game() {
             </div>
             <div className="row">
               <div className="col-12">
-              {stage == 4 && (
+              {/* {stage == 4 && ( */}
                <Media todayVideo={todayChallenge}/>
-              )}
+              {/* )} */}
                 
               </div>
             </div>
