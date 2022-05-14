@@ -319,7 +319,7 @@ export default function Game() {
     <>
       <div className="game container-fluid">
         <div className="row">
-          <div className={`col-12 ${biggerThan1500 &&' col-lg-9'}`}>
+          <div className={`col-12 ${biggerThan1500 && ' col-lg-9'}`}>
             <div className="row">
               <div className="col-lg-12">
                 <div className="row">
@@ -610,7 +610,7 @@ export default function Game() {
               </div>
             </div>
           </div>
-          <div className={`col-12 ${biggerThan1500 &&' col-lg-3'}`}>
+          <div className={`col-12 ${biggerThan1500 && ' col-lg-3'}`}>
             <div className="row h-100 ">
               <div className="col-12 h-100 ">
 
