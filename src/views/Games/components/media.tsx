@@ -33,12 +33,6 @@ const Media = () => {
 
                      All Submissions{" "}
                    </p>
-                   <button
-                     type="button"
-                     className="btn text-nowrap font-weight-bold  p-2 fs-12 mt-2 btn-success"
-                   >
-                     View All
-                   </button>
                  </div>
 
                  <div className="row mx-auto mt-2">

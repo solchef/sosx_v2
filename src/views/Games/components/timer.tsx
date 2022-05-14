@@ -6,8 +6,9 @@ import Link from 'next/link'
 import DesktopImage from './DesktopImage'
 import Masonry from "react-masonry-css";
 import { cleanNumber } from 'utils/amount'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMediaPredicate } from 'react-media-hook'
+import axios from 'axios'
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -17,9 +18,20 @@ const StyledRanking = styled(Box)`
 
 const TimerDisplay = (props) => {
   const { t } = useTranslation()
-
+  const [price, setPrice] = useState(Number);
   const [displayLevel, setDisplayLevel] = useState(1);
   const biggerThan1500 = useMediaPredicate("(min-width: 1500px)");
+
+  const getSOSXPrice = async () => {
+    const getSOSXValue = await axios.get(
+      "https://api.pancakeswap.info/api/v2/tokens/0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF",
+      {}
+    );
+    setPrice(1000 / parseFloat(getSOSXValue.data.data.price));
+  };
+  useEffect(() => {
+    getSOSXPrice();
+  }, []);
 
   return (
    
@@ -98,7 +110,7 @@ const TimerDisplay = (props) => {
                       </span>
                       <br />
                       <span className=" fs-10  pb-3 font-weight-bold main-pink">
-                        sewedweedwqedwe
+                        {Number(price.toFixed(0))} SOSX
                       </span>
                     </div>
                   </div>
