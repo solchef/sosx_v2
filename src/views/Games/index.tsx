@@ -348,11 +348,8 @@ export default function Game() {
                               <div className="col-12 col-sm-6">
                                 <StageNav stage={2} />
 
-                                <p className="mt-2"> Lorem ipsum dolor sit amet consectetur adipisicing
-                                  elit. Velit beatae atque dolores laborum? Earum vitae
-                                  voluptatibus necessitatibus ullam nemo tempora fugit
-                                  quos explicabo quis, saepe illum molestias cumque ipsa
-                                  quas?</p>
+                                <p className="mt-2"> Vote for your favorite challenge wich the top 3 will then make it to the Final Challenge round.</p>
+                                <p className="mt-2"> All Levels members are allowed to vote.</p>
 
 
                                 <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
@@ -362,7 +359,7 @@ export default function Game() {
                               <div className="col-6">
 
 
-                                <img className="mobile-hide" src="images/votechallenge-img.png" />
+                                <img className="mobile-hide" width="60%" src="images/votechallenge-img.png" />
 
 
 
@@ -376,7 +373,7 @@ export default function Game() {
 
                         )}
 
-                        {stage == 4 && (
+                        {stage == 3 && (
 
 
 
@@ -388,11 +385,8 @@ export default function Game() {
                               <div className="col-12 col-sm-6">
                                 <StageNav stage={3} />
 
-                                <p className="mt-2"> Lorem ipsum dolor sit amet consectetur adipisicing
-                                  elit. Velit beatae atque dolores laborum? Earum vitae
-                                  voluptatibus necessitatibus ullam nemo tempora fugit
-                                  quos explicabo quis, saepe illum molestias cumque ipsa
-                                  quas?</p>
+                                <p className="mt-2"> Vote for the Final Challenge in between the Top 3 </p>
+                                <p className="mt-2"> Only Levels 3 members are allowed to vote.</p>
 
 
                                 <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
@@ -423,7 +417,7 @@ export default function Game() {
 
                         )}
 
-                        {stage == 5 && (
+                        {stage == 4 && (
 
 
 
