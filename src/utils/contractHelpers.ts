@@ -13,6 +13,7 @@ import {
   getSosxContractAddress,
   getPredictionsAddress,
   getSosxDaoContractAddress,
+  getMulticallAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -23,6 +24,7 @@ import sosxStakingAbi from 'config/abi/sosxStakingAbi.json'
 import sosxDaoStakingAbi from 'config/abi/sosxABI.json'
 import sosxTokenABI from 'config/abi/sosxTokenABI.json'
 import predictionsAbi from 'config/abi/predictions.json'
+import MultiCallAbi from 'config/abi/Multicall.json'
 
 // Types
 import type {
@@ -31,6 +33,7 @@ import type {
   PancakeProfile,
   Masterchef,
   PointCenterIfo,
+  Multicall,
   // Staking,
 } from 'config/abi/types'
 import { useWeb3React } from '@web3-react/core'
@@ -43,8 +46,8 @@ const getContract = (abi: any, address: string, signer?: Signer | Provider) => {
 // const { account, library } = useWeb3React<Provider>()
 
 
-export const getMulticallContract = (signer?: Signer | Provider) => {
-  // return getContract(pointCenterIfo, getPointCenterIfoAddress(), signer) as PointCenterIfo
+export const getMulticallContract = () => {
+  // return getContract(MultiCallAbi, getMulticallAddress(), simpleRpcProvider) as Multicall
 }
 
 export const getPointCenterIfoContract = (signer?: Signer | Provider) => {
