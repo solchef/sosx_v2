@@ -34,8 +34,8 @@ const TimerDisplay = (props) => {
   }, []);
 
   return (
-  <div className="d-flex flex-column">
-    <div className="card">
+  <div className="d-flex h-100 flex-column">
+    <div className="card h-100">
         <div className="d-flex align-items-center mb-2"><img src="images/submission-date-icon.png" className="title-icon" />
           <h4>TIME REMAINING
           </h4>
@@ -58,8 +58,8 @@ const TimerDisplay = (props) => {
           </div>
         </div>
       </div>
-      <div className="card">
-        <div className="d-flex flex-column flex-xl-row justify-content-between">
+      <div className="card h-100 mb-auto">
+        <div className="d-flex flex-sm-column flex-xl-row justify-content-between">
           <div className="d-flex flex-column">
             <div className="d-flex mb-2 align-items-center"><img src="images/prize-pool-icon.png" className="title-icon" />
               <h4>PRIZE POOL</h4>
@@ -67,8 +67,7 @@ const TimerDisplay = (props) => {
               Donate to pool</span>
           </div>
           <div>
-            <h2 className="main-pink fs-18">$
-              1,000.00</h2><span className=" fs-12 pb-3 font-weight-bold main-pink">{Number(price.toFixed(0))}  SOSX</span>
+            <h2 className="main-pink font-weight-bold mt-2 fs-28">$1,000.00</h2><span className=" fs-12 pb-3 font-weight-bold main-pink">{Number(price.toFixed(0))}  SOSX</span>
           </div>
         </div>
       </div>

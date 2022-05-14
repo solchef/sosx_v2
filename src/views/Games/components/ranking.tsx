@@ -40,7 +40,7 @@ const Ranking = (props) => {
       ${displayLevel === 3 ?' btn-primary':''}`}
       > Level 3</button>
       </div>
-      <div>
+      <div className='mt-3'>
         {props.voters
           .sort((b, a) => a.amount - b.amount)
           .map((voter, i) => (
