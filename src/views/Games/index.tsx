@@ -89,7 +89,7 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652542643;
+    const roundStartTime = 1652546834;
 
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 60 * 60 };
@@ -134,6 +134,12 @@ export default function Game() {
         const data = concat(level1);
         challenge = JSON.parse(new TextDecoder().decode(data).toString());
         setVoters(challenge);
+          challenge.map(voter => {
+            if(voter.address == account){
+              // alert(voter.level)
+                setCurrentLevel(voter.level)
+            }
+          })
       }
     }
   };
@@ -294,9 +300,9 @@ export default function Game() {
         amount: total_stake,
         level: getLevel(total_stake),
       };
-      if (voter_address == account) {setCurrentLevel(data.level)};
+      // if (voter_address == account) {setCurrentLevel(data.level)};
 
-      alert(data.level)
+      // alert(data.level)
       voters.push(data);
 
       // }
@@ -359,9 +365,6 @@ export default function Game() {
 
                         {stage == 2 && (
 
-
-
-
                           <div className="card">
 
                             <div className="row">
@@ -382,21 +385,15 @@ export default function Game() {
                                 <img className="mobile-hide" width="60%" src="images/votechallenge-img.png" />
 
 
-
                               </div>
                             </div>
 
                           </div>
 
 
-
-
                         )}
 
                         {stage == 3 && (
-
-
-
 
 
                           <div className="card">
@@ -444,9 +441,6 @@ export default function Game() {
                         {stage == 4 && (
 
 
-
-
-
                           <div className="card">
 
                             <div className="row">
@@ -470,14 +464,13 @@ export default function Game() {
                                   </div>
 
                                   <button type="submit" className="btn btn-primary mt-2">
-                                    Vote for Challange
+                                    Upload Video
                                   </button>
                                 </form>
 
 
                               </div>
                               <div className="col-12 col-xl-6">
-
 
                                 <div className={`backgroun-dark rounded m-0 d-flex  pb-0 h-100 text-white  flex-column`} >
                                   {todayChallenge ? (
@@ -518,7 +511,7 @@ export default function Game() {
                                           ).slice(-5)}
                                         </span>
 
-                                        <p className=" ml-3 p-1 fs-10 bg-pink-radius  text-white">
+                                        <p className=" ml-3 p-1 fs-10 bg-pink-radius text-white">
                                           {" "}
                                           Level 3
                                         </p>
@@ -560,63 +553,7 @@ export default function Game() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -630,9 +567,9 @@ export default function Game() {
             </div>
             <div className="row">
               <div className="col-12">
-              {stage == 4 && (
+              {/* {stage == 4 && ( */}
                <Media todayVideo={todayChallenge}/>
-              )}
+              {/* )} */}
                 
               </div>
             </div>
