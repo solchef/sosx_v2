@@ -127,7 +127,6 @@ export default function Game() {
     for await (const resultPart of server.files.ls("/levels")) {
       let challenge;
       if (resultPart.name === "level.json") {
-        console.log("level1");
         for await (const chunk of server.cat(resultPart.cid)) {
           level1.push(chunk);
         }
@@ -221,7 +220,8 @@ export default function Game() {
         const valid = (match&&match[7].length==11)? match[7] : false;
         if (valid !== false) {
             data = JSON.stringify({
-                youtube: valid
+                youtube: valid,
+                wallet: account
             })
         }
     }
@@ -229,11 +229,13 @@ export default function Game() {
     if (url.search("tiktok") != -1) {
       if (url.search("tiktok") != -1) {
         if (url.search("vt") != -1) {
+            toastError("Use https://tiktok.com/@usename...")
             return
         }
         const index = url.indexOf("video/")
         data = JSON.stringify({
-          tiktok: url.substring(index + 6, index+25)
+          tiktok: url.substring(index + 6, index+25),
+          wallet: account
       })
     } else {
         return false
@@ -283,11 +285,9 @@ export default function Game() {
 
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
-      console.log(voters.findIndex((vt) => vt.address == daoList[i]) != -1);
       // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      // console.log(total_stake);
       total_stake = Number(total_stake / 10 ** 18);
       let data = {
         address: voter_address,
@@ -466,10 +466,14 @@ export default function Game() {
                                       onChange={(e) => setURL(e.target.value)}
                                     />
                                   </div>
-
-                                  <button type="submit" className="btn btn-primary mt-2">
-                                    Vote for Challange
+                                  {account ? (
+                                    <button type="submit" className="btn btn-primary mt-2">
+                                    Submit you Video
                                   </button>
+                                  ) : (
+                                    <ConnectWalletButton />
+                                  )}
+                                 
                                 </form>
 
 
