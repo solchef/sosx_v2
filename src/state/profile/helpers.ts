@@ -63,7 +63,6 @@ export const getProfile = async (address: string): Promise<GetProfileResponse> =
     // If the profile is not active the tokenId returns 0, which is still a valid token id
     // so only fetch the nft data if active
 
-
     const profile = {
       userId,
       points,
@@ -77,7 +76,7 @@ export const getProfile = async (address: string): Promise<GetProfileResponse> =
 
     return { hasRegistered, profile }
   } catch (e) {
-    console.error(e)
+    // console.error(e)
     return null
   }
 }
