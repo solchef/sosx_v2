@@ -73,6 +73,9 @@ export default function DaoStaking() {
         : setReferralAddress("0x0000000000000000000000000000000000000001");
     });
 
+
+
+    
     contract.getActiveStakeCount().then((activeStakes) => {
       setNumberOfActiveStake(Number(activeStakes));
     });
@@ -237,9 +240,8 @@ export default function DaoStaking() {
   return (
     <>
       <div
-        className={`${biggerThan1400 && "container"} ${
-          biggest1400 && "container-fluid"
-        }`}
+        className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"
+          }`}
       >
         <div className="row">
           <div className="col-sm-3 col-6">
@@ -276,26 +278,25 @@ export default function DaoStaking() {
         </div>
         <div className="row">
           <div className="col-xl-4">
-            <div className="card ">
+            <div className="card d-flex flex-column h-100">
               <div className="card-header border-0 pl-0 pt-0">
                 <h4 className="fs-18 ">Stake SOSX for Voting Power</h4>
               </div>
 
-              <div>
-                <div className="card-body">
-                  <div className="bg-dark mb-3 p-3 rounded">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span>
-                        <input
-                          type="text"
-                          className="form-control"
-                          required
-                          onChange={(e) => handleAmountChange(e)}
-                          defaultValue={0}
-                        />
-                      </span>
-                      <span className="text-white fs-18">SOSX</span>
-                    </div>
+
+              <div className="card-body">
+                <div className="bg-dark mb-3 p-3 rounded">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <span>
+                      <input
+                        type="text"
+                        className="form-control"
+                        required
+                        onChange={(e) => handleAmountChange(e)}
+                        defaultValue={0}
+                      />
+                    </span>
+                    <span className="text-white fs-18">SOSX</span>
                   </div>
                   {/* <div className="bg-dark p-3 mb-3 rounded">
                     <div className="d-flex justify-content-between align-items-center">
@@ -312,10 +313,10 @@ export default function DaoStaking() {
                                 : Number(e.target.value) == 2
                                 ? 0.5
                                 : 1;
-                            const r =
-                              Number(e.target.value) == 1
-                                ? 0.29
-                                : Number(e.target.value) == 2
+                          const r =
+                            Number(e.target.value) == 1
+                              ? 0.29
+                              : Number(e.target.value) == 2
                                 ? 0.64
                                 : 1.45;
                             const n = 12;
@@ -340,69 +341,70 @@ export default function DaoStaking() {
                           <div className="text-white fs-14"> 29%</div>
                         </div>
                       </div>
-                      <div className="small2">
-                        <div className="success mr-1">Estimated </div>
-                        <div className="d-flex align-items-center">
-                          <div className="text-white fs-14">
-                            {" "}
-                            {stakingInterest} SOSX
-                          </div>
+                    </div>
+                    <div className="small2">
+                      <div className="success mr-1">Estimated </div>
+                      <div className="d-flex align-items-center">
+                        <div className="text-white fs-14">
+                          {" "}
+                          {stakingInterest} SOSX
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <>
-                  {account ? (
-                    <>
-                      {activateStake ? (
-                        <div className="d-flex card-footer pt-0 pb-0 foot-card border-0 justify-content-between">
-                          <button
-                            type="button"
-                            onClick={handleSubmit}
-                            className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
-                            //   disabled={insufficientBalance || activateStake}
-                          >
-                            {loading ? "Approving..." : "Approve"}
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
-                            disabled
-                          >
-                            Stake
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="d-flex card-footer pt-0 pb-0  foot-card border-0 justify-content-between">
-                          <button
-                            type="button"
-                            className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
-                            disabled
-                          >
-                            Approve
-                          </button>
-                          <button
-                            type="button"
-                            // disabled={insufficientBalance || activateStake}
-                            onClick={handleSubmit}
-                            className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
-                          >
-                            {loading ? "Staking.." : "Stake"}
-                          </button>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <ConnectWalletButton />
-                  )}
-                </>
+              </div>
+
+              <div className="card-footer pt-0 foot-card  border-0">
+                {account ? (
+                  <>
+                    {activateStake ? (
+                      <div className="d-flex card-footer pt-0 pb-0 foot-card border-0 justify-content-between">
+                        <button
+                          type="button"
+                          onClick={handleSubmit}
+                          className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
+                        //   disabled={insufficientBalance || activateStake}
+                        >
+                          {loading ? "Approving..." : "Approve"}
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
+                          disabled
+                        >
+                          Stake
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="d-flex card-footer pt-0 pb-0  foot-card border-0 justify-content-between">
+                        <button
+                          type="button"
+                          className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
+                          disabled
+                        >
+                          Approve
+                        </button>
+                        <button
+                          type="button"
+                          // disabled={insufficientBalance || activateStake}
+                          onClick={handleSubmit}
+                          className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
+                        >
+                          {loading ? "Staking.." : "Stake"}
+                        </button>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <ConnectWalletButton />
+                )}
               </div>
             </div>
           </div>
 
           <div className="col-xl-4">
-            <div className="card ">
+            <div className="card d-flex flex-column h-100">
               <div className="card-header border-0 p-0">
                 <h4 className="fs-18">DAO Staking Summary</h4>
               </div>
@@ -458,10 +460,10 @@ export default function DaoStaking() {
                   </span>
                 </div> */}
               </div>
-              <div className="card-footer pt-0 pb-0 foot-card border-0">
+              <div className="card-footer pt-0 mx-auto foot-card  border-0">
                 <button
                   type="button"
-                  className="btn btn-primary btn-lg w-100 mt-5"
+                  className="btn btn-primary btn-lg mt-5"
                 >
                   Refresh Summarry
                 </button>
@@ -470,7 +472,7 @@ export default function DaoStaking() {
           </div>
 
           <div className="col-xl-4">
-            <div className="card ">
+            <div className="card d-flex flex-column h-100">
               <div className="card-header border-0 pb-0">
                 <div className="col-3">
                   <div className="token-balance-icon mb-3">
@@ -517,8 +519,8 @@ export default function DaoStaking() {
                               {stake.stakingClass == 1
                                 ? 3
                                 : stake.stakingClass == 2
-                                ? 6
-                                : 12}{" "}
+                                  ? 6
+                                  : 12}{" "}
                               Months
                             </span>
                           </li>
@@ -604,8 +606,8 @@ export default function DaoStaking() {
                                     (stake.stakingClass == 1
                                       ? 90
                                       : stake.stakingClass == 2
-                                      ? 180
-                                      : 360) -
+                                        ? 180
+                                        : 360) -
                                     stake.periodElapsed / (24 * 60)
                                   ).toFixed(0)}{" "}
                                   Days
