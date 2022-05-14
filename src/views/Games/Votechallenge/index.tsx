@@ -5,6 +5,7 @@ import { concat } from "uint8arrays";
 import { useMediaPredicate } from "react-media-hook";
 import { Placeholder, Spinner } from "react-bootstrap";
 import { Skeleton } from "../../../../packages/uikit/src/components/Skeleton";
+import LoaderDisplay from "../components/loader";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -151,12 +152,7 @@ export default function Votechallenge() {
           </div>
         </div>
       ) : loading ? (
-        <div className="col-12 col-xl-4 col-md-6">
-          <Skeleton className="mb-2" width={"40%"} />
-          <Skeleton className="mb-2" width={"90%"} />
-          <Skeleton className="mb-2" width={"30%"} />
-          <Skeleton className="mb-2" width={"70%"} />
-        </div>
+        <LoaderDisplay/>
       ) : (
         "No Challenge"
       )}
