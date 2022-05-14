@@ -29,12 +29,15 @@ async function addPost(req, res) {
         // connect to the database
         let { db } = await connectToDatabase();
         // add the post
+        db.collection('accounts').createIndex({"account":1},{unique:true});
+        if(db.collection('accounts').find({ "account" : { $exists : true, $not : null } })){
         await db.collection('accounts').insertOne(JSON.parse(req.body));
         // return a message
         return res.json({
             message: 'Account details added successfully',
             success: true,
         });
+    }
     } catch (error) {
         // return an error
         return res.json({
