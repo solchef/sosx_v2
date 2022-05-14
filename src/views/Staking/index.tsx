@@ -183,6 +183,13 @@ export default function Staking() {
     return amount.toFixed(2);
   };
 
+
+  const handleUnstake = async () => {
+
+      
+
+  }
+
   const handleSubmit = async () => {
     console.log(allowanceValue);
     if (amountToStake < balance) {
@@ -333,7 +340,7 @@ export default function Staking() {
                       <div className="small2">
                         <div className="success mr-1">Reward Interest: </div>
                         <div className="d-flex align-items-center">
-                          <div className="text-white fs-14"> 29%</div>
+                          <div className="text-white fs-14"> {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145}%</div>
                         </div>
                       </div>
                       <div className="small2">

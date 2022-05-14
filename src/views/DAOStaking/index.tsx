@@ -347,7 +347,7 @@ export default function DaoStaking() {
                       <div className="small2">
                         <div className="success mr-1">Reward Interest: </div>
                         <div className="d-flex align-items-center">
-                          <div className="text-white fs-14"> 29%</div>
+                            <div className="text-white fs-14"> {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145}%</div>
                         </div>
                       </div>
                       <div className="small2">
@@ -449,8 +449,8 @@ export default function DaoStaking() {
                         <h6 className=" mb-0 fs-12">Level 3 : Stake above  100,000 SOSX</h6>
                       </div>
                 </div>
-
-                   <h6 className=" mb-0 fs-12 text-center">Staking for voting tokens also earn you interest. You can unstake at any time.</h6>
+                <hr/>
+                   <h6 className=" mb-0 fs-12 ">Staking for voting tokens also earn you interest. You can unstake at any time.</h6>
               
               </div>
               <div className="card-footer pt-0 mx-auto foot-card  border-0">
