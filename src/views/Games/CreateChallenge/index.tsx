@@ -29,7 +29,7 @@ import NavGame from "../NavGame";
 import { CID, create } from "ipfs-http-client";
 import ReactMarkdown from "react-markdown";
 import { useMediaPredicate } from "react-media-hook";
-import { useStakingContract } from "hooks/useContract";
+import { useDaoStakingContract } from "hooks/useContract";
 import { StageNav } from "../index"
 
 // import MDEditor from './MDEdit,or'
@@ -90,16 +90,15 @@ const CreateChallenge = (props) => {
   );
 
 
-
-  const contract = useStakingContract();
+  const contract = useDaoStakingContract();
   const [onPresentVoteDetailsModal] = useModal(
     <VoteDetailsModal block={state.snapshot} />
   );
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    console.log(props.level)
-    if (props.level > 1) {
+    // console.log(props.level)
+    if (level > 1) {
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
@@ -233,7 +232,7 @@ const CreateChallenge = (props) => {
     let amount = await contract.getVoterTotalStakeAmount(account);
     amount = amount;
     console.log(amount)
-    alert(amount)
+    // alert(amount)
     let level = getLevel(amount);
     setVotingLevel(level);
   };
@@ -295,7 +294,7 @@ const CreateChallenge = (props) => {
             {formErrors.body && fieldsState.body && (
               <FormErrors errors={formErrors.body} />
             )}
-            
+
           </div>
         </div>
       </form>

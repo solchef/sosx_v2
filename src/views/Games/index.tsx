@@ -38,7 +38,6 @@ export const StageNav = (props) => {
       </div>
 
 
-
       <div className="text-muted d-flex align-items-center mb-2">
         <div className={`step ${props.stage == 4 && "done"}  mr-3 `}>3</div>UPLOAD VIDEO
       </div> */}
@@ -106,13 +105,14 @@ export default function Game() {
 
   useEffect(() => {
 
-    const roundStartTime = 1652557322;
+    const roundStartTime = 1652624095;
 
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 60 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 60 * 100 };
-    let stage3 = { start: stage2.end, end: stage2.end + 60 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + 60 * 60 };
+    
+    let stage1 = { start: roundStartTime, end: roundStartTime + 10 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + 10 * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + 10 * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end + 10 * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
@@ -618,7 +618,7 @@ export default function Game() {
 
         <div className="modal-body">
           <form onSubmit={handleSubmitDonate}>
-            Hi
+            
             <div className=" rounded p-2">
               <button className="btn btn-primary w-100">Submit</button>
             </div>
