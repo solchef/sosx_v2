@@ -30,7 +30,7 @@ import { CID, create } from "ipfs-http-client";
 import ReactMarkdown from "react-markdown";
 import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract } from "hooks/useContract";
-import { StageNav } from "../index"
+import { StageNav } from "../index";
 
 // import MDEditor from './MDEdit,or'
 
@@ -88,7 +88,6 @@ const CreateChallenge = (props) => {
   const bet1200and1500 = useMediaPredicate(
     "(min-width: 1200px) and (max-width: 1500px)"
   );
-
 
   const contract = useDaoStakingContract();
   const [onPresentVoteDetailsModal] = useModal(
@@ -231,7 +230,7 @@ const CreateChallenge = (props) => {
   const userVotingLevel = async () => {
     let amount = await contract.getVoterTotalStakeAmount(account);
     amount = amount;
-    console.log(amount)
+    console.log(amount);
     // alert(amount)
     let level = getLevel(amount);
     setVotingLevel(level);
@@ -257,33 +256,80 @@ const CreateChallenge = (props) => {
   };
 
   return (
+    // <div className="card h-100 w-100">
+    //   <form onSubmit={handleSubmit}>
+    //     <div className="row">
+    //       <div className="col-12 col-xl-6">
+    //         <StageNav stage={1} />
 
-    <div className="card h-100">
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col-12 col-xl-6">
-            <StageNav stage={1} />
+    //         <p >Submit a challenge that you wish others to
+    //           perform for money. Challenge must be doable within the next
+    //           48H and cannot
+    //           location-specific. Be crazy,
+    //           be original, but be dea. Challenges can be created by level
+    //           2 and level 3.</p>
 
-            <p >Submit a challenge that you wish others to
-              perform for money. Challenge must be doable within the next
-              48H and cannot
-              location-specific. Be crazy,
-              be original, but be dea. Challenges can be created by level
-              2 and level 3.</p>
+    //         {account
+    //           ?
+    //           <button type="submit" className="btn btn-primary btn-lg w-100 my-4">Submit your challenge</button>
+    //           :
+    //           <ConnectWalletButton width="100%" className="btn btn-primary btn-lg w-100 my-4" type="button" />
+    //         }
+    //       </div>
+    //       <div className="col-12 col-xl-7" style={{order: 5}}>
+    //         <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required />
 
+    //         {/* @ts-ignore */}
 
-            {account
-              ?
-              <button type="submit" className="btn btn-primary">Submit your challenge</button>
-              :
-              <ConnectWalletButton width="100%" type="button" />
-            }
-          </div>
-          <div className="col-12 col-xl-6 pt-2">
-            <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required />
+    //         {formErrors.body && fieldsState.body && (
+    //           <FormErrors errors={formErrors.body} />
+    //         )}
 
-            {/* @ts-ignore */}
-            <EasyMde
+    //       </div>
+    //     </div>
+    //   </form>
+    // </div>
+
+    <div id="action-section" style={{ flex: "2 60%", order: 2 }}>
+      <div className="card h-100 w-100">
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-12 col-xl-5">
+              <StageNav stage={1} />
+
+              <p style={{ order: 4 }}>
+                Submit a challenge that you wish others to perform for money.
+                Challenge must be doable within the next 48H and cannot
+                location-specific. Be crazy, be original, but be dea. Challenges
+                can be created by level 2 and level 3.
+              </p>
+
+              {account ? (
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-lg w-100 my-4"
+                >
+                  Submit your challenge
+                </button>
+              ) : (
+                <ConnectWalletButton
+                  width="100%"
+                  className="btn btn-primary btn-lg w-100 my-4"
+                  type="button"
+                />
+              )}
+            </div>
+            <div className="col-12 col-xl-7" style={{ order: 5 }}>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                className="input1 mb-3"
+                placeholder="Challenge Title"
+                required
+              />
+              {/* @ts-ignore */}
+             <EasyMde
               id="body"
               name="body"
               onTextChange={handleEasyMdeChange}
@@ -291,38 +337,11 @@ const CreateChallenge = (props) => {
               options={options}
               required
             />
-            {formErrors.body && fieldsState.body && (
-              <FormErrors errors={formErrors.body} />
-            )}
-
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   );
 };
 

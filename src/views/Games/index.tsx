@@ -25,8 +25,6 @@ const server = create({
 export const StageNav = (props) => {
   return (
     <>
-
-
       {/* <h5 className="step-title d-flex fs-14 mb-2">
         <div className={`step ${props.stage == 1 && "done"} mr-3 `}>1</div>SUBMIT A CHALLENGE
       </h5>
@@ -42,22 +40,26 @@ export const StageNav = (props) => {
         <div className={`step ${props.stage == 4 && "done"}  mr-3 `}>3</div>UPLOAD VIDEO
       </div> */}
 
-         
-              <h4 class="step-title d-flex align-items-center mb-2">
-                  <div class="step done mr-3 ">1</div>SUBMIT A CHALLENGE
-              </h4>
-              <h4 class="d-flex text-muted align-items-center mb-2">
-                  <div class="step false mr-3 ">2</div>VOTE A CHALLENGE
-              </h4>
-              <h4 class="text-muted d-flex align-items-center mb-2">
-                  <div class="step false  mr-3 ">3</div>UPLOAD VIDEO
-              </h4>
-            
-         
+      <h4
+        className="step-title d-flex align-items-center mb-2"
+        style={{ order: 1 }}
+      >
+        <div className="step done mr-3 ">1</div>SUBMIT A CHALLENGE
+      </h4>
+      <h4
+        className="d-flex text-muted align-items-center mb-2"
+        style={{ order: 2 }}
+      >
+        <div className="step false mr-3 ">2</div>VOTE A CHALLENGE
+      </h4>
 
-
-
-
+      <h4
+        className="text-muted d-flex align-items-center mb-4"
+        style={{ order: 3 }}
+      >
+        <div className="step false mr-3 ">3</div>
+        UPLOAD VIDEO
+      </h4>
     </>
   );
 };
@@ -94,25 +96,27 @@ export default function Game() {
 
     // console.log(duration)
 
-
     setDays(duration.days());
     setHours(duration.hours());
     setMinutes(duration.minutes());
     setSeconds(duration.seconds());
 
-    return {hour: duration.hours(), min: duration.minutes(), sec: duration.seconds() };
+    return {
+      hour: duration.hours(),
+      min: duration.minutes(),
+      sec: duration.seconds(),
+    };
   };
 
   useEffect(() => {
-
-    const roundStartTime = 1652626156;
+    const roundStartTime = 1652636142;
 
     let stageGroups = [];
-    
-    let stage1 = { start: roundStartTime, end: roundStartTime + 10 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 10 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 10 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + 10 * 60 };
+
+    let stage1 = { start: roundStartTime, end: roundStartTime + 120 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + 120 * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + 120 * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end + 120 * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
@@ -199,11 +203,9 @@ export default function Game() {
     .sort((a, b) => a.votes - b.votes)
     .reverse()[0];
 
-  let topThreeChallenges = []
-  const ch = challenges
-    .sort((a, b) => a.votes - b.votes)
-    .reverse()
-  topThreeChallenges.push(ch[0], ch[1], ch[2])
+  let topThreeChallenges = [];
+  const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
+  topThreeChallenges.push(ch[0], ch[1], ch[2]);
 
   const getVideo = async () => {
     let finalData = [];
@@ -236,33 +238,34 @@ export default function Game() {
       return;
     }
 
-    let data
+    let data;
     if (url.search("youtu") != -1) {
-      let regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-        let match = url.match(regExp);
-        const valid = (match&&match[7].length==11)? match[7] : false;
-        if (valid !== false) {
-            data = JSON.stringify({
-                youtube: valid,
-                wallet: account
-            })
-        }
+      let regExp =
+        /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+      let match = url.match(regExp);
+      const valid = match && match[7].length == 11 ? match[7] : false;
+      if (valid !== false) {
+        data = JSON.stringify({
+          youtube: valid,
+          wallet: account,
+        });
+      }
     }
 
     if (url.search("tiktok") != -1) {
       if (url.search("tiktok") != -1) {
         if (url.search("vt") != -1) {
-            toastError("Use https://tiktok.com/@usename...")
-            return
+          toastError("Use https://tiktok.com/@usename...");
+          return;
         }
-        const index = url.indexOf("video/")
+        const index = url.indexOf("video/");
         data = JSON.stringify({
-          tiktok: url.substring(index + 6, index+25),
-          wallet: account
-      })
-    } else {
-        return false
-    }
+          tiktok: url.substring(index + 6, index + 25),
+          wallet: account,
+        });
+      } else {
+        return false;
+      }
     }
 
     if (data !== "") {
@@ -287,7 +290,7 @@ export default function Game() {
   const handleCloseDonate = () => setShowDonate(false);
   const handleShowDonate = () => setShowDonate(true);
 
-  const handleSubmitDonate = async () => { };
+  const handleSubmitDonate = async () => {};
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -353,12 +356,11 @@ export default function Game() {
   };
 
   useEffect(() => {
-
     contract.getTotalStakeAmount().then((stakeAmount) => {
-      setTotalAmountStaked(stakeAmount);
-      let level =  getLevel(stakeAmount);
-      alert(level)
-      setCurrentLevel(level)
+      // setTotalAmountStaked(stakeAmount);
+      let level = getLevel(stakeAmount);
+      // alert(level);
+      setCurrentLevel(level);
     });
 
     // loadDaoLevels();
@@ -367,249 +369,244 @@ export default function Game() {
     // test();
   }, []);
 
-
   return (
     <>
-      <div className="game container-fluid">
-        <div className="row">
-          <div className='col-xl-9 col-lg-12' id="game-section">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="row">
-                  <div className="col-lg-4 mb-4" id="timer-section">
-                    <TimerDisplay
-                      hours={hours}
-                      minutes={minutes}
-                      seconds={seconds}
-                    />
-                  </div>
-                  <div className="col-lg-8 mb-4" id="action-section">
-                    <div className="row h-100 ">
-                      <div className="col-12 h-100 ">
+      <div className="game container-fluid d-flex flex-wrap flex-direction-row-reverse">
+        <div id="action-section" style={{ flex: "2 60%", order: 2 }}>
+          {stage == 1 && <CreateChallenge level={currentLevel} />}
 
+          {stage == 2 && (
+            <div className="card h-100 w-100">
+              <div className="row h-100">
+                <div className="col-12 col-sm-6">
+                  <StageNav stage={2} />
 
-                        {stage == 1 && <CreateChallenge level={currentLevel} />}
+                  <p className="mt-2">
+                    {" "}
+                    Vote for your favorite challenge wich the top 3 will then
+                    make it to the Final Challenge round.
+                  </p>
+                  <p className="mt-2">
+                    {" "}
+                    All Levels members are allowed to vote.
+                  </p>
+                  {console.log(currentLevel)}
+                  {currentLevel == 3 ? (
+                    <Link href="/votechallenge">
+                      <button type="submit" className="btn mt-2 btn-primary">
+                        {" "}
+                        Vote for Challange
+                      </button>
+                    </Link>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="btn mt-2 btn-primary"
+                      onClick={() =>
+                        toastError("Only level 3 DAO members can participate")
+                      }
+                    >
+                      {" "}
+                      Vote for Challange
+                    </button>
+                  )}
+                </div>
+                <div className="col-6">
+                  <img
+                    className="mobile-hide"
+                    width="60%"
+                    src="images/votechallenge-img.png"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
-                        {stage == 2 && (
+          {stage == 3 && (
+            <div className="card h-100">
+              <div className="row h-100">
+                <div className="col-6 h-100 ">
+                  <StageNav stage={3} />
 
-                          <div className="card h-100">
-                            <div className="row h-100">
-                              <div className="col-12 col-sm-6">
-                                <StageNav stage={2} />
+                  <p className="mt-2 fs-14">
+                    {" "}
+                    Vote for the Final Challenge in between the Top 3{" "}
+                  </p>
+                  <p className="mt-2 fs-14">
+                    {" "}
+                    Only Levels 3 members are allowed to vote.
+                  </p>
 
-                                <p className="mt-2"> Vote for your favorite challenge wich the top 3 will then make it to the Final Challenge round.</p>
-                                <p className="mt-2"> All Levels members are allowed to vote.</p>
-                              {console.log(currentLevel)}
-                              {currentLevel == 3? 
-                                  <Link href="/votechallenge">
-                                    <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
-                                  </Link>
-                                  :
-                                  <button type="submit" className="btn mt-2 btn-primary" onClick={() => toastError("Only level 3 DAO members can participate")}>  Vote for Challange</button>
-                                }
-                              </div>
-                              <div className="col-6">
-                                <img className="mobile-hide" width="60%" src="images/votechallenge-img.png" />
+                  <Link href="/votechallenge">
+                    <button
+                      type="submit"
+                      className="btn mt-2 mb-auto btn-primary"
+                    >
+                      {" "}
+                      Vote for Challange
+                    </button>
+                  </Link>
+                </div>
+                <div className="col-6  border-left">
+                  <h4 className="mb-4 pt-2  font-weight-bold">
+                    Top 3 Challenges
+                  </h4>
 
-                              </div>
-                            </div>
-
-                          </div>
-
-
-                        )}
-
-                        {stage == 3 && (
-
-
-
-                          <div className="card h-100">
-
-                            <div className="row h-100">
-                              <div className="col-6 h-100 ">
-                                <StageNav stage={3} />
-
-                                <p className="mt-2 fs-14"> Vote for the Final Challenge in between the Top 3 </p>
-                                <p className="mt-2 fs-14"> Only Levels 3 members are allowed to vote.</p>
-
-                                <Link href="/votechallenge">
-                                   <button type="submit" className="btn mt-2 mb-auto btn-primary">  Vote for Challange</button>
-                               </Link>
-
-                              </div>
-                              <div className="col-6  border-left">
-
-
-                                <h4 className="mb-4 pt-2  font-weight-bold">
-                                   Top 3 Challenges 
-                                </h4>
-
-                                {topThreeChallenges[2] ? (
-                                    <>
-                                    {topThreeChallenges.map((challenge, index) => 
-                                      <div className="d-flex mb-4">
-                                      <p className="mr-5 fs-12">
-                                        {index + 1}. {challenge.challenge.payload.name}
-                                      </p>
-                                      <span className="ml-auto fs-12">{challenge.votes} votes</span>
-                                      </div>
-                                      )}
-                                    </>
-                                    
-                                  ) : "loading"}
-                              </div>
-                            </div>
-
-                          </div>
-
-
-                        )}
-
-                        {stage == 4 && (
-
-                          <div className="card h-100">
-
-                            <div className="row h-100">
-                              <div className="col-12 col-xl-6">
-                                <StageNav stage={4} />
-
-                                <p className="mt-2 fs-14 mb-3"> Here is your challenge. You have 48 hours to complete for the chance to win the prize pool. Challenge must match all criteria listed and submitted to your Youtiube or Tiktok. Anyone can participate.
-                                </p>
-
-                                <form onSubmit={videoLink}>
-
-                                  <div className="text-muted m-0 mb-2 bg-dark rounded p-2">
-                                    <input
-                                      type="text"
-                                      className="form-control fs-14"
-                                      id="youtube"
-                                      placeholder="Youtube or Toktok URL link Here"
-                                      value={url}
-                                      onChange={(e) => setURL(e.target.value)}
-                                    />
-                                  </div>
-                                  {account ? (
-                                    <button type="submit" className="btn btn-primary mt-2">
-                                    Submit you Video
-                                  </button>
-                                  ) : (
-                                    <ConnectWalletButton />
-                                  )}
-                                 
-                                </form>
-
-
-                              </div>
-                              <div className="col-12 col-xl-6">
-
-                                <div className={`backgroun-dark rounded m-0 d-flex  pb-0 h-100 text-white  flex-column`} >
-                                  {todayChallenge ? (
-                                    <>
-                                      <span className="text-white  fs-18 d-flex align-items-center pb-1 mb-1">
-                                        {" "}
-                                        <img
-                                          src="images/submission-date-icon.png"
-                                          width="20px"
-                                          height="20px"
-                                          className="mr-2"
-                                        />
-                                        THIS WEEK CHALLENGE{" "}
-                                      </span>
-                                      <span className="text-white pt-1 fs-18 pb-2 font-weight-bold">
-                                        {todayChallenge.challenge.payload.name}{" "}
-                                      </span>
-
-                                      <div className="d-flex align-items-center">
-                                        <i className="fa-regular main-pink fa-heart mr-2"></i>
-
-                                        <span className="fs-10">
-                                          {todayChallenge.votes} votes
-                                        </span>
-
-                                        <img
-                                          className="ml-3 width-22 fs-22"
-                                          src="/images/dp.png"
-                                        />
-
-                                        <span className="ml-2 fs-12 font-weight-bold">
-                                          {String(
-                                            todayChallenge.challenge.payload.creator
-                                          ).slice(0, 5)}
-                                          ...
-                                          {String(
-                                            todayChallenge.challenge.payload.creator
-                                          ).slice(-5)}
-                                        </span>
-
-                                        <p className=" ml-3 p-1 fs-10 bg-pink-radius text-white">
-                                          {" "}
-                                          Level 3
-                                        </p>
-                                      </div>
-
-                                      <div className="row">
-                                        <div className="col-12 d-flex pt-1 pb-1 flex-column">
-                                          <span className="text-muted pb-1 fs-12 mt-3">
-                                            Details
-                                          </span>
-                                          <p className="fs-12 " style={{ whiteSpace: "break-spaces" }}>
-                                            {todayChallenge.challenge.payload.body}
-                                          </p>
-
-                                          <Link
-                                            className="mt-3"
-                                            href={`/challenge/${String(
-                                              todayChallenge.challenge.payload.name
-                                            ).replaceAll(" ", "-")}`}
-                                          >
-                                            Details
-                                          </Link>
-                                        </div>
-                                      </div>
-                                    </>
-                                  ) : (
-                                    <LoaderDisplay />
-                                  )}
-                                </div>
-
-
-
-                              </div>
-                            </div>
-
-                          </div>
-
-
-                        )}
-
-
-                      </div>
-                    </div>
-
-                    <div className="row" id="video-mobile-section">
-                      <div className="col-12">
-                          <Media todayVideo={todayChallenge}/>
+                  {topThreeChallenges[2] ? (
+                    <>
+                      {topThreeChallenges.map((challenge, index) => (
+                        <div className="d-flex mb-4">
+                          <p className="mr-5 fs-12">
+                            {index + 1}. {challenge.challenge.payload.name}
+                          </p>
+                          <span className="ml-auto fs-12">
+                            {challenge.votes} votes
+                          </span>
                         </div>
+                      ))}
+                    </>
+                  ) : (
+                    "loading"
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {stage == 4 && (
+            <div className="card h-100">
+              <div className="row h-100">
+                <div className="col-12 col-xl-6">
+                  <StageNav stage={4} />
+
+                  <p className="mt-2 fs-14 mb-3">
+                    {" "}
+                    Here is your challenge. You have 48 hours to complete for
+                    the chance to win the prize pool. Challenge must match all
+                    criteria listed and submitted to your Youtiube or Tiktok.
+                    Anyone can participate.
+                  </p>
+
+                  <form onSubmit={videoLink}>
+                    <div className="text-muted m-0 mb-2 bg-dark rounded p-2">
+                      <input
+                        type="text"
+                        className="form-control fs-14"
+                        id="youtube"
+                        placeholder="Youtube or Toktok URL link Here"
+                        value={url}
+                        onChange={(e) => setURL(e.target.value)}
+                      />
                     </div>
+                    {account ? (
+                      <button type="submit" className="btn btn-primary mt-2">
+                        Submit you Video
+                      </button>
+                    ) : (
+                      <ConnectWalletButton />
+                    )}
+                  </form>
+                </div>
+                <div className="col-12 col-xl-6">
+                  <div
+                    className={`backgroun-dark rounded m-0 d-flex  pb-0 h-100 text-white  flex-column`}
+                  >
+                    {todayChallenge ? (
+                      <>
+                        <span className="text-white  fs-18 d-flex align-items-center pb-1 mb-1">
+                          {" "}
+                          <img
+                            src="images/submission-date-icon.png"
+                            width="20px"
+                            height="20px"
+                            className="mr-2"
+                          />
+                          THIS WEEK CHALLENGE{" "}
+                        </span>
+                        <span className="text-white pt-1 fs-18 pb-2 font-weight-bold">
+                          {todayChallenge.challenge.payload.name}{" "}
+                        </span>
+
+                        <div className="d-flex align-items-center">
+                          <i className="fa-regular main-pink fa-heart mr-2"></i>
+
+                          <span className="fs-10">
+                            {todayChallenge.votes} votes
+                          </span>
+
+                          <img
+                            className="ml-3 width-22 fs-22"
+                            src="/images/dp.png"
+                          />
+
+                          <span className="ml-2 fs-12 font-weight-bold">
+                            {String(
+                              todayChallenge.challenge.payload.creator
+                            ).slice(0, 5)}
+                            ...
+                            {String(
+                              todayChallenge.challenge.payload.creator
+                            ).slice(-5)}
+                          </span>
+
+                          <p className=" ml-3 p-1 fs-10 bg-pink-radius text-white">
+                            {" "}
+                            Level 3
+                          </p>
+                        </div>
+
+                        <div className="row">
+                          <div className="col-12 d-flex pt-1 pb-1 flex-column">
+                            <span className="text-muted pb-1 fs-12 mt-3">
+                              Details
+                            </span>
+                            <p
+                              className="fs-12 "
+                              style={{ whiteSpace: "break-spaces" }}
+                            >
+                              {todayChallenge.challenge.payload.body}
+                            </p>
+
+                            <Link
+                              className="mt-3"
+                              href={`/challenge/${String(
+                                todayChallenge.challenge.payload.name
+                              ).replaceAll(" ", "-")}`}
+                            >
+                              Details
+                            </Link>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <LoaderDisplay />
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="row" id="video-section">
-              <div className="col-12" >
-                   <Media todayVideo={todayChallenge}/>
-              </div>
-            </div>
-          </div>
-          <div className='col-xl-3' id="ranking-section">
-            <div className="row h-100 ">
-              <div className="col-12 h-100">
-                <Ranking voters={voters} />
-              </div>
+          )}
+
+          <div className="row" id="video-mobile-section">
+            <div className="col-12">
+              <Media todayVideo={todayChallenge} />
             </div>
           </div>
         </div>
+
+        <div id="timer-section" style={{ flex: 2, order: 1 }}>
+          <TimerDisplay hours={hours} minutes={minutes} seconds={seconds} />
+        </div>
+
+        <div id="ranking-section" style={{ flex: 1, order: 4 }}>
+          <Ranking voters={voters} />
+        </div>
+
+        <div id="video-section" style={{ flex: "1 60%", order: 3 }}>
+          <Media todayVideo={todayChallenge} />
+        </div>
       </div>
+
       <Modal show={showDonate} onHide={handleCloseDonate} centered>
         <ModalHeader className="text-dark">
           Donate
@@ -618,7 +615,6 @@ export default function Game() {
 
         <div className="modal-body">
           <form onSubmit={handleSubmitDonate}>
-            
             <div className=" rounded p-2">
               <button className="btn btn-primary w-100">Submit</button>
             </div>
