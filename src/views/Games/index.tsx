@@ -441,7 +441,7 @@ export default function Game() {
 
 
                                 <h4 className="mb-4 pt-2  font-weight-bold">
-                                  Find Top 3 Nominees
+                                   Top 3 Challenges 
                                 </h4>
 
                                 {topThreeChallenges[2] ? (
