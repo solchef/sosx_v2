@@ -54,8 +54,12 @@ const TimerDisplay = (props) => {
           <h4>TIME REMAINING</h4>
         </div>
 
-        <p>The challenge submission stage is in effect.</p>
-
+        {props.stage == 1 &&   <p>The challenge submission stage is in effect.</p>}
+        {props.stage == 2 &&   <p>The challenge voting stage is in effect.</p>}
+        {props.stage == 3 &&   <p>The challenge final voting stage is in effect.</p>}
+        {props.stage == 4 &&   <p>The challenge upload stage is in effect.</p>}
+      
+      
         <div className="clock mt-4">
           <div
             className="d-flex m-auto w-100"

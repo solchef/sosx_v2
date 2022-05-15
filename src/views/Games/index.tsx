@@ -125,7 +125,7 @@ export const StageNav = (props) => {
 
                   <div className="d-flex align-items-center mb-2">
                     <div className="step done ">3</div>
-                    <h4>VOTE A CHALLENGE</h4>
+                    <h4>UPLOAD VIDEO</h4>
                   </div>
                   <p>Currently into Stage 3 of SOSX Game. Submitting challenge videos.</p>
                 </>
@@ -151,7 +151,7 @@ export default function Game() {
   const router = useRouter();
   const contract = useDaoStakingContract();
   const [challenges, setChallenges] = useState<any[]>([]);
-  let [stage, setStage] = useState(1);
+  let [stage, setStage] = useState(5);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
 
   const calculateTimeLeft = (entryTime) => {
@@ -182,14 +182,14 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652643117;
+    const roundStartTime = 1652644481;
 
     let stageGroups = [];
 
-    let stage1 = { start: roundStartTime, end: roundStartTime + 180 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 180 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 60 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + 60 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 300 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + 300 * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + 300 * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end + 720 * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
@@ -377,7 +377,8 @@ export default function Game() {
     <>
       <div className="game container-fluid d-flex flex-wrap flex-direction-row-reverse">
         <div id="action-section" style={{ flex: "2 60%", order: 2 }}>
-          {stage == 1 && <CreateChallenge level={currentLevel} />}
+          {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
+          {stage == 5 && <CreateChallenge level={currentLevel} stage={stage} />}
 
           {stage == 2 && (
             <div className="card h-100 w-100">
@@ -400,7 +401,7 @@ export default function Game() {
                     <Link href="/votechallenge">
                       <button type="submit" className="btn mt-2 btn-primary">
                         {" "}
-                        Vote for Challange
+                        Vote for challenge
                       </button>
                     </Link>
                   ) : (
@@ -445,12 +446,13 @@ export default function Game() {
                   <Link href="/votechallenge">
                     <button
                       type="submit"
-                      className="btn mt-2 mb-auto btn-primary"
+                      className="btn btn-primary btn-lg w-100 my-4"
                     >
                       {" "}
                       Vote for Challange
                     </button>
                   </Link>
+                  
                 </div>
                 <div className="col-6  border-left">
                   <h4 className="mb-4 pt-2  font-weight-bold">
@@ -504,7 +506,7 @@ export default function Game() {
                       />
                     </div>
                     {account ? (
-                      <button type="submit" className="btn btn-primary mt-2">
+                      <button type="submit" className="btn btn-primary btn-lg w-100 my-4">
                         Submit you Video
                       </button>
                     ) : (
@@ -540,7 +542,8 @@ export default function Game() {
                           </span>
 
                           <img
-                            className="ml-3 width-22 fs-22"
+                            className="ml-3 "
+                            width={22} height={22}
                             src="/images/dp.png"
                           />
 
@@ -556,7 +559,7 @@ export default function Game() {
 
                           <p className=" ml-3 p-1 fs-10 bg-pink-radius text-white">
                             {" "}
-                            {/* Level 3 */}
+                            DAO
                           </p>
                         </div>
 
@@ -596,7 +599,7 @@ export default function Game() {
         </div>
 
         <div id="timer-section" style={{ flex: 2, order: 1 }}>
-          <TimerDisplay hours={hours} minutes={minutes} seconds={seconds} />
+          <TimerDisplay hours={hours} minutes={minutes} seconds={seconds} stage={stage} />
         </div>
 
         <div id="ranking-section" style={{ flex: 1, order: 4 }}>
