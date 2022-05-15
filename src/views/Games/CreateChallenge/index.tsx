@@ -98,7 +98,7 @@ const CreateChallenge = (props) => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     // console.log(props.level)
-    if (votingLevel == 2 || votingLevel == 3) {
+    if (votingLevel >= 2) {
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
