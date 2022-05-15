@@ -80,6 +80,10 @@ export default function DaoStaking() {
     });
 
     tokenContract.allowance(account, contract.address).then((allowance) => {
+      if(Number(allowance) > 0){
+        // alert("ff")
+          setActivatestake(true);
+      }
       setAllowanceValue(allowance);
     });
   };
@@ -223,7 +227,7 @@ export default function DaoStaking() {
   // }, 10000); 
 
   const handleSubmit = async () => {
-    // console.log(allowanceValue);
+    console.log(allowanceValue);
 
  
     if(amountToStake < 1){
@@ -270,6 +274,7 @@ export default function DaoStaking() {
         );
         let signer = contract.signer;
        await  signer.sendTransaction(tx);
+       toastSuccess("Approval transaction sent. You can stake after the transaction is mined.");
         // 	toastError("token allowance not yet set");
         loadUI()
       }
@@ -665,9 +670,7 @@ export default function DaoStaking() {
                          {!stake.isWithdrawed ? 
                          
                          <ul
-                         className="token-balance-list mb-2 mt-2"
-
-                       >
+                         className="token-balance-list mb-2 mt-2"  >
                          
                          <li>
                            <span className="justify-content-between success fs-12">
