@@ -6,6 +6,7 @@ import { useMediaPredicate } from "react-media-hook";
 import { Placeholder, Spinner } from "react-bootstrap";
 import { Skeleton } from "../../../../packages/uikit/src/components/Skeleton";
 import LoaderDisplay from "../components/loader";
+import moment from "moment";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -14,6 +15,12 @@ const server = create({
 export default function Votechallenge() {
   const [challenges, setChallenges] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [topChallenges, setTopChallenges] = useState([]);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [stage, setStage] = useState(3);
+
 
   const ReadMore = ({ children, size, css }) => {
     const text = children;
@@ -33,7 +40,71 @@ export default function Votechallenge() {
     );
   };
 
+
+  const calculateTimeLeft = (entryTime) => {
+    let eventTime = moment(entryTime).unix();
+    let currentTime = Number(Math.floor(Date.now() / 1000).toString());
+    let leftTime = eventTime - currentTime;
+    let duration = moment.duration(leftTime, "seconds");
+    let interval = 1000;
+
+    if (duration.asSeconds() <= 0) {
+      clearInterval(interval);
+    }
+
+    duration = moment.duration(duration.asSeconds() - 1, "seconds");
+
+    // console.log(duration)
+
+    // setDays(duration.days());
+    setHours(duration.hours());
+    setMinutes(duration.minutes());
+    setSeconds(duration.seconds());
+
+    return {
+      hour: duration.hours(),
+      min: duration.minutes(),
+      sec: duration.seconds(),
+    };
+  };
+
   useEffect(() => {
+    const roundStartTime = 1652653254;
+
+    let stageGroups = [];
+
+
+    let stage1 = { start: roundStartTime, end: roundStartTime + 5 * 10 };
+    let stage2 = { start: stage1.end, end: stage1.end + 5 * 10 };
+    let stage3 = { start: stage2.end, end: stage2.end + 5 * 10 };
+    let stage4 = { start: stage3.end, end: stage3.end + 5 * 10 };
+    let stage5 = { start: stage4.end, end: stage1.start };
+
+    stageGroups.push(stage1, stage2, stage3, stage4, stage5);
+    let current = moment().unix();
+    let check = stageGroups.findIndex(
+      (group) => group.end > current && current > group.start
+    );
+    if (check == -1 && current > current) {
+      setStage(1);
+    } else {
+      const interval = setInterval(() => {
+        let currTime = moment().unix();
+        let checkStage = stageGroups.findIndex(
+          (group) => group.end > currTime && currTime > group.start
+        );
+
+        if (checkStage != -1) {
+          setStage(checkStage + 1);
+          calculateTimeLeft(moment.unix(stageGroups[checkStage].end));
+        }
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, []);
+
+  useEffect(() => {
+
     setLoading(true);
     const getData = async () => {
       let challenges = [];
@@ -61,20 +132,36 @@ export default function Votechallenge() {
           }
         }
 
+        
+
         let challengeData = {
           challenge: challenge,
           votes: vote,
         };
+
         challenges.push(challengeData);
       }
+      // setTopChallenges(challenges);
 
-      setChallenges(challenges);
+      let topThreeChallenges = [];
+      const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
+
+      topThreeChallenges.push(ch[0], ch[1], ch[2]);
+
+      if(stage == 3){
+        setChallenges(topThreeChallenges);
+
+      }else{
+        setChallenges(challenges);
+      }
       setLoading(false);
+
+
     };
     getData();
   }, []);
 
-  console.log("challenges", challenges);
+  // console.log("challenges", challenges);
 
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");

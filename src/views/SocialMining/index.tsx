@@ -6,17 +6,19 @@ import { InlineShareButtons } from 'sharethis-reactjs';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 import Link from 'next/link';
 import NavMining from './NavMining';
+import { useMediaPredicate } from 'react-media-hook';
 
 export default function SocialMining() {
 
     const [miningStage, setMiningStage] = useState(0);
     const [account, setAccount] = useState(null);
-
+    const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+    const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
     const Navigation = (props) => {
 
         return (
-            <ul className="nav nav-tabs nav-justified mb-3">
+            <ul className="nav nav-tabs nav-justified mt-5 mb-3">
                 <li className="nav-item">
                     <a className={`nav-link ${props.stage == 0 && 'active'}`}>Steps</a>
                 </li>
@@ -77,18 +79,18 @@ export default function SocialMining() {
 
     return (
         <>
-                <NavMining/>
+           <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
+          <NavMining/>
 
 
-            <div className="pt-3 pb-0">
-
-
+            <div className="pt-2 pb-0">
+                
                 <div className="row pt-3">
                     <div className="col-sm-12">
-                        <h3 className="text-center h3-mobile pb-3">CLAIM YOUR DAILY FREE SOSX TOKEN REWARD</h3>
+                        <h3 className="text-center h3-mobile pb-1">CLAIM YOUR DAILY FREE SOSX TOKEN REWARD</h3>
                     </div>
 
-                    <div className="row pt-3 text-center container ">
+                    <div className="row pt-1 text-center container ">
                         <div className="col-md-4">
                             <div className="card overflow-hidden">
                                 <div>
@@ -135,6 +137,7 @@ export default function SocialMining() {
                         </a>
                     </Link>
                 </div>
+            </div>
             </div>
         </>
     );

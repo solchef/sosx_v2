@@ -54,8 +54,7 @@ export default function Staking() {
   }, []);
 
 
-
-
+  
   const stakingDetails = async () => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
       setTotalAmountStaked(stakeAmount);
@@ -82,7 +81,7 @@ export default function Staking() {
 
   const listUserStaking = async () => {
     let list = [];
-    for (let i = 1; i < numberOfActiveStake; i++) {
+    for (let i = 0; i < numberOfActiveStake; i++) {
       await contract.getStakeInfo(i).then(stakeInstance => {
          
           // if (stakeInstance) {
@@ -183,6 +182,13 @@ export default function Staking() {
     return amount.toFixed(2);
   };
 
+
+  const handleUnstake = async () => {
+
+      
+
+  }
+
   const handleSubmit = async () => {
     console.log(allowanceValue);
     if (amountToStake < balance) {
@@ -239,7 +245,7 @@ export default function Staking() {
         className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"
           }`}
       >
-        <div className="row">
+        <div className="row mb-5">
           <div className="col-sm-3 col-6">
             <div className="card overflow-hidden ">
               <h4>10,000,000,000</h4>
@@ -333,7 +339,7 @@ export default function Staking() {
                       <div className="small2">
                         <div className="success mr-1">Reward Interest: </div>
                         <div className="d-flex align-items-center">
-                          <div className="text-white fs-14"> 29%</div>
+                          <div className="text-white fs-14"> {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145}%</div>
                         </div>
                       </div>
                       <div className="small2">

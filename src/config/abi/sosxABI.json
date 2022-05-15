@@ -6,6 +6,12 @@
 	},
 	{
 		"anonymous": false,
+		"inputs": [],
+		"name": "GamerewardPoolExhausted",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
 		"inputs": [
 			{
 				"indexed": false,
@@ -103,6 +109,19 @@
 			}
 		],
 		"name": "referralRewardSent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "newGameRewwardPool",
+				"type": "uint256"
+			}
+		],
+		"name": "rewardPoolUpdated",
 		"type": "event"
 	},
 	{
@@ -336,6 +355,19 @@
 	},
 	{
 		"inputs": [],
+		"name": "getCurrentGamesRewardPool",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getCurrentPot",
 		"outputs": [
 			{
@@ -427,6 +459,19 @@
 	{
 		"inputs": [],
 		"name": "getLevel3Interest",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getLevelThreeDaoDuration",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -717,6 +762,19 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "oXGamesRewardPool",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
@@ -785,6 +843,24 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "winner",
+				"type": "address"
+			}
+		],
+		"name": "rewardOxGameWinner",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "_interestRate1",
 				"type": "uint256"
 			}
@@ -816,6 +892,19 @@
 			}
 		],
 		"name": "setLevel3Interest",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_stakeLockDuration",
+				"type": "uint256"
+			}
+		],
+		"name": "setLevelThreeDaoDuration",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

@@ -13,8 +13,8 @@ import {
 import { AutoColumn } from 'components/Layout/Column'
 import QuestionHelper from 'components/QuestionHelper'
 import { AutoRow, RowBetween, RowFixed } from 'components/Layout/Row'
-import FormattedPriceImpact from './FormattedPriceImpact'
-import { StyledBalanceMaxMini, SwapCallbackError } from './styleds'
+import FormattedPriceImpact from '../../Swap/components/FormattedPriceImpact'
+import { StyledBalanceMaxMini, SwapCallbackError } from '../../Swap/components/styleds'
 
 const SwapModalFooterContainer = styled(AutoColumn)`
   margin-top: 24px;

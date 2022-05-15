@@ -29,8 +29,8 @@ import NavGame from "../NavGame";
 import { CID, create } from "ipfs-http-client";
 import ReactMarkdown from "react-markdown";
 import { useMediaPredicate } from "react-media-hook";
-import { useStakingContract } from "hooks/useContract";
-import { StageNav } from "../index"
+import { useDaoStakingContract } from "hooks/useContract";
+import { StageNav } from "../index";
 
 // import MDEditor from './MDEdit,or'
 
@@ -89,17 +89,15 @@ const CreateChallenge = (props) => {
     "(min-width: 1200px) and (max-width: 1500px)"
   );
 
-
-
-  const contract = useStakingContract();
+  const contract = useDaoStakingContract();
   const [onPresentVoteDetailsModal] = useModal(
     <VoteDetailsModal block={state.snapshot} />
   );
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    console.log(props.level)
-    if (props.level > 1) {
+    // console.log(props.level)
+    if (votingLevel >= 2) {
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
@@ -232,8 +230,8 @@ const CreateChallenge = (props) => {
   const userVotingLevel = async () => {
     let amount = await contract.getVoterTotalStakeAmount(account);
     amount = amount;
-    console.log(amount)
-    alert(amount)
+    console.log(amount);
+    // alert(amount)
     let level = getLevel(amount);
     setVotingLevel(level);
   };
@@ -258,33 +256,90 @@ const CreateChallenge = (props) => {
   };
 
   return (
+    // <div className="card h-100 w-100">
+    //   <form onSubmit={handleSubmit}>
+    //     <div className="row">
+    //       <div className="col-12 col-xl-6">
+    //         <StageNav stage={1} />
 
-    <div className="card h-100">
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col-12 col-xl-6">
-            <StageNav stage={1} />
+    //         <p >Submit a challenge that you wish others to
+    //           perform for money. Challenge must be doable within the next
+    //           48H and cannot
+    //           location-specific. Be crazy,
+    //           be original, but be dea. Challenges can be created by level
+    //           2 and level 3.</p>
 
-            <p >Submit a challenge that you wish others to
-              perform for money. Challenge must be doable within the next
-              48H and cannot
-              location-specific. Be crazy,
-              be original, but be dea. Challenges can be created by level
-              2 and level 3.</p>
+    //         {account
+    //           ?
+    //           <button type="submit" className="btn btn-primary btn-lg w-100 my-4">Submit your challenge</button>
+    //           :
+    //           <ConnectWalletButton width="100%" className="btn btn-primary btn-lg w-100 my-4" type="button" />
+    //         }
+    //       </div>
+    //       <div className="col-12 col-xl-7" style={{order: 5}}>
+    //         <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required />
 
+    //         {/* @ts-ignore */}
 
-            {account
-              ?
-              <button type="submit" className="btn btn-primary">Submit your challenge</button>
-              :
-              <ConnectWalletButton width="100%" type="button" />
-            }
-          </div>
-          <div className="col-12 col-xl-6 pt-2">
-            <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required />
+    //         {formErrors.body && fieldsState.body && (
+    //           <FormErrors errors={formErrors.body} />
+    //         )}
 
-            {/* @ts-ignore */}
-            <EasyMde
+    //       </div>
+    //     </div>
+    //   </form>
+    // </div>
+
+   
+      <div className="card h-100">
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-12 col-xl-6">
+              <StageNav stage={1} />
+
+                 <p style={{ order: 4 }}>
+                  DAO Members get to decide the rules for the next game challenge. Whoever
+                  accomplishes the challenge first wins the prize pool. Please include
+                  detailed directions for your challenge submission.
+                </p>
+
+                   <p>
+                    <span style={{fontWeight:700}}>Challenges criteria:</span><br/> 
+                    - Challenge must be accomplishable immediatelly.<br/>
+                    - Challenges cannot be location or gender-specific.<br/>
+                    - Challenges cannot result in death by any means.<br/>
+                    - Challenges must be accepted within youtube restrictions.<br/>
+                </p>
+
+              {account ? (
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-lg  my-4"
+                  style={{ order: 6 }}
+                >
+                  {isLoading ? 'Request is being processed' : 'Submit your challenge'}
+                  
+                </button>
+              ) : (
+                <ConnectWalletButton
+                  width="100%"
+                  className="btn btn-primary btn-lg  my-4"
+                  type="button"
+                  style={{ order: 6 }}
+                />
+              )}
+            </div>
+            <div className="col-12 col-xl-6" style={{ order: 5 }}>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                className="input1 mb-3"
+                placeholder="Challenge Title"
+                required
+              />
+              {/* @ts-ignore */}
+             <EasyMde
               id="body"
               name="body"
               onTextChange={handleEasyMdeChange}
@@ -292,41 +347,11 @@ const CreateChallenge = (props) => {
               options={options}
               required
             />
-            {formErrors.body && fieldsState.body && (
-              <FormErrors errors={formErrors.body} />
-            )}
-
-
-
-
+            </div>
           </div>
-        </div>
-      </form>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </form>
+      </div>
+   
   );
 };
 
