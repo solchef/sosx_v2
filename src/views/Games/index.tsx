@@ -143,26 +143,6 @@ export default function Game() {
     }
   }, []);
 
-  // const test = async () => {
-  //   const level1 = [];
-  //   for await (const resultPart of server.files.ls("/levels")) {
-  //     let challenge;
-  //     if (resultPart.name === "level.json") {
-  //       for await (const chunk of server.cat(resultPart.cid)) {
-  //         level1.push(chunk);
-  //       }
-  //       const data = concat(level1);
-  //       challenge = JSON.parse(new TextDecoder().decode(data).toString());
-  //       setVoters(challenge);
-  //         challenge.map(voter => {
-  //           if(voter.address == account){
-  //             // alert(voter.level)
-  //               setCurrentLevel(voter.level)
-  //           }
-  //         })
-  //     }
-  //   }
-  // };
   const getData = async () => {
     let challenges = [];
     for await (const resultPart of server.files.ls("/challenges")) {
@@ -278,7 +258,6 @@ export default function Game() {
         data,
         { create: true }
       );
-      handleClose();
       toastSuccess("Uploaded");
       form.reset();
       getVideo();
@@ -286,54 +265,10 @@ export default function Game() {
       toastError("Not Valid Links");
     }
   };
-  const [showDonate, setShowDonate] = useState(false);
-  const handleCloseDonate = () => setShowDonate(false);
-  const handleShowDonate = () => setShowDonate(true);
 
-  const handleSubmitDonate = async () => {};
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
-  const biggerThan1500 = useMediaPredicate("(min-width: 1500px)");
-  const bet768and1200 = useMediaPredicate(
-    "(min-width: 576px) and (max-width: 1200px)"
-  );
-  const bet1200and1500 = useMediaPredicate(
-    "(min-width: 1200px) and (max-width: 1500px)"
-  );
-  const biggest576 = useMediaPredicate(" (max-width: 576px)");
-
-  // const loadDaoLevels = async () => {
-  //   let daoList = await contract.getAllAccount();
-  //   daoList = [...new Set(daoList)];
-
-  //   console.log(daoList)
-
-  //   let voters = [];
-  //   for (let i = 0; i < daoList.length; i++) {
-  //     // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
-  //     let voter_address = daoList[i];
-  //     let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-  //     total_stake = Number(total_stake / 10 ** 18);
-  //     let data = {
-  //       address: voter_address,
-  //       amount: total_stake,
-  //       level: getLevel(total_stake),
-  //     };
-  //     // if (voter_address == account) {setCurrentLevel(data.level)};
-
-  //     // alert(data.level)
-  //     voters.push(data);
-
-  //     // }
-  //   }
-  //   // await server.files.write("/levels/level.json", JSON.stringify(voters), {
-  //   //   create: true,
-  //   // });
-  //   setVoters(voters);
-  // };
+ 
 
   const getLevel = (amount) => {
     if (
@@ -607,20 +542,7 @@ export default function Game() {
         </div>
       </div>
 
-      <Modal show={showDonate} onHide={handleCloseDonate} centered>
-        <ModalHeader className="text-dark">
-          Donate
-          <CloseButton />
-        </ModalHeader>
-
-        <div className="modal-body">
-          <form onSubmit={handleSubmitDonate}>
-            <div className=" rounded p-2">
-              <button className="btn btn-primary w-100">Submit</button>
-            </div>
-          </form>
-        </div>
-      </Modal>
+     
     </>
   );
 }

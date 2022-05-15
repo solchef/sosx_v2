@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useMediaPredicate } from "react-media-hook";
 import axios from "axios";
 import Ranking from "./ranking";
+import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -20,8 +21,11 @@ const StyledRanking = styled(Box)`
 const TimerDisplay = (props) => {
   const { t } = useTranslation();
   const [price, setPrice] = useState(Number);
-  const [displayLevel, setDisplayLevel] = useState(1);
-  const biggerThan1500 = useMediaPredicate("(min-width: 1500px)");
+  const [donateAmount, setDonateAmount] = useState(0);
+  const [showDonate, setShowDonate] = useState(false);
+  const handleCloseDonate = () => setShowDonate(false);
+  const handleShowDonate = () => setShowDonate(true);
+  
 
   const getSOSXPrice = async () => {
     const getSOSXValue = await axios.get(
@@ -37,6 +41,10 @@ const TimerDisplay = (props) => {
   const pad = (num) => {
     return ("0"+num).slice(-2);
 }
+
+    const handleSubmitDonate = () => {
+
+    }
 
   return (
     <div className="flex-direction-column flex-wrap flex-row d-flex">
@@ -84,7 +92,7 @@ const TimerDisplay = (props) => {
             <h4>PRIZE POOL</h4>
           </div>
           <p>
-            Feel free to <a href="donate">donate</a> to the prize pool.
+            Feel free to <a href="#" onClick={handleShowDonate}>donate</a> to the prize pool.
           </p>
         </div>
         <div className="d-flex flex-column align-items-center">
@@ -92,6 +100,27 @@ const TimerDisplay = (props) => {
           <p className="main-pink">{Number(price.toFixed(0))} SOSX </p>
         </div>
       </div>
+
+      <Modal show={showDonate} onHide={handleCloseDonate} centered >
+        <ModalHeader className="text-dark" style={{background:"#111117"}}>
+          Donate
+          {/* <CloseButton /> */}
+          <a href="#" onClick={handleCloseDonate} className="pull-right text-white"><i className="fa fa-close"></i></a>
+        </ModalHeader>
+
+        <div className="modal-body" style={{background:"#111117"}}>
+          <form onSubmit={handleSubmitDonate}>
+
+            <div className="form-group">
+                 <input className="input1" placeholder="Amount Contributing in SOSX" required type="text" onChange={(e) => setDonateAmount(Number(e.target.value))}/>
+            </div>
+            <div className=" rounded p-2">
+              <button className="btn btn-primary w-100">Donate to Prize Pool</button>
+            </div>
+          </form>
+        </div>
+      </Modal>
+      
     </div>
   );
 };
