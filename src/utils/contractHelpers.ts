@@ -66,11 +66,11 @@ export const getMasterchefContract = (signer?: Signer | Provider) => {
 }
 
 export const getStakingContract = (signer?: Signer | Provider) => {
-  return getContract(sosxDaoStakingAbi, getstakingContractAddress(), signer);
+  return getContract(sosxStakingAbi, getstakingContractAddress(), signer);
 }
 
 export const getDaoStakingContract = (signer?: Signer | Provider) => {
-  return getContract(sosxStakingAbi, getSosxDaoContractAddress(), signer);
+  return getContract(sosxDaoStakingAbi, getSosxDaoContractAddress(), signer);
 }
 
 export const getSosxContract = (signer?: Signer | Provider) => {

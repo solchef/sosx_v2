@@ -102,6 +102,7 @@ export default function DaoStaking() {
   const listUserStaking = async () => {
     let list = [];
     let count = []
+    console.log(numberOfActiveStake);
     for (let i = 0; i < numberOfActiveStake; i++) {
       await contract.getStakeInfo(i).then(stakeInstance => {
 

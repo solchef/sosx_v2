@@ -5,7 +5,7 @@ import { useMediaPredicate } from "react-media-hook";
 import { create } from "ipfs-http-client";
 import useToast from "hooks/useToast";
 import { concat } from "uint8arrays";
-import { useStakingContract, useSosxContract } from "hooks/useContract";
+import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
 import moment from "moment";
 import ConnectWalletButton from "../../components/ConnectWalletButton";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
@@ -62,7 +62,7 @@ export default function Game() {
   const [voters, setVoters] = useState([]);
   const [videos, setVideos] = useState([]);
   const router = useRouter();
-  const contract = useStakingContract();
+  const contract = useDaoStakingContract();
   const [challenges, setChallenges] = useState<any[]>([]);
   let [stage, setStage] = useState(2);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
@@ -80,7 +80,8 @@ export default function Game() {
 
     duration = moment.duration(duration.asSeconds() - 1, "seconds");
 
-    console.log(duration)
+    // console.log(duration)
+
 
     setDays(duration.days());
     setHours(duration.hours());
@@ -125,26 +126,26 @@ export default function Game() {
     }
   }, []);
 
-  const test = async () => {
-    const level1 = [];
-    for await (const resultPart of server.files.ls("/levels")) {
-      let challenge;
-      if (resultPart.name === "level.json") {
-        for await (const chunk of server.cat(resultPart.cid)) {
-          level1.push(chunk);
-        }
-        const data = concat(level1);
-        challenge = JSON.parse(new TextDecoder().decode(data).toString());
-        setVoters(challenge);
-          challenge.map(voter => {
-            if(voter.address == account){
-              // alert(voter.level)
-                setCurrentLevel(voter.level)
-            }
-          })
-      }
-    }
-  };
+  // const test = async () => {
+  //   const level1 = [];
+  //   for await (const resultPart of server.files.ls("/levels")) {
+  //     let challenge;
+  //     if (resultPart.name === "level.json") {
+  //       for await (const chunk of server.cat(resultPart.cid)) {
+  //         level1.push(chunk);
+  //       }
+  //       const data = concat(level1);
+  //       challenge = JSON.parse(new TextDecoder().decode(data).toString());
+  //       setVoters(challenge);
+  //         challenge.map(voter => {
+  //           if(voter.address == account){
+  //             // alert(voter.level)
+  //               setCurrentLevel(voter.level)
+  //           }
+  //         })
+  //     }
+  //   }
+  // };
   const getData = async () => {
     let challenges = [];
     for await (const resultPart of server.files.ls("/challenges")) {
@@ -288,33 +289,35 @@ export default function Game() {
   );
   const biggest576 = useMediaPredicate(" (max-width: 576px)");
 
-  const loadDaoLevels = async () => {
-    let daoList = await contract.getAllAccount();
-    daoList = [...new Set(daoList)];
+  // const loadDaoLevels = async () => {
+  //   let daoList = await contract.getAllAccount();
+  //   daoList = [...new Set(daoList)];
 
-    let voters = [];
-    for (let i = 0; i < daoList.length; i++) {
-      // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
-      let voter_address = daoList[i];
-      let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = Number(total_stake / 10 ** 18);
-      let data = {
-        address: voter_address,
-        amount: total_stake,
-        level: getLevel(total_stake),
-      };
-      // if (voter_address == account) {setCurrentLevel(data.level)};
+  //   console.log(daoList)
 
-      // alert(data.level)
-      voters.push(data);
+  //   let voters = [];
+  //   for (let i = 0; i < daoList.length; i++) {
+  //     // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
+  //     let voter_address = daoList[i];
+  //     let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
+  //     total_stake = Number(total_stake / 10 ** 18);
+  //     let data = {
+  //       address: voter_address,
+  //       amount: total_stake,
+  //       level: getLevel(total_stake),
+  //     };
+  //     // if (voter_address == account) {setCurrentLevel(data.level)};
 
-      // }
-    }
-    await server.files.write("/levels/level.json", JSON.stringify(voters), {
-      create: true,
-    });
-    setVoters(voters);
-  };
+  //     // alert(data.level)
+  //     voters.push(data);
+
+  //     // }
+  //   }
+  //   // await server.files.write("/levels/level.json", JSON.stringify(voters), {
+  //   //   create: true,
+  //   // });
+  //   setVoters(voters);
+  // };
 
   const getLevel = (amount) => {
     if (
@@ -337,10 +340,18 @@ export default function Game() {
   };
 
   useEffect(() => {
-    loadDaoLevels();
+
+    contract.getTotalStakeAmount().then((stakeAmount) => {
+      setTotalAmountStaked(stakeAmount);
+      let level =  getLevel(stakeAmount);
+      alert(level)
+      setCurrentLevel(level)
+    });
+
+    // loadDaoLevels();
     getData();
     getVideo();
-    test();
+    // test();
   }, []);
 
 

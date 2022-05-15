@@ -6,8 +6,10 @@ import Link from 'next/link'
 import DesktopImage from './DesktopImage'
 import Masonry from "react-masonry-css";
 import { cleanNumber } from 'utils/amount'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useMediaPredicate } from 'react-media-hook'
+import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
+
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -20,6 +22,65 @@ const Ranking = (props) => {
   let count = 1;
   const [displayLevel, setDisplayLevel] = useState(1);
   const biggerThan1500 = useMediaPredicate("(min-width: 1500px)");
+  const contract = useDaoStakingContract();
+  const [voters, setVoters] = useState([]);
+
+
+  const loadDaoLevels = async () => {
+    let daoList = await contract.getAllAccount();
+    daoList = [...new Set(daoList)];
+
+    
+
+    let voters = [];
+    for (let i = 0; i < daoList.length; i++) {
+      // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
+      let voter_address = daoList[i];
+      let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
+      total_stake = Number(total_stake / 10 ** 18);
+      let data = {
+        address: voter_address,
+        amount: total_stake,
+        level: getLevel(total_stake),
+      };
+      // if (voter_address == account) {setCurrentLevel(data.level)};
+      // console.log(data)
+      // alert(data.level)
+      voters.push(data);
+
+      // }
+    }
+    // await server.files.write("/levels/level.json", JSON.stringify(voters), {
+    //   create: true,
+    // });
+    setVoters(voters);
+
+  };
+
+  useEffect(() => {
+     loadDaoLevels()
+  },[props])
+
+  const getLevel = (amount) => {
+    if (
+      amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
+      amount < process.env.NEXT_PUBLIC_LEVEL2
+    ) {
+      return 1;
+    }
+
+    if (
+      amount >= process.env.NEXT_PUBLIC_LEVEL2 &&
+      amount < process.env.NEXT_PUBLIC_LEVEL3
+    ) {
+      return 2;
+    }
+
+    if (amount >= process.env.NEXT_PUBLIC_LEVEL3) {
+      return 3;
+    }
+  };
+
 
   return (
     <div className="card">
@@ -41,7 +102,7 @@ const Ranking = (props) => {
       > Level 3</button>
       </div>
       <div className='mt-3'>
-        {props.voters
+        {voters
           .sort((b, a) => a.amount - b.amount)
           .map((voter, i) => (
             <span key={i}>
@@ -55,7 +116,7 @@ const Ranking = (props) => {
                     </span>
                     <img
                       className="blueprint-img-sm rounded-circle"
-                      src=" https://app.hedgeboard.io/userprofiles/default.png"
+                      src="https://app.hedgeboard.io/userprofiles/default.png"
                       alt="profile"
                     />
                     <div className="ml-1">
