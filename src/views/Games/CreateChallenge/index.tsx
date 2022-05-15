@@ -290,24 +290,32 @@ const CreateChallenge = (props) => {
     //   </form>
     // </div>
 
-    <div id="action-section" style={{ flex: "2 60%", order: 2 }}>
-      <div className="card h-100 w-100">
+   
+      <div className="card  w-100">
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-12 col-xl-5">
               <StageNav stage={1} />
 
-              <p style={{ order: 4 }}>
-                Submit a challenge that you wish others to perform for money.
-                Challenge must be doable within the next 48H and cannot
-                location-specific. Be crazy, be original, but be dea. Challenges
-                can be created by level 2 and level 3.
-              </p>
+                 <p style={{ order: 4 }}>
+                  DAO Members get to decide the rules for the next game challenge. Whoever
+                  accomplishes the challenge first wins the prize pool. Please include
+                  detailed directions for your challenge submission.
+                </p>
+
+                   <p>
+                    <span style={{fontWeight:700}}>Challenges criteria:</span><br/> 
+                    - Challenge must be accomplishable immediatelly.<br/>
+                    - Challenges cannot be location or gender-specific.<br/>
+                    - Challenges cannot result in death by any means.<br/>
+                    - Challenges must be accepted within youtube restrictions.<br/>
+                </p>
 
               {account ? (
                 <button
                   type="submit"
                   className="btn btn-primary btn-lg w-100 my-4"
+                  style={{ order: 6 }}
                 >
                   Submit your challenge
                 </button>
@@ -316,6 +324,7 @@ const CreateChallenge = (props) => {
                   width="100%"
                   className="btn btn-primary btn-lg w-100 my-4"
                   type="button"
+                  style={{ order: 6 }}
                 />
               )}
             </div>
@@ -341,7 +350,7 @@ const CreateChallenge = (props) => {
           </div>
         </form>
       </div>
-    </div>
+   
   );
 };
 

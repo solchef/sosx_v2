@@ -25,42 +25,115 @@ const server = create({
 export const StageNav = (props) => {
   return (
     <>
-      {/* <h5 className="step-title d-flex fs-14 mb-2">
-        <div className={`step ${props.stage == 1 && "done"} mr-3 `}>1</div>SUBMIT A CHALLENGE
-      </h5>
 
+            {props.stage == 1 && (  
 
-      <div className="text-muted fs-14 d-flex align-items-center mb-2">
-        <div className={`step ${(props.stage == 2 || props.stage == 3) && "done"
-          } mr-3 `}>2</div>VOTE A CHALLENGE
-      </div>
+            <>
+            <div className="d-flex align-items-center mb-2">
+                <div className="step done ">1</div>
+                <h4>SUBMIT A CHALLENGE</h4>
+              </div>
+              <p>Currently into Stage 1 of SOSX Game</p>
 
+              <h5
+                className="d-flex text-muted align-items-center mt-4 mb-2"
+                style={{ order: 2 }}
+              >
+                <div className="step false mr-3 ">2</div>VOTE A CHALLENGE
+              </h5>
 
-      <div className="text-muted d-flex align-items-center mb-2">
-        <div className={`step ${props.stage == 4 && "done"}  mr-3 `}>3</div>UPLOAD VIDEO
-      </div> */}
+              <h5
+                className="text-muted d-flex align-items-center mb-4"
+                style={{ order: 3 }}
+              >
+                <div className="step false mr-3 ">3</div>UPLOAD VIDEO
+              </h5>
+            </>
 
-      <h4
-        className="step-title d-flex align-items-center mb-2"
-        style={{ order: 1 }}
-      >
-        <div className="step done mr-3 ">1</div>SUBMIT A CHALLENGE
-      </h4>
-      <h4
-        className="d-flex text-muted align-items-center mb-2"
-        style={{ order: 2 }}
-      >
-        <div className="step false mr-3 ">2</div>VOTE A CHALLENGE
-      </h4>
+            )}
 
-      <h4
-        className="text-muted d-flex align-items-center mb-4"
-        style={{ order: 3 }}
-      >
-        <div className="step false mr-3 ">3</div>
-        UPLOAD VIDEO
-      </h4>
-    </>
+            {props.stage == 2 && (  
+
+            <>
+
+              <h5
+                className="d-flex text-muted align-items-center mt-4 mb-2"
+                style={{ order: 2 }}
+              >
+                <div className="step false mr-3 ">1</div>SUBMIT A CHALLENGE
+              </h5>
+
+              <div className="d-flex align-items-center mb-2">
+                <div className="step done ">2</div>
+                <h4>VOTE A CHALLENGE</h4>
+              </div>
+              <p>Currently into Stage 2 of SOSX Game. Voting challenges</p>
+
+              <h5
+                className="text-muted d-flex align-items-center mb-4"
+                style={{ order: 3 }}
+              >
+                <div className="step false mr-3 ">3</div>UPLOAD VIDEO
+              </h5>
+            </>
+
+            )}
+
+            {props.stage == 3 && (  
+
+            <>
+              <h5
+                className="d-flex text-muted align-items-center mt-4 mb-2"
+                style={{ order: 2 }}
+              >
+                <div className="step false mr-3 ">1</div>SUBMIT A CHALLENGE
+              </h5>
+
+              <div className="d-flex align-items-center mb-2">
+                <div className="step done ">2</div>
+                <h4>VOTE A CHALLENGE</h4>
+              </div>
+              <p>Currently into Stage 2 of SOSX Game. Voting final challenges</p>
+
+              <h5
+                className="text-muted d-flex align-items-center mb-4"
+                style={{ order: 3 }}
+              >
+                <div className="step false mr-3 ">3</div>UPLOAD VIDEO
+              </h5>
+            </>
+
+            )}
+
+                {props.stage == 4 && (  
+
+                <>
+
+                  <h5
+                    className="d-flex text-muted align-items-center mt-4 mb-2"
+                    style={{ order: 2 }}
+                  >
+                    <div className="step false mr-3 ">1</div>SUBMIT A CHALLENGE
+                  </h5>
+
+                  <h5
+                    className="text-muted d-flex align-items-center mb-4"
+                    style={{ order: 3 }}
+                  >
+                    <div className="step false mr-3 ">2</div>VOTE A CHALLENGE
+                  </h5>
+
+                  <div className="d-flex align-items-center mb-2">
+                    <div className="step done ">3</div>
+                    <h4>VOTE A CHALLENGE</h4>
+                  </div>
+                  <p>Currently into Stage 3 of SOSX Game. Submitting challenge videos.</p>
+                </>
+
+                )}
+     
+        
+</>
   );
 };
 
@@ -109,14 +182,14 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652636142;
+    const roundStartTime = 1652643117;
 
     let stageGroups = [];
 
-    let stage1 = { start: roundStartTime, end: roundStartTime + 120 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 120 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 120 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + 120 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 180 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + 180 * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + 60 * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end + 60 * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
@@ -266,10 +339,6 @@ export default function Game() {
     }
   };
 
-
-
- 
-
   const getLevel = (amount) => {
     if (
       amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
@@ -312,20 +381,21 @@ export default function Game() {
 
           {stage == 2 && (
             <div className="card h-100 w-100">
-              <div className="row h-100">
+              <div className="row">
                 <div className="col-12 col-sm-6">
                   <StageNav stage={2} />
 
                   <p className="mt-2">
                     {" "}
-                    Vote for your favorite challenge wich the top 3 will then
-                    make it to the Final Challenge round.
+                    Vote for your favorite challenge which the top 3 will then
+                    make it to the Final Challenge voting round.
                   </p>
                   <p className="mt-2">
                     {" "}
-                    All Levels members are allowed to vote.
+                     Only Level 2 members can members are allowed to vote.
                   </p>
-                  {console.log(currentLevel)}
+                  <br/>
+                  {/* {console.log(currentLevel)} */}
                   {currentLevel == 3 ? (
                     <Link href="/votechallenge">
                       <button type="submit" className="btn mt-2 btn-primary">
@@ -486,7 +556,7 @@ export default function Game() {
 
                           <p className=" ml-3 p-1 fs-10 bg-pink-radius text-white">
                             {" "}
-                            Level 3
+                            {/* Level 3 */}
                           </p>
                         </div>
 
@@ -522,11 +592,7 @@ export default function Game() {
             </div>
           )}
 
-          <div className="row" id="video-mobile-section">
-            <div className="col-12">
-              <Media todayVideo={todayChallenge} />
-            </div>
-          </div>
+     
         </div>
 
         <div id="timer-section" style={{ flex: 2, order: 1 }}>
@@ -537,12 +603,10 @@ export default function Game() {
           <Ranking voters={voters} />
         </div>
 
-        <div id="video-section" style={{ flex: "1 60%", order: 3 }}>
+        <div id="video-section" style={{flex: '1 60%', order: 3}}>
           <Media todayVideo={todayChallenge} />
         </div>
       </div>
-
-     
     </>
   );
 }

@@ -1,16 +1,3 @@
-div#video-mobile-section {display: none;}
-
-div#mobile-ranking-section {display: none;}
-
-div#timer-section {min-width: 340px;}
-
-div#ranking-section {min-width: 340px;}
-
-.flex-direction-row {flex-direction: row;}
-.flex-direction-column {flex-direction: column!important;}
-
-.game.container-fluid {gap: 20px;align-content: stretch;}
-
 /*
     Table of Contents
 
@@ -11137,7 +11124,7 @@ a.text-dark:focus {
 
 p {
     line-height: 1.5;
-font-size: 14px!important;color: #a2a2a2;}
+font-size: 14px!important;color: #a2a2a2;margin-bottom: 10px!important;}
 
 .box-shadow-none {
     box-shadow: none !important;
@@ -15717,16 +15704,19 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 
 .deznav .metismenu>li>a g [fill] {
     fill: #8088a1;
+    color:#fff!important
 }
 
 .deznav .metismenu>li:hover>a,
 .deznav .metismenu>li:focus>a {
     color: #43c4d3;
+    color:#fff!important
 }
 
 .deznav .metismenu>li:hover>a g [fill],
 .deznav .metismenu>li:focus>a g [fill] {
     fill: #43c4d3;
+    color:#fff!important
 }
 
 .deznav .metismenu>li.mm-active>a {
@@ -47017,8 +47007,8 @@ a.video span {
 }
 
 .step {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     background-color: #444444;
     display: inline-block;
     border: 4px solid;
@@ -47028,7 +47018,7 @@ a.video span {
     font-weight: 600;
     text-align: center;
     line-height: 30px;
-}
+margin-right: 10px;font-size: 17px;}
 
 @media(max-width:576px) {
     .step:nth-child(n+2) {
@@ -47041,7 +47031,7 @@ a.video span {
 }
 
 .step:first-child {
-    line-height: 24px;
+    line-height: 18px;
 }
 
 .step:nth-child(n+2) {
@@ -47144,43 +47134,6 @@ a.video span {
     left: 10px;
 }
 
-.width-22 {
-    width: 22px !important;
-}
-
-.my-masonry-grid {
-    display: -webkit-box;
-    /* Not needed if autoprefixing */
-    display: -ms-flexbox;
-    /* Not needed if autoprefixing */
-    display: flex;
-    margin-left: -30px;
-    /* gutter size offset */
-    width: auto;
-}
-
-.my-masonry-grid_column {
-    padding-left: 30px;
-    /* gutter size */
-    background-clip: padding-box;
-}
-
-
-/* Style your items */
-
-.my-masonry-grid_column>div {
-    /* change div to reference your elements you put in <Masonry> */
-    background: grey;
-    position: relative;
-    margin-bottom: 30px;
-}
-
-.game .iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
 .game .details {}
 
 @media (max-width: 576px) {
@@ -47248,8 +47201,15 @@ padding: 15px!important;}
 }
 
 .video-container {
+    overflow: hidden;
     position: relative;
-    padding-bottom: 56.25%;
+    width:100%;
+border-radius: 10px;}
+
+.video-container::after {
+    padding-top: 56.25%;
+    display: block;
+    content: '';
 }
 
 .video-container iframe {
@@ -47260,38 +47220,44 @@ padding: 15px!important;}
     height: 100%;
 }
 
-.video {
-    aspect-ratio: 16 / 9;
-    width: 100%;
-}
-
 .my-masonry-grid {
-    display: -webkit-box;
-    /* Not needed if autoprefixing */
-    display: -ms-flexbox;
-    /* Not needed if autoprefixing */
-    display: flex;
-    margin-left: -30px;
-    /* gutter size offset */
-    width: auto;
+  display: flex;
+  margin-left: -20px;
 }
-
 .my-masonry-grid_column {
-    padding-left: 30px;
-    /* gutter size */
-    background-clip: padding-box;
-}
-
+  
+  background-clip: padding-box;
+flex: 1;}
 
 /* Style your items */
-
-.my-masonry-grid_column>div {
-    /* change div to reference your elements you put in <Masonry> */
-    background: grey;
-    margin-bottom: 30px;
-}
+.my-masonry-grid_column > div { /* change div to reference your elements in <masonry> */
+  background: none;
+  padding: 0;
+  margin-bottom: 20px;
+background: #111116;}
 
 a {
     color:#ff00cc!important;
     font-weight:bold;
   }
+
+
+div#timer-section {min-width: 340px;}
+
+div#ranking-section {min-width: 340px;}
+
+.flex-direction-row {flex-direction: row;}
+.flex-direction-column {flex-direction: column!important;}
+
+.game.container-fluid {gap: 20px;align-content: stretch;}
+
+
+p.video-title {margin-top: 10px;margin-bottom: 50px;}
+
+.tiktok-container {left: 0; width: 100%; height: 0; position: relative; padding-bottom: 161.7778%; padding-top: 120px;}
+
+.video-submission {}
+
+.step.false.mr-3 {font-size: 10px;width: 20px;height: 20px;line-height: 13px;}
+
+.metismenu .mm-active a {color: #fff!important;}

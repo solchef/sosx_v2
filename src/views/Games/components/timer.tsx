@@ -9,16 +9,11 @@ import { cleanNumber } from "utils/amount";
 import { useEffect, useState } from "react";
 import { useMediaPredicate } from "react-media-hook";
 import axios from "axios";
-import Ranking from "./ranking";
 import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { useDaoStakingContract } from "hooks/useContract";
 
 
-const StyledRanking = styled(Box)`
-  background: ${({ theme }) => theme.colors.gradients.bubblegum};
-  padding-bottom: 32px;
-  padding-top: 32px;
-`;
+
 
 const TimerDisplay = (props) => {
   const { t } = useTranslation();
