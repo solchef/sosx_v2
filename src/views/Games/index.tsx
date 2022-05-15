@@ -13,7 +13,7 @@ import { validLinks } from "utils/validateLink";
 import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { cleanNumber } from "utils/amount";
 import CreateChallenge from "./CreateChallenge";
-import Votechallenge from "./Votechallenge";
+// import Votechallenge from "./Votechallenge";
 import Media from "./components/media";
 import Ranking from "./components/ranking";
 import TimerDisplay from "./components/timer";
@@ -36,17 +36,24 @@ export const StageNav = (props) => {
               <p>Currently into Stage 1 of SOSX Game</p>
 
               <h5
-                className="d-flex text-muted align-items-center mt-4 mb-2"
+                className="d-flex text-muted align-items-center mt-2 mb-2"
                 style={{ order: 2 }}
               >
                 <div className="step false mr-3 ">2</div>VOTE A CHALLENGE
               </h5>
 
               <h5
-                className="text-muted d-flex align-items-center mb-4"
+                className="d-flex text-muted align-items-center mt-2 mb-2"
                 style={{ order: 3 }}
               >
-                <div className="step false mr-3 ">3</div>UPLOAD VIDEO
+                <div className="step false mr-3 ">3</div>FINAL TOP 3 VOTE
+              </h5>
+
+              <h5
+                className="text-muted d-flex align-items-center mt-2 mb-4"
+                style={{ order: 4 }}
+              >
+                <div className="step false mr-3 ">3</div>VIDEO SUBMISSION
               </h5>
             </>
 
@@ -378,15 +385,15 @@ export default function Game() {
 
   return (
     <>
-      <div className="game container-fluid d-flex flex-wrap flex-direction-row-reverse">
-        <div id="action-section" style={{ flex: "2 60%", order: 2 }}>
+      <div className="game container-fluid d-flex flex-wrap flex-direction-row-reverse" style={{gap:"20px"}}>
+        <div id="action-section" style={{ flex: "2 1 60%", order: 2 }}>
           {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
           {stage == 5 && <CreateChallenge level={currentLevel} stage={stage} />}
 
           {stage == 2 && (
             <div className="card h-100 w-100">
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-xl-6">
                   <StageNav stage={2} />
 
                   <p className="mt-2">
@@ -602,7 +609,7 @@ export default function Game() {
      
         </div>
 
-        <div id="timer-section" style={{ flex: 2, order: 1 }}>
+        <div id="timer-section" style={{flex:'1 20%', gap: "20px"}}>
           <TimerDisplay hours={hours} minutes={minutes} seconds={seconds} stage={stage} />
         </div>
 

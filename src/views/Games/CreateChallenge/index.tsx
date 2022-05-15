@@ -291,7 +291,7 @@ const CreateChallenge = (props) => {
     // </div>
 
    
-      <div className="card h-100 w-100">
+      <div className="card h-100">
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-12 col-xl-6">

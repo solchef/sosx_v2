@@ -47,8 +47,8 @@ const TimerDisplay = (props) => {
     }
 
   return (
-    <div className="flex-direction-column flex-wrap flex-row d-flex">
-      <div className="card w-100" style={{marginBottom:"20px"}}>
+    <>
+        <div className="card timer-card" style={{flex: 0, gap: "20px"}}>
         <div className="d-flex align-items-center mb-2">
           <img src="images/submission-date-icon.png" className="title-icon" />
           <h4>TIME REMAINING</h4>
@@ -89,7 +89,7 @@ const TimerDisplay = (props) => {
         </div>
       </div>
 
-      <div className="card w-100 prize-pool">
+      <div className="card prize-card" style={{flex: 0}}>
         <div className="d-flex flex-column mb-3">
           <div className="d-flex mb-2 align-items-center">
             <img src="images/prize-pool-icon.png" className="title-icon" />
@@ -127,7 +127,7 @@ const TimerDisplay = (props) => {
         </div>
       </Modal>
       
-    </div>
+    </>
   );
 };
 

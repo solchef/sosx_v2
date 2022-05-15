@@ -258,7 +258,7 @@ export default function DaoStaking() {
           setActivatestake(true);
           setLoading(false);
           loadUI();
-          toastSuccess("Staking Transaction successfully sent, Check your wallet balance");
+          toastSuccess("Staking Transaction successfully sent");
   
         }else{
           toastError("Could not stake");
