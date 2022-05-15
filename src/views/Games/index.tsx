@@ -399,17 +399,17 @@ export default function Game() {
 
                                 <p className="mt-2"> Vote for your favorite challenge wich the top 3 will then make it to the Final Challenge round.</p>
                                 <p className="mt-2"> All Levels members are allowed to vote.</p>
-
-                                <Link href="/votechallenge">
-                                 <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
-                              </Link>
-
+                              {console.log(currentLevel)}
+                              {currentLevel == 3? 
+                                  <Link href="/votechallenge">
+                                    <button type="submit" className="btn mt-2 btn-primary">  Vote for Challange</button>
+                                  </Link>
+                                  :
+                                  <button type="submit" className="btn mt-2 btn-primary" onClick={() => toastError("Only level 3 DAO members can participate")}>  Vote for Challange</button>
+                                }
                               </div>
                               <div className="col-6">
-
-
                                 <img className="mobile-hide" width="60%" src="images/votechallenge-img.png" />
-
 
                               </div>
                             </div>
