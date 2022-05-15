@@ -233,15 +233,13 @@ export default function DaoStaking() {
     }
 
 
-    if(stakingClass == 2 && amountToStake < 100000){
-
+    if(stakingClass == 2 && amountToStake < NEXT_PUBLIC_LEVEL2){
 
         toastError("DAO Level 2 required you to stake more than 100000 SOSX");
       return;
     }
 
-    if(stakingClass == 3 && amountToStake < 1000000){
-
+    if(stakingClass == 3 && amountToStake < NEXT_PUBLIC_LEVEL3){
 
       toastError("DAO Level 3 required you to stake more than 100000 SOSX");
     return;
