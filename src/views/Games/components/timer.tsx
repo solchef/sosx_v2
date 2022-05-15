@@ -11,6 +11,8 @@ import { useMediaPredicate } from "react-media-hook";
 import axios from "axios";
 import Ranking from "./ranking";
 import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
+import { useDaoStakingContract } from "hooks/useContract";
+
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -25,6 +27,7 @@ const TimerDisplay = (props) => {
   const [showDonate, setShowDonate] = useState(false);
   const handleCloseDonate = () => setShowDonate(false);
   const handleShowDonate = () => setShowDonate(true);
+  const contract = useDaoStakingContract();
   
 
   const getSOSXPrice = async () => {
@@ -43,6 +46,8 @@ const TimerDisplay = (props) => {
 }
 
     const handleSubmitDonate = () => {
+
+
 
     }
 
