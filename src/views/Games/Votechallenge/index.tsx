@@ -69,9 +69,10 @@ export default function Votechallenge() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652651455;
+    const roundStartTime = 1652653254;
 
     let stageGroups = [];
+
 
     let stage1 = { start: roundStartTime, end: roundStartTime + 5 * 10 };
     let stage2 = { start: stage1.end, end: stage1.end + 5 * 10 };
@@ -84,7 +85,6 @@ export default function Votechallenge() {
     let check = stageGroups.findIndex(
       (group) => group.end > current && current > group.start
     );
-
     if (check == -1 && current > current) {
       setStage(1);
     } else {
@@ -104,6 +104,7 @@ export default function Votechallenge() {
   }, []);
 
   useEffect(() => {
+
     setLoading(true);
     const getData = async () => {
       let challenges = [];
