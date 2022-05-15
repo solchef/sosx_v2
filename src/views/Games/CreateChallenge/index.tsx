@@ -295,10 +295,7 @@ const CreateChallenge = (props) => {
             {formErrors.body && fieldsState.body && (
               <FormErrors errors={formErrors.body} />
             )}
-
-
-
-
+            
           </div>
         </div>
       </form>

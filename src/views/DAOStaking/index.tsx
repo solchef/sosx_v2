@@ -198,7 +198,7 @@ export default function DaoStaking() {
 
     const p = event.target.value;
     const t = stakingClass == 1 ? 0.25 : stakingClass == 2 ? 0.5 : 1;
-    const r = stakingClass == 1 ? 0.29 : stakingClass == 2 ? 0.64 : 1.45;
+    const r = stakingClass == 1 ? 0.03 : stakingClass == 2 ? 0.06 : 0.12;
     const n = 12;
 
     let interest = compoundInterest(p, t, r, n);
@@ -378,10 +378,10 @@ export default function DaoStaking() {
                                   : 1;
                             const r =
                               Number(e.target.value) == 1
-                                ? 0.29
+                                ? 0.03
                                 : Number(e.target.value) == 2
-                                  ? 0.64
-                                  : 1.45;
+                                  ? 0.06
+                                  : 0.12
                             const n = 12;
                             setStakingInterest(
                               Number(compoundInterest(p, t, r, n))

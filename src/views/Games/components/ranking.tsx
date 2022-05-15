@@ -17,13 +17,21 @@ const StyledRanking = styled(Box)`
   padding-top: 32px;
 `
 
+const StyledList = styled.ol`
+  
+
+  li{
+    list-style-type: decimal;
+  }
+`
+
 const Ranking = (props) => {
   const { t } = useTranslation()
-  let count = 1;
   const [displayLevel, setDisplayLevel] = useState(1);
-  const biggerThan1500 = useMediaPredicate("(min-width: 1500px)");
   const contract = useDaoStakingContract();
   const [voters, setVoters] = useState([]);
+  const [count, setCount] = useState(1);
+
 
 
   const loadDaoLevels = async () => {
@@ -81,6 +89,11 @@ const Ranking = (props) => {
     }
   };
 
+   const incrementCounter = () => {
+
+
+   }
+
 
   return (
     <div className="card">
@@ -102,35 +115,38 @@ const Ranking = (props) => {
       > Level 3</button>
       </div>
       <div className='mt-3'>
+      <StyledList>
         {voters
           .sort((b, a) => a.amount - b.amount)
           .map((voter, i) => (
-            <span key={i}>
-            
-              {voter.level == displayLevel && (
-                <a className="blueprint-header-display trader-display">
-                  <div className="d-flex align-items-center">
-                    <span className="text-white mr-3 fs-16 font-w600">
-                      {()=> {count ++}}
-                      {count}
-                    </span>
-                    <img
-                      className="blueprint-img-sm rounded-circle"
-                      src="https://app.hedgeboard.io/userprofiles/default.png"
-                      alt="profile"
-                    />
-                    <div className="ml-1">
-                      <span className=" card-small-text text-white trader-name">
-                        {voter.address.replace(/(.{10})..+/, "$1…")}
-                      </span>
-                    </div>
-                  </div>
-                  <span> {cleanNumber(voter.amount + "")} </span>
-                  {/* {count ++} */}
-                </a>
-              )}
-            </span>
+           <>
+                  {voter.level == displayLevel && (
+                     <li key={i}>
+                    <a className="blueprint-header-display trader-display">
+                      <div className="d-flex align-items-center">
+                        
+                        <span className="text-white mr-3 fs-16 font-w600">
+                          {/* {() => setCount(count+1)} */}
+                        </span>
+                        <img
+                          className="blueprint-img-sm rounded-circle"
+                          src="https://app.hedgeboard.io/userprofiles/default.png"
+                          alt="profile"
+                        />
+                        <div className="ml-1">
+                          <span className=" card-small-text text-white trader-name">
+                            {voter.address.replace(/(.{10})..+/, "$1…")}
+                          </span>
+                        </div>
+                      </div>
+                      <span> {cleanNumber(voter.amount + "")} </span>
+                      {/* {count ++} */}
+                    </a>
+                    </li>
+                  )}
+             </>
           ))}
+          </StyledList>
       </div>
     </div>
 

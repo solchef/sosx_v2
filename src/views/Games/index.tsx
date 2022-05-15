@@ -27,7 +27,7 @@ export const StageNav = (props) => {
     <>
 
 
-      <h5 className="step-title d-flex fs-14 mb-2">
+      {/* <h5 className="step-title d-flex fs-14 mb-2">
         <div className={`step ${props.stage == 1 && "done"} mr-3 `}>1</div>SUBMIT A CHALLENGE
       </h5>
 
@@ -41,7 +41,20 @@ export const StageNav = (props) => {
 
       <div className="text-muted d-flex align-items-center mb-2">
         <div className={`step ${props.stage == 4 && "done"}  mr-3 `}>3</div>UPLOAD VIDEO
-      </div>
+      </div> */}
+
+         
+              <h4 class="step-title d-flex align-items-center mb-2">
+                  <div class="step done mr-3 ">1</div>SUBMIT A CHALLENGE
+              </h4>
+              <h4 class="d-flex text-muted align-items-center mb-2">
+                  <div class="step false mr-3 ">2</div>VOTE A CHALLENGE
+              </h4>
+              <h4 class="text-muted d-flex align-items-center mb-2">
+                  <div class="step false  mr-3 ">3</div>UPLOAD VIDEO
+              </h4>
+            
+         
 
 
 
@@ -64,7 +77,7 @@ export default function Game() {
   const router = useRouter();
   const contract = useDaoStakingContract();
   const [challenges, setChallenges] = useState<any[]>([]);
-  let [stage, setStage] = useState(2);
+  let [stage, setStage] = useState(1);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
 
   const calculateTimeLeft = (entryTime) => {
@@ -109,7 +122,7 @@ export default function Game() {
     );
 
     if (check == -1 && current > current) {
-      setStage(4);
+      setStage(1);
     } else {
       const interval = setInterval(() => {
         let currTime = moment().unix();
@@ -359,18 +372,18 @@ export default function Game() {
     <>
       <div className="game container-fluid">
         <div className="row">
-          <div className={`col-12 ${biggerThan1500 && ' col-lg-9'}`}>
+          <div className='col-xl-9 col-lg-12' id="game-section">
             <div className="row">
               <div className="col-lg-12">
                 <div className="row">
-                  <div className="col-lg-4 mb-4 col-12">
+                  <div className="col-lg-4 mb-4" id="timer-section">
                     <TimerDisplay
                       hours={hours}
                       minutes={minutes}
                       seconds={seconds}
                     />
                   </div>
-                  <div className="col-lg-8 mb-4">
+                  <div className="col-lg-8 mb-4" id="action-section">
                     <div className="row h-100 ">
                       <div className="col-12 h-100 ">
 
@@ -541,7 +554,6 @@ export default function Game() {
                                           </span>
                                           <p className="fs-12 " style={{ whiteSpace: "break-spaces" }}>
                                             {todayChallenge.challenge.payload.body}
-                                            {/* Lorem ips hium quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id <br /><br />dolores vitae labore provident dignissimos! Lorem ipsum quidem aliquid, cum quas dicta omnis quibusdam numquam hic id dolores vitae labore provident dignissimos! */}
                                           </p>
 
                                           <Link
@@ -568,39 +580,31 @@ export default function Game() {
                           </div>
 
 
-
-
                         )}
 
 
-
-
-
                       </div>
+                    </div>
+
+                    <div className="row" id="video-mobile-section">
+                      <div className="col-12">
+                          <Media todayVideo={todayChallenge}/>
+                        </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-12">
-              {/* {stage == 4 && ( */}
-               <Media todayVideo={todayChallenge}/>
-              {/* )} */}
-                
+            <div className="row" id="video-section">
+              <div className="col-12" >
+                   <Media todayVideo={todayChallenge}/>
               </div>
             </div>
           </div>
-          <div className={`col-12 ${biggerThan1500 && ' col-lg-3'}`}>
+          <div className='col-xl-3' id="ranking-section">
             <div className="row h-100 ">
-              <div className="col-12 h-100 ">
-
-
+              <div className="col-12 h-100">
                 <Ranking voters={voters} />
-
-
-
-
               </div>
             </div>
           </div>
