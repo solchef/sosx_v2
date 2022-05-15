@@ -182,14 +182,14 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652644481;
+    const roundStartTime = 1652651455;
 
     let stageGroups = [];
 
-    let stage1 = { start: roundStartTime, end: roundStartTime + 300 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 300 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 300 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + 720 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 5 * 10 };
+    let stage2 = { start: stage1.end, end: stage1.end + 5 * 10 };
+    let stage3 = { start: stage2.end, end: stage2.end + 5 * 10 };
+    let stage4 = { start: stage3.end, end: stage3.end + 5 * 10 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
@@ -373,6 +373,9 @@ export default function Game() {
     // test();
   }, []);
 
+
+
+
   return (
     <>
       <div className="game container-fluid d-flex flex-wrap flex-direction-row-reverse">
@@ -431,6 +434,7 @@ export default function Game() {
           {stage == 3 && (
             <div className="card h-100">
               <div className="row h-100">
+                
                 <div className="col-6 h-100 ">
                   <StageNav stage={3} />
 
@@ -446,7 +450,7 @@ export default function Game() {
                   <Link href="/votechallenge">
                     <button
                       type="submit"
-                      className="btn btn-primary btn-lg w-100 my-4"
+                      className="btn btn-primary btn-lg  my-4"
                     >
                       {" "}
                       Vote for Challange

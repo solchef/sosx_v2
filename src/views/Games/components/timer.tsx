@@ -59,7 +59,7 @@ const TimerDisplay = (props) => {
         {props.stage == 3 &&   <p>The challenge final voting stage is in effect.</p>}
         {props.stage == 4 &&   <p>The challenge upload stage is in effect.</p>}
       
-      
+
         <div className="clock mt-4">
           <div
             className="d-flex m-auto w-100"
@@ -113,13 +113,15 @@ const TimerDisplay = (props) => {
         </ModalHeader>
 
         <div className="modal-body" style={{background:"#111117"}}>
-          <form onSubmit={handleSubmitDonate}>
+          <form 
+          // onSubmit={handleSubmitDonate}
+          >
 
             <div className="form-group">
                  <input className="input1" placeholder="Amount Contributing in SOSX" required type="text" onChange={(e) => setDonateAmount(Number(e.target.value))}/>
             </div>
             <div className=" rounded p-2">
-              <button className="btn btn-primary w-100">Donate to Prize Pool</button>
+              <button className="btn btn-primary ">Donate to Prize Pool</button>
             </div>
           </form>
         </div>

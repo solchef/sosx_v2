@@ -291,10 +291,10 @@ const CreateChallenge = (props) => {
     // </div>
 
    
-      <div className="card  w-100">
+      <div className="card h-100 w-100">
         <form onSubmit={handleSubmit}>
           <div className="row">
-            <div className="col-12 col-xl-5">
+            <div className="col-12 col-xl-6">
               <StageNav stage={1} />
 
                  <p style={{ order: 4 }}>
@@ -314,21 +314,22 @@ const CreateChallenge = (props) => {
               {account ? (
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg w-100 my-4"
+                  className="btn btn-primary btn-lg  my-4"
                   style={{ order: 6 }}
                 >
-                  Submit your challenge
+                  {isLoading ? 'Request is being processed' : 'Submit your challenge'}
+                  
                 </button>
               ) : (
                 <ConnectWalletButton
                   width="100%"
-                  className="btn btn-primary btn-lg w-100 my-4"
+                  className="btn btn-primary btn-lg  my-4"
                   type="button"
                   style={{ order: 6 }}
                 />
               )}
             </div>
-            <div className="col-12 col-xl-7" style={{ order: 5 }}>
+            <div className="col-12 col-xl-6" style={{ order: 5 }}>
               <input
                 id="name"
                 type="text"

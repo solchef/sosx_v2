@@ -94,10 +94,11 @@ export default function SocialminingS3() {
 
   return (
     <>
+       <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
       <NavMining />
       <form onSubmit={handlePost}>
-      <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
-        <div className="card p-3 mt-3">
+   
+        <div className="card p-3 mt-5">
           <div className="row">
             <div className="col-lg-6">
               
@@ -175,7 +176,7 @@ export default function SocialminingS3() {
             </div>
           </div>
         </div>
-      </div>
+     
 
       <div className="container-fluid">
         <div className="row text-center">
@@ -199,8 +200,10 @@ export default function SocialminingS3() {
              
           </div>
         </div>
+      
       </div>
       </form>
+      </div>
     </>
   );
 }

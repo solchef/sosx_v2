@@ -232,13 +232,13 @@ export default function DaoStaking() {
       return;
     }
 
-    if(stakingClass == 2 && amountToStake < process.env.NEXT_PUBLIC_LEVEL2){
+    if(stakingClass == 2 && amountToStake < Number(process.env.NEXT_PUBLIC_LEVEL2) ){
 
         toastError("DAO Level 2 required you to stake more than 100000 SOSX");
       return;
     }
 
-    if(stakingClass == 3 && amountToStake < process.env.NEXT_PUBLIC_LEVEL3){
+    if(stakingClass == 3 && amountToStake < Number(process.env.NEXT_PUBLIC_LEVEL3)){
 
       toastError("DAO Level 3 required you to stake more than 100000 SOSX");
     return;
@@ -304,7 +304,7 @@ export default function DaoStaking() {
         className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"
           }`}
       >
-        <div className="row">
+        <div className="row mb-5">
           <div className="col-sm-3 col-6">
             <div className="card overflow-hidden ">
               <h4>10,000,000,000</h4>

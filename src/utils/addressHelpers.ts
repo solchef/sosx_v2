@@ -77,8 +77,12 @@ export const getstakingContractAddress = () => {
   return "0xab1EffDe3241545a26e1597BDf3A0E2724AB9924";
 }
 
+// export const getSosxDaoContractAddress = () => {
+//   return "0x1aA0ce82643700b4A554368F286fEF76Dd60Ab72";
+// }
+
 export const getSosxDaoContractAddress = () => {
-  return "0x1aA0ce82643700b4A554368F286fEF76Dd60Ab72";
+  return "0x5F2cd649D6C1BaF0014D84Bc42509EB9027B7C1D";
 }
 
 // {testnet}

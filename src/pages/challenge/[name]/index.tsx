@@ -11,7 +11,7 @@ import useToast from 'hooks/useToast'
 import { generatePayloadData } from "views/Games/helpers";
 import Link from "next/link";
 import { useMediaPredicate } from "react-media-hook";
-import { useStakingContract } from "hooks/useContract";
+import { useDaoStakingContract } from "hooks/useContract";
 import ConnectWalletButton from '../../../components/ConnectWalletButton'
 
 
@@ -30,13 +30,14 @@ export default function Challenge() {
     const { library, connector } = useWeb3Provider()
     const { toastSuccess, toastError } = useToast()
     const { t } = useTranslation()
-    const contract = useStakingContract();
+    const contract = useDaoStakingContract();
 	const [voters, setVoters] = useState([])
 
     useEffect(() => {
         getData();
         userVotingLevel()
     }, [name]);
+
 
     let challengeName = `challenge-${name}`
     const getData = async () => {
@@ -92,9 +93,9 @@ export default function Challenge() {
 
     const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
-
+        // alert("voting")
         let daoList = await contract.getAllAccount();
-        console.log(daoList)
+        // console.log(daoList)
         let voters = [];
         for (let i = 0; i < daoList.length; i++) {
             let voter_address = daoList[i];
@@ -163,7 +164,7 @@ export default function Challenge() {
             }
         })
 
-        const sig = await signMessage(connector, library, account, vote)
+        const sig = await signMessage(connector, library, account, vote);
 
         if (sig) {
             const forIPFS = JSON.stringify({
@@ -214,7 +215,7 @@ export default function Challenge() {
                     data: voters
                 }
             }, null, 2)
-
+            // alert
 
             await server.files.write(`/challenges/challenge-${name}/votes/${account}.json`, forIPFS, { create: true })
             toastSuccess(t('Vote created!'))
@@ -265,7 +266,6 @@ export default function Challenge() {
     }
 
 
-
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
     const biggerThan1200 = useMediaPredicate("(min-width: 1200px)");
     const biggest1400 = useMediaPredicate("(max-width: 1400px)");
@@ -308,6 +308,7 @@ export default function Challenge() {
                                     </div>
 
                                 </div>
+                                
                                 <div className="row mx-auto pt-5">
                                     <div className="ml-2 text-nowrap ">
                                         <form onSubmit={handleSubmit}>
@@ -317,7 +318,7 @@ export default function Challenge() {
                                             votesList.find(acc => acc.name == account) ? (
                                                 <button disabled className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>You already voted</button>
                                             ) : (
-                                                <button className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Vote This Challenge</button>
+                                                <button   type="submit" className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Vote This Challenge</button>
                                             ))}
                                         </form>
                                     </div>
