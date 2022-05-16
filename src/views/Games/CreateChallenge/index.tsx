@@ -339,6 +339,10 @@ const CreateChallenge = (props) => {
                 placeholder="Challenge Title"
                 required
               />
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["http://app.socialx.io:5001", "http://localhost:3000", "http://127.0.0.1:5001", "https://app.socialx.io"]'
+$ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
+$ ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001
+$ ipfs config Addresses.Gateway /ip4/127.0.0.1/tcp/8080
 
 {/* <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required /> */}
               {/* @ts-ignore */}

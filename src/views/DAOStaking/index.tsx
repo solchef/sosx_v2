@@ -178,11 +178,11 @@ export default function DaoStaking() {
   const handleAmountChange = async (event) => {
     let _amountToStake = Number(event.target.value);
 
-    if (_amountToStake > balance) {
-      setInsufficientBalance(true);
-    } else {
-      setInsufficientBalance(false);
-    }
+    // if (_amountToStake > balance) {
+    //   setInsufficientBalance(true);
+    // } else {
+    //   setInsufficientBalance(false);
+    // }
 
     let decimals = new BigNumber(10).pow(18);
 
@@ -250,7 +250,7 @@ export default function DaoStaking() {
     return;
   }
   // console.log()
-    if (amountToStake < balance) {
+    if (amountToStake > balance) {
       if (Number(allowanceValue) > amountToStake) {
         // console.log(referralAddress);
         setLoading(true);
@@ -499,12 +499,12 @@ export default function DaoStaking() {
                       </div>
                       <br/>
                       <div className="d-flex justify-content-between">
-                        <h6 className=" mb-0 fs-12">Level 2 : Stake between 100,000 and 1000,000 SOSX</h6>
+                        <h6 className=" mb-0 fs-12">Level 2 : Stake between 100,000 and 100,000 SOSX</h6>
                       </div>
 
                       <br/>
                       <div className="d-flex justify-content-between">
-                        <h6 className=" mb-0 fs-12">Level 3 : Stake above  100,000 SOSX</h6>
+                        <h6 className=" mb-0 fs-12">Level 3 : Stake above  1,000,000 SOSX</h6>
                       </div>
                 </div>
                 <hr/>
