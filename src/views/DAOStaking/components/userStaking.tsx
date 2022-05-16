@@ -20,7 +20,7 @@ const BorderCard = styled.div`
   padding: 16px;
 `;
 
-export default function DaoStaking(props) {
+export default function userStaking(props) {
   const contract = useDaoStakingContract();
   const { account } = useActiveWeb3React();
   const tokenContract = useSosxContract();
