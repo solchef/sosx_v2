@@ -306,52 +306,60 @@ export default function DaoStaking() {
 
   return (
     <>
-      <div style={{gap: '20px'}} className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse" >
-        <div style={{flex: '1 25%', gap: '20px'}}>
+      <div style={{ gap: '20px' }} className={`container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse`} >
+        <div style={{ flex: '1 25%', gap: '20px' }}>
           <div className="card w-100 h-100">
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex h-100 justify-content-between align-items-center">
               <div>
                 Img
               </div>
               <div className="d-flex flex-column align-items-center">
                 <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end text-success">5MO</span>
-                  <h4 className="fs-28">5,000</h4>
-                  <span className="text-success" >SOSX</span>
-                  <span className="text-success">Staked</span>
+                  <span className="align-self-end main-pink">5 MO</span>
+                  <h4 style={{ fontSize: '30px', letterSpacing: '3px', fontWeight: '900' }} className="main-pink">$1,000.00</h4>
+                  <p className="main-pink" >SOSX Staked</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div style={{flex: '1 25%', gap: '20px'}}>
+        <div style={{ flex: '1 25%', gap: '20px' }}>
           <div className="card w-100 h-100">
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex h-100 justify-content-between align-items-center">
+              <div>
+                Img
+              </div>
+              <div className="d-flex flex-column justify-content-between">
+                <h4 style={{ fontSize: '30px', letterSpacing: '3px', fontWeight: '900' }} className="main-pink" >DAO3
+                </h4>
+                <br />
+                <h4 style={{ fontSize: '30px', letterSpacing: '3px', fontWeight: '900' }} className="main-pink" >Level3
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{ flex: '1 25%', gap: '20px' }}>
+          <div className="card w-100 h-100">
+            <div className="d-flex h-100 justify-content-between align-items-center">
               <div>
                 Img
               </div>
               <div className="d-flex flex-column align-items-center">
-                <h4>5 Month</h4>
-                <span className="pt-1 pb-1">Total supply</span>
+                <div className="d-flex flex-column align-items-center">
+                  <span className="align-self-end main-pink">+2.5%</span>
+                  <h4 style={{ fontSize: '30px', letterSpacing: '3px', fontWeight: '900' }} className="display-3 main-pink">${price.toFixed(8)}</h4>
+                  <p className="main-pink" >SOSX price</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div style={{flex: '1 25%', gap: '20px'}}>
-          <div className="card w-100 h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <h4 className="pt-1 pb-1 ">Price</h4>
-              <div className="d-flex flex-column align-items-center">
-                <h4 className="fs-28">${price.toFixed(8)}</h4>
-                <span className="text-success" >SOSX price</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style={{flex: '1 25%', gap: '20px'}}>
-          <div className="card d-flex flex-column w-100 h-100">
-            <div className="card-header border-0 p-0">
-              <h4 className="fs-18 ">Stake SOSX</h4>
+        <div style={{ flex: '1 30%', gap: '20px' }}>
+
+          <div className="card d-flex flex-column h-100">
+            <div className="card-header border-0 pl-0 pt-0">
+              <h4 className="fs-18 ">Stake SOSX for DAO Level</h4>
             </div>
             <div className="card-body">
               <div className="bg-dark mb-3 p-3 rounded">
@@ -359,7 +367,7 @@ export default function DaoStaking() {
                   <span>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control fs-18"
                       required
                       onChange={(e) => handleAmountChange(e)}
                       defaultValue={0}
@@ -368,53 +376,19 @@ export default function DaoStaking() {
                   <span className="text-white fs-18">SOSX</span>
                 </div>
               </div>
-              <div className="bg-dark p-3 mb-3 rounded">
-                <div className="d-flex justify-content-between align-items-center">
-                  <span>
-                    <select
-                      className="form-control  select-special"
-                      onChange={(e) => {
-                        setStakingClass(Number(e.target.value));
 
-                        const p = amountToStake;
-                        const t =
-                          Number(e.target.value) == 1
-                            ? 0.25
-                            : Number(e.target.value) == 2
-                              ? 0.5
-                              : 1;
-                        const r =
-                          Number(e.target.value) == 1
-                            ? 0.29
-                            : Number(e.target.value) == 2
-                              ? 0.64
-                              : 1.45;
-                        const n = 12;
-                        setStakingInterest(
-                          Number(compoundInterest(p, t, r, n))
-                        );
-                      }}
-                    >
-                      <option value={1}>3 </option>
-                      <option value={2}>6 </option>
-                      <option value={3}>12 </option>
-                    </select>
-                  </span>
-                  <h4 className="text-white ">Months</h4>
-                </div>
-              </div>
               <div className="bg-dark p-3 rounded">
                 <div className="d-flex justify-content-between">
                   <div className="small2">
-                    <div className="success mr-1">Reward Interest: </div>
+                    <div className="success pt-2 pb-2">Reward Interest: </div>
                     <div className="d-flex align-items-center">
-                      <div className="text-white fs-14"> {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145}%</div>
+                      <div className="text-white fs-18"> {stakingClass == 1 ? 6 : stakingClass == 2 ? 9 : 12}%</div>
                     </div>
                   </div>
                   <div className="small2">
-                    <div className="success mr-1">Estimated </div>
+                    <div className="success mr-1 pb-2 pt-2">Estimated </div>
                     <div className="d-flex align-items-center">
-                      <div className="text-white fs-14">
+                      <div className="text-white fs-18">
                         {" "}
                         {stakingInterest} SOSX
                       </div>
@@ -427,7 +401,7 @@ export default function DaoStaking() {
               {account ? (
                 <>
                   {activateStake ? (
-                    <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-between">
+                    <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-around">
                       <button
                         type="button"
                         onClick={handleSubmit}
@@ -445,7 +419,7 @@ export default function DaoStaking() {
                       </button>
                     </div>
                   ) : (
-                    <div className="d-flex card-footer pt-0 pb-0  foot-card  border-0 justify-content-between">
+                    <div className="d-flex card-footer pt-0 pb-0  foot-card  border-0 justify-content-around">
                       <button
                         type="button"
                         className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
@@ -471,54 +445,307 @@ export default function DaoStaking() {
 
           </div>
         </div>
-        <div style={{flex: '1 25%', gap: '20px'}}>
+        <div style={{ flex: '1 30%', gap: '20px' }}>
           <div className="card d-flex flex-column h-100">
             <div className="card-header border-0 p-0">
-
               <h4 className="fs-18">Staking Log</h4>
             </div>
             <div className="card-body">
-              <LoaderDisplay />
+              <div className="tab-bg">
 
+                {stakingList.length == 0 ? (
+                  <>
+                    <div style={{ justifyContent: 'space-between' }} className="mt-3 d-flex p-4 mt-0  ranking-header"
+                    >
+                      <div className="header-item" >Rank</div>
+                      <div style={{ width: ' 55px', textAlign: 'center' }} className="header-item" >Wallet</div>
+                      <div className="header-item">Staking</div>
+                    </div>
+
+
+                    {/* {loadingData ? <div className='text-center'>Loading Data</div> : ''} */}
+                    {activeStakes.length > 0 ?
+
+                      <>
+
+
+
+
+
+
+
+
+
+
+
+
+                        {activeStakes.map((stake, i) => (
+                          <>
+                            <ul
+                              className="token-balance-list mb-2 mt-2"
+                              onClick={() => {
+                                showDetails == i
+                                  ? setShowDetails(-1)
+                                  : setShowDetails(i);
+                              }}
+                            >
+                              <li>
+                                <span className="justify-content-between success fs-12">
+                                  Level {" "}
+                                  {stake.stakingClass == 1
+                                    ? 1
+                                    : stake.stakingClass == 2
+                                      ? 2
+                                      : 3}{" "}
+
+                                </span>
+                              </li>
+                              <li>
+                                <span className="success fs-12">
+                                  {stake.amount.toFixed(3)}
+                                </span>
+                              </li>
+                              <i className="fa fa-chevron-down"></i>
+                            </ul>
+
+
+                            <div
+                              style={{
+                                display: showDetails == i ? "block" : "none",
+                              }}
+                              className="faq-header"
+                            >
+                              <div className="bg-dark rounded">
+                                <ul
+                                  className="token-balance-list mb-2 mt-2"
+                                  onClick={() => {
+                                    showDetails == i
+                                      ? setShowDetails(-1)
+                                      : setShowDetails(i);
+                                  }}
+                                >
+                                  <li>
+                                    <span className="justify-content-between success fs-12">
+                                      {" "}
+                                      Amount Staked: <br />
+                                      {stake.amount.toFixed(3)} SOSX
+                                    </span>
+                                  </li>
+                                  <li>
+                                    <span className="justify-content-between success fs-12">
+                                      {" "}
+                                      Rewards Gained: <br />
+                                      {stake.amount.toFixed(3)} SOSX{" "}
+                                    </span>
+                                  </li>
+                                </ul>
+
+                                <ul className="token-balance-list mb-2 mt-2">
+                                  <li>
+                                    <span className="justify-content-between success fs-12">
+                                      {" "}
+                                      Date Staked: <br />
+                                      {stake.stakeDate}
+                                    </span>
+                                  </li>
+
+                                  <li>
+                                    <span className="justify-content-between success fs-12">
+                                      {" "}
+                                      Duration Elapsed: <br />
+                                      {(stake.periodElapsed / (24 * 60)).toFixed(
+                                        0
+                                      )}{" "}
+                                      Days
+                                    </span>
+                                  </li>
+                                </ul>
+
+                                <ul
+                                  className="token-balance-list mb-2 mt-2"
+                                  onClick={() => {
+                                    showDetails == i
+                                      ? setShowDetails(-1)
+                                      : setShowDetails(i);
+                                  }}
+                                >
+                                  <li>
+                                    <span className="justify-content-between success fs-12">
+                                      {" "}
+                                      Withdrawed: <br />
+                                      {stake.isWithdrawed ? "Yes" : "No"}
+                                    </span>
+                                  </li>
+                                  {/* <li>
+                                <span className="justify-content-between success fs-12">
+                                  {" "}
+                                  Remaining Period: <br />
+                                  {(
+                                    (stake.stakingClass == 1
+                                      ? 90
+                                      : stake.stakingClass == 2
+                                        ? 180
+                                        : 360) -
+                                    stake.periodElapsed / (24 * 60)
+                                  ).toFixed(0)}{" "}
+                                  Days
+                                </span>
+                              </li> */}
+                                </ul>
+                                {!stake.isWithdrawed ?
+
+                                  <ul
+                                    className="token-balance-list mb-2 mt-2"  >
+
+                                    <li>
+                                      <span className="justify-content-between success fs-12">
+                                        <button onClick={() => handleClaim()} className="btn btn-success full-width">
+                                          CLAIM REWARDS
+                                        </button>
+                                      </span>
+                                    </li>
+                                    <li>
+                                      <span className="justify-content-between success fs-12">
+                                        <button onClick={() => handleUnstake(i)} className="btn btn-primary">
+                                          UNSTAKE
+                                        </button>
+                                      </span>
+                                    </li>
+                                  </ul>
+
+                                  :
+
+                                  <p></p>
+
+                                }
+
+                              </div>
+                            </div>
+                          </>
+                        ))}
+
+
+                      </>
+
+
+                      :
+
+                      <>
+
+                        {/* <br />
+                      <br />
+                      <br />
+                      <br />
+                      <hr />
+                      <hr />
+                      <br />
+                      <br />
+                      <hr />
+                      <div className="d-flex justify-content-center">
+
+                        <span className="position-absolute mx-auto main-pink">No Data</span>
+
+                      </div>
+
+                      <hr />
+                      <hr />
+                      <hr /> */}
+
+                        <div style={{ justifyContent: 'space-between' }} className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
+                        >
+                          <div className="header-item">1</div>
+                          <div className="header-item"  >
+                            7640od72938640tr...</div >
+                          <div className="header-item" > 1, 098, 000, 00</div >
+                        </div >
+                        <div style={{ justifyContent: 'space-between' }} className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
+                        >
+                          <div className="header-item">1</div>
+                          <div className="header-item"  >
+                            7640od72938640tr...</div >
+                          <div className="header-item" > 1, 098, 000, 00</div >
+                        </div >
+                        <div style={{ justifyContent: 'space-between' }} className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
+                        >
+                          <div className="header-item">1</div>
+                          <div className="header-item"  >
+                            7640od72938640tr...</div >
+                          <div className="header-item" > 1, 098, 000, 00</div >
+                        </div >
+                        <div style={{ justifyContent: 'space-between' }} className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
+                        >
+                          <div className="header-item">1</div>
+                          <div className="header-item"  >
+                            7640od72938640tr...</div >
+                          <div className="header-item"> 1, 098, 000, 00</div >
+                        </div >
+
+
+
+                      </>
+
+                    }
+
+
+
+
+
+
+                  </>
+                ) : (
+                  { stakingList }
+                )}
+              </div>
             </div>
           </div>
-        </div>
-        <div style={{flex: '1 25%', gap: '20px'}}>
+        </div >
+        <div style={{ flex: '1 30%', gap: '20px' }}>
           <div className="card d-flex flex-column justify-content-between h-100">
 
             <div className="bg-dark p-3 rounded">
               <div className="d-flex align-items-center justify-content-between">
                 <div className="text-white fs-28 mr-3" > 6%</div>
                 <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end text-success">Level</span>
-                  <h4 className="fs-28">5,000</h4>
-                  <span className="text-success" >Dealy Rewared</span>
+                  <span className="align-self-end main-pink">DAO Level 1</span>
+                  <h4 style={{ fontSize: '30px' }}>100,000</h4>
+                  <span className="main-pink" >Dealy Rewared</span>
                 </div>
               </div>
             </div>
             <div className="bg-dark p-3 rounded">
               <div className="d-flex align-items-center justify-content-between">
-                <div className="text-white fs-28 mr-3"> 10%</div>
+                <div className="text-white fs-28 mr-3" > 10%</div>
                 <div className="d-flex flex-column align-items-center">
-                  <h4 className="fs-28">5,000K+</h4>
-                  <span className="text-success" >Staking</span>
+                  <span className="align-self-end main-pink">DAO Level 2</span>
+                  <h4 style={{ fontSize: '30px' }}>100,000K+</h4>
+                  <span className="main-pink" >Staking</span>
                 </div>
               </div>
             </div>
+
+
 
             <div className="bg-dark p-3 rounded">
               <div className="d-flex align-items-center justify-content-between">
                 <div className="text-white fs-28 mr-3"> 16%</div>
                 <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end text-success">Level</span>
-                  <h4 className="fs-28">5,000+</h4>
-                  <span className="text-success" >Dealy Rewared</span>
+                  <span className="align-self-end main-pink">DAO Level 3</span>
+                  <h4 style={{ fontSize: '30px', letterSpacing: '3px' }}>1,0000.00+</h4>
+                  <span className="main-pink" >SOSX</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+
+      </div >
     </>
   );
 }
+
+
+
+
+
+
+
