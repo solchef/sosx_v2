@@ -14,6 +14,8 @@ import ConnectWalletButton from "components/ConnectWalletButton";
 import web3 from "web3";
 import { cleanNumber } from "utils/amount";
 import UserStaking from "./userStaking";
+import ConfirmStakingModal from "./components/ConfirmStakingModal";
+import { useModal } from "@pancakeswap/uikit";
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -99,10 +101,7 @@ export default function DaoStaking() {
 
   }
 
-    
-  const showStakingLog = async () => {
-      await  listUserStaking();
-  } 
+
   
   const listUserStaking = async () => {
     let list = [];
@@ -134,11 +133,8 @@ export default function DaoStaking() {
 
                 list.push(instance);
                
-                
             // });
-           
           // }
-
         
       });
 
@@ -260,12 +256,12 @@ export default function DaoStaking() {
         setLoading(true);
         // alert('ss')
       let stake =  await contract.stakeToken(
-          amountToStake + "000000000000000000",
+          result.toString(),
           "0x0000000000000000000000000000000000000001",
           stakingClass
         );
 
-        alert('ss')
+        // alert('ss')
         if(stake){
           setActivatestake(true);
           setLoading(false);
@@ -278,7 +274,7 @@ export default function DaoStaking() {
       } else {
         const tx = await tokenContract.populateTransaction.approve(
           contract.address,
-          amountToStake + "000000000000000000",
+          result.toString(),
         );
         let signer = contract.signer;
        await  signer.sendTransaction(tx);
@@ -310,6 +306,26 @@ export default function DaoStaking() {
       return 3;
     }
   };
+
+
+      const [onPresentConfirmModal] = useModal(
+         <ConfirmStakingModal
+		  //   trade={trade}
+		  //   originalTrade={tradeToConfirm}
+		  //   onAcceptChanges={handleSubmit}
+		  //   attemptingTxn={attemptingTxn}
+		  //   txHash={txHash}
+		  //   recipient={recipient}
+		  //   allowedSlippage={allowedSlippage}
+		  onConfirm={handleSubmit} attemptingTxn={false} recipient={""} allowedSlippage={0} onAcceptChanges={function (): void {
+			  throw new Error("Function not implemented.");
+		  } }    //   swapErrorMessage={swapErrorMessage}
+    //   customOnDismiss={handleConfirmDismiss}
+    />,
+    true,
+    true,
+    'ConfirmStakingModal',
+  )
 
   return (
     <>
@@ -426,14 +442,23 @@ export default function DaoStaking() {
                     </div>
                   </div>
                 </div>
-              <div className="card-footer pt-0 foot-card  border-0">
+
+                {/* <div className="card-footer pt-0 foot-card  border-0"> */}
+                          <button
+                            type="button"
+                            className="btn btn-primary  btn-lg w-100 text-nowrap mt-3"
+                            onClick={onPresentConfirmModal} >
+                          Stake SOSX
+                      </button> 
+                {/* </div> */}
+              {/* <div className="card-footer pt-0 foot-card  border-0">
                 {account ? (
                   <>
                     {!activateStake ? (
                       <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-around">
                         <button
                           type="button"
-                          onClick={handleSubmit}
+                          onClick={onPresentConfirmModal}
                           className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
                         //   disabled={insufficientBalance || activateStake}
                         >
@@ -459,7 +484,7 @@ export default function DaoStaking() {
                         <button
                           type="button"
                           // disabled={insufficientBalance || activateStake}
-                          onClick={handleSubmit}
+                          onClick={onPresentConfirmModal}
                           className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
                         >
                           {loading ? "Staking.." : "Stake"}
@@ -470,7 +495,7 @@ export default function DaoStaking() {
                 ) : (
                   <ConnectWalletButton />
                 )}
-              </div>
+              </div> */}
 
             </div>
           </div>

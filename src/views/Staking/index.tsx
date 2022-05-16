@@ -193,21 +193,24 @@ export default function Staking() {
     console.log(allowanceValue);
     if (amountToStake < balance) {
       let final = BigNumber(amountToStake).multiply(18);
-      // console.log(allowanceValue.toString().length);
-      if (allowanceValue.toString().length > 50) {
+      console.log(Number(allowanceValue), (amountToStake * (10 ** 18)));
+      if (Number(allowanceValue) > (amountToStake * (10 ** 18)) ) {
         setLoading(true);
+        // alert('al')
         await contract.stakeToken(
-          (amountToStake * 10 ** 18).toString(),
-          referralAddress,
+          (amountToStake * (10 ** 18)).toString(),
+          "0x0000000000000000000000000000000000000001",
           stakingClass
         );
         setActivatestake(true);
         setLoading(false);
         listUserStaking();
       } else {
+
+        alert('gd')
         const tx = await tokenContract.populateTransaction.approve(
           contract.address,
-          MaxUint256
+          (amountToStake * (10 ** 18)).toString()
         );
         let signer = contract.signer;
         signer.sendTransaction(tx);
