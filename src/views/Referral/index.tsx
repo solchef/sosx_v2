@@ -346,9 +346,8 @@ const getDataSocialMining = async () => {
        </div>
        <div className="card-body">
          <div className="bg-dark rounded">
+         {account!=null?  (
            <div className="d-flex justify-content-between align-items-center">
-            {account!=null?  (
-              <div>
               <span>https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}</span>
               <div className="float-right d-flex">
              <li className="nav-item pr-2">
@@ -368,12 +367,9 @@ const getDataSocialMining = async () => {
               <i className="fa-solid fa-share-from-square"></i></a></li>
             </OverlayTrigger>
              </div>
-             </div>
-             ) :(
-               <p>** Connect to Refer ** </p> )   }
-           
-             
            </div>
+           ) :(
+            <p>** Connect to Refer ** </p> )   }
          </div>
         
        
