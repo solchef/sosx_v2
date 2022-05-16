@@ -38,7 +38,7 @@ export default function Challenge() {
     useEffect(() => {
         getData();
         userVotingLevel()
-    }, [name]);
+    }, [stage, name]);
 
     const stageHook = useStage()
     useEffect(() => {
@@ -49,7 +49,7 @@ export default function Challenge() {
 
     let challengeName = `challenge-${name}`
     const getData = async () => {
-        if (name) {
+        if (name && stage) {
             let challenge = [];
             for await (const resultPart of server.files.ls("/challenges")) {
                 let challengeJson;
@@ -70,7 +70,7 @@ export default function Challenge() {
                             );
                         }
                         if (cha.name == 'votes') {
-                            for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes/stage-${stage ? stage : 2}`)) {
+                            for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes/stage-${stage}`)) {
 
                                 // console.log(await voteListLevels(name));
                                 // console.log(vote)
