@@ -13,7 +13,7 @@ import axios from "axios";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import web3 from "web3";
 import { cleanNumber } from "utils/amount";
-import UserStaking from "./userStaking";
+import UserStaking from "./components/userStaking";
 import ConfirmStakingModal from "./components/ConfirmStakingModal";
 import { useModal } from "@pancakeswap/uikit";
 
@@ -219,55 +219,54 @@ export default function DaoStaking() {
   //   listUserStaking()
   // }, 10000);
 
-  const handleSubmit = async () => {
-    // console.log(allowanceValue);
-
-    if (amountToStake < 1) {
-      toastError("You Must stake at least one token. Check your input");
-      // referralAddress;
-      return;
-    }
-
-    if (
-      stakingClass == 2 &&
-      amountToStake < Number(process.env.NEXT_PUBLIC_LEVEL2)
-    ) {
-      toastError("DAO Level 2 required you to stake more than 100000 SOSX");
-      return;
-    }
-
-    if (
-      stakingClass == 3 &&
-      amountToStake < Number(process.env.NEXT_PUBLIC_LEVEL3)
-    ) {
-      toastError("DAO Level 3 required you to stake more than 100000 SOSX");
-      return;
-    }
-    // console.log()
-    // if (amountToStake > balance) {
+  const handleStake = async () => {
     let decimals = BigNumber(10).pow(18);
 
     let result = BigNumber(amountToStake).multiply(decimals);
     // console.log(Number(allowanceValue),amountToStake )
-    if (Number(allowanceValue) > amountToStake) {
-      // console.log(referralAddress);
-      setLoading(true);
-      // alert('ss')
-      let stake = await contract.stakeToken(
-        result.toString(),
-        "0x0000000000000000000000000000000000000001",
-        stakingClass
-      );
 
-      // alert('ss')
-      if (stake) {
-        setActivatestake(true);
-        setLoading(false);
-        loadUI();
-        toastSuccess("Staking Transaction successfully sent");
-      } else {
-        toastError("Could not stake");
-      }
+    // console.log(referralAddress);
+    setLoading(true);
+    // alert('ss')
+    let stake = await contract.stakeToken(
+      result.toString(),
+      "0x0000000000000000000000000000000000000001",
+      stakingClass
+    );
+
+    // alert('ss')
+    if (stake) {
+      setActivatestake(true);
+      setLoading(false);
+      loadUI();
+      toastSuccess("Staking Transaction successfully sent");
+    } else {
+      toastError("Could not stake");
+    }
+  };
+
+  const handleSubmit = async () => {
+    // if (amountToStake > balance) {
+
+    let decimals = BigNumber(10).pow(18);
+    let result = BigNumber(amountToStake).multiply(decimals);
+    console.log(result - Number(allowanceValue));
+
+    if (Number(allowanceValue) >= amountToStake * 10 ** 18) {
+      useModal(
+        <ConfirmStakingModal
+          onConfirm={handleStake}
+          attemptingTxn={false}
+          recipient={""}
+          allowedSlippage={0}
+          onAcceptChanges={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />,
+        true,
+        true,
+        "ConfirmStakingModal"
+      );
     } else {
       const tx = await tokenContract.populateTransaction.approve(
         contract.address,
@@ -275,15 +274,26 @@ export default function DaoStaking() {
       );
       let signer = contract.signer;
       await signer.sendTransaction(tx);
-      toastSuccess(
-        "Approval transaction sent. You can stake after the transaction is mined."
-      );
-      // 	toastError("token allowance not yet set");
-      loadUI();
+
+      // toastSuccess(
+      //   "Approval transaction sent. You can stake after the transaction is mined."
+      // );
+            useModal(
+              <ConfirmStakingModal
+                onConfirm={handleStake}
+                attemptingTxn={true}
+                recipient={""}
+                allowedSlippage={0}
+                onAcceptChanges={function (): void {
+                  throw new Error("Function not implemented.");
+                }} 
+                
+              />,
+              true,
+              true,
+              "ConfirmStakingModal"
+            );
     }
-    // } else {
-    //   toastError("Insufficient Balance");
-    // }
   };
 
   const getLevel = (amount) => {
@@ -305,29 +315,6 @@ export default function DaoStaking() {
       return 3;
     }
   };
-
-  const [onPresentConfirmModal] = useModal(
-    <ConfirmStakingModal
-      //   trade={trade}
-      //   originalTrade={tradeToConfirm}
-      //   onAcceptChanges={handleSubmit}
-      //   attemptingTxn={attemptingTxn}
-      //   txHash={txHash}
-      //   recipient={recipient}
-      //   allowedSlippage={allowedSlippage}
-      onConfirm={handleSubmit}
-      attemptingTxn={false}
-      recipient={""}
-      allowedSlippage={0}
-      onAcceptChanges={function (): void {
-        throw new Error("Function not implemented.");
-      }} //   swapErrorMessage={swapErrorMessage}
-      //   customOnDismiss={handleConfirmDismiss}
-    />,
-    true,
-    true,
-    "ConfirmStakingModal"
-  );
 
   return (
     <>
@@ -451,7 +438,15 @@ export default function DaoStaking() {
               <div className="card-footer pt-0 foot-card  border-0">
                 {account ? (
                   <>
-                    {!activateStake ? (
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
+                      //   disabled={insufficientBalance || activateStake}
+                    >
+                      {loading ? "Staking..." : "Stake"}
+                    </button>
+                    {/* {!activateStake ? (
                       <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-around">
                         <button
                           type="button"
@@ -487,7 +482,7 @@ export default function DaoStaking() {
                           {loading ? "Staking.." : "Stake"}
                         </button>
                       </div>
-                    )}
+                    )} */}
                   </>
                 ) : (
                   <ConnectWalletButton />

@@ -24,7 +24,7 @@ const StyledList = styled.ol`
   }
 `;
 
-const Ranking = () => {
+const Ranking = (props) => {
   const { t } = useTranslation();
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
@@ -40,18 +40,16 @@ const Ranking = () => {
       // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = (total_stake / 10 ** 18);
+      total_stake = Number(total_stake / 10 ** 18);
       let data = {
         address: voter_address,
         amount: total_stake,
         level: await getLevel(total_stake),
       };
-
-      console.log(data);
-
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
       voters.push(data);
+
       // }
     }
 
@@ -92,6 +90,7 @@ const Ranking = () => {
           xmlnsXlink="http://www.w3.org/1999/xlink"
           version="1.1"
           id="Layer_1"
+
           x="0px"
           y="0px"
           viewBox="0 0 239 116"
@@ -172,52 +171,27 @@ const Ranking = () => {
               .map((voter, i) => (
                 <>
                   {voter.level == displayLevel && (
-                    <div
-                      className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
-                      key={i}
-                      style={{
-                        justifyContent: "space-between",
-                        marginTop: "0px!important",
-                        display: "flex",
-                      }}
-                    >
-                      <div
-                        className="header-item"
-                        style={{ width: "40px", textAlign: "center" }}
-                      >
-                        1
-                      </div>
-                      <div
-                        className="header-item"
-                        style={{ width: "160px", textAlign: "left" }}
-                      >
-                        {voter.address.replace(/(.{10})..+/, "$1…")}
-                      </div>
-                      <div className="header-item">
-                        {cleanNumber(voter.amount + "")}
-                      </div>
-                    </div>
-                    // <li key={i}>
-                    //   <a className="blueprint-header-display trader-display">
-                    //     <div className="d-flex align-items-center">
-                    //       <span className="text-white mr-3 fs-16 font-w600">
-                    //         {/* {() => setCount(count+1)} */}
-                    //       </span>
-                    //       <img
-                    //         className="blueprint-img-sm rounded-circle"
-                    //         src="https://app.hedgeboard.io/userprofiles/default.png"
-                    //         alt="profile"
-                    //       />
-                    //       <div className="ml-1">
-                    //         <span className=" card-small-text text-white trader-name">
-                    //           {voter.address.replace(/(.{10})..+/, "$1…")}
-                    //         </span>
-                    //       </div>
-                    //     </div>
-                    //     <span> {cleanNumber(voter.amount + "")} </span>
-                    //     {/* {count ++} */}
-                    //   </a>
-                    // </li>
+                    <li key={i}>
+                      <a className="blueprint-header-display trader-display">
+                        <div className="d-flex align-items-center">
+                          <span className="text-white mr-3 fs-16 font-w600">
+                            {/* {() => setCount(count+1)} */}
+                          </span>
+                          <img
+                            className="blueprint-img-sm rounded-circle"
+                            src="https://app.hedgeboard.io/userprofiles/default.png"
+                            alt="profile"
+                          />
+                          <div className="ml-1">
+                            <span className=" card-small-text text-white trader-name">
+                              {voter.address.replace(/(.{10})..+/, "$1…")}
+                            </span>
+                          </div>
+                        </div>
+                        <span> {cleanNumber(voter.amount + "")} </span>
+                        {/* {count ++} */}
+                      </a>
+                    </li>
                   )}
                 </>
               ))
