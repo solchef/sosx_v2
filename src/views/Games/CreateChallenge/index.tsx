@@ -153,6 +153,8 @@ const CreateChallenge = (props) => {
           const challengeName = `challenge` + `-${name.replaceAll(" ", "-")}`;
           await server.files.mkdir(`/challenges/${challengeName}`);
           await server.files.mkdir(`/challenges/${challengeName}/votes`);
+          await server.files.mkdir(`/challenges/${challengeName}/votes/stage-2`);
+          await server.files.mkdir(`/challenges/${challengeName}/votes/stage-3`);
           await server.files.mkdir(`/challenges/${challengeName}/videos`);
           await server.files.write(
             `/challenges/${challengeName}/challenge.json`,

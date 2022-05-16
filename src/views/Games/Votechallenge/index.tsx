@@ -7,6 +7,8 @@ import { Placeholder, Spinner } from "react-bootstrap";
 import { Skeleton } from "../../../../packages/uikit/src/components/Skeleton";
 import LoaderDisplay from "../components/loader";
 import moment from "moment";
+import useStage from "../hooks/useStage";
+import { useRouter } from "next/router";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -19,8 +21,18 @@ export default function Votechallenge() {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [stage, setStage] = useState(3);
+  const [stage, setStage] = useState(2);
+  const router = useRouter();
 
+  const allowedStages = [2, 3]
+  const stageHook = useStage();
+  useEffect(() => {
+    setStage(stageHook);
+    if (!allowedStages.includes(stageHook)) {
+      router.push('/xgame')
+    }
+  });
+  
   const ReadMore = ({ children, size, css }) => {
     const text = children;
     const [isReadMore, setIsReadMore] = useState(true);
@@ -108,14 +120,13 @@ export default function Votechallenge() {
       for await (const resultPart of server.files.ls("/challenges")) {
         let challenge;
         let vote;
-
         for await (const cha of server.files.ls(
           `/challenges/${resultPart.name}`
         )) {
           const chunks = [];
           if (cha.name == "votes") {
             let votes = await server.files.stat(
-              `/challenges/${resultPart.name}/votes`
+              `/challenges/${resultPart.name}/votes/stage-${stage}`
             );
             vote = votes.blocks;
           }
@@ -135,6 +146,7 @@ export default function Votechallenge() {
         };
 
         challenges.push(challengeData);
+        console.log(challengeData)
       }
       // setTopChallenges(challenges);
 
@@ -143,6 +155,7 @@ export default function Votechallenge() {
       topThreeChallenges.push(ch[0], ch[1], ch[2]);
 
       if (stage == 3) {
+
         if(challenges.length > 3){
           setChallenges(topThreeChallenges);
 
@@ -157,8 +170,6 @@ export default function Votechallenge() {
     getData();
   }, []);
 
-  console.log("challenges", challenges);
-
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
@@ -172,15 +183,20 @@ export default function Votechallenge() {
         <i className="fa-solid fa-arrow-left"></i>{" "}
         <Link href="/xgame"> Back </Link>{" "}
       </p>
-      {challenges.length > 0 ? (
-        <div className="row pt-3">
-          <div className="row pt-3">
+      <div
+        className="container-fluid d-flex flex-wrap flex-column flex-sm-row"
+        style={{ gap: "20px" }}
+      >
+        {challenges.length > 0 ? (
+          <>
             {challenges
               .sort((a, b) => a.votes - b.votes)
               .reverse()
               .map((camp) => (
-                <div className="col-12 col-xl-4 col-md-6">
-                  <div className="card p-0 overflow-hidden">
+              <div  style={{ flex: "1", gap: "20px" }}>
+
+           
+                  <div className="card h-100 p-0 overflow-hidden">
                     <div className="card-body p-3 align-items-start border-0">
                       <div>
                         <span className="fs-12 font-weight-bold success">
@@ -196,8 +212,9 @@ export default function Votechallenge() {
                         </ReadMore>
                       </div>
                     </div>
-                    <div className="card-footer  pt-0 foot-card border-0">
+                    <div className="card-footer pt-0 foot-card border-0">
                       <div>
+
                         <h4 className="fs-12 text-white">Rules</h4>
                         {camp.challenge.payload.choices.map((element) => (
                           <ul className="fs-12">
@@ -230,7 +247,7 @@ export default function Votechallenge() {
                       </Link>
                     </div>
                   </div>
-                </div>
+                  </div>
               ))}
           </div>
         </div>
