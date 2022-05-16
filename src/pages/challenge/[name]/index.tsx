@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract } from "hooks/useContract";
 import ConnectWalletButton from '../../../components/ConnectWalletButton'
+import useStage from "../../../views/Games/hooks/useStage";
 
 
 const server = create({
@@ -32,12 +33,19 @@ export default function Challenge() {
     const { t } = useTranslation()
     const contract = useDaoStakingContract();
 	const [voters, setVoters] = useState([])
+    const [stage, setStage] = useState(0);
 
     useEffect(() => {
         getData();
         userVotingLevel()
     }, [name]);
 
+    const stageHook = useStage()
+    useEffect(() => {
+        setStage(stageHook)
+    })
+
+    const allowedStages = [2, 3]
 
     let challengeName = `challenge-${name}`
     const getData = async () => {
@@ -215,9 +223,8 @@ export default function Challenge() {
                     data: voters
                 }
             }, null, 2)
-            // alert
-
-            await server.files.write(`/challenges/challenge-${name}/votes/${account}.json`, forIPFS, { create: true })
+            
+            await server.files.write(`/challenges/challenge-${name}/votes/stage-${stage}/${account}.json`, forIPFS, { create: true })
             toastSuccess(t('Vote created!'))
             getData()
         } else {
@@ -294,19 +301,6 @@ export default function Challenge() {
                                     </div>
 
 
-                                    <div className='text-muted font-weight-bold mt-3'>
-
-                                        <h1 className='font-weight-bold mb-2'>Game Rules</h1>
-                                        {challenge[0].challenge.payload.choices.map((element) => (
-                                            <ul className="fs-12">
-                                                <li>
-                                                    <i className="fa-solid fa-check pr-2"></i>
-                                                    {element}
-                                                </li>
-                                            </ul>
-                                        ))}
-                                    </div>
-
                                 </div>
                                 
                                 <div className="row mx-auto pt-5">
@@ -318,7 +312,7 @@ export default function Challenge() {
                                             votesList.find(acc => acc.name == account) ? (
                                                 <button disabled className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>You already voted</button>
                                             ) : (
-                                                <button   type="submit" className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>Vote This Challenge</button>
+                                                    <button disabled={!allowedStages.includes(stage)} type="submit" className="btn btn-primary  font-weight-bold "><i className="fa-solid fa-check-to-slot pr-2"></i>{allowedStages.includes(stage) ? "Vote For the Challenge" : "Voting Disabled in this Stage" }</button>
                                             ))}
                                         </form>
                                     </div>
