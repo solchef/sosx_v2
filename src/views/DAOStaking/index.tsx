@@ -194,7 +194,7 @@ export default function DaoStaking() {
     // console.log(_amountToStake)
     // console.log(allowanceValue);
     // console.log(result);
-    console.log(Number(allowanceValue))
+    // console.log(Number(allowanceValue))
     if (Number(allowanceValue) > amountToStake * (10 ** 18)) {
       setActivatestake(true);
     } else {
@@ -251,15 +251,21 @@ export default function DaoStaking() {
   }
   // console.log()
     // if (amountToStake > balance) {
+              let decimals = BigNumber(10).pow(18)
+
+        let result = BigNumber(amountToStake).multiply(decimals)        
+  // console.log(Number(allowanceValue),amountToStake )
       if (Number(allowanceValue) > amountToStake) {
         // console.log(referralAddress);
         setLoading(true);
+        // alert('ss')
       let stake =  await contract.stakeToken(
           amountToStake + "000000000000000000",
           "0x0000000000000000000000000000000000000001",
           stakingClass
         );
-      
+
+        alert('ss')
         if(stake){
           setActivatestake(true);
           setLoading(false);
@@ -272,7 +278,7 @@ export default function DaoStaking() {
       } else {
         const tx = await tokenContract.populateTransaction.approve(
           contract.address,
-          amountToStake + "000000000000000000"
+          amountToStake + "000000000000000000",
         );
         let signer = contract.signer;
        await  signer.sendTransaction(tx);
@@ -311,7 +317,7 @@ export default function DaoStaking() {
         className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"
           }`}
       >
-        <div className="row mb-2">
+        <div className="row mb-5">
           <div className="col-sm-3 col-6">
             <div className="card overflow-hidden" style={{rowGap:"20px"}}>
               <h4>10,000,000,000</h4>
@@ -469,7 +475,7 @@ export default function DaoStaking() {
             </div>
           </div>
 
-          <div className="col-xl-4 mb-4">
+          <div className="col-xl-4">
             <div className="card d-flex flex-column h-100 ">
               <div className="card-header border-0 p-0">
                 <h4 className="fs-18">DAO Staking Summary</h4>

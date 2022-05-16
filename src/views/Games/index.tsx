@@ -53,7 +53,7 @@
                     className="text-muted d-flex align-items-center mt-2 mb-4"
                     style={{ order: 4 }}
                   >
-                    <div className="step false mr-3 ">3</div>VIDEO SUBMISSION
+                    <div className="step false mr-3 ">4</div>VIDEO SUBMISSION
                   </h5>
                 </>
 
