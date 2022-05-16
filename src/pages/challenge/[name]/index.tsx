@@ -70,7 +70,7 @@ export default function Challenge() {
                             );
                         }
                         if (cha.name == 'votes') {
-                            for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes/stage-${stage}`)) {
+                            for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes/stage-${stage ? stage : 2}`)) {
 
                                 // console.log(await voteListLevels(name));
                                 // console.log(vote)
@@ -368,7 +368,7 @@ export default function Challenge() {
 
                                     <div className="row mx-auto d-flex font-weight-bold pt-2 justify-content-between p-0">
                                         <div>Voting Stage	</div>
-                                        <div className="ml-auto text-white">1</div>
+                                        <div className="ml-auto text-white">{stage}</div>
                                     </div>
                                     <div className="row  pb-2 mx-auto d-flex font-weight-bold pt-2 justify-content-between p-0">
                                         <div >Creator	</div>
