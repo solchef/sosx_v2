@@ -28,9 +28,9 @@ export default function Votechallenge() {
 
     return (
       <p className={css}>
-        {isReadMore ? text.slice(0, size) : text}
+        {isReadMore ? text?.slice(0, size) : text}
         <a style={{ color: "#ff00cc" }} className="ml-2 read-or-hide">
-          {text.length > text.slice(0, size).length
+          {text?.length > text?.slice(0, size).length
             ? isReadMore
               ? "..."
               : ""
@@ -192,18 +192,18 @@ export default function Votechallenge() {
                         </span>
 
                         <h1 className="fs-18 pb-2 pt-3">
-                          {camp.challenge.payload.name}
+                          {camp.challenge?.payload?.name}
                         </h1>
 
                         <ReadMore size="150" css="fs-14 pt-2">
-                          {camp.challenge.payload.body}
+                          {camp.challenge?.payload?.body}
                         </ReadMore>
                       </div>
                     </div>
                     <div className="card-footer  pt-0 foot-card border-0">
                       <div>
                         <h4 className="fs-12 text-white">Rules</h4>
-                        {camp.challenge.payload.choices.map((element) => (
+                        {camp.challenge?.payload?.choices.map((element) => (
                           <ul className="fs-12">
                             <li>
                               <i className="fa-solid fa-check pr-2"></i>
@@ -216,7 +216,7 @@ export default function Votechallenge() {
                         <div>
                           <i className="fa-regular fa-heart p-2"></i>
                           <span className="fs-12 p-1" id="votes">
-                            {camp.votes}
+                            {camp?.votes}
                           </span>
                           <span className="fs-12">Votes</span>
                         </div>
@@ -224,7 +224,7 @@ export default function Votechallenge() {
 
                       <Link
                         href={`/challenge/${String(
-                          camp.challenge.payload.name
+                          camp.challenge?.payload?.name
                         ).replaceAll(" ", "-")}`}
                       >
                         <button type="button" className="btn btn-primary ">
