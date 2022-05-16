@@ -20,8 +20,6 @@ const server = create({
     url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL
 });
 
-console.log(process.env.NEXT_PUBLIC_SOSX_IPFS_URL)
-
 export default function Challenge() {
     const router = useRouter()
     const { name } = router.query
