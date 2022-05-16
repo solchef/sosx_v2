@@ -72,17 +72,7 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
             />
   }
 
-
-
-  // text to show while loading
- 
-
-  const confirmationContent = 
-    () =>{
-         <ConfirmationModalContent topContent={modalHeader} bottomContent={modalBottom} />
-    }
   
-
   return (
     <Modal title={"Confirm Stake"} headerBackground="gradients.cardHeader" >
     {/* {attemptingTxn ? (

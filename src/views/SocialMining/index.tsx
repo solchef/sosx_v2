@@ -11,7 +11,6 @@ export default function SocialMining() {
            <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
           <NavMining/>
 
-
             <div className="pt-2 pb-0">
                 
                 <div className="row pt-3">

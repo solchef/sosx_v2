@@ -22,11 +22,7 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 import fetch from "isomorphic-unfetch";
 import ConnectWalletButton from "components/ConnectWalletButton";
 
-const BorderCard = styled.div`
-  border: solid 1px ${({ theme }) => theme.colors.cardBorder};
-  border-radius: 16px;
-  padding: 16px;
-`;
+
 
 const tabs = [{ name: "list" }, { name: "mining" }, { name: "staking" }];
 export default function Referral({ datasocial }) {
@@ -383,23 +379,7 @@ export default function Referral({ datasocial }) {
               </div>
 
               <div className="card-header border-0 pl-0 pb-0"></div>
-              {/* <div className="bg-dark rounded">
-          
-           <div className='font-weight-bold align-items-center d-flex justify-content-between '>
-             <div className='d-flex flex-column align-items-center'>
-             <h4 className='fs-18 font-weight-bold' >You will get</h4>
-              <p className='text-success font-weight-bold mt-1 fs-28'>35%</p>
-             </div>
-             <i className="fa-solid fs-28 text-success fa-angles-right"></i>
 
-             <div>
-             <p className='text-muted' >Social Mining</p>
-               <h3 className='font-weight-bold'> 25%</h3>
-             <p className='text-muted'>Staking </p>
-             <h3 className='font-weight-bold'> 10%</h3>
-             </div>
-           </div>
-         </div> */}
 
               <div className="bg-dark rounded">
                 <div className="font-weight-bold align-items-center d-flex justify-content-between ">
@@ -459,7 +439,7 @@ export default function Referral({ datasocial }) {
                 </div>
               </div>
             </div>
-
+            
             <div className="col-md-12   col-12">
               <div className="card m-0 mt-2  h-auto" >
                 <div className="card-body" style={{ display: "flex",justifyContent: "space-between", flexFlow: "row-reverse"}}>
@@ -477,8 +457,7 @@ export default function Referral({ datasocial }) {
                       <button
                         style={{ padding: "0.338rem 1rem" }}
                         type="button"
-                        className="btn btn-primary  "
-                      >
+                        className="btn btn-primary">
                         Withdraw
                       </button>
                     </div>

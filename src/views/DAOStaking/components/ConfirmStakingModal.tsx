@@ -75,43 +75,25 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
 
 
 
-  
-
   return (
-    <Modal   headerBackground="gradients.cardHeader" title={''} >
-  
-          <Wrapper>
+    <Modal title={"Confirm Stake"} headerBackground="gradients.cardHeader" >
+ 
+
+             <Wrapper>
                 <ConfirmedIcon>
-                  {/* <Spinner /> */}
-                  <img src='https://socialx.io/img/loader.gif'  height="100" width="100"/>
+                  <Spinner />
                 </ConfirmedIcon>
-                {attemptingTxn ? 
-                            <AutoColumn gap="12px" justify="center">
-                              <Text fontSize="20px">Please wait for the approval transaction.</Text>
-                              <AutoColumn gap="12px" justify="center">
-                                <Text bold small textAlign="center">
-                                    You have approved the amount of SOSX to stake. <br/> Wait for the confirmation to stake.
-                                </Text>
-                              </AutoColumn>
-                              <Text small color="textSubtle" textAlign="center">
-                                {t('Confirm this transaction in your wallet')}
-                              </Text>
-                            </AutoColumn>
-
-                      :
-                          <AutoColumn gap="12px" justify="center">
-                          <Text fontSize="20px">Confirm staking SOSX.</Text>
-                          <AutoColumn gap="12px" justify="center">
-                            <Text bold small textAlign="center">
-                                You have approved the amount of SOSX to stake. <br/> Wait for the confirmation to stake.
-                            </Text>
-                          </AutoColumn>
-                          <Text small color="textSubtle" textAlign="center">
-                            {t('Confirm this transaction in your wallet')}
-                          </Text>
-                        </AutoColumn>
-
-                }
+                <AutoColumn gap="12px" justify="center">
+                  <Text fontSize="20px">You are staking SOSX</Text>
+                  <AutoColumn gap="12px" justify="center">
+                    <Text bold small textAlign="center">
+                        Transaction is being sent
+                    </Text>
+                  </AutoColumn>
+                  <Text small color="textSubtle" textAlign="center">
+                    {t('Confirm this transaction in your wallet')}
+                  </Text>
+                </AutoColumn>
               </Wrapper>
 
             {/* <p>Staking </p> */}
@@ -131,4 +113,4 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
   
 }
 
-export default ConfirmStakingModal;
+export default ConfirmStakingModal
