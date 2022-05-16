@@ -87,7 +87,7 @@ export default function SocialMining() {
                 
                 <div className="row pt-3">
                     <div className="col-sm-12">
-                        <h3 className="text-center h3-mobile pb-1">CLAIM YOUR DAILY FREE SOSX TOKEN REWARD</h3>
+                        <h4 className="text-center h3-mobile pb-1">CLAIM YOUR DAILY FREE SOSX TOKEN REWARD</h4>
                     </div>
 
                     <div className="row pt-1 text-center container ">

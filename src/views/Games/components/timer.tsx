@@ -23,7 +23,7 @@ const TimerDisplay = (props) => {
   const handleCloseDonate = () => setShowDonate(false);
   const handleShowDonate = () => setShowDonate(true);
   const contract = useDaoStakingContract();
-  
+
 
   const getSOSXPrice = async () => {
     const getSOSXValue = await axios.get(
@@ -37,28 +37,28 @@ const TimerDisplay = (props) => {
   }, []);
 
   const pad = (num) => {
-    return ("0"+num).slice(-2);
-}
+    return ("0" + num).slice(-2);
+  }
 
-    const handleSubmitDonate = () => {
+  const handleSubmitDonate = () => {
 
 
 
-    }
+  }
 
   return (
     <>
-        <div className="card timer-card mb-5" style={{flex: 0, gap: "20px"}}>
+      <div className="card timer-card mb-5" style={{ flex: 0, gap: "20px" }}>
         <div className="d-flex align-items-center mb-2">
           <img src="images/submission-date-icon.png" className="title-icon" />
           <h4>TIME REMAINING</h4>
         </div>
 
-        {props.stage == 1 &&   <p>The challenge submission stage is in effect.</p>}
-        {props.stage == 2 &&   <p>The challenge voting stage is in effect.</p>}
-        {props.stage == 3 &&   <p>The challenge final voting stage is in effect.</p>}
-        {props.stage == 4 &&   <p>The challenge upload stage is in effect.</p>}
-      
+        {props.stage == 1 && <p>The challenge submission stage is in effect.</p>}
+        {props.stage == 2 && <p>The challenge voting stage is in effect.</p>}
+        {props.stage == 3 && <p>The challenge final voting stage is in effect.</p>}
+        {props.stage == 4 && <p>The challenge upload stage is in effect.</p>}
+
 
         <div className="clock mt-4">
           <div
@@ -89,7 +89,7 @@ const TimerDisplay = (props) => {
         </div>
       </div>
 
-      <div className="card prize-card" style={{flex: 0}}>
+      <div className="card prize-card" style={{ flex: 0 }}>
         <div className="d-flex flex-column mb-3">
           <div className="d-flex mb-2 align-items-center">
             <img src="images/prize-pool-icon.png" className="title-icon" />
@@ -106,19 +106,19 @@ const TimerDisplay = (props) => {
       </div>
 
       <Modal show={showDonate} onHide={handleCloseDonate} centered >
-        <ModalHeader className="text-dark" style={{background:"#111117"}}>
+        <ModalHeader className="text-dark" style={{ background: "#111117" }}>
           Donate
           {/* <CloseButton /> */}
           <a href="#" onClick={handleCloseDonate} className="pull-right text-white"><i className="fa fa-close"></i></a>
         </ModalHeader>
 
-        <div className="modal-body" style={{background:"#111117"}}>
-          <form 
+        <div className="modal-body" style={{ background: "#111117" }}>
+          <form
           // onSubmit={handleSubmitDonate}
           >
 
             <div className="form-group">
-                 <input className="input1" placeholder="Amount Contributing in SOSX" required type="text" onChange={(e) => setDonateAmount(Number(e.target.value))}/>
+              <input className="input1" placeholder="Amount Contributing in SOSX" required type="text" onChange={(e) => setDonateAmount(Number(e.target.value))} />
             </div>
             <div className=" rounded p-2">
               <button className="btn btn-primary ">Donate to Prize Pool</button>
@@ -126,7 +126,7 @@ const TimerDisplay = (props) => {
           </form>
         </div>
       </Modal>
-      
+
     </>
   );
 };

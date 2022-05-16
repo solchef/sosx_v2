@@ -40,7 +40,7 @@ export default function Faq() {
          
 
             <div className="section">
-                    <h5 className="section-heading">Frequenty Asked Question (FAQ)</h5>
+                    <h4 className="section-heading">Frequenty Asked Question (FAQ)</h4>
                     <p className="p-main">Everything you need to know about SOSX is just one click away.</p>
 
                     <div className="faq-list row">
