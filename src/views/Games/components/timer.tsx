@@ -43,9 +43,12 @@ const TimerDisplay = (props) => {
 
     const handleSubmitDonate = async() => {
 
-      await contract.oXGamesRewardPool( donateAmount + "000000000000000000");
-
-      toastSuccess("Thank you for contributing to the reward pool")
+     let donate = await contract.oXGamesRewardPool( donateAmount + "000000000000000000");
+      if(donate){
+        toastSuccess("Thank you for contributing to the reward pool");
+      }else{
+        toastSuccess("Dotation nabled at challenge stage");
+      }
 
     }
 
