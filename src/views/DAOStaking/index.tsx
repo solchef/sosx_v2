@@ -44,6 +44,9 @@ export default function DaoStaking() {
   const [insufficientBalance, setInsufficientBalance] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
+  const [transaction, setTransaction] = useState();
+  const [challenge, setChallenge] = useState(false);
+  const [pendingTx, setPendingTx] = useState(false);
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const [price, setPrice] = useState(Number);
@@ -219,81 +222,59 @@ export default function DaoStaking() {
   //   listUserStaking()
   // }, 10000);
 
-  const handleStake = async () => {
-    let decimals = BigNumber(10).pow(18);
+      const handleStake = async() => {
+        let decimals = BigNumber(10).pow(18);
 
-    let result = BigNumber(amountToStake).multiply(decimals);
-    // console.log(Number(allowanceValue),amountToStake )
+        let result = BigNumber(amountToStake).multiply(decimals);
+        // console.log(Number(allowanceValue),amountToStake )
+      
+          // console.log(referralAddress);
+          setLoading(true);
+          // alert('ss')
+          let stake = await contract.stakeToken(
+            result.toString(),
+            "0x0000000000000000000000000000000000000001",
+            stakingClass
+          );
 
-    // console.log(referralAddress);
-    setLoading(true);
-    // alert('ss')
-    let stake = await contract.stakeToken(
-      result.toString(),
-      "0x0000000000000000000000000000000000000001",
-      stakingClass
-    );
-
-    // alert('ss')
-    if (stake) {
-      setActivatestake(true);
-      setLoading(false);
-      loadUI();
-      toastSuccess("Staking Transaction successfully sent");
-    } else {
-      toastError("Could not stake");
-    }
-  };
+          // alert('ss')
+          if (stake) {
+            setActivatestake(true);
+            setLoading(false);
+            loadUI();
+            toastSuccess("Staking Transaction successfully sent");
+          } else {
+            toastError("Could not stake");
+          }
+       
+      }
 
   const handleSubmit = async () => {
     // if (amountToStake > balance) {
-
+    
     let decimals = BigNumber(10).pow(18);
     let result = BigNumber(amountToStake).multiply(decimals);
-    console.log(result - Number(allowanceValue));
+    console.log(result - (Number(allowanceValue)) );
 
-    if (Number(allowanceValue) >= amountToStake * 10 ** 18) {
-      useModal(
-        <ConfirmStakingModal
-          onConfirm={handleStake}
-          attemptingTxn={false}
-          recipient={""}
-          allowedSlippage={0}
-          onAcceptChanges={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        />,
-        true,
-        true,
-        "ConfirmStakingModal"
-      );
+    if ((Number(allowanceValue)) >= (amountToStake * (10 ** 18))) {
+            onPresentConfirmModal();
     } else {
       const tx = await tokenContract.populateTransaction.approve(
         contract.address,
         result.toString()
       );
       let signer = contract.signer;
-      await signer.sendTransaction(tx);
+      let trans = await signer.sendTransaction(tx);
+      setPendingTx(true);
 
-      // toastSuccess(
-      //   "Approval transaction sent. You can stake after the transaction is mined."
-      // );
-            useModal(
-              <ConfirmStakingModal
-                onConfirm={handleStake}
-                attemptingTxn={true}
-                recipient={""}
-                allowedSlippage={0}
-                onAcceptChanges={function (): void {
-                  throw new Error("Function not implemented.");
-                }} 
-                
-              />,
-              true,
-              true,
-              "ConfirmStakingModal"
-            );
+      toastSuccess(
+        "Approval transaction sent. You can stake after the transaction is mined."
+      );
+      // setTransaction(tx);
+      onPresentConfirmModal();
+ 
     }
+
   };
 
   const getLevel = (amount) => {
@@ -315,6 +296,23 @@ export default function DaoStaking() {
       return 3;
     }
   };
+
+  const [onPresentConfirmModal] = useModal(
+    <ConfirmStakingModal
+
+      onConfirm={handleStake}
+      attemptingTxn={pendingTx}
+      recipient={""}
+      allowedSlippage={0}
+      onAcceptChanges={function (): void {
+        throw new Error("Function not implemented.");
+      }} 
+      //   customOnDismiss={handleConfirmDismiss}
+    />,
+    true,
+    true,
+    "ConfirmStakingModal"
+  );
 
   return (
     <>
@@ -435,17 +433,18 @@ export default function DaoStaking() {
                   </div>
                 </div>
               </div>
-              <div className="card-footer pt-0 foot-card  border-0">
+            
                 {account ? (
                   <>
-                    <button
-                      type="button"
-                      onClick={handleSubmit}
-                      className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
-                      //   disabled={insufficientBalance || activateStake}
-                    >
-                      {loading ? "Staking..." : "Stake"}
-                    </button>
+
+                      <button
+                          type="button"
+                          onClick={handleSubmit}
+                          className="btn btn-primary  btn-lg w-100 text-nowrap "
+                          //   disabled={insufficientBalance || activateStake}
+                        >
+                          {loading ? "Staking..." : "Stake"}
+                        </button>
                     {/* {!activateStake ? (
                       <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-around">
                         <button
@@ -487,7 +486,7 @@ export default function DaoStaking() {
                 ) : (
                   <ConnectWalletButton />
                 )}
-              </div>
+            
             </div>
           </div>
 

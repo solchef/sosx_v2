@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import useToast from "hooks/useToast";
-import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
+import { useStakingContract, useSosxContract } from "hooks/useContract";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { useMediaPredicate } from "react-media-hook";
@@ -21,7 +21,7 @@ const BorderCard = styled.div`
 `;
 
 export default function UserStakingLogs(props) {
-  const contract = useDaoStakingContract();
+  const contract = useStakingContract();
   const { account } = useActiveWeb3React();
   const tokenContract = useSosxContract();
   const [balance, setUserBalace] = useState(0);
