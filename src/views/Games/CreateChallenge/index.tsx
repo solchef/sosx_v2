@@ -334,10 +334,13 @@ const CreateChallenge = (props) => {
                 id="name"
                 type="text"
                 name="name"
+                onChange={handleChange}
                 className="input1 mb-3"
                 placeholder="Challenge Title"
                 required
               />
+
+{/* <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required /> */}
               {/* @ts-ignore */}
              <EasyMde
               id="body"
