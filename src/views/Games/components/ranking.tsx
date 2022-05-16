@@ -55,7 +55,7 @@ const Ranking = (props) => {
       // }
     }
   
-    // setVoters(voters);
+    setVoters(voters);
 
     //   await server.files.write("/levels/level.json", JSON.stringify(voters), {
     //   create: true,
