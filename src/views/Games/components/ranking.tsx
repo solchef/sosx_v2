@@ -9,6 +9,8 @@ import { cleanNumber } from "utils/amount";
 import { useState, useEffect } from "react";
 import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
+import ConnectWalletButton from "components/ConnectWalletButton";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -28,6 +30,7 @@ const Ranking = (props) => {
   const contract = useDaoStakingContract();
   const [voters, setVoters] = useState([]);
   const [count, setCount] = useState(1);
+  const{account} = useActiveWeb3React();
 
   const loadDaoLevels = async () => {
     let daoList = await contract.getAllAccount();
@@ -42,19 +45,21 @@ const Ranking = (props) => {
       let data = {
         address: voter_address,
         amount: total_stake,
-        level: getLevel(total_stake),
+        level: await getLevel(total_stake),
       };
       // if (voter_address == account) {setCurrentLevel(data.level)};
-      // console.log(data)
+      console.log(data)
       // alert(data.level)
       voters.push(data);
 
       // }
     }
-    // await server.files.write("/levels/level.json", JSON.stringify(voters), {
+  
+    // setVoters(voters);
+
+    //   await server.files.write("/levels/level.json", JSON.stringify(voters), {
     //   create: true,
     // });
-    setVoters(voters);
   };
 
   useEffect(() => {
@@ -84,7 +89,7 @@ const Ranking = (props) => {
   const incrementCounter = () => {};
 
   return (
-    <div className="card h-100 w-100" style={{ minHeight: "500px" }}>
+    <div className="card h-100 w-100" style={{ minHeight: "800px" }}>
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -164,8 +169,9 @@ const Ranking = (props) => {
 
       <div className="mt-3">
         <StyledList>
-          {voters
+          {voters.length > 0 ? voters
             .sort((b, a) => a.amount - b.amount)
+
             .map((voter, i) => (
               <>
                 {voter.level == displayLevel && (
@@ -192,7 +198,21 @@ const Ranking = (props) => {
                   </li>
                 )}
               </>
-            ))}
+            )) : 
+            <>
+             {!account ? 
+                <>
+                 <ConnectWalletButton/>
+                </>
+                :
+                <div className="mx-auto text-center">
+                  Data Loading
+                </div>
+             }
+              
+            </>
+                 
+            }
         </StyledList>
       </div>
     </div>

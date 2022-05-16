@@ -54,7 +54,7 @@ const TimerDisplay = (props) => {
 
   return (
     <>
-        <div className="card timer-card mb-5" style={{flex: 0, gap: "20px"}}>
+        <div className="card timer-card mb-3" style={{flex: 1, gap: "20px"}}>
         <div className="d-flex align-items-center mb-2">
           <img src="images/submission-date-icon.png" className="title-icon" />
           <h4>TIME REMAINING</h4>

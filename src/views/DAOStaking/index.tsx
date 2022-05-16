@@ -317,7 +317,7 @@ export default function DaoStaking() {
         className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"
           }`}
       >
-        <div className="row mb-5">
+        <div className="row mb-3">
           <div className="col-sm-3 col-6">
             <div className="card overflow-hidden" style={{rowGap:"20px"}}>
               <h4>10,000,000,000</h4>
@@ -352,7 +352,7 @@ export default function DaoStaking() {
         </div>
         <div className="row" >
         <div className="col-xl-4 mb-4">
-            <div className="card d-flex flex-column mb-4 h-100">
+            <div className="card d-flex flex-column  h-100">
               <div className="card-header border-0 pl-0 pt-0">
                 <h4 className="fs-18 ">Stake SOSX for DAO Level</h4>
               </div>

@@ -96,7 +96,13 @@ const Media = (props: { todayVideo }) => {
     <p>Previous Game Winners Archives video</p>
     <div className="d-flex w-100 flex-wrap flex-row mt-4 " style={{gap: '21px'}}>
 
-      <div className="row mx-auto text-center"></div>
+      {/* <div className="row mx-auto text-center"></div> */}
+
+          <div className="row mx-auto text-center my-auto">
+              NO VIDEOS UPLOADED
+          </div>
+
+
       {/* <div className="my-masonry-grid_column">
         <div className="video-submission">
           <div className="video-container">

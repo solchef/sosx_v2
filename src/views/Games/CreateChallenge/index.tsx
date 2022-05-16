@@ -97,7 +97,7 @@ const CreateChallenge = (props) => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     // console.log(props.level)
-    if (votingLevel >= 2) {
+    if(votingLevel == 2) {
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
@@ -314,7 +314,7 @@ const CreateChallenge = (props) => {
               {account ? (
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg  my-4"
+                  className="btn btn-primary btn-lg mt-2"
                   style={{ order: 6 }}
                 >
                   {isLoading ? 'Request is being processed' : 'Submit your challenge'}
@@ -323,7 +323,7 @@ const CreateChallenge = (props) => {
               ) : (
                 <ConnectWalletButton
                   width="100%"
-                  className="btn btn-primary btn-lg  my-4"
+                  className="btn btn-primary btn-lg  mt-2"
                   type="button"
                   style={{ order: 6 }}
                 />
