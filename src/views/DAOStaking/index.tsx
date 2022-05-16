@@ -314,10 +314,10 @@ export default function DaoStaking() {
                 Img
               </div>
               <div className="d-flex flex-column align-items-center">
-                <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end main-pink">5 MO</span>
+                <div className="d-flex flex-column align-items-end">
+                  <span>5 MO</span>
                   <h4 style={{ fontSize: '30px', letterSpacing: '3px', fontWeight: '900' }} className="main-pink">$1,000.00</h4>
-                  <p className="main-pink" >SOSX Staked</p>
+                  <p className="text-white">SOSX Staked</p>
                 </div>
               </div>
             </div>
@@ -346,10 +346,10 @@ export default function DaoStaking() {
                 Img
               </div>
               <div className="d-flex flex-column align-items-center">
-                <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end main-pink">+2.5%</span>
+                <div className="d-flex flex-column align-items-end">
+                  <span>+2.5%</span>
                   <h4 style={{ fontSize: '30px', letterSpacing: '3px', fontWeight: '900' }} className="display-3 main-pink">${price.toFixed(8)}</h4>
-                  <p className="main-pink" >SOSX price</p>
+                  <p className="text-white">SOSX price</p>
                 </div>
               </div>
             </div>
@@ -373,7 +373,7 @@ export default function DaoStaking() {
                       defaultValue={0}
                     />
                   </span>
-                  <span className="text-white fs-18">SOSX</span>
+                  <span className="text-white pt-3 pb-3 fs-18">SOSX</span>
                 </div>
               </div>
 
@@ -705,8 +705,8 @@ export default function DaoStaking() {
             <div className="bg-dark p-3 rounded">
               <div className="d-flex align-items-center justify-content-between">
                 <div className="text-white fs-28 mr-3" > 6%</div>
-                <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end main-pink">DAO Level 1</span>
+                <div className="d-flex flex-column align-items-end">
+                  <span className="main-pink">DAO Level 1</span>
                   <h4 style={{ fontSize: '30px' }}>100,000</h4>
                   <span className="main-pink" >Dealy Rewared</span>
                 </div>
@@ -715,8 +715,8 @@ export default function DaoStaking() {
             <div className="bg-dark p-3 rounded">
               <div className="d-flex align-items-center justify-content-between">
                 <div className="text-white fs-28 mr-3" > 10%</div>
-                <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end main-pink">DAO Level 2</span>
+                <div className="d-flex flex-column align-items-end">
+                  <span className="main-pink">DAO Level 2</span>
                   <h4 style={{ fontSize: '30px' }}>100,000K+</h4>
                   <span className="main-pink" >Staking</span>
                 </div>
@@ -728,8 +728,8 @@ export default function DaoStaking() {
             <div className="bg-dark p-3 rounded">
               <div className="d-flex align-items-center justify-content-between">
                 <div className="text-white fs-28 mr-3"> 16%</div>
-                <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end main-pink">DAO Level 3</span>
+                <div className="d-flex flex-column align-items-end">
+                  <span className="main-pink">DAO Level 3</span>
                   <h4 style={{ fontSize: '30px', letterSpacing: '3px' }}>1,0000.00+</h4>
                   <span className="main-pink" >SOSX</span>
                 </div>
