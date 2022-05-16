@@ -47,7 +47,7 @@ const TimerDisplay = (props) => {
       if(donate){
         toastSuccess("Thank you for contributing to the reward pool");
       }else{
-        toastSuccess("Dotation nabled at challenge stage");
+        toastError("An error has occurred");
       }
 
     }
