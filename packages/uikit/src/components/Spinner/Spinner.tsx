@@ -42,11 +42,15 @@ const FloatingPanIcon = styled(PanIcon)`
   transform: translate3d(0, 0, 0);
 `;
 
+const Loader = styled.img`
+  animation: ${float} 6s ease-in-out infinite;
+  transform: translate3d(0, 0, 0);
+`;
+
 const Spinner: React.FC<SpinnerProps> = ({ size = 128 }) => {
   return (
     <Container>
-      <RotatingPancakeIcon width={`${size * 0.5}px`} />
-      <FloatingPanIcon width={`${size}px`} />
+      <Loader src="https://socialx.io/img/loader.gif" height={100} width={100} />
     </Container>
   );
 };
