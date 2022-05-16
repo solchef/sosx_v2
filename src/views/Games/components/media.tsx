@@ -95,7 +95,9 @@ const Media = (props: { todayVideo }) => {
     </div>
     <p>Previous Game Winners Archives video</p>
     <div className="d-flex w-100 flex-wrap flex-row mt-4 " style={{gap: '21px'}}>
-      <div className="my-masonry-grid_column">
+
+      <div className="row mx-auto text-center"></div>
+      {/* <div className="my-masonry-grid_column">
         <div className="video-submission">
           <div className="video-container">
             <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
@@ -108,8 +110,8 @@ const Media = (props: { todayVideo }) => {
           </div>
           <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
         </div>
-      </div>
-      <div className="my-masonry-grid_column">
+      </div> */}
+      {/* <div className="my-masonry-grid_column">
         <div className="video-submission">
           <div className="video-container">
             <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
@@ -122,8 +124,8 @@ const Media = (props: { todayVideo }) => {
           </div>
           <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
         </div>
-      </div>
-      <div className="my-masonry-grid_column">
+      </div> */}
+      {/* <div className="my-masonry-grid_column">
         <div className="video-submission">
           <div className="video-container">
             <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
@@ -136,7 +138,7 @@ const Media = (props: { todayVideo }) => {
           </div>
           <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
         </div>
-      </div>
+      </div> */}
     </div>
   </div>
   );

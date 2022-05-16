@@ -438,8 +438,8 @@ console.log(data)
 
   return (
 
-    <div  style={{height:'calc(100vh)'}} className={`${biggerThan1400 && "container p-0"} ${biggest1400 && "p-0 container-fluid"}`} >
-        <div className="row m-auto justify-content-center">
+    <div   className={`${biggerThan1400 && "container p-0"} ${biggest1400 && "p-0 container-fluid"}`} >
+        <div className="row m-auto justify-content-center mt-5 pt-5">
           <div className="col-xl-5">
             <div className="card">
               <div className="card-header border-0 pb-0 justify-content-between">

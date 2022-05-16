@@ -245,7 +245,7 @@ export default function Staking() {
         className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"
           }`}
       >
-        <div className="row mb-5">
+        <div className="row mb-2">
           <div className="col-sm-3 col-6">
             <div className="card overflow-hidden ">
               <h4>10,000,000,000</h4>

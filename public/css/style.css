@@ -453,7 +453,9 @@ a:not([href]):not([class]):hover {
     color: inherit;
     text-decoration: none;
 }
-
+span.nav-text {
+    color: #fff;
+}
 pre,
 code,
 kbd,
@@ -5007,10 +5009,10 @@ input[type="button"].btn-block {
 
 .nav-justified>.nav-link,
 .nav-justified .nav-item {
-    flex-basis: 0;
-    flex-grow: 1;
+    /* flex-basis: 0; */
+    /* flex-grow: 1; */
     text-align: center;
-}
+margin: 10px;display: flex;}
 
 .tab-content>.tab-pane {
     display: none;
@@ -13361,7 +13363,7 @@ svg.pulse-svg .third-circle {
     padding-top: 0px;
     padding-bottom: 50px;
     margin-top: 10px;
-    height: 100%;
+    
 }
 
 
@@ -17150,7 +17152,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     padding: 0 0.875rem 0 0;
     position: relative;
     top: 0;
-    color: #fff;
+    color: #fff!important;
     line-height: 1;
 }
 
@@ -32273,7 +32275,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 }
 
 [data-theme-version="dark"] .nav-tabs {
-    /* border-color: #3e454d; */
+    border-color: #3e454d;
 }
 
 [data-theme-version="dark"] .mail-list .list-group-item.active i {
@@ -38026,7 +38028,7 @@ button:focus {
 .btn-dark {
     background: #3e4954;
     border-color: #3e4954;
-    color: #fff;
+    color: #fff!important;
     font-size: 14px;
 }
 
@@ -38314,7 +38316,7 @@ button:focus {
 @media only screen and (max-width: 575px) {
     .card {
         margin-bottom: 0.938rem;
-        height: calc(100% - 0.938rem);
+        /* height: calc(100% - 0.938rem); */
     }
 }
 
@@ -46635,9 +46637,9 @@ h-lg-100 {}
 }
 
 [data-theme-version="dark"] .nav-tabs {
-    /* border-color: #3e454d; */
+    /* border-color: #b2b2b2; */
     /* background-color: #090d13; */
-}
+display: flex;justify-content: center;}
 
 [data-theme-version="dark"] .mail-list .list-group-item.active i {
     color: #fff;
@@ -46990,7 +46992,7 @@ span.nav-text.comingsoon {
 
 .referral-rewards {
     width: 100px !important;
-    position: absolute;
+    /* position: absolute; */
     right: 30px;
 }
 
@@ -48783,7 +48785,7 @@ a.video span {
         border: 0px solid transparent;
         border-radius: 0.75rem;
         box-shadow: 0px 12px 33px 0px rgb(62 73 84 / 8%);
-        height: calc(100% - 30px);
+
         padding: 15px;
     }
 
@@ -48954,7 +48956,7 @@ a.video span {
         border: 0px solid transparent;
         border-radius: 0.75rem;
         box-shadow: 0px 12px 33px 0px rgb(62 73 84 / 8%);
-        height: calc(100% - 30px);
+    
         padding: 15px;
     }
 

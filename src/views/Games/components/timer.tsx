@@ -11,7 +11,7 @@ import { useMediaPredicate } from "react-media-hook";
 import axios from "axios";
 import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { useDaoStakingContract } from "hooks/useContract";
-
+import useToast from "hooks/useToast";
 
 
 
@@ -23,7 +23,8 @@ const TimerDisplay = (props) => {
   const handleCloseDonate = () => setShowDonate(false);
   const handleShowDonate = () => setShowDonate(true);
   const contract = useDaoStakingContract();
-  
+  const { toastError, toastSuccess } = useToast();
+
 
   const getSOSXPrice = async () => {
     const getSOSXValue = await axios.get(
@@ -40,9 +41,11 @@ const TimerDisplay = (props) => {
     return ("0"+num).slice(-2);
 }
 
-    const handleSubmitDonate = () => {
+    const handleSubmitDonate = async() => {
 
+      await contract.oXGamesRewardPool( donateAmount + "000000000000000000");
 
+      toastSuccess("Thank you for contributing to the reward pool")
 
     }
 
@@ -121,7 +124,7 @@ const TimerDisplay = (props) => {
                  <input className="input1" placeholder="Amount Contributing in SOSX" required type="text" onChange={(e) => setDonateAmount(Number(e.target.value))}/>
             </div>
             <div className=" rounded p-2">
-              <button className="btn btn-primary ">Donate to Prize Pool</button>
+              <button className="btn btn-primary " onClick={handleSubmitDonate}>Donate to Prize Pool</button>
             </div>
           </form>
         </div>

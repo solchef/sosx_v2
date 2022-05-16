@@ -99,14 +99,14 @@ export default function DaoStaking() {
   }
 
     
-  const handleClaim = async () => {
-
-  }
+  const showStakingLog = async () => {
+      await  listUserStaking();
+  } 
   
   const listUserStaking = async () => {
     let list = [];
     let count = []
-    console.log(numberOfActiveStake);
+    // console.log(numberOfActiveStake);
     for (let i = 0; i < numberOfActiveStake; i++) {
       await contract.getStakeInfo(i).then(stakeInstance => {
 
@@ -115,7 +115,7 @@ export default function DaoStaking() {
               // console.log("here")
             let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
              let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
-              console.log(stakeInstance) 
+              // console.log(stakeInstance) 
               count.push(i)
                 let instance = {
                   amount: stakeAmt,
@@ -146,7 +146,7 @@ export default function DaoStaking() {
 
     setActiveStakes(list);
     console.log(list)
-    console.log(count)
+    // console.log(count)
     // clearTimeout(listTimeOut);
 
     
@@ -191,13 +191,13 @@ export default function DaoStaking() {
     // let finalAmount = this.web3.utils.toBN(result.toString())
     // let finalAmount = result;
     // console.log(_amountToStake)
-    console.log(allowanceValue);
-    console.log(result);
-    // console.log(allowanceValue)
-    if (allowanceValue != 0) {
-      setActivatestake(false);
-    } else {
+    // console.log(allowanceValue);
+    // console.log(result);
+    console.log(Number(allowanceValue))
+    if (Number(allowanceValue) > amountToStake * (10 ** 18)) {
       setActivatestake(true);
+    } else {
+      setActivatestake(false);
     }
 
     const p = event.target.value;
@@ -211,6 +211,7 @@ export default function DaoStaking() {
     // console.log(_amountToStake);
     setamountToStake(_amountToStake);
     setStakingInterest(Number(interest));
+
   };
 
   const compoundInterest = (p, t, r, n) => {
@@ -309,7 +310,7 @@ export default function DaoStaking() {
         className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"
           }`}
       >
-        <div className="row mb-5">
+        <div className="row mb-2">
           <div className="col-sm-3 col-6">
             <div className="card overflow-hidden ">
               <h4>10,000,000,000</h4>
@@ -421,7 +422,7 @@ export default function DaoStaking() {
               <div className="card-footer pt-0 foot-card  border-0">
                 {account ? (
                   <>
-                    {activateStake ? (
+                    {!activateStake ? (
                       <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-around">
                         <button
                           type="button"
@@ -537,7 +538,7 @@ export default function DaoStaking() {
                 </div>
               </div>
               <div className="card-body">
-                {stakingList.length == 0 ? (
+                {activeStakes ?
                   <>
                     <span className="fs-14">Your Stakes</span>
                     <ul className="token-balance-list mb-2 mt-2">
@@ -674,7 +675,7 @@ export default function DaoStaking() {
                          
                          <li>
                            <span className="justify-content-between success fs-12">
-                             <button onClick={() => handleClaim()} className="btn btn-success full-width">
+                             <button onClick={() => toastSuccess("No claim available")} className="btn btn-success full-width">
                                CLAIM REWARDS
                              </button>
                            </span>
@@ -699,9 +700,9 @@ export default function DaoStaking() {
                       </>
                     ))}
                   </>
-                ) : (
-                    {stakingList}
-                )}
+                 : 
+                  <a href="#" onClick={() => showStakingLog()}>Check Logs</a>
+                }
               </div>
             </div>
           </div>
