@@ -180,7 +180,7 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652666907;
+    const roundStartTime = 1652705443;
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 60 };
     let stage2 = { start: stage1.end, end: stage1.end + 500 * 60 };
@@ -396,14 +396,13 @@ export default function Game() {
                   </p>
 
                   {/* {console.log(currentLevel)} */}
-                 
-                    <Link href="/votechallenge">
-                      <button type="submit" className="btn mt-2 btn-primary">
-                        {" "}
-                        Vote for challenge
-                      </button>
-                    </Link>
-                  
+
+                  <Link href="/votechallenge">
+                    <button type="submit" className="btn mt-2 btn-primary">
+                      {" "}
+                      Vote for challenge
+                    </button>
+                  </Link>
                 </div>
                 <div className="col-12 col-xl-6">
                   <div className="w-100 d-flex">
