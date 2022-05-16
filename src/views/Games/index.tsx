@@ -385,8 +385,8 @@
 
       return (
         <>
-          <div className="game container-fluid d-flex flex-wrap flex-direction-row-reverse" style={{gap:"20px"}}>
-            <div id="action-section" style={{ flex: "1 50%", order: 2 }}>
+          <div className="game container-fluid d-flex flex-wrap flex-direction-row-reverse" >
+            <div id="action-section">
               {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
               {stage == 5 && <CreateChallenge level={currentLevel} stage={stage} />}
 
@@ -609,15 +609,15 @@
         
             </div>
 
-            <div id="timer-section" style={{flex:1, gap: "20px"}}>
+            <div id="timer-section">
               <TimerDisplay hours={hours} minutes={minutes} seconds={seconds} stage={stage} />
             </div>
 
-            <div id="ranking-section" style={{ flex: 1, order: 4 }}>
+            <div id="ranking-section">
               <Ranking voters={voters} />
             </div>
 
-            <div id="video-section" style={{flex: '1 50%', order: 3}}>
+            <div id="video-section" >
               <Media todayVideo={todayChallenge} />
             </div>
           </div>

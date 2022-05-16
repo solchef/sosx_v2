@@ -95,56 +95,24 @@ const Media = (props: { todayVideo }) => {
     </div>
     <p>Previous Game Winners Archives video</p>
     <div className="d-flex w-100 flex-wrap flex-row mt-4 " style={{gap: '21px'}}>
+    {videos.length > 0 ? (
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid mx-auto "
+            columnClassName="my-masonry-grid_column">
 
-      {/* <div className="row mx-auto text-center"></div> */}
+                {videos.map((video) =>
 
-          <div className="row mx-auto text-center my-auto">
-              NO VIDEOS UPLOADED
-          </div>
+                        <div className={` ${video.youtube ? "width400" : "width200"} ${video.youtube ? "height200" : "height400"}  p-3   mb-4  align-self-stretch rounded`}>
+                          <iframe className="position-absolute iframe" width={`${video.youtube ? "400" : "200"}`} height={`${video.youtube ? "200" : "400"}`} src={`https://www.${video.youtube ? "youtube" : "tiktok"}.com/embed/${video.youtube ? video.youtube : video.tiktok}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                        </div>
 
+                    )}
 
-      {/* <div className="my-masonry-grid_column">
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-      </div> */}
-      {/* <div className="my-masonry-grid_column">
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-      </div> */}
-      {/* <div className="my-masonry-grid_column">
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-      </div> */}
+          </Masonry>
+            ) : (
+              <p className='mx-auto w-100'>No Videos</p>
+            )}
     </div>
   </div>
   );
