@@ -183,8 +183,8 @@ export default function Game() {
     const roundStartTime = 1652666907;
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 2400 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 2400 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + 500 * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + 500 * 60 };
     let stage4 = { start: stage3.end, end: stage3.end + 2400 * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
@@ -396,25 +396,14 @@ export default function Game() {
                   </p>
 
                   {/* {console.log(currentLevel)} */}
-                  {currentLevel == 3 ? (
+                 
                     <Link href="/votechallenge">
                       <button type="submit" className="btn mt-2 btn-primary">
                         {" "}
                         Vote for challenge
                       </button>
                     </Link>
-                  ) : (
-                    <button
-                      type="submit"
-                      className="btn mt-2 btn-primary"
-                      onClick={() =>
-                        toastError("Only level 3 DAO members can participate")
-                      }
-                    >
-                      {" "}
-                      Vote for Challange
-                    </button>
-                  )}
+                  
                 </div>
                 <div className="col-12 col-xl-6">
                   <div className="w-100 d-flex">
