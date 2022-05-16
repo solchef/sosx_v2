@@ -249,7 +249,7 @@ export default function DaoStaking() {
     return;
   }
   // console.log()
-    if (amountToStake < balance) {
+    // if (amountToStake < balance) {
       if (Number(allowanceValue) > amountToStake) {
         // console.log(referralAddress);
         setLoading(true);
@@ -279,9 +279,9 @@ export default function DaoStaking() {
         // 	toastError("token allowance not yet set");
         loadUI()
       }
-    } else {
-      toastError("Insufficient Balance");
-    }
+    // } else {
+    //   toastError("Insufficient Balance");
+    // }
   };
 
     const getLevel = (amount) => {
