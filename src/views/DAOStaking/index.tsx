@@ -455,7 +455,7 @@ export default function DaoStaking() {
                       <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-around">
                         <button
                           type="button"
-                          onClick={onPresentConfirmModal}
+                          onClick={handleSubmit}
                           className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
                           //   disabled={insufficientBalance || activateStake}
                         >
@@ -481,7 +481,7 @@ export default function DaoStaking() {
                         <button
                           type="button"
                           // disabled={insufficientBalance || activateStake}
-                          onClick={onPresentConfirmModal}
+                          onClick={handleSubmit}
                           className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
                         >
                           {loading ? "Staking.." : "Stake"}
