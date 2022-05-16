@@ -448,7 +448,7 @@ export default function DaoStaking() {
                     </div>
                   </div>
                 </div>
-              {/* <div className="card-footer pt-0 foot-card  border-0">
+              <div className="card-footer pt-0 foot-card  border-0">
                 {account ? (
                   <>
                     {!activateStake ? (
@@ -492,7 +492,7 @@ export default function DaoStaking() {
                 ) : (
                   <ConnectWalletButton />
                 )}
-              </div> */}
+              </div>
 
             </div>
           </div>
