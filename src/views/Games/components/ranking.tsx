@@ -40,7 +40,7 @@ const Ranking = () => {
       // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = Number(total_stake / 10 ** 18);
+      total_stake = (total_stake / 10 ** 18);
       let data = {
         address: voter_address,
         amount: total_stake,
@@ -48,7 +48,7 @@ const Ranking = () => {
       };
 
       console.log(data);
-      
+
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
       voters.push(data);
