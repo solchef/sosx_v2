@@ -212,6 +212,7 @@
             let currTime = moment().unix();
             let checkStage = stageGroups.findIndex(
               (group) => group.end > currTime && currTime > group.start
+              
             );
 
             if (checkStage != -1) {
