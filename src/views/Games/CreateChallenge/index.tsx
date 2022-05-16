@@ -97,7 +97,7 @@ const CreateChallenge = (props) => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     // console.log(props.level)
-    // if(votingLevel == 2) {
+    if(votingLevel == 2) {
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
@@ -172,12 +172,12 @@ const CreateChallenge = (props) => {
         // console.error(error)
         setIsLoading(false);
       }
-    // } else {
-    //   toastError(
-    //     "Errorr",
-    //     "You need at least level2 DAO ranking to create challenge"
-    //   );
-    // }
+    } else {
+      toastError(
+        "Errorr",
+        "You need at least level2 DAO ranking to create challenge"
+      );
+    }
   };
 
   const updateValue = (key: string, value: string | Choice[] | Date) => {
