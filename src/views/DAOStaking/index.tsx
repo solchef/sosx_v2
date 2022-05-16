@@ -13,7 +13,9 @@ import axios from "axios";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import web3 from "web3";
 import { cleanNumber } from "utils/amount";
-import LoaderDisplay from "../Games/components/loader";
+import UserStaking from "./userStaking";
+import ConfirmStakingModal from "./components/ConfirmStakingModal";
+import { useModal } from "@pancakeswap/uikit";
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -81,65 +83,65 @@ export default function DaoStaking() {
     });
 
     tokenContract.allowance(account, contract.address).then((allowance) => {
-      if (Number(allowance) > 0) {
+      if(Number(allowance) > 0){
         // alert("ff")
-        setActivatestake(true);
+          setActivatestake(true);
       }
       setAllowanceValue(allowance);
     });
   };
-
+  
   const handleUnstake = async (stakeID) => {
 
-    const unstake = await contract.returnTokens(0);
+     const unstake = await contract.returnTokens(0);
 
-    if (unstake) {
-      toastSuccess("Successfully sent unstake SOSX transaction, Check balance in your wallet");
-    }
-
-  }
-
-
-  const handleClaim = async () => {
+     if(unstake){
+       toastSuccess("Successfully sent unstake SOSX transaction, Check balance in your wallet");
+     }
 
   }
 
+    
+  const showStakingLog = async () => {
+      await  listUserStaking();
+  } 
+  
   const listUserStaking = async () => {
     let list = [];
     let count = []
-    console.log(numberOfActiveStake);
+    // console.log(numberOfActiveStake);
     for (let i = 0; i < numberOfActiveStake; i++) {
       await contract.getStakeInfo(i).then(stakeInstance => {
 
-        // if (stakeInstance) {
-        // contract.getCurrentStakeClass(i).then(stakeClass => {
-        // console.log("here")
-        let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
-        let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
-        console.log(stakeInstance)
-        count.push(i)
-        let instance = {
-          amount: stakeAmt,
-          isWithdrawed: Boolean(stakeInstance[1]),
-          stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
-            "en-US",
-            { timeZone: "America/New_York" }
-          ),
-          referral: stakeInstance[3],
-          rewardAmount: Number(stakeInstance[4]),
-          penalty: Number(stakeInstance[5]),
-          stakingClass: stakeClass,
-          periodElapsed: stakeClass,
-        };
+          // if (stakeInstance) {
+            // contract.getCurrentStakeClass(i).then(stakeClass => {
+              // console.log("here")
+            let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
+             let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
+              // console.log(stakeInstance) 
+              count.push(i)
+                let instance = {
+                  amount: stakeAmt,
+                  isWithdrawed: Boolean(stakeInstance[1]),
+                  stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
+                    "en-US",
+                    { timeZone: "America/New_York" }
+                  ),
+                  referral: stakeInstance[3],
+                  rewardAmount: Number(stakeInstance[4]),
+                  penalty: Number(stakeInstance[5]),
+                  stakingClass: stakeClass,
+                  periodElapsed: stakeClass,
+                };
 
-        list.push(instance);
+                list.push(instance);
+               
+                
+            // });
+           
+          // }
 
-
-        // });
-
-        // }
-
-
+        
       });
 
       // console.log(stakeInstance)
@@ -147,10 +149,10 @@ export default function DaoStaking() {
 
     setActiveStakes(list);
     console.log(list)
-    console.log(count)
+    // console.log(count)
     // clearTimeout(listTimeOut);
 
-
+    
     // console.log(list)
   };
 
@@ -178,11 +180,11 @@ export default function DaoStaking() {
   const handleAmountChange = async (event) => {
     let _amountToStake = Number(event.target.value);
 
-    if (_amountToStake > balance) {
-      setInsufficientBalance(true);
-    } else {
-      setInsufficientBalance(false);
-    }
+    // if (_amountToStake > balance) {
+    //   setInsufficientBalance(true);
+    // } else {
+    //   setInsufficientBalance(false);
+    // }
 
     let decimals = new BigNumber(10).pow(18);
 
@@ -192,13 +194,13 @@ export default function DaoStaking() {
     // let finalAmount = this.web3.utils.toBN(result.toString())
     // let finalAmount = result;
     // console.log(_amountToStake)
-    console.log(allowanceValue);
-    console.log(result);
-    // console.log(allowanceValue)
-    if (allowanceValue != 0) {
-      setActivatestake(false);
-    } else {
+    // console.log(allowanceValue);
+    // console.log(result);
+    // console.log(Number(allowanceValue))
+    if (Number(allowanceValue) > amountToStake * (10 ** 18)) {
       setActivatestake(true);
+    } else {
+      setActivatestake(false);
     }
 
     const p = event.target.value;
@@ -212,6 +214,7 @@ export default function DaoStaking() {
     // console.log(_amountToStake);
     setamountToStake(_amountToStake);
     setStakingInterest(Number(interest));
+
   };
 
   const compoundInterest = (p, t, r, n) => {
@@ -228,63 +231,69 @@ export default function DaoStaking() {
   // }, 10000); 
 
   const handleSubmit = async () => {
-    console.log(allowanceValue);
+    // console.log(allowanceValue);
 
-
-    if (amountToStake < 1) {
+ 
+    if(amountToStake < 1){
       toastError("You Must stake at least one token. Check your input");
       // referralAddress;
       return;
     }
 
-    if (stakingClass == 2 && amountToStake < Number(process.env.NEXT_PUBLIC_LEVEL2)) {
+    if(stakingClass == 2 && amountToStake < Number(process.env.NEXT_PUBLIC_LEVEL2) ){
 
-      toastError("DAO Level 2 required you to stake more than 100000 SOSX");
+        toastError("DAO Level 2 required you to stake more than 100000 SOSX");
       return;
     }
 
-    if (stakingClass == 3 && amountToStake < Number(process.env.NEXT_PUBLIC_LEVEL3)) {
+    if(stakingClass == 3 && amountToStake < Number(process.env.NEXT_PUBLIC_LEVEL3)){
 
       toastError("DAO Level 3 required you to stake more than 100000 SOSX");
-      return;
-    }
-    // console.log()
-    if (amountToStake < balance) {
+    return;
+  }
+  // console.log()
+    // if (amountToStake > balance) {
+              let decimals = BigNumber(10).pow(18)
+
+        let result = BigNumber(amountToStake).multiply(decimals)        
+  // console.log(Number(allowanceValue),amountToStake )
       if (Number(allowanceValue) > amountToStake) {
         // console.log(referralAddress);
         setLoading(true);
-        let stake = await contract.stakeToken(
-          amountToStake + "000000000000000000",
+        // alert('ss')
+      let stake =  await contract.stakeToken(
+          result.toString(),
           "0x0000000000000000000000000000000000000001",
           stakingClass
         );
 
-        if (stake) {
+        // alert('ss')
+        if(stake){
           setActivatestake(true);
           setLoading(false);
           loadUI();
           toastSuccess("Staking Transaction successfully sent");
-
-        } else {
+  
+        }else{
           toastError("Could not stake");
-        }
+        } 
       } else {
         const tx = await tokenContract.populateTransaction.approve(
           contract.address,
-          amountToStake + "000000000000000000"
+          result.toString(),
         );
         let signer = contract.signer;
-        await signer.sendTransaction(tx);
-        toastSuccess("Approval transaction sent. You can stake after the transaction is mined.");
+       await  signer.sendTransaction(tx);
+       toastSuccess("Approval transaction sent. You can stake after the transaction is mined.");
         // 	toastError("token allowance not yet set");
         loadUI()
       }
-    } else {
-      toastError("Insufficient Balance");
-    }
+    // } else {
+    //   toastError("Insufficient Balance");
+    // }
   };
 
-  const getLevel = (amount) => {
+    const getLevel = (amount) => {
     if (
       amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
       amount < process.env.NEXT_PUBLIC_LEVEL2
@@ -304,217 +313,245 @@ export default function DaoStaking() {
     }
   };
 
+
+      const [onPresentConfirmModal] = useModal(
+         <ConfirmStakingModal
+		  //   trade={trade}
+		  //   originalTrade={tradeToConfirm}
+		  //   onAcceptChanges={handleSubmit}
+		  //   attemptingTxn={attemptingTxn}
+		  //   txHash={txHash}
+		  //   recipient={recipient}
+		  //   allowedSlippage={allowedSlippage}
+		  onConfirm={handleSubmit} attemptingTxn={false} recipient={""} allowedSlippage={0} onAcceptChanges={function (): void {
+			  throw new Error("Function not implemented.");
+		  } }    //   swapErrorMessage={swapErrorMessage}
+    //   customOnDismiss={handleConfirmDismiss}
+    />,
+    true,
+    true,
+    'ConfirmStakingModal',
+  )
+
   return (
     <>
-      <div className="container-fluid dao d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse" >
-        <div>
-          <div className="card w-100 h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                Img
-              </div>
-              <div className="d-flex flex-column align-items-center">
-                <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end text-success">5MO</span>
-                  <h4 className="fs-28">5,000</h4>
-                  <span className="text-success" >SOSX</span>
-                  <span className="text-success">Staked</span>
-                </div>
-              </div>
+      <div
+        className={`${biggerThan1400 && "container"} ${biggest1400 && "container-fluid"
+          }`}
+      >
+        <div className="row mb-3">
+          <div className="col-sm-3 col-6">
+            <div className="card overflow-hidden" style={{rowGap:"20px"}}>
+              <h4>10,000,000,000</h4>
+              <span className="pt-1 pb-1">Total supply</span>
             </div>
           </div>
-        </div>
-        <div>
-          <div className="card w-100 h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                Img
-              </div>
-              <div className="d-flex flex-column align-items-center">
-                <h4>5 Month</h4>
-                <span className="pt-1 pb-1">Total supply</span>
-              </div>
+          <div className="col-sm-3 col-6">
+            <div className="card overflow-hidden" style={{rowGap:"20px"}}>
+              <h4>${marketCap.toFixed(8)}</h4>
+              <span className="pt-1 pb-1">Market Cap</span>
             </div>
           </div>
-        </div>
-        <div>
-          <div className="card w-100 h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <h4 className="pt-1 pb-1 ">Price</h4>
-              <div className="d-flex flex-column align-items-center">
-                <h4 className="fs-28">5,000</h4>
-              </div>
+          <div className="col-sm-3 col-6">
+            <div className="card overflow-hidden" style={{rowGap:"20px"}}>
+              <h4>${price.toFixed(8)}</h4>
+              <span className="pt-1 pb-1">Price</span>
+              {/* <div className="daily-avr warning fs-12">
+								<i className="fa fa-chevron-down"></i> 0.5% 7D
+							</div> */}
             </div>
           </div>
-        </div>
-        <div>
-          <div className="card d-flex flex-column w-100 h-100">
-            <div className="card-header border-0 p-0">
-              <h4 className="fs-18 ">Stake SOSX</h4>
-            </div>
-            <div className="card-body">
-              <div className="bg-dark mb-3 p-3 rounded">
-                <div className="d-flex justify-content-between align-items-center">
-                  <span>
-                    <input
-                      type="text"
-                      className="form-control"
-                      required
-                      onChange={(e) => handleAmountChange(e)}
-                      defaultValue={0}
-                    />
-                  </span>
-                  <span className="text-white fs-18">SOSX</span>
-                </div>
-              </div>
-              <div className="bg-dark p-3 mb-3 rounded">
-                <div className="d-flex justify-content-between align-items-center">
-                  <span>
-                    <select
-                      className="form-control  select-special"
-                      onChange={(e) => {
-                        setStakingClass(Number(e.target.value));
 
-                        const p = amountToStake;
-                        const t =
-                          Number(e.target.value) == 1
-                            ? 0.25
-                            : Number(e.target.value) == 2
-                              ? 0.5
-                              : 1;
-                        const r =
-                          Number(e.target.value) == 1
-                            ? 0.29
-                            : Number(e.target.value) == 2
-                              ? 0.64
-                              : 1.45;
-                        const n = 12;
-                        setStakingInterest(
-                          Number(compoundInterest(p, t, r, n))
-                        );
-                      }}
-                    >
-                      <option value={1}>3 </option>
-                      <option value={2}>6 </option>
-                      <option value={3}>12 </option>
-                    </select>
-                  </span>
-                  <h4 className="text-white ">Months</h4>
-                </div>
+          <div className="col-sm-3 col-6">
+            <div className="card overflow-hidden" style={{rowGap:"20px"}}>
+              <h4>321139778.950</h4>
+              <span className="pt-1 pb-1">Circulating Supply</span>
+              {/* <div className="daily-avr success fs-12">
+								<i className="fa fa-chevron-up"></i> 1.5% 7D
+							</div> */}
+            </div>
+          </div>
+        </div>
+        <div className="row" >
+        <div className="col-xl-4 ">
+            <div className="card d-flex flex-column  h-100">
+              <div className="card-header border-0 pl-0 pt-0">
+                <h4 className="fs-18 ">Stake SOSX for DAO Level</h4>
               </div>
-              <div className="bg-dark p-3 rounded">
-                <div className="d-flex justify-content-between">
-                  <div className="small2">
-                    <div className="success mr-1">Reward Interest: </div>
-                    <div className="d-flex align-items-center">
-                      <div className="text-white fs-14"> {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145}%</div>
+                <div className="card-body" >
+                  <div className="bg-dark mb-3 p-3 rounded">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <span>
+                        <input
+                          type="text"
+                          className="form-control"
+                          required
+                          onChange={(e) => handleAmountChange(e)}
+                          defaultValue={0}
+                        />
+                      </span>
+                      <span className="text-white fs-18">SOSX</span>
                     </div>
                   </div>
-                  <div className="small2">
-                    <div className="success mr-1">Estimated </div>
-                    <div className="d-flex align-items-center">
-                      <div className="text-white fs-14">
-                        {" "}
-                        {stakingInterest} SOSX
+                  <div className="bg-dark p-3 mb-3 rounded">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <span>
+                        <select
+                          className="form-control  select-special"
+                          onChange={(e) => {
+                            setStakingClass(Number(e.target.value));
+
+                            const p = amountToStake;
+                            const t =
+                              Number(e.target.value) == 1
+                                ? 0.25
+                                : Number(e.target.value) == 2
+                                  ? 0.5
+                                  : 1;
+                            const r =
+                              Number(e.target.value) == 1
+                                ? 0.06
+                                : Number(e.target.value) == 2
+                                  ? 0.09
+                                  : 0.12
+                            const n = 12;
+                            setStakingInterest(
+                              Number(compoundInterest(p, t, r, n))
+                            );
+                          }}
+                        >
+                          <option value={1}>Level 1 DAO </option>
+                          <option value={2}>Level 2 DAO </option>
+                          <option value={3}>Level 3 DAO </option>
+                        </select>
+                      </span>
+                      {/* <span className="text-white fs-18">Months</span> */}
+                    </div>
+                  </div>
+                  <div className="bg-dark p-3 rounded">
+                    <div className="d-flex justify-content-between">
+                      <div className="small2">
+                        <div className="success mr-1">Reward Interest: </div>
+                        <div className="d-flex align-items-center">
+                            <div className="text-white fs-14"> {stakingClass == 1 ? 6 : stakingClass == 2 ? 9 : 12}%</div>
+                        </div>
+                      </div>
+                      <div className="small2">
+                        <div className="success mr-1">Estimated </div>
+                        <div className="d-flex align-items-center">
+                          <div className="text-white fs-14">
+                            {" "}
+                            {stakingInterest} SOSX
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="card-footer pt-0 foot-card  border-0">
-              {account ? (
-                <>
-                  {activateStake ? (
-                    <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-between">
-                      <button
-                        type="button"
-                        onClick={handleSubmit}
-                        className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
-                      //   disabled={insufficientBalance || activateStake}
-                      >
-                        {loading ? "Approving..." : "Approve"}
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
-                        disabled
-                      >
-                        Stake
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="d-flex card-footer pt-0 pb-0  foot-card  border-0 justify-content-between">
-                      <button
-                        type="button"
-                        className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
-                        disabled
-                      >
-                        Approve
-                      </button>
-                      <button
-                        type="button"
-                        // disabled={insufficientBalance || activateStake}
-                        onClick={handleSubmit}
-                        className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
-                      >
-                        {loading ? "Staking.." : "Stake"}
-                      </button>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <ConnectWalletButton />
-              )}
-            </div>
-
-          </div>
-        </div>
-        <div>
-          <div className="card d-flex flex-column h-100">
-            <div className="card-header border-0 p-0">
-
-              <h4 className="fs-18">Staking Log</h4>
-            </div>
-            <div className="card-body">
-              <LoaderDisplay />
+              {/* <div className="card-footer pt-0 foot-card  border-0">
+                {account ? (
+                  <>
+                    {!activateStake ? (
+                      <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-around">
+                        <button
+                          type="button"
+                          onClick={onPresentConfirmModal}
+                          className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
+                        //   disabled={insufficientBalance || activateStake}
+                        >
+                          {loading ? "Approving..." : "Approve"}
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
+                          disabled
+                        >
+                          Stake
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="d-flex card-footer pt-0 pb-0  foot-card  border-0 justify-content-around">
+                        <button
+                          type="button"
+                          className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
+                          disabled
+                        >
+                          Approve
+                        </button>
+                        <button
+                          type="button"
+                          // disabled={insufficientBalance || activateStake}
+                          onClick={onPresentConfirmModal}
+                          className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
+                        >
+                          {loading ? "Staking.." : "Stake"}
+                        </button>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <ConnectWalletButton />
+                )}
+              </div> */}
 
             </div>
           </div>
-        </div>
-        <div>
-          <div className="card d-flex flex-column justify-content-between h-100">
 
-            <div className="bg-dark p-3 rounded">
-              <div className="d-flex align-items-center justify-content-between">
-                <div className="text-white fs-28 mr-3" > 6%</div>
-                <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end text-success">Level</span>
-                  <h4 className="fs-28">5,000</h4>
-                  <span className="text-success" >Dealy Rewared</span>
-                </div>
+          <div className="col-xl-4">
+            <div className="card d-flex flex-column h-100 ">
+              <div className="card-header border-0 p-0">
+                <h4 className="fs-18">DAO Staking Summary</h4>
               </div>
-            </div>
-            <div className="bg-dark p-3 rounded">
-              <div className="d-flex align-items-center justify-content-between">
-                <div className="text-white fs-28 mr-3"> 10%</div>
-                <div className="d-flex flex-column align-items-center">
-                  <h4 className="fs-28">5,000K+</h4>
-                  <span className="text-success" >Staking</span>
-                </div>
-              </div>
-            </div>
 
-            <div className="bg-dark p-3 rounded">
-              <div className="d-flex align-items-center justify-content-between">
-                <div className="text-white fs-28 mr-3"> 16%</div>
-                <div className="d-flex flex-column align-items-center">
-                  <span className="align-self-end text-success">Level</span>
-                  <h4 className="fs-28">5,000+</h4>
-                  <span className="text-success" >Dealy Rewared</span>
+              <div className="card-body flex-column d-flex justify-content-between">
+                <div className="pt-4">
+                  <div className="d-flex justify-content-between">
+                    <p className="success mb-0 fs-12">Total SOSX Staked</p>
+                    <h4 className="mb-0 font-w600  fs-24 pb-3">
+                      {cleanNumber(totalAmountStaked / 10 ** 18 + "")}
+                    </h4>
+                  </div>
+
+                  <div className="d-flex justify-content-between">
+                    <p className="success mb-0 fs-12">Your DAO Level</p>
+                    <h4 className="mb-0 font-w600  fs-24 pb-3">
+                      {totalAmountStaked ? getLevel(totalAmountStaked / 10 ** 18) : 0}
+                    </h4>
                 </div>
+
+                <hr/>
+                 <h5>DAO Membership</h5>
+                    <br/>
+                      <div className="d-flex justify-content-between">
+                        <h6 className=" mb-0 fs-12">Level 1 : Stake between 1 and 100,000 SOSX</h6>
+                      </div>
+                      <br/>
+                      <div className="d-flex justify-content-between">
+                        <h6 className=" mb-0 fs-12">Level 2 : Stake between 100,000 and 100,000 SOSX</h6>
+                      </div>
+
+                      <br/>
+                      <div className="d-flex justify-content-between">
+                        <h6 className=" mb-0 fs-12">Level 3 : Stake above  1,000,000 SOSX</h6>
+                      </div>
+                </div>
+                <hr/>
+                   <h6 className=" mb-0 fs-12 ">Staking for voting tokens also earn you interest. You can unstake at any time.</h6>
+              
+              </div>
+              <div className="card-footer pt-0 mx-auto foot-card  border-0">
+                {/* <button
+                  type="button"
+                  className="btn btn-primary btn-lg mt-5"
+                >
+                  Refresh Summarry
+                </button> */}
               </div>
             </div>
+          </div>
+
+          <div className="col-xl-4">
+                <UserStaking/>
           </div>
         </div>
       </div>

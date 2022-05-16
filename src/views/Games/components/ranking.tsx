@@ -24,7 +24,7 @@ const StyledList = styled.ol`
   }
 `;
 
-const Ranking = (props) => {
+const Ranking = () => {
   const { t } = useTranslation();
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
