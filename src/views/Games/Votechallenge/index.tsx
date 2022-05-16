@@ -29,7 +29,7 @@ export default function Votechallenge() {
   useEffect(() => {
     setStage(stageHook);
     if (!allowedStages.includes(stageHook)) {
-      router.push('/xgame')
+      // router.push('/xgame')
     }
   });
   
@@ -130,7 +130,7 @@ export default function Votechallenge() {
               <div  style={{ flex: "1", gap: "20px" }}>
 
            
-                  <div className="card h-100 p-0 overflow-hidden">
+                  <div className="card h-100 p-0 d-flex flex-column overflow-hidden">
                     <div className="card-body p-3 align-items-start border-0">
                       <div>
                         <span className="fs-12 font-weight-bold success">
@@ -146,9 +146,8 @@ export default function Votechallenge() {
                         </ReadMore>
                       </div>
                     </div>
-                    <div className="card-footer pt-0 foot-card border-0">
-                      <div>
-                      </div>
+                    <div className="card-footer pt-0 mb-auto d-flex flex-column foot-card border-0">
+                      
                       <div className="align-items-center d-flex justify-content-between">
                         <div>
                           <i className="fa-regular fa-heart p-2"></i>
