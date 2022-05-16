@@ -342,7 +342,8 @@ export default function DaoStaking() {
             <div className="d-flex justify-content-between align-items-center">
               <h4 className="pt-1 pb-1 ">Price</h4>
               <div className="d-flex flex-column align-items-center">
-                <h4 className="fs-28">5,000</h4>
+                <h4 className="fs-28">$0000</h4>
+                <h4 >SOSX price</h4>
               </div>
             </div>
           </div>
