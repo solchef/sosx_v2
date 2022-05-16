@@ -7,6 +7,8 @@ import { Placeholder, Spinner } from "react-bootstrap";
 import { Skeleton } from "../../../../packages/uikit/src/components/Skeleton";
 import LoaderDisplay from "../components/loader";
 import moment from "moment";
+import useStage from "../hooks/useStage";
+import { useRouter } from "next/router";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -19,18 +21,27 @@ export default function Votechallenge() {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [stage, setStage] = useState(3);
+  const [stage, setStage] = useState(2);
+  const router = useRouter();
 
-
+  const allowedStages = [2, 3]
+  const stageHook = useStage();
+  useEffect(() => {
+    setStage(stageHook);
+    if (!allowedStages.includes(stageHook)) {
+      // router.push('/xgame')
+    }
+  });
+  
   const ReadMore = ({ children, size, css }) => {
     const text = children;
     const [isReadMore, setIsReadMore] = useState(true);
 
     return (
       <p className={css}>
-        {isReadMore ? text?.slice(0, size) : text}
+        {isReadMore ? text.slice(0, size) : text}
         <a style={{ color: "#ff00cc" }} className="ml-2 read-or-hide">
-          {text?.length > text?.slice(0, size).length
+          {text.length > text.slice(0, size).length
             ? isReadMore
               ? "..."
               : ""
@@ -39,7 +50,6 @@ export default function Votechallenge() {
       </p>
     );
   };
-
 
   const calculateTimeLeft = (entryTime) => {
     let eventTime = moment(entryTime).unix();
@@ -73,12 +83,12 @@ export default function Votechallenge() {
 
     let stageGroups = [];
 
-
     let stage1 = { start: roundStartTime, end: roundStartTime + 5 * 10 };
     let stage2 = { start: stage1.end, end: stage1.end + 5 * 10 };
     let stage3 = { start: stage2.end, end: stage2.end + 5 * 10 };
     let stage4 = { start: stage3.end, end: stage3.end + 5 * 10 };
     let stage5 = { start: stage4.end, end: stage1.start };
+
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
     let current = moment().unix();
@@ -104,21 +114,19 @@ export default function Votechallenge() {
   }, []);
 
   useEffect(() => {
-
     setLoading(true);
     const getData = async () => {
       let challenges = [];
       for await (const resultPart of server.files.ls("/challenges")) {
         let challenge;
         let vote;
-
         for await (const cha of server.files.ls(
           `/challenges/${resultPart.name}`
         )) {
           const chunks = [];
           if (cha.name == "votes") {
             let votes = await server.files.stat(
-              `/challenges/${resultPart.name}/votes`
+              `/challenges/${resultPart.name}/votes/stage-${stage}`
             );
             vote = votes.blocks;
           }
@@ -132,36 +140,35 @@ export default function Votechallenge() {
           }
         }
 
-        
-
         let challengeData = {
           challenge: challenge,
           votes: vote,
         };
 
         challenges.push(challengeData);
+        console.log(challengeData)
       }
       // setTopChallenges(challenges);
 
       let topThreeChallenges = [];
       const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
-
       topThreeChallenges.push(ch[0], ch[1], ch[2]);
 
-      if(stage == 3){
-        setChallenges(topThreeChallenges);
+      if (stage == 3) {
 
-      }else{
+        if(challenges.length > 3){
+          setChallenges(topThreeChallenges);
+
+        }else{
+          setChallenges(challenges);
+        }
+      } else {
         setChallenges(challenges);
       }
       setLoading(false);
-
-
     };
     getData();
   }, []);
-
-  // console.log("challenges", challenges);
 
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
@@ -176,15 +183,20 @@ export default function Votechallenge() {
         <i className="fa-solid fa-arrow-left"></i>{" "}
         <Link href="/xgame"> Back </Link>{" "}
       </p>
-      {challenges.length > 0 ? (
-        <div className="row pt-3">
-          <div className="row pt-3">
+      <div
+        className="container-fluid d-flex flex-wrap flex-column flex-sm-row"
+        style={{ gap: "20px" }}
+      >
+        {challenges.length > 0 ? (
+          <>
             {challenges
               .sort((a, b) => a.votes - b.votes)
               .reverse()
               .map((camp) => (
-                <div className="col-12 col-xl-4 col-md-6">
-                  <div className="card p-0 overflow-hidden">
+              <div  style={{ flex: "1", gap: "20px" }}>
+
+           
+                  <div className="card h-100 p-0 d-flex flex-column overflow-hidden">
                     <div className="card-body p-3 align-items-start border-0">
                       <div>
                         <span className="fs-12 font-weight-bold success">
@@ -192,31 +204,21 @@ export default function Votechallenge() {
                         </span>
 
                         <h1 className="fs-18 pb-2 pt-3">
-                          {camp.challenge?.payload?.name}
+                          {camp.challenge.payload.name}
                         </h1>
 
                         <ReadMore size="150" css="fs-14 pt-2">
-                          {camp.challenge?.payload?.body}
+                          {camp.challenge.payload.body}
                         </ReadMore>
                       </div>
                     </div>
-                    <div className="card-footer  pt-0 foot-card border-0">
-                      <div>
-                        <h4 className="fs-12 text-white">Rules</h4>
-                        {camp.challenge?.payload?.choices.map((element) => (
-                          <ul className="fs-12">
-                            <li>
-                              <i className="fa-solid fa-check pr-2"></i>
-                              {element}
-                            </li>
-                          </ul>
-                        ))}
-                      </div>
+                    <div className="card-footer pt-0 mb-auto d-flex flex-column foot-card border-0">
+                      
                       <div className="align-items-center d-flex justify-content-between">
                         <div>
                           <i className="fa-regular fa-heart p-2"></i>
                           <span className="fs-12 p-1" id="votes">
-                            {camp?.votes}
+                            {camp.votes}
                           </span>
                           <span className="fs-12">Votes</span>
                         </div>
@@ -224,7 +226,7 @@ export default function Votechallenge() {
 
                       <Link
                         href={`/challenge/${String(
-                          camp.challenge?.payload?.name
+                          camp.challenge.payload.name
                         ).replaceAll(" ", "-")}`}
                       >
                         <button type="button" className="btn btn-primary ">
@@ -234,15 +236,15 @@ export default function Votechallenge() {
                       </Link>
                     </div>
                   </div>
-                </div>
+                  </div>
               ))}
-          </div>
-        </div>
+              </>
       ) : loading ? (
-        <LoaderDisplay/>
+        <LoaderDisplay />
       ) : (
         "No Challenge"
       )}
+    </div>
     </div>
   );
 }

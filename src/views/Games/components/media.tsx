@@ -157,6 +157,31 @@ const Media = (props: { todayVideo }) => {
       </div> */}
       </div>
     </div>
+<<<<<<< HEAD
+=======
+    <p>Previous Game Winners Archives video</p>
+    <div className="d-flex w-100 flex-wrap flex-row mt-4 " style={{gap: '21px'}}>
+    {videos.length > 0 ? (
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid mx-auto "
+            columnClassName="my-masonry-grid_column">
+
+                {videos.map((video) =>
+
+                        <div className={` ${video.youtube ? "width400" : "width200"} ${video.youtube ? "height200" : "height400"}  p-3   mb-4  align-self-stretch rounded`}>
+                          <iframe className="position-absolute iframe" width={`${video.youtube ? "400" : "200"}`} height={`${video.youtube ? "200" : "400"}`} src={`https://www.${video.youtube ? "youtube" : "tiktok"}.com/embed/${video.youtube ? video.youtube : video.tiktok}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                        </div>
+
+                    )}
+
+          </Masonry>
+            ) : (
+              <p className='mx-auto w-100'>No Videos</p>
+            )}
+    </div>
+  </div>
+>>>>>>> afa7c98a0b35b8b562b7a13b714c8769bf27981e
   );
 };
 

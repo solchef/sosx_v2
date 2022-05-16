@@ -356,6 +356,7 @@ export default function Game() {
     }
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
       // setTotalAmountStaked(stakeAmount);
@@ -363,6 +364,14 @@ export default function Game() {
       // alert(level);
       setCurrentLevel(level);
     });
+=======
+      return (
+        <>
+          <div className="game container-fluid d-flex flex-wrap flex-direction-row-reverse" >
+            <div id="action-section">
+              {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
+              {stage == 5 && <CreateChallenge level={currentLevel} stage={stage} />}
+>>>>>>> afa7c98a0b35b8b562b7a13b714c8769bf27981e
 
     // loadDaoLevels();
     getData();
@@ -400,6 +409,7 @@ export default function Game() {
                     <Link href="/votechallenge">
                       <button type="submit" className="btn mt-2 btn-primary">
                         {" "}
+<<<<<<< HEAD
                         Vote for challenge
                       </button>
                     </Link>
@@ -502,6 +512,42 @@ export default function Game() {
                         placeholder="Youtube or Toktok URL link Here"
                         value={url}
                         onChange={(e) => setURL(e.target.value)}
+=======
+                        Vote for your favorite challenge which the top 3 will then
+                        make it to the Final Challenge voting round.
+                      </p>
+                      <p className="mt-2">
+                        {" "}
+                        Only Level 2 members can members are allowed to vote.
+                      </p>
+                      <br/>
+                      {/* {console.log(currentLevel)} */}
+                      {/* {currentLevel == 2 ? ( */}
+                        <Link href="/votechallenge">
+                          <button type="submit" className="btn mt-2 btn-primary">
+                            {" "}
+                            Vote for challenge
+                          </button>
+                        </Link>
+                      {/* ) : ( */}
+                        {/* <button
+                          type="submit"
+                          className="btn mt-2 btn-primary"
+                          onClick={() =>
+                            toastError("Only level 3 DAO members can participate")
+                          }
+                        >
+                          {" "}
+                          Vote for Challange
+                        </button> */}
+                      {/* )} */}
+                    </div>
+                    <div className="col-6">
+                      <img
+                        className="mobile-hide"
+                        width="60%"
+                        src="images/votechallenge-img.png"
+>>>>>>> afa7c98a0b35b8b562b7a13b714c8769bf27981e
                       />
                     </div>
                     {account ? (
@@ -599,6 +645,7 @@ export default function Game() {
           )}
         </div>
 
+<<<<<<< HEAD
         <div id="timer-section" style={{ flex: 1, gap: "20px" }}>
           <TimerDisplay
             hours={hours}
@@ -619,3 +666,20 @@ export default function Game() {
     </>
   );
 }
+=======
+            <div id="timer-section">
+              <TimerDisplay hours={hours} minutes={minutes} seconds={seconds} stage={stage} />
+            </div>
+
+            <div id="ranking-section">
+              <Ranking voters={voters} />
+            </div>
+
+            <div id="video-section" >
+              <Media todayVideo={todayChallenge} />
+            </div>
+          </div>
+        </>
+      );
+    }
+>>>>>>> afa7c98a0b35b8b562b7a13b714c8769bf27981e
