@@ -279,7 +279,7 @@ export default function Staking() {
           </div>
         </div>
         <div className="row">
-          <div className="col-xl-4">
+          <div className="col-xl-4 mb-4">
             <div className="card d-flex flex-column h-100">
               <div className="card-header border-0 pl-0 pt-0">
                 <h4 className="fs-18 ">Stake SOSX</h4>
@@ -403,7 +403,7 @@ export default function Staking() {
             </div>
           </div>
 
-          <div className="col-xl-4">
+          <div className="col-xl-4 mb-4">
             <div className="card d-flex flex-column h-100">
               <div className="card-header border-0 p-0">
                 <h4 className="fs-18">Staking Summary</h4>
@@ -462,7 +462,7 @@ export default function Staking() {
             </div>
           </div>
 
-          <div className="col-xl-4">
+          <div className="col-xl-4 mb-4">
             <div className="card d-flex flex-column h-100">
               <div className="card-header border-0 pb-0">
                 <div className="col-3">

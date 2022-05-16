@@ -344,13 +344,13 @@ export default function DaoStaking() {
             </div>
           </div>
         </div>
-        <div className="row">
-        <div className="col-xl-4">
-            <div className="card d-flex flex-column h-100">
+        <div className="row" >
+        <div className="col-xl-4 mb-4">
+            <div className="card d-flex flex-column mb-4 h-100">
               <div className="card-header border-0 pl-0 pt-0">
                 <h4 className="fs-18 ">Stake SOSX for DAO Level</h4>
               </div>
-                <div className="card-body">
+                <div className="card-body" >
                   <div className="bg-dark mb-3 p-3 rounded">
                     <div className="d-flex justify-content-between align-items-center">
                       <span>
@@ -469,8 +469,8 @@ export default function DaoStaking() {
             </div>
           </div>
 
-          <div className="col-xl-4">
-            <div className="card d-flex flex-column h-100">
+          <div className="col-xl-4 mb-4">
+            <div className="card d-flex flex-column h-100 ">
               <div className="card-header border-0 p-0">
                 <h4 className="fs-18">DAO Staking Summary</h4>
               </div>
