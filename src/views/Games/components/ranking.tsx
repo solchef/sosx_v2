@@ -30,12 +30,11 @@ const Ranking = (props) => {
   const contract = useDaoStakingContract();
   const [voters, setVoters] = useState([]);
   const [count, setCount] = useState(1);
-  const{account} = useActiveWeb3React();
+  const { account } = useActiveWeb3React();
 
   const loadDaoLevels = async () => {
     let daoList = await contract.getAllAccount();
     daoList = [...new Set(daoList)];
-
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
       // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
@@ -48,23 +47,18 @@ const Ranking = (props) => {
         level: await getLevel(total_stake),
       };
       // if (voter_address == account) {setCurrentLevel(data.level)};
-      console.log(data)
       // alert(data.level)
       voters.push(data);
 
       // }
     }
-  
-    setVoters(voters);
 
-    //   await server.files.write("/levels/level.json", JSON.stringify(voters), {
-    //   create: true,
-    // });
+    setVoters(voters);
   };
 
   useEffect(() => {
     loadDaoLevels();
-  }, [props]);
+  }, []);
 
   const getLevel = (amount) => {
     if (
@@ -169,50 +163,48 @@ const Ranking = (props) => {
 
       <div className="mt-3">
         <StyledList>
-          {voters.length > 0 ? voters
-            .sort((b, a) => a.amount - b.amount)
+          {voters.length > 0 ? (
+            voters
+              .sort((b, a) => a.amount - b.amount)
 
-            .map((voter, i) => (
-              <>
-                {voter.level == displayLevel && (
-                  <li key={i}>
-                    <a className="blueprint-header-display trader-display">
-                      <div className="d-flex align-items-center">
-                        <span className="text-white mr-3 fs-16 font-w600">
-                          {/* {() => setCount(count+1)} */}
-                        </span>
-                        <img
-                          className="blueprint-img-sm rounded-circle"
-                          src="https://app.hedgeboard.io/userprofiles/default.png"
-                          alt="profile"
-                        />
-                        <div className="ml-1">
-                          <span className=" card-small-text text-white trader-name">
-                            {voter.address.replace(/(.{10})..+/, "$1…")}
-                          </span>
-                        </div>
-                      </div>
-                      <span> {cleanNumber(voter.amount + "")} </span>
-                      {/* {count ++} */}
-                    </a>
-                  </li>
-                )}
-              </>
-            )) : 
-            <>
-             {!account ? 
+              .map((voter, i) => (
                 <>
-                 <ConnectWalletButton/>
+                  {voter.level == displayLevel && (
+                    <li key={i}>
+                      <a className="blueprint-header-display trader-display">
+                        <div className="d-flex align-items-center">
+                          <span className="text-white mr-3 fs-16 font-w600">
+                            {/* {() => setCount(count+1)} */}
+                          </span>
+                          <img
+                            className="blueprint-img-sm rounded-circle"
+                            src="https://app.hedgeboard.io/userprofiles/default.png"
+                            alt="profile"
+                          />
+                          <div className="ml-1">
+                            <span className=" card-small-text text-white trader-name">
+                              {voter.address.replace(/(.{10})..+/, "$1…")}
+                            </span>
+                          </div>
+                        </div>
+                        <span> {cleanNumber(voter.amount + "")} </span>
+                        {/* {count ++} */}
+                      </a>
+                    </li>
+                  )}
                 </>
-                :
-                <div className="mx-auto text-center">
-                  Data Loading
-                </div>
-             }
-              
+              ))
+          ) : (
+            <>
+              {!account ? (
+                <>
+                  <ConnectWalletButton />
+                </>
+              ) : (
+                <div className="mx-auto text-center">Data Loading</div>
+              )}
             </>
-                 
-            }
+          )}
         </StyledList>
       </div>
     </div>

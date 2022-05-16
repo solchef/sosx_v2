@@ -97,7 +97,7 @@ const CreateChallenge = (props) => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     // console.log(props.level)
-    if(votingLevel == 2) {
+    if (votingLevel == 2) {
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
@@ -290,59 +290,64 @@ const CreateChallenge = (props) => {
     //   </form>
     // </div>
 
-   
-      <div className="card h-100">
-        <form onSubmit={handleSubmit}>
-          <div className="row">
-            <div className="col-12 col-xl-6">
-              <StageNav stage={1} />
+    <div className="card h-100">
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="col-12 col-xl-6">
+            <StageNav stage={1} />
 
-                 <p style={{ order: 4 }}>
-                  DAO Members get to decide the rules for the next game challenge. Whoever
-                  accomplishes the challenge first wins the prize pool. Please include
-                  detailed directions for your challenge submission.
-                </p>
+            <p style={{ order: 4 }}>
+              DAO Members get to decide the rules for the next game challenge.
+              Whoever accomplishes the challenge first wins the prize pool.
+              Please include detailed directions for your challenge submission.
+            </p>
 
-                   <p>
-                    <span style={{fontWeight:700}}>Challenges criteria:</span><br/> 
-                    - Challenge must be accomplishable immediatelly.<br/>
-                    - Challenges cannot be location or gender-specific.<br/>
-                    - Challenges cannot result in death by any means.<br/>
-                    - Challenges must be accepted within youtube restrictions.<br/>
-                </p>
+            <p>
+              <span style={{ fontWeight: 700 }}>Challenges criteria:</span>
+              <br />
+              - Challenge must be accomplishable immediatelly.
+              <br />
+              - Challenges cannot be location or gender-specific.
+              <br />
+              - Challenges cannot result in death by any means.
+              <br />
+              - Challenges must be accepted within youtube restrictions.
+              <br />
+            </p>
 
-              {account ? (
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-lg mt-2"
-                  style={{ order: 6 }}
-                >
-                  {isLoading ? 'Request is being processed' : 'Submit your challenge'}
-                  
-                </button>
-              ) : (
-                <ConnectWalletButton
-                  width="100%"
-                  className="btn btn-primary btn-lg  mt-2"
-                  type="button"
-                  style={{ order: 6 }}
-                />
-              )}
-            </div>
-            <div className="col-12 col-xl-6" style={{ order: 5 }}>
-              <input
-                id="name"
-                type="text"
-                name="name"
-                onChange={handleChange}
-                className="input1 mb-3"
-                placeholder="Challenge Title"
-                required
+            {account ? (
+              <button
+                type="submit"
+                className="btn btn-primary btn-lg mt-2"
+                style={{ order: 6 }}
+              >
+                {isLoading
+                  ? "Request is being processed"
+                  : "Submit your challenge"}
+              </button>
+            ) : (
+              <ConnectWalletButton
+                width="100%"
+                className="btn btn-primary btn-lg  mt-2"
+                type="button"
+                style={{ order: 6 }}
               />
+            )}
+          </div>
+          <div className="col-12 col-xl-6" style={{ order: 5 }}>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              onChange={handleChange}
+              className="input1 mb-3"
+              placeholder="Challenge Title"
+              required
+            />
 
-{/* <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required /> */}
-              {/* @ts-ignore */}
-             <EasyMde
+            {/* <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required /> */}
+            {/* @ts-ignore */}
+            <EasyMde
               id="body"
               name="body"
               onTextChange={handleEasyMdeChange}
@@ -350,11 +355,10 @@ const CreateChallenge = (props) => {
               options={options}
               required
             />
-            </div>
           </div>
-        </form>
-      </div>
-   
+        </div>
+      </form>
+    </div>
   );
 };
 
