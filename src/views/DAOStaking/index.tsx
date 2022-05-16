@@ -386,7 +386,7 @@ export default function DaoStaking() {
                     </div>
                   </div>
                   <div className="small2">
-                    <div className="success mr-1 pb-2 pt-2">Estimated </div>
+                    <div className="success mr-1 pb-2git  pt-2">Estimated </div>
                     <div className="d-flex align-items-center">
                       <div className="text-white fs-18">
                         {" "}
