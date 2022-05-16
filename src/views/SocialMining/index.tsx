@@ -91,7 +91,7 @@ export default function SocialMining() {
                     </div>
 
                     <div className="row pt-1 text-center container ">
-                        <div className="col-md-4">
+                        <div className="col-md-4 mb-3">
                             <div className="card overflow-hidden">
                                 <div>
                                     <img src="images/share-img.png" className="steps-img pb-3 justify-content-center pb-3" />
@@ -103,7 +103,7 @@ export default function SocialMining() {
                             </div>
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="col-md-4 mb-3">
                             <div className="card overflow-hidden">
                                 <div>
                                     <img src="images/inv-img.png" className="steps-img pb-3 justify-content-center pb-3" />
