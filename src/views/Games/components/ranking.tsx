@@ -25,7 +25,7 @@ const StyledList = styled.ol`
   }
 `;
 
-const Ranking = () => {
+const Ranking = (props) => {
   const { t } = useTranslation();
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
@@ -52,7 +52,6 @@ const Ranking = () => {
         amount: total_stake,
         level: await getLevel(total_stake),
       };
-
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
       if (data.level === 1) level1.push(data);
