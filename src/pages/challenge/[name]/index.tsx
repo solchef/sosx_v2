@@ -33,7 +33,7 @@ export default function Challenge() {
     const { t } = useTranslation()
     const contract = useDaoStakingContract();
 	const [voters, setVoters] = useState([])
-    const [stage, setStage] = useState(0);
+    const [stage, setStage] = useState(2);
 
     useEffect(() => {
         getData();
@@ -70,7 +70,7 @@ export default function Challenge() {
                             );
                         }
                         if (cha.name == 'votes') {
-                            for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes`)) {
+                            for await (const vote of server.files.ls(`/challenges/${resultPart.name}/votes/stage-${stage}`)) {
 
                                 // console.log(await voteListLevels(name));
                                 // console.log(vote)
