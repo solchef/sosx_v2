@@ -15,14 +15,13 @@ const useStage = () => {
 
     duration = moment.duration(duration.asSeconds() - 1, "seconds");
 
-    // console.log(duration)
-
     return {
       hour: duration.hours(),
       min: duration.minutes(),
       sec: duration.seconds(),
     };
   };
+
 
   
   const [stage, setStage] = useState(0);

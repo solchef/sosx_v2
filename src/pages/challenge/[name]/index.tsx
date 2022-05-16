@@ -13,7 +13,8 @@ import Link from "next/link";
 import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract } from "hooks/useContract";
 import ConnectWalletButton from '../../../components/ConnectWalletButton'
-import useStage from "../../../views/Games/hooks/useStage";
+import useStage from "../../../hooks/useStage";
+import useLevels from "hooks/useLevels";
 
 
 const server = create({
@@ -34,7 +35,6 @@ export default function Challenge() {
     const contract = useDaoStakingContract();
 	const [voters, setVoters] = useState([])
     const [stage, setStage] = useState(2);
-
     useEffect(() => {
         getData();
         userVotingLevel()
@@ -46,6 +46,10 @@ export default function Challenge() {
     })
 
     const allowedStages = [2, 3]
+
+    if (!allowedStages.includes(stage)) {
+        router.push('/xgame')
+    }
 
     let challengeName = `challenge-${name}`
     const getData = async () => {
@@ -264,13 +268,8 @@ export default function Challenge() {
         if (amount >= process.env.NEXT_PUBLIC_LEVEL3) { return 3; }
     }
 
-    const voteListLevels = async (acc) => {
-        let amount = await contract.getVoterTotalStakeAmount(acc);
-        amount = amount / (10 ** 18);
-        let level = getLevel(amount);
-        // console.log(level)
-        return level;
-    }
+    const level = useLevels(account)
+    console.log(level)
 
 
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
