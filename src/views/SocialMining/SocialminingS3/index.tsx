@@ -42,11 +42,22 @@ export default function SocialminingS3() {
         method: 'POST',
         body: JSON.stringify(post),
     });
+    console.log(response)
+    // get the data
+    let data = await response.json();
+    console.log(data)
+
+    if (data.success) {
+        // reset the fields
+        setEmailAdrress('');
+        setsocialpostlink('');
+        // set the message
+        return setMessage(data.message);
+    } else {
+        // set the error
+        return setError(data.message);
+    }
 };
-
-
-
-
 
 const onReCAPTCHAChange = async (captchaCode) => {
   // If the reCAPTCHA code is null or undefined indicating that
@@ -82,9 +93,9 @@ const onReCAPTCHAChange = async (captchaCode) => {
   } finally {
     // Reset the reCAPTCHA when the request has failed or succeeeded 
     // so that it can be executed again if user submits another email.
+    
     recaptchaRef.current.reset();
-    setEmailAdrress('');
-    setsocialpostlink('');
+   
   }
 };
 
