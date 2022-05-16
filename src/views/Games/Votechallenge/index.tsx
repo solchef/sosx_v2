@@ -238,13 +238,13 @@ export default function Votechallenge() {
                   </div>
                   </div>
               ))}
-          </div>
-        </div>
+              </>
       ) : loading ? (
         <LoaderDisplay />
       ) : (
         "No Challenge"
       )}
+    </div>
     </div>
   );
 }
