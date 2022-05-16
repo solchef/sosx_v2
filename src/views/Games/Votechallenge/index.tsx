@@ -32,7 +32,7 @@ export default function Votechallenge() {
       // router.push('/xgame')
     }
   });
-  
+
   const ReadMore = ({ children, size, css }) => {
     const text = children;
     const [isReadMore, setIsReadMore] = useState(true);
@@ -156,10 +156,10 @@ export default function Votechallenge() {
 
       if (stage == 3) {
 
-        if(challenges.length > 3){
+        if (challenges.length > 3) {
           setChallenges(topThreeChallenges);
 
-        }else{
+        } else {
           setChallenges(challenges);
         }
       } else {
@@ -175,9 +175,8 @@ export default function Votechallenge() {
 
   return (
     <div
-      className={`${biggerThan1400 && "container"} pt-3 ${
-        biggest1400 && "container-fluid"
-      }`}
+      className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"
+        }`}
     >
       <p className="p-2">
         <i className="fa-solid fa-arrow-left"></i>{" "}
@@ -185,7 +184,7 @@ export default function Votechallenge() {
       </p>
       <div
         className="container-fluid d-flex flex-wrap flex-column flex-sm-row"
-        style={{ gap: "20px" }}
+        style={{ gap: "20px", flexBasis: '300px' }}
       >
         {challenges.length > 0 ? (
           <>
@@ -193,58 +192,61 @@ export default function Votechallenge() {
               .sort((a, b) => a.votes - b.votes)
               .reverse()
               .map((camp) => (
-              <div  style={{ flex: "1", gap: "20px" }}>
+                <>
+                  <div style={{ gap: "20px", flexBasis: '300px' }}>
 
-           
-                  <div className="card h-100 p-0 d-flex flex-column overflow-hidden">
-                    <div className="card-body p-3 align-items-start border-0">
-                      <div>
-                        <span className="fs-12 font-weight-bold success">
-                          {/* {camp.challenge.payload.metadata.strategies[0].params.address} */}
-                        </span>
 
-                        <h1 className="fs-18 pb-2 pt-3">
-                          {camp.challenge.payload.name}
-                        </h1>
-
-                        <ReadMore size="150" css="fs-14 pt-2">
-                          {camp.challenge.payload.body}
-                        </ReadMore>
-                      </div>
-                    </div>
-                    <div className="card-footer pt-0 mb-auto d-flex flex-column foot-card border-0">
-                      
-                      <div className="align-items-center d-flex justify-content-between">
+                    <div className="card h-100 p-0 d-flex flex-column overflow-hidden">
+                      <div className="card-body p-3 align-items-start border-0">
                         <div>
-                          <i className="fa-regular fa-heart p-2"></i>
-                          <span className="fs-12 p-1" id="votes">
-                            {camp.votes}
+                          <span className="fs-12 font-weight-bold success">
+                            {/* {camp.challenge.payload.metadata.strategies[0].params.address} */}
                           </span>
-                          <span className="fs-12">Votes</span>
+
+                          <h1 className="fs-18 pb-2 pt-3">
+                            {camp.challenge.payload.name}
+                          </h1>
+
+                          <ReadMore size="150" css="fs-14 pt-2">
+                            {camp.challenge.payload.body}
+                          </ReadMore>
                         </div>
                       </div>
+                      <div className="card-footer pt-0 mb-auto d-flex flex-column foot-card border-0">
 
-                      <Link
-                        href={`/challenge/${String(
-                          camp.challenge.payload.name
-                        ).replaceAll(" ", "-")}`}
-                      >
-                        <button type="button" className="btn btn-primary ">
-                          <i className="fa-solid fa-check-to-slot pr-2"></i>
-                          Details
-                        </button>
-                      </Link>
+                        <div className="align-items-center d-flex justify-content-between">
+                          <div>
+                            <i className="fa-regular fa-heart p-2"></i>
+                            <span className="fs-12 p-1" id="votes">
+                              {camp.votes}
+                            </span>
+                            <span className="fs-12">Votes</span>
+                          </div>
+                        </div>
+
+                        <Link
+                          href={`/challenge/${String(
+                            camp.challenge.payload.name
+                          ).replaceAll(" ", "-")}`}
+                        >
+                          <button type="button" className="btn btn-primary ">
+                            <i className="fa-solid fa-check-to-slot pr-2"></i>
+                            Details
+                          </button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                  </div>
+                </>
               ))}
-              </>
-      ) : loading ? (
-        <LoaderDisplay />
-      ) : (
-        "No Challenge"
-      )}
-    </div>
+          </>
+
+        ) : loading ? (
+          <LoaderDisplay />
+        ) : (
+          "No Challenge"
+        )}
+      </div>
     </div>
   );
 }
