@@ -35,6 +35,8 @@ export default function Challenge() {
     const contract = useDaoStakingContract();
 	const [voters, setVoters] = useState([])
     const [stage, setStage] = useState(2);
+    const [challenges, setChallenges] = useState([])
+
     useEffect(() => {
         getData();
         userVotingLevel()
@@ -47,8 +49,10 @@ export default function Challenge() {
 
     const allowedStages = [2, 3]
 
-    if (!allowedStages.includes(stage)) {
-        router.push('/xgame')
+    if (stage) {
+        if (!allowedStages.includes(stage)) {
+            router.push('/xgame')
+        }
     }
 
     let challengeName = `challenge-${name}`
@@ -103,6 +107,8 @@ export default function Challenge() {
         }
     }
 
+    const level = useLevels(account)
+
     const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
         // alert("voting")
@@ -122,67 +128,10 @@ export default function Challenge() {
 
             voters.push(voterData);
         }
-
-        const vote = JSON.stringify({
-            ...generatePayloadData(),
-            address: account,
-            data: {
-                domain: {
-                    name: 'snapshot',
-                    version: '0.1.4'
-                },
-                types: {
-                    Vote: [
-                        {
-                            name: "from",
-                            type: "address"
-                        },
-                        {
-                            name: "from",
-                            type: "address"
-                        },
-                        {
-                            name: "space",
-                            type: "string"
-                        },
-                        {
-                            name: "timestamp",
-                            type: "uint64"
-                        },
-                        {
-                            name: "challenge",
-                            type: "string"
-                        },
-                        {
-                            name: "choice",
-                            type: "uint32"
-                        },
-                        {
-                            name: "metadata",
-                            type: "string"
-                        }
-
-                    ]
-                },
-                message: {
-                    space: "SOSX",
-                    challenge: `${challengeName}`,
-                    choice: 1,
-                    metadata: '{}',
-                    from: account,
-                    timestamp: Date.now()
-                },
-                data: voters
-            }
-        })
-
-        const sig = await signMessage(connector, library, account, vote);
-
-        if (sig) {
-            const forIPFS = JSON.stringify({
+        if (level > 0) {
+            const vote = JSON.stringify({
                 ...generatePayloadData(),
                 address: account,
-                sig: sig.toString(),
                 data: {
                     domain: {
                         name: 'snapshot',
@@ -190,6 +139,10 @@ export default function Challenge() {
                     },
                     types: {
                         Vote: [
+                            {
+                                name: "from",
+                                type: "address"
+                            },
                             {
                                 name: "from",
                                 type: "address"
@@ -203,7 +156,7 @@ export default function Challenge() {
                                 type: "uint64"
                             },
                             {
-                                name: "proposal",
+                                name: "challenge",
                                 type: "string"
                             },
                             {
@@ -214,11 +167,12 @@ export default function Challenge() {
                                 name: "metadata",
                                 type: "string"
                             }
+    
                         ]
                     },
                     message: {
-                        space: "sosx",
-                        challenge: '',
+                        space: "SOSX",
+                        challenge: `${challengeName}`,
                         choice: 1,
                         metadata: '{}',
                         from: account,
@@ -226,13 +180,68 @@ export default function Challenge() {
                     },
                     data: voters
                 }
-            }, null, 2)
-            
-            await server.files.write(`/challenges/challenge-${name}/votes/stage-${stage}/${account}.json`, forIPFS, { create: true })
-            toastSuccess(t('Vote created!'))
-            getData()
+            })
+    
+            const sig = await signMessage(connector, library, account, vote);
+    
+            if (sig) {
+                const forIPFS = JSON.stringify({
+                    ...generatePayloadData(),
+                    address: account,
+                    sig: sig.toString(),
+                    data: {
+                        domain: {
+                            name: 'snapshot',
+                            version: '0.1.4'
+                        },
+                        types: {
+                            Vote: [
+                                {
+                                    name: "from",
+                                    type: "address"
+                                },
+                                {
+                                    name: "space",
+                                    type: "string"
+                                },
+                                {
+                                    name: "timestamp",
+                                    type: "uint64"
+                                },
+                                {
+                                    name: "proposal",
+                                    type: "string"
+                                },
+                                {
+                                    name: "choice",
+                                    type: "uint32"
+                                },
+                                {
+                                    name: "metadata",
+                                    type: "string"
+                                }
+                            ]
+                        },
+                        message: {
+                            space: "sosx",
+                            challenge: '',
+                            choice: 1,
+                            metadata: '{}',
+                            from: account,
+                            timestamp: Date.now()
+                        },
+                        data: voters
+                    }
+                }, null, 2)
+                
+                await server.files.write(`/challenges/challenge-${name}/votes/stage-${stage}/${account}.json`, forIPFS, { create: true })
+                toastSuccess(t('Vote created!'))
+                getData()
+            } else {
+                toastError(t('Error'), t('Unable to sign payload'))
+            }
         } else {
-            toastError(t('Error'), t('Unable to sign payload'))
+            toastError(t('Error'), t('You should have a level to vote'))
         }
     }
 
@@ -267,9 +276,6 @@ export default function Challenge() {
         if (amount >= process.env.NEXT_PUBLIC_LEVEL2 && amount < process.env.NEXT_PUBLIC_LEVEL3) { return 2; }
         if (amount >= process.env.NEXT_PUBLIC_LEVEL3) { return 3; }
     }
-
-    const level = useLevels(account)
-    console.log(level)
 
 
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
