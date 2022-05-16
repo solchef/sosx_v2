@@ -161,7 +161,7 @@ const CreateChallenge = (props) => {
           );
 
           toastSuccess(t("challenge created!"));
-          router.push(`challenge/${name.replaceAll(" ", "-")}`);
+          // router.push(`challenge/${name.replaceAll(" ", "-")}`);
         } else {
           toastError(t("Error"), t("Unable to sign payload"));
         }
