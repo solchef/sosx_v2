@@ -313,19 +313,19 @@ export default function DaoStaking() {
       >
         <div className="row mb-2">
           <div className="col-sm-3 col-6">
-            <div className="card overflow-hidden ">
+            <div className="card overflow-hidden" style={{rowGap:"20px"}}>
               <h4>10,000,000,000</h4>
               <span className="pt-1 pb-1">Total supply</span>
             </div>
           </div>
           <div className="col-sm-3 col-6">
-            <div className="card overflow-hidden">
+            <div className="card overflow-hidden" style={{rowGap:"20px"}}>
               <h4>${marketCap.toFixed(8)}</h4>
               <span className="pt-1 pb-1">Market Cap</span>
             </div>
           </div>
           <div className="col-sm-3 col-6">
-            <div className="card overflow-hidden">
+            <div className="card overflow-hidden" style={{rowGap:"20px"}}>
               <h4>${price.toFixed(8)}</h4>
               <span className="pt-1 pb-1">Price</span>
               {/* <div className="daily-avr warning fs-12">
@@ -335,7 +335,7 @@ export default function DaoStaking() {
           </div>
 
           <div className="col-sm-3 col-6">
-            <div className="card overflow-hidden">
+            <div className="card overflow-hidden" style={{rowGap:"20px"}}>
               <h4>321139778.950</h4>
               <span className="pt-1 pb-1">Circulating Supply</span>
               {/* <div className="daily-avr success fs-12">
