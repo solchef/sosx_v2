@@ -121,8 +121,8 @@ export default function Swap() {
         localStorage.setItem('referral',param.get('ref'))
         if(referedby!=null){
         getaccountDetails(); 
-        console.log("not null")
-      }}
+        console.log("ref is not null")
+      }} 
     // }
  
     setUserSlippageTolerance(3700)
@@ -132,12 +132,11 @@ export default function Swap() {
   const [loadedInputCurrency, loadedOutputCurrency] = [
     useCurrency(loadedUrlParams?.inputCurrencyId),
     useCurrency(loadedUrlParams?.outputCurrencyId),
-  ]
+  ] 
   const urlLoadedTokens: Token[] = useMemo(
     () => [loadedInputCurrency, loadedOutputCurrency]?.filter((c): c is Token => c instanceof Token) ?? [],
-    [loadedInputCurrency, loadedOutputCurrency],
+    [loadedInputCurrency, loadedOutputCurrency], 
   )
-
   // dismiss warning if all imported tokens are in active lists
   const defaultTokens = useAllTokens()
   const importTokensNotInDefault =
@@ -148,24 +147,24 @@ export default function Swap() {
 
   
 // console.log(account)
-  const gotrefered=account;
-  
+
   const getaccountDetails = async() => {
     console.log(account)
-    if(account){
+    console.log(referrerAddress)
+    if(account){ 
       
-    let post = {
-      gotrefered,
+    let post = { 
+      gotrefered:account, 
       referedby,
       createdAt: new Date().toDateString(),
-  };
+  };  
   // save the post
   let response =await fetch('/api/social_mining', {
       method: 'POST',
       body: JSON.stringify(post),
-  });
+  }); 
 
-  // get the data
+  // get the data 
   let data = await response.json();
 console.log(data)
 }
