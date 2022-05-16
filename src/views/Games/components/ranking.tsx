@@ -53,29 +53,26 @@ const Ranking = () => {
         level: await getLevel(total_stake),
       };
 
-      console.log(data);
-
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
-      console.log(data);
       if (data.level === 1) level1.push(data);
       if (data.level === 2) level2.push(data);
       if (data.level === 3) level3.push(data);
       voters.push(data);
 
       setAllVoter(voters);
-      setLoading(false);
+
       // }
     }
     voters.sort((b, a) => a.amount - b.amount);
     if (displayLevel === 1) setVoters(level1);
     if (displayLevel === 2) setVoters(level2);
     if (displayLevel === 3) setVoters(level3);
+    setLoading(false);
   };
 
   useEffect(() => {
     loadDaoLevels();
-    console.log("in");
     sortData();
   }, [account]);
 
