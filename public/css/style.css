@@ -47338,41 +47338,8 @@ p.video-title {
     padding-bottom: 10px;
 }
 
-.dao {
-    gap: 20px;
-}
 
-.dao>div {
-    flex: 1 25%;
-    gap: 20px;
-}
 
-.game {
-    gap: 20px;
-}
 
-.game>div:first-of-type,
-.game>div:last-of-type {
-    flex: 1 50%;
-}
 
-.game>div:nth-of-type(2),
-.game>div:nth-of-type(3) {
-    flex: 1;
-}
 
-.game>div:nth-of-type(2) {
-    gap: 20px;
-}
-
-.game>div:nth-of-type(3) {
-    order: 4;
-}
-
-.game>div:first-of-type {
-    order: 2;
-}
-
-.game>div:last-of-type {
-    order: 3;
-}

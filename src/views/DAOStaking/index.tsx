@@ -306,8 +306,8 @@ export default function DaoStaking() {
 
   return (
     <>
-      <div className="container-fluid dao d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse" >
-        <div>
+      <div style={{gap: '20px'}} className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse" >
+        <div style={{flex: '1 25%', gap: '20px'}}>
           <div className="card w-100 h-100">
             <div className="d-flex justify-content-between align-items-center">
               <div>
@@ -324,7 +324,7 @@ export default function DaoStaking() {
             </div>
           </div>
         </div>
-        <div>
+        <div style={{flex: '1 25%', gap: '20px'}}>
           <div className="card w-100 h-100">
             <div className="d-flex justify-content-between align-items-center">
               <div>
@@ -337,18 +337,18 @@ export default function DaoStaking() {
             </div>
           </div>
         </div>
-        <div>
+        <div style={{flex: '1 25%', gap: '20px'}}>
           <div className="card w-100 h-100">
             <div className="d-flex justify-content-between align-items-center">
               <h4 className="pt-1 pb-1 ">Price</h4>
               <div className="d-flex flex-column align-items-center">
-                <h4 className="fs-28">$0000</h4>
-                <h4 >SOSX price</h4>
+                <h4 className="fs-28">${price.toFixed(8)}</h4>
+                <span className="text-success" >SOSX price</span>
               </div>
             </div>
           </div>
         </div>
-        <div>
+        <div style={{flex: '1 25%', gap: '20px'}}>
           <div className="card d-flex flex-column w-100 h-100">
             <div className="card-header border-0 p-0">
               <h4 className="fs-18 ">Stake SOSX</h4>
@@ -471,7 +471,7 @@ export default function DaoStaking() {
 
           </div>
         </div>
-        <div>
+        <div style={{flex: '1 25%', gap: '20px'}}>
           <div className="card d-flex flex-column h-100">
             <div className="card-header border-0 p-0">
 
@@ -483,7 +483,7 @@ export default function DaoStaking() {
             </div>
           </div>
         </div>
-        <div>
+        <div style={{flex: '1 25%', gap: '20px'}}>
           <div className="card d-flex flex-column justify-content-between h-100">
 
             <div className="bg-dark p-3 rounded">
