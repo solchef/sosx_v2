@@ -7,7 +7,7 @@ import { Placeholder, Spinner } from "react-bootstrap";
 import { Skeleton } from "../../../../packages/uikit/src/components/Skeleton";
 import LoaderDisplay from "../components/loader";
 import moment from "moment";
-import useStage from "../hooks/useStage";
+import useStage from "../../../hooks/useStage";
 import { useRouter } from "next/router";
 
 const server = create({

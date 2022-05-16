@@ -52,6 +52,9 @@ const Ranking = () => {
         amount: total_stake,
         level: await getLevel(total_stake),
       };
+
+      console.log(data);
+
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
       console.log(data);
