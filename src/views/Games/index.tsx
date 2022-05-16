@@ -407,15 +407,15 @@
                       </p>
                       <br/>
                       {/* {console.log(currentLevel)} */}
-                      {currentLevel == 3 ? (
+                      {/* {currentLevel == 2 ? ( */}
                         <Link href="/votechallenge">
                           <button type="submit" className="btn mt-2 btn-primary">
                             {" "}
                             Vote for challenge
                           </button>
                         </Link>
-                      ) : (
-                        <button
+                      {/* ) : ( */}
+                        {/* <button
                           type="submit"
                           className="btn mt-2 btn-primary"
                           onClick={() =>
@@ -424,8 +424,8 @@
                         >
                           {" "}
                           Vote for Challange
-                        </button>
-                      )}
+                        </button> */}
+                      {/* )} */}
                     </div>
                     <div className="col-6">
                       <img
