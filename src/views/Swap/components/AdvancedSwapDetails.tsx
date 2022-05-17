@@ -60,17 +60,16 @@ function TradeSummary({
         </div>
       </div>
 
-                 <hr className="hr-custom" />
-                          <div className="small">
-                            <div className="d-flex small justify-content-between">
-                              <div className=" mr-1">
-                                Minimum Received After Slippage ({" "}
-                                {allowedSlippage / 100}%){" "}
-                              </div>
-                              <div className="text-white"> ${slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4)}</div>
-                            </div>
-                     
-                          </div>
+      <hr className="hr-custom" />
+        <div className="small">
+          <div className="d-flex small justify-content-between">
+            <div className=" mr-1">
+              Minimum Received After Slippage ({" "}
+              {allowedSlippage / 100}%){" "}
+            </div>
+            <div className="text-white"> ${slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)}</div>
+          </div>
+      </div>
 
     </>
   );

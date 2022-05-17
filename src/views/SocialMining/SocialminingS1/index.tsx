@@ -152,7 +152,7 @@ export default function SocialminingS1() {
                 download
               >
                 <button className="btn btn-success mr-2 mt-3">
-                  Save Image
+                    {media.name == 'tiktok' ? 'Save Video' : 'Save Image'} 
                 </button>
               </a>
 

@@ -554,17 +554,17 @@ export default function Swap() {
                                     <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
                               )}
                                  
-                                  <hr className="hr-custom" />
-                          <div className="small">
-                            <div className="d-flex small justify-content-between">
+                                  {/* <hr className="hr-custom" />
+                          <div className="small"> */}
+                            {/* <div className="d-flex small justify-content-between">
                               <div className=" mr-1">
                                 Minimum Received After Slippage ({" "}
                                 {allowedSlippage / 100}%){" "}
                               </div>
                               <div className="text-white">{trade?.minimumAmountOut} </div>
-                            </div>
+                            </div> */}
                      
-                          </div>
+                          {/* </div> */}
                         </div>
                       </div>
                     </div>
