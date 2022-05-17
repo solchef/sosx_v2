@@ -43,7 +43,7 @@ export default function SocialminingS1() {
           <div className="row align-items-center">
             <div className="col-xl-5 mx-auto align-items-center col-12">
               {media.name == "tiktok" ? 
-                <video width="400" height={400} autoplay  controls autoplay>
+                <video width="400" height={400} autoPlay  controls>
                   <source  src="posts/xgame.mp4" type="video/mp4" />
                   Your browser does not support HTML video.
                 </video>
