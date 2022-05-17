@@ -127,7 +127,7 @@ export default function Swap() {
       }}
     // }
  
-    setUserSlippageTolerance(3700)
+    setUserSlippageTolerance(2500)
   }, [isChartDisplayed, setUserChartPreference])
 
   // token warning stuff
@@ -439,16 +439,18 @@ console.log(data)
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
   return (
-
-    <div   className={`${biggerThan1400 && "container p-0"} ${biggest1400 && "p-0 container-fluid"}`} >
-        <div className="row m-auto justify-content-center mt-5 pt-5">
-          <div className="col-xl-5">
-            <div className="card">
-              <div className="card-header border-0 pb-0 justify-content-between">
-                {/* <span className="fs-26 main-color-1">Ditto</span> */}
-                <h4 className="fs-14">Swap</h4>
-                <a href="#" className="pull-right" data-toggle="modal">
-                
+    <div
+      className={`${biggerThan1400 && "container p-0"} ${
+        biggest1400 && "p-0 container-fluid"
+      }`}
+    >
+      <div className="row m-auto justify-content-center mt-5 pt-5">
+        <div className="col-xl-5">
+          <div className="card">
+            <div className="card-header border-0 pb-0 justify-content-between">
+              {/* <span className="fs-26 main-color-1">Ditto</span> */}
+              <h4 className="fs-14">Swap</h4>
+              <a href="#" className="pull-right" data-toggle="modal">
                 <CurrencyInputHeader
                   title={""}
                   subtitle={""}
@@ -457,54 +459,270 @@ console.log(data)
                   hasAmount={hasAmount}
                   onRefreshPrice={onRefreshPrice}
                 />
-                </a>
-                      
+              </a>
+            </div>
+            <div className="card-body">
+              <CurrencyInputPanel
+                label={
+                  independentField === Field.OUTPUT && !showWrap && trade
+                    ? t("From (estimated)")
+                    : t("From")
+                }
+                value={formattedAmounts[Field.INPUT]}
+                showMaxButton={!atMaxAmountInput}
+                currency={currencies[Field.INPUT]}
+                onUserInput={handleTypeInput}
+                onMax={handleMaxInput}
+                onCurrencySelect={handleInputSelect}
+                otherCurrency={currencies[Field.OUTPUT]}
+                id="swap-currency-input"
+              />
+              <div className="d-inline-flex justify-content-center text-center w-100 m-auto">
+                <i
+                  className="switch fa-solid fa-repeat"
+                  onClick={() => {
+                    setApprovalSubmitted(false);
+                    onSwitchTokens();
+                  }}
+                  aria-hidden="true"
+                />
               </div>
-              <div className="card-body">
-                
-                <CurrencyInputPanel
-                      label={
-                        independentField === Field.OUTPUT && !showWrap && trade ? t('From (estimated)') : t('From')
-                      }
-                      value={formattedAmounts[Field.INPUT]}
-                      showMaxButton={!atMaxAmountInput}
-                      currency={currencies[Field.INPUT]}
-                      onUserInput={handleTypeInput}
-                      onMax={handleMaxInput}
-                      onCurrencySelect={handleInputSelect}
-                      otherCurrency={currencies[Field.OUTPUT]}
-                      id="swap-currency-input"
-                    />
-                <div className="d-inline-flex justify-content-center text-center w-100 m-auto">
-                  <i className="switch fa-solid fa-repeat"  onClick={() => {
-                           setApprovalSubmitted(false) 
-                          onSwitchTokens()
-                        }} aria-hidden="true" />
+              <CurrencyInputPanel
+                value={formattedAmounts[Field.OUTPUT]}
+                onUserInput={handleTypeOutput}
+                label={
+                  independentField === Field.INPUT && !showWrap && trade
+                    ? t("To (estimated)")
+                    : t("To")
+                }
+                showMaxButton={false}
+                currency={currencies[Field.OUTPUT]}
+                onCurrencySelect={handleOutputSelect}
+                otherCurrency={currencies[Field.INPUT]}
+                id="swap-currency-output"
+              />
+              
+              <div className="pt-3">
+                <div className="small"></div>
+                <div className="bg-dark p-3 rounded ">
+                  <div className="small">
+                    <div id="accordion">
+                      {showWrap ? null : (
+                        <div
+                          className={`text-white fs-14 ${
+                            collapse ? "collapsed" : ""
+                          }`}
+                          onClick={() => showCollapse(!collapse)}
+                          data-toggle="collapse"
+                          data-target="#collapseOne"
+                          aria-expanded="false"
+                          aria-controls="collapseOne"
+                        >
+                          <div className='d-flex justify-content-between'>
+                          {Boolean(trade) ? (
+                            <>
+                              {isLoading ? (
+                               <span style={{color: "6c757d"}}>($0.00) </span>
+                              ) : (
+                                <TradePrice
+                                  price={trade?.executionPrice}
+                                  showInverted={showInverted}
+                                  setShowInverted={setShowInverted}
+                                />
+                              )}
+                            </>
+                          ) : 
+                          <>$0.00</> 
+                          }
+                         
+                           <span  className="float-right dropdown-toggle small"></span>
+                      </div>
+                    </div>
+                      )}
+                      <div className="small">
+                        <div
+                          id="collapseOne"
+                          className={`accordion-collapse collapse ${
+                            collapse ? "show" : ""
+                          }`}
+                          aria-labelledby="headingOne"
+                          data-parent="#accordion"
+                        >
+                         
+                             {!swapIsUnsupported ? (
+                                    trade && <AdvancedSwapDetailsDropdown trade={trade} />
+                                  ) : (
+                                    <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
+                              )}
+                                 
+                                  <hr className="hr-custom" />
+                          <div className="small">
+                            <div className="d-flex small justify-content-between">
+                              <div className=" mr-1">
+                                Minimum Received After Slippage ({" "}
+                                {allowedSlippage / 100}%){" "}
+                              </div>
+                              <div className="text-white"> 0.00</div>
+                            </div>
+                            {/* <div className="d-flex small justify-content-between">
+                              <div className=" mr-1">Status: </div>
+                              <div className="text-white"> Successful</div>
+                            </div> */}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <CurrencyInputPanel
-                      value={formattedAmounts[Field.OUTPUT]}
-                      onUserInput={handleTypeOutput}
-                      label={independentField === Field.INPUT && !showWrap && trade ? t('To (estimated)') : t('To')}
-                      showMaxButton={false}
-                      currency={currencies[Field.OUTPUT]}
-                      onCurrencySelect={handleOutputSelect}
-                      otherCurrency={currencies[Field.INPUT]}
-                      id="swap-currency-output"
-                    />
-                {/* <button type="button" className="btn btn-primary btn-lg w-100 mt-4">SWAP</button> */}
+              </div>
 
-                  <Box mt="0.25rem">
+              <Box mt="0.25rem">
+                {swapIsUnsupported ? (
+                  <button
+                    className="btn btn-primary btn-lg w-100 mt-4"
+                    disabled
+                  >
+                    {t("Unsupported Asset")}
+                  </button>
+                ) : !account ? (
+                  <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4" />
+                ) : showWrap ? (
+                  <button
+                    className="btn btn-primary btn-lg w-100 mt-4"
+                    disabled={Boolean(wrapInputError)}
+                    onClick={onWrap}
+                  >
+                    {wrapInputError ??
+                      (wrapType === WrapType.WRAP
+                        ? "Wrap"
+                        : wrapType === WrapType.UNWRAP
+                        ? "Unwrap"
+                        : null)}
+                  </button>
+                ) : noRoute && userHasSpecifiedInputOutput ? (
+                  <GreyCard style={{ textAlign: "center", padding: "0.75rem" }}>
+                    <Text color="textSubtle">
+                      {t("Insufficient liquidity for this trade.")}
+                    </Text>
+                    {singleHopOnly && (
+                      <Text color="textSubtle">
+                        {t("Try enabling multi-hop trades.")}
+                      </Text>
+                    )}
+                  </GreyCard>
+                ) : showApproveFlow ? (
+                  <RowBetween>
+                    <button
+                      className="btn btn-primary btn-lg w-100 mt-4"
+                      // variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
+                      onClick={approveCallback}
+                      disabled={
+                        approval !== ApprovalState.NOT_APPROVED ||
+                        approvalSubmitted
+                      }
+                      // width="48%"
+                    >
+                      {approval === ApprovalState.PENDING ? (
+                        <AutoRow gap="6px" justify="center">
+                          {t("Enabling")} <CircleLoader stroke="white" />
+                        </AutoRow>
+                      ) : approvalSubmitted &&
+                        approval === ApprovalState.APPROVED ? (
+                        t("Enabled")
+                      ) : (
+                        t("Enable %asset%", {
+                          asset: currencies[Field.INPUT]?.symbol ?? "",
+                        })
+                      )}
+                    </button>
+                    <button
+                      className="btn btn-primary btn-lg w-100 mt-4"
+                      // variant={isValid && priceImpactSeverity > 2 ? 'danger' : 'primary'}
+                      onClick={() => {
+                        if (isExpertMode) {
+                          handleSwap();
+                        } else {
+                          setSwapState({
+                            tradeToConfirm: trade,
+                            attemptingTxn: false,
+                            swapErrorMessage: undefined,
+                            txHash: undefined,
+                          });
+                          onPresentConfirmModal();
+                        }
+                      }}
+                      // width="48%"
+                      id="swap-button"
+                      disabled={
+                        !isValid ||
+                        approval !== ApprovalState.APPROVED ||
+                        (priceImpactSeverity > 3 && !isExpertMode)
+                      }
+                    >
+                      {priceImpactSeverity > 3 && !isExpertMode
+                        ? t("Price Impact High")
+                        : priceImpactSeverity > 2
+                        ? t("Swap Anyway")
+                        : t("Swap")}
+                    </button>
+                  </RowBetween>
+                ) : (
+                  <button
+                    className="btn btn-primary btn-lg w-100 mt-4"
+                    // variant={isValid && priceImpactSeverity > 2 && !swapCallbackError ? 'danger' : 'primary'}
+                    onClick={() => {
+                      if (isExpertMode) {
+                        handleSwap();
+                      } else {
+                        setSwapState({
+                          tradeToConfirm: trade,
+                          attemptingTxn: false,
+                          swapErrorMessage: undefined,
+                          txHash: undefined,
+                        });
+                        onPresentConfirmModal();
+                      }
+                    }}
+                    id="swap-button"
+                    // width="100%"
+                    disabled={
+                      !isValid ||
+                      (priceImpactSeverity > 3 && !isExpertMode) ||
+                      !!swapCallbackError
+                    }
+                  >
+                    {swapInputError ||
+                      (priceImpactSeverity > 3 && !isExpertMode
+                        ? t("Price Impact Too High")
+                        : priceImpactSeverity > 2
+                        ? t("Swap Anyway")
+                        : t("Swap"))}
+                  </button>
+                )}
+                {showApproveFlow && (
+                  <Column style={{ marginTop: "1rem" }}>
+                    <ProgressSteps
+                      steps={[approval === ApprovalState.APPROVED]}
+                    />
+                  </Column>
+                )}
+                {isExpertMode && swapErrorMessage ? (
+                  <SwapCallbackError error={swapErrorMessage} />
+                ) : null}
+              </Box>
+
+              {/* <Box mt="0.25rem">
                     {swapIsUnsupported ? (
-                      <button className="btn btn-primary btn-lg w-100 mt-4" disabled>
+                      <Button width="100%" disabled>
                         {t('Unsupported Asset')}
-                      </button>
+                      </Button>
                     ) : !account ? (
-                      <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4"/>
+                      <ConnectWalletButton width="100%" />
                     ) : showWrap ? (
-                      <button className="btn btn-primary btn-lg w-100 mt-4" disabled={Boolean(wrapInputError)} onClick={onWrap}>
+                      <Button width="100%" disabled={Boolean(wrapInputError)} onClick={onWrap}>
                         {wrapInputError ??
                           (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
-                      </button>
+                      </Button>
                     ) : noRoute && userHasSpecifiedInputOutput ? (
                       <GreyCard style={{ textAlign: 'center', padding: '0.75rem' }}>
                         <Text color="textSubtle">{t('Insufficient liquidity for this trade.')}</Text>
@@ -512,13 +730,12 @@ console.log(data)
                       </GreyCard>
                     ) : showApproveFlow ? (
                       <RowBetween>
-                        <button
-                          className="btn btn-primary btn-lg w-100 mt-4"
-                          // variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
+                        <Button
+                          variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
                           onClick={approveCallback}
                           disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
-                          // width="48%"
-                          >
+                          width="48%"
+                        >
                           {approval === ApprovalState.PENDING ? (
                             <AutoRow gap="6px" justify="center">
                               {t('Enabling')} <CircleLoader stroke="white" />
@@ -528,10 +745,9 @@ console.log(data)
                           ) : (
                             t('Enable %asset%', { asset: currencies[Field.INPUT]?.symbol ?? '' })
                           )}
-                        </button>
-                        <button
-                        className="btn btn-primary btn-lg w-100 mt-4"
-                          // variant={isValid && priceImpactSeverity > 2 ? 'danger' : 'primary'}
+                        </Button>
+                        <Button
+                          variant={isValid && priceImpactSeverity > 2 ? 'danger' : 'primary'}
                           onClick={() => {
                             if (isExpertMode) {
                               handleSwap()
@@ -545,7 +761,7 @@ console.log(data)
                               onPresentConfirmModal()
                             }
                           }}
-                          // width="48%"
+                          width="48%"
                           id="swap-button"
                           disabled={
                             !isValid ||
@@ -558,12 +774,11 @@ console.log(data)
                             : priceImpactSeverity > 2
                             ? t('Swap Anyway')
                             : t('Swap')}
-                        </button>
+                        </Button>
                       </RowBetween>
                     ) : (
-                      <button
-                        className="btn btn-primary btn-lg w-100 mt-4"
-                        // variant={isValid && priceImpactSeverity > 2 && !swapCallbackError ? 'danger' : 'primary'}
+                      <Button
+                        variant={isValid && priceImpactSeverity > 2 && !swapCallbackError ? 'danger' : 'primary'}
                         onClick={() => {
                           if (isExpertMode) {
                             handleSwap()
@@ -578,7 +793,7 @@ console.log(data)
                           }
                         }}
                         id="swap-button"
-                        // width="100%"
+                        width="100%"
                         disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
                       >
                         {swapInputError ||
@@ -587,7 +802,7 @@ console.log(data)
                             : priceImpactSeverity > 2
                             ? t('Swap Anyway')
                             : t('Swap'))}
-                      </button>
+                      </Button>
                     )}
                     {showApproveFlow && (
                       <Column style={{ marginTop: '1rem' }}>
@@ -595,268 +810,17 @@ console.log(data)
                       </Column>
                     )}
                     {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
-                  </Box>
-                  
+                  </Box> */}
 
-                <div className="pt-3">
-									<div className="small"></div>
-									<div className="bg-dark p-3 rounded ">
-										<div className="small">
-											<div id="accordion">
-												<div className={`text-white fs-14 ${collapse ? 'collapsed' : '' }`} onClick={() => showCollapse(!collapse)} data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-													0.00 BNB = 0.00 SOSX
-													<span style={{color: "6c757d"}}>($0.00) </span>
-													<span className="float-right dropdown-toggle small"></span>
-												</div>
-												<div className="small">
-													<div id="collapseOne" className={`accordion-collapse collapse ${collapse ? '' : 'show' }`} aria-labelledby="headingOne" data-parent="#accordion" >
-														<div className="d-flex justify-content-between small pt-3">
+            
 
-															<div className=" mr-1">Price: </div> .                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-															<div className="text-white"> 0.00 SOSX</div>
-														</div>
-														<div className="small">
-															<div className="d-flex justify-content-between small">
+           
 
-																<div className="mr-1">Gas Fee: </div>
-																<div className="text-white"> 0.1 BNB</div>
-															</div>
-														</div>
-														<div className="small">
-															<div className="d-flex small justify-content-between">
 
-																<div className=" mr-1">Price Impact: </div>
-																<div className="text-white float-right"> 0.01%</div>
-															</div>
-														</div>
-														<hr className="hr-custom"/>
-														<div className="small">
-															<div className="d-flex small justify-content-between">
-
-																<div className=" mr-1">Minimum Received After Slippage
-																	(10%) </div>
-																<div className="text-white"> 0.00</div>
-															</div>
-															<div className="d-flex small justify-content-between">
-
-																<div className=" mr-1">Status: </div>
-																<div className="text-white"> Successful</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-              </div>
-              
-             
             </div>
           </div>
-          
         </div>
-
       </div>
-
-    // <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
-    //   <Flex width="100%" justifyContent="center" position="relative">
-    //     <Flex flexDirection="column">
-    //       <StyledSwapContainer $isChartExpanded={isChartExpanded}>
-    //         <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}></StyledInputCurrencyWrapper>
-    //           <AppBody>
-    //             <CurrencyInputHeader
-    //               title={""}
-    //               subtitle={""}
-    //               setIsChartDisplayed={setIsChartDisplayed}
-    //               isChartDisplayed={isChartDisplayed}
-    //               hasAmount={hasAmount}
-    //               onRefreshPrice={onRefreshPrice}
-    //             />
-    //             <Wrapper id="swap-page" style={{ minHeight: '412px' }}>
-    //               <AutoColumn gap="sm">
-    //                 <AutoColumn justify="space-between">
-    //                   <AutoRow justify={isExpertMode ? 'space-between' : 'center'} style={{ padding: '0 1rem' }}>
-    //                     <SwitchIconButton
-    //                       variant="light"
-    //                       scale="sm"
-    //                       onClick={() => {
-    //                         setApprovalSubmitted(false) // reset 2 step UI for approvals
-    //                         onSwitchTokens()
-    //                       }}
-    //                     >
-    //                       <ArrowDownIcon
-    //                         className="icon-down"
-    //                         color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? 'primary' : 'text'}
-    //                       />
-    //                       <ArrowUpDownIcon
-    //                         className="icon-up-down"
-    //                         color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? 'primary' : 'text'}
-    //                       />
-    //                     </SwitchIconButton>
-    //                     {recipient === null && !showWrap && isExpertMode ? (
-    //                       <Button variant="text" id="add-recipient-button" onClick={() => onChangeRecipient('')}>
-    //                         {t('+ Add a send (optional)')}
-    //                       </Button>
-    //                     ) : null}
-    //                   </AutoRow>
-    //                 </AutoColumn>
-
-
-    //                 {isExpertMode && recipient !== null && !showWrap ? (
-    //                   <>
-    //                     <AutoRow justify="space-between" style={{ padding: '0 1rem' }}>
-    //                       <ArrowWrapper clickable={false}>
-    //                         <ArrowDownIcon width="16px" />
-    //                       </ArrowWrapper>
-    //                       <Button variant="text" id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
-    //                         {t('- Remove send')}
-    //                       </Button>
-    //                     </AutoRow>
-    //                     <AddressInputPanel id="recipient" value={recipient} onChange={onChangeRecipient} />
-    //                   </>
-    //                 ) : null}
-
-    //                 {showWrap ? null : (
-    //                   <AutoColumn gap="7px" style={{ padding: '0 16px' }}>
-    //                     <RowBetween align="center">
-    //                       {Boolean(trade) && (
-    //                         <>
-    //                           <Label>{t('Price')}</Label>
-    //                           {isLoading ? (
-    //                             <Skeleton width="100%" ml="8px" height="24px" />
-    //                           ) : (
-    //                             <TradePrice
-    //                               price={trade?.executionPrice}
-    //                               showInverted={showInverted}
-    //                               setShowInverted={setShowInverted}
-    //                             />
-    //                           )}
-    //                         </>
-    //                       )}
-    //                     </RowBetween>
-    //                     <RowBetween align="center">
-    //                       <Label>{t('Slippage Tolerance')}</Label>
-    //                       <Text bold color="primary">
-    //                         {allowedSlippage / 100}%
-    //                       </Text>
-    //                     </RowBetween>
-    //                   </AutoColumn>
-    //                 )}
-    //               </AutoColumn>
-    //               <Box mt="0.25rem">
-    //                 {swapIsUnsupported ? (
-    //                   <Button width="100%" disabled>
-    //                     {t('Unsupported Asset')}
-    //                   </Button>
-    //                 ) : !account ? (
-    //                   <ConnectWalletButton width="100%" />
-    //                 ) : showWrap ? (
-    //                   <Button width="100%" disabled={Boolean(wrapInputError)} onClick={onWrap}>
-    //                     {wrapInputError ??
-    //                       (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
-    //                   </Button>
-    //                 ) : noRoute && userHasSpecifiedInputOutput ? (
-    //                   <GreyCard style={{ textAlign: 'center', padding: '0.75rem' }}>
-    //                     <Text color="textSubtle">{t('Insufficient liquidity for this trade.')}</Text>
-    //                     {singleHopOnly && <Text color="textSubtle">{t('Try enabling multi-hop trades.')}</Text>}
-    //                   </GreyCard>
-    //                 ) : showApproveFlow ? (
-    //                   <RowBetween>
-    //                     <Button
-    //                       variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
-    //                       onClick={approveCallback}
-    //                       disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
-    //                       width="48%"
-    //                     >
-    //                       {approval === ApprovalState.PENDING ? (
-    //                         <AutoRow gap="6px" justify="center">
-    //                           {t('Enabling')} <CircleLoader stroke="white" />
-    //                         </AutoRow>
-    //                       ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
-    //                         t('Enabled')
-    //                       ) : (
-    //                         t('Enable %asset%', { asset: currencies[Field.INPUT]?.symbol ?? '' })
-    //                       )}
-    //                     </Button>
-    //                     <Button
-    //                       variant={isValid && priceImpactSeverity > 2 ? 'danger' : 'primary'}
-    //                       onClick={() => {
-    //                         if (isExpertMode) {
-    //                           handleSwap()
-    //                         } else {
-    //                           setSwapState({
-    //                             tradeToConfirm: trade,
-    //                             attemptingTxn: false,
-    //                             swapErrorMessage: undefined,
-    //                             txHash: undefined,
-    //                           })
-    //                           onPresentConfirmModal()
-    //                         }
-    //                       }}
-    //                       width="48%"
-    //                       id="swap-button"
-    //                       disabled={
-    //                         !isValid ||
-    //                         approval !== ApprovalState.APPROVED ||
-    //                         (priceImpactSeverity > 3 && !isExpertMode)
-    //                       }
-    //                     >
-    //                       {priceImpactSeverity > 3 && !isExpertMode
-    //                         ? t('Price Impact High')
-    //                         : priceImpactSeverity > 2
-    //                         ? t('Swap Anyway')
-    //                         : t('Swap')}
-    //                     </Button>
-    //                   </RowBetween>
-    //                 ) : (
-    //                   <Button
-    //                     variant={isValid && priceImpactSeverity > 2 && !swapCallbackError ? 'danger' : 'primary'}
-    //                     onClick={() => {
-    //                       if (isExpertMode) {
-    //                         handleSwap()
-    //                       } else {
-    //                         setSwapState({
-    //                           tradeToConfirm: trade,
-    //                           attemptingTxn: false,
-    //                           swapErrorMessage: undefined,
-    //                           txHash: undefined,
-    //                         })
-    //                         onPresentConfirmModal()
-    //                       }
-    //                     }}
-    //                     id="swap-button"
-    //                     width="100%"
-    //                     disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
-    //                   >
-    //                     {swapInputError ||
-    //                       (priceImpactSeverity > 3 && !isExpertMode
-    //                         ? t('Price Impact Too High')
-    //                         : priceImpactSeverity > 2
-    //                         ? t('Swap Anyway')
-    //                         : t('Swap'))}
-    //                   </Button>
-    //                 )}
-    //                 {showApproveFlow && (
-    //                   <Column style={{ marginTop: '1rem' }}>
-    //                     <ProgressSteps steps={[approval === ApprovalState.APPROVED]} />
-    //                   </Column>
-    //                 )}
-    //                 {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
-    //               </Box>
-    //             </Wrapper>
-    //           </AppBody>
-    //           {!swapIsUnsupported ? (
-    //             trade && <AdvancedSwapDetailsDropdown trade={trade} />
-    //           ) : (
-    //             <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
-    //           )}
-    //         </StyledInputCurrencyWrapper>
-    //       </StyledSwapContainer>
-      
-    //     </Flex>
-    //   </Flex>
-    // </Page>
-  )
+    </div>
+  );
 }

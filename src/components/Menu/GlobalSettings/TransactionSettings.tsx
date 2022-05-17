@@ -76,7 +76,7 @@ const SlippageTabs = () => {
   }
 
   return (
-    <Flex flexDirection="column">
+        <Flex flexDirection="column">
       <Flex flexDirection="column" mb="24px">
         <Flex mb="12px">
           <Text>{t('Slippage Tolerance')}</Text>
@@ -89,37 +89,46 @@ const SlippageTabs = () => {
           />
         </Flex>
         <Flex flexWrap="wrap">
-          <button
-            className={`btn  btn-sm mr-4 mt-4' ${userSlippageTolerance === 50 ? 'btn-primary' : 'btn-tertiary'} `}
+          <Button
+            mt="4px"
+            mr="4px"
+            scale="sm"
             onClick={() => {
               setSlippageInput('')
               setUserSlippageTolerance(10)
             }}
+            variant={userSlippageTolerance === 10 ? 'primary' : 'tertiary'}
           >
             0.1%
-          </button>
-          <button
-            className={`btn  btn-sm mr-4 mt-4' ${userSlippageTolerance === 50 ? 'btn-primary' : 'btn-tertiary'} `}
+          </Button>
+          <Button
+            mt="4px"
+            mr="4px"
+            scale="sm"
             onClick={() => {
               setSlippageInput('')
               setUserSlippageTolerance(50)
             }}
+            variant={userSlippageTolerance === 50 ? 'primary' : 'tertiary'}
           >
             0.5%
-          </button>
-          <button
-            className={`btn  btn-sm mr-4 mt-4' ${userSlippageTolerance === 100 ? 'btn-primary' : 'btn-tertiary'} `}
+          </Button>
+          <Button
+            mr="4px"
+            mt="4px"
+            scale="sm"
             onClick={() => {
               setSlippageInput('')
               setUserSlippageTolerance(100)
             }}
+            variant={userSlippageTolerance === 100 ? 'primary' : 'tertiary'}
           >
             1.0%
-          </button>
+          </Button>
           <Flex alignItems="center">
             <Box width="76px" mt="4px">
               <Input
-                scale="md"
+                scale="sm"
                 inputMode="decimal"
                 pattern="^[0-9]*[.,]?[0-9]{0,2}$"
                 placeholder={(userSlippageTolerance / 100).toFixed(2)}
@@ -136,22 +145,22 @@ const SlippageTabs = () => {
                 isSuccess={![10, 50, 100].includes(userSlippageTolerance)}
               />
             </Box>
-            <Text color="success" bold ml="2px">
+            <Text color="primary" bold ml="2px">
               %
             </Text>
           </Flex>
         </Flex>
         {!!slippageError && (
-          <Text  fontSize="14px" color={slippageError === SlippageError.InvalidInput ? 'red' : 'success'} mt="8px">
+          <Text fontSize="14px" color={slippageError === SlippageError.InvalidInput ? 'red' : '#F3841E'} mt="8px">
             {slippageError === SlippageError.InvalidInput
               ? t('Enter a valid slippage percentage')
               : slippageError === SlippageError.RiskyLow
               ? t('Your transaction may fail')
               : t('Your transaction may be frontrun')}
-          </Text >
+          </Text>
         )}
       </Flex>
-      
+  
     </Flex>
   )
 }

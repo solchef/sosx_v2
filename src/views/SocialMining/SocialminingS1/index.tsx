@@ -6,7 +6,7 @@ import { useMediaPredicate } from "react-media-hook";
 import SocialminingS3 from '../SocialminingS3';
 
 const socialMedias = [
-    { name: 'twitter', addres: 'https://twitter', reward: '500' },
+    { name: 'twitter', addres: 'https://twitter', reward: '500',  },
     { name: 'instagram', addres: 'https://instagram', reward: '500' },
     { name: 'tiktok', addres: 'https://tiktok', reward: '1000' }
 ];
@@ -104,21 +104,16 @@ export default function SocialminingS1() {
                             </a>
                             <a>
                                 <button onClick={() => {
-                                    navigator.clipboard.writeText(media.addres)
+                                    navigator.clipboard.writeText(`${media.name== "tiktok" ? 'SOSX relaunching new SOSX Token next week 🚀   <br/> Join instagram for updates': media.name== "twitter" ? 'images/post18.jpeg' : 'images/post18.jpeg' }`)
                                     setCopySuccess('Copied!')
 
                                 }} className="btn btn-dark mr-3 mt-3">Copy Caption</button>  <span className="text-success"> {copySuccess}</span>
                             </a>
                         </div>
 
-
-
-
-
                     </div>
                 </div>
             </div>
-
 
 
 
