@@ -48,14 +48,34 @@ export default function Challenge() {
   });
 
   const allowedStages = [2, 3];
- 
+  let challengeName = `challenge-${name}`;
+
   const getData = async () => {
     if (name && stage) {
       let challenge = [];
-      for await (const resultPart of server.files.ls("/rounds/round-1")) {
-        console.log(resultPart)
+      for await (const roundContent of server.files.ls("/rounds/round-1")) {
+        let challengeData;
+        let voteData
+        let votes = 0;
+        const chunks = [];
+        let allVotes = []
+
+
+        if (roundContent.name.includes(`${challengeName}`)) {
+          challenge.push(roundContent)
+          for await (const challengeFolderContent of server.files.ls(`/rounds/round-1/${roundContent.name}`)) {
+            if (challengeFolderContent.name == 'info.json') {
+              for await (const chunk of server.cat(challengeFolderContent.cid)) {
+                chunks.push(chunk);
+              }
+              const data = concat(chunks);
+              challengeData = JSON.parse(new TextDecoder().decode(data).toString());
+              challenge.push(challengeData)
+            }
+          }
+          setChallenge(challenge)
+        }
       }
-      setChallenge(challenge);
     }
   };
 
@@ -141,7 +161,7 @@ export default function Challenge() {
         timestamp: moment().unix(),
         address: account,
         round: "1",
-        data: voters,
+        // data: voters,
         comments: []
       },
     );
@@ -154,10 +174,9 @@ export default function Challenge() {
           timestamp: moment().unix(),
           address: account,
           round: "1",
-          challenge: "CID",
+          challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
-          data: voters,
-          comments: []
+          // data: voters,
           },
         null,
         2
@@ -241,7 +260,7 @@ export default function Challenge() {
         <i className="fa-solid fa-arrow mx-auto-left"></i>{" "}
         <Link href="/votechallenge"> Back to Challenges </Link>{" "}
       </p>
-      {challenge[0] && (
+      {challenge[1] && (
         <div className="row mx-auto">
           <div className="col-12 col-xl-8 ">
             <div className="row mx-auto">
@@ -250,7 +269,7 @@ export default function Challenge() {
                   <div className="text-muted font-weight-bold">
                     <h1 className="font-weight-bold mb-2">{name}</h1>
 
-                    <ReadMore>{challenge[0].challenge.payload.body}</ReadMore>
+                    <ReadMore>{challenge[1].payload.body}</ReadMore>
                   </div>
                 </div>
 
@@ -338,7 +357,7 @@ export default function Challenge() {
                   <div className="row mx-auto d-flex font-weight-bold pt-2 justify-content-between p-0">
                     <div>Challenge Creation </div>
                     <div className="ml-auto text-white">
-                      {challenge[0].challenge.payload.created}
+                      {challenge[1].payload.created}
                     </div>
                   </div>
 
@@ -352,11 +371,11 @@ export default function Challenge() {
                       {" "}
                       <div className="ml-auto text-white">
                         <a
-                          href={`https://bscscan.com/address/${challenge[0].challenge.payload.creator}`}
+                          href={`https://bscscan.com/address/${challenge[1].payload.creator}`}
                           target="_blank"
                         >
                           {" "}
-                          {challenge[0].challenge.payload.creator.replace(
+                          {challenge[1].payload.creator.replace(
                             /(.{15})..+/,
                             "$1…"
                           )}{" "}
@@ -367,7 +386,7 @@ export default function Challenge() {
                   </div>
                   {/* <div className="row mx-auto d-flex font-weight-bold pt-2 justify-content-between p-0">
                                         <div >Network</div>
-                                        <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                        <div className="ml-auto text-white" >{challenge[1].payload.metadata.network}</div>
                                     </div> */}
                 </div>
               </div>

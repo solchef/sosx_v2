@@ -30,8 +30,8 @@ import { CID, create } from "ipfs-http-client";
 import ReactMarkdown from "react-markdown";
 import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract } from "hooks/useContract";
-import { StageNav } from "../index";
 import moment from "moment";
+import { StageNav } from "../Nav";
 
 // import MDEditor from './MDEdit,or'
 
@@ -113,7 +113,7 @@ const CreateChallenge = (props) => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     // console.log(props.level)
-    if (votingLevel == 2 || votingLevel == 3) {
+    // if (votingLevel == 2 || votingLevel == 3) {
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
@@ -165,12 +165,12 @@ const CreateChallenge = (props) => {
               // console.error(error)
               setIsLoading(false);
             }
-            }else {
-            toastError(
-              "Errorr",
-              "You need at least level2 DAO ranking to create challenge"
-            );
-          }
+          //   }else {
+          //   toastError(
+          //     "Errorr",
+          //     "You need at least level2 DAO ranking to create challenge"
+          //   );
+          // }
 
   };
 
@@ -256,6 +256,7 @@ const CreateChallenge = (props) => {
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-12 col-xl-6">
+
             <StageNav stage={1} />
 
             <p style={{ order: 4 }}>
