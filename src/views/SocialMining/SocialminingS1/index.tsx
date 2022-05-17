@@ -105,7 +105,7 @@ export default function SocialminingS1() {
                             <a>
                                 <button onClick={() => {
                                      
-                                    navigator.clipboard.writeText(`SOSX relaunching new SOSX Token next week 🚀 . Join tiktok for updates: ${media.addres}`)
+                                    navigator.clipboard.writeText(`SOSX relaunching new SOSX Token next week 🚀 . Join ${media.name} for updates: ${media.addres}`)
                                     setCopySuccess('Copied!')
 
                                 }} className="btn btn-dark mr-3 mt-3">Copy Caption</button>  <span className="text-success"> {copySuccess}</span>
