@@ -375,7 +375,7 @@ export default function Game() {
     getData();
     getVideo();
     // test();
-  }, []);
+  }, [stage]);
 
   return (
     <>
@@ -399,7 +399,7 @@ export default function Game() {
                     press the "submit your vote" button on the XO game page.
                     From there, you can browse all challenges submitted and
                     place your vote. Once the 8-hour clock is completed, the top
-                    3 challenges will go for a final vote on stage 3.
+                    3 challenges will go for a final vote on stage 3. 
                   </p>
 
                   {/* {console.log(currentLevel)} */}
