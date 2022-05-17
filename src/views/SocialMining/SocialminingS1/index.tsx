@@ -147,7 +147,7 @@ export default function SocialminingS1() {
 
               <a
                 href={`${
-                  media.name == "twitter" ? "post19.jpeg" : "post19.jpeg"
+                  media.name == "tiktok" ? "posts/xgame.mp4" : "images/post19.jpeg"
                 }`}
                 download
               >
