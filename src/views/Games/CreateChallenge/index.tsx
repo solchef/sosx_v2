@@ -30,6 +30,7 @@ import { CID, create } from "ipfs-http-client";
 import ReactMarkdown from "react-markdown";
 import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract } from "hooks/useContract";
+import moment from "moment";
 import { StageNav } from "../Nav";
 
 // import MDEditor from './MDEdit,or'
@@ -94,76 +95,68 @@ const CreateChallenge = (props) => {
     <VoteDetailsModal block={state.snapshot} />
   );
 
+  let roundId
+  const roundInfo = JSON.stringify({
+    id: roundId,
+    startingTime: moment().unix()
+  })
+  const createRound = async () => {
+    await server.files.mkdir(`/rounds/round-${roundId}`)
+    await server.files.mkdir(`/rounds/round-${roundId}`)
+
+    await server.files.mkdir(`/rounds/round-${roundId}/videos`)
+    await server.files.mkdir(`/rounds/round-${roundId}/votes`)
+    await server.files.mkdir(`/rounds/round-${roundId}/votes/stage-2`)
+    await server.files.mkdir(`/rounds/round-${roundId}/votes/stage-3`)
+  }
+
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     // console.log(props.level)
-    if (votingLevel == 2 || votingLevel == 3) {
+    // if (votingLevel == 2 || votingLevel == 3) {
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
-          ...generatePayloadData(),
-          type: SnapshotCommand.PROPOSAL,
+          version: "1.0",
+          timestamp: moment().unix(),
+          type: "challenge",
           payload: {
             name,
             body,
-            snapshot,
-            start: combineDateAndTime(startDate, startTime),
-            end: combineDateAndTime(endDate, endTime),
             creator: account,
             created: new Date(),
-            rules: choices
-              .filter((choice) => choice.value)
-              .map((choice) => {
-                return choice.value;
-              }),
-            metadata: generateMetaData(),
-            type: "challenge-with-rules",
           },
         });
 
         const sig = await signMessage(connector, library, account, challenge);
 
               if (sig) {
-                const forIPFS = JSON.stringify(
-                  {
-                    ...generatePayloadData(),
-                    type: SnapshotCommand.PROPOSAL,
+                const forIPFS = JSON.stringify({
+                    version: "1.0",
+                    timestamp: moment().unix(),
+                    type: "challenge",
                     signiture: sig.toString(),
                     payload: {
                       name,
                       body,
-                      snapshot,
-                      start: combineDateAndTime(startDate, startTime),
-                      end: combineDateAndTime(endDate, endTime),
                       creator: account,
                       created: new Date(),
-                      choices: choices
-                        .filter((choice) => choice.value)
-                        .map((choice) => {
-                          return choice.value;
-                        }),
-                      metadata: generateMetaData(),
-                      type: "challenge-with-rules",
                     },
+          
                   },
                   null,
                   2
                 );
 
                 const challengeName = `challenge` + `-${name.replaceAll(" ", "-")}`;
-                await server.files.mkdir(`/challenges/${challengeName}`);
-                await server.files.mkdir(`/challenges/${challengeName}/votes`);
-                await server.files.mkdir(`/challenges/${challengeName}/votes/stage-2`);
-                await server.files.mkdir(`/challenges/${challengeName}/votes/stage-3`);
-                await server.files.mkdir(`/challenges/${challengeName}/videos`);
+                await server.files.mkdir(`/rounds/round-1/${challengeName}`);
                 await server.files.write(
-                  `/challenges/${challengeName}/challenge.json`,
+                  `/rounds/round-1/${challengeName}/info.json`,
                   forIPFS,
                   { create: true }
                 );
 
                 toastSuccess(t("challenge created!"));
-                // router.push(`challenge/${name.replaceAll(" ", "-")}`);
               } else {
                 toastError(t("Error"), t("Unable to sign payload"));
               }
@@ -172,12 +165,12 @@ const CreateChallenge = (props) => {
               // console.error(error)
               setIsLoading(false);
             }
-            }else {
-            toastError(
-              "Errorr",
-              "You need at least level2 DAO ranking to create challenge"
-            );
-          }
+          //   }else {
+          //   toastError(
+          //     "Errorr",
+          //     "You need at least level2 DAO ranking to create challenge"
+          //   );
+          // }
 
   };
 
@@ -263,6 +256,7 @@ const CreateChallenge = (props) => {
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-12 col-xl-6">
+
             <StageNav stage={1} />
 
             <p style={{ order: 4 }}>
