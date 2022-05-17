@@ -30,7 +30,7 @@ import { CID, create } from "ipfs-http-client";
 import ReactMarkdown from "react-markdown";
 import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract } from "hooks/useContract";
-import { StageNav } from "../index";
+import { StageNav } from "../Nav";
 
 // import MDEditor from './MDEdit,or'
 
