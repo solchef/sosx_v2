@@ -15,6 +15,7 @@ import { useDaoStakingContract } from "hooks/useContract";
 import ConnectWalletButton from "../../../components/ConnectWalletButton";
 import useStage from "../../../hooks/useStage";
 import useLevels from "hooks/useLevels";
+import moment from "moment";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -47,54 +48,12 @@ export default function Challenge() {
   });
 
   const allowedStages = [2, 3];
-
-  let challengeName = `challenge-${name}`;
+ 
   const getData = async () => {
     if (name && stage) {
       let challenge = [];
-      for await (const resultPart of server.files.ls("/challenges")) {
-        let challengeJson;
-        let vote;
-        let votesList = [];
-
-        if (resultPart.name === challengeName) {
-          for await (const cha of server.files.ls(
-            `/challenges/${resultPart.name}`
-          )) {
-            const chunks = [];
-
-            if (cha.name == "challenge.json") {
-              for await (const chunk of server.cat(cha.cid)) {
-                chunks.push(chunk);
-              }
-              const data = concat(chunks);
-              challengeJson = JSON.parse(
-                new TextDecoder().decode(data).toString()
-              );
-            }
-            if (cha.name == "votes") {
-              for await (const vote of server.files.ls(
-                `/challenges/${resultPart.name}/votes/stage-${stage}`
-              )) {
-                // console.log(await voteListLevels(name));
-                // console.log(vote)
-                let data = {
-                  name: vote.name.slice(0, -5),
-                  level: 1,
-                };
-                votesList.push(data);
-              }
-            }
-            setVotesList(votesList);
-
-            // console.log(votesList)
-          }
-          let challengeData = {
-            challenge: challengeJson,
-            votes: vote,
-          };
-          challenge.push(challengeData);
-        }
+      for await (const resultPart of server.files.ls("/rounds/round-1")) {
+        console.log(resultPart)
       }
       setChallenge(challenge);
     }
@@ -132,14 +91,11 @@ export default function Challenge() {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    // alert("voting")
     let daoList = await contract.getAllAccount();
-    // console.log(daoList)
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      // console.log(total_stake);
       total_stake = Number(total_stake / 10 ** 18);
       let voterData = {
         address: voter_address,
@@ -182,115 +138,33 @@ export default function Challenge() {
     }
 
     const vote = JSON.stringify({
-      ...generatePayloadData(),
-      address: account,
-      data: {
-        domain: {
-          name: "snapshot",
-          version: "0.1.4",
-        },
-        types: {
-          Vote: [
-            {
-              name: "from",
-              type: "address",
-            },
-            {
-              name: "from",
-              type: "address",
-            },
-            {
-              name: "space",
-              type: "string",
-            },
-            {
-              name: "timestamp",
-              type: "uint64",
-            },
-            {
-              name: "challenge",
-              type: "string",
-            },
-            {
-              name: "choice",
-              type: "uint32",
-            },
-            {
-              name: "metadata",
-              type: "string",
-            },
-          ],
-        },
-        message: {
-          space: "SOSX",
-          challenge: `${challengeName}`,
-          choice: 1,
-          metadata: "{}",
-          from: account,
-          timestamp: Date.now(),
-        },
+        timestamp: moment().unix(),
+        address: account,
+        round: "1",
         data: voters,
+        comments: []
       },
-    });
+    );
 
     const sig = await signMessage(connector, library, account, vote);
 
     if (sig) {
       const forIPFS = JSON.stringify(
         {
-          ...generatePayloadData(),
+          timestamp: moment().unix(),
           address: account,
+          round: "1",
+          challenge: "CID",
           sig: sig.toString(),
-          data: {
-            domain: {
-              name: "snapshot",
-              version: "0.1.4",
-            },
-            types: {
-              Vote: [
-                {
-                  name: "from",
-                  type: "address",
-                },
-                {
-                  name: "space",
-                  type: "string",
-                },
-                {
-                  name: "timestamp",
-                  type: "uint64",
-                },
-                {
-                  name: "proposal",
-                  type: "string",
-                },
-                {
-                  name: "choice",
-                  type: "uint32",
-                },
-                {
-                  name: "metadata",
-                  type: "string",
-                },
-              ],
-            },
-            message: {
-              space: "sosx",
-              challenge: "",
-              choice: 1,
-              metadata: "{}",
-              from: account,
-              timestamp: Date.now(),
-            },
-            data: voters,
+          data: voters,
+          comments: []
           },
-        },
         null,
         2
       );
 
       await server.files.write(
-        `/challenges/challenge-${name}/votes/stage-${stage}/${account}.json`,
+        `/rounds/round-1/votes/stage-${stage}/${account}.json`,
         forIPFS,
         { create: true }
       );

@@ -317,8 +317,11 @@ export default function Game() {
       const valid = match && match[7].length == 11 ? match[7] : false;
       if (valid !== false) {
         data = JSON.stringify({
-          youtube: valid,
-          wallet: account,
+          id: `${account}+round-1`,
+          rId: "round",
+          urls: {
+            youtube: valid,
+          }
         });
       }
     }
@@ -331,8 +334,11 @@ export default function Game() {
         }
         const index = url.indexOf("video/");
         data = JSON.stringify({
-          tiktok: url.substring(index + 6, index + 25),
-          wallet: account,
+          id: `${account}+round-1`,
+          rId: "round",
+          urls: {
+            youtube: url.substring(index + 6, index + 25),
+          }
         });
       } else {
         return false;
@@ -379,16 +385,12 @@ export default function Game() {
 
   useEffect(() => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
-      // setTotalAmountStaked(stakeAmount);
       let level = getLevel(stakeAmount);
-      // alert(level);
       setCurrentLevel(level);
     });
 
-    // loadDaoLevels();
     getData();
     getVideo();
-    // test();
   }, [stage]);
 
   return (
