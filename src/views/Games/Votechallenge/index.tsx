@@ -29,14 +29,6 @@ export default function Votechallenge() {
     setStage(stageHook);
   });
 
-
-  if (stage) {
-    if (stage != 2) {
-      alert("You can't be here in current stage")
-      router.push('/xgame')
-    }
-  }
-
   const ReadMore = ({ children, size, css }) => {
     const text = children;
     const [isReadMore, setIsReadMore] = useState(true);

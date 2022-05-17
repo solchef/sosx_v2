@@ -48,12 +48,6 @@ export default function Challenge() {
 
   const allowedStages = [2, 3];
 
-  if (stage) {
-    if (!allowedStages.includes(stage)) {
-      router.push("/xgame");
-    }
-  }
-
   let challengeName = `challenge-${name}`;
   const getData = async () => {
     if (name && stage) {
