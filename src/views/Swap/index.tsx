@@ -104,6 +104,8 @@ export default function Swap() {
   const { refreshBlockNumber, isLoading } = useRefreshBlockNumberID()
   const [userSlippageTolerance, setUserSlippageTolerance] = useUserSlippageTolerance()
   const [referrerAddress, setReferrerAddress] = useState('')
+  const [collapse, showCollapse] = useState(false)
+
   let referedby=null;
   
   useEffect(() => {
@@ -595,25 +597,62 @@ console.log(data)
                     {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
                   </Box>
                   
-                {/* 
-                    <div className="transaction-box pt-3 pb-3 pr-2 pl-2">
-                      <div className="small2">
-                        <div className="d-flex justify-content-center small">
-                          <div className="mr-1">Gas Fee: </div>
-                          <div className="text-white mr-3"> 0.009 SOL</div>
-                          <div className="mr-1">Receiving: </div>
-                          <div className="text-white mr-3"> 503.0300 GHSTX</div>
-                          <div className=" mr-1">Giving: </div>
-                          <div className="text-white mr-3"> 25.9340 SOL</div>
-                          <div className=" mr-1">Status: </div>
-                          <div className="text-white"> Successfull</div>
-                        </div>  
-                      </div>
-                </div> */}
+
+                <div className="pt-3">
+									<div className="small"></div>
+									<div className="bg-dark p-3 rounded ">
+										<div className="small">
+											<div id="accordion">
+												<div className={`text-white fs-14 ${collapse ? 'collapsed' : '' }`} onClick={() => showCollapse(!collapse)} data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+													0.00 BNB = 0.00 SOSX
+													<span style={{color: "6c757d"}}>($0.00) </span>
+													<span className="float-right dropdown-toggle small"></span>
+												</div>
+												<div className="small">
+													<div id="collapseOne" className={`accordion-collapse collapse ${collapse ? '' : 'show' }`} aria-labelledby="headingOne" data-parent="#accordion" >
+														<div className="d-flex justify-content-between small pt-3">
+
+															<div className=" mr-1">Price: </div> .                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+															<div className="text-white"> 0.00 SOSX</div>
+														</div>
+														<div className="small">
+															<div className="d-flex justify-content-between small">
+
+																<div className="mr-1">Gas Fee: </div>
+																<div className="text-white"> 0.1 BNB</div>
+															</div>
+														</div>
+														<div className="small">
+															<div className="d-flex small justify-content-between">
+
+																<div className=" mr-1">Price Impact: </div>
+																<div className="text-white float-right"> 0.01%</div>
+															</div>
+														</div>
+														<hr className="hr-custom"/>
+														<div className="small">
+															<div className="d-flex small justify-content-between">
+
+																<div className=" mr-1">Minimum Received After Slippage
+																	(10%) </div>
+																<div className="text-white"> 0.00</div>
+															</div>
+															<div className="d-flex small justify-content-between">
+
+																<div className=" mr-1">Status: </div>
+																<div className="text-white"> Successful</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
               </div>
               
-              <span className=' m-2 px-3 py-2 fs-14 text-white'>When placing order. Choose the (SOSX) amount first until allowed swap</span>
-
+             
             </div>
           </div>
           
