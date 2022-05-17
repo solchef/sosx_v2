@@ -48,7 +48,7 @@ export default function SocialminingS1() {
                         <div className="col-xl-5 mx-auto align-items-center col-12">
                            
                                 
-                             <img className={`${wImg576 && "img-soc"} rounded w-auto p-0`} src={`${media.name== "tiktok" ? 'images/post15.jpeg' : media.name== "twitter" ? 'images/post18.jpeg' : 'images/post18.jpeg' }`} />
+                             <img className={`${wImg576 && "img-soc"} rounded w-auto p-0`} src={`${ media.name== "twitter" ? '/post19.jpeg' : 'posts/xgame.mp4' }`} />
 
                         </div>
 
@@ -61,18 +61,18 @@ export default function SocialminingS1() {
                             </div>
                        
                                 <p className="pt-3 pl-1 text-white pb-3">CAPTION:
-<div className="pt-2 pl-2 row">
-                                    <a onClick={(e) => toggleMenu(e, "twitter")} className={` btn btn-dark mr-2 ml-2 ${media.name == "twitter" ? "bg-success" : ""}`}
-                                        id="twitter-toggle" >Twitter</a>
+                                <div className="pt-2 pl-2 row">
+                                                                    <a onClick={(e) => toggleMenu(e, "twitter")} className={` btn btn-dark mr-2 ml-2 ${media.name == "twitter" ? "bg-success" : ""}`}
+                                                                        id="twitter-toggle" >Twitter</a>
 
-                                    <a onClick={(e) => toggleMenu(e, "instagram")}
-                                        className={` mr-2 ml-2 btn btn-dark ${media.name == "instagram" ? "bg-success" : ""}`}
-                                        id="instagram-toggle">Instagram</a>
+                                                                    <a onClick={(e) => toggleMenu(e, "instagram")}
+                                                                        className={` mr-2 ml-2 btn btn-dark ${media.name == "instagram" ? "bg-success" : ""}`}
+                                                                        id="instagram-toggle">Instagram</a>
 
-                                    <a onClick={(e) => toggleMenu(e, "tiktok")}
-                                        className={` mr-2 ml-2 btn btn-dark ${media.name == "tiktok" ? "bg-success" : ""}`}
-                                        id="tiktok-toggle">Tiktok</a>
-</div>
+                                                                    <a onClick={(e) => toggleMenu(e, "tiktok")}
+                                                                        className={` mr-2 ml-2 btn btn-dark ${media.name == "tiktok" ? "bg-success" : ""}`}
+                                                                        id="tiktok-toggle">Tiktok</a>
+                                </div>
                                 </p>
                         
 
@@ -80,32 +80,45 @@ export default function SocialminingS1() {
                                 <p style={{ display: media.name == "twitter" ? "" : "none" }}>
                                     SOSX relaunching new SOSX Token next week 🚀<br /><br />
                                     Join twitter for updates: <br />
+                                    <a href="socialx.io">www.socialx.io</a>  <a href="https://twitter.com/socialx_io?s=20&t=BAk0mefbJABXHT-ig2ycQg">@socialx_io</a> <br />
                                     {media.addres}
                                 </p>
 
                                 <p style={{ display: media.name == "instagram" ? "" : "none" }}>
-                                    SOSX relaunching new SOSX Token next week 🚀<br /><br />
-                                    Join instagram for updates: <br />
+                                SOCIAL X JUST LAUNCHED OX GAMES!! <br />
+
+                                Create a challenge & watch someone record themselves for the 48 hour money prize pool 🤑💰 <br />
+
+                                Earn daily crypto for sharing 💵 <br />
+                                <a href="socialx.io">www.socialx.io</a>  <a href="https://t.me/SocialXToken">@socialxtoken</a> <br />
+
+                                <br />
                                     {media.addres}
 
                                 </p>
 
                                 <p style={{ display: media.name == "tiktok" ? "" : "none" }}>
-                                    SOSX relaunching new SOSX Token next week 🚀<br /><br />
-                                    Join tiktok for updates: <br />
+                                SOCIAL X JUST LAUNCHED OX GAMES!! <br />
+
+                                Create a challenge & watch someone record themselves for the 48 hour money prize pool 🤑💰 <br />
+
+                                Earn daily crypto for sharing 💵 <br />
+                                <a href="socialx.io">www.socialx.io</a>  <a href="https://www.tiktok.com/@socialxtoken">$SOSX</a> <br />
+
+                                <br />                      
                                     {media.addres}
 
                                 </p>
 
                             </div>
 
-                            <a href={`${media.name== "tiktok" ? 'images/post15.jpeg' : media.name== "twitter" ? 'images/post18.jpeg' : 'images/post18.jpeg' }`} download>
+                            <a href={`${media.name== "tiktok" ? 'post19.jpeg' : media.name== "twitter" ? 'post19.jpeg' : 'post19.jpeg' }`} download>
                                 <button className="btn btn-success mr-2 mt-3">Save Image</button>
                             </a>
                             <a>
                                 <button onClick={() => {
                                      
-                                    navigator.clipboard.writeText(`SOSX relaunching new SOSX Token next week 🚀 . Join tiktok for updates: ${media.addres}`)
+                                    navigator.clipboard.writeText(`SOSX relaunching new SOSX Token next week 🚀 . Join ${media.name} for updates: ${media.addres}`)
                                     setCopySuccess('Copied!')
 
                                 }} className="btn btn-dark mr-3 mt-3">Copy Caption</button>  <span className="text-success"> {copySuccess}</span>
@@ -115,7 +128,6 @@ export default function SocialminingS1() {
                     </div>
                 </div>
             </div>
-
 
 
 
