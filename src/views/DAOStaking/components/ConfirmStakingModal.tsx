@@ -86,12 +86,13 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
                   <Text fontSize="20px">You are staking SOSX</Text>
                   <AutoColumn gap="12px" justify="center">
                     <Text bold small textAlign="center">
-                        Transaction is being sent
+                        Stake SOSX
                     </Text>
                   </AutoColumn>
                   <Text small color="textSubtle" textAlign="center">
-                    {t('Confirm this transaction in your wallet')}
+                    {t('Press and Confirm this transaction in your wallet')}
                   </Text>
+                  
                 </AutoColumn>
               </Wrapper>
 

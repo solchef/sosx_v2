@@ -60,6 +60,18 @@ function TradeSummary({
         </div>
       </div>
 
+      {/* <hr className="hr-custom" />
+                          <div className="small">
+                            <div className="d-flex small justify-content-between">
+                              <div className=" mr-1">
+                                Minimum Received After Slippage ({" "}
+                                {allowedSlippage / 100}%){" "}
+                              </div>
+                              <div className="text-white"> </div>
+                            </div>
+                     
+                          </div> */}
+
     </>
   );
 }

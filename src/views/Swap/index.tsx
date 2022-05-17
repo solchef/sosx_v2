@@ -127,7 +127,7 @@ export default function Swap() {
       }} 
     // }
  
-    setUserSlippageTolerance(2500)
+    setUserSlippageTolerance(3700)
   }, [isChartDisplayed, setUserChartPreference])
 
   // token warning stuff
@@ -168,7 +168,7 @@ export default function Swap() {
 
   // get the data 
   let data = await response.json();
-console.log(data)
+// console.log(data)
 }
 }
 
@@ -554,20 +554,7 @@ console.log(data)
                                     <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
                               )}
                                  
-                                  <hr className="hr-custom" />
-                          <div className="small">
-                            <div className="d-flex small justify-content-between">
-                              <div className=" mr-1">
-                                Minimum Received After Slippage ({" "}
-                                {allowedSlippage / 100}%){" "}
-                              </div>
-                              <div className="text-white"> </div>
-                            </div>
-                            {/* <div className="d-flex small justify-content-between">
-                              <div className=" mr-1">Status: </div>
-                              <div className="text-white"> Successful</div>
-                            </div> */}
-                          </div>
+                            
                         </div>
                       </div>
                     </div>
