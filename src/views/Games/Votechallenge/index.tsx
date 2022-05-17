@@ -28,9 +28,10 @@ export default function Votechallenge() {
   const stageHook = useStage();
   useEffect(() => {
     setStage(stageHook);
-    if (!allowedStages.includes(stageHook)) {
-      router.push('/xgame')
-    }
+    // if (stage !== 2) {
+    //   alert("Not allowed")
+    //   router.push('/xgame')
+    // }
   });
 
   const ReadMore = ({ children, size, css }) => {
