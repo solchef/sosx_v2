@@ -51,41 +51,30 @@ export default function Votechallenge() {
     setLoading(true);
     const getData = async () => {
       let challenges = [];
-      for await (const resultPart of server.files.ls("/challenges")) {
-        let challenge;
+      for await (const roundContent of server.files.ls("/rounds/round-1")) {
+        let challengeData;
         let vote;
-        for await (const cha of server.files.ls(
-          `/challenges/${resultPart.name}`
-        )) {
-          const chunks = [];
-          if (cha.name == "votes") {
-            let votes = await server.files.stat(
-              `/challenges/${resultPart.name}/votes/stage-${stage}`
-            );
-            vote = votes.blocks;
-          }
+        const chunks = [];
 
-          if (cha.name == "challenge.json") {
-            for await (const chunk of server.cat(cha.cid)) {
-              chunks.push(chunk);
+        if (roundContent.name.includes("challenge-")) {
+          for await (const challengeFolderContent of server.files.ls(`/rounds/round-1/${roundContent.name}`)) {
+            if (challengeFolderContent.name == 'info.json') {
+              for await (const chunk of server.cat(challengeFolderContent.cid)) {
+                chunks.push(chunk);
+              }
+              const data = concat(chunks);
+              challengeData = JSON.parse(new TextDecoder().decode(data).toString());
+              challenges.push(challengeData)
             }
-            const data = concat(chunks);
-            challenge = JSON.parse(new TextDecoder().decode(data).toString());
           }
+          setChallenges(challenges)
         }
-
-        let challengeData = {
-          challenge: challenge,
-          votes: vote,
-        };
-
-        challenges.push(challengeData);
+        console.log(challenges)
       }
 
       let topThreeChallenges = [];
       const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
       topThreeChallenges.push(ch[0], ch[1], ch[2]);
-
       if (stage == 3) {
         if (challenges.length > 3) {
           setChallenges(topThreeChallenges);
@@ -129,15 +118,15 @@ export default function Votechallenge() {
                     <div className="card-body p-3 align-items-start border-0">
                       <div>
                         <span className="fs-12 font-weight-bold success">
-                          {/* {camp.challenge.payload.metadata.strategies[0].params.address} */}
+                          {/* {camp.payload.metadata.strategies[0].params.address} */}
                         </span>
 
                         <h1 className="fs-18 pb-2 pt-3">
-                          {camp.challenge.payload.name}
+                          {camp.payload.name}
                         </h1>
 
                         <ReadMore size="150" css="fs-14 pt-2">
-                          {camp.challenge.payload.body}
+                          {camp.payload.body}
                         </ReadMore>
                       </div>
                     </div>
@@ -154,7 +143,7 @@ export default function Votechallenge() {
 
                       <Link
                         href={`/challenge/${String(
-                          camp.challenge.payload.name
+                          camp.payload.name
                         ).replaceAll(" ", "-")}`}
                       >
                         <button type="button" className="btn btn-primary ">
