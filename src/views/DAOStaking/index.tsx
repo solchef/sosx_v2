@@ -380,7 +380,7 @@ export default function DaoStaking() {
                   </div>
                 </div>
               </div>
-              <button
+              <button onClick={handleClaimReward}
                 className="btn mx-auto btn-primary btn-lg mt-3"
                 type="button"
               >
