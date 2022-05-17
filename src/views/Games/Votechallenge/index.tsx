@@ -24,15 +24,18 @@ export default function Votechallenge() {
   const [stage, setStage] = useState(2);
   const router = useRouter();
 
-  const allowedStages = [2, 3];
   const stageHook = useStage();
   useEffect(() => {
     setStage(stageHook);
-    // if (stage !== 2) {
-    //   alert("Not allowed")
-    //   router.push('/xgame')
-    // }
   });
+
+
+  if (stage) {
+    if (stage != 2) {
+      alert("You can't be here in current stage")
+      router.push('/xgame')
+    }
+  }
 
   const ReadMore = ({ children, size, css }) => {
     const text = children;
@@ -85,9 +88,7 @@ export default function Votechallenge() {
         };
 
         challenges.push(challengeData);
-        console.log(challengeData);
       }
-      // setTopChallenges(challenges);
 
       let topThreeChallenges = [];
       const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
