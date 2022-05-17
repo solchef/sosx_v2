@@ -23,127 +23,6 @@ const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
 
-export const StageNav = (props) => {
-  return (
-    <>
-      {props.stage == 1 && (
-        <>
-          <div className="d-flex align-items-center mb-2">
-            <div className="step done ">1</div>
-            <h4>SUBMIT A CHALLENGE</h4>
-          </div>
-          <p>Currently into Stage 1 of SOSX Game</p>
-
-          <h5
-            className="d-flex text-muted align-items-center mt-2 mb-2"
-            style={{ order: 2 }}
-          >
-            <div className="step false mr-3 ">2</div>VOTE A CHALLENGE
-          </h5>
-
-          <h5
-            className="d-flex text-muted align-items-center mt-2 mb-2"
-            style={{ order: 3 }}
-          >
-            <div className="step false mr-3 ">3</div>FINAL TOP 3 VOTE
-          </h5>
-
-          <h5
-            className="text-muted d-flex align-items-center mt-2 mb-4"
-            style={{ order: 4 }}
-          >
-            <div className="step false mr-3 ">4</div>VIDEO SUBMISSION
-          </h5>
-        </>
-      )}
-
-      {props.stage == 2 && (
-        <>
-          <div className="d-flex align-items-center mb-2">
-            <div className="step done ">2</div>
-            <h4>VOTE A CHALLENGE</h4>
-          </div>
-          <p>Currently into Stage 2 of SOSX Game</p>
-          <h5
-            className="d-flex text-muted align-items-center mt-2 mb-2"
-            style={{ order: 3 }}
-          >
-            <div className="step false mr-3 ">3</div>FINAL TOP 3 VOTE
-          </h5>
-          <h5
-            className="text-muted d-flex align-items-center mt-2 mb-2"
-            style={{ order: 4 }}
-          >
-            <div className="step false mr-3 ">4</div>VIDEO SUBMISSION
-          </h5>
-          <h5
-            className="d-flex text-muted align-items-center mt-2 mb-4"
-            style={{ order: 2 }}
-          >
-            <div className="step false mr-3 ">1</div>SUBMIT A CHALLENGE
-          </h5>
-        </>
-      )}
-
-      {props.stage == 3 && (
-        <>
-        <div className="d-flex align-items-center mb-2">
-            <div className="step done ">3</div>
-            <h4>FINAL TOP 3 VOTE</h4>
-          </div>
-          <p>Currently into Stage 2 of SOSX Game</p>
-
-          <h5
-            className="text-muted d-flex align-items-center mt-2 mb-2"
-            style={{ order: 3 }}
-          >
-            <div className="step false mr-3 ">4</div>VIDEO SUBMISSION
-          </h5>
-
-          <h5
-            className="text-muted d-flex align-items-center mb-4"
-            style={{ order: 4 }}
-          >
-            <div className="step false mr-3 ">1</div>UPSUBMIT A CHALLENGE
-          </h5>
-
-          <h5
-            className="text-muted d-flex align-items-center mb-4"
-            style={{ order: 3 }} >
-            <div className="step false mr-3 ">2</div>VOTE A CHALLENGE
-          </h5>
-        </>
-      )}
-
-      {props.stage == 4 && (
-        <>
-          <h5
-            className="d-flex text-muted align-items-center mt-4 mb-2"
-            style={{ order: 2 }}
-          >
-            <div className="step false mr-3 ">1</div>SUBMIT A CHALLENGE
-          </h5>
-
-          <h5
-            className="text-muted d-flex align-items-center mb-4"
-            style={{ order: 3 }}
-          >
-            <div className="step false mr-3 ">2</div>VOTE A CHALLENGE
-          </h5>
-
-          <div className="d-flex align-items-center mb-2">
-            <div className="step done ">3</div>
-            <h4>UPLOAD VIDEO</h4>
-          </div>
-          <p>
-            Currently into Stage 3 of SOSX Game. Submitting challenge videos.
-          </p>
-        </>
-      )}
-    </>
-  );
-};
-
 export default function Game() {
   const { account } = useActiveWeb3React();
   const [days, setDays] = useState(0);
@@ -307,7 +186,7 @@ export default function Game() {
           rId: "round",
           urls: {
             youtube: valid,
-          }
+          },
         });
       }
     }
@@ -324,7 +203,7 @@ export default function Game() {
           rId: "round",
           urls: {
             youtube: url.substring(index + 6, index + 25),
-          }
+          },
         });
       } else {
         return false;
@@ -379,38 +258,30 @@ export default function Game() {
     // loadDaoLevels();
     getData();
     getVideo();
-
   }, [stage]);
 
   return (
-    <>
-      <div
-        className="game container-fluid d-flex flex-wrap flex-direction-row-reverse"
-        style={{ gap: "20px" }}
-      >
-        <div id="action-section" style={{ flex: "1 50%", order: 2 }}>
-
-          {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
-
-       </div>
-
-        <div id="timer-section" style={{ flex: 1, gap: "20px" }}>
-          <TimerDisplay
-            hours={hours}
-            minutes={minutes}
-            seconds={seconds}
-            stage={stage}
-          />
-        </div>
-
-        <div id="ranking-section" style={{ flex: 1, order: 4 }}>
-          <Ranking voters={voters} />
-        </div>
-
-        <div id="video-section" style={{ flex: "1 50%", order: 3 }}>
-          <Media todayVideo={todayChallenge} />
-        </div>
+    <div className="game container-fluid d-flex flex-wrap flex-direction-row">
+      <div id="action-section" style={{ flex: "1 50%", order: 2 }}>
+        {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
       </div>
-    </>
+
+      <div id="timer-section" style={{ flex: 1, gap: "20px" }}>
+        <TimerDisplay
+          hours={hours}
+          minutes={minutes}
+          seconds={seconds}
+          stage={stage}
+        />
+      </div>
+
+      <div id="ranking-section" style={{ flex: 1, order: 4 }}>
+        <Ranking voters={voters} />
+      </div>
+
+      <div id="video-section" style={{ flex: "1 50%", order: 3 }}>
+        <Media todayVideo={todayChallenge} />
+      </div>
+    </div>
   );
 }

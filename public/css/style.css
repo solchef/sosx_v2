@@ -670,9 +670,9 @@ h1,
 
 h2,
 .h2 {
-  font-size: 35px !important;
+  font-size: 70px !important;
   color: #fff;
-  font-weight: 800;
+  font-weight: 200;
   margin-bottom: 0;
 }
 
@@ -689,7 +689,7 @@ h4,
 h5,
 .h5 {
   font-size: 1rem;
-}
+color: #e3e70a;}
 
 h6,
 .h6 {
@@ -5516,8 +5516,8 @@ margin: 10px;display: flex;}
 }
 
 .card h4 {
-  font-size: 20px;
-  font-weight: 300;
+  font-size: 22px;
+  font-weight: 900;
 }
 
 .card span {
@@ -12164,7 +12164,7 @@ a.text-dark:focus {
 
 p {
   line-height: 1.5;
-  font-size: 14px !important;
+  font-size: 16px !important;
   color: #a2a2a2;
   margin-bottom: 10px !important;
 }
@@ -46923,7 +46923,7 @@ span.nav-text.comingsoon {
 
 .form-control {
   font-size: 35px;
-  color: #909090;
+  color: #100e15;
   border: none;
   background: none !important;
   padding: 3px;
@@ -46972,6 +46972,11 @@ span.nav-text.comingsoon {
 
 .main-pink {
   color: #ff00cc !important;
+}
+.glow-pink {
+  color: #ff00cc !important;
+
+
 }
 
 .sosx-img {
@@ -47086,8 +47091,8 @@ textarea {
   /* border: 2px solid #6d6d6d; */
   border-radius: 0.75rem;
   resize: vertical;
-  background-color: black;
-}
+  background-color: #d9d9d9;
+font-size: 20px;}
 
 .input1[type=text],
 select,
@@ -47096,8 +47101,8 @@ textarea {
   padding: 15px;
   border-radius: 0.75rem;
   resize: vertical;
-  color: #fff !important;
-  background: #000000;
+  color: #100e15 !important;
+  
 
 }
 
@@ -48630,7 +48635,7 @@ Define the font family, weight, and icon
       border-radius: 0.75rem;
       resize: vertical;
       color: #fff;
-      background-color: #000000;
+      background-color: #d9d9d9;
       /* margin-left: 15px; */
       /* margin-right: 14px; */
       font-size: 12px;
@@ -49007,7 +49012,7 @@ Define the font family, weight, and icon
 }
 
 .card h3 {
-  font-size: 27px;
+  font-size: 18px;
 }
 
 @media (max-width: 1400px) {
@@ -49327,7 +49332,7 @@ Define the font family, weight, and icon
 @media (min-width: 1700px) {
   .clock .li span {
       font-size: 4.5rem !important;
-      line-height: 75px !important;
+      line-height: 35px !important;
   }
 }
 
@@ -49388,6 +49393,7 @@ Define the font family, weight, and icon
   content: '';
 }
 
+
 .video-container iframe {
   position: absolute;
   top: 0;
@@ -49425,7 +49431,7 @@ a {
 
 @media (max-width: 1600px) {
   div#action-section {
-      flex: 2 100% !important;
+      flex: 2 50% !important;
   }
 
   div#timer-section {
@@ -49434,13 +49440,13 @@ a {
 
   .prize-card.card,
   .timer-card.card {
-      flex: 0 100% !important;
-      margin-bottom: 0px !important;
+      flex: 20% !important;
+      
   }
 
   div#timer-section {
       min-width: 340px;
-      display: inline-flex;
+      /* display: inline-flex; */
       gap: 20px;
   }
   #action-section.button{margin-bottom:50px!important}
@@ -49453,12 +49459,12 @@ a {
 
   div#timer-section {
       flex: 2 100% !important;
-  flex-flow: column;}
+  flex-flow: column;max-width: none;max-width: 100%;}
 
   .prize-card.card,
   .timer-card.card {
-      flex: 2 100% !important;
-      margin-bottom: 0px !important;
+      flex: 1 100% !important;
+      
   }
 
 
@@ -49546,10 +49552,25 @@ background-position: center right;}
   background-size: 40%;
   background-repeat:no-repeat;
 background-position: center right;}
-}    
+
 
 
 .bg-input {
 box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 background-color: #d9d9d9!important;
 }
+
+@media (max-width: 1200px) {
+  #timer-section .card{width:100%!important}
+  
+.challenge-form
+{flex:1 100%!important;}
+  
+}
+
+
+
+h2.main-pink {font-family: 'digital-7';font-size: 25px;}
+
+.challenge-form
+{flex: 0 80%;}

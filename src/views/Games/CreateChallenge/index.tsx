@@ -62,6 +62,8 @@ const CreateChallenge = (props) => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [votingLevel, setVotingLevel] = useState(0);
+  const [challengeDetails, setChallengeDetails] = useState('');
+
   const [fieldsState, setFieldsState] = useState<{ [key: string]: boolean }>(
     {}
   );
@@ -82,96 +84,89 @@ const CreateChallenge = (props) => {
     endTime,
     snapshot,
   } = state;
-  const formErrors = getFormErrors(state, t);
-  const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
-  const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-  const biggerThan1500 = useMediaPredicate("(min-width: 1500px)");
-  const bet1200and1500 = useMediaPredicate(
-    "(min-width: 1200px) and (max-width: 1500px)"
-  );
+
 
   const contract = useDaoStakingContract();
   const [onPresentVoteDetailsModal] = useModal(
     <VoteDetailsModal block={state.snapshot} />
   );
 
-  let roundId
+  let roundId;
   const roundInfo = JSON.stringify({
     id: roundId,
-    startingTime: moment().unix()
-  })
+    startingTime: moment().unix(),
+  });
   const createRound = async () => {
-    await server.files.mkdir(`/rounds/round-${roundId}`)
-    await server.files.mkdir(`/rounds/round-${roundId}`)
+    await server.files.mkdir(`/rounds/round-${roundId}`);
+    await server.files.mkdir(`/rounds/round-${roundId}`);
 
-    await server.files.mkdir(`/rounds/round-${roundId}/videos`)
-    await server.files.mkdir(`/rounds/round-${roundId}/votes`)
-    await server.files.mkdir(`/rounds/round-${roundId}/votes/stage-2`)
-    await server.files.mkdir(`/rounds/round-${roundId}/votes/stage-3`)
-  }
+    await server.files.mkdir(`/rounds/round-${roundId}/videos`);
+    await server.files.mkdir(`/rounds/round-${roundId}/votes`);
+    await server.files.mkdir(`/rounds/round-${roundId}/votes/stage-2`);
+    await server.files.mkdir(`/rounds/round-${roundId}/votes/stage-3`);
+  };
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    // console.log(props.level)
+    // console.log(body)
     // if (votingLevel == 2 || votingLevel == 3) {
-      try {
-        setIsLoading(true);
-        const challenge = JSON.stringify({
-          version: "1.0",
-          timestamp: moment().unix(),
-          type: "challenge",
-          payload: {
-            name,
-            body,
-            creator: account,
-            created: new Date(),
+    try {
+      setIsLoading(true);
+      const challenge = JSON.stringify({
+        version: "1.0",
+        timestamp: moment().unix(),
+        type: "challenge",
+        payload: {
+          name,
+          body:"body",
+          creator: account,
+          created: new Date(),
+        },
+      });
+
+      const sig = await signMessage(connector, library, account, challenge);
+
+      if (sig) {
+        const forIPFS = JSON.stringify(
+          {
+            version: "1.0",
+            timestamp: moment().unix(),
+            type: "challenge",
+            signiture: sig.toString(),
+            payload: {
+              name,
+              body,
+              creator: account,
+              created: new Date(),
+            },
           },
-        });
+          null,
+          2
+        );
 
-        const sig = await signMessage(connector, library, account, challenge);
-
-              if (sig) {
-                const forIPFS = JSON.stringify({
-                    version: "1.0",
-                    timestamp: moment().unix(),
-                    type: "challenge",
-                    signiture: sig.toString(),
-                    payload: {
-                      name,
-                      body,
-                      creator: account,
-                      created: new Date(),
-                    },
-          
-                  },
-                  null,
-                  2
-                );
-
-                const challengeName = `challenge` + `-${name.replaceAll(" ", "-")}`;
-                await server.files.mkdir(`/rounds/round-1/${challengeName}`);
-                await server.files.write(
-                  `/rounds/round-1/${challengeName}/info.json`,
-                  forIPFS,
-                  { create: true }
-                );
-
-                toastSuccess(t("challenge created!"));
-              } else {
-                toastError(t("Error"), t("Unable to sign payload"));
-              }
-            } catch (error) {
-              toastError(t("Error"), (error as Error)?.message);
-              // console.error(error)
-              setIsLoading(false);
-            }
-          //   }else {
-          //   toastError(
-          //     "Errorr",
-          //     "You need at least level2 DAO ranking to create challenge"
-          //   );
-          // }
-
+        const challengeName = `challenge` + `-${name.replaceAll(" ", "-")}`;
+        await server.files.mkdir(`/rounds/round-1/${challengeName}`);
+        await server.files.write(
+          `/rounds/round-1/${challengeName}/info.json`,
+          forIPFS,
+          { create: true }
+        );
+        
+        toastSuccess(t("challenge created!"));
+      } else {
+        toastError(t("Error"), t("Unable to sign payload"));
+      }
+    } catch (error) {
+      toastError(t("Error"), (error as Error)?.message);
+      // console.error(error)
+      setIsLoading(false);
+    }
+    //   }else {
+    //   toastError(
+    //     "Errorr",
+    //     "You need at least level2 DAO ranking to create challenge"
+    //   );
+    // }
   };
 
   const updateValue = (key: string, value: string | Choice[] | Date) => {
@@ -193,6 +188,8 @@ const CreateChallenge = (props) => {
   };
 
   const handleEasyMdeChange = (value: string) => {
+    // console.log(value);
+    setChallengeDetails(value)
     updateValue("body", value);
   };
 
@@ -226,7 +223,7 @@ const CreateChallenge = (props) => {
   const userVotingLevel = async () => {
     let amount = await contract.getVoterTotalStakeAmount(account);
     amount = amount;
-    console.log(amount);
+    // console.log(amount);
     // alert(amount)
     let level = getLevel(amount);
     setVotingLevel(level);
@@ -252,41 +249,107 @@ const CreateChallenge = (props) => {
   };
 
   return (
-    <div className="card h-100">
+    <div id="action-section" style={{ flex: "5 70%" }}>
       <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col-12 col-xl-6">
+      <div className="card h-100">
+        <div className="d-flex align-items-center mb-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            version="1.1"
+            id="Layer_1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 239 116"
+            xmlSpace="preserve"
+            style={{
+              width: "80px",
+              fill: "rgb(255, 0, 204)",
+              marginRight: "5px",
+            }}
+          >
+            <path d="M58,0C25.97,0,0,25.97,0,58c0,32.03,25.97,58,58,58s58-25.97,58-58C116,25.97,90.03,0,58,0z M58,90.78 c-18.11,0-32.78-14.68-32.78-32.78c0-18.11,14.68-32.78,32.78-32.78S90.78,39.89,90.78,58C90.78,76.11,76.11,90.78,58,90.78z" />
+            <g>
+              <path
+                className="st0"
+                d="M151.87,48.3l-25.23-25.23c-5.27-5.27-5.27-13.82,0-19.09l0,0c5.27-5.27,13.82-5.27,19.09,0l25.23,25.23 c5.27,5.27,5.27,13.82,0,19.09l0,0C165.69,53.57,157.14,53.57,151.87,48.3z"
+              />
+              <path
+                className="st0"
+                d="M215.27,112.05l-25.23-25.23c-5.27-5.27-5.27-13.82,0-19.09l0,0c5.27-5.27,13.82-5.27,19.09,0l25.23,25.23 c5.27,5.27,5.27,13.82,0,19.09l0,0C229.09,117.32,220.55,117.32,215.27,112.05z"
+              />
+              <path
+                className="st0"
+                d="M126.64,92.96l25.23-25.23c5.27-5.27,13.82-5.27,19.09,0l0,0c5.27,5.27,5.27,13.82,0,19.09l-25.23,25.23 c-5.27,5.27-13.82,5.27-19.09,0l0,0C121.37,106.77,121.37,98.23,126.64,92.96z"
+              />
+              <path
+                className="st0"
+                d="M190.73,29.21l25.23-25.23c5.27-5.27,13.82-5.27,19.09,0l0,0c5.27,5.27,5.27,13.82,0,19.09L209.82,48.3 c-5.27,5.27-13.82,5.27-19.09,0l0,0C185.46,43.03,185.46,34.48,190.73,29.21z"
+              />
+            </g>
+          </svg>
+          <h4 style={{ fontSize: "60px" }}>GAMES</h4>
+        </div>
+        <div className="d-flex align-items-center mb-2">
+          <h4>CREATE A CHALLENGE</h4>
+        </div>
+        <p>
+          Describe your challenge below at the best of your capabilities and
+          submit it.
+        </p>
+        <div
+          className="flex-row d-flex mt-5"
+          style={{ justifyContent: "center" }}
+        >
+          <div className="challenge-form flex-column" style={{ flex: "0 80%" }}>
+            <div>
+              <div className="bg-input mb-3 py-2 px-3 rounded ">
+                <div className="d-flex justify-content-between align-items-center">
+                  <input
+                    type="text"
+                    placeholder="Your Challenge Title"
+                    onChange={handleChange}
+                    required
+                    defaultValue={0}
+                    className="form-control w-100"
+                    style={{ fontSize: "20px" }}
+                  />
+                  <h3 className=" pt-3 pb-3 " style={{ color: "#8e8e8e" }}>
+                    SOSX
+                  </h3>
+                </div>
+              </div>
+              <div className="bg-input bg-input mb-3 py-2 px-3 rounded ">
+                <textarea
+                  id="story"
+                  name="story"
+                  onChange={handleEasyMdeChange}
+                  rows={20}
+                  cols={33}
+                  // defaultValue={"Explain in detail what your challenge is...\n"}
+                  placeholder={'Explain in detail what your challenge is'}
+                />
 
-            <StageNav stage={1} />
-
-            <p style={{ order: 4 }}>
-              DAO Members get to decide the rules for the next game challenge.
-              Whoever accomplishes the challenge first wins the prize pool.
-              Please include detailed directions for your challenge submission.
-            </p>
-
-            <p>
-              <span style={{ fontWeight: 700 }}>Challenges criteria:</span>
-              <br />
-              - Challenge must be accomplishable immediatelly.
-              <br />
-              - Challenges cannot be location or gender-specific.
-              <br />
-              - Challenges cannot result in death by any means.
-              <br />
-              - Challenges must be accepted within youtube restrictions.
-              <br />
-            </p>
-
+                {/* @ts-ignore */}
+            {/* <EasyMde
+              id="body"
+              name="body"
+              onTextChange={handleEasyMdeChange}
+              value={body}
+              options={options}
+              required
+            /> */}
+              </div>
+            </div>
             {account ? (
               <button
                 type="submit"
-                className="btn btn-primary btn-lg mt-2"
+                className="btn btn-primary btn-lg mt-4"
                 style={{ order: 6 }}
               >
                 {isLoading
                   ? "Request is being processed"
-                  : "Submit your challenge"}
+                  : "Submit Challenge"}
               </button>
             ) : (
               <ConnectWalletButton
@@ -296,30 +359,10 @@ const CreateChallenge = (props) => {
                 style={{ order: 6 }}
               />
             )}
-          </div>
-          <div className="col-12 col-xl-6" style={{ order: 5 }}>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              onChange={handleChange}
-              className="input1 mb-3"
-              placeholder="Challenge Title"
-              required
-            />
-
-            {/* <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required /> */}
-            {/* @ts-ignore */}
-            <EasyMde
-              id="body"
-              name="body"
-              onTextChange={handleEasyMdeChange}
-              value={body}
-              options={options}
-              required
-            />
+       
           </div>
         </div>
+      </div>
       </form>
     </div>
   );
