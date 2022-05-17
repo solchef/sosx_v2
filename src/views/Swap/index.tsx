@@ -118,7 +118,7 @@ export default function Swap() {
         setReferrerAddress(param.get('ref')) ;
         
         referedby=param.get('ref');
-        console.log(referedby);
+        // console.log(referedby);
       //  @ts-ignore
         localStorage.setItem('referral',param.get('ref'))
         if(referedby!=null){
