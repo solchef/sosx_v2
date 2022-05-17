@@ -30,10 +30,15 @@ const useStage = () => {
 
     let stageGroups = [];
 
-    let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 1 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 2400 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + 2400 * 60 };
+    const STAGE_1 = Number(process.env.NEXT_PUBLIC_STAGE_1)
+    const STAGE_2 = Number(process.env.NEXT_PUBLIC_STAGE_2)
+    const STAGE_3 = Number(process.env.NEXT_PUBLIC_STAGE_3)
+    const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4)
+
+    let stage1 = { start: roundStartTime, end: roundStartTime + STAGE_1 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + STAGE_2  * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + STAGE_3  * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end + STAGE_4  * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
@@ -43,7 +48,7 @@ const useStage = () => {
     );
 
     if (check == -1 && current > current) {
-      setStage(5);
+      setStage(1);
     } else {
       const interval = setInterval(() => {
         let currTime = moment().unix();

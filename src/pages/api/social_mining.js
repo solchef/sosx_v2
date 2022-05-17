@@ -17,7 +17,7 @@ async function getPosts(req,res){
             success: true,
         });
     } catch (error) {
-        // return the error
+        // return the error 
         return res.json({
             message: new Error(error).message,
             success: false,
@@ -37,7 +37,9 @@ async function addPost(req, res) {
             message: 'Data details added successfully',
             success: true,
         });
-    }} catch (error) {
+    }
+} 
+     catch (error) { 
         // return an error
         return res.json({
             message: new Error(error).message,

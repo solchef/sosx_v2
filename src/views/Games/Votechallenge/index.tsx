@@ -24,13 +24,9 @@ export default function Votechallenge() {
   const [stage, setStage] = useState(2);
   const router = useRouter();
 
-  const allowedStages = [2, 3];
   const stageHook = useStage();
   useEffect(() => {
     setStage(stageHook);
-    if (!allowedStages.includes(stageHook)) {
-      router.push('/xgame')
-    }
   });
 
   const ReadMore = ({ children, size, css }) => {
@@ -84,9 +80,7 @@ export default function Votechallenge() {
         };
 
         challenges.push(challengeData);
-        console.log(challengeData);
       }
-      // setTopChallenges(challenges);
 
       let topThreeChallenges = [];
       const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
