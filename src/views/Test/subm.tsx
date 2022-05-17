@@ -113,7 +113,7 @@ export default function Test() {
 
 
 
-<textarea rows={15} cols={200} value="Challenge Rules" className="overflow-auto bg-dark p-3 m-0 rounded text-muted" >   
+<textarea rows={15} cols={200} value="Challenge Rules" className="overflow-auto bg-dark p-3 m-0 rounded text-muted" >    
 </textarea>
 
 </div>
