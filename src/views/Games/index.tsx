@@ -22,6 +22,7 @@ import LoaderDisplay from "./components/loader";
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
+
 export const StageNav = (props) => {
   return (
     <>
@@ -186,7 +187,7 @@ export default function Game() {
   };
 
   useEffect(() => {
-    const roundStartTime = 1652705443;
+    const roundStartTime = 1652813165;
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 60 };
     let stage2 = { start: stage1.end, end: stage1.end + 500 * 60 };
@@ -388,215 +389,10 @@ export default function Game() {
         style={{ gap: "20px" }}
       >
         <div id="action-section" style={{ flex: "1 50%", order: 2 }}>
+
           {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
-          {stage == 5 && <CreateChallenge level={currentLevel} stage={stage} />}
 
-          {stage == 2 && (
-            <div className="card h-100 w-100">
-              <div className="row">
-                <div className="col-12 col-xl-6">
-                  <StageNav stage={2} />
-
-                  <p style={{ order: 4 }}>
-                    All DAO members have 8 hours to place a single vote on their
-                    favourite challenge. Connect your DAO-associated wallet and
-                    press the "submit your vote" button on the XO game page.
-                    From there, you can browse all challenges submitted and
-                    place your vote. Once the 8-hour clock is completed, the top
-                    3 challenges will go for a final vote on stage 3.
-                  </p>
-
-                  {/* {console.log(currentLevel)} */}
-
-                  <Link href="/votechallenge">
-                    <button type="submit" className="btn mt-2 btn-primary">
-                      {" "}
-                      Vote for challenge
-                    </button>
-                  </Link>
-                </div>
-                <div className="col-12 col-xl-6">
-                  <div className="w-100 d-flex">
-                    <img
-                      src="images/votechallenge-img.png"
-                      style={{ maxHeight: "400px", margin: "auto" }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {stage == 3 && (
-            <div className="card h-100">
-              <div className="row h-100">
-                <div className="col-6 h-100 ">
-                  <StageNav stage={3} />
-
-                  <p className="mt-2 fs-14">
-                    {" "}
-                    Vote for the Final Challenge in between the Top 3{" "}
-                  </p>
-                  <p className="mt-2 fs-14">
-                    {" "}
-                    Only Levels 3 members are allowed to vote.
-                  </p>
-
-                  <Link href="/votechallenge">
-                    <button
-                      type="submit"
-                      className="btn btn-primary btn-lg  my-4"
-                    >
-                      {" "}
-                      Vote for Challange
-                    </button>
-                  </Link>
-                </div>
-                <div className="col-6  border-left">
-                  <h4 className="mb-4 pt-2  font-weight-bold">
-                    Top 3 Challenges
-                  </h4>
-
-                  {topThreeChallenges[2] ? (
-                    <>
-                      {topThreeChallenges.map((challenge, index) => (
-                        <div className="d-flex mb-4">
-                          <p className="mr-5 fs-12">
-                            {index + 1}. {challenge.challenge.payload.name}
-                          </p>
-                          <span className="ml-auto fs-12">
-                            {challenge.votes} votes
-                          </span>
-                        </div>
-                      ))}
-                    </>
-                  ) : (
-                    "loading"
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {stage == 4 && (
-            <div className="card h-100">
-              <div className="row h-100">
-                <div className="col-12 col-xl-6">
-                  <StageNav stage={4} />
-
-                  <p className="mt-2 fs-14 mb-3">
-                    {" "}
-                    Here is your challenge. You have 48 hours to complete for
-                    the chance to win the prize pool. Challenge must match all
-                    criteria listed and submitted to your Youtiube or Tiktok.
-                    Anyone can participate.
-                  </p>
-
-                  <form onSubmit={videoLink}>
-                    <div className="text-muted m-0 mb-2 bg-dark rounded p-2">
-                      <input
-                        type="text"
-                        className="form-control fs-14"
-                        id="youtube"
-                        placeholder="Youtube or Toktok URL link Here"
-                        value={url}
-                        onChange={(e) => setURL(e.target.value)}
-                      />
-                    </div>
-                    {account ? (
-                      <button
-                        type="submit"
-                        className="btn btn-primary btn-lg w-100 my-4"
-                      >
-                        Submit you Video
-                      </button>
-                    ) : (
-                      <ConnectWalletButton />
-                    )}
-                  </form>
-                </div>
-                <div className="col-12 col-xl-6">
-                  <div
-                    className={`backgroun-dark rounded m-0 d-flex  pb-0 h-100 text-white  flex-column`}
-                  >
-                    {todayChallenge ? (
-                      <>
-                        <span className="text-white  fs-18 d-flex align-items-center pb-1 mb-1">
-                          {" "}
-                          <img
-                            src="images/submission-date-icon.png"
-                            width="20px"
-                            height="20px"
-                            className="mr-2"
-                          />
-                          THIS WEEK CHALLENGE{" "}
-                        </span>
-                        <span className="text-white pt-1 fs-18 pb-2 font-weight-bold">
-                          {todayChallenge.challenge.payload.name}{" "}
-                        </span>
-
-                        <div className="d-flex align-items-center">
-                          <i className="fa-regular main-pink fa-heart mr-2"></i>
-
-                          <span className="fs-10">
-                            {todayChallenge.votes} votes
-                          </span>
-
-                          <img
-                            className="ml-3 "
-                            width={22}
-                            height={22}
-                            src="/images/dp.png"
-                          />
-
-                          <span className="ml-2 fs-12 font-weight-bold">
-                            {String(
-                              todayChallenge.challenge.payload.creator
-                            ).slice(0, 5)}
-                            ...
-                            {String(
-                              todayChallenge.challenge.payload.creator
-                            ).slice(-5)}
-                          </span>
-
-                          <p className=" ml-3 p-1 fs-10 bg-pink-radius text-white">
-                            {" "}
-                            DAO
-                          </p>
-                        </div>
-
-                        <div className="row">
-                          <div className="col-12 d-flex pt-1 pb-1 flex-column">
-                            <span className="text-muted pb-1 fs-12 mt-3">
-                              Details
-                            </span>
-                            <p
-                              className="fs-12 "
-                              style={{ whiteSpace: "break-spaces" }}
-                            >
-                              {todayChallenge.challenge.payload.body}
-                            </p>
-
-                            <Link
-                              className="mt-3"
-                              href={`/challenge/${String(
-                                todayChallenge.challenge.payload.name
-                              ).replaceAll(" ", "-")}`}
-                            >
-                              Details
-                            </Link>
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <LoaderDisplay />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+       </div>
 
         <div id="timer-section" style={{ flex: 1, gap: "20px" }}>
           <TimerDisplay
