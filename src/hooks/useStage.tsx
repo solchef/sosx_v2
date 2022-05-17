@@ -30,10 +30,10 @@ const useStage = () => {
 
     let stageGroups = [];
 
-    let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 1 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 2400 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + 2400 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + Number(process.env.NEXT_PUBLIC_STAGE_1) * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + Number(process.env.NEXT_PUBLIC_STAGE_2) * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + Number(process.env.NEXT_PUBLIC_STAGE_3) * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end + Number(process.env.NEXT_PUBLIC_STAGE_4) * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
