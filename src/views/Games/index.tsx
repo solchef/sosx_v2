@@ -84,26 +84,33 @@ export const StageNav = (props) => {
         </>
       )}
 
+
       {props.stage == 3 && (
         <>
+        <div className="d-flex align-items-center mb-2">
+            <div className="step done ">3</div>
+            <h4>FINAL TOP 3 VOTE</h4>
+          </div>
+          <p>Currently into Stage 2 of SOSX Game</p>
+
           <h5
-            className="d-flex text-muted align-items-center mt-4 mb-2"
-            style={{ order: 2 }}
+            className="text-muted d-flex align-items-center mt-2 mb-2"
+            style={{ order: 3 }}
+          >
+            <div className="step false mr-3 ">4</div>VIDEO SUBMISSION  
+          </h5>
+
+          <h5
+            className="text-muted d-flex align-items-center mb-4"
+            style={{ order: 4 }}
           >
             <div className="step false mr-3 ">1</div>SUBMIT A CHALLENGE
           </h5>
 
-          <div className="d-flex align-items-center mb-2">
-            <div className="step done ">2</div>
-            <h4>VOTE A CHALLENGE</h4>
-          </div>
-          <p>Currently into Stage 2 of SOSX Game. Voting final challenges</p>
-
           <h5
             className="text-muted d-flex align-items-center mb-4"
-            style={{ order: 3 }}
-          >
-            <div className="step false mr-3 ">3</div>UPLOAD VIDEO
+            style={{ order: 2 }} >
+            <div className="step false mr-3 ">2</div>VOTE A CHALLENGE
           </h5>
         </>
       )}
@@ -225,7 +232,7 @@ export default function Game() {
         const chunks = [];
         if (cha.name == "votes") {
           let votes = await server.files.stat(
-            `/challenges/${resultPart.name}/votes`
+            `/challenges/${resultPart.name}/votes/stage-${stage}`
           );
           vote = votes.blocks;
         }
