@@ -446,15 +446,15 @@ export default function Game() {
                     Top 3 Challenges
                   </h4>
 
-                  {topThreeChallenges[2] ? (
+                  {topThreeChallenges.length > 0 ? (
                     <>
                       {topThreeChallenges.map((challenge, index) => (
                         <div className="d-flex mb-4">
                           <p className="mr-5 fs-12">
-                            {index + 1}. {challenge.challenge.payload.name}
+                            {index + 1}. {challenge?.challenge?.payload?.name}
                           </p>
                           <span className="ml-auto fs-12">
-                            {challenge.votes} votes
+                            {challenge?.votes} votes
                           </span>
                         </div>
                       ))}
