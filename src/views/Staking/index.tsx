@@ -22,7 +22,7 @@ export default function Staking() {
   const { account } = useActiveWeb3React();
   const tokenContract = useSosxContract();
   const [balance, setUserBalace] = useState(0);
-  const { toastError } = useToast();
+  const { toastError, toastSuccess } = useToast();
   const [stakingClass, setStakingClass] = useState(1);
   const [stakingInterest, setStakingInterest] = useState(0);
   const [amountToStake, setamountToStake] = useState(0);
@@ -189,40 +189,59 @@ export default function Staking() {
 
   // const handleUnstake = async () => {
 
-      
+    const handleStake = async () => {
+      let decimals = BigNumber(10).pow(18);
+  
+      let result = BigNumber(amountToStake).multiply(decimals);
+      // console.log(Number(allowanceValue),amountToStake )
+  
+      // console.log(referralAddress);
+      setLoading(true);
+      // alert('ss')
+      let stake = await contract.stakeToken(
+        result.toString(),
+        "0x0000000000000000000000000000000000000001",
+        stakingClass
+      );
+  
+      // alert('ss')
+      if (stake) {
+        setActivatestake(true);
+        setLoading(false);
+        // loadUI();
+        toastSuccess("Staking Transaction successfully sent");
+      } else {
+        toastError("Could not stake");
+      }
+    };
 
   // }
 
   const handleSubmit = async () => {
-    console.log(allowanceValue);
-    if (amountToStake < balance) {
-      let final = BigNumber(amountToStake).multiply(18);
-      console.log(Number(allowanceValue), (amountToStake * (10 ** 18)));
-      if (Number(allowanceValue) > (amountToStake * (10 ** 18)) ) {
-        setLoading(true);
-        // alert('al')
-        await contract.stakeToken(
-          (amountToStake * (10 ** 18)).toString(),
-          "0x0000000000000000000000000000000000000001",
-          stakingClass
-        );
-        setActivatestake(true);
-        setLoading(false);
-        listUserStaking();
-      } else {
+    if (Number(amountToStake) < 1) {
+      toastError("Yo must stake a minimum of 1 token");
+    }
 
-        alert('gd')
-        const tx = await tokenContract.populateTransaction.approve(
-          contract.address,
-          (amountToStake * (10 ** 18)).toString()
-        );
-        let signer = contract.signer;
-        signer.sendTransaction(tx);
-        // 	toastError("token allowance not yet set");
-        listUserStaking();
-      }
+    let decimals = BigNumber(10).pow(18);
+    let result = BigNumber(amountToStake).multiply(decimals);
+    console.log(result - Number(allowanceValue));
+    if (Number(allowanceValue) >= amountToStake * 10 ** 18) {
+      onPresentConfirmModal();
     } else {
-      toastError("Insufficient Balance");
+      const tx = await tokenContract.populateTransaction.approve(
+        contract.address,
+        result.toString()
+      );
+
+      let signer = contract.signer;
+      let trans = await signer.sendTransaction(tx);
+      setPendingTx(true);
+
+      toastSuccess(
+        "Approval transaction sent. You can stake after the transaction is mined."
+      );
+      // setTransaction(tx);
+      onPresentConfirmModal();
     }
   };
 

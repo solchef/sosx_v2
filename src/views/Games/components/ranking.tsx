@@ -191,12 +191,14 @@ const Ranking = (props) => {
 
       <div className="tab-bg">
         <div
-          className="d-flex p-4 mt-0  ranking-header"
+          className="d-flex p-4 mt-0 ranking-header"
           style={{
             justifyContent: "space-between",
-            marginTop: "0px!important",
+            // marginTop: "0px!important",
           }}
         >
+          
+        <div className="header-item" style={{width: '40px'}}>Rank</div>
           <div className="header-item" style={{ width: "40px" }}>
             Rank
           </div>

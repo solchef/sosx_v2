@@ -102,10 +102,10 @@ const TimerDisplay = (props) => {
                <p className="li d-flex align-self-baseline"><span>:</span></p>
             </div>
             <div className="d-flex justify-content-start align-items-center">
-               <p className="li "><span className=" main-pink m-0">{pad(props.hours)}</span>Minutes</p>
+               <p className="li "><span className=" main-pink m-0">{pad(props.minutes)}</span>Minutes</p>
                <p className="li d-flex align-self-baseline"><span>:</span></p>
             </div>
-            <p className="li"><span className=" main-pink m-0">{pad(props.hours)}</span>Seconds</p>
+            <p className="li"><span className=" main-pink m-0">{pad(props.seconds)}</span>Seconds</p>
          </div>
       </div>
    </div>
