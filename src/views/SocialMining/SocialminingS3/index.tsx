@@ -75,14 +75,14 @@ export default function SocialminingS3() {
         // set the message
         
         toastSuccess("Details successfully submiotted for verifications");
-        
+        router.replace('/x-mining')
         return setMessage(data.message);
     } else {
         // set the error
-        toastSuccess("Submissions Encountering an error. Try again later");
+        toastSuccess("Error During Submission");
     }
 
-    router.replace('/x-mining')}
+   
 };
 
 
@@ -175,7 +175,7 @@ export default function SocialminingS3() {
                   <div className="row mb-3">
                     <input
                       className="input1"
-                      type="text"
+                      type="url"
                       name="postlink"
                       onChange={(e) => setsocialpostlink(e.target.value)}
                       value={socialpostlink}
