@@ -52,8 +52,8 @@ const TimerDisplay = (props) => {
   return (
     <>
 
-<div id="timer-section" style={{flex: '0 20%'}}>
-      <div className="card timer-card mb-3">
+
+        <div className="card timer-card mb-3">
          <div className="d-flex align-items-center mb-1">
             <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 239 116" xmlSpace="preserve" style={{width: '40px', fill: 'rgb(255, 0, 204)', marginRight: '5px'}}>
             <path d="M58,0C25.97,0,0,25.97,0,58c0,32.03,25.97,58,58,58s58-25.97,58-58C116,25.97,90.03,0,58,0z M58,90.78 c-18.11,0-32.78-14.68-32.78-32.78c0-18.11,14.68-32.78,32.78-32.78S90.78,39.89,90.78,58C90.78,76.11,76.11,90.78,58,90.78z" />
@@ -121,7 +121,6 @@ const TimerDisplay = (props) => {
          <h2 className="main-pink">$1,000.00</h2>
       </div>
    </div>
-</div>
       {/* <div className="card timer-card mb-3" style={{ flex: 1, gap: "20px" }}>
         <div className="d-flex align-items-center mb-2">
           <img src="images/submission-date-icon.png" className="title-icon" />

@@ -561,7 +561,7 @@ console.log(data)
                                 Minimum Received After Slippage ({" "}
                                 {allowedSlippage / 100}%){" "}
                               </div>
-                              <div className="text-white"> 0.00</div>
+                              <div className="text-white"> </div>
                             </div>
                             {/* <div className="d-flex small justify-content-between">
                               <div className=" mr-1">Status: </div>

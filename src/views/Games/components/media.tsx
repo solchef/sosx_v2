@@ -69,17 +69,15 @@ const Media = (props: { todayVideo }) => {
   };
 
   return (
-    <>
-          <div className="d-flex align-items-center mb-2">
-              <img src="images/prize-pool-icon.png" className="title-icon" />
-                  <h4>Wall of Fame</h4>
-                  </div>
-                  <p>Previous Game Winners Archives video</p>
-                  <div className="d-flex w-100 flex-wrap flex-row mt-4 " style={{gap: '21px'}}>
-                  <div className="row mx-auto text-center my-auto">NO VIDEOS UPLOADED</div>
-              </div>
-   
-    </>
+    <div className="card w-100 h-100" style={{minHeight: '500px'}}>
+    <div className="d-flex align-items-center mb-2">
+    <img src="images/prize-pool-icon.png" className="title-icon" />
+    <h4>Wall of Fame</h4>
+    </div>
+    <p>Previous Game Winners Archives video</p>
+    <div className="d-flex w-100 flex-wrap flex-row mt-4 " style={{gap: '21px'}}>
+    <div className="row mx-auto text-center my-auto">NO VIDEOS UPLOADED</div>
+    </div></div>
   );
 };
 

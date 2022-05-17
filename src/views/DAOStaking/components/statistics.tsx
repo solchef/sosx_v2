@@ -41,39 +41,7 @@ export default function Statistics() {
 
 
   return (
-                // <div className="row mb-3">
-                //   <div className="col-sm-3 col-6">
-                //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-                //       <h4>10,000,000,000</h4>
-                //       <span className="pt-1 pb-1">Total supply</span>
-                //     </div>
-                //   </div>
-                //   <div className="col-sm-3 col-6">
-                //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-                //       <h4>${marketCap.toFixed(8)}</h4>
-                //       <span className="pt-1 pb-1">Market Cap</span>
-                //     </div>
-                //   </div>
-                //   <div className="col-sm-3 col-6">
-                //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-                //       <h4>${price.toFixed(8)}</h4>
-                //       <span className="pt-1 pb-1">Price</span>
-                //       {/* <div className="daily-avr warning fs-12">
-                //                       <i className="fa fa-chevron-down"></i> 0.5% 7D
-                //                   </div> */}
-                //     </div>
-                //   </div>
 
-                //   <div className="col-sm-3 col-6">
-                //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-                //       <h4>321139778.950</h4>
-                //       <span className="pt-1 pb-1">Circulating Supply</span>
-                //       {/* <div className="daily-avr success fs-12">
-                //                       <i className="fa fa-chevron-up"></i> 1.5% 7D
-                //                   </div> */}
-                //     </div>
-                //   </div>
-                // </div>
 
     <>
      <div className="stake-amount">
@@ -103,7 +71,7 @@ export default function Statistics() {
                             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center" >
                                 <div className="data-content">
                                     <div className="d-flex  align-items-end">
-                                        <h2 className="mb-3 main-pink">16.4%</h2>
+                                        <h2 className="mb-3 main-pink">{level == 1 ? 6.00 : level == 9.00 ? 6 : 12.00}</h2>
                                     </div>
                                     <div className="">
                                         <div className="">
@@ -143,7 +111,7 @@ export default function Statistics() {
                             <div className="flex-row d-flex flex-wrap justify-content-between w-100 align-items-center" >
                                 <div className="data-content">
                                     <div className="d-flex align-items-end">
-                                        <h2 className="mb-3 main-pink">0.000948</h2>
+                                        <h2 className="mb-3 main-pink">0.0000</h2>
                                     </div>
                                     <div className="d-flex flex-column align-items-start ">
                                         <div className="d-flex align-items-center">

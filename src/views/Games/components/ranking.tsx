@@ -110,8 +110,8 @@ const Ranking = (props) => {
 
   return (
 
-    <div className="card h-100 w-100" style={{ minHeight: 500 }}>
-        <div className="d-flex align-items-center mb-2">
+    <div className="card h-100 w-100" style={{minHeight: 500}}>
+<div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -155,10 +155,8 @@ const Ranking = (props) => {
       <p>
         To become member, visit <Link href="/daostaking/">STAKING DAO</Link>
       </p>
-      <div
-        className="d-flex justify-content-left mt-4"
-        style={{ justifyContent: "start" }}
-      >
+      <div className="d-flex justify-content-left mt-4" style={{justifyContent: 'start'}}>
+
         <button
           type="submit"
           onClick={() => setDisplayLevel(1)}

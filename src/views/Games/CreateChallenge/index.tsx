@@ -118,14 +118,14 @@ const CreateChallenge = (props) => {
         type: "challenge",
         payload: {
           name,
-          body:"body",
+          body:challengeDetails,
           creator: account,
           created: new Date(),
         },
       });
 
       const sig = await signMessage(connector, library, account, challenge);
-
+      // alert(challengeDetails)
       if (sig) {
         const forIPFS = JSON.stringify(
           {
@@ -135,7 +135,7 @@ const CreateChallenge = (props) => {
             signiture: sig.toString(),
             payload: {
               name,
-              body,
+              body:challengeDetails,
               creator: account,
               created: new Date(),
             },
@@ -151,7 +151,7 @@ const CreateChallenge = (props) => {
           forIPFS,
           { create: true }
         );
-        
+        setIsLoading(false);
         toastSuccess(t("challenge created!"));
       } else {
         toastError(t("Error"), t("Unable to sign payload"));
@@ -187,10 +187,10 @@ const CreateChallenge = (props) => {
     updateValue(inputName, value);
   };
 
-  const handleEasyMdeChange = (value: string) => {
+  const handleEasyMdeChange = (e) => {
     // console.log(value);
-    setChallengeDetails(value)
-    updateValue("body", value);
+    setChallengeDetails(e.target.value)
+    // updateValue("body", value);
   };
 
   const handleChoiceChange = (newChoices: Choice[]) => {
@@ -249,7 +249,8 @@ const CreateChallenge = (props) => {
   };
 
   return (
-    <div id="action-section" style={{ flex: "5 70%" }}>
+    <div className="card h-100">
+
       <form onSubmit={handleSubmit}>
       <div className="card h-100">
         <div className="d-flex align-items-center mb-2">
@@ -310,7 +311,6 @@ const CreateChallenge = (props) => {
                     placeholder="Your Challenge Title"
                     onChange={handleChange}
                     required
-                    defaultValue={0}
                     className="form-control w-100"
                     style={{ fontSize: "20px" }}
                   />
@@ -323,7 +323,7 @@ const CreateChallenge = (props) => {
                 <textarea
                   id="story"
                   name="story"
-                  onChange={handleEasyMdeChange}
+                  onChange={(e) => setChallengeDetails(e.target.value)}
                   rows={20}
                   cols={33}
                   // defaultValue={"Explain in detail what your challenge is...\n"}

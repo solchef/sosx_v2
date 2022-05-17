@@ -95,7 +95,7 @@ export default function userStaking(props) {
 
   return (
     <>
-      {/* <div style={{ flex: "1 1 30%" }}>
+      <div style={{ flex: "1 1 30%" }}>
         <div className="card d-flex flex-column h-100">
           <div className="card-body">
             <div className="d-flex align-items-center mb-2">
@@ -169,9 +169,9 @@ export default function userStaking(props) {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
 
-      <div className="card d-flex flex-column h-100">
+      {/* <div className="card d-flex flex-column h-100">
         <div className="card-header border-0 pb-0">
           <div className="col-3">
             <div className="token-balance-icon mb-3">
@@ -335,7 +335,7 @@ export default function userStaking(props) {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
