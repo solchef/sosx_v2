@@ -97,7 +97,7 @@ const CreateChallenge = (props) => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     // console.log(props.level)
-    if (votingLevel >= 2) {
+    if (votingLevel == 2 || votingLevel == 3) {
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
@@ -123,59 +123,62 @@ const CreateChallenge = (props) => {
 
         const sig = await signMessage(connector, library, account, challenge);
 
-        if (sig) {
-          const forIPFS = JSON.stringify(
-            {
-              ...generatePayloadData(),
-              type: SnapshotCommand.PROPOSAL,
-              signiture: sig.toString(),
-              payload: {
-                name,
-                body,
-                snapshot,
-                start: combineDateAndTime(startDate, startTime),
-                end: combineDateAndTime(endDate, endTime),
-                creator: account,
-                created: new Date(),
-                choices: choices
-                  .filter((choice) => choice.value)
-                  .map((choice) => {
-                    return choice.value;
-                  }),
-                metadata: generateMetaData(),
-                type: "challenge-with-rules",
-              },
-            },
-            null,
-            2
-          );
+              if (sig) {
+                const forIPFS = JSON.stringify(
+                  {
+                    ...generatePayloadData(),
+                    type: SnapshotCommand.PROPOSAL,
+                    signiture: sig.toString(),
+                    payload: {
+                      name,
+                      body,
+                      snapshot,
+                      start: combineDateAndTime(startDate, startTime),
+                      end: combineDateAndTime(endDate, endTime),
+                      creator: account,
+                      created: new Date(),
+                      choices: choices
+                        .filter((choice) => choice.value)
+                        .map((choice) => {
+                          return choice.value;
+                        }),
+                      metadata: generateMetaData(),
+                      type: "challenge-with-rules",
+                    },
+                  },
+                  null,
+                  2
+                );
 
-          const challengeName = `challenge` + `-${name.replaceAll(" ", "-")}`;
-          await server.files.mkdir(`/challenges/${challengeName}`);
-          await server.files.mkdir(`/challenges/${challengeName}/votes`);
-          await server.files.mkdir(`/challenges/${challengeName}/videos`);
-          await server.files.write(
-            `/challenges/${challengeName}/challenge.json`,
-            forIPFS,
-            { create: true }
-          );
+                const challengeName = `challenge` + `-${name.replaceAll(" ", "-")}`;
+                await server.files.mkdir(`/challenges/${challengeName}`);
+                await server.files.mkdir(`/challenges/${challengeName}/votes`);
+                await server.files.mkdir(`/challenges/${challengeName}/votes/stage-2`);
+                await server.files.mkdir(`/challenges/${challengeName}/votes/stage-3`);
+                await server.files.mkdir(`/challenges/${challengeName}/videos`);
+                await server.files.write(
+                  `/challenges/${challengeName}/challenge.json`,
+                  forIPFS,
+                  { create: true }
+                );
 
-          toastSuccess(t("challenge created!"));
-          router.push(`challenge/${name.replaceAll(" ", "-")}`);
-        } else {
-          toastError(t("Error"), t("Unable to sign payload"));
-        }
-      } catch (error) {
-        toastError(t("Error"), (error as Error)?.message);
-        // console.error(error)
-        setIsLoading(false);
-      }
-    } else {
-      toastError(
-        "Errorr",
-        "You need at least level2 DAO ranking to create challenge"
-      );
-    }
+                toastSuccess(t("challenge created!"));
+                // router.push(`challenge/${name.replaceAll(" ", "-")}`);
+              } else {
+                toastError(t("Error"), t("Unable to sign payload"));
+              }
+            } catch (error) {
+              toastError(t("Error"), (error as Error)?.message);
+              // console.error(error)
+              setIsLoading(false);
+            }
+            }else {
+            toastError(
+              "Errorr",
+              "You need at least level2 DAO ranking to create challenge"
+            );
+          }
+
   };
 
   const updateValue = (key: string, value: string | Choice[] | Date) => {
@@ -256,90 +259,64 @@ const CreateChallenge = (props) => {
   };
 
   return (
-    // <div className="card h-100 w-100">
-    //   <form onSubmit={handleSubmit}>
-    //     <div className="row">
-    //       <div className="col-12 col-xl-6">
-    //         <StageNav stage={1} />
+    <div className="card h-100">
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="col-12 col-xl-6">
+            <StageNav stage={1} />
 
-    //         <p >Submit a challenge that you wish others to
-    //           perform for money. Challenge must be doable within the next
-    //           48H and cannot
-    //           location-specific. Be crazy,
-    //           be original, but be dea. Challenges can be created by level
-    //           2 and level 3.</p>
+            <p style={{ order: 4 }}>
+              DAO Members get to decide the rules for the next game challenge.
+              Whoever accomplishes the challenge first wins the prize pool.
+              Please include detailed directions for your challenge submission.
+            </p>
 
-    //         {account
-    //           ?
-    //           <button type="submit" className="btn btn-primary btn-lg w-100 my-4">Submit your challenge</button>
-    //           :
-    //           <ConnectWalletButton width="100%" className="btn btn-primary btn-lg w-100 my-4" type="button" />
-    //         }
-    //       </div>
-    //       <div className="col-12 col-xl-7" style={{order: 5}}>
-    //         <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required />
+            <p>
+              <span style={{ fontWeight: 700 }}>Challenges criteria:</span>
+              <br />
+              - Challenge must be accomplishable immediatelly.
+              <br />
+              - Challenges cannot be location or gender-specific.
+              <br />
+              - Challenges cannot result in death by any means.
+              <br />
+              - Challenges must be accepted within youtube restrictions.
+              <br />
+            </p>
 
-    //         {/* @ts-ignore */}
-
-    //         {formErrors.body && fieldsState.body && (
-    //           <FormErrors errors={formErrors.body} />
-    //         )}
-
-    //       </div>
-    //     </div>
-    //   </form>
-    // </div>
-
-   
-      <div className="card h-100">
-        <form onSubmit={handleSubmit}>
-          <div className="row">
-            <div className="col-12 col-xl-6">
-              <StageNav stage={1} />
-
-                 <p style={{ order: 4 }}>
-                  DAO Members get to decide the rules for the next game challenge. Whoever
-                  accomplishes the challenge first wins the prize pool. Please include
-                  detailed directions for your challenge submission.
-                </p>
-
-                   <p>
-                    <span style={{fontWeight:700}}>Challenges criteria:</span><br/> 
-                    - Challenge must be accomplishable immediatelly.<br/>
-                    - Challenges cannot be location or gender-specific.<br/>
-                    - Challenges cannot result in death by any means.<br/>
-                    - Challenges must be accepted within youtube restrictions.<br/>
-                </p>
-
-              {account ? (
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-lg  my-4"
-                  style={{ order: 6 }}
-                >
-                  {isLoading ? 'Request is being processed' : 'Submit your challenge'}
-                  
-                </button>
-              ) : (
-                <ConnectWalletButton
-                  width="100%"
-                  className="btn btn-primary btn-lg  my-4"
-                  type="button"
-                  style={{ order: 6 }}
-                />
-              )}
-            </div>
-            <div className="col-12 col-xl-6" style={{ order: 5 }}>
-              <input
-                id="name"
-                type="text"
-                name="name"
-                className="input1 mb-3"
-                placeholder="Challenge Title"
-                required
+            {account ? (
+              <button
+                type="submit"
+                className="btn btn-primary btn-lg mt-2"
+                style={{ order: 6 }}
+              >
+                {isLoading
+                  ? "Request is being processed"
+                  : "Submit your challenge"}
+              </button>
+            ) : (
+              <ConnectWalletButton
+                width="100%"
+                className="btn btn-primary btn-lg  mt-2"
+                type="button"
+                style={{ order: 6 }}
               />
-              {/* @ts-ignore */}
-             <EasyMde
+            )}
+          </div>
+          <div className="col-12 col-xl-6" style={{ order: 5 }}>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              onChange={handleChange}
+              className="input1 mb-3"
+              placeholder="Challenge Title"
+              required
+            />
+
+            {/* <input id="name" type="text" name="name" value={name} onChange={handleChange} className="input1" placeholder="Challenge Title" required /> */}
+            {/* @ts-ignore */}
+            <EasyMde
               id="body"
               name="body"
               onTextChange={handleEasyMdeChange}
@@ -347,11 +324,10 @@ const CreateChallenge = (props) => {
               options={options}
               required
             />
-            </div>
           </div>
-        </form>
-      </div>
-   
+        </div>
+      </form>
+    </div>
   );
 };
 

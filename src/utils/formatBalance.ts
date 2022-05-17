@@ -80,4 +80,3 @@ export const formatLocalisedCompactNumber = (number: number): string => {
   }).format(number)
 }
 
-export default formatLocalisedCompactNumber

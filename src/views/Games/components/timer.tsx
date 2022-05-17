@@ -11,9 +11,7 @@ import { useMediaPredicate } from "react-media-hook";
 import axios from "axios";
 import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { useDaoStakingContract } from "hooks/useContract";
-
-
-
+import useToast from "hooks/useToast";
 
 const TimerDisplay = (props) => {
   const { t } = useTranslation();
@@ -23,7 +21,7 @@ const TimerDisplay = (props) => {
   const handleCloseDonate = () => setShowDonate(false);
   const handleShowDonate = () => setShowDonate(true);
   const contract = useDaoStakingContract();
-  
+  const { toastError, toastSuccess } = useToast();
 
   const getSOSXPrice = async () => {
     const getSOSXValue = await axios.get(
@@ -37,28 +35,36 @@ const TimerDisplay = (props) => {
   }, []);
 
   const pad = (num) => {
-    return ("0"+num).slice(-2);
-}
+    return ("0" + num).slice(-2);
+  };
 
-    const handleSubmitDonate = () => {
-
-
-
+  const handleSubmitDonate = async () => {
+    let donate = await contract.oXGamesRewardPool(
+      donateAmount + "000000000000000000"
+    );
+    if (donate) {
+      toastSuccess("Thank you for contributing to the reward pool");
+    } else {
+      toastError("An error has occurred");
     }
+  };
 
   return (
     <>
-        <div className="card timer-card mb-5" style={{flex: 0, gap: "20px"}}>
+      <div className="card timer-card mb-3" style={{ flex: 1, gap: "20px" }}>
         <div className="d-flex align-items-center mb-2">
           <img src="images/submission-date-icon.png" className="title-icon" />
           <h4>TIME REMAINING</h4>
         </div>
 
-        {props.stage == 1 &&   <p>The challenge submission stage is in effect.</p>}
-        {props.stage == 2 &&   <p>The challenge voting stage is in effect.</p>}
-        {props.stage == 3 &&   <p>The challenge final voting stage is in effect.</p>}
-        {props.stage == 4 &&   <p>The challenge upload stage is in effect.</p>}
-      
+        {props.stage == 1 && (
+          <p>The challenge submission stage is in effect.</p>
+        )}
+        {props.stage == 2 && <p>The challenge voting stage is in effect.</p>}
+        {props.stage == 3 && (
+          <p>The challenge final voting stage is in effect.</p>
+        )}
+        {props.stage == 4 && <p>The challenge upload stage is in effect.</p>}
 
         <div className="clock mt-4">
           <div
@@ -76,27 +82,33 @@ const TimerDisplay = (props) => {
             </div>
             <div className="d-flex justify-content-start align-items-center">
               <p className="li ">
-                <span className=" main-pink m-0">{pad(props.minutes)}</span>Minutes
+                <span className=" main-pink m-0">{pad(props.minutes)}</span>
+                Minutes
               </p>
               <p className="li d-flex align-self-baseline">
                 <span>:</span>
               </p>
             </div>
             <p className="li">
-              <span className=" main-pink m-0">{pad(props.seconds)}</span>Seconds
+              <span className=" main-pink m-0">{pad(props.seconds)}</span>
+              Seconds
             </p>
           </div>
         </div>
       </div>
 
-      <div className="card prize-card" style={{flex: 0}}>
+      <div className="card prize-card" style={{ flex: 0 }}>
         <div className="d-flex flex-column mb-3">
           <div className="d-flex mb-2 align-items-center">
             <img src="images/prize-pool-icon.png" className="title-icon" />
             <h4>PRIZE POOL</h4>
           </div>
           <p>
-            Feel free to <a href="#" onClick={handleShowDonate}>donate</a> to the prize pool.
+            Feel free to{" "}
+            <a href="#" onClick={handleShowDonate}>
+              donate
+            </a>{" "}
+            to the prize pool.
           </p>
         </div>
         <div className="d-flex flex-column align-items-center">
@@ -105,28 +117,46 @@ const TimerDisplay = (props) => {
         </div>
       </div>
 
-      <Modal show={showDonate} onHide={handleCloseDonate} centered >
-        <ModalHeader className="text-dark" style={{background:"#111117"}}>
+      <Modal show={showDonate} onHide={handleCloseDonate} centered>
+        <ModalHeader
+          className="text-dark"
+          style={{ background: "#111117", borderRadius: "10px 10px 0px 0px" }}
+        >
           Donate
           {/* <CloseButton /> */}
-          <a href="#" onClick={handleCloseDonate} className="pull-right text-white"><i className="fa fa-close"></i></a>
+          <a
+            href="#"
+            onClick={handleCloseDonate}
+            className="pull-right text-white"
+          >
+            <i className="fa fa-close"></i>
+          </a>
         </ModalHeader>
 
-        <div className="modal-body" style={{background:"#111117"}}>
-          <form 
+        <div
+          className="modal-body"
+          style={{ background: "#111117", borderRadius: "0px 0px 10px 10px" }}
+        >
+          <form
           // onSubmit={handleSubmitDonate}
           >
-
             <div className="form-group">
-                 <input className="input1" placeholder="Amount Contributing in SOSX" required type="text" onChange={(e) => setDonateAmount(Number(e.target.value))}/>
+              <input
+                className="input1"
+                placeholder="Amount Contributing in SOSX"
+                required
+                type="text"
+                onChange={(e) => setDonateAmount(Number(e.target.value))}
+              />
             </div>
             <div className=" rounded p-2">
-              <button className="btn btn-primary ">Donate to Prize Pool</button>
+              <button className="btn btn-primary " onClick={handleSubmitDonate}>
+                Donate to Prize Pool
+              </button>
             </div>
           </form>
         </div>
       </Modal>
-      
     </>
   );
 };

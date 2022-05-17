@@ -117,15 +117,15 @@ export const Variants: React.FC = () => {
           </Button>
         </Row>
         <Row>
-          <Button startIcon={<LogoIcon />}>Start Icon</Button>
-          <Button endIcon={<LogoIcon />}>End Icon</Button>
-          <Button startIcon={<LogoIcon />} endIcon={<LogoIcon />}>
+          <Button >Start Icon</Button>
+          <Button >End Icon</Button>
+          <Button  >
             Start & End Icon
           </Button>
         </Row>
         <Row>
           <IconButton>
-            <LogoIcon />
+            
           </IconButton>
           <IconButton variant="secondary">
             <AddIcon />
@@ -133,7 +133,7 @@ export const Variants: React.FC = () => {
         </Row>
         <Row>
           <IconButton scale="sm" variant="danger">
-            <LogoIcon />
+            
           </IconButton>
           <IconButton scale="sm" variant="success">
             <AddIcon color="currentColor" />

@@ -9,6 +9,9 @@ import { cleanNumber } from "utils/amount";
 import { useState, useEffect } from "react";
 import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
+import ConnectWalletButton from "components/ConnectWalletButton";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
+import web3 from "web3";
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -27,40 +30,63 @@ const Ranking = (props) => {
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
   const [voters, setVoters] = useState([]);
-  const [count, setCount] = useState(1);
+  const [allVoters, setAllVoter] = useState([]);
+  const { account } = useActiveWeb3React();
+  const [loading, setLoading] = useState<boolean>();
 
   const loadDaoLevels = async () => {
+    setLoading(true);
+    const level1 = [];
+    const level2 = [];
+    const level3 = [];
     let daoList = await contract.getAllAccount();
     daoList = [...new Set(daoList)];
-
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
       // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = Number(total_stake / 10 ** 18);
+      total_stake = parseFloat(web3.utils.fromWei(total_stake + "", "ether"));
       let data = {
         address: voter_address,
         amount: total_stake,
-        level: getLevel(total_stake),
+        level: await getLevel(total_stake),
       };
       // if (voter_address == account) {setCurrentLevel(data.level)};
-      // console.log(data)
       // alert(data.level)
+      if (data.level === 1) level1.push(data);
+      if (data.level === 2) level2.push(data);
+      if (data.level === 3) level3.push(data);
       voters.push(data);
+
+      setAllVoter(voters);
 
       // }
     }
-    // await server.files.write("/levels/level.json", JSON.stringify(voters), {
-    //   create: true,
-    // });
-    setVoters(voters);
+    voters.sort((b, a) => a.amount - b.amount);
+    if (displayLevel === 1) setVoters(level1);
+    if (displayLevel === 2) setVoters(level2);
+    if (displayLevel === 3) setVoters(level3);
+    setLoading(false);
   };
 
   useEffect(() => {
     loadDaoLevels();
-  }, [props]);
+    sortData();
+  }, [account]);
 
+  useEffect(() => {
+    sortData();
+  }, [displayLevel]);
+
+  const sortData = () => {
+    const currentLevel = [];
+    for (let x = 0; x < allVoters.length; x++) {
+      const element = allVoters[x];
+      if (element.level === displayLevel) currentLevel.push(element);
+    }
+    setVoters(currentLevel);
+  };
   const getLevel = (amount) => {
     if (
       amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
@@ -84,7 +110,7 @@ const Ranking = (props) => {
   const incrementCounter = () => {};
 
   return (
-    <div className="card h-100 w-100" style={{ minHeight: "500px" }}>
+    <div className="card h-100 w-100" style={{ minHeight: "800px" }}>
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +155,10 @@ const Ranking = (props) => {
       <p>
         To become member, visit <Link href="/daostaking/">STAKING DAO</Link>
       </p>
-      <div className="d-flex justify-content-between mt-3">
+      <div
+        className="d-flex justify-content-left mt-4"
+        style={{ justifyContent: "start" }}
+      >
         <button
           type="submit"
           onClick={() => setDisplayLevel(1)}
@@ -153,7 +182,7 @@ const Ranking = (props) => {
         <button
           type="submit"
           onClick={() => setDisplayLevel(3)}
-          className={`font-weight-bold btn  text-nowrap ${
+          className={`font-weight-bold btn  text-nowrap  ${
             displayLevel === 3 ? " btn-primary" : ""
           }`}
         >
@@ -162,37 +191,68 @@ const Ranking = (props) => {
         </button>
       </div>
 
-      <div className="mt-3">
+      <div className="tab-bg">
+        <div
+          className="d-flex p-4 mt-0  ranking-header"
+          style={{
+            justifyContent: "space-between",
+            marginTop: "0px!important",
+          }}
+        >
+          <div className="header-item" style={{ width: "40px" }}>
+            Rank
+          </div>
+          <div
+            className="header-item"
+            style={{ width: "55px", textAlign: "center" }}
+          >
+            Wallet
+          </div>
+          <div className="header-item">Staking</div>
+        </div>
         <StyledList>
-          {voters
-            .sort((b, a) => a.amount - b.amount)
-            .map((voter, i) => (
-              <>
-                {voter.level == displayLevel && (
-                  <li key={i}>
-                    <a className="blueprint-header-display trader-display">
-                      <div className="d-flex align-items-center">
-                        <span className="text-white mr-3 fs-16 font-w600">
-                          {/* {() => setCount(count+1)} */}
-                        </span>
-                        <img
-                          className="blueprint-img-sm rounded-circle"
-                          src="https://app.hedgeboard.io/userprofiles/default.png"
-                          alt="profile"
-                        />
-                        <div className="ml-1">
-                          <span className=" card-small-text text-white trader-name">
-                            {voter.address.replace(/(.{10})..+/, "$1…")}
-                          </span>
-                        </div>
-                      </div>
-                      <span> {cleanNumber(voter.amount + "")} </span>
-                      {/* {count ++} */}
-                    </a>
-                  </li>
-                )}
-              </>
-            ))}
+          {voters.length > 0 ? (
+            voters.map((voter, i) => {
+              return (
+                <span key={i}>
+                  <div
+                    className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
+                    style={{
+                      justifyContent: "space-between",
+                      marginTop: "0px!important",
+                      display: "flex",
+                    }}
+                  >
+                    <div
+                      className="header-item"
+                      style={{ width: "40px", textAlign: "center" }}
+                    >
+                      {i + 1}
+                    </div>
+                    <div
+                      className="header-item"
+                      style={{ width: "160px", textAlign: "left" }}
+                    >
+                      {voter.address.replace(/(.{10})..+/, "$1…")}
+                    </div>
+                    <div className="header-item">
+                      {cleanNumber(voter.amount + "")}
+                    </div>
+                  </div>
+                </span>
+              );
+            })
+          ) : !account ? (
+            <div className="mx-auto text-center">
+              You need to be connected to view the Level {displayLevel}
+            </div>
+          ) : loading ? (
+            <div className="mx-auto text-center">Loading Data</div>
+          ) : (
+            <div className="mx-auto text-center">
+              No one is on Level {displayLevel}
+            </div>
+          )}
         </StyledList>
       </div>
     </div>

@@ -7,9 +7,11 @@ import Head from "next/head";
 import ReCAPTCHA from "react-google-recaptcha";
 import React from "react";
 import { useMediaPredicate } from "react-media-hook";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
 
 export default function SocialminingS3() {
 
+  const {account} = useActiveWeb3React();
   const [email_address, setEmailAdrress] = useState("");
   const [socialpostlink, setsocialpostlink] = useState("");
   const [error, setError] = useState("");
@@ -36,16 +38,31 @@ export default function SocialminingS3() {
       reward,
         createdAt: new Date().toISOString(),
     };
-    console.log(post)
-    // save the post
+
     let response = await fetch('/api/posts', {
         method: 'POST',
         body: JSON.stringify(post),
     });
-    console.log(response)
-    // get the data
+
     let data = await response.json();
-    console.log(data)
+    // console.log(data)
+
+    let fd = new FormData();
+      fd.append('my-name', 'SOSX');
+      fd.append('url-reward',  socialpostlink);
+      fd.append('referral',  '0x0000000000000000000000000000000000000001');
+      fd.append('wallet',  account);
+      fd.append('reward-email', email_address);
+      fd.append('reward', reward)
+
+  const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+  };
+    let rest = await axios.post("https://socialx.io/inviteemail.php", 
+        fd,
+          {headers}
+
+    );
 
     if (data.success) {
         // reset the fields
@@ -58,6 +75,7 @@ export default function SocialminingS3() {
         return setError(data.message);
     }
 };
+
 
 const onReCAPTCHAChange = async (captchaCode) => {
   // If the reCAPTCHA code is null or undefined indicating that
@@ -100,6 +118,7 @@ const onReCAPTCHAChange = async (captchaCode) => {
 };
 
 
+
   return (
     <>
        <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
@@ -138,7 +157,7 @@ const onReCAPTCHAChange = async (captchaCode) => {
                       type="text"
                       id="fname"
                       name="firstname"
-                      value="0x684A4e50De4ff380E70DB03D7B61a4111395326a"
+                      value={account}
                       readOnly
                       placeholder="Metamask Wallet Address"
                     />

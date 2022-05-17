@@ -6,8 +6,9 @@ import Link from "next/link";
 import DesktopImage from "./DesktopImage";
 import Masonry from "react-masonry-css";
 import { create } from "ipfs-http-client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { concat } from "uint8arrays";
+import useInterval from "hooks/useInterval";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -36,6 +37,15 @@ const Media = (props: { todayVideo }) => {
 
   const [videos, setVideos] = useState([]);
 
+  useEffect(() => {
+    getVideo();
+  }, []);
+  useInterval(
+    () => {
+      getVideo();
+    },
+    true ? 4000 : null
+  );
   const getVideo = async () => {
     let finalData = [];
 
@@ -57,8 +67,6 @@ const Media = (props: { todayVideo }) => {
       setVideos(finalData);
     }
   };
-
-  getVideo();
 
   return (
     // <div className="card w-100 h-100" style={{minHeight: "500px"}}>
@@ -89,56 +97,66 @@ const Media = (props: { todayVideo }) => {
     //   </div>
     // </div>
 
-    <div className="card w-100 h-100" style={{minHeight: '500px'}}>
-    <div className="d-flex align-items-center mb-2"><img src="images/prize-pool-icon.png" className="title-icon" />
-      <h4>Wall of Fame</h4>
+    <div className="card w-100 h-100" style={{ minHeight: "500px" }}>
+      <div className="d-flex align-items-center mb-2">
+        <img src="images/prize-pool-icon.png" className="title-icon" />
+        <h4>Wall of Fame</h4>
+      </div>
+      <p>Previous Game Winners Archives video</p>
+      <div
+        className="d-flex w-100 flex-wrap flex-row mt-4 "
+        style={{ gap: "21px" }}
+      >
+        {/* <div className="row mx-auto text-center"></div> */}
+
+        <div className="row mx-auto text-center my-auto">
+          NO VIDEOS UPLOADED
+        </div>
+
+        {/* <div className="my-masonry-grid_column">
+        <div className="video-submission">
+          <div className="video-container">
+            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
+          </div>
+          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
+        </div>
+        <div className="video-submission">
+          <div className="video-container">
+            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
+          </div>
+          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
+        </div>
+      </div> */}
+        {/* <div className="my-masonry-grid_column">
+        <div className="video-submission">
+          <div className="video-container">
+            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
+          </div>
+          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
+        </div>
+        <div className="video-submission">
+          <div className="video-container">
+            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
+          </div>
+          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
+        </div>
+      </div> */}
+        {/* <div className="my-masonry-grid_column">
+        <div className="video-submission">
+          <div className="video-container">
+            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
+          </div>
+          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
+        </div>
+        <div className="video-submission">
+          <div className="video-container">
+            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
+          </div>
+          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
+        </div>
+      </div> */}
+      </div>
     </div>
-    <p>Previous Game Winners Archives video</p>
-    <div className="d-flex w-100 flex-wrap flex-row mt-4 " style={{gap: '21px'}}>
-      <div className="my-masonry-grid_column">
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-      </div>
-      <div className="my-masonry-grid_column">
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-      </div>
-      <div className="my-masonry-grid_column">
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-        <div className="video-submission">
-          <div className="video-container">
-            <iframe  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen frameBorder={0} src="https://www.youtube.com/embed/PzqWfRE5mYk" />
-          </div>
-          <p className="video-title">SOSXGAME001_Username - Challenge Name excerpt...</p>
-        </div>
-      </div>
-    </div>
-  </div>
   );
 };
 

@@ -1,87 +1,15 @@
-
-import { useState } from 'react'
-import { withStyles } from '@material-ui/core/styles';
-import CopyToClipboard from "react-copy-to-clipboard";
-import { InlineShareButtons } from 'sharethis-reactjs';
-import { Popover, OverlayTrigger } from 'react-bootstrap';
 import Link from 'next/link';
 import NavMining from './NavMining';
 import { useMediaPredicate } from 'react-media-hook';
 
 export default function SocialMining() {
-
-    const [miningStage, setMiningStage] = useState(0);
-    const [account, setAccount] = useState(null);
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
     const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-
-    const Navigation = (props) => {
-
-        return (
-            <ul className="nav nav-tabs nav-justified mt-5 mb-3">
-                <li className="nav-item">
-                    <a className={`nav-link ${props.stage == 0 && 'active'}`}>Steps</a>
-                </li>
-                <li className="nav-item">
-                    <a onClick={props.onClick} className={`nav-link ${props.stage == 1 && 'active'}`}>Copy</a>
-                </li>
-                <li className="nav-item">
-                    <a onClick={props.onClick} className={`nav-link ${props.stage == 2 && 'active'}`}>Affiliate</a>
-                </li>
-                <li className="nav-item">
-                    <a onClick={props.onClick} className={`nav-link ${props.stage == 3 && 'active'}`}>Redeem</a>
-                </li>
-            </ul>
-        )
-    }
-
-    const ShareComponent = (props) => (
-        <OverlayTrigger trigger="click" placement="right" overlay={
-
-            <Popover id="popover-success">
-                {/* <Popover.Header as="h3">Popover right</Popover.Header> */}
-                <Popover.Body>
-                    <InlineShareButtons
-                        config={{
-                            alignment: 'center',  // alignment of buttons (left, center, right)
-                            color: 'social',      // set the color of buttons (social, white)
-                            enabled: true,        // show/hide buttons (true, false)
-                            font_size: 16,        // font size for the buttons
-                            labels: 'cta',        // button labels (cta, counts, null)
-                            language: 'en',       // which language to use (see LANGUAGES)
-                            networks: [           // which networks to include (see SHARING NETWORKS)
-                                'twitter',
-                                'whatsapp',
-                                'facebook',
-                            ],
-                            padding: 12,          // padding within buttons (INTEGER)
-                            radius: 4,            // the corner radius on each button (INTEGER)
-                            show_total: true,
-                            size: 40,             // the size of each button (INTEGER)
-
-                            // OPTIONAL PARAMETERS
-                            url: props.data.url, // (defaults to current url)
-                            image: 'https://socialx.io/images/xlogo@2x.png',  // (defaults to og:image or twitter:image)
-                            description: 'CURRENTLY LOOKING FOR HUMAN SUBJECTS TO PARTICIPATE IN A 30 DAY EXPERIMENT. COMPENSATION UP TO A $1 MILLION . WILL YOU PARTICIPATE? ',       // (defaults to og:description or twitter:description)
-                            title: 'WELCOME TO THE SOCIAL EXPERIMENT. CURRENTLY LOOKING FOR HUMAN SUBJECTS TO PARTICIPATE IN A 30 DAY EXPERIMENT. COMPENSATION UP TO A $1 MILLION . WILL YOU PARTICIPATE? ',            // (defaults to og:title or twitter:title)
-                            message: 'CURRENTLY LOOKING FOR HUMAN SUBJECTS TO PARTICIPATE IN A 30 DAY EXPERIMENT. COMPENSATION UP TO A $1 MILLION . WILL YOU PARTICIPATE?',     // (only for email sharing)
-                            subject: 'WELCOME TO THE SOCIAL EXPERIMENT?',  // (only for email sharing)
-                            username: 'socialx_io' // (only for twitter sharing)
-                        }}
-                    />
-                </Popover.Body>
-            </Popover>
-        }>
-            <a className="nav-link" data-toggle="modal"><i className="fa-solid fa-share-from-square" /></a>
-        </OverlayTrigger>
-    );
-
 
     return (
         <>
            <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
           <NavMining/>
-
 
             <div className="pt-2 pb-0">
                 
@@ -91,7 +19,7 @@ export default function SocialMining() {
                     </div>
 
                     <div className="row pt-1 text-center container ">
-                        <div className="col-md-4">
+                        <div className="col-md-4 mb-3">
                             <div className="card overflow-hidden">
                                 <div>
                                     <img src="images/share-img.png" className="steps-img pb-3 justify-content-center pb-3" />
@@ -103,7 +31,7 @@ export default function SocialMining() {
                             </div>
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="col-md-4 mb-3">
                             <div className="card overflow-hidden">
                                 <div>
                                     <img src="images/inv-img.png" className="steps-img pb-3 justify-content-center pb-3" />

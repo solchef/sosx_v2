@@ -73,19 +73,13 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
   }
 
 
+
+
   return (
     <Modal  headerBackground="gradients.cardHeader" >
-    {/* {attemptingTxn ? (
-      <ConfirmationModalContent pendingText={pendingText} />
-    ) : hash ? ( */}
-      {/* <TransactionSubmittedContent
-        chainId={chainId}
-        hash={hash}
-        onDismiss={handleDismiss}
-        currencyToAdd={currencyToAdd}
-      /> */}
+ 
 
-          <Wrapper>
+             <Wrapper>
                 <ConfirmedIcon>
                   <Spinner />
                 </ConfirmedIcon>
@@ -97,7 +91,7 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
                     </Text>
                   </AutoColumn>
                   <Text small color="textSubtle" textAlign="center">
-                    {t('Confirm the transaction by clicking the button below')}
+                    {t('Confirm this transaction in your wallet')}
                   </Text>
                 </AutoColumn>
               </Wrapper>
