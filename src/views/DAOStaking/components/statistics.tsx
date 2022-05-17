@@ -16,11 +16,15 @@ export default function Statistics() {
   const tokenContract = useSosxContract();
   const [totalAmountStaked, setTotalAmountStaked] = useState(0);
   const [numberOfActiveStake, setNumberOfActiveStake] = useState(0);    
-  const [level, setLevel] = useState();
+  const [level, setLevel] = useState(1);
 
         const stakingDetails = async () => {
+
             contract.getTotalStakeAmount().then((stakeAmount) => {
-                setTotalAmountStaked((Number(stakeAmount/ (10 ** 10))));
+               let amount = Number(stakeAmount/ (10 ** 18));
+                setTotalAmountStaked(amount);
+                let level = useGetDaoLevel(amount);
+                setLevel(level)
                  
             });
 
@@ -28,47 +32,48 @@ export default function Statistics() {
                 setNumberOfActiveStake(Number(activeStakes));
             });
 
-            
         };
 
         useEffect(() => {
             stakingDetails();
         }, []);
 
-  return (
-    // <div className="row mb-3">
-    //   <div className="col-sm-3 col-6">
-    //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-    //       <h4>10,000,000,000</h4>
-    //       <span className="pt-1 pb-1">Total supply</span>
-    //     </div>
-    //   </div>
-    //   <div className="col-sm-3 col-6">
-    //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-    //       <h4>${marketCap.toFixed(8)}</h4>
-    //       <span className="pt-1 pb-1">Market Cap</span>
-    //     </div>
-    //   </div>
-    //   <div className="col-sm-3 col-6">
-    //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-    //       <h4>${price.toFixed(8)}</h4>
-    //       <span className="pt-1 pb-1">Price</span>
-    //       {/* <div className="daily-avr warning fs-12">
-    //                       <i className="fa fa-chevron-down"></i> 0.5% 7D
-    //                   </div> */}
-    //     </div>
-    //   </div>
 
-    //   <div className="col-sm-3 col-6">
-    //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-    //       <h4>321139778.950</h4>
-    //       <span className="pt-1 pb-1">Circulating Supply</span>
-    //       {/* <div className="daily-avr success fs-12">
-    //                       <i className="fa fa-chevron-up"></i> 1.5% 7D
-    //                   </div> */}
-    //     </div>
-    //   </div>
-    // </div>
+
+  return (
+                // <div className="row mb-3">
+                //   <div className="col-sm-3 col-6">
+                //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
+                //       <h4>10,000,000,000</h4>
+                //       <span className="pt-1 pb-1">Total supply</span>
+                //     </div>
+                //   </div>
+                //   <div className="col-sm-3 col-6">
+                //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
+                //       <h4>${marketCap.toFixed(8)}</h4>
+                //       <span className="pt-1 pb-1">Market Cap</span>
+                //     </div>
+                //   </div>
+                //   <div className="col-sm-3 col-6">
+                //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
+                //       <h4>${price.toFixed(8)}</h4>
+                //       <span className="pt-1 pb-1">Price</span>
+                //       {/* <div className="daily-avr warning fs-12">
+                //                       <i className="fa fa-chevron-down"></i> 0.5% 7D
+                //                   </div> */}
+                //     </div>
+                //   </div>
+
+                //   <div className="col-sm-3 col-6">
+                //     <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
+                //       <h4>321139778.950</h4>
+                //       <span className="pt-1 pb-1">Circulating Supply</span>
+                //       {/* <div className="daily-avr success fs-12">
+                //                       <i className="fa fa-chevron-up"></i> 1.5% 7D
+                //                   </div> */}
+                //     </div>
+                //   </div>
+                // </div>
 
     <>
      <div className="stake-amount">
@@ -77,7 +82,7 @@ export default function Statistics() {
                             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center" >
                                 <div className="data-content">
                                     <div className="d-flex  align-items-end">
-                                        <h2 className="mb-3 main-pink"> ${totalAmountStaked} </h2>
+                                        <h2 className="mb-3 main-pink"> {totalAmountStaked} SOSX</h2>
                                     </div>
                                     <div className="">
                                         <div className="">
@@ -110,9 +115,7 @@ export default function Statistics() {
                             </div>
                         </div>
                     </div>
-
                 </div>
-
 
                 <div className="dao-box">
                     <div className="card h-100 datarow justify-content-between">
@@ -120,7 +123,7 @@ export default function Statistics() {
                             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center">
                                 <div className="data-content">
                                     <div className="d-flex align-items-end">
-                                        <h2 className="mb-3 main-pink">LEVEL {}</h2>
+                                        <h2 className="mb-3 main-pink">LEVEL {level}</h2>
                                     </div>
                                     <div className="">
                                         <div className="">
@@ -132,7 +135,6 @@ export default function Statistics() {
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div className="price-box">
@@ -154,6 +156,7 @@ export default function Statistics() {
                         </div>
                     </div>
                 </div>
+                
     </>
   );
 }

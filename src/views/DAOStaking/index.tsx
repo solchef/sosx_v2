@@ -7,11 +7,6 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useMediaPredicate } from "react-media-hook";
 import BigNumber from "big-number";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
-import { MaxUint256 } from "@ethersproject/constants";
-import { calculateGasMargin } from "utils";
-import axios from "axios";
-import ConnectWalletButton from "components/ConnectWalletButton";
-import web3 from "web3";
 import { cleanNumber } from "utils/amount";
 import UserStaking from "./components/userStaking";
 import ConfirmStakingModal from "./components/ConfirmStakingModal";
@@ -19,6 +14,7 @@ import { useModal } from "@pancakeswap/uikit";
 import Statistics from "./components/statistics";
 import StakingSummary from "./components/DaoMemebrship";
 import DaoMemebrship from "./components/DaoMemebrship";
+import { useGetDaoLevel } from "views/Games/hooks/useGetDaoLevel";
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -39,8 +35,11 @@ export default function DaoStaking() {
   const [activateStake, setActivatestake] = useState(true);
   const [loading, setLoading] = useState(false);
   const [pendingTx, setPendingTx] = useState(false);
-  const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
-  const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+  const [estimateDaoLevel, setEstimateDaoLevel] = useState(1);
+  const [transactionState, setTransactionState] = useState(1);
+  const [txHash, setTxHash] = useState(1);
+
+
 
   useEffect(() => {
     if (account !== undefined) {
@@ -59,31 +58,31 @@ export default function DaoStaking() {
     }
   }, [account]);
 
+
   const handleAmountChange = async (event) => {
-    let _amountToStake = Number(event.target.value);
+        let _amountToStake = Number(event.target.value);
+        let level = useGetDaoLevel(_amountToStake);
+        setEstimateDaoLevel(level)
+        
+        // let decimals = new BigNumber(10).pow(18);
 
-    let decimals = new BigNumber(10).pow(18);
+        if (Number(allowanceValue) > amountToStake * 10 ** 18) {
+        setActivatestake(true);
+        } else {
+        setActivatestake(false);
+        }
 
-    let result = new BigNumber(_amountToStake).multiply(decimals);
+        const p = event.target.value;
+        const t = stakingClass == 1 ? 0.25 : stakingClass == 2 ? 0.5 : 1;
+        const r = stakingClass == 1 ? 0.06 : stakingClass == 2 ? 0.09 : 0.12;
+        const n = 12;
 
-    if (Number(allowanceValue) > amountToStake * 10 ** 18) {
-      setActivatestake(true);
-    } else {
-      setActivatestake(false);
-    }
+        let interest = compoundInterest(p, t, r, n);
 
-    const p = event.target.value;
-    const t = stakingClass == 1 ? 0.25 : stakingClass == 2 ? 0.5 : 1;
-    const r = stakingClass == 1 ? 0.06 : stakingClass == 2 ? 0.09 : 0.12;
-    const n = 12;
-
-    let interest = compoundInterest(p, t, r, n);
-
-    // this.setState({stakingInterest:interest})
-    // console.log(_amountToStake);
-    setamountToStake(_amountToStake);
-    setStakingInterest(Number(interest));
+        setamountToStake(_amountToStake);
+        setStakingInterest(Number(interest));
   };
+  
 
   const compoundInterest = (p, t, r, n) => {
     let amount = p * Math.pow(1 + r / n, n * t);
@@ -111,11 +110,54 @@ export default function DaoStaking() {
     }
   };
 
+  const handleClaimReward = async () => {
+    // if (stake) {
+    //   setActivatestake(true);
+    //   setLoading(false);
+    //   toastSuccess("Staking Transaction successfully sent");
+    // } else {
+      toastError("Rewards not yet available");
+    // }
+  };
+
+
+  const handleUnStake = async () => {
+    let decimals = BigNumber(10).pow(18);
+
+    let result = BigNumber(amountToStake).multiply(decimals);
+    setLoading(true);
+
+    const tx = await tokenContract.populateTransaction.returnTokens(
+        0
+      );
+
+    if (tx) {
+      setActivatestake(true);
+      setLoading(false);
+      toastSuccess("Staking Transaction successfully sent");
+      
+    } else {
+      toastError("Could not unstake");
+    }
+  };
+
+  const handleConfirmDismiss = useCallback(() => {
+    setTransactionState(4)
+    // if there was a tx hash, we want to clear the input
+    // if (txHash) {
+    //   onUserInput(Field.INPUT, '')
+    // }
+  }, [])
+  
+
   const handleSubmit = async () => {
+    if (Number(amountToStake) < 1) {
+      toastError("Yo must stake a minimum of 1 token");
+    }
+
     let decimals = BigNumber(10).pow(18);
     let result = BigNumber(amountToStake).multiply(decimals);
     console.log(result - Number(allowanceValue));
-
     if (Number(allowanceValue) >= amountToStake * 10 ** 18) {
       onPresentConfirmModal();
     } else {
@@ -123,6 +165,7 @@ export default function DaoStaking() {
         contract.address,
         result.toString()
       );
+
       let signer = contract.signer;
       let trans = await signer.sendTransaction(tx);
 
@@ -146,7 +189,7 @@ export default function DaoStaking() {
       onAcceptChanges={function (): void {
         throw new Error("Function not implemented.");
       }}
-      //   customOnDismiss={handleConfirmDismiss}
+     customOnDismiss={handleConfirmDismiss}
     />,
     true,
     true,
@@ -205,18 +248,16 @@ export default function DaoStaking() {
               <p className="mb-4">
                 Become a DAOX member while receiving daily rewards
               </p>
-              <div
-                className="bg-input mb-3 py-2 px-3 rounded mt-4
-"
-              >
+              <div className="bg-input mb-3 py-2 px-3 rounded mt-4">
                 <div className="d-flex justify-content-between align-items-center">
                   <span>
                     <input
                       type="text"
                       className="form-control"
-                      required
-                      value="0"
-                    />{" "}
+                      //   required
+                      onChange={(e) => handleAmountChange(e)}
+                      value={amountToStake}
+                    />
                   </span>
                   <h3 className=" pt-3 pb-3 " style={{ color: " #8e8e8e" }}>
                     SOSX
@@ -227,6 +268,7 @@ export default function DaoStaking() {
                 <button
                   className="btn w-100  mr-1 btn-primary btn-lg mt-2"
                   type="button"
+                  onClick={handleSubmit}
                 >
                   STAKE
                 </button>
@@ -234,6 +276,7 @@ export default function DaoStaking() {
                 <button
                   className="btn w-100 ml-1 btn-primary btn-lg mt-2"
                   type="button"
+                  onClick={handleUnStake}
                 >
                   UNSTAKE
                 </button>
@@ -241,7 +284,6 @@ export default function DaoStaking() {
             </div>
           </div>
 
-          
           <div className="card d-flex flex-column mt-4">
             <div className="card-body">
               <div className="d-flex align-items-center mt-2 mb-2">
@@ -253,13 +295,13 @@ export default function DaoStaking() {
                 <div className="d-flex h-100 justify-content-between mt-3 mb-3">
                   <div>
                     <div className="d-flex w-auto m-auto">
-                      <h3>6%</h3>
+                      <h3>{stakingInterest} {estimateDaoLevel == 1 ? 6 : estimateDaoLevel == 2 ? 9 : 12} %</h3>
                     </div>
                     <p className="success mb-0 main-pink pt-2">Reward % </p>
                   </div>
                   <div>
                     <div className="d-flex w-auto m-auto">
-                      <h3>Lv 3</h3>
+                      <h3>Lv {estimateDaoLevel}</h3>
                     </div>
                     <p className="success main-pink mb-0 pt-2">DAO Level</p>
                   </div>
@@ -282,11 +324,10 @@ export default function DaoStaking() {
             </div>
           </div>
         </div>
-                    
-                <DaoMemebrship/>
 
-                <UserStaking/>
-       
+        <DaoMemebrship />
+
+        <UserStaking />
 
         {/*             
         <div className="row">
@@ -383,6 +424,7 @@ export default function DaoStaking() {
                 <ConnectWalletButton />
               )}
             </div> */}
+            
         {/* </div> */}
         {/* 
           <div className="col-xl-4">

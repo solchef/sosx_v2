@@ -58,11 +58,10 @@ const Ranking = (props) => {
       if (data.level === 2) level2.push(data);
       if (data.level === 3) level3.push(data);
       voters.push(data);
-
       setAllVoter(voters);
-
       // }
     }
+    
     voters.sort((b, a) => a.amount - b.amount);
     if (displayLevel === 1) setVoters(level1);
     if (displayLevel === 2) setVoters(level2);
@@ -73,7 +72,7 @@ const Ranking = (props) => {
   useEffect(() => {
     loadDaoLevels();
     sortData();
-  }, [account]);
+  }, []);
 
   useEffect(() => {
     sortData();

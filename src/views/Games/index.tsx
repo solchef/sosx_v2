@@ -194,7 +194,7 @@ export default function Game() {
         className="game container-fluid d-flex flex-wrap flex-direction-row-reverse"
         style={{ gap: "20px" }}>
         <div id="action-section" style={{ flex: "1 50%", order: 2 }}>
-          <CreateChallenge level={currentLevel} stage={stage} />
+            <CreateChallenge level={currentLevel} stage={stage} />
         </div>
 
         <div id="timer-section" style={{ flex: 1, gap: "20px" }}>

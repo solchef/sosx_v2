@@ -191,7 +191,6 @@ const onReCAPTCHAChange = async (captchaCode) => {
                   activity. The more you share the more the network is utilized,
                   the more holders will receive.
                 </p>
-
                 
                 <ReCAPTCHA
               ref={recaptchaRef}

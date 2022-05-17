@@ -61,7 +61,7 @@ export default function SocialminingS1() {
                             </div>
                        
                                 <p className="pt-3 pl-1 text-white pb-3">CAPTION:
-<div className="pt-2 pl-2 row">
+                                    <div className="pt-2 pl-2 row">
                                     <a onClick={(e) => toggleMenu(e, "twitter")} className={` btn btn-dark mr-2 ml-2 ${media.name == "twitter" ? "bg-success" : ""}`}
                                         id="twitter-toggle" >Twitter</a>
 
@@ -104,8 +104,12 @@ export default function SocialminingS1() {
                             </a>
                             <a>
                                 <button onClick={() => {
+<<<<<<< HEAD
+                                    navigator.clipboard.writeText(`${media.name== "tiktok" ? 'SOSX relaunching new SOSX Token next week 🚀   <br/> Join instagram for updates': media.name== "twitter" ? 'images/post18.jpeg' : 'images/post18.jpeg' }`)
+=======
                                      
                                     navigator.clipboard.writeText(`SOSX relaunching new SOSX Token next week 🚀 . Join ${media.name} for updates: ${media.addres}`)
+>>>>>>> 1ef760d7910f0647d8e8e59d054f850f74ace232
                                     setCopySuccess('Copied!')
 
                                 }} className="btn btn-dark mr-3 mt-3">Copy Caption</button>  <span className="text-success"> {copySuccess}</span>

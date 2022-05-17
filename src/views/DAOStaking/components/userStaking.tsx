@@ -29,6 +29,7 @@ export default function userStaking(props) {
   const [activeStakes, setActiveStakes] = useState([]);
   const [showDetails, setShowDetails] = useState(-1);
   const [loadingData, setLoadingData] = useState(false);
+  const [level, setlevel] = useState(false);
 
   const handleUnstake = async (stakeID) => {
     const unstake = await contract.returnTokens(stakeID);
@@ -156,13 +157,15 @@ export default function userStaking(props) {
                 overflow: "auto",
                 paddingRight: "5px",
               }}>
-              <div
-                className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
-                style={{ justifyContent: "space-between" }}>
-                <div className="header-item">10 JAN 2022</div>
-                <div className="header-item">Staked</div>
-                <div className="header-item"> 1, 098, 000, 00</div>
-              </div>
+                {activeStakes.map((stake, i) => 
+                  <div
+                    className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
+                    style={{ justifyContent: "space-between" }}>
+                    <div className="header-item">{stake.stakeDate}</div>
+                    <div className="header-item">Staked</div>
+                    <div className="header-item"> {cleanNumber(stake.amount.toFixed(2))}</div>
+                  </div>
+                )}
             </div>
           </div>
         </div>
