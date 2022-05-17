@@ -10,11 +10,11 @@ export default async function handler(req, res) {
   const { body, method } = req;
 
   // Extract the email and captcha code from the request body
-  const { email, captcha } = body;
+  const { email_address, captcha } = body;
 
   if (method === "POST") {
     // If email or captcha are missing return an error
-    if (!email || !captcha) {
+    if (!email_address || !captcha) {
       return res.status(422).json({
         message: "Unproccesable request, please provide the required fields",
       });

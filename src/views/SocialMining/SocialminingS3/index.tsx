@@ -18,10 +18,11 @@ export default function SocialminingS3() {
   const [message, setMessage] = useState("");
   const recaptchaRef = React.useRef(null);
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
-      const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+  const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const handlePost = async (e) => {
     e.preventDefault();
-    // recaptchaRef.current.getValue();
+    recaptchaRef.current.getValue();
+    console.log(recaptchaRef)
     const reward=localStorage.getItem("reward");
     // reset error and message
     setError('');
@@ -75,39 +76,47 @@ export default function SocialminingS3() {
     }
 };
 
-// const onReCAPTCHAChange = async (captchaCode) => {
-//   // If the reCAPTCHA code is null or undefined indicating that
-//   // the reCAPTCHA was expired then return early
-//   // if (!captchaCode) {
-//   //   return;
-//   // }
-//   try {
-//     const response = await fetch("/api/register", {
-//       method: "POST",
-//       body: JSON.stringify({ email_address, captcha: captchaCode }),
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
 
-//     if (response.ok) {
-//       // If the response is ok than show the success alert
-//       alert("Email registered successfully");
-//     } else {
-//       // Else throw an error with the message returned
-//       // from the API
-//       const error = await response.json();
-//       throw new Error(error.message)
-//     }
-//   } catch (error) {
-//     alert("Something went wrong!!!");
-//   } finally {
-//     // Reset the reCAPTCHA when the request has failed or succeeeded 
-//     // so that it can be executed again if user submits another email.
-//     recaptchaRef.current.reset();
-//     setEmailAdrress("");
-//   }
-// };
+const onReCAPTCHAChange = async (captchaCode) => {
+  // If the reCAPTCHA code is null or undefined indicating that
+  // the reCAPTCHA was expired then return early
+  if (!captchaCode) {
+    console.log("no captcha")
+  }
+  // alert(`Hey, ${email_address}`);
+  let captchabody= {
+    email_address,
+    captcha: captchaCode
+  };
+  try {
+    const response = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify(captchabody),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      // If the response is ok than show the success alert
+      alert("Email registered successfully");
+    } else {
+      // Else throw an error with the message returned
+      // from the API
+      const error = await response.json();
+      throw new Error(error.message)
+    }
+  } catch (error) {
+    alert("Something went wrong!!!");
+  } finally {
+    // Reset the reCAPTCHA when the request has failed or succeeeded 
+    // so that it can be executed again if user submits another email.
+    
+    recaptchaRef.current.reset();
+   
+  }
+};
+
 
 
   return (
@@ -184,12 +193,12 @@ export default function SocialminingS3() {
                 </p>
 
                 
-                {/* <ReCAPTCHA
+                <ReCAPTCHA
               ref={recaptchaRef}
               size="normal"
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
               onChange={onReCAPTCHAChange}
-            /> */}
+            />
               </div>
             </div>
           </div>
