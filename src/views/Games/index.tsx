@@ -262,7 +262,15 @@ export default function Game() {
 
   let topThreeChallenges = [];
   const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
-  topThreeChallenges.push(ch[0], ch[1], ch[2]);
+  if (ch[0]) {
+    topThreeChallenges.push(ch[0]);
+  }
+  if (ch[1]) {
+    topThreeChallenges.push(ch[1]);
+  }
+  if (ch[2]) {
+    topThreeChallenges.push(ch[2]);
+  }
 
   const getVideo = async () => {
     let finalData = [];
