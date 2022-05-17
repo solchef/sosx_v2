@@ -177,16 +177,100 @@ export default function Game() {
     }
   };
 
+  const videoLink = async (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const form = event.target as HTMLFormElement;
+
+    if (!url) {
+      toastError("Link Required");
+      return;
+    }
+
+    let data;
+    if (url.search("youtu") != -1) {
+      let regExp =
+        /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+      let match = url.match(regExp);
+      const valid = match && match[7].length == 11 ? match[7] : false;
+      if (valid !== false) {
+        data = JSON.stringify({
+          id: `${account}+round-1`,
+          rId: "round",
+          urls: {
+            youtube: valid,
+          }
+        });
+      }
+    }
+
+    if (url.search("tiktok") != -1) {
+      if (url.search("tiktok") != -1) {
+        if (url.search("vt") != -1) {
+          toastError("Use https://tiktok.com/@usename...");
+          return;
+        }
+        const index = url.indexOf("video/");
+        data = JSON.stringify({
+          id: `${account}+round-1`,
+          rId: "round",
+          urls: {
+            youtube: url.substring(index + 6, index + 25),
+          }
+        });
+      } else {
+        return false;
+      }
+    }
+
+    if (data !== "") {
+      const todayChallengeName = String(
+        todayChallenge.challenge.payload.name
+      ).replaceAll(" ", "-");
+      const fileName = `video-${moment().unix()}`;
+      await server.files.write(
+        `/challenges/challenge-${todayChallengeName}/videos/${fileName}`,
+        data,
+        { create: true }
+      );
+      toastSuccess("Uploaded");
+      form.reset();
+      getVideo();
+    } else {
+      toastError("Not Valid Links");
+    }
+  };
+
+  const getLevel = (amount) => {
+    if (
+      amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
+      amount < process.env.NEXT_PUBLIC_LEVEL2
+    ) {
+      return 1;
+    }
+
+    if (
+      amount >= process.env.NEXT_PUBLIC_LEVEL2 &&
+      amount < process.env.NEXT_PUBLIC_LEVEL3
+    ) {
+      return 2;
+    }
+
+    if (amount >= process.env.NEXT_PUBLIC_LEVEL3) {
+      return 3;
+    }
+  };
+
 
   useEffect(() => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
       let level = getLevel(stakeAmount);
-        setCurrentLevel(level);
+      setCurrentLevel(level);
     });
 
     getData();
     getVideo();
-  }, []);
+
+  }, [stage]);
 
   return (
     <>
