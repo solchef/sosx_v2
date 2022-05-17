@@ -37,6 +37,7 @@
     ]
   },
   "dependencies": {
+    "@apollo/client": "^3.6.4",
     "@binance-chain/bsc-connector": "^1.0.0",
     "@blocto/blocto-connector": "^0.2.3",
     "@ethersproject/abi": "^5.5.0",

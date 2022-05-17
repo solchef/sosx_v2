@@ -1,119 +1,105 @@
-import { Trade, TradeType } from '@pancakeswap/sdk'
-import { Text } from '@pancakeswap/uikit'
-import { Field } from 'state/swap/actions'
-import { useTranslation } from 'contexts/Localization'
-import { useUserSlippageTolerance } from 'state/user/hooks'
-import { computeSlippageAdjustedAmounts, computeTradePriceBreakdown } from 'utils/prices'
-import { AutoColumn } from 'components/Layout/Column'
-import QuestionHelper from 'components/QuestionHelper'
-import { RowBetween, RowFixed } from 'components/Layout/Row'
-import FormattedPriceImpact from './FormattedPriceImpact'
-import SwapRoute from './SwapRoute'
+import { Trade, TradeType } from "@pancakeswap/sdk";
+import { Text } from "@pancakeswap/uikit";
+import { Field } from "state/swap/actions";
+import { useTranslation } from "contexts/Localization";
+import { useUserSlippageTolerance } from "state/user/hooks";
+import {
+  computeSlippageAdjustedAmounts,
+  computeTradePriceBreakdown,
+} from "utils/prices";
+import { AutoColumn } from "components/Layout/Column";
+import QuestionHelper from "components/QuestionHelper";
+import { RowBetween, RowFixed } from "components/Layout/Row";
+import FormattedPriceImpact from "./FormattedPriceImpact";
+import SwapRoute from "./SwapRoute";
 
-function TradeSummary({ trade, allowedSlippage }: { trade: Trade; allowedSlippage: number }) {
-  const { t } = useTranslation()
-  const { priceImpactWithoutFee, realizedLPFee } = computeTradePriceBreakdown(trade)
-  const isExactIn = trade.tradeType === TradeType.EXACT_INPUT
-  const slippageAdjustedAmounts = computeSlippageAdjustedAmounts(trade, allowedSlippage)
+function TradeSummary({
+  trade,
+  allowedSlippage,
+}: {
+  trade: Trade;
+  allowedSlippage: number;
+}) {
+  const { t } = useTranslation();
+  const { priceImpactWithoutFee, realizedLPFee } =
+    computeTradePriceBreakdown(trade);
+  const isExactIn = trade.tradeType === TradeType.EXACT_INPUT;
+  const slippageAdjustedAmounts = computeSlippageAdjustedAmounts(
+    trade,
+    allowedSlippage
+  );
 
   return (
-    <AutoColumn style={{ padding: '0 16px' }}>
-      <RowBetween>
-        <RowFixed>
-          <Text fontSize="14px" color="textSubtle">
-            {isExactIn ? t('Minimum received') : t('Maximum sold')}
-          </Text>
-          <QuestionHelper
-            text={t(
-              'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.',
-            )}
-            ml="4px"
-            placement="top-start"
-          />
-        </RowFixed>
-        <RowFixed>
-          <Text fontSize="14px">
-            {isExactIn
-              ? `${slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)} ${trade.outputAmount.currency.symbol}` ??
-                '-'
-              : `${slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4)} ${trade.inputAmount.currency.symbol}` ?? '-'}
-          </Text>
-        </RowFixed>
-      </RowBetween>
-      <RowBetween>
-        <RowFixed>
-          <Text fontSize="14px" color="textSubtle">
-            {t('Price Impact')}
-          </Text>
-          <QuestionHelper
-            text={t('The difference between the market price and estimated price due to trade size.')}
-            ml="4px"
-            placement="top-start"
-          />
-        </RowFixed>
-        <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
-      </RowBetween>
+    <>
+      <div className="d-flex justify-content-between small pt-3">
+        <div className=" mr-1">Price: </div> .
+        <div className="text-white"> 
+        {isExactIn
+              ? `${slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)} ${
+                  trade.outputAmount.currency.symbol
+                }` ?? "-"
+              : `${slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4)} ${
+                  trade.inputAmount.currency.symbol
+                }` ?? "-"}
+         SOSX</div>
+      </div>
+      <div className="  small pt-3">
+        <div className="d-flex justify-content-between small">
+          <div className="mr-1">Liquidity Provider Fee: </div>
+          <div className="text-white"> {realizedLPFee
+            ? `${realizedLPFee.toSignificant(4)} ${
+                trade.inputAmount.currency.symbol
+              }`
+            : "-"}</div>
+        </div>
+      </div>
+      <div className="small pt-3">
+        <div className="d-flex small justify-content-between">
+          <div className=" mr-1">Price Impact: </div>
+          <div className="text-white float-right"><FormattedPriceImpact priceImpact={priceImpactWithoutFee} /></div>
+        </div>
+      </div>
 
-      <RowBetween>
-        <RowFixed>
-          <Text fontSize="14px" color="textSubtle">
-            {t('Liquidity Provider Fee')}
-          </Text>
-          <QuestionHelper
-            text={
-              <>
-                <Text mb="12px">{t('For each trade a %amount% fee is paid', { amount: '0.25%' })}</Text>
-                <Text>- {t('%amount% to LP token holders', { amount: '0.17%' })}</Text>
-                <Text>- {t('%amount% to the Treasury', { amount: '0.03%' })}</Text>
-                <Text>- {t('%amount% towards CAKE buyback and burn', { amount: '0.05%' })}</Text>
-              </>
-            }
-            ml="4px"
-            placement="top-start"
-          />
-        </RowFixed>
-        <Text fontSize="14px">
-          {realizedLPFee ? `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol}` : '-'}
-        </Text>
-      </RowBetween>
-    </AutoColumn>
-  )
+    </>
+  );
 }
 
 export interface AdvancedSwapDetailsProps {
-  trade?: Trade
+  trade?: Trade;
 }
 
 export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
-  const { t } = useTranslation()
-  const [allowedSlippage] = useUserSlippageTolerance()
+  const { t } = useTranslation();
+  const [allowedSlippage] = useUserSlippageTolerance();
 
-  const showRoute = Boolean(trade && trade.route.path.length > 2)
+  const showRoute = Boolean(trade && trade.route.path.length > 2);
 
   return (
-    <AutoColumn gap="0px">
+    <>
       {trade && (
         <>
           <TradeSummary trade={trade} allowedSlippage={allowedSlippage} />
           {showRoute && (
             <>
-              <RowBetween style={{ padding: '0 16px' }}>
-                <span style={{ display: 'flex', alignItems: 'center' }}>
+              {/* <RowBetween style={{ padding: "0 16px" }}>
+                <span style={{ display: "flex", alignItems: "center" }}>
                   <Text fontSize="14px" color="textSubtle">
-                    {t('Route')}
+                    {t("Route")}
                   </Text>
                   <QuestionHelper
-                    text={t('Routing through these tokens resulted in the best price for your trade.')}
+                    text={t(
+                      "Routing through these tokens resulted in the best price for your trade."
+                    )}
                     ml="4px"
                     placement="top-start"
                   />
                 </span>
                 <SwapRoute trade={trade} />
-              </RowBetween>
+              </RowBetween> */}
             </>
           )}
         </>
       )}
-    </AutoColumn>
-  )
+    </>
+  );
 }

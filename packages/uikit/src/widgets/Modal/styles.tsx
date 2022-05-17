@@ -8,7 +8,7 @@ import { ModalProps } from "./types";
 
 export const ModalHeader = styled.div<{ background?: string }>`
   align-items: center;
-  background: ${({ background }) => background || "transparent"};
+  background: #111117;
   border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
   display: flex;
   padding: 12px 24px;
@@ -17,6 +17,10 @@ export const ModalHeader = styled.div<{ background?: string }>`
 export const ModalTitle = styled(Flex)`
   align-items: center;
   flex: 1;
+  
+  h2{
+    font-size:20px !important;
+  }
 `;
 
 export const ModalBody = styled(Flex)`
@@ -43,7 +47,7 @@ export const ModalBackButton: React.FC<{ onBack: ModalProps["onBack"] }> = ({ on
 
 export const ModalContainer = styled(Box)<{ minWidth: string }>`
   overflow: hidden;
-  background: ${({ theme }) => theme.modal.background};
+  background: #111117;
   box-shadow: 0px 20px 36px -8px rgba(14, 14, 44, 0.1), 0px 1px 1px rgba(0, 0, 0, 0.05);
   border: 1px solid ${({ theme }) => theme.colors.cardBorder};
   border-radius: 32px;
