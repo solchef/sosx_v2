@@ -21,6 +21,7 @@ import LoaderDisplay from "./components/loader";
 import { getDaoLevel } from "./hooks/getDaoLevel";
 import { useQuery } from "@apollo/client";
 import { GET_LastVideo, GET_Videos } from "utils/graphqlQ";
+import Vote from "./Vote";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
