@@ -71,7 +71,8 @@ export default function Statistics(props) {
                         : level == 2
                         ? 9.0
                         : 12.0
-                      : 0}
+                      : 0} 
+                      {/* {`${'%'}`} */}
                   </h2>
                 </div>
                 <div className="">

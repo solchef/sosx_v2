@@ -15,6 +15,7 @@ import Statistics from "./components/statistics";
 import StakingSummary from "./components/DaoMemebrship";
 import DaoMemebrship from "./components/DaoMemebrship";
 import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
+import { formatFixedNumber, getDecimalAmount } from "utils/formatBalance";
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -48,73 +49,22 @@ export default function DaoStaking() {
   const [pendingTx, setPendingTx] = useState(false);
   const [estimateDaoLevel, setEstimateDaoLevel] = useState(0);
   const [transactionState, setTransactionState] = useState(1);
-  const [txHash, setTxHash] = useState(1);
-
-  const listUserStaking = async () => {
-    let list = [];
-    let count = [];
-    // console.log(numberOfActiveStake);
-    for (let i = 0; i < numberOfActiveStake; i++) {
-      await contract.getStakeInfo(i).then((stakeInstance) => {
-        // if (stakeInstance) {
-        // contract.getCurrentStakeClass(i).then(stakeClass => {
-        // console.log("here")
-        let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
-        let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
-        // console.log(stakeInstance)
-        count.push(i);
-        let instance = {
-          amount: stakeAmt,
-          isWithdrawed: Boolean(stakeInstance[1]),
-          stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString("en-US", {
-            timeZone: "America/New_York",
-          }),
-          referral: stakeInstance[3],
-          rewardAmount: Number(stakeInstance[4]),
-          penalty: Number(stakeInstance[5]),
-          stakingClass: stakeClass,
-          periodElapsed: stakeClass,
-        };
-
-        list.push(instance);
-
-        // });
-
-        // }
-      });
-
-      // console.log(stakeInstance)
-    }
-
-    setActiveStakes(list);
-    console.log(list);
-    // console.log(count)
-    // clearTimeout(listTimeOut);
-
-    // console.log(list)
-  };
-
-  const loadUI = async () => {
-    setLoadingData(true);
-    // await stakingDetails();
-    await listUserStaking();
-    // console.log(activeStakes)
-    setLoadingData(false);
-  };
+  const [txHash, setTxHash] = useState("");
 
   useEffect(() => {
 
     setLoading(false)
-
     if (account !== undefined) {
       tokenContract.balanceOf(account).then((bal) => {
-        let balance = Number(bal / 10 ** 18);
-        setUserBalace(balance);
+        let balance = formatFixedNumber(bal, 3, 18)
+        // console.log(balance)
+        setUserBalace(Number(balance));
       });
 
       tokenContract.allowance(account, contract.address).then((allowance) => {
-        if (Number(allowance) > 0) {
-          // alert("ff")
+          allowance = Number(formatFixedNumber(allowance, 3, 18));
+          console.log(allowance)
+        if (allowance > 0) {
           setActivatestake(true);
         }
         setAllowanceValue(allowance);
@@ -126,16 +76,13 @@ export default function DaoStaking() {
   const handleAmountChange = async (event) => {
         let _amountToStake = Number(event.target.value);
         let level = getDaoLevel(_amountToStake);
-        setEstimateDaoLevel(level)
-        
+          setEstimateDaoLevel(level)
         // let decimals = new BigNumber(10).pow(18);
-
-        if (Number(allowanceValue) > amountToStake * 10 ** 18) {
+        if (allowanceValue > amountToStake) {
         setActivatestake(true);
         } else {
         setActivatestake(false);
         }
-
         const p = event.target.value;
         const t = stakingClass == 1 ? 0.25 : stakingClass == 2 ? 0.5 : 1;
         const r = stakingClass == 1 ? 0.06 : stakingClass == 2 ? 0.09 : 0.12;
@@ -156,30 +103,29 @@ export default function DaoStaking() {
   };
 
   const handleStake = async () => {
-    let decimals = BigNumber(10).pow(18);
+        let decimals = BigNumber(10).pow(18);
 
-    let result = BigNumber(amountToStake).multiply(decimals);
-    // console.log(Number(allowanceValue),amountToStake )
+        let result = BigNumber(amountToStake).multiply(decimals);
+        // console.log(Number(allowanceValue),amountToStake)
 
-    // console.log(referralAddress);
-    setLoading(true);
-    // alert('ss')
-    let stake = await contract.stakeToken(
-      result.toString(),
-      "0x0000000000000000000000000000000000000001",
-      stakingClass
-    );
+        // console.log(referralAddress);
+        setLoading(true);
+        // alert('ss')
+        let stake = await contract.stakeToken(
+          result.toString(),
+          "0x0000000000000000000000000000000000000001",
+          stakingClass
+        );
 
-    // alert('ss')
-    if (stake) {
-      setActivatestake(true);
-      setLoading(false);
-      loadUI();
-      toastSuccess("Staking Transaction successfully sent");
-      handleConfirmDismiss();
-    } else {
-      toastError("Could not stake");
-    }
+        // alert('ss')
+        if (stake) {
+          setActivatestake(true);
+          setLoading(false);
+          toastSuccess("Staking Transaction successfully sent");
+          handleConfirmDismiss();
+        } else {
+          toastError("Could not stake");
+        }
   };
 
   const handleClaimReward = async () => {
@@ -199,7 +145,7 @@ export default function DaoStaking() {
     let result = BigNumber(amountToStake).multiply(decimals);
     setLoading(true);
 
-    const tx = await contract.stakeToken(0);
+    const tx = await contract.returnTokens(0);
 
     if (tx) {
       setActivatestake(true);
@@ -227,17 +173,21 @@ export default function DaoStaking() {
 
     let decimals = BigNumber(10).pow(18);
     let result = BigNumber(amountToStake).multiply(decimals);
-    console.log(result - Number(allowanceValue));
-    if (Number(allowanceValue) >= amountToStake * 10 ** 18) {
+    // console.log(result - allowanceValue)
+    if (allowanceValue > amountToStake) {
       onPresentConfirmModal();
     } else {
       const tx = await tokenContract.populateTransaction.approve(
         contract.address,
         result.toString()
       );
-
+      setTxHash(tx.toString)
+    
       let signer = contract.signer;
+
       let trans = await signer.sendTransaction(tx);
+      
+      // console.log(trans)
       setPendingTx(true);
 
       toastSuccess(
@@ -251,9 +201,8 @@ export default function DaoStaking() {
   const [onPresentConfirmModal] = useModal(
     <ConfirmStakingModal
       onConfirm={handleStake}
-      attemptingTxn={pendingTx}
-      recipient={""}
-      allowedSlippage={0}
+      receipt={txHash.toString()}
+      clientMessage={"Your spending approval is being confirmed. "}
       onAcceptChanges={function (): void {
         throw new Error("Function not implemented.");
       }}
@@ -336,7 +285,7 @@ export default function DaoStaking() {
                   className="btn w-100  mr-1 btn-primary btn-lg mt-2"
                   type="button"
                   onClick={handleSubmit}>
-                  STAKE
+                  {activateStake ? 'STAKE'  : 'APPROVE'  }
                     </button>
               </div>
             </div>
@@ -375,8 +324,7 @@ export default function DaoStaking() {
               </div>
               <button onClick={handleClaimReward}
                 className="btn mx-auto btn-primary btn-lg mt-3"
-                type="button"
-              >
+                type="button">
                 CLAIM REWARD
               </button>
             </div>
