@@ -13,6 +13,8 @@ import useStage from "../../../hooks/useStage";
 import useLevels from "hooks/useLevels";
 import moment from "moment";
 import { useTranslation } from "contexts/Localization";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
+import { validLinks } from "utils/validateLink";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -22,61 +24,75 @@ const Submission = (props: {level, stage}) => {
   const [challenge, setChallenge] = useState<any[]>([]);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
+  const [url, setURL] = useState("");
   const { toastSuccess, toastError } = useToast();
   const { t } = useTranslation();
   const contract = useDaoStakingContract();
   const stage = props.stage
   const level = props.level
 
-  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+  const videoLink = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    let daoList = await contract.getAllAccount();
-    let voters = [];
-    for (let i = 0; i < daoList.length; i++) {
-      let voter_address = daoList[i];
-      let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = Number(total_stake / 10 ** 18);
-      let voterData = {
-        address: voter_address,
-        amount: total_stake,
-        level: level,
-      };
+    const form = event.target as HTMLFormElement;
 
-      voters.push(voterData);
+    if (!url) {
+      toastError("Link Required");
+      return;
     }
 
+    let data;
+    if (url.search("youtube") != -1) {
+      let regExp =
+        /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+      let match = url.match(regExp);
+      const valid = match && match[7].length == 11 ? match[7] : false;
+      if (valid !== false) {
+        data = JSON.stringify({
+          id: `${account}+round-1`,
+          rId: "round",
+          urls: {
+            youtube: valid,
+          },
+        });
+      }
+    }
 
+    if (url.search("tiktok") != -1) {
+      if (url.search("tiktok") != -1) {
+        if (url.search("vt") != -1) {
+          toastError("Use https://tiktok.com/@usename...");
+          return;
+        }
+        const index = url.indexOf("video/");
+        data = JSON.stringify({
+          id: `${account}+round-1`,
+          rId: "round",
+          urls: {
+            youtube: url.substring(index + 6, index + 25),
+          },
+        });
+      } else {
+        return false;
+      }
+    }
 
-    const vote = JSON.stringify({
-      timestamp: moment().unix(),
-      address: account,
-      round: "1",
-    });
+    if (data !== "") {
+    //   const todayChallengeName = String(
+    //     todayChallenge.challenge.payload.name
+    //   ).replaceAll(" ", "-");
 
-    const sig = await signMessage(connector, library, account, vote);
-
-    if (sig) {
-      const forIPFS = JSON.stringify(
-        {
-          timestamp: moment().unix(),
-          address: account,
-          round: "1",
-          // challenge: challenge[0].cid.toString(),
-          sig: sig.toString(),
-          // data: voters,
-        },
-        null,
-        2
-      );
-
+    let  todayChallengeName = "Mall-Streaking-Challenge";
+      const fileName = `video-${moment().unix()}`;
       await server.files.write(
-        `/Rounds/Round-1/votes/stage-${stage}/${account}.json`,
-        forIPFS,
+        `/challenges/challenge-${todayChallengeName}/videos/${fileName}`,
+        data,
         { create: true }
       );
-      toastSuccess(t("Vote created!"));
+      toastSuccess("Uploaded");
+      form.reset();
+    //   getVideo();
     } else {
-      toastError(t("Error"), t("Unable to sign payload"));
+      toastError("Not Valid Links");
     }
   };
 
@@ -123,11 +139,17 @@ const Submission = (props: {level, stage}) => {
           <div className="upload-game pt-5 m-3 rounded">
             <p> Enter the YOUTUBE, INSTAGRAM or TIKTOK URL of your video.</p>
             <div className="bg-input mb-3 mt-3 py-2 px-3 rounded ">
-              <div className="d-flex justify-content-between align-items-center">
-                <input type="text" placeholder="Video Hosted URL" required  className="form-control w-100" style={{fontSize: '20px'}} />
-              </div>
+                <form onSubmit={videoLink}>
+
+                        <div className="d-flex justify-content-between align-items-center">
+                            <input type="text" placeholder="Video Hosted URL" onChange={e => setURL(e.target.value)} required  className="form-control w-100" style={{fontSize: '20px'}} />
+                        </div>
+
+                        <button className="btn btn-primary btn-lg mt-5 mb-5 " type="submit" style={{width: 'max-content'}}>SUBMIT VIDEO LINK</button>
+
+                </form>
+             
             </div>
-            <button className="btn btn-primary btn-lg mt-5 mb-5 " type="button" style={{width: 'max-content'}}>SUBMIT VIDEO LINK</button>
           </div>
         </div>
       </div>

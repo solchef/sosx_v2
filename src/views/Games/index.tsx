@@ -141,7 +141,7 @@ export default function Game() {
       </div>
 
       <div id="video-section" style={{ flex: "2 73%" }}>
-        <Media />
+        <Media todayVideo={undefined} />
       </div>
     </div>
   );

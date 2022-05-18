@@ -1,8 +1,13 @@
 import PrizePool from "./PrizePool"
+import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { create } from "ipfs-http-client";
+import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
+
 
 export const  SubmissionAside = () => {
 
-
+ 
 
     return(
 
