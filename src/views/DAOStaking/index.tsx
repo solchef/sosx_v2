@@ -46,7 +46,7 @@ export default function DaoStaking() {
   const [transaction, setTransaction] = useState();
   const [challenge, setChallenge] = useState(false);
   const [pendingTx, setPendingTx] = useState(false);
-  const [estimateDaoLevel, setEstimateDaoLevel] = useState(1);
+  const [estimateDaoLevel, setEstimateDaoLevel] = useState(0);
   const [transactionState, setTransactionState] = useState(1);
   const [txHash, setTxHash] = useState(1);
 

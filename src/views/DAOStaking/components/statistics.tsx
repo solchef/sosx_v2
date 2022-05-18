@@ -16,7 +16,7 @@ export default function Statistics() {
   const tokenContract = useSosxContract();
   const [totalAmountStaked, setTotalAmountStaked] = useState(0);
   const [numberOfActiveStake, setNumberOfActiveStake] = useState(0);    
-  const [level, setLevel] = useState(1);
+  const [level, setLevel] = useState(0);
 
         const stakingDetails = async () => {
 
@@ -52,7 +52,7 @@ export default function Statistics() {
                             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center" >
                                 <div className="data-content">
                                     <div className="d-flex  align-items-end">
-                                        <h2 className="mb-3 main-pink"> {totalAmountStaked} SOSX</h2>
+                                        <h2 className="mb-3 main-pink"> {totalAmountStaked} </h2>
                                     </div>
                                     <div className="">
                                         <div className="">
