@@ -66,7 +66,7 @@ export default function SocialminingS1() {
                 Post image &amp; caption on to your social media.
               </h3>
               <div className="reward-box mr-3">
-                <i className="fab fa-instagram-f pr-2"></i>
+                <i className="fab fa-instagram pr-2"></i>
                 <i className="fab fa-twitter pr-1"></i>{" "}
                 <i className="fab fa-tiktok pr-2"></i>
                 <span>Reward = {media.reward} SOSX</span>
@@ -108,41 +108,44 @@ export default function SocialminingS1() {
               </p>
 
               <div className="postcaption" id="myCaption">
-                <p style={{ display: media.name == "twitter" ? "" : "none" }}>
-                  SOSX relaunching new SOSX Token next week 🚀
-                  <br />
-                  <br />
-                  Join twitter for updates: <br />
-                  <a href="socialx.io">www.socialx.io</a>{" "}
-                  <a href="https://twitter.com/socialx_io?s=20&t=BAk0mefbJABXHT-ig2ycQg">
-                    @socialx_io
-                  </a>{" "}
-                  <br />
-                  {media.addres}
+              
+                          <p style={{ display: media.name == "instagram" ? "" : "none" }}>
+                              SOCIAL X JUST LAUNCHED OX GAMES!! <br />
+                              Create a challenge & watch someone record themselves for the
+                              48 hour money prize pool 🤑💰 <br />
+                              Earn daily crypto for sharing 💵 <br />
+                              <a href="socialx.io">www.socialx.io</a>{" "}
+                              <a href="https://t.me/SocialXToken">@socialxtoken</a> <br />
+                              <br />
+                              {media.addres}
+                          </p>
+
+                          <p style={{ display: media.name == "twitter" ? "" : "none" }}>
+                            SOCIAL X JUST LAUNCHED OX GAMES!! <br />
+                            Create a challenge & watch someone record themselves for the
+                            48 hour money prize pool 🤑💰 <br />
+                            Earn daily crypto for sharing 💵 <br />
+                            www.socialx.io
+                            $SOSX
+                          <br />
+                          <br />
+                          {media.addres}
+                        </p>
+
+                      <p style={{ display: media.name == "tiktok" ? "" : "none" }}>
+                            SOSX relaunching new SOSX Token next week 🚀
+                              <br />
+                              <br />
+                             Join twitter for updates: <br />
+                        <a href="socialx.io">www.socialx.io</a>{" "}
+                        <a href="https://twitter.com/socialx_io?s=20&t=BAk0mefbJABXHT-ig2ycQg">
+                          @socialx_io
+                        </a>{" "}
+                      <br />
+                      {media.addres}
                 </p>
 
-                <p style={{ display: media.name == "instagram" ? "" : "none" }}>
-                  SOCIAL X JUST LAUNCHED OX GAMES!! <br />
-                  Create a challenge & watch someone record themselves for the
-                  48 hour money prize pool 🤑💰 <br />
-                  Earn daily crypto for sharing 💵 <br />
-                  <a href="socialx.io">www.socialx.io</a>{" "}
-                  <a href="https://t.me/SocialXToken">@socialxtoken</a> <br />
-                  <br />
-                  {media.addres}
-                </p>
 
-                <p style={{ display: media.name == "tiktok" ? "" : "none" }}>
-                  SOCIAL X JUST LAUNCHED OX GAMES!! <br />
-                  Create a challenge & watch someone record themselves for the
-                  48 hour money prize pool 🤑💰 <br />
-                  Earn daily crypto for sharing 💵 <br />
-                  <a href="socialx.io">www.socialx.io</a>{" "}
-                  <a href="https://www.tiktok.com/@socialxtoken">$SOSX</a>{" "}
-                  <br />
-                  <br />
-                  {media.addres}
-                </p>
               </div>
 
               <a

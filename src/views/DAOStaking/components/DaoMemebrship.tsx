@@ -38,7 +38,7 @@ export default function DaoMemebrship() {
           <div className="d-flex align-items-center justify-content-between">
             <h2 className=" mr-3 main-pink">
               {" "}
-              10%{" "}
+              9%{" "}
               <span style={{ fontSize: "15px", color: " #ff00cc" }}>
                 *EST. APY
               </span>
