@@ -11,7 +11,6 @@ import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
-import web3 from "web3";
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -25,7 +24,7 @@ const StyledList = styled.ol`
   }
 `;
 
-const Ranking = (props) => {
+const Ranking = () => {
   const { t } = useTranslation();
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
@@ -46,11 +45,11 @@ const Ranking = (props) => {
       // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = parseFloat(web3.utils.fromWei(total_stake + "", "ether"));
+      total_stake = (total_stake/(10 ** 18)) ;
       let data = {
         address: voter_address,
         amount: total_stake,
-        level: await getLevel(total_stake),
+        level:  getLevel(total_stake),
       };
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
@@ -58,11 +57,10 @@ const Ranking = (props) => {
       if (data.level === 2) level2.push(data);
       if (data.level === 3) level3.push(data);
       voters.push(data);
-
       setAllVoter(voters);
-
       // }
     }
+
     voters.sort((b, a) => a.amount - b.amount);
     if (displayLevel === 1) setVoters(level1);
     if (displayLevel === 2) setVoters(level2);
@@ -73,11 +71,11 @@ const Ranking = (props) => {
   useEffect(() => {
     loadDaoLevels();
     sortData();
-  }, [account]);
+  }, []);
 
   useEffect(() => {
     sortData();
-  }, [displayLevel]);
+  }, []);
 
   const sortData = () => {
     const currentLevel = [];
@@ -107,10 +105,9 @@ const Ranking = (props) => {
     }
   };
 
-  const incrementCounter = () => {};
 
   return (
-    <div className="card h-100 w-100" style={{ minHeight: "800px" }}>
+    <div className="card h-100 w-100" style={{ minHeight: 500 }}>
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -193,10 +190,10 @@ const Ranking = (props) => {
 
       <div className="tab-bg">
         <div
-          className="d-flex p-4 mt-0  ranking-header"
+          className="d-flex p-4 mt-0 ranking-header"
           style={{
             justifyContent: "space-between",
-            marginTop: "0px!important",
+            // marginTop: "0px!important",
           }}
         >
           <div className="header-item" style={{ width: "40px" }}>
@@ -242,7 +239,8 @@ const Ranking = (props) => {
                 </span>
               );
             })
-          ) : !account ? (
+          )
+           : !account ? (
             <div className="mx-auto text-center">
               You need to be connected to view the Level {displayLevel}
             </div>

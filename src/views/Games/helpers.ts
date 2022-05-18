@@ -53,7 +53,6 @@ export const generatePayloadData = () => {
   return {
     version: SNAPSHOT_VERSION,
     timestamp: (Date.now() / 1e3).toFixed(),
-    space: PANCAKE_SPACE,
   }
 }
 

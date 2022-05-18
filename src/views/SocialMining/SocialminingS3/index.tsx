@@ -8,6 +8,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import React from "react";
 import { useMediaPredicate } from "react-media-hook";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
+import useToast from "hooks/useToast";
 
 export default function SocialminingS3() {
 
@@ -19,6 +20,9 @@ export default function SocialminingS3() {
   const recaptchaRef = React.useRef(null);
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+
+  const { toastError, toastSuccess } = useToast();
+
   const handlePost = async (e) => {
     e.preventDefault();
     recaptchaRef.current.getValue();
@@ -69,53 +73,58 @@ export default function SocialminingS3() {
         setEmailAdrress('');
         setsocialpostlink('');
         // set the message
+        
+        toastSuccess("Details successfully submiotted for verifications");
+        router.replace('/x-mining')
         return setMessage(data.message);
     } else {
         // set the error
-        return setError(data.message);
+        toastSuccess("Error During Submission");
     }
-};
 
-
-const onReCAPTCHAChange = async (captchaCode) => {
-  // If the reCAPTCHA code is null or undefined indicating that
-  // the reCAPTCHA was expired then return early
-  if (!captchaCode) {
-    console.log("no captcha")
-  }
-  // alert(`Hey, ${email_address}`);
-  let captchabody= {
-    email_address,
-    captcha: captchaCode
-  };
-  try {
-    const response = await fetch("/api/register", {
-      method: "POST",
-      body: JSON.stringify(captchabody),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      // If the response is ok than show the success alert
-      alert("Email registered successfully");
-    } else {
-      // Else throw an error with the message returned
-      // from the API
-      const error = await response.json();
-      throw new Error(error.message)
-    }
-  } catch (error) {
-    alert("Something went wrong!!!");
-  } finally {
-    // Reset the reCAPTCHA when the request has failed or succeeeded 
-    // so that it can be executed again if user submits another email.
-    
-    recaptchaRef.current.reset();
    
-  }
 };
+
+
+// const onReCAPTCHAChange = async (captchaCode) => {
+//   // If the reCAPTCHA code is null or undefined indicating that
+//   // the reCAPTCHA was expired then return early
+//   if (!captchaCode) {
+//     console.log("no captcha")
+//   }
+//   // alert(`Hey, ${email_address}`);
+//   let captchabody= {
+//     email_address,
+//     captcha: captchaCode
+//   };
+//   try {
+//     const response = await fetch("/api/register", {
+//       method: "POST",
+//       body: JSON.stringify(captchabody),
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+
+//     if (response.ok) {
+//       // If the response is ok than show the success alert
+//       alert("Email registered successfully");
+//     } else {
+//       // Else throw an error with the message returned
+//       // from the API
+//       const error = await response.json();
+//       throw new Error(error.message)
+//     }
+//   } catch (error) {
+//     alert("Something went wrong!!!");
+//   } finally {
+//     // Reset the reCAPTCHA when the request has failed or succeeeded 
+//     // so that it can be executed again if user submits another email.
+    
+//     recaptchaRef.current.reset();
+   
+//   }
+// };
 
 
 
@@ -170,7 +179,7 @@ const onReCAPTCHAChange = async (captchaCode) => {
                       name="postlink"
                       onChange={(e) => setsocialpostlink(e.target.value)}
                       value={socialpostlink}
-                      placeholder="Post Link"
+                      placeholder="Link to Social Media post"
                       required
                     />
                   </div>
@@ -191,13 +200,12 @@ const onReCAPTCHAChange = async (captchaCode) => {
                   activity. The more you share the more the network is utilized,
                   the more holders will receive.
                 </p>
-
                 
                 <ReCAPTCHA
               ref={recaptchaRef}
               size="normal"
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-              onChange={onReCAPTCHAChange}
+              // onChange={}
             />
               </div>
             </div>

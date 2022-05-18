@@ -9,6 +9,8 @@ import LoaderDisplay from "../components/loader";
 import moment from "moment";
 import useStage from "../../../hooks/useStage";
 import { useRouter } from "next/router";
+import { useQuery } from "@apollo/client";
+import { GET_Challenges, GET_LastRound } from "utils/graphqlQ";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -22,16 +24,14 @@ export default function Votechallenge() {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [stage, setStage] = useState(2);
+  const [lastRound, setLastRound] = useState();
   const router = useRouter();
+  const graphChallengesData = useQuery(GET_Challenges);
+  const graphLastRoundData = useQuery(GET_LastRound);
 
-  const allowedStages = [2, 3];
   const stageHook = useStage();
   useEffect(() => {
     setStage(stageHook);
-    // if (stage !== 2) {
-    //   alert("Not allowed")
-    //   router.push('/xgame')
-    // }
   });
 
   const ReadMore = ({ children, size, css }) => {
@@ -53,46 +53,52 @@ export default function Votechallenge() {
   };
 
   useEffect(() => {
+    if (graphLastRoundData.data !== undefined) {
+      setLastRound(graphLastRoundData.data.lastRound);
+    }
+  }, [graphLastRoundData.data]);
+
+  useEffect(() => {
+    if (graphChallengesData.data !== undefined) {
+      setChallenges(graphChallengesData.data.challenge);
+    }
+  }, [graphChallengesData.data]);
+
+  useEffect(() => {
     setLoading(true);
     const getData = async () => {
       let challenges = [];
-      for await (const resultPart of server.files.ls("/challenges")) {
-        let challenge;
+      for await (const roundContent of server.files.ls(
+        "/Rounds/Round-1/challenges"
+      )) {
+        let challengeData;
         let vote;
-        for await (const cha of server.files.ls(
-          `/challenges/${resultPart.name}`
-        )) {
-          const chunks = [];
-          if (cha.name == "votes") {
-            let votes = await server.files.stat(
-              `/challenges/${resultPart.name}/votes/stage-${stage}`
-            );
-            vote = votes.blocks;
-          }
+        const chunks = [];
 
-          if (cha.name == "challenge.json") {
-            for await (const chunk of server.cat(cha.cid)) {
-              chunks.push(chunk);
+        if (roundContent.name.includes("challenge-")) {
+          for await (const challengeFolderContent of server.files.ls(
+            `/Rounds/Round-1/challenges/${roundContent.name}`
+          )) {
+            if (challengeFolderContent.name == "info.json") {
+              for await (const chunk of server.cat(
+                challengeFolderContent.cid
+              )) {
+                chunks.push(chunk);
+              }
+              const data = concat(chunks);
+              challengeData = JSON.parse(
+                new TextDecoder().decode(data).toString()
+              );
+              challenges.push(challengeData);
             }
-            const data = concat(chunks);
-            challenge = JSON.parse(new TextDecoder().decode(data).toString());
           }
+          setChallenges(challenges);
         }
-
-        let challengeData = {
-          challenge: challenge,
-          votes: vote,
-        };
-
-        challenges.push(challengeData);
-        console.log(challengeData);
       }
-      // setTopChallenges(challenges);
 
       let topThreeChallenges = [];
       const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
       topThreeChallenges.push(ch[0], ch[1], ch[2]);
-
       if (stage == 3) {
         if (challenges.length > 3) {
           setChallenges(topThreeChallenges);
@@ -106,7 +112,6 @@ export default function Votechallenge() {
     };
     getData();
   }, [stage]);
-
 
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
@@ -136,15 +141,13 @@ export default function Votechallenge() {
                     <div className="card-body p-3 align-items-start border-0">
                       <div>
                         <span className="fs-12 font-weight-bold success">
-                          {/* {camp.challenge.payload.metadata.strategies[0].params.address} */}
+                          {/* {camp.payload.metadata.strategies[0].params.address} */}
                         </span>
 
-                        <h1 className="fs-18 pb-2 pt-3">
-                          {camp.challenge.payload.name}
-                        </h1>
+                        <h1 className="fs-18 pb-2 pt-3">{camp.payload.name}</h1>
 
                         <ReadMore size="150" css="fs-14 pt-2">
-                          {camp.challenge.payload.body}
+                          {camp.payload.body}
                         </ReadMore>
                       </div>
                     </div>
@@ -161,7 +164,7 @@ export default function Votechallenge() {
 
                       <Link
                         href={`/challenge/${String(
-                          camp.challenge.payload.name
+                          camp.payload.name
                         ).replaceAll(" ", "-")}`}
                       >
                         <button type="button" className="btn btn-primary ">

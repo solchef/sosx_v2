@@ -27,8 +27,8 @@ import ConnectWalletButton from "components/ConnectWalletButton";
 const tabs = [{ name: "list" }, { name: "mining" }, { name: "staking" }];
 export default function Referral({ datasocial }) {
   const [resultsoc, setResultsoc] = useState(datasocial);
-  const [socialData, setsocialData] = useState([]);
-  const [tab, setTab] = useState(tabs[0]);
+  const [socialData, setsocialData] = useState([]); 
+  const [tab, setTab] = useState(tabs[0]); 
   const { account } = useActiveWeb3React();
   const [userAccount, setUserAccount] = useState("");
   const contract = useStakingContract();

@@ -15,6 +15,7 @@ import { useDaoStakingContract } from "hooks/useContract";
 import ConnectWalletButton from "../../../components/ConnectWalletButton";
 import useStage from "../../../hooks/useStage";
 import useLevels from "hooks/useLevels";
+import moment from "moment";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -47,62 +48,39 @@ export default function Challenge() {
   });
 
   const allowedStages = [2, 3];
-
-  if (stage) {
-    if (!allowedStages.includes(stage)) {
-      router.push("/xgame");
-    }
-  }
-
   let challengeName = `challenge-${name}`;
+
   const getData = async () => {
     if (name && stage) {
       let challenge = [];
-      for await (const resultPart of server.files.ls("/challenges")) {
-        let challengeJson;
-        let vote;
-        let votesList = [];
+      for await (const roundContent of server.files.ls("/Rounds/Round-1")) {
+        let challengeData;
+        let voteData;
+        let votes = 0;
+        const chunks = [];
+        let allVotes = [];
 
-        if (resultPart.name === challengeName) {
-          for await (const cha of server.files.ls(
-            `/challenges/${resultPart.name}`
+        if (roundContent.name.includes(`${challengeName}`)) {
+          challenge.push(roundContent);
+          for await (const challengeFolderContent of server.files.ls(
+            `/Rounds/Round-1/${roundContent.name}`
           )) {
-            const chunks = [];
-
-            if (cha.name == "challenge.json") {
-              for await (const chunk of server.cat(cha.cid)) {
+            if (challengeFolderContent.name == "info.json") {
+              for await (const chunk of server.cat(
+                challengeFolderContent.cid
+              )) {
                 chunks.push(chunk);
               }
               const data = concat(chunks);
-              challengeJson = JSON.parse(
+              challengeData = JSON.parse(
                 new TextDecoder().decode(data).toString()
               );
+              challenge.push(challengeData);
             }
-            if (cha.name == "votes") {
-              for await (const vote of server.files.ls(
-                `/challenges/${resultPart.name}/votes/stage-${stage}`
-              )) {
-                // console.log(await voteListLevels(name));
-                // console.log(vote)
-                let data = {
-                  name: vote.name.slice(0, -5),
-                  level: 1,
-                };
-                votesList.push(data);
-              }
-            }
-            setVotesList(votesList);
-
-            // console.log(votesList)
           }
-          let challengeData = {
-            challenge: challengeJson,
-            votes: vote,
-          };
-          challenge.push(challengeData);
+          setChallenge(challenge);
         }
       }
-      setChallenge(challenge);
     }
   };
 
@@ -138,14 +116,11 @@ export default function Challenge() {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    // alert("voting")
     let daoList = await contract.getAllAccount();
-    // console.log(daoList)
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      // console.log(total_stake);
       total_stake = Number(total_stake / 10 ** 18);
       let voterData = {
         address: voter_address,
@@ -159,27 +134,24 @@ export default function Challenge() {
     const stage3voted = await stageThreeVotes();
 
     if (stage == 2 && !stage2voted) {
-        toastError(
-          t("Error"),
-          t("You already voted for another challenge in stage 2")
-        );
-        return;
-      }
+      toastError(
+        t("Error"),
+        t("You already voted for another challenge in stage 2")
+      );
+      return;
+    }
 
     if (stage == 3 && !stage3voted) {
-        toastError(
-            t("Error"),
-            t("You already voted for another challenge in stage 3")
-        );
-        return;
+      toastError(
+        t("Error"),
+        t("You already voted for another challenge in stage 3")
+      );
+      return;
     }
-  
+
     if (stage == 2 && level == 0) {
-        toastError(
-            t("Error"),
-            t("You should have level to be able to vote")
-        );
-        return;
+      toastError(t("Error"), t("You should have level to be able to vote"));
+      return;
     }
 
     if (stage == 3 && level != 3) {
@@ -188,55 +160,11 @@ export default function Challenge() {
     }
 
     const vote = JSON.stringify({
-      ...generatePayloadData(),
+      timestamp: moment().unix(),
       address: account,
-      data: {
-        domain: {
-          name: "snapshot",
-          version: "0.1.4",
-        },
-        types: {
-          Vote: [
-            {
-              name: "from",
-              type: "address",
-            },
-            {
-              name: "from",
-              type: "address",
-            },
-            {
-              name: "space",
-              type: "string",
-            },
-            {
-              name: "timestamp",
-              type: "uint64",
-            },
-            {
-              name: "challenge",
-              type: "string",
-            },
-            {
-              name: "choice",
-              type: "uint32",
-            },
-            {
-              name: "metadata",
-              type: "string",
-            },
-          ],
-        },
-        message: {
-          space: "SOSX",
-          challenge: `${challengeName}`,
-          choice: 1,
-          metadata: "{}",
-          from: account,
-          timestamp: Date.now(),
-        },
-        data: voters,
-      },
+      round: "1",
+      // data: voters,
+      comments: [],
     });
 
     const sig = await signMessage(connector, library, account, vote);
@@ -244,59 +172,19 @@ export default function Challenge() {
     if (sig) {
       const forIPFS = JSON.stringify(
         {
-          ...generatePayloadData(),
+          timestamp: moment().unix(),
           address: account,
+          round: "1",
+          challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
-          data: {
-            domain: {
-              name: "snapshot",
-              version: "0.1.4",
-            },
-            types: {
-              Vote: [
-                {
-                  name: "from",
-                  type: "address",
-                },
-                {
-                  name: "space",
-                  type: "string",
-                },
-                {
-                  name: "timestamp",
-                  type: "uint64",
-                },
-                {
-                  name: "proposal",
-                  type: "string",
-                },
-                {
-                  name: "choice",
-                  type: "uint32",
-                },
-                {
-                  name: "metadata",
-                  type: "string",
-                },
-              ],
-            },
-            message: {
-              space: "sosx",
-              challenge: "",
-              choice: 1,
-              metadata: "{}",
-              from: account,
-              timestamp: Date.now(),
-            },
-            data: voters,
-          },
+          // data: voters,
         },
         null,
         2
       );
 
       await server.files.write(
-        `/challenges/challenge-${name}/votes/stage-${stage}/${account}.json`,
+        `/Rounds/Round-1/votes/stage-${stage}/${account}.json`,
         forIPFS,
         { create: true }
       );
@@ -373,7 +261,7 @@ export default function Challenge() {
         <i className="fa-solid fa-arrow mx-auto-left"></i>{" "}
         <Link href="/votechallenge"> Back to Challenges </Link>{" "}
       </p>
-      {challenge[0] && (
+      {challenge[1] && (
         <div className="row mx-auto">
           <div className="col-12 col-xl-8 ">
             <div className="row mx-auto">
@@ -382,7 +270,7 @@ export default function Challenge() {
                   <div className="text-muted font-weight-bold">
                     <h1 className="font-weight-bold mb-2">{name}</h1>
 
-                    <ReadMore>{challenge[0].challenge.payload.body}</ReadMore>
+                    <ReadMore>{challenge[1].payload.body}</ReadMore>
                   </div>
                 </div>
 
@@ -470,7 +358,7 @@ export default function Challenge() {
                   <div className="row mx-auto d-flex font-weight-bold pt-2 justify-content-between p-0">
                     <div>Challenge Creation </div>
                     <div className="ml-auto text-white">
-                      {challenge[0].challenge.payload.created}
+                      {challenge[1].payload.created}
                     </div>
                   </div>
 
@@ -484,11 +372,11 @@ export default function Challenge() {
                       {" "}
                       <div className="ml-auto text-white">
                         <a
-                          href={`https://bscscan.com/address/${challenge[0].challenge.payload.creator}`}
+                          href={`https://bscscan.com/address/${challenge[1].payload.creator}`}
                           target="_blank"
                         >
                           {" "}
-                          {challenge[0].challenge.payload.creator.replace(
+                          {challenge[1].payload.creator.replace(
                             /(.{15})..+/,
                             "$1…"
                           )}{" "}
@@ -499,7 +387,7 @@ export default function Challenge() {
                   </div>
                   {/* <div className="row mx-auto d-flex font-weight-bold pt-2 justify-content-between p-0">
                                         <div >Network</div>
-                                        <div className="ml-auto text-white" >{challenge[0].challenge.payload.metadata.network}</div>
+                                        <div className="ml-auto text-white" >{challenge[1].payload.metadata.network}</div>
                                     </div> */}
                 </div>
               </div>

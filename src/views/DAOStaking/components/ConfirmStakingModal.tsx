@@ -76,8 +76,7 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
 
 
   return (
-    <Modal  headerBackground="gradients.cardHeader" >
- 
+    <Modal  headerBackground="gradients.cardHeader">
 
              <Wrapper>
                 <ConfirmedIcon>
