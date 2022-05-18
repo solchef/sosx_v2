@@ -55,6 +55,10 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
   attemptingTxn,
   txHash,
 }) => {
+  const showAcceptChanges = useMemo(
+    () => Boolean(trade && originalTrade && tradeMeaningfullyDiffers(trade, originalTrade)),
+    [originalTrade, trade],
+  )
 
   const { t } = useTranslation()
 
@@ -72,7 +76,7 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
 
 
   return (
-    <Modal title={''} headerBackground="gradients.cardHeader">
+    <Modal  headerBackground="gradients.cardHeader">
 
              <Wrapper>
                 <ConfirmedIcon>
@@ -82,13 +86,12 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
                   <Text fontSize="20px">You are staking SOSX</Text>
                   <AutoColumn gap="12px" justify="center">
                     <Text bold small textAlign="center">
-                        Stake SOSX
+                        Transaction is being sent
                     </Text>
                   </AutoColumn>
                   <Text small color="textSubtle" textAlign="center">
-                    {t('Press and Confirm this transaction in your wallet')}
+                    {t('Confirm this transaction in your wallet')}
                   </Text>
-                  
                 </AutoColumn>
               </Wrapper>
 
