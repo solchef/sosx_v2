@@ -21,6 +21,7 @@ import LoaderDisplay from "./components/loader";
 import { getDaoLevel } from "./hooks/getDaoLevel";
 import { useQuery } from "@apollo/client";
 import { GET_LastVideo, GET_Videos } from "utils/graphqlQ";
+import { getWalletIsVotedStage2 } from "api/graphql";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -71,6 +72,12 @@ export default function Game() {
   };
 
   useEffect(() => {
+    console.log(GraphqlLastVideosData);
+    getWalletIsVotedStage2("0xC410e12052FFf5D4CD6E421AFff24e7f449052A2").then(
+      (data) => {
+        console.log(data);
+      }
+    );
     if (GraphqlVideosData.data !== undefined) setVideos(GraphqlVideosData.data);
   }, [GraphqlVideosData.data]);
 
