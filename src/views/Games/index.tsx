@@ -23,6 +23,7 @@ import { useQuery } from "@apollo/client";
 import { GET_LastVideo, GET_Videos } from "utils/graphqlQ";
 import VoteStageTwo from "./VoteStageTwo";
 import VoteStageThree from "./VoteStageThree";
+import Submission from "./SubmitChallenge";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -35,7 +36,7 @@ export default function Game() {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [videos, setVideos] = useState([]);
-  const [lastVideos, setLastVideos] = useState([])
+  const [lastVideos, setLastVideos] = useState([]);
   const router = useRouter();
   const contract = useDaoStakingContract();
   let [stage, setStage] = useState(5);
@@ -60,7 +61,7 @@ export default function Game() {
     setHours(duration.hours());
     setMinutes(duration.minutes());
     setSeconds(duration.seconds());
-    
+
     return {
       hour: duration.hours(),
       min: duration.minutes(),
@@ -100,7 +101,7 @@ export default function Game() {
         let checkStage = stageGroups.findIndex(
           (group) => group.end > currTime && currTime > group.start
         );
-          
+
         if (checkStage != -1) {
           setStage(checkStage + 1);
           calculateTimeLeft(moment.unix(stageGroups[checkStage].end));
@@ -120,26 +121,20 @@ export default function Game() {
 
   return (
     <div className="game container-fluid d-flex flex-wrap flex-direction-row">
-
-     <div id="timer-section" style={{flex:"0 1 350px"}}>
-          <TimerDisplay
-            hours={hours}
-            minutes={minutes}
-            seconds={seconds}
-            stage={stage}
-          />
+      <div id="timer-section" style={{ flex: "0 1 350px" }}>
+        <TimerDisplay
+          hours={hours}
+          minutes={minutes}
+          seconds={seconds}
+          stage={stage}
+        />
       </div>
 
-      <div id="action-section" style={{flex:"2 73%"}}>
-        {stage == 1 && (
-          <CreateChallenge level={currentLevel} stage={stage} />
-        )}
-        {stage == 2 && (
-           <VoteStageTwo level={currentLevel} stage={stage} />
-        )}
-        {stage == 3 && (
-           <VoteStageThree level={currentLevel} stage={stage} />
-        )}        
+      <div id="action-section" style={{ flex: "2 73%" }}>
+        {stage == 5 && <CreateChallenge level={currentLevel} stage={stage} />}
+        {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
+        {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
+        {stage == 1 && <Submission level={currentLevel} stage={stage} />}
       </div>
       <div id="ranking-section" style={{ flex: "0 1 350px" }}>
         <Ranking stage={stage} />

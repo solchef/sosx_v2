@@ -24,7 +24,6 @@ import Choices, { Choice, makeChoice, MINIMUM_CHOICES } from "./Choices";
 import { combineDateAndTime, getFormErrors } from "./helpers";
 import { FormState } from "./types";
 import { ADMINS } from "../config";
-import VoteDetailsModal from "../components/VoteDetailsModal";
 import NavGame from "../NavGame";
 import { CID, create } from "ipfs-http-client";
 import ReactMarkdown from "react-markdown";
@@ -87,9 +86,7 @@ const CreateChallenge = (props) => {
   } = state;
 
   const contract = useDaoStakingContract();
-  const [onPresentVoteDetailsModal] = useModal(
-    <VoteDetailsModal block={state.snapshot} />
-  );
+
 
   let roundId;
   const roundInfo = JSON.stringify({

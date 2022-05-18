@@ -12,6 +12,8 @@ import axios from "axios";
 import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
 import { useDaoStakingContract } from "hooks/useContract";
 import useToast from "hooks/useToast";
+import { SubmissionAside } from "./SubmissionAside";
+import PrizePool from "./PrizePool";
 
 const TimerDisplay = (props) => {
   const { t } = useTranslation();
@@ -49,27 +51,22 @@ const TimerDisplay = (props) => {
     }
   };
 
+
+    if(props.stage == 1){
+
+
+      return(
+        <>
+         <SubmissionAside/>
+        </>
+       
+      )
+    }
+
+
   return (
     <>
-      <div className="card prize-card mb-3">
-        <div className="d-flex flex-column mb-0">
-          <div className="d-flex mb-2 align-items-center">
-            <img src="images/prize-pool-icon.png" className="title-icon" />
-            <h4>PRIZE POOL</h4>
-          </div>
-          <p>
-            Feel free to{" "}
-            <a href="#" onClick={handleShowDonate}>
-              donate
-            </a>{" "}
-            to the prize pool.
-          </p>
-        </div>
-        <div className="d-flex justify-content-center m-auto w-auto">
-          <h2 className="main-pink">$1,000.00</h2>
-        </div>
-      </div>
-
+       <PrizePool/>
 
       <div className="card timer-card mb-3">
         <div className="d-flex align-items-center mb-2">
@@ -274,6 +271,10 @@ const TimerDisplay = (props) => {
           </div>
         </div>
       )}
+
+
+
+      
 
       <Modal show={showDonate} onHide={handleCloseDonate} centered>
         <ModalHeader
