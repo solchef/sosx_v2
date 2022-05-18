@@ -335,7 +335,7 @@ export default function Challenge() {
                 <h5 className=" fs-16 font-weight-bold pb-2">Details</h5>
                 <div className="card-body p-0">
                   <div className="row mx-auto d-flex font-weight-bold justify-content-between ">
-                    <div>X-Games Challenge</div>
+                    <div>OxGame Challenge</div>
                     <div className="ml-auto text-white">
                       {" "}
                       <img

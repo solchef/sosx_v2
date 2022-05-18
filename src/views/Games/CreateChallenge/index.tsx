@@ -291,7 +291,7 @@ const CreateChallenge = (props) => {
                 />
               </g>
             </svg>
-            <h4 style={{ fontSize: "60px" }}>GAMES</h4>
+            <h4 style={{ fontSize: "60px" }}>GAME</h4>
           </div>
           <div className="d-flex align-items-center mb-2">
             <h4>CREATE A CHALLENGE</h4>
