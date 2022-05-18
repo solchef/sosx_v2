@@ -45,11 +45,11 @@ const Ranking = () => {
       // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = (total_stake/(10 ** 18)) ;
+      total_stake = total_stake / 10 ** 18;
       let data = {
         address: voter_address,
         amount: total_stake,
-        level:  getLevel(total_stake),
+        level: getLevel(total_stake),
       };
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
@@ -71,7 +71,7 @@ const Ranking = () => {
   useEffect(() => {
     loadDaoLevels();
     sortData();
-  }, []);
+  }, [account]);
 
   useEffect(() => {
     sortData();
@@ -104,7 +104,6 @@ const Ranking = () => {
       return 3;
     }
   };
-
 
   return (
     <div className="card h-100 w-100" style={{ minHeight: 500 }}>
@@ -239,8 +238,7 @@ const Ranking = () => {
                 </span>
               );
             })
-          )
-           : !account ? (
+          ) : !account ? (
             <div className="mx-auto text-center">
               You need to be connected to view the Level {displayLevel}
             </div>
