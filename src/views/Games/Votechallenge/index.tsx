@@ -60,6 +60,7 @@ export default function Votechallenge() {
 
   useEffect(() => {
     if (graphChallengesData.data !== undefined) {
+      console.log(graphChallengesData.data.challenge);
       setChallenges(graphChallengesData.data.challenge);
     }
   }, [graphChallengesData.data]);
@@ -110,7 +111,7 @@ export default function Votechallenge() {
       }
       setLoading(false);
     };
-    getData();
+    // getData();
   }, [stage]);
 
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
@@ -132,50 +133,49 @@ export default function Votechallenge() {
       >
         {challenges.length > 0 ? (
           <>
-            {challenges
-              .sort((a, b) => a.votes - b.votes)
-              .reverse()
-              .map((camp) => (
-                <div style={{ flex: "1", gap: "20px" }}>
-                  <div className="card h-100 p-0 d-flex flex-column overflow-hidden">
-                    <div className="card-body p-3 align-items-start border-0">
-                      <div>
-                        <span className="fs-12 font-weight-bold success">
-                          {/* {camp.payload.metadata.strategies[0].params.address} */}
-                        </span>
+            {challenges.map((camp) => (
+              <div style={{ flex: "1", gap: "20px" }}>
+                <div className="card h-100 p-0 d-flex flex-column overflow-hidden">
+                  <div className="card-body p-3 align-items-start border-0">
+                    <div>
+                      <span className="fs-12 font-weight-bold success">
+                        {/* {camp.payload.metadata.strategies[0].params.address} */}
+                      </span>
 
-                        <h1 className="fs-18 pb-2 pt-3">{camp.payload.name}</h1>
+                      <h1 className="fs-18 pb-2 pt-3">{camp.payload.name}</h1>
 
-                        <ReadMore size="150" css="fs-14 pt-2">
-                          {camp.payload.body}
-                        </ReadMore>
-                      </div>
-                    </div>
-                    <div className="card-footer pt-0 mb-auto d-flex flex-column foot-card border-0">
-                      <div className="align-items-center d-flex justify-content-between">
-                        <div>
-                          <i className="fa-regular fa-heart p-2"></i>
-                          <span className="fs-12 p-1" id="votes">
-                            {camp.votes}
-                          </span>
-                          <span className="fs-12">Votes</span>
-                        </div>
-                      </div>
-
-                      <Link
-                        href={`/challenge/${String(
-                          camp.payload.name
-                        ).replaceAll(" ", "-")}`}
-                      >
-                        <button type="button" className="btn btn-primary ">
-                          <i className="fa-solid fa-check-to-slot pr-2"></i>
-                          Details
-                        </button>
-                      </Link>
+                      <ReadMore size="150" css="fs-14 pt-2">
+                        {camp.payload.body}
+                      </ReadMore>
                     </div>
                   </div>
+                  <div className="card-footer pt-0 mb-auto d-flex flex-column foot-card border-0">
+                    <div className="align-items-center d-flex justify-content-between">
+                      <div>
+                        <i className="fa-regular fa-heart p-2"></i>
+                        <span className="fs-12 p-1" id="votes">
+                          {camp.votedList.stage2.length +
+                            camp.votedList.stage3.length}
+                        </span>
+                        <span className="fs-12">Votes</span>
+                      </div>
+                    </div>
+
+                    <Link
+                      href={`/challenge/${String(camp.payload.name).replaceAll(
+                        " ",
+                        "-"
+                      )}`}
+                    >
+                      <button type="button" className="btn btn-primary ">
+                        <i className="fa-solid fa-check-to-slot pr-2"></i>
+                        Details
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-              ))}
+              </div>
+            ))}
           </>
         ) : loading ? (
           <LoaderDisplay />
