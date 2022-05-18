@@ -24,6 +24,8 @@ export default function Statistics() {
                let amount = Number(stakeAmount/ (10 ** 18));
                 setTotalAmountStaked(amount);
                 let level = getDaoLevel(amount);
+
+                // alert(level)
                 setLevel(level)
                  
             });
@@ -71,7 +73,7 @@ export default function Statistics() {
                             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center" >
                                 <div className="data-content">
                                     <div className="d-flex  align-items-end">
-                                        <h2 className="mb-3 main-pink">{level == 1 ? 6.00 : level == 9.00 ? 6 : 12.00}</h2>
+                                        <h2 className="mb-3 main-pink">{level == 1 ? 6.00 : level == 2 ? 9.00 : level == 3 ? 12.00 : 0.00}</h2>
                                     </div>
                                     <div className="">
                                         <div className="">
