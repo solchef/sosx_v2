@@ -243,6 +243,7 @@ export default function Staking() {
       // setTransaction(tx);
       onPresentConfirmModal();
     }
+    
   };
 
 

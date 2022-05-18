@@ -56,7 +56,7 @@ export default function DaoMemebrship() {
             <h2 className=" mr-3 main-pink">
               <h2 className=" mr-3 main-pink">
                 {" "}
-                10%{" "}
+                12%{" "}
                 <span style={{ fontSize: "15px", color: " #ff00cc" }}>
                   *EST. APY
                 </span>

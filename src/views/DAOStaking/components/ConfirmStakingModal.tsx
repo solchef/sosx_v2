@@ -43,40 +43,21 @@ interface ConfirmStakingModalProps {
 }
 
 const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProps> = ({
-  trade,
-  originalTrade,
   onAcceptChanges,
-  allowedSlippage,
   onConfirm,
   onDismiss,
   customOnDismiss,
-  recipient,
-  swapErrorMessage,
-  attemptingTxn,
-  txHash,
+
 }) => {
-  const showAcceptChanges = useMemo(
-    () => Boolean(trade && originalTrade && tradeMeaningfullyDiffers(trade, originalTrade)),
-    [originalTrade, trade],
-  )
 
-  const { t } = useTranslation()
 
-  const modalHeader = () => {
-                <StakeModalFooter
-                onConfirm={onConfirm}
-                trade={trade}
-                disabledConfirm={showAcceptChanges}
-                swapErrorMessage={swapErrorMessage}
-                allowedSlippage={allowedSlippage}
-            />
-  }
+  
 
 
 
 
   return (
-    <Modal  headerBackground="gradients.cardHeader">
+    <Modal onDismiss={onDismiss} title={''} headerBackground="gradients.cardHeader">
 
              <Wrapper>
                 <ConfirmedIcon>
