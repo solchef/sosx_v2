@@ -66,7 +66,7 @@ export default function SocialminingS1() {
                 Post image &amp; caption on to your social media.
               </h3>
               <div className="reward-box mr-3">
-                <i className="fab fa-facebook-f pr-2"></i>
+                <i className="fab fa-instagram-f pr-2"></i>
                 <i className="fab fa-twitter pr-1"></i>{" "}
                 <i className="fab fa-tiktok pr-2"></i>
                 <span>Reward = {media.reward} SOSX</span>
