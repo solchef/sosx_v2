@@ -63,6 +63,7 @@ const CreateChallenge = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [votingLevel, setVotingLevel] = useState(0);
   const [challengeDetails, setChallengeDetails] = useState("");
+  const [challengeInputName, setChallengeInputName] = useState("");
 
   const [fieldsState, setFieldsState] = useState<{ [key: string]: boolean }>(
     {}
@@ -117,7 +118,7 @@ const CreateChallenge = (props) => {
           timestamp: moment().unix(),
           type: "challenge",
           payload: {
-            name,
+            name: challengeInputName,
             body: challengeDetails,
             creator: account,
             created: new Date(),
@@ -134,7 +135,7 @@ const CreateChallenge = (props) => {
               type: "challenge",
               signiture: sig.toString(),
               payload: {
-                name,
+                name: challengeInputName,
                 body: challengeDetails,
                 creator: account,
                 created: new Date(),
@@ -144,12 +145,12 @@ const CreateChallenge = (props) => {
             2
           );
 
-          const challengeName = `challenge` + `-${name.replaceAll(" ", "-")}`;
+          const challengeName = `challenge` + `-${challengeInputName.replaceAll(" ", "-")}`;
 
-          await server.files.mkdir(`/Rounds/Round-1/${challengeName}`);
+          await server.files.mkdir(`/Rounds/Round-1/challenges/${challengeName}`);
 
           await server.files.write(
-            `/Rounds/Round-1/${challengeName}/info.json`,
+            `/Rounds/Round-1/challenges/${challengeName}/info.json`,
             forIPFS,
             { create: true }
           );
@@ -313,7 +314,7 @@ const CreateChallenge = (props) => {
                     <input
                       type="text"
                       placeholder="Your Challenge Title"
-                      onChange={handleChange}
+                      onChange={(e) => setChallengeInputName(e.target.value)}
                       required
                       className="form-control w-100"
                       style={{ fontSize: "20px" }}
