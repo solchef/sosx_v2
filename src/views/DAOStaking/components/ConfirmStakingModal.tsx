@@ -2,22 +2,12 @@ import { useCallback, useMemo } from 'react'
 import { currencyEquals, Trade } from '@pancakeswap/sdk'
 import { InjectedModalProps, Modal, Spinner } from '@pancakeswap/uikit'
 import { useTranslation } from 'contexts/Localization'
-import TransactionConfirmationModal, {
-  ConfirmationModalContent,
-  TransactionErrorContent,
-} from 'components/TransactionConfirmationModal'
+
 import StakeModalFooter from './StakeModalFooter'
-import StakeModalHeader from './StakeModalHeader'
 import { AutoColumn, ColumnCenter } from 'components/Layout/Column'
 import {
-  Button,
   Text,
-  ErrorIcon,
-  ArrowUpIcon,
-  MetamaskIcon,
-  Flex,
-  Box,
-  Link,
+
 } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 
@@ -51,26 +41,9 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
   onDismiss,
   customOnDismiss,
   recipient,
-  swapErrorMessage,
-  attemptingTxn,
-  txHash,
 }) => {
-  const showAcceptChanges = useMemo(
-    () => Boolean(trade && originalTrade && tradeMeaningfullyDiffers(trade, originalTrade)),
-    [originalTrade, trade],
-  )
 
   const { t } = useTranslation()
-
-  const modalHeader = () => {
-                <StakeModalFooter
-                onConfirm={onConfirm}
-                trade={trade}
-                disabledConfirm={showAcceptChanges}
-                swapErrorMessage={swapErrorMessage}
-                allowedSlippage={allowedSlippage}
-            />
-  }
 
   const handleDismiss = useCallback(() => {
     if (customOnDismiss) {
@@ -82,7 +55,6 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
 
   return (
     <Modal onDismiss={handleDismiss} title={'Staking'}  headerBackground="gradients.cardHeader">
-
              <Wrapper>
                 <ConfirmedIcon>
                   <Spinner />
@@ -100,18 +72,15 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
                 </AutoColumn>
               </Wrapper>
 
-            {/* <p>Staking </p> */}
 
            <StakeModalFooter
                 onConfirm={onConfirm}
                 trade={trade}
-                disabledConfirm={showAcceptChanges}
-                swapErrorMessage={swapErrorMessage}
+                disabledConfirm={false}
+                swapErrorMessage={"Transaction could not be confirmed"}
                 allowedSlippage={allowedSlippage}
             />
-    {/* ) : (
-      content()
-    )} */}
+  
   </Modal>
 )
   

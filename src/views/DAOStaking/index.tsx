@@ -271,7 +271,7 @@ export default function DaoStaking() {
         <div style={{ flex: "2 1 30%", minWidth: "400px" }}>
           <div className="card d-flex flex-column">
             <div className="card-body">
-              <div className="d-flex align-items-center mb-2">
+              <div className="d-flex align-items-center mb-5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   xmlnsXlink="http://www.w3.org/1999/xlink"

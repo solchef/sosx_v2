@@ -118,6 +118,7 @@ export default function Game() {
 
   return (
     <div className="game container-fluid d-flex flex-wrap flex-direction-row">
+      
      <div id="timer-section" style={{flex:" 0 1 350px"}}>
           <TimerDisplay
             hours={hours}
