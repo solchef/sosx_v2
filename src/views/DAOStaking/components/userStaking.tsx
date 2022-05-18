@@ -30,6 +30,7 @@ export default function userStaking(props) {
   const [showDetails, setShowDetails] = useState(-1);
   const [loadingData, setLoadingData] = useState(false);
   const [level, setlevel] = useState(false);
+  
 
   const handleUnstake = async (stakeID) => {
     const unstake = await contract.returnTokens(stakeID);
@@ -72,6 +73,7 @@ export default function userStaking(props) {
           };
           list.push(instance);
 
+
           setActiveStakes((activeStakes) => [...activeStakes, instance]);
         });
         count++;
@@ -90,8 +92,11 @@ export default function userStaking(props) {
   };
 
   useEffect(() => {
+    if(account != undefined){
     loadUI();
-  }, []);
+
+    }
+  }, [account]);
 
   return (
     <>

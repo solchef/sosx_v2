@@ -34,6 +34,7 @@ export default function Game() {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [videos, setVideos] = useState([]);
+  const [lastVideos, setLastVideos] = useState([])
   const router = useRouter();
   const contract = useDaoStakingContract();
   let [stage, setStage] = useState(5);
@@ -118,8 +119,8 @@ export default function Game() {
 
   return (
     <div className="game container-fluid d-flex flex-wrap flex-direction-row">
-      
-     <div id="timer-section" style={{flex:" 0 1 350px"}}>
+
+     <div id="timer-section" style={{flex:"0 1 350px"}}>
           <TimerDisplay
             hours={hours}
             minutes={minutes}
@@ -128,9 +129,7 @@ export default function Game() {
           />
       </div>
 
-
-
-      <div id="action-section" style={{flex:" 2 73%"}}>
+      <div id="action-section" style={{flex:"2 73%"}}>
         {stage == 1 && (
           <CreateChallenge level={currentLevel} stage={stage} />
         )}
@@ -138,8 +137,8 @@ export default function Game() {
            <Vote level={currentLevel} stage={stage} />
         )}
       </div>
-      <div id="ranking-section" style={{ flex: " 0 1 350px" }}>
-        <Ranking />
+      <div id="ranking-section" style={{ flex: "0 1 350px" }}>
+        <Ranking stage={stage} />
       </div>
 
       <div id="video-section" style={{ flex: "2 73%" }}>

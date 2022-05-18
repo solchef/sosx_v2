@@ -26,7 +26,7 @@ const StyledList = styled.ol`
   }
 `;
 
-const Ranking = () => {
+const Ranking = (props) => {
   const { t } = useTranslation();
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
@@ -71,15 +71,14 @@ const Ranking = () => {
   };
 
   useEffect(() => {
-    contract.getAllAccount().then(daolist => {
+    contract.getAllAccount().then((daolist) => {
       loadDaoLevels(daolist);
-    })
+    });
     // alert(account)
     sortData();
-  }, []);
+  }, [props.stage]);
 
   useEffect(() => {
-    
     sortData();
   }, [displayLevel]);
 
@@ -92,8 +91,7 @@ const Ranking = () => {
     setVoters(currentLevel);
   };
 
-  const incrementCounter = () => {};
-
+  
   return (
     <div className="card h-100 w-100" style={{ minHeight: 500 }}>
       <div className="d-flex align-items-center mb-2">
