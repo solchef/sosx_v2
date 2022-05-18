@@ -12161,7 +12161,9 @@ a.text-dark:focus {
       font-size: 0.875rem;
   }
 }
-
+.flex-wrap{
+  flex-wrap:wrap
+}
 p {
   line-height: 1.5;
   font-size: 16px !important;
@@ -38305,7 +38307,7 @@ box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px
   position: relative;
   border: 0px solid transparent;
   border-radius: 0.25rem;
-  box-shadow: 0px 12px 33px 0px rgba(62, 73, 84, 0.08);
+  /* box-shadow: 0px 12px 33px 0px rgb(62 73 84 / 8%); */
   padding: 20px;
 }
 
@@ -48836,11 +48838,10 @@ Define the font family, weight, and icon
       font-size: 12px;
       background-color: #ff00cc;
       border-color: #ff00cc;
-      width: %;
+      
   }
   #action-section .btn-primary {
-      margin-bottom:25px
-  }
+      }
 
   .col-1,
   .col-2,
@@ -48984,12 +48985,7 @@ Define the font family, weight, and icon
   }
 }
 
-@media (max-width: 1200px) {
-  .card h3 {
-      font-size: 16px;
-  }
-  #video-section{flex: 0 100% !important;}
-}
+
 
 @media (max-width: 920px) {
   .game-top h1 {
@@ -49430,34 +49426,29 @@ a {
 
 
 @media (max-width: 1600px) {
-  div#action-section {
+  div#action-section, div#video-section {
       flex: 2 50% !important;
   }
 
   div#timer-section {
-      flex: 1 auto !important;
-  }
-
-  .prize-card.card,
-  .timer-card.card {
-      flex: 20% !important;
       
   }
 
+
+  
+
   div#timer-section {
-      min-width: 340px;
-      /* display: inline-flex; */
-      gap: 20px;
+      
+      
+      
   }
   #action-section.button{margin-bottom:50px!important}
-      .stake-amount, .dao-box, .price-box, .rate-amount {
-      flex: 1 40%!important;
-  }
+
 }
 
 @media (max-width: 997px) {
 
-  div#timer-section {
+  div#timer-section, div#ranking-section {
       flex: 2 100% !important;
   flex-flow: column;max-width: none;max-width: 100%;}
 
@@ -49561,7 +49552,7 @@ background-color: #d9d9d9!important;
 }
 
 @media (max-width: 1200px) {
-  #timer-section .card{width:100%!important}
+  #timer-section .card{width:100%!important;}
   
 .challenge-form
 {flex:1 100%!important;}
@@ -49574,3 +49565,28 @@ h2.main-pink {font-family: 'digital-7';font-size: 25px;}
 
 .challenge-form
 {flex: 0 80%;}
+.challenge-list {flex: 1 46%;background: #494949;overflow-y: scroll;max-height: 600px;}
+.challenge-details {flex: 1 47%;overflow-y: auto;max-height: 600px;}
+.list-title {margin-right: 20px;flex: 2 50%;}
+
+.challenge-items {/* border-bottom: 1px solid #efefef; */padding: 10px 20px;align-items: center;}
+.challenge-items:nth-child(even){
+    background:#00000017
+}
+.challenge-items:hover{
+    background:#ffffff21
+}
+.challenge-items:active, .challenge-items:focus{
+    background:#ff00cc26
+}
+
+.list-votes {margin-right: 20px;}
+
+.challenge-details h1 {font-size: 20px;margin-bottom: 15px;}
+
+@media (max-width:1500px){
+
+.challenge-list {flex: 1 100%; max-height: 250px;}
+.challenge-details {flex: 1 100%; max-height: 600px;}
+    
+}

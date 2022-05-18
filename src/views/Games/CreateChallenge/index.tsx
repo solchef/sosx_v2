@@ -254,7 +254,6 @@ const CreateChallenge = (props) => {
   return (
     <div className="card h-100">
       <form onSubmit={handleSubmit}>
-        <div className="card h-100">
           <div className="d-flex align-items-center mb-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -291,7 +290,7 @@ const CreateChallenge = (props) => {
                 />
               </g>
             </svg>
-            <h4 style={{ fontSize: "60px" }}>GAMES</h4>
+            <h4 style={{ fontSize: "60px" }}>GAME</h4>
           </div>
           <div className="d-flex align-items-center mb-2">
             <h4>CREATE A CHALLENGE</h4>
@@ -366,7 +365,7 @@ const CreateChallenge = (props) => {
               )}
             </div>
           </div>
-        </div>
+       
       </form>
     </div>
   );

@@ -46,7 +46,7 @@ export default function DaoStaking() {
   const [transaction, setTransaction] = useState();
   const [challenge, setChallenge] = useState(false);
   const [pendingTx, setPendingTx] = useState(false);
-  const [estimateDaoLevel, setEstimateDaoLevel] = useState(1);
+  const [estimateDaoLevel, setEstimateDaoLevel] = useState(0);
   const [transactionState, setTransactionState] = useState(1);
   const [txHash, setTxHash] = useState(1);
 
@@ -358,7 +358,7 @@ export default function DaoStaking() {
                 <div className="d-flex h-100 justify-content-between mt-3 mb-3">
                   <div>
                     <div className="d-flex w-auto m-auto">
-                      <h3>{estimateDaoLevel == 1 ? 6 : estimateDaoLevel == 2 ? 9 : 12} %</h3>
+                      <h3>{estimateDaoLevel > 0 ? (estimateDaoLevel == 1 ? 6.00 : estimateDaoLevel == 2 ? 9.00 : 12.00) : 0} %</h3>
                     </div>
                     <p className="success mb-0 main-pink pt-2">Reward % </p>
                   </div>
