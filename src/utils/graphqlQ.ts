@@ -55,3 +55,31 @@ export const GET_Stage3Voter = gql`
     }
   }
 `;
+
+export const GET_Videos = gql`
+  query Videos {
+    videos {
+      id
+      rId
+      cId
+      urls {
+        youtube
+        tiktok
+      }
+    }
+  }
+`;
+
+export const GET_LastVideo = gql`
+  query Videos {
+    lastVideo {
+      id
+      rId
+      cId
+      urls {
+        youtube
+        tiktok
+      }
+    }
+  }
+`;

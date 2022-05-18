@@ -53,27 +53,32 @@ export default function Challenge() {
   const getData = async () => {
     if (name && stage) {
       let challenge = [];
-      for await (const roundContent of server.files.ls("/rounds/round-1")) {
+      for await (const roundContent of server.files.ls("/Rounds/Round-1")) {
         let challengeData;
-        let voteData
+        let voteData;
         let votes = 0;
         const chunks = [];
-        let allVotes = []
-
+        let allVotes = [];
 
         if (roundContent.name.includes(`${challengeName}`)) {
-          challenge.push(roundContent)
-          for await (const challengeFolderContent of server.files.ls(`/rounds/round-1/${roundContent.name}`)) {
-            if (challengeFolderContent.name == 'info.json') {
-              for await (const chunk of server.cat(challengeFolderContent.cid)) {
+          challenge.push(roundContent);
+          for await (const challengeFolderContent of server.files.ls(
+            `/Rounds/Round-1/${roundContent.name}`
+          )) {
+            if (challengeFolderContent.name == "info.json") {
+              for await (const chunk of server.cat(
+                challengeFolderContent.cid
+              )) {
                 chunks.push(chunk);
               }
               const data = concat(chunks);
-              challengeData = JSON.parse(new TextDecoder().decode(data).toString());
-              challenge.push(challengeData)
+              challengeData = JSON.parse(
+                new TextDecoder().decode(data).toString()
+              );
+              challenge.push(challengeData);
             }
           }
-          setChallenge(challenge)
+          setChallenge(challenge);
         }
       }
     }
@@ -129,27 +134,24 @@ export default function Challenge() {
     const stage3voted = await stageThreeVotes();
 
     if (stage == 2 && !stage2voted) {
-        toastError(
-          t("Error"),
-          t("You already voted for another challenge in stage 2")
-        );
-        return;
-      }
+      toastError(
+        t("Error"),
+        t("You already voted for another challenge in stage 2")
+      );
+      return;
+    }
 
     if (stage == 3 && !stage3voted) {
-        toastError(
-            t("Error"),
-            t("You already voted for another challenge in stage 3")
-        );
-        return;
+      toastError(
+        t("Error"),
+        t("You already voted for another challenge in stage 3")
+      );
+      return;
     }
-  
+
     if (stage == 2 && level == 0) {
-        toastError(
-            t("Error"),
-            t("You should have level to be able to vote")
-        );
-        return;
+      toastError(t("Error"), t("You should have level to be able to vote"));
+      return;
     }
 
     if (stage == 3 && level != 3) {
@@ -158,13 +160,12 @@ export default function Challenge() {
     }
 
     const vote = JSON.stringify({
-        timestamp: moment().unix(),
-        address: account,
-        round: "1",
-        // data: voters,
-        comments: []
-      },
-    );
+      timestamp: moment().unix(),
+      address: account,
+      round: "1",
+      // data: voters,
+      comments: [],
+    });
 
     const sig = await signMessage(connector, library, account, vote);
 
@@ -177,13 +178,13 @@ export default function Challenge() {
           challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
           // data: voters,
-          },
+        },
         null,
         2
       );
 
       await server.files.write(
-        `/rounds/round-1/votes/stage-${stage}/${account}.json`,
+        `/Rounds/Round-1/votes/stage-${stage}/${account}.json`,
         forIPFS,
         { create: true }
       );
