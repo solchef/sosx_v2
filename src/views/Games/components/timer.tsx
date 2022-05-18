@@ -124,38 +124,7 @@ const TimerDisplay = (props) => {
         <p style={{fontWeight: 800, color: "white"}}>3- Challenges cant be designed to harm, kill, or intentionally lead
             to death.</p>
     </div>
-      <div className="card timer-card mb-3">
-         <div className="d-flex align-items-center mb-2">
-            <img src="images/submission-date-icon.png" className="title-icon" />
-            <h4>TIME REMAINING</h4>
-         </div>
-         <p>To complete this stage of the game</p>
-         <div className="clock mt-4">
-            <div className="d-flex m-auto w-100" id="countdown" style={{justifyContent: 'center'}}>
-            <div className="d-flex justify-content-start align-items-center">
-               <p className="li "><span className=" main-pink m-0">{pad(props.hours)}</span>Hours</p>
-               <p className="li d-flex align-self-baseline"><span>:</span></p>
-            </div>
-            <div className="d-flex justify-content-start align-items-center">
-               <p className="li "><span className=" main-pink m-0">{pad(props.minutes)}</span>Minutes</p>
-               <p className="li d-flex align-self-baseline"><span>:</span></p>
-            </div>
-            <p className="li"><span className=" main-pink m-0">{pad(props.seconds)}</span>Seconds</p>
-         </div>
-      </div>
-   </div>
-   <div className="card prize-card">
-      <div className="d-flex flex-column mb-0">
-         <div className="d-flex mb-2 align-items-center">
-            <img src="images/prize-pool-icon.png" className="title-icon" />
-            <h4>PRIZE POOL</h4>
-         </div>
-         <p>Feel free to <a href="#" onClick={handleShowDonate}>donate</a> to the prize pool.</p>
-      </div>
-      <div>
-         <h2 className="main-pink">$1,000.00</h2>
-      </div>
-   </div>
+
   
 
       <Modal show={showDonate} onHide={handleCloseDonate} centered>
