@@ -11,7 +11,6 @@ import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
-import web3 from "web3";
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -25,7 +24,7 @@ const StyledList = styled.ol`
   }
 `;
 
-const Ranking = (props) => {
+const Ranking = () => {
   const { t } = useTranslation();
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
@@ -46,11 +45,11 @@ const Ranking = (props) => {
       // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = parseFloat(web3.utils.fromWei(total_stake + "", "ether"));
+      total_stake = (total_stake/(10 ** 18)) ;
       let data = {
         address: voter_address,
         amount: total_stake,
-        level: await getLevel(total_stake),
+        level:  getLevel(total_stake),
       };
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
@@ -76,7 +75,7 @@ const Ranking = (props) => {
 
   useEffect(() => {
     sortData();
-  }, [displayLevel]);
+  }, []);
 
   const sortData = () => {
     const currentLevel = [];
@@ -106,7 +105,6 @@ const Ranking = (props) => {
     }
   };
 
-  const incrementCounter = () => {};
 
   return (
     <div className="card h-100 w-100" style={{ minHeight: 500 }}>
@@ -241,7 +239,8 @@ const Ranking = (props) => {
                 </span>
               );
             })
-          ) : !account ? (
+          )
+           : !account ? (
             <div className="mx-auto text-center">
               You need to be connected to view the Level {displayLevel}
             </div>

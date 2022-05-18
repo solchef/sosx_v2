@@ -110,39 +110,39 @@ export default function SocialminingS1() {
               <div className="postcaption" id="myCaption">
               
                           <p style={{ display: media.name == "instagram" ? "" : "none" }}>
-                              SOCIAL X JUST LAUNCHED OX GAMES!! <br />
-                              Create a challenge & watch someone record themselves for the
-                              48 hour money prize pool 🤑💰 <br />
-                              Earn daily crypto for sharing 💵 <br />
-                              <a href="socialx.io">www.socialx.io</a>{" "}
-                              <a href="https://t.me/SocialXToken">@socialxtoken</a> <br />
-                              <br />
-                              {media.addres}
+                          SOCIAL X JUST LAUNCHED OX GAMES!! <br/><br/>
+
+                            Create a challenge & watch someone record themselves for the 48 hour money prize pool <br/><br/>
+                            🤑💰 
+
+                            Earn daily crypto for sharing 💵<br/><br/>
+
+                            www.socialx.io @socialxtoken<br/><br/>
+
+
                           </p>
 
                           <p style={{ display: media.name == "twitter" ? "" : "none" }}>
-                            SOCIAL X JUST LAUNCHED OX GAMES!! <br />
-                            Create a challenge & watch someone record themselves for the
-                            48 hour money prize pool 🤑💰 <br />
-                            Earn daily crypto for sharing 💵 <br />
-                            www.socialx.io
-                            $SOSX
-                          <br />
-                          <br />
-                          {media.addres}
+                           
+                                SOCIAL X JUST LAUNCHED OX GAMES!! <br/><br/>
+
+                                Create a challenge & watch someone record themselves for the 48 hour money prize pool <br/><br/>
+                                🤑💰 
+
+                                Earn daily crypto for sharing 💵<br/><br/>
+
+                                socialx.io $SOSX<br/><br/>
                         </p>
 
                       <p style={{ display: media.name == "tiktok" ? "" : "none" }}>
-                            SOSX relaunching new SOSX Token next week 🚀
-                              <br />
-                              <br />
-                             Join twitter for updates: <br />
-                        <a href="socialx.io">www.socialx.io</a>{" "}
-                        <a href="https://twitter.com/socialx_io?s=20&t=BAk0mefbJABXHT-ig2ycQg">
-                          @socialx_io
-                        </a>{" "}
-                      <br />
-                      {media.addres}
+                          SOCIAL X JUST LAUNCHED OX GAMES!! <br/><br/>
+
+                          Create a challenge & watch someone record themselves for the 48 hour money prize pool <br/><br/>
+                          🤑💰 
+
+                          Earn daily crypto for sharing 💵<br/><br/>
+
+                          socialx.io $SOSX<br/><br/>
                 </p>
 
 

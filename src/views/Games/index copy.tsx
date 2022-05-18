@@ -18,7 +18,7 @@ import Media from "./components/media";
 import Ranking from "./components/ranking";
 import TimerDisplay from "./components/timer";
 import LoaderDisplay from "./components/loader";
-import {getDaoLevel} from "./hooks/getDaoLevel";
+import { getDaoLevel } from "./hooks/getDaoLevel";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -33,6 +33,7 @@ export default function Game() {
   const [seconds, setSeconds] = useState(0);
   const [url, setURL] = useState("");
   const [displayLevel, setDisplayLevel] = useState(1);
+  const [voters, setVoters] = useState([]);
   const [videos, setVideos] = useState([]);
   const router = useRouter();
   const contract = useDaoStakingContract();
@@ -98,15 +99,148 @@ export default function Game() {
     }
   }, []);
 
+  const getData = async () => {
+    console.log("first");
+    let challenges = [];
+    for await (const resultPart of server.files.ls("/challenges")) {
+      let challenge;
+      let vote;
+
+      for await (const cha of server.files.ls(
+        `/challenges/${resultPart.name}`
+      )) {
+        const chunks = [];
+        if (cha.name == "votes") {
+          let votes = await server.files.stat(
+            `/challenges/${resultPart.name}/votes`
+          );
+          vote = votes.blocks;
+        }
+
+        if (cha.name == "challenge.json") {
+          for await (const chunk of server.cat(cha.cid)) {
+            chunks.push(chunk);
+          }
+          const data = concat(chunks);
+          challenge = JSON.parse(new TextDecoder().decode(data).toString());
+        }
+      }
+
+      let challengeData = {
+        challenge: challenge,
+        votes: vote,
+      };
+      challenges.push(challengeData);
+    }
+
+    setChallenges(challenges);
+  };
+
+  const todayChallenge = challenges
+    .sort((a, b) => a.votes - b.votes)
+    .reverse()[0];
+
+  let topThreeChallenges = [];
+  const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
+  topThreeChallenges.push(ch[0], ch[1], ch[2]);
+
+  const getVideo = async () => {
+    let finalData = [];
+
+    if (todayChallenge) {
+      for await (const videoFile of server.files.ls(
+        `/challenges/${String(
+          `challenge-${todayChallenge.challenge.payload.name}`
+        ).replaceAll(" ", "-")}/videos`
+      )) {
+        let fileContent;
+        const chunks = [];
+        for await (const chunk of server.cat(videoFile.cid)) {
+          chunks.push(chunk);
+        }
+        const data = concat(chunks);
+        fileContent = JSON.parse(new TextDecoder().decode(data).toString());
+        finalData.push(fileContent);
+      }
+      setVideos(finalData);
+    }
+  };
+
+  const videoLink = async (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const form = event.target as HTMLFormElement;
+
+    if (!url) {
+      toastError("Link Required");
+      return;
+    }
+
+    let data;
+    if (url.search("youtu") != -1) {
+      let regExp =
+        /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+      let match = url.match(regExp);
+      const valid = match && match[7].length == 11 ? match[7] : false;
+      if (valid !== false) {
+        data = JSON.stringify({
+          id: `${account}+round-1`,
+          rId: "round",
+          urls: {
+            youtube: valid,
+          },
+        });
+      }
+    }
+
+    if (url.search("tiktok") != -1) {
+      if (url.search("tiktok") != -1) {
+        if (url.search("vt") != -1) {
+          toastError("Use https://tiktok.com/@usename...");
+          return;
+        }
+        const index = url.indexOf("video/");
+        data = JSON.stringify({
+          id: `${account}+round-1`,
+          rId: "round",
+          urls: {
+            youtube: url.substring(index + 6, index + 25),
+          },
+        });
+      } else {
+        return false;
+      }
+    }
+
+    if (data !== "") {
+      const todayChallengeName = String(
+        todayChallenge.challenge.payload.name
+      ).replaceAll(" ", "-");
+      const fileName = `video-${moment().unix()}`;
+      await server.files.write(
+        `/challenges/challenge-${todayChallengeName}/videos/${fileName}`,
+        data,
+        { create: true }
+      );
+      toastSuccess("Uploaded");
+      form.reset();
+      getVideo();
+    } else {
+      toastError("Not Valid Links");
+    }
+  };
+
+
 
   useEffect(() => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
       // setTotalAmountStaked(stakeAmount);
       let level = getDaoLevel(stakeAmount);
-        setCurrentLevel(level);
+      setCurrentLevel(level);
     });
 
-
+    // loadDaoLevels();
+    getData();
+    getVideo();
   }, [stage]);
 
   return (
@@ -125,11 +259,11 @@ export default function Game() {
       </div>
 
       <div id="ranking-section" style={{ flex: "1 20%", minWidth: "335px" }}>
-        <Ranking  />
+        <Ranking voters={voters} />
       </div>
 
       <div id="video-section" style={{ flex: "5 70%" }}>
-        <Media  />
+        <Media todayVideo={todayChallenge} />
       </div>
     </div>
   );

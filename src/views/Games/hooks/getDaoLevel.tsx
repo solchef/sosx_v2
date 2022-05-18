@@ -1,4 +1,4 @@
-export const useGetDaoLevel = (amount) => {
+export const getDaoLevel = (amount) => {
     if (
       amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
       amount < process.env.NEXT_PUBLIC_LEVEL2

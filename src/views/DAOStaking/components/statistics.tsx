@@ -4,7 +4,7 @@ import axios from "axios";
 import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
-import { useGetDaoLevel } from "views/Games/hooks/useGetDaoLevel";
+import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
 
 
 
@@ -23,7 +23,7 @@ export default function Statistics() {
             contract.getTotalStakeAmount().then((stakeAmount) => {
                let amount = Number(stakeAmount/ (10 ** 18));
                 setTotalAmountStaked(amount);
-                let level = useGetDaoLevel(amount);
+                let level = getDaoLevel(amount);
                 setLevel(level)
                  
             });

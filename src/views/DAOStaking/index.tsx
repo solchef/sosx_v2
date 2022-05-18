@@ -14,7 +14,7 @@ import { useModal } from "@pancakeswap/uikit";
 import Statistics from "./components/statistics";
 import StakingSummary from "./components/DaoMemebrship";
 import DaoMemebrship from "./components/DaoMemebrship";
-import { useGetDaoLevel } from "views/Games/hooks/useGetDaoLevel";
+import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -122,7 +122,7 @@ export default function DaoStaking() {
 
   const handleAmountChange = async (event) => {
         let _amountToStake = Number(event.target.value);
-        let level = useGetDaoLevel(_amountToStake);
+        let level = getDaoLevel(_amountToStake);
         setEstimateDaoLevel(level)
         
         // let decimals = new BigNumber(10).pow(18);
