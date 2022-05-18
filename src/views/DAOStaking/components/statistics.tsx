@@ -73,7 +73,7 @@ export default function Statistics() {
                             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center" >
                                 <div className="data-content">
                                     <div className="d-flex  align-items-end">
-                                        <h2 className="mb-3 main-pink">{level > 0 ? (level == 1 ? 6.00 : level == 2 ? 9.00 : 12.00) : 0}</h2>
+                                        <h2 className="mb-3 main-pink">{level !== 0  ? (level == 1 ? 6.00 : level == 2 ? 9.00 : 12.00) : 0}</h2>
                                     </div>
                                     <div className="">
                                         <div className="">
