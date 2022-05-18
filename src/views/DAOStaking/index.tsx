@@ -216,8 +216,9 @@ export default function DaoStaking() {
   }, [])
 
   const handleSubmit = async () => {
-    if (Number(amountToStake/(10 ** 18)) < 0) {
+    if (amountToStake < 1) {
       toastError("Yo must stake a minimum of 1 token");
+      return;
     }
 
     let decimals = BigNumber(10).pow(18);

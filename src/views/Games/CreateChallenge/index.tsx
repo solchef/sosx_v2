@@ -110,6 +110,7 @@ const CreateChallenge = (props) => {
     evt.preventDefault();
     // console.log(body)
     // if (votingLevel == 2 || votingLevel == 3) {
+      await createRound();
     try {
       setIsLoading(true);
       const challenge = JSON.stringify({
