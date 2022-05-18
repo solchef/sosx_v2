@@ -26,7 +26,6 @@ export default function Challenge() {
   const { name } = router.query;
   const [challenge, setChallenge] = useState<any[]>([]);
   const [votesList, setVotesList] = useState([]);
-  const [challengeUrl, setChallengeUrl] = useState([]);
   const [votingLevel, setVotingLevel] = useState(0);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
@@ -38,7 +37,6 @@ export default function Challenge() {
   const [challenges, setChallenges] = useState([]);
 
   useEffect(() => {
-    getData();
     userVotingLevel();
   }, [stage, name]);
 
@@ -53,7 +51,7 @@ export default function Challenge() {
   const getData = async () => {
     if (name && stage) {
       let challenge = [];
-      for await (const roundContent of server.files.ls("/Rounds/Round-1")) {
+      for await (const roundContent of server.files.ls("/Rounds/Round-1/challenges")) {
         let challengeData;
         let voteData;
         let votes = 0;
@@ -63,7 +61,7 @@ export default function Challenge() {
         if (roundContent.name.includes(`${challengeName}`)) {
           challenge.push(roundContent);
           for await (const challengeFolderContent of server.files.ls(
-            `/Rounds/Round-1/${roundContent.name}`
+            `/Rounds/Round-1/challenges/${roundContent.name}`
           )) {
             if (challengeFolderContent.name == "info.json") {
               for await (const chunk of server.cat(
@@ -84,11 +82,9 @@ export default function Challenge() {
     }
   };
 
-  const level = useLevels(account);
-
   const stageTwoVotes = async () => {
     let voted = true;
-    for await (const challenges of server.files.ls("/challenges")) {
+    for await (const challenges of server.files.ls("Rounds/Round-1/challenges")) {
       for await (const cha of server.files.ls(
         `/challenges/${challenges.name}/votes/stage-2`
       )) {
@@ -102,7 +98,7 @@ export default function Challenge() {
 
   const stageThreeVotes = async () => {
     let voted = true;
-    for await (const challenges of server.files.ls("/challenges")) {
+    for await (const challenges of server.files.ls("Rounds/Round-1/challenges")) {
       for await (const cha of server.files.ls(
         `/challenges/${challenges.name}/votes/stage-3`
       )) {
@@ -130,41 +126,40 @@ export default function Challenge() {
 
       voters.push(voterData);
     }
-    const stage2voted = await stageTwoVotes();
-    const stage3voted = await stageThreeVotes();
+    // const stage2voted = await stageTwoVotes();
+    // const stage3voted = await stageThreeVotes();
 
-    if (stage == 2 && !stage2voted) {
-      toastError(
-        t("Error"),
-        t("You already voted for another challenge in stage 2")
-      );
-      return;
-    }
+    // if (stage == 2 && !stage2voted) {
+    //   toastError(
+    //     t("Error"),
+    //     t("You already voted for another challenge in stage 2")
+    //   );
+    //   return;
+    // }
 
-    if (stage == 3 && !stage3voted) {
-      toastError(
-        t("Error"),
-        t("You already voted for another challenge in stage 3")
-      );
-      return;
-    }
+    // if (stage == 3 && !stage3voted) {
+    //   toastError(
+    //     t("Error"),
+    //     t("You already voted for another challenge in stage 3")
+    //   );
+    //   return;
+    // }
 
-    if (stage == 2 && level == 0) {
-      toastError(t("Error"), t("You should have level to be able to vote"));
-      return;
-    }
+    // if (stage == 2 && level == 0) {
+    //   toastError(t("Error"), t("You should have level to be able to vote"));
+    //   return;
+    // }
 
-    if (stage == 3 && level != 3) {
-      toastError(t("Error"), t("Only Level 3 can vote in this stage"));
-      return;
-    }
+    // if (stage == 3 && level != 3) {
+    //   toastError(t("Error"), t("Only Level 3 can vote in this stage"));
+    //   return;
+    // }
 
     const vote = JSON.stringify({
       timestamp: moment().unix(),
       address: account,
       round: "1",
       // data: voters,
-      comments: [],
     });
 
     const sig = await signMessage(connector, library, account, vote);
@@ -189,7 +184,6 @@ export default function Challenge() {
         { create: true }
       );
       toastSuccess(t("Vote created!"));
-      getData();
     } else {
       toastError(t("Error"), t("Unable to sign payload"));
     }

@@ -91,21 +91,21 @@ const CreateChallenge = (props) => {
     <VoteDetailsModal block={state.snapshot} />
   );
 
-  let roundId;
+  let roundId = 2;
   const roundInfo = JSON.stringify({
     id: roundId,
     startingTime: moment().unix(),
-  });
+  }, null, 2);
   const createRound = async () => {
     await server.files.mkdir(`/Rounds/Round-${roundId}`);
-    await server.files.mkdir(`/Rounds/Round-${roundId}`);
-
-    await server.files.mkdir(`/Rounds/round-${roundId}/videos`);
+    await server.files.write(`/Rounds/Round-${roundId}/info.json`, roundInfo, {create: true});
+    await server.files.mkdir(`/Rounds/Round-${roundId}/challenges`);
+    await server.files.mkdir(`/Rounds/Round-${roundId}/videos`);
     await server.files.mkdir(`/Rounds/Round-${roundId}/votes`);
     await server.files.mkdir(`/Rounds/Round-${roundId}/votes/stage-2`);
     await server.files.mkdir(`/Rounds/Round-${roundId}/votes/stage-3`);
   };
-
+  
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     // console.log(body)
