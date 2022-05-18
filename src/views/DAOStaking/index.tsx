@@ -138,7 +138,6 @@ export default function DaoStaking() {
     // }
   };
 
-
   const handleUnStake = async () => {
     let decimals = BigNumber(10).pow(18);
 
@@ -167,7 +166,12 @@ export default function DaoStaking() {
 
   const handleSubmit = async () => {
     if (amountToStake < 1) {
-      toastError("Yo must stake a minimum of 1 token");
+      toastError("You must stake a minimum of 1 token");
+      return;
+    }
+
+    if (amountToStake > balance) {
+      toastError(`Insufficient balance. Your wallet balance is ${balance} you need  ${(amountToStake - balance).toFixed(3)} more SOSX to stake that amount. `);
       return;
     }
 
@@ -186,22 +190,22 @@ export default function DaoStaking() {
       let signer = contract.signer;
 
       let trans = await signer.sendTransaction(tx);
-      
       // console.log(trans)
-      setPendingTx(true);
+       setPendingTx(true);
+     
+      // setTransaction(tx);
+      onPresentConfirmModal();
 
       toastSuccess(
         "Approval transaction sent. You can stake after the transaction is mined."
       );
-      // setTransaction(tx);
-      onPresentConfirmModal();
     }
   };
 
   const [onPresentConfirmModal] = useModal(
     <ConfirmStakingModal
       onConfirm={handleStake}
-      receipt={txHash.toString()}
+      receipt={pendingTx? 'Pending' : 'Success'}
       clientMessage={"Your spending approval is being confirmed. "}
       onAcceptChanges={function (): void {
         throw new Error("Function not implemented.");
