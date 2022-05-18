@@ -18,7 +18,7 @@ const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
 
-const Vote = (props: {level, stage}) => {
+const VoteStageTwo = (props: {level, stage}) => {
   const [challenge, setChallenge] = useState<any[]>([]);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
@@ -120,7 +120,7 @@ const Vote = (props: {level, stage}) => {
               </path>
             </g>
           </svg>
-          <h4 style={{fontSize: '60px'}}>Games</h4>
+          <h4 style={{fontSize: '60px'}}>Game</h4>
         </div>
         <div className="d-flex align-items-center mb-2">
           <h4>VOTE FOR CHALLENGE</h4>
@@ -181,4 +181,4 @@ const Vote = (props: {level, stage}) => {
     )
 }
 
-export default Vote
+export default VoteStageTwo

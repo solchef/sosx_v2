@@ -21,7 +21,8 @@ import LoaderDisplay from "./components/loader";
 import { getDaoLevel } from "./hooks/getDaoLevel";
 import { useQuery } from "@apollo/client";
 import { GET_LastVideo, GET_Videos } from "utils/graphqlQ";
-import Vote from "./Vote";
+import VoteStageTwo from "./VoteStageTwo";
+import VoteStageThree from "./VoteStageThree";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -79,8 +80,8 @@ export default function Game() {
   useEffect(() => {
     const roundStartTime = 1652888782;
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 500 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 5 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + 5 * 60 };
     let stage3 = { start: stage2.end, end: stage2.end + 500 * 60 };
     let stage4 = { start: stage3.end, end: stage3.end + 2400 * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
@@ -134,8 +135,11 @@ export default function Game() {
           <CreateChallenge level={currentLevel} stage={stage} />
         )}
         {stage == 2 && (
-           <Vote level={currentLevel} stage={stage} />
+           <VoteStageTwo level={currentLevel} stage={stage} />
         )}
+        {stage == 3 && (
+           <VoteStageThree level={currentLevel} stage={stage} />
+        )}        
       </div>
       <div id="ranking-section" style={{ flex: "0 1 350px" }}>
         <Ranking stage={stage} />
