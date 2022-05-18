@@ -42,22 +42,14 @@ export default function userStaking(props) {
     }
   };
 
-  const showStakingLog = async () => {
-    await listUserStaking();
-  };
 
   const listUserStaking = async () => {
-    // console.log(numberOfActiveStake);
     contract.getStakeCount().then((stakes) => {
-      let list = [];
-      let count = 1;
       setActiveStakes([]);
       for (let i = 0; i < stakes; i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
           let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
           let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
-          // count.push(i)
-          // alert(i)
           let instance = {
             amount: stakeAmt,
             isWithdrawed: Boolean(stakeInstance[1]),
@@ -71,32 +63,16 @@ export default function userStaking(props) {
             stakingClass: stakeClass,
             periodElapsed: stakeClass,
           };
-          list.push(instance);
-
-
           setActiveStakes((activeStakes) => [...activeStakes, instance]);
         });
-        count++;
-        console.log(activeStakes);
       }
-      // setActiveStakes(list);
     });
   };
 
-  const loadUI = async () => {
-    setLoadingData(true);
-    // await stakingDetails();
-    await listUserStaking();
-    // console.log(activeStakes)
-    setLoadingData(false);
-  };
 
   useEffect(() => {
-    if(account != undefined){
-    loadUI();
-
-    }
-  }, [account]);
+    listUserStaking();
+  }, []);
 
   return (
     <>

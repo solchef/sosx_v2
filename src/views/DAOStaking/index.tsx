@@ -41,7 +41,7 @@ export default function DaoStaking() {
   const [activateStake, setActivatestake] = useState(true);
   const [showDetails, setShowDetails] = useState(-1);
   const [insufficientBalance, setInsufficientBalance] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [loadingData, setLoadingData] = useState(false);
   const [transaction, setTransaction] = useState();
   const [challenge, setChallenge] = useState(false);
@@ -103,6 +103,9 @@ export default function DaoStaking() {
   };
 
   useEffect(() => {
+
+    setLoading(false)
+
     if (account !== undefined) {
       tokenContract.balanceOf(account).then((bal) => {
         let balance = Number(bal / 10 ** 18);
@@ -266,7 +269,7 @@ export default function DaoStaking() {
         className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
         style={{ gap: "20px" }}
       >
-        <Statistics />
+        <Statistics status={loading} />
 
         <div style={{ flex: "2 1 30%", minWidth: "400px" }}>
           <div className="card d-flex flex-column">
