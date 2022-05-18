@@ -49565,7 +49565,7 @@ h2.main-pink {font-family: 'digital-7';font-size: 25px;}
 
 .challenge-form
 {flex: 0 80%;}
-.challenge-list {flex: 1 46%;background: #494949;overflow-y: scroll;max-height: 600px;}
+.challenge-list {flex: 1 46%;background: #494949;overflow-y: scroll;max-height: 600px;height: 100%;}
 .challenge-details {flex: 1 47%;overflow-y: auto;max-height: 600px;}
 .list-title {margin-right: 20px;flex: 2 50%;}
 
