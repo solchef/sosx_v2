@@ -148,6 +148,7 @@ const CreateChallenge = (props) => {
         const challengeName = `challenge` + `-${name.replaceAll(" ", "-")}`;
         
         await server.files.mkdir(`/rounds/round-1/${challengeName}`);
+
         await server.files.write(
           `/rounds/round-1/${challengeName}/info.json`,
           forIPFS,
