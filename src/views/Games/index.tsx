@@ -135,7 +135,12 @@ export default function Game() {
 
 
       <div id="action-section" style={{ flex: "5 70%" }}>
-        <CreateChallenge level={currentLevel} stage={stage} />
+        {stage == 1 && (
+          <CreateChallenge level={currentLevel} stage={stage} />
+        )}
+        {stage == 2 && (
+           <Vote level={currentLevel} stage={stage} />
+        )}
       </div>
 
       <div id="ranking-section" style={{ flex: "1 20%", minWidth: "335px" }}>
