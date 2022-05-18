@@ -123,6 +123,7 @@ export default function DaoStaking() {
   const handleAmountChange = async (event) => {
         let _amountToStake = Number(event.target.value);
         let level = getDaoLevel(_amountToStake);
+
         setEstimateDaoLevel(level)
         
         // let decimals = new BigNumber(10).pow(18);
@@ -318,6 +319,7 @@ export default function DaoStaking() {
                       type="text"
                       className="form-control"
                       //   required
+                      defaultValue={0}
                       onChange={(e) => handleAmountChange(e)}
                       value={amountToStake}
                     />
