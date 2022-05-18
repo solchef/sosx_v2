@@ -1,6 +1,109 @@
+import { useRouter } from "next/router";
+import { create } from "ipfs-http-client";
+import { useEffect, useState } from "react";
+import { concat } from "uint8arrays";
+import React, { FormEvent } from "react";
+import { signMessage } from "utils/web3React";
+import { useWeb3React } from "@web3-react/core";
+import useWeb3Provider from "hooks/useActiveWeb3React";
+import useToast from "hooks/useToast";
+import { useDaoStakingContract } from "hooks/useContract";
+import ConnectWalletButton from "../../../components/ConnectWalletButton";
+import useStage from "../../../hooks/useStage";
+import useLevels from "hooks/useLevels";
+import moment from "moment";
+import { useTranslation } from "contexts/Localization";
 
+const server = create({
+  url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
+});
 
-const Vote = () => {
+const Vote = (props: {level, stage}) => {
+  const [challenge, setChallenge] = useState<any[]>([]);
+  const { account } = useWeb3React();
+  const { library, connector } = useWeb3Provider();
+  const { toastSuccess, toastError } = useToast();
+  const { t } = useTranslation();
+  const contract = useDaoStakingContract();
+  const stage = props.stage
+  const level = props.level
+
+  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    let daoList = await contract.getAllAccount();
+    let voters = [];
+    for (let i = 0; i < daoList.length; i++) {
+      let voter_address = daoList[i];
+      let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
+      total_stake = Number(total_stake / 10 ** 18);
+      let voterData = {
+        address: voter_address,
+        amount: total_stake,
+        level: level,
+      };
+
+      voters.push(voterData);
+    }
+
+    // if (stage == 2) {
+    //   toastError(
+    //     t("Error"),
+    //     t("You already voted for another challenge in stage 2")
+    //   );
+    //   return;
+    // }
+
+    // if (stage == 3) {
+    //   toastError(
+    //     t("Error"),
+    //     t("You already voted for another challenge in stage 3")
+    //   );
+    //   return;
+    // }
+
+    // if (stage == 2 && level == 0) {
+    //   toastError(t("Error"), t("You should have level to be able to vote"));
+    //   return;
+    // }
+
+    // if (stage == 3 && level != 3) {
+    //   toastError(t("Error"), t("Only Level 3 can vote in this stage"));
+    //   return;
+    // }
+
+    const vote = JSON.stringify({
+      timestamp: moment().unix(),
+      address: account,
+      round: "1",
+    });
+
+    const sig = await signMessage(connector, library, account, vote);
+
+    if (sig) {
+      const forIPFS = JSON.stringify(
+        {
+          timestamp: moment().unix(),
+          address: account,
+          round: "1",
+          // challenge: challenge[0].cid.toString(),
+          sig: sig.toString(),
+          // data: voters,
+        },
+        null,
+        2
+      );
+
+      await server.files.write(
+        `/Rounds/Round-1/votes/stage-${stage}/${account}.json`,
+        forIPFS,
+        { create: true }
+      );
+      toastSuccess(t("Vote created!"));
+    } else {
+      toastError(t("Error"), t("Unable to sign payload"));
+    }
+  };
+
     return (
       <div className="card h-100">
         <div className="d-flex align-items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 239 116" xmlSpace="preserve" style={{width: '80px', fill: 'rgb(255, 0, 204)', marginRight: '5px'}}>
@@ -39,132 +142,6 @@ const Vote = () => {
               <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
               </div>
             </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div> 
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
-            <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div>
           </div>
           <div className="challenge-details m-3 d-flex flex-column">
             <h1>Challenge Title Here</h1>
@@ -182,8 +159,22 @@ const Vote = () => {
               <p><span>Created On: 22/22/2202 22:22:00 </span>
               </p>
             </div>
-            <button className="btn btn-primary btn-lg mt-5 mb-5 " type="button" style={{width: 'max-content'}}>VOTE
-              FOR THIS CHALLENGE</button>
+            <form onSubmit={handleSubmit}>
+                      {!account ? (
+                        <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4" />
+                      ) : (
+                        <button
+                          type="submit"
+                          className="btn btn-primary btn-lg mt-5 mb-5 "
+                          style={{width: 'max-content'}}
+                        >
+                          <i className="fa-solid fa-check-to-slot pr-2"></i>
+                          VOTE
+              FOR THIS CHALLENGE
+                        </button>
+                      )}
+              </form>
+
           </div>
         </div>
       </div>
