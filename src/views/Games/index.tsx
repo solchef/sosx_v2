@@ -60,7 +60,7 @@ export default function Game() {
     setHours(duration.hours());
     setMinutes(duration.minutes());
     setSeconds(duration.seconds());
-
+    
     return {
       hour: duration.hours(),
       min: duration.minutes(),
@@ -100,7 +100,7 @@ export default function Game() {
         let checkStage = stageGroups.findIndex(
           (group) => group.end > currTime && currTime > group.start
         );
-
+          
         if (checkStage != -1) {
           setStage(checkStage + 1);
           calculateTimeLeft(moment.unix(stageGroups[checkStage].end));

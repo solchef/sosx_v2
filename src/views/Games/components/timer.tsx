@@ -99,7 +99,7 @@ const TimerDisplay = (props) => {
               </p>
             </div>
             <p className="li">
-              <span className=" main-pink m-0">{pad(props.hours)}</span>Seconds
+              <span className=" main-pink m-0">{pad(props.seconds)}</span>Seconds
             </p>
           </div>
         </div>
