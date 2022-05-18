@@ -52,6 +52,39 @@ const TimerDisplay = (props) => {
   return (
     <>
 
+    <div className="card prize-card mb-3">
+        <div className="d-flex flex-column mb-0">
+            <div className="d-flex mb-2 align-items-center"><img src="images/prize-pool-icon.png" className="title-icon"/>
+                <h4>PRIZE POOL</h4>
+            </div>
+            <p>Feel free to <a href="#" onClick={handleShowDonate}>donate</a> to the prize pool.</p>
+        </div>
+        <div className="d-flex justify-content-center m-auto w-auto">
+            <h2 className="main-pink">$1,000.00</h2>
+        </div>
+    </div>
+    <div className="card timer-card mb-3">
+        <div className="d-flex align-items-center mb-2"><img src="images/submission-date-icon.png" className="title-icon"/>
+            <h4>TIME REMAINING</h4>
+        </div>
+        <p>To complete this stage of the game</p>
+        <div className="clock mt-4">
+            <div className="d-flex m-auto w-100" id="countdown" style={{justifyContent: "center"}}>
+                <div className="d-flex justify-content-start align-items-center">
+                    <p className="li "><span className=" main-pink m-0">{pad(props.hours)}</span>Hours</p>
+                    <p className="li d-flex align-self-baseline"><span>:</span></p>
+                </div>
+                <div className="d-flex justify-content-start align-items-center">
+                    <p className="li "><span className=" main-pink m-0">{pad(props.minutes)}</span>Minutes</p>
+                    <p className="li d-flex align-self-baseline"><span>:</span></p>
+                </div>
+                <p className="li"><span className=" main-pink m-0">{pad(props.seconds)}</span>Seconds</p>
+            </div>
+        </div>
+    </div>
+
+    
+
 
         <div className="card timer-card mb-3">
          <div className="d-flex align-items-center mb-1">
@@ -84,11 +117,13 @@ const TimerDisplay = (props) => {
             </g>
             </svg>
             <h4>GAME RULES</h4>
-         </div>
-         <p style={{/* fontWeight: 800, */color: 'white'}}>1- Challenges must be accomplishable within a few hours.</p>
-         <p style={{fontWeight: 800, color: 'white'}}>2- Challenges cannot be location or gender-specific.</p>
-         <p style={{fontWeight: 800, color: 'white'}}>3- Challenges cant be designed to harm, kill, or intentionally lead to death.</p>
-      </div>
+    </div>
+    
+        <p style={{color: "white"}}>1- Challenges must be accomplishable within a few hours.</p>
+        <p style={{fontWeight: 800, color: "white" }}>2- Challenges cannot be location or gender-specific.</p>
+        <p style={{fontWeight: 800, color: "white"}}>3- Challenges cant be designed to harm, kill, or intentionally lead
+            to death.</p>
+    </div>
       <div className="card timer-card mb-3">
          <div className="d-flex align-items-center mb-2">
             <img src="images/submission-date-icon.png" className="title-icon" />
@@ -121,71 +156,7 @@ const TimerDisplay = (props) => {
          <h2 className="main-pink">$1,000.00</h2>
       </div>
    </div>
-      {/* <div className="card timer-card mb-3" style={{ flex: 1, gap: "20px" }}>
-        <div className="d-flex align-items-center mb-2">
-          <img src="images/submission-date-icon.png" className="title-icon" />
-          <h4>TIME REMAINING</h4>
-        </div>
-
-        {props.stage == 1 && (
-          <p>The challenge submission stage is in effect.</p>
-        )}
-        {props.stage == 2 && <p>The challenge voting stage is in effect.</p>}
-        {props.stage == 3 && (
-          <p>The challenge final voting stage is in effect.</p>
-        )}
-        {props.stage == 4 && <p>The challenge upload stage is in effect.</p>}
-
-        <div className="clock mt-4">
-          <div
-            className="d-flex m-auto w-100"
-            id="countdown"
-            style={{ justifyContent: "center" }}
-          >
-            <div className="d-flex justify-content-start align-items-center">
-              <p className="li ">
-                <span className=" main-pink m-0">{pad(props.hours)}</span>Hours
-              </p>
-              <p className="li d-flex align-self-baseline">
-                <span>:</span>
-              </p>
-            </div>
-            <div className="d-flex justify-content-start align-items-center">
-              <p className="li ">
-                <span className=" main-pink m-0">{pad(props.minutes)}</span>
-                Minutes
-              </p>
-              <p className="li d-flex align-self-baseline">
-                <span>:</span>
-              </p>
-            </div>
-            <p className="li">
-              <span className=" main-pink m-0">{pad(props.seconds)}</span>
-              Seconds
-            </p>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <div className="card prize-card" style={{ flex: 0 }}>
-        <div className="d-flex flex-column mb-3">
-          <div className="d-flex mb-2 align-items-center">
-            <img src="images/prize-pool-icon.png" className="title-icon" />
-            <h4>PRIZE POOL</h4>
-          </div>
-          <p>
-            Feel free to{" "}
-            <a href="#" onClick={handleShowDonate}>
-              donate
-            </a>{" "}
-            to the prize pool.
-          </p>
-        </div>
-        <div className="d-flex flex-column align-items-center">
-          <h2 className="main-pink">$1,000.00</h2>
-          <p className="main-pink">{Number(price.toFixed(0))} SOSX </p>
-        </div>
-      </div> */}
+  
 
       <Modal show={showDonate} onHide={handleCloseDonate} centered>
         <ModalHeader

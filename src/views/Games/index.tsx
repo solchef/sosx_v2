@@ -122,14 +122,16 @@ export default function Game() {
 
   return (
     <div className="game container-fluid d-flex flex-wrap flex-direction-row">
-      <div id="timer-section" style={{ flex: "0 20%" }}>
-        <TimerDisplay
-          hours={hours}
-          minutes={minutes}
-          seconds={seconds}
-          stage={stage}
-        />
+     <div id="timer-section" style={{flex:" 0 1 335px"}}>
+          <TimerDisplay
+            hours={hours}
+            minutes={minutes}
+            seconds={seconds}
+            stage={stage}
+          />
       </div>
+
+
 
       <div id="action-section" style={{ flex: "5 70%" }}>
         <CreateChallenge level={currentLevel} stage={stage} />

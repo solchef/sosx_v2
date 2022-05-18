@@ -341,7 +341,7 @@ const Menu: React.FC<NavProps> = ({
 
                 <a>
                   <i className="fa fa-gamepad"></i>
-                  <span className="nav-text">OXGame</span>
+                  <span className="nav-text">OX Game</span>
                 </a>
               </Link>
 
