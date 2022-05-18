@@ -173,6 +173,7 @@ export default function DaoStaking() {
       setLoading(false);
       loadUI();
       toastSuccess("Staking Transaction successfully sent");
+      handleConfirmDismiss();
     } else {
       toastError("Could not stake");
     }

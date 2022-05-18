@@ -12,6 +12,7 @@ import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import web3 from "web3";
+import { getDaoLevel } from "../hooks/getDaoLevel";
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -25,7 +26,7 @@ const StyledList = styled.ol`
   }
 `;
 
-const Ranking = (props) => {
+const Ranking = () => {
   const { t } = useTranslation();
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
@@ -39,18 +40,19 @@ const Ranking = (props) => {
     const level1 = [];
     const level2 = [];
     const level3 = [];
-    let daoList = await contract.getAllAccount();
+     contract.getAllAccount().then(daoList =>  {
+
     daoList = [...new Set(daoList)];
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
       // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
-      let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = total_stake/(10 ** 18);
+      let total_stake =  contract.getVoterTotalStakeAmount(voter_address);
+      total_stake = total_stake / 10 ** 18;
       let data = {
         address: voter_address,
         amount: total_stake,
-        level: await getLevel(total_stake),
+        level: getDaoLevel(total_stake),
       };
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
@@ -67,12 +69,14 @@ const Ranking = (props) => {
     if (displayLevel === 2) setVoters(level2);
     if (displayLevel === 3) setVoters(level3);
     setLoading(false);
+  })
+
   };
 
   useEffect(() => {
     loadDaoLevels();
     sortData();
-  }, [account]);
+  }, []);
 
   useEffect(() => {
     sortData();
@@ -85,25 +89,6 @@ const Ranking = (props) => {
       if (element.level === displayLevel) currentLevel.push(element);
     }
     setVoters(currentLevel);
-  };
-  const getLevel = (amount) => {
-    if (
-      amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
-      amount < process.env.NEXT_PUBLIC_LEVEL2
-    ) {
-      return 1;
-    }
-
-    if (
-      amount >= process.env.NEXT_PUBLIC_LEVEL2 &&
-      amount < process.env.NEXT_PUBLIC_LEVEL3
-    ) {
-      return 2;
-    }
-
-    if (amount >= process.env.NEXT_PUBLIC_LEVEL3) {
-      return 3;
-    }
   };
 
   const incrementCounter = () => {};

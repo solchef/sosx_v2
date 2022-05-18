@@ -131,17 +131,14 @@ export default function Game() {
           />
       </div>
 
-
-
-      <div id="action-section" style={{ flex: "5 70%" }}>
+      <div id="action-section" style={{flex:" 2 73%"}}>
         <CreateChallenge level={currentLevel} stage={stage} />
       </div>
-
-      <div id="ranking-section" style={{ flex: "1 20%", minWidth: "335px" }}>
+      <div id="ranking-section" style={{ flex: "flex: 0 1 335px", minWidth: "335px" }}>
         <Ranking />
       </div>
 
-      <div id="video-section" style={{ flex: "5 70%" }}>
+      <div id="video-section" style={{ flex: "2 73%" }}>
         <Media />
       </div>
     </div>

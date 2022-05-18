@@ -72,11 +72,16 @@ const ConfirmStakingModal: React.FC<InjectedModalProps & ConfirmStakingModalProp
             />
   }
 
-
+  const handleDismiss = useCallback(() => {
+    if (customOnDismiss) {
+      customOnDismiss()
+    }
+    onDismiss?.()
+  }, [customOnDismiss, onDismiss])
 
 
   return (
-    <Modal  headerBackground="gradients.cardHeader">
+    <Modal onDismiss={handleDismiss} title={'Staking'}  headerBackground="gradients.cardHeader">
 
              <Wrapper>
                 <ConfirmedIcon>
