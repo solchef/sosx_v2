@@ -21,6 +21,7 @@ import LoaderDisplay from "./components/loader";
 import { getDaoLevel } from "./hooks/getDaoLevel";
 import { useQuery } from "@apollo/client";
 import { GET_LastVideo, GET_Videos } from "utils/graphqlQ";
+import Vote from "./Vote";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -29,17 +30,12 @@ const server = create({
 export default function Game() {
   const { account } = useActiveWeb3React();
   const [days, setDays] = useState(0);
-  const { toastError, toastSuccess } = useToast();
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [url, setURL] = useState("");
-  const [displayLevel, setDisplayLevel] = useState(1);
   const [videos, setVideos] = useState([]);
-  const [lastVideos, setLastVideos] = useState({});
   const router = useRouter();
   const contract = useDaoStakingContract();
-  const [challenges, setChallenges] = useState<any[]>([]);
   let [stage, setStage] = useState(5);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
   const GraphqlVideosData = useQuery(GET_Videos);
@@ -80,7 +76,7 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    const roundStartTime = 1652826898;
+    const roundStartTime = 1652888782;
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 60 };
     let stage2 = { start: stage1.end, end: stage1.end + 500 * 60 };
@@ -122,7 +118,7 @@ export default function Game() {
 
   return (
     <div className="game container-fluid d-flex flex-wrap flex-direction-row">
-     <div id="timer-section" style={{flex:" 0 1 335px"}}>
+     <div id="timer-section" style={{flex:" 0 1 350px"}}>
           <TimerDisplay
             hours={hours}
             minutes={minutes}
@@ -131,10 +127,17 @@ export default function Game() {
           />
       </div>
 
+
+
       <div id="action-section" style={{flex:" 2 73%"}}>
-        <CreateChallenge level={currentLevel} stage={stage} />
+        {stage == 1 && (
+          <CreateChallenge level={currentLevel} stage={stage} />
+        )}
+        {stage == 2 && (
+           <Vote level={currentLevel} stage={stage} />
+        )}
       </div>
-      <div id="ranking-section" style={{ flex: "flex: 0 1 335px", minWidth: "335px" }}>
+      <div id="ranking-section" style={{ flex: " 0 1 350px" }}>
         <Ranking />
       </div>
 

@@ -35,24 +35,23 @@ const Ranking = () => {
   const { account } = useActiveWeb3React();
   const [loading, setLoading] = useState<boolean>();
 
-  const loadDaoLevels = async () => {
+  const loadDaoLevels = async (data) => {
     setLoading(true);
     const level1 = [];
     const level2 = [];
     const level3 = [];
-     contract.getAllAccount().then(daoList =>  {
-
+    let daoList = data;
     daoList = [...new Set(daoList)];
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
       // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
-      let total_stake =  contract.getVoterTotalStakeAmount(voter_address);
+      let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
       total_stake = total_stake / 10 ** 18;
       let data = {
         address: voter_address,
         amount: total_stake,
-        level: getDaoLevel(total_stake),
+        level: await getDaoLevel(total_stake),
       };
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
@@ -69,16 +68,18 @@ const Ranking = () => {
     if (displayLevel === 2) setVoters(level2);
     if (displayLevel === 3) setVoters(level3);
     setLoading(false);
-  })
-
   };
 
   useEffect(() => {
-    loadDaoLevels();
+    contract.getAllAccount().then(daolist => {
+      loadDaoLevels(daolist);
+    })
+    // alert(account)
     sortData();
   }, []);
 
   useEffect(() => {
+    
     sortData();
   }, [displayLevel]);
 
