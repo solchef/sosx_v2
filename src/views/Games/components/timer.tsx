@@ -119,7 +119,7 @@ const TimerDisplay = (props) => {
             <h4>GAME RULES</h4>
     </div>
     
-        <p style={{color: "white"}}>1- Challenges must be accomplishable within a few hours.</p>
+        <p style={{fontWeight: 800,color: "white"}}>1- Challenges must be accomplishable within a few hours.</p>
         <p style={{fontWeight: 800, color: "white" }}>2- Challenges cannot be location or gender-specific.</p>
         <p style={{fontWeight: 800, color: "white"}}>3- Challenges cant be designed to harm, kill, or intentionally lead
             to death.</p>
