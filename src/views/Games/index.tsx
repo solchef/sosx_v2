@@ -65,6 +65,29 @@ export default function Game() {
     };
   };
 
+
+  const createRound = async (lastRound) => {
+    let newRoundId = lastRound + 1;
+    const roundInfo = JSON.stringify({
+      id: newRoundId,
+      startingTime: moment().unix(),
+    }, null, 2);
+    await server.files.mkdir(`/Rounds/Round-${newRoundId}`);
+    await server.files.write(`/Rounds/Round-${newRoundId}/info.json`, roundInfo, {create: true});
+    await server.files.mkdir(`/Rounds/Round-${newRoundId}/challenges`);
+    await server.files.mkdir(`/Rounds/Round-${newRoundId}/videos`);
+    await server.files.mkdir(`/Rounds/Round-${newRoundId}/votes`);
+    await server.files.mkdir(`/Rounds/Round-${newRoundId}/votes/stage-2`);
+    await server.files.mkdir(`/Rounds/Round-${newRoundId}/votes/stage-3`);
+  };
+
+  // console.log(stage)
+
+  // useEffect(() => {
+  //   if (stage == 5) createRound(3)
+  // }, [stage])
+
+
   useEffect(() => {
     const roundStartTime = 1652826898;
     let stageGroups = [];

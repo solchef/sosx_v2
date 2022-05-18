@@ -126,8 +126,6 @@ export default function Challenge() {
 
       voters.push(voterData);
     }
-    // const stage2voted = await stageTwoVotes();
-    // const stage3voted = await stageThreeVotes();
 
     // if (stage == 2 && !stage2voted) {
     //   toastError(
