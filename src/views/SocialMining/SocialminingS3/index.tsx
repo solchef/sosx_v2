@@ -175,11 +175,11 @@ export default function SocialminingS3() {
                   <div className="row mb-3">
                     <input
                       className="input1"
-                      type="url"
+                      type="text"
                       name="postlink"
                       onChange={(e) => setsocialpostlink(e.target.value)}
                       value={socialpostlink}
-                      placeholder="Post Link"
+                      placeholder="Link to Social Media post"
                       required
                     />
                   </div>
