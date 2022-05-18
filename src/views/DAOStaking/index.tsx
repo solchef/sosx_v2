@@ -214,7 +214,6 @@ export default function DaoStaking() {
     //   onUserInput(Field.INPUT, '')
     // }
   }, [])
-  
 
   const handleSubmit = async () => {
     if (Number(amountToStake/(10 ** 18)) < 0) {
