@@ -217,7 +217,7 @@ export default function DaoStaking() {
   
 
   const handleSubmit = async () => {
-    if (Number(amountToStake) < 1) {
+    if (Number(amountToStake/(10 ** 18)) < 0) {
       toastError("Yo must stake a minimum of 1 token");
     }
 
@@ -336,13 +336,13 @@ export default function DaoStaking() {
                   STAKE
                     </button>
 
-                    <button
+                    {/* <button
                       className="btn w-100 ml-1 btn-primary btn-lg mt-2"
                       type="button"
                       onClick={handleUnStake}
                     >
                   UNSTAKE
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
