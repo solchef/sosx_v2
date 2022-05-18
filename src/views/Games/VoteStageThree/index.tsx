@@ -120,12 +120,12 @@ const VoteStageThree = (props: {level, stage}) => {
             </path>
           </g>
         </svg>
-        <h4 style={{fontSize: '60px'}}>Games</h4>
+        <h4 style={{fontSize: '60px'}}>Game</h4>
       </div>
       <div className="d-flex align-items-center mb-2">
         <h4>VOTE IN FINAL CHALLENGE</h4>
       </div>
-      <p>Vote for the next OX Games challenge within the top 3 voted challenges.</p>
+      <p>Vote for the next OX Game challenge within the top 3 voted challenges.</p>
       <div className="d-flex flex-row flex-wrap">
         <div className="challenge-list m-3 rounded">
           <div className="challenge-items d-flex">

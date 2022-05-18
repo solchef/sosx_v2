@@ -8,7 +8,7 @@ import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
 
 
 
-export default function Statistics(props) {
+export default function Statistics() {
   const [price, setPrice] = useState(Number);
   const [marketCap, setMarketCap] = useState(Number);
   const contract = useDaoStakingContract();
@@ -38,7 +38,7 @@ export default function Statistics(props) {
 
         useEffect(() => {
             stakingDetails();
-        }, [props.status]);
+        }, []);
 
 
 

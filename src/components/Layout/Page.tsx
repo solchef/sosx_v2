@@ -37,10 +37,10 @@ export const PageMeta: React.FC<{ symbol?: string }> = ({ symbol }) => {
 
   return (
     <Head>
-      <title>{pageTitle}</title>
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
+      <title>{"SOCIALX"}</title>
+      <meta property="og:title" content={"SOCIALX"} />
+      <meta property="og:description" content={"SOCIALX"} />
+      <meta property="og:image" content={"https://socialx.io/img/fav/favicon-96x96.png"} />
     </Head>
   )
 }

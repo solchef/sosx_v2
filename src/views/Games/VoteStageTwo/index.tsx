@@ -125,7 +125,7 @@ const VoteStageTwo = (props: {level, stage}) => {
         <div className="d-flex align-items-center mb-2">
           <h4>VOTE FOR CHALLENGE</h4>
         </div>
-        <p>Vote for the next OX Games challenge.</p>
+        <p>Vote for the next OX Game challenge.</p>
         <div className="d-flex flex-row flex-wrap">
           <div className="challenge-list m-3 rounded">
             <div className="challenge-items d-flex">
