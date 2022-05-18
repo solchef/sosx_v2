@@ -109,8 +109,8 @@ const CreateChallenge = (props) => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     // console.log(body)
-    // if (votingLevel == 2 || votingLevel == 3) {
-      await createRound();
+    if (votingLevel == 2 || votingLevel == 3) {
+      // await createRound();
     try {
       setIsLoading(true);
       const challenge = JSON.stringify({
@@ -146,6 +146,7 @@ const CreateChallenge = (props) => {
         );
 
         const challengeName = `challenge` + `-${name.replaceAll(" ", "-")}`;
+        
         await server.files.mkdir(`/rounds/round-1/${challengeName}`);
         await server.files.write(
           `/rounds/round-1/${challengeName}/info.json`,
@@ -158,16 +159,16 @@ const CreateChallenge = (props) => {
         toastError(t("Error"), t("Unable to sign payload"));
       }
     } catch (error) {
-      toastError(t("Error"), (error as Error)?.message);
+      toastError(t("File Error"), (error as Error)?.message);
       // console.error(error)
       setIsLoading(false);
     }
-    //   }else {
-    //   toastError(
-    //     "Errorr",
-    //     "You need at least level2 DAO ranking to create challenge"
-    //   );
-    // }
+      }else {
+      toastError(
+        "Errorr",
+        "You need at least level2 DAO ranking to create challenge"
+      );
+    }
   };
 
   const updateValue = (key: string, value: string | Choice[] | Date) => {
