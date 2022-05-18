@@ -18,7 +18,9 @@ import Media from "./components/media";
 import Ranking from "./components/ranking";
 import TimerDisplay from "./components/timer";
 import LoaderDisplay from "./components/loader";
-import {getDaoLevel} from "./hooks/getDaoLevel";
+import { getDaoLevel } from "./hooks/getDaoLevel";
+import { useQuery } from "@apollo/client";
+import { GET_LastVideo, GET_Videos } from "utils/graphqlQ";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -34,11 +36,14 @@ export default function Game() {
   const [url, setURL] = useState("");
   const [displayLevel, setDisplayLevel] = useState(1);
   const [videos, setVideos] = useState([]);
+  const [lastVideos, setLastVideos] = useState({});
   const router = useRouter();
   const contract = useDaoStakingContract();
   const [challenges, setChallenges] = useState<any[]>([]);
   let [stage, setStage] = useState(5);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
+  const GraphqlVideosData = useQuery(GET_Videos);
+  const GraphqlLastVideosData = useQuery(GET_LastVideo);
 
   const calculateTimeLeft = (entryTime) => {
     let eventTime = moment(entryTime).unix();
@@ -64,6 +69,15 @@ export default function Game() {
       sec: duration.seconds(),
     };
   };
+
+  useEffect(() => {
+    if (GraphqlVideosData.data !== undefined) setVideos(GraphqlVideosData.data);
+  }, [GraphqlVideosData.data]);
+
+  useEffect(() => {
+    if (GraphqlLastVideosData.data !== undefined)
+      setLastVideos(GraphqlLastVideosData.data);
+  }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
     const roundStartTime = 1652826898;
@@ -98,15 +112,12 @@ export default function Game() {
     }
   }, []);
 
-
   useEffect(() => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
       // setTotalAmountStaked(stakeAmount);
       let level = getDaoLevel(stakeAmount);
-        setCurrentLevel(level);
+      setCurrentLevel(level);
     });
-
-
   }, [stage]);
 
   return (
@@ -125,11 +136,11 @@ export default function Game() {
       </div>
 
       <div id="ranking-section" style={{ flex: "1 20%", minWidth: "335px" }}>
-        <Ranking  />
+        <Ranking />
       </div>
 
       <div id="video-section" style={{ flex: "5 70%" }}>
-        <Media  />
+        <Media />
       </div>
     </div>
   );
