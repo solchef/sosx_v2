@@ -9,6 +9,8 @@ import LoaderDisplay from "../components/loader";
 import moment from "moment";
 import useStage from "../../../hooks/useStage";
 import { useRouter } from "next/router";
+import { useQuery } from "@apollo/client";
+import { GET_Challenges, GET_LastRound } from "utils/graphqlQ";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -22,7 +24,10 @@ export default function Votechallenge() {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [stage, setStage] = useState(2);
+  const [lastRound, setLastRound] = useState();
   const router = useRouter();
+  const graphChallengesData = useQuery(GET_Challenges);
+  const graphLastRoundData = useQuery(GET_LastRound);
 
   const stageHook = useStage();
   useEffect(() => {
@@ -48,28 +53,47 @@ export default function Votechallenge() {
   };
 
   useEffect(() => {
+    if (graphLastRoundData.data !== undefined) {
+      setLastRound(graphLastRoundData.data.lastRound);
+    }
+  }, [graphLastRoundData.data]);
+
+  useEffect(() => {
+    if (graphChallengesData.data !== undefined) {
+      setChallenges(graphChallengesData.data.challenge);
+    }
+  }, [graphChallengesData.data]);
+
+  useEffect(() => {
     setLoading(true);
     const getData = async () => {
       let challenges = [];
-      for await (const roundContent of server.files.ls("/rounds/round-1")) {
+      for await (const roundContent of server.files.ls(
+        "/Rounds/Round-1/challenges"
+      )) {
         let challengeData;
         let vote;
         const chunks = [];
 
         if (roundContent.name.includes("challenge-")) {
-          for await (const challengeFolderContent of server.files.ls(`/rounds/round-1/${roundContent.name}`)) {
-            if (challengeFolderContent.name == 'info.json') {
-              for await (const chunk of server.cat(challengeFolderContent.cid)) {
+          for await (const challengeFolderContent of server.files.ls(
+            `/Rounds/Round-1/challenges/${roundContent.name}`
+          )) {
+            if (challengeFolderContent.name == "info.json") {
+              for await (const chunk of server.cat(
+                challengeFolderContent.cid
+              )) {
                 chunks.push(chunk);
               }
               const data = concat(chunks);
-              challengeData = JSON.parse(new TextDecoder().decode(data).toString());
-              challenges.push(challengeData)
+              challengeData = JSON.parse(
+                new TextDecoder().decode(data).toString()
+              );
+              challenges.push(challengeData);
             }
           }
-          setChallenges(challenges)
+          setChallenges(challenges);
         }
-        console.log(challenges)
       }
 
       let topThreeChallenges = [];
@@ -88,7 +112,6 @@ export default function Votechallenge() {
     };
     getData();
   }, [stage]);
-
 
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
@@ -121,9 +144,7 @@ export default function Votechallenge() {
                           {/* {camp.payload.metadata.strategies[0].params.address} */}
                         </span>
 
-                        <h1 className="fs-18 pb-2 pt-3">
-                          {camp.payload.name}
-                        </h1>
+                        <h1 className="fs-18 pb-2 pt-3">{camp.payload.name}</h1>
 
                         <ReadMore size="150" css="fs-14 pt-2">
                           {camp.payload.body}
