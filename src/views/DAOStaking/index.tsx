@@ -123,7 +123,6 @@ export default function DaoStaking() {
   const handleAmountChange = async (event) => {
         let _amountToStake = Number(event.target.value);
         let level = getDaoLevel(_amountToStake);
-
         setEstimateDaoLevel(level)
         
         // let decimals = new BigNumber(10).pow(18);
@@ -319,7 +318,6 @@ export default function DaoStaking() {
                       type="text"
                       className="form-control"
                       //   required
-                      defaultValue={0}
                       onChange={(e) => handleAmountChange(e)}
                       value={amountToStake}
                     />
@@ -360,7 +358,7 @@ export default function DaoStaking() {
                 <div className="d-flex h-100 justify-content-between mt-3 mb-3">
                   <div>
                     <div className="d-flex w-auto m-auto">
-                      <h3>{estimateDaoLevel == 1 ? 6 : estimateDaoLevel == 2 ? 9 : 12} %</h3>
+                      <h3>{estimateDaoLevel > 0 ? (estimateDaoLevel == 1 ? 6.00 : estimateDaoLevel == 2 ? 9.00 : 12.00) : 0} %</h3>
                     </div>
                     <p className="success mb-0 main-pink pt-2">Reward % </p>
                   </div>
