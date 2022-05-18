@@ -131,10 +131,10 @@ export default function Game() {
       </div>
 
       <div id="action-section" style={{ flex: "2 73%" }}>
-        {stage == 5 && <CreateChallenge level={currentLevel} stage={stage} />}
+        {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
         {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
         {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
-        {stage == 1 && <Submission level={currentLevel} stage={stage} />}
+        {stage == 4 && <Submission level={currentLevel} stage={stage} />}
       </div>
       <div id="ranking-section" style={{ flex: "0 1 350px" }}>
         <Ranking stage={stage} />
