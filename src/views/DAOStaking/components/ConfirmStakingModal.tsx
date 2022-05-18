@@ -57,7 +57,7 @@ const ConfirmStakingModal: React.FC<
               {clientMessage}
             </Text>
           </AutoColumn>
-          {receipt}
+          {/* {receipt} */}
           <Text small color="textSubtle" textAlign="center">
             {t("Confirm this transaction in your wallet")}
           </Text>
