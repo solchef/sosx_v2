@@ -1,19 +1,10 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import { useMediaPredicate } from "react-media-hook";
 import { create } from "ipfs-http-client";
-import useToast from "hooks/useToast";
-import { concat } from "uint8arrays";
 import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
 import moment from "moment";
-import ConnectWalletButton from "../../components/ConnectWalletButton";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
-import { validLinks } from "utils/validateLink";
-import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
-import { cleanNumber } from "utils/amount";
 import CreateChallenge from "./CreateChallenge";
-// import Votechallenge from "./Votechallenge";
 import Media from "./components/media";
 import Ranking from "./components/ranking";
 import TimerDisplay from "./components/timer";
@@ -31,13 +22,11 @@ const server = create({
 
 export default function Game() {
   const { account } = useActiveWeb3React();
-  const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [videos, setVideos] = useState([]);
   const [lastVideos, setLastVideos] = useState([]);
-  const router = useRouter();
   const contract = useDaoStakingContract();
   let [stage, setStage] = useState(5);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
@@ -57,7 +46,6 @@ export default function Game() {
 
     duration = moment.duration(duration.asSeconds() - 1, "seconds");
 
-    setDays(duration.days());
     setHours(duration.hours());
     setMinutes(duration.minutes());
     setSeconds(duration.seconds());
