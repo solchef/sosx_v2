@@ -15,13 +15,14 @@ import moment from "moment";
 import { useTranslation } from "contexts/Localization";
 import { useQuery } from "@apollo/client";
 import { GET_Stage3Challenges } from "utils/graphqlQ";
+import { getWalletIsVotedStage3 } from "api/graphql";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
 
 const VoteStageThree = (props: { level; stage }) => {
-  const [challenge, setChallenge] = useState<any[]>([]);
+  const [voted, setVoted] = useState(true)
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
   const { toastSuccess, toastError } = useToast();
@@ -36,34 +37,27 @@ const VoteStageThree = (props: { level; stage }) => {
   useEffect(() => {
     if (top3Challenges.data !== undefined) {
       setStage3Challenges(top3Challenges.data);
-      console.log(top3Challenges.data);
     }
   }, [top3Challenges.data]);
 
+
+  const getVoteData = async () => {
+    const vote = await getWalletIsVotedStage3(account)
+    if (vote.walltIsVotaed3 == null) {
+      setVoted(false)
+    }
+  }
+
+  useEffect(() => {
+    getVoteData()
+  }, [account])
+
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    let daoList = await contract.getAllAccount();
-    let voters = [];
-    for (let i = 0; i < daoList.length; i++) {
-      let voter_address = daoList[i];
-      let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = Number(total_stake / 10 ** 18);
-      let voterData = {
-        address: voter_address,
-        amount: total_stake,
-        level: level,
-      };
-
-      voters.push(voterData);
+    if (voted) {
+      toastError('You already voted for another challenge in stage 3')
+      return
     }
-
-    // if (stage == 2) {
-    //   toastError(
-    //     t("Error"),
-    //     t("You already voted for another challenge in stage 2")
-    //   );
-    //   return;
-    // }
 
     // if (stage == 3) {
     //   toastError(
@@ -85,7 +79,8 @@ const VoteStageThree = (props: { level; stage }) => {
 
     const vote = JSON.stringify({
       timestamp: moment().unix(),
-      address: account,
+      voterAddress: account,
+      level: level,
       round: "1",
     });
 
@@ -95,27 +90,29 @@ const VoteStageThree = (props: { level; stage }) => {
       const forIPFS = JSON.stringify(
         {
           timestamp: moment().unix(),
-          address: account,
+          voterAddress: account,
           round: "1",
-          // challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
-          // data: voters,
+          level: level,
+          // @ts-ignore
+          CId: selectedChallange.CID
         },
         null,
         2
       );
 
       await server.files.write(
-        `/Rounds/Round-1/votes/stage-${stage}/${account}.json`,
+        `/Rounds/Round-1/Votes/stage-${stage}/${account}.json`,
         forIPFS,
         { create: true }
       );
       toastSuccess(t("Vote created!"));
+      getVoteData()
     } else {
       toastError(t("Error"), t("Unable to sign payload"));
     }
   };
-console.log(stage3Challenges)
+
   return (
     <div className="card h-100">
       <div className="d-flex align-items-center mb-2">
@@ -211,6 +208,7 @@ console.log(stage3Challenges)
                   type="submit"
                   className="btn btn-primary btn-lg mt-5 mb-5 "
                   style={{ width: "max-content" }}
+                  disabled={voted}
                 >
                   <i className="fa-solid fa-check-to-slot pr-2"></i>
                   VOTE FOR THIS CHALLENGE

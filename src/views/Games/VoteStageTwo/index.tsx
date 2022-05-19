@@ -60,7 +60,6 @@ const VoteStageTwo = (props: { level; stage }) => {
   };
 
   const getVoteData = async () => {
-    console.log(account)
     const vote = await getWalletIsVotedStage2(account)
     if (vote.walltIsVotaed2 == null) {
       setVoted(false)
@@ -70,7 +69,6 @@ const VoteStageTwo = (props: { level; stage }) => {
   useEffect(() => {
     getVoteData()
   }, [account])
-  console.log(voted)
 
   useEffect(() => {
     getChalanges();
@@ -83,7 +81,6 @@ const VoteStageTwo = (props: { level; stage }) => {
         "/Rounds/Round-1/challenges"
       )) {
         let challengeData;
-        let vote;
         const chunks = [];
 
         if (roundContent.name.includes("challenge-")) {
@@ -122,7 +119,6 @@ const VoteStageTwo = (props: { level; stage }) => {
     };
     getData();
   }, [stage]);
-  console.log(selectedChallange)
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -154,7 +150,6 @@ const VoteStageTwo = (props: { level; stage }) => {
       voterAddress: account,
       level: level,
       round: "1",
-      // cId: 
     });
 
     const sig = await signMessage(connector, library, account, vote);
@@ -168,6 +163,8 @@ const VoteStageTwo = (props: { level; stage }) => {
           // challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
           level: level,
+          // @ts-ignore
+          CId: selectedChallange.CID
         },
         null,
         2
@@ -184,7 +181,6 @@ const VoteStageTwo = (props: { level; stage }) => {
       toastError(t("Error"), t("Unable to sign payload"));
     }
   };
-  // console.log(selectedChallange)
 
   return (
     <div className="card h-100">
