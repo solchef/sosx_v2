@@ -22,54 +22,60 @@ export default function DaoMemebrship() {
         </p>
         <div className="p-2 mb-3">
           <div className="d-flex align-items-center justify-content-between">
-            <h2 className=" mr-3 main-pink">
+           <div className="d-flex flex-column justify-content-between align-items-center">
+           <span style={{fontFamily: 'digital-7', fontSize: "60px", color: "#ff00cc" }} className=" mr-3 mb-3 main-pink">
               6%{" "}
-              <span style={{ fontSize: "15px", color: "#ff00cc" }}>
+             
+            </span>
+             <span style={{ fontSize: "15px", color: "#ff00cc" }}>
                 *EST. APY
               </span>
-            </h2>
+           </div>
             <div className="d-flex flex-column align-items-end">
               <span className="main-pink">DAO Level 1</span>
               <h4 style={{ fontSize: "30px" }}>1 - 99,999</h4>
-              <p>Voting rights on Challenges</p>
+              <p className="text-nowrap ">Voting rights on Challenges</p>
             </div>
           </div>
         </div>
         <hr />
         <div className=" p-2 mb-3">
           <div className="d-flex align-items-center justify-content-between">
-            <h2 className=" mr-3 main-pink">
-              {" "}
+          <div className="d-flex flex-column justify-content-between align-items-center">
+           <span style={{fontFamily: 'digital-7', fontSize: "60px", color: "#ff00cc" }} className=" mr-3 mb-3 main-pink">
               9%{" "}
-              <span style={{ fontSize: "15px", color: " #ff00cc" }}>
+             
+            </span>
+             <span style={{ fontSize: "15px", color: "#ff00cc" }}>
                 *EST. APY
               </span>
-            </h2>
+           </div>
             <div className="d-flex flex-column align-items-end">
               <span className="main-pink">DAO Level 2</span>
               <h4 style={{ fontSize: "30px" }}>1,000,000+</h4>
-              <p>Voting + Creating Challenges</p>
+              <p className="text-nowrap ">Voting + Creating Challenges</p>
             </div>
           </div>
         </div>
         <hr />
         <div className=" p-2">
           <div className="d-flex align-items-center justify-content-between">
-            <h2 className=" mr-3 main-pink">
-              <h2 className=" mr-3 main-pink">
-                {" "}
-                12%{" "}
-                <span style={{ fontSize: "15px", color: " #ff00cc" }}>
-                  *EST. APY
-                </span>
-              </h2>
-            </h2>
+          <div style={{transform: 'translateX(-15px)'}} className="d-flex flex-column justify-content-between align-items-center">
+           <span style={{ fontFamily: 'digital-7', fontSize: "60px", color: "#ff00cc" }} className=" mr-3 mb-3 main-pink">
+              12%
+             
+            </span>
+             <span style={{ fontSize: "15px", color: "#ff00cc" }}>
+                *EST. APY
+              </span>
+           </div>
+         
             <div className="d-flex flex-column align-items-end">
               <span className="main-pink">DAO Level 3</span>
-              <h4 style={{ fontSize: "30px", letterSpacing: "3px" }}>
+              <h4 style={{ fontSize: "30px" }}>
                 1,000,000+
               </h4>
-              <p>Create, vote and final pick</p>
+              <p className="text-nowrap ">Create, vote and final pick</p>
             </div>
           </div>
         </div>
