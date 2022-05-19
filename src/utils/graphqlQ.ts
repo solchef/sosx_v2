@@ -59,6 +59,98 @@ export const GET_Stage2Voter = gql`
   }
 `;
 
+export const GET_WiningChallenge = gql`
+  query WiningChallenge {
+    winingChallenge {
+      version
+      timestamp
+      type
+      signiture
+      payload {
+        name
+        body
+        creator
+      }
+      votedList {
+        stage2 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+        stage3 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+      }
+    }
+  }
+`;
+
+export const GET_Stage3Challenges = gql`
+  query Stage3Challenges {
+    stage3Challenges {
+      version
+      timestamp
+      type
+      signiture
+      payload {
+        name
+        body
+        creator
+      }
+      votedList {
+        stage2 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+        stage3 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+      }
+    }
+  }
+`;
+
+export const GET_Challange_Pages = `
+query GetChallengesByPage($page: Int, $values: Int) {
+  getChallengesByPage(page: $page, values: $values) {
+    chalanges {
+      version
+      timestamp
+      type
+      signiture
+      payload {
+        name
+        body
+        creator
+      }
+      votedList {
+        stage2 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+        stage3 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+      }
+    }
+    maxData
+  }
+}`;
+
 export const GET_WalletIsVoted = `
   query Vote($wallet: String) {
     walltIsVotaed2(wallet: $wallet) {
