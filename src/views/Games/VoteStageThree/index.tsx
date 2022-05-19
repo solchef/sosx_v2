@@ -43,6 +43,7 @@ const VoteStageThree = (props: { level; stage }) => {
     }
   }, [top3Challenges.data]);
 
+  console.log(top3Challenges);
 
   const getVoteData = async () => {
     if(account){
@@ -171,7 +172,7 @@ const VoteStageThree = (props: { level; stage }) => {
       <div className="d-flex flex-row flex-wrap">
         <div style={{ display: "inline-table" }}>
           {stage3Challenges ? stage3Challenges.stage3Challenges.map((data, index) => {
-            if(data != null){
+            // if(data != null){
               return (
                 <div key={index} className="challenge-list m-3 rounded">
                   <div className="challenge-items d-flex">
@@ -196,7 +197,7 @@ const VoteStageThree = (props: { level; stage }) => {
               </div> */}
                 </div>
               );
-            }
+            // }
         
           }) : ""}
         </div>

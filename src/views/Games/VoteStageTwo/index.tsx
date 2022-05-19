@@ -64,6 +64,7 @@ const VoteStageTwo = (props: { level; stage }) => {
 
   const getVoteData = async () => {
     const vote = await getWalletIsVotedStage2(account)
+    console.log(vote)
     if (vote.walltIsVotaed2 == null) {
       setVoted(false)
     }
