@@ -216,6 +216,7 @@ export default function DaoStaking() {
     true,
     "ConfirmStakingModal"
   );
+	const biggest1500 = useMediaPredicate("(min-width: 1500px)");
 
   return (
       <div
@@ -224,7 +225,7 @@ export default function DaoStaking() {
       >
         <Statistics status={loading} />
 
-        <div style={{ flex: "2 1 30%", minWidth: "400px" }}>
+        <div style={{ flex: `${biggest1500? ' 1 1 30%':' 1 1 50%' }`, maxWidth:'100%'}}>
           <div className="card d-flex flex-column">
             <div className="card-body">
               <div className="d-flex align-items-center mb-2">
