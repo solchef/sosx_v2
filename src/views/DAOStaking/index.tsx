@@ -354,19 +354,19 @@ export default function DaoStaking() {
                     <div className="d-flex w-auto m-auto">
                       <h3>{estimateDaoLevel > 0 ? (estimateDaoLevel == 1 ? 6.00 : estimateDaoLevel == 2 ? 9.00 : 12.00) : 0} %</h3>
                     </div>
-                    <p className="success mb-0 main-pink pt-2">Reward % </p>
+                    <p className="success mb-0 fs-13 main-pink pt-2">Reward % </p>
                   </div>
                   <div>
                     <div className="d-flex w-auto m-auto">
                       <h3>Lv {estimateDaoLevel}</h3>
                     </div>
-                    <p className="success main-pink mb-0 pt-2">DAO Level</p>
+                    <p className="success fs-13 main-pink mb-0 pt-2">DAO Level</p>
                   </div>
                   <div>
                     <div className="d-flex w-auto m-auto">
                       <h3>{stakingInterest}</h3>
                     </div>
-                    <p className="success mb-0 main-pink pt-2">
+                    <p className="success fs-13 mb-0 main-pink pt-2">
                       Estimate yearly Return
                     </p>
                   </div>
