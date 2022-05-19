@@ -43,12 +43,12 @@ export default function SocialminingS3() {
         createdAt: new Date().toISOString(),
     };
 
-    let response = await fetch('/api/posts', {
-        method: 'POST',
-        body: JSON.stringify(post),
-    });
+    // let response = await fetch('/api/posts', {
+    //     method: 'POST',
+    //     body: JSON.stringify(post),
+    // });
 
-    let data = await response.json();
+    // let data = await response.json();
     // console.log(data)
 
     let fd = new FormData();
@@ -68,19 +68,23 @@ export default function SocialminingS3() {
 
     );
 
-    if (data.success) {
-        // reset the fields
-        setEmailAdrress('');
-        setsocialpostlink('');
-        // set the message
+    toastSuccess("Details successfully submitted for verification");
+
+    router.replace('/x-mining');
+    
+    // if (data.success) {
+    //     // reset the fields
+    //     setEmailAdrress('');
+    //     setsocialpostlink('');
+    //     // set the message
         
-        toastSuccess("Details successfully submiotted for verifications");
-        router.replace('/x-mining')
-        return setMessage(data.message);
-    } else {
-        // set the error
-        toastSuccess("Error During Submission");
-    }
+    //     toastSuccess("Details successfully submiotted for verifications");
+    //     router.replace('/x-mining')
+    //     return setMessage(data.message);
+    // } else {
+    //     // set the error
+    //     toastSuccess("Error During Submission");
+    // }
 
    
 };

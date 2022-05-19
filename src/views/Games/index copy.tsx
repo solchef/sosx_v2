@@ -237,7 +237,6 @@ export default function Game() {
       let level = getDaoLevel(stakeAmount);
       setCurrentLevel(level);
     });
-
     // loadDaoLevels();
     getData();
     getVideo();

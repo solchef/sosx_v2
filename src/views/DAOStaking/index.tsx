@@ -15,6 +15,8 @@ import Statistics from "./components/statistics";
 import StakingSummary from "./components/DaoMemebrship";
 import DaoMemebrship from "./components/DaoMemebrship";
 import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
+import { formatFixedNumber, getDecimalAmount } from "utils/formatBalance";
+import { Modal, ModalHeader } from "react-bootstrap";
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -41,77 +43,34 @@ export default function DaoStaking() {
   const [activateStake, setActivatestake] = useState(true);
   const [showDetails, setShowDetails] = useState(-1);
   const [insufficientBalance, setInsufficientBalance] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [loadingData, setLoadingData] = useState(false);
   const [transaction, setTransaction] = useState();
   const [challenge, setChallenge] = useState(false);
   const [pendingTx, setPendingTx] = useState(false);
-  const [estimateDaoLevel, setEstimateDaoLevel] = useState(1);
+  const [estimateDaoLevel, setEstimateDaoLevel] = useState(0);
   const [transactionState, setTransactionState] = useState(1);
-  const [txHash, setTxHash] = useState(1);
-
-  const listUserStaking = async () => {
-    let list = [];
-    let count = [];
-    // console.log(numberOfActiveStake);
-    for (let i = 0; i < numberOfActiveStake; i++) {
-      await contract.getStakeInfo(i).then((stakeInstance) => {
-        // if (stakeInstance) {
-        // contract.getCurrentStakeClass(i).then(stakeClass => {
-        // console.log("here")
-        let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
-        let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
-        // console.log(stakeInstance)
-        count.push(i);
-        let instance = {
-          amount: stakeAmt,
-          isWithdrawed: Boolean(stakeInstance[1]),
-          stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString("en-US", {
-            timeZone: "America/New_York",
-          }),
-          referral: stakeInstance[3],
-          rewardAmount: Number(stakeInstance[4]),
-          penalty: Number(stakeInstance[5]),
-          stakingClass: stakeClass,
-          periodElapsed: stakeClass,
-        };
-
-        list.push(instance);
-
-        // });
-
-        // }
-      });
-
-      // console.log(stakeInstance)
-    }
-
-    setActiveStakes(list);
-    console.log(list);
-    // console.log(count)
-    // clearTimeout(listTimeOut);
-
-    // console.log(list)
-  };
-
-  const loadUI = async () => {
-    setLoadingData(true);
-    // await stakingDetails();
-    await listUserStaking();
-    // console.log(activeStakes)
-    setLoadingData(false);
-  };
+  const [txHash, setTxHash] = useState("");
+  const [ahow, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
+
+    setLoading(false)
     if (account !== undefined) {
       tokenContract.balanceOf(account).then((bal) => {
-        let balance = Number(bal / 10 ** 18);
-        setUserBalace(balance);
+        let balance = formatFixedNumber(bal, 3, 18)
+        // console.log(balance)
+        setUserBalace(Number(balance));
       });
 
+      listUserStaking();
+
       tokenContract.allowance(account, contract.address).then((allowance) => {
-        if (Number(allowance) > 0) {
-          // alert("ff")
+          allowance = Number(formatFixedNumber(allowance, 3, 18));
+          console.log(allowance)
+        if (allowance > 0) {
           setActivatestake(true);
         }
         setAllowanceValue(allowance);
@@ -120,19 +79,45 @@ export default function DaoStaking() {
   }, [account]);
 
 
+
+  const listUserStaking = async () => {
+    contract.getStakeCount().then((stakes) => {
+      setActiveStakes([]);
+      for (let i = 0; i < stakes; i++) {
+        contract.getStakeInfo(i).then((stakeInstance) => {
+          let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
+          let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
+          let instance = {
+            amount: stakeAmt,
+            isWithdrawed: Boolean(stakeInstance[1]),
+            stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
+              "en-US",
+              { timeZone: "America/New_York" }
+            ),
+            referral: stakeInstance[3],
+            rewardAmount: Number(stakeInstance[4]),
+            penalty: Number(stakeInstance[5]),
+            stakingClass: stakeClass,
+            periodElapsed: stakeClass,
+          };
+          setActiveStakes((activeStakes) => [...activeStakes, instance]);
+        });
+      }
+    });
+  };
+
+
+
   const handleAmountChange = async (event) => {
         let _amountToStake = Number(event.target.value);
         let level = getDaoLevel(_amountToStake);
-        setEstimateDaoLevel(level)
-        
+          setEstimateDaoLevel(level)
         // let decimals = new BigNumber(10).pow(18);
-
-        if (Number(allowanceValue) > amountToStake * 10 ** 18) {
+        if (allowanceValue > amountToStake) {
         setActivatestake(true);
         } else {
         setActivatestake(false);
         }
-
         const p = event.target.value;
         const t = stakingClass == 1 ? 0.25 : stakingClass == 2 ? 0.5 : 1;
         const r = stakingClass == 1 ? 0.06 : stakingClass == 2 ? 0.09 : 0.12;
@@ -153,29 +138,30 @@ export default function DaoStaking() {
   };
 
   const handleStake = async () => {
-    let decimals = BigNumber(10).pow(18);
+        let decimals = BigNumber(10).pow(18);
 
-    let result = BigNumber(amountToStake).multiply(decimals);
-    // console.log(Number(allowanceValue),amountToStake )
+        let result = BigNumber(amountToStake).multiply(decimals);
+        // console.log(Number(allowanceValue),amountToStake)
 
-    // console.log(referralAddress);
-    setLoading(true);
-    // alert('ss')
-    let stake = await contract.stakeToken(
-      result.toString(),
-      "0x0000000000000000000000000000000000000001",
-      stakingClass
-    );
-
-    // alert('ss')
-    if (stake) {
-      setActivatestake(true);
-      setLoading(false);
-      loadUI();
-      toastSuccess("Staking Transaction successfully sent");
-    } else {
-      toastError("Could not stake");
-    }
+        // console.log(referralAddress);
+        setLoading(true);
+        // alert('ss')
+        let stake = await contract.stakeToken(
+          result.toString(),
+          "0x0000000000000000000000000000000000000001",
+          stakingClass
+        );
+        
+        await listUserStaking();
+        // alert('ss')
+        if (stake) {
+          setActivatestake(true);
+          setLoading(false);
+          toastSuccess("Staking Transaction successfully sent");
+          handleConfirmDismiss();
+        } else {
+          toastError("Could not stake");
+        }
   };
 
   const handleClaimReward = async () => {
@@ -188,14 +174,13 @@ export default function DaoStaking() {
     // }
   };
 
-
   const handleUnStake = async () => {
     let decimals = BigNumber(10).pow(18);
 
     let result = BigNumber(amountToStake).multiply(decimals);
     setLoading(true);
-
-    const tx = await contract.stakeToken(0);
+    
+    const tx = await contract.returnTokens(0);
 
     if (tx) {
       setActivatestake(true);
@@ -207,6 +192,8 @@ export default function DaoStaking() {
     }
   };
 
+  
+
   const handleConfirmDismiss = useCallback(() => {
     setTransactionState(4)
     // if there was a tx hash, we want to clear the input
@@ -217,39 +204,47 @@ export default function DaoStaking() {
 
   const handleSubmit = async () => {
     if (amountToStake < 1) {
-      toastError("Yo must stake a minimum of 1 token");
+      toastError("You must stake a minimum of 1 token");
+      return;
+    }
+
+    if (amountToStake > balance) {
+      toastError(`Insufficient balance. Your wallet balance is ${balance} you need  ${(amountToStake - balance).toFixed(3)} more SOSX to stake that amount. `);
       return;
     }
 
     let decimals = BigNumber(10).pow(18);
     let result = BigNumber(amountToStake).multiply(decimals);
-    console.log(result - Number(allowanceValue));
-    if (Number(allowanceValue) >= amountToStake * 10 ** 18) {
+    // console.log(result - allowanceValue)
+    if (allowanceValue > amountToStake) {
       onPresentConfirmModal();
     } else {
       const tx = await tokenContract.populateTransaction.approve(
         contract.address,
         result.toString()
       );
-
+      setTxHash(tx.toString)
+    
       let signer = contract.signer;
+
       let trans = await signer.sendTransaction(tx);
-      setPendingTx(true);
+      // console.log(trans)
+       setPendingTx(true);
+     
+      // setTransaction(tx);
+      onPresentConfirmModal();
 
       toastSuccess(
         "Approval transaction sent. You can stake after the transaction is mined."
       );
-      // setTransaction(tx);
-      onPresentConfirmModal();
     }
   };
 
   const [onPresentConfirmModal] = useModal(
     <ConfirmStakingModal
       onConfirm={handleStake}
-      attemptingTxn={pendingTx}
-      recipient={""}
-      allowedSlippage={0}
+      receipt={pendingTx? 'Pending' : 'Success'}
+      clientMessage={"Your spending approval is being confirmed. "}
       onAcceptChanges={function (): void {
         throw new Error("Function not implemented.");
       }}
@@ -259,15 +254,17 @@ export default function DaoStaking() {
     true,
     "ConfirmStakingModal"
   );
+	const biggest1500 = useMediaPredicate("(min-width: 1500px)");
 
+  
   return (
       <div
         className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
         style={{ gap: "20px" }}
       >
-        <Statistics />
+        <Statistics status={loading} />
 
-        <div style={{ flex: "2 1 30%", minWidth: "400px" }}>
+        <div style={{ flex: `${biggest1500? ' 1 1 30%':' 1 1 50%' }`, maxWidth:'100%'}}>
           <div className="card d-flex flex-column">
             <div className="card-body">
               <div className="d-flex align-items-center mb-2">
@@ -284,8 +281,7 @@ export default function DaoStaking() {
                     width: " 40px",
                     fill: "rgb(255, 0, 204)",
                     marginRight: "10px",
-                  }}
-                >
+                  }} >
                   <path d="M58,0C25.97,0,0,25.97,0,58c0,32.03,25.97,58,58,58s58-25.97,58-58C116,25.97,90.03,0,58,0z M58,90.78 c-18.11,0-32.78-14.68-32.78-32.78c0-18.11,14.68-32.78,32.78-32.78S90.78,39.89,90.78,58C90.78,76.11,76.11,90.78,58,90.78z"></path>
                   <g>
                     <path
@@ -331,19 +327,17 @@ export default function DaoStaking() {
                 <button
                   className="btn w-100  mr-1 btn-primary btn-lg mt-2"
                   type="button"
-                  onClick={handleSubmit}
-                >
-                  STAKE
+                  onClick={handleSubmit}>
+                  {activateStake ? 'STAKE'  : 'APPROVE'  }
                     </button>
-
-                    {/* <button
-                      className="btn w-100 ml-1 btn-primary btn-lg mt-2"
-                      type="button"
-                      onClick={handleUnStake}
-                    >
-                  UNSTAKE
-                </button> */}
+                     {/* <button
+                        className="btn w-100  mr-1 btn-primary btn-lg mt-2"
+                        type="button"
+                        onClick={handleShow}>
+                        UNSTAKE
+                    </button> */}
               </div>
+
             </div>
           </div>
 
@@ -358,7 +352,7 @@ export default function DaoStaking() {
                 <div className="d-flex h-100 justify-content-between mt-3 mb-3">
                   <div>
                     <div className="d-flex w-auto m-auto">
-                      <h3>{estimateDaoLevel == 1 ? 6 : estimateDaoLevel == 2 ? 9 : 12} %</h3>
+                      <h3>{estimateDaoLevel > 0 ? (estimateDaoLevel == 1 ? 6.00 : estimateDaoLevel == 2 ? 9.00 : 12.00) : 0} %</h3>
                     </div>
                     <p className="success mb-0 main-pink pt-2">Reward % </p>
                   </div>
@@ -380,19 +374,167 @@ export default function DaoStaking() {
               </div>
               <button onClick={handleClaimReward}
                 className="btn mx-auto btn-primary btn-lg mt-3"
-                type="button"
-              >
+                type="button">
                 CLAIM REWARD
               </button>
             </div>
           </div>
         </div>
 
-        <DaoMemebrship />
+        <DaoMemebrship  />
 
-        <UserStaking />
+        <UserStaking  status={loading} stakelist={activeStakes}/>
 
       
+      
+
+        <Modal show={ahow} onHide={handleClose} centered>
+        <ModalHeader
+          className="text-dark"
+          style={{ background: "#111117", borderRadius: "10px 10px 0px 0px" }}
+        >
+          Select the Stake Entry to UNSTAKE
+          {/* <CloseButton /> */}
+          <a
+            href="#"
+            onClick={handleClose}
+            className="pull-right text-white" >
+            <i className="fa fa-close"></i>
+          </a>
+        </ModalHeader>
+
+        <div
+          className="modal-body"
+          style={{ background: "#111117", borderRadius: "0px 0px 10px 10px" }}
+        >
+              
+              {activeStakes.map((stake, i) => 
+                <>
+                  <ul
+                    className="token-balance-list mb-2 mt-2"
+                    onClick={() => {
+                      showDetails == i ? setShowDetails(-1) : setShowDetails(i);
+                    }}
+                  >
+                    <li>
+                      <span className="justify-content-between success fs-12">
+                        Level{" "}
+                        {stake.stakingClass == 1
+                          ? 1
+                          : stake.stakingClass == 2
+                          ? 2
+                          : 3}{" "}
+                      </span>
+                    </li>
+                    <li>
+                      <span className="success fs-12">
+                        {stake.amount.toFixed(3)}
+                      </span>
+                    </li>
+                    <i className="fa fa-chevron-down"></i>
+                  </ul>
+
+                  <div
+                    style={{
+                      display: showDetails == i ? "block" : "none",
+                    }}
+                    className="faq-header"
+                  >
+                    <div className="bg-dark rounded">
+                      <ul
+                        className="token-balance-list mb-2 mt-2"
+                        onClick={() => {
+                          showDetails == i
+                            ? setShowDetails(-1)
+                            : setShowDetails(i);
+                        }}
+                      >
+                        <li>
+                          <span className="justify-content-between success fs-12">
+                            {" "}
+                            Amount Staked: <br />
+                            {stake.amount.toFixed(3)} SOSX
+                          </span>
+                        </li>
+                        <li>
+                          <span className="justify-content-between success fs-12">
+                            {" "}
+                            Rewards Gained: <br />
+                            {stake.amount.toFixed(3)} SOSX{" "}
+                          </span>
+                        </li>
+                      </ul>
+
+                      <ul className="token-balance-list mb-2 mt-2">
+                        <li>
+                          <span className="justify-content-between success fs-12">
+                            {" "}
+                            Date Staked: <br />
+                            {stake.stakeDate}
+                          </span>
+                        </li>
+
+                        <li>
+                          <span className="justify-content-between success fs-12">
+                            {" "}
+                            Duration Elapsed: <br />
+                            {(stake.periodElapsed / (24 * 60)).toFixed(0)} Days
+                          </span>
+                        </li>
+                      </ul>
+
+                      <ul
+                        className="token-balance-list mb-2 mt-2"
+                        onClick={() => {
+                          showDetails == i
+                            ? setShowDetails(-1)
+                            : setShowDetails(i);
+                        }}
+                      >
+                        <li>
+                          <span className="justify-content-between success fs-12">
+                            {" "}
+                            Withdrawed: <br />
+                            {stake.isWithdrawed ? "Yes" : "No"}
+                          </span>
+                        </li>
+     
+                      </ul>
+                      {!stake.isWithdrawed ? (
+                        <ul className="token-balance-list mb-2 mt-2">
+                          <li>
+                            <span className="justify-content-between success fs-12">
+                              <button
+                                onClick={() =>
+                                  toastSuccess("No claim available")
+                                }
+                                className="btn btn-success full-width"
+                              >
+                                CLAIM REWARDS
+                              </button>
+                            </span>
+                          </li>
+                          <li>
+                            <span className="justify-content-between success fs-12">
+                              <button
+                                onClick={() => handleUnStake(i)}
+                                className="btn btn-primary"
+                              >
+                                UNSTAKE
+                              </button>
+                            </span>
+                          </li>
+                        </ul>
+                      ) : (
+                        <p></p>
+                      )}
+
+                  </div>
+              </div>
+            </>
+              )}
+        </div>
+      </Modal>
   </div>
   );
 }
