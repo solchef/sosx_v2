@@ -44,10 +44,13 @@ const VoteStageThree = (props: { level; stage }) => {
 
 
   const getVoteData = async () => {
-    const vote = await getWalletIsVotedStage3(account)
-    if (vote.walltIsVotaed3 == null) {
-      setVoted(false)
+    if(account){
+      const vote = await getWalletIsVotedStage3(account)
+      if (vote.walltIsVotaed3 == null) {
+        setVoted(false)
+      }
     }
+
   }
 
   useEffect(() => {
@@ -167,34 +170,37 @@ const VoteStageThree = (props: { level; stage }) => {
       <div className="d-flex flex-row flex-wrap">
         <div style={{ display: "inline-table" }}>
           {stage3Challenges ? stage3Challenges.stage3Challenges.map((data, index) => {
-            return (
-              <div key={index} className="challenge-list m-3 rounded">
-                <div className="challenge-items d-flex">
-                  <div className="list-title">{data.payload.name}</div>
-                  <div className="list-button">
-                    {" "}
-                    <button
-                      className="btn mx-auto btn-primary btn-sm "
-                      type="button"
-                      onClick={() => setSelectedChallange(stage3Challenges.stage3Challenges[index])}
-                    >
-                      VIEW
-                    </button>
+            if(data != null){
+              return (
+                <div key={index} className="challenge-list m-3 rounded">
+                  <div className="challenge-items d-flex">
+                    <div className="list-title">{data.payload.name}</div>
+                    <div className="list-button">
+                      {" "}
+                      <button
+                        className="btn mx-auto btn-primary btn-sm "
+                        type="button"
+                        onClick={() => setSelectedChallange(data)}
+                      >
+                        VIEW
+                      </button>
+                    </div>
                   </div>
+                  {/* <div className="challenge-items d-flex">
+                <div className="list-title">
+                  Challenge Title Here
                 </div>
-                {/* <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div> */}
-              </div>
-            );
+                <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
+                </div>
+              </div> */}
+                </div>
+              );
+            }
+        
           }) : ""}
         </div>
 
-        {selectedChallange.payload !== undefined ? (
+        { selectedChallange.payload !== undefined ? (
           <div className="challenge-details m-3 d-flex flex-column">
             <h1>{selectedChallange.payload.name}</h1>
             <p>{selectedChallange.payload.body}</p>
