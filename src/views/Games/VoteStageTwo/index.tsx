@@ -13,7 +13,7 @@ import useStage from "../../../hooks/useStage";
 import useLevels from "hooks/useLevels";
 import moment from "moment";
 import { useTranslation } from "contexts/Localization";
-import { getChallengesByPage } from "api/graphql";
+import { getChallengesByPage, getWalletIsVotedStage2 } from "api/graphql";
 import { Button, ButtonGroup } from "react-bootstrap";
 
 const server = create({
@@ -21,7 +21,7 @@ const server = create({
 });
 
 const VoteStageTwo = (props: { level; stage }) => {
-  const [challenge, setChallenge] = useState<any[]>([]);
+  const [voted, setVoted] = useState(false);
   const [challenges, setChallenges] = useState<any[]>([]);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
@@ -58,6 +58,17 @@ const VoteStageTwo = (props: { level; stage }) => {
     setSelectedChallange(result.chalanges[0]);
     setChallangeList(result.chalanges);
   };
+
+  useEffect(() => {
+    const getVoteData = async () => {
+      console.log(account);
+      const voted = await getWalletIsVotedStage2(account);
+      if (voted.walltIsVotaed2 == null) {
+        setVoted(true);
+      }
+    };
+    getVoteData();
+  }, [account]);
 
   useEffect(() => {
     getChalanges();
@@ -112,20 +123,6 @@ const VoteStageTwo = (props: { level; stage }) => {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    let daoList = await contract.getAllAccount();
-    let voters = [];
-    for (let i = 0; i < daoList.length; i++) {
-      let voter_address = daoList[i];
-      let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = Number(total_stake / 10 ** 18);
-      let voterData = {
-        address: voter_address,
-        amount: total_stake,
-        level: level,
-      };
-
-      voters.push(voterData);
-    }
 
     // if (stage == 2) {
     //   toastError(
@@ -155,8 +152,8 @@ const VoteStageTwo = (props: { level; stage }) => {
 
     const vote = JSON.stringify({
       timestamp: moment().unix(),
-      address: account,
-      level: 3,
+      voterAddress: account,
+      level: level,
       round: "1",
     });
 
@@ -166,7 +163,7 @@ const VoteStageTwo = (props: { level; stage }) => {
       const forIPFS = JSON.stringify(
         {
           timestamp: moment().unix(),
-          address: account,
+          voterAddress: account,
           round: "1",
           // challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
