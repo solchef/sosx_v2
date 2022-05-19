@@ -31,6 +31,8 @@ import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract } from "hooks/useContract";
 import moment from "moment";
 import { StageNav } from "../Nav";
+import { getDaoLevel } from "../hooks/getDaoLevel";
+import { formatFixedNumber } from "utils/formatBalance";
 
 // import MDEditor from './MDEdit,or'
 
@@ -104,8 +106,6 @@ const CreateChallenge = (props) => {
   };
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    // console.log(body)
     if (votingLevel == 2 || votingLevel == 3) {
       // await createRound();
       try {
@@ -142,19 +142,19 @@ const CreateChallenge = (props) => {
             2
           );
 
-          const challengeName = `challenge` + `-${challengeInputName.replaceAll(" ", "-")}`;
+          // const challengeName = `challenge` + `-${challengeInputName.replaceAll(" ", "-")}`;
 
           try {
-            await server.files.mkdir(`/Rounds/Round-1/challenges/${challengeName}`);
+            await server.files.mkdir(`/Rounds/Round-1/challenges/${account}`);
           } catch (err) {
             // @ts-ignore
             console.log(err.message)
-            toastError(t("Challenge Error"), t("Every Challenge should have unique Title, Please choose unique one"));
+            toastError(t("Challenge Error"), t("You can only create up to one challenge, Please wait for the next game to begin."));
             return
           }
 
           await server.files.write(
-            `/Rounds/Round-1/challenges/${challengeName}/info.json`,
+            `/Rounds/Round-1/challenges/${account}/info.json`,
             forIPFS,
             { create: true }
           );
@@ -230,30 +230,11 @@ const CreateChallenge = (props) => {
   const userVotingLevel = async () => {
     let amount = await contract.getVoterTotalStakeAmount(account);
     amount = amount;
-    // console.log(amount);
-    // alert(amount)
-    let level = getLevel(amount);
+    let level = getDaoLevel(Number(formatFixedNumber(amount, 3, 18)));
     setVotingLevel(level);
   };
 
-  const getLevel = (amount) => {
-    // console.log(process.env.NEXT_PUBLIC_LEVEL1)
-    if (
-      amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
-      amount < process.env.NEXT_PUBLIC_LEVEL2
-    ) {
-      return 1;
-    }
-    if (
-      amount >= process.env.NEXT_PUBLIC_LEVEL2 &&
-      amount < process.env.NEXT_PUBLIC_LEVEL3
-    ) {
-      return 2;
-    }
-    if (amount >= process.env.NEXT_PUBLIC_LEVEL3) {
-      return 3;
-    }
-  };
+
 
   return (
     <div className="card h-100">
