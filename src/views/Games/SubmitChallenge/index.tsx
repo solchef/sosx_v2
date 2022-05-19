@@ -40,60 +40,20 @@ const Submission = (props: {level, stage}) => {
       return;
     }
 
-    let data;
-    if (url.search("youtube") != -1) {
-      let regExp =
-        /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-      let match = url.match(regExp);
-      const valid = match && match[7].length == 11 ? match[7] : false;
-      if (valid !== false) {
-        data = JSON.stringify({
-          id: `${account}+round-1`,
-          rId: "round",
-          urls: {
-            youtube: valid,
-          },
-        });
-      }
-    }
+    let data = JSON.stringify({
+        id: `${account}`,
+        rId: "1",
+        url : url
+    }, null, 2)
 
-    if (url.search("tiktok") != -1) {
-      if (url.search("tiktok") != -1) {
-        if (url.search("vt") != -1) {
-          toastError("Use https://tiktok.com/@usename...");
-          return;
-        }
-        const index = url.indexOf("video/");
-        data = JSON.stringify({
-          id: `${account}+round-1`,
-          rId: "round",
-          urls: {
-            youtube: url.substring(index + 6, index + 25),
-          },
-        });
-      } else {
-        return false;
-      }
-    }
-
-    if (data !== "") {
-    //   const todayChallengeName = String(
-    //     todayChallenge.challenge.payload.name
-    //   ).replaceAll(" ", "-");
-
-    let  todayChallengeName = "Mall-Streaking-Challenge";
-      const fileName = `video-${moment().unix()}`;
+      const fileName = `${account}.json`;
       await server.files.write(
-        `/challenges/challenge-${todayChallengeName}/videos/${fileName}`,
+        `/Rounds/Round-1/Videos/${fileName}`,
         data,
         { create: true }
       );
       toastSuccess("Uploaded");
       form.reset();
-    //   getVideo();
-    } else {
-      toastError("Not Valid Links");
-    }
   };
 
     return (
@@ -154,7 +114,7 @@ const Submission = (props: {level, stage}) => {
         <form onSubmit={videoLink}>
             <div className="bg-input mb-3 mt-3 py-2 px-3 rounded ">
                 <div className="d-flex justify-content-between align-items-center">
-                    <input onChange={e => setURL(e.target.value)} type="text" placeholder="Video Hosted URL" required
+                    <input onChange={e => setURL(e.target.value)} type="url" placeholder="Video Hosted URL" required
                          className="form-control w-100"
                         style={{fontSize: "20px"}}/>
                 </div>
