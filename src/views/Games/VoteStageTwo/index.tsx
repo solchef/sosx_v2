@@ -155,8 +155,9 @@ const VoteStageTwo = (props: { level; stage }) => {
 
     const vote = JSON.stringify({
       timestamp: moment().unix(),
-      address: account,
-      round: "1",
+        address: account,
+          level: level,
+          round: "1",
     });
 
     const sig = await signMessage(connector, library, account, vote);
@@ -169,14 +170,14 @@ const VoteStageTwo = (props: { level; stage }) => {
           round: "1",
           // challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
-          // data: voters,
+          level: level,
         },
         null,
         2
       );
 
       await server.files.write(
-        `/Rounds/Round-1/votes/stage-${stage}/${account}.json`,
+        `/Rounds/Round-1/Votes/stage-${stage}/${account}.json`,
         forIPFS,
         { create: true }
       );
@@ -185,6 +186,7 @@ const VoteStageTwo = (props: { level; stage }) => {
       toastError(t("Error"), t("Unable to sign payload"));
     }
   };
+  console.log(selectedChallange)
 
   return (
     <div className="card h-100">
