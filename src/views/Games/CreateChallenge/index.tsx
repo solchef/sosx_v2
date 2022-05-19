@@ -144,7 +144,14 @@ const CreateChallenge = (props) => {
 
           const challengeName = `challenge` + `-${challengeInputName.replaceAll(" ", "-")}`;
 
-          await server.files.mkdir(`/Rounds/Round-1/challenges/${challengeName}`);
+          try {
+            await server.files.mkdir(`/Rounds/Round-1/challenges/${challengeName}`);
+          } catch (err) {
+            // @ts-ignore
+            console.log(err.message)
+            toastError(t("Challenge Error"), t("Every Challenge should have unique Title, Please choose unique one"));
+            return
+          }
 
           await server.files.write(
             `/Rounds/Round-1/challenges/${challengeName}/info.json`,
