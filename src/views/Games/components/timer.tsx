@@ -104,7 +104,7 @@ const TimerDisplay = (props) => {
           </div>
         </div>
       ) : (
-        <div className="card timer-card mb-3">
+        <div className="card timer-card mb-3 mt-3">
           <div className="d-flex align-items-center mb-2">
             <img src="images/submission-date-icon.png" className="title-icon" />
             <h4>NO TIMER</h4>
