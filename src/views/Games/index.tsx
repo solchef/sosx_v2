@@ -75,7 +75,7 @@ export default function Game() {
     const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4)
     
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 500 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 50009 * 5000 };
     let stage2 = { start: stage1.end, end: stage1.end + 500 * 500 };
     let stage3 = { start: stage2.end, end: stage2.end + 500 * 500 };
     let stage4 = { start: stage3.end, end: stage3.end + 1000 * 10 };
@@ -125,8 +125,8 @@ export default function Game() {
       </div>
 
       <div id="action-section" style={{ flex: "2 73%" }}>
-        {stage == 2 && <CreateChallenge level={currentLevel} stage={stage} />}
-        {stage == 1 && <VoteStageTwo level={currentLevel} stage={stage} />}
+        {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
+        {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
         {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
         {stage == 4 && <Submission level={currentLevel} stage={stage} />}
       </div>

@@ -83,9 +83,7 @@ const CreateChallenge = (props) => {
           try {
             await server.files.mkdir(`/Rounds/Round-1/challenges/${account}`);
           } catch (err) {
-            // @ts-ignore
-            console.log(err.message)
-            toastError(t("Challenge Error"), t("Every Challenge should have unique Title, Please choose unique one"));
+            toastError(t("Challenge Error"), t("You can't create more then one challenge"));
             return
           }
 
