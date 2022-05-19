@@ -69,11 +69,11 @@ export default function Game() {
   useEffect(() => {
     const roundStartTime = 1652963607;
 
-    const STAGE_1 = Number(process.env.NEXT_PUBLIC_STAGE_1)
-    const STAGE_2 = Number(process.env.NEXT_PUBLIC_STAGE_2)
-    const STAGE_3 = Number(process.env.NEXT_PUBLIC_STAGE_3)
-    const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4)
-    
+    const STAGE_1 = Number(process.env.NEXT_PUBLIC_STAGE_1);
+    const STAGE_2 = Number(process.env.NEXT_PUBLIC_STAGE_2);
+    const STAGE_3 = Number(process.env.NEXT_PUBLIC_STAGE_3);
+    const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4);
+
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 9 * 50 };
     let stage2 = { start: stage1.end, end: stage1.end + 500 * 500 };
@@ -93,7 +93,7 @@ export default function Game() {
       const interval = setInterval(() => {
         let currTime = moment().unix();
         let checkStage = stageGroups.findIndex(
-          (group) => group.end > currTime && currTime > group.start 
+          (group) => group.end > currTime && currTime > group.start
         );
 
         if (checkStage != -1) {
