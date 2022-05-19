@@ -79,12 +79,12 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    const roundStartTime = 1652948880;
+    const roundStartTime = 1652959286;
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 500 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 500 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + 2400 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 10 * 10 };
+    let stage2 = { start: stage1.end, end: stage1.end + 10 * 10 };
+    let stage3 = { start: stage2.end, end: stage2.end + 10 * 10 };
+    let stage4 = { start: stage3.end, end: stage3.end + 10 * 10 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
@@ -99,7 +99,7 @@ export default function Game() {
       const interval = setInterval(() => {
         let currTime = moment().unix();
         let checkStage = stageGroups.findIndex(
-          (group) => group.end > currTime && currTime > group.start
+          (group) => group.end > currTime && currTime > group.start 
         );
 
         if (checkStage != -1) {
@@ -131,8 +131,8 @@ export default function Game() {
       </div>
 
       <div id="action-section" style={{ flex: "2 73%" }}>
-        {stage == 2 && <CreateChallenge level={currentLevel} stage={stage} />}
-        {stage == 1 && <VoteStageTwo level={currentLevel} stage={stage} />}
+        {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
+        {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
         {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
         {stage == 4 && <Submission level={currentLevel} stage={stage} />}
       </div>
