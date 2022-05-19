@@ -156,7 +156,7 @@ const VoteStageTwo = (props: { level; stage }) => {
     const vote = JSON.stringify({
       timestamp: moment().unix(),
       address: account,
-      level: level,
+      level: 3,
       round: "1",
     });
 
