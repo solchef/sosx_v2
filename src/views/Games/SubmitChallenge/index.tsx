@@ -135,7 +135,7 @@ const Submission = (props: { level; stage }) => {
               <span>Created by: {winingChallenge?.winingChallenge.payload.creator} </span>
             </p>
             <p>
-              <span>Created On: {winingChallenge?.winingChallenge.payload.name} </span>
+              {/* <span>Created On: {winingChallenge?.winingChallenge.payload.name} </span> */}
             </p>
           </div>
         </div>
