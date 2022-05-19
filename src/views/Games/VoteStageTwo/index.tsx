@@ -15,6 +15,8 @@ import moment from "moment";
 import { useTranslation } from "contexts/Localization";
 import { getChallengesByPage, getWalletIsVotedStage2 } from "api/graphql";
 import { Button, ButtonGroup } from "react-bootstrap";
+import { getDaoLevel } from "../hooks/getDaoLevel";
+import { formatFixedNumber } from "utils/formatBalance";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -34,7 +36,7 @@ const VoteStageTwo = (props: { level; stage }) => {
   const dataIndex = 5;
   const contract = useDaoStakingContract();
   const stage = props.stage;
-  const level = useLevels(account);
+  const [votingLevel, setVotingLevel] = useState(0);
 
   const getChalanges = async () => {
     const result: any = await getChallengesByPage(currentPage, dataIndex);
@@ -120,35 +122,37 @@ const VoteStageTwo = (props: { level; stage }) => {
     getData();
   }, [stage]);
 
+  useEffect(() => {
+    userVotingLevel();
+  }, []);
+
+  const userVotingLevel = async () => {
+    let amount = await contract.getVoterTotalStakeAmount(account);
+    amount = amount;
+    let level = getDaoLevel(Number(formatFixedNumber(amount, 3, 18)));
+    setVotingLevel(level);
+  };
+
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
+    if (votingLevel === 0) {
+      toastError(
+        t("Error"),
+        t("You should have level to be able to vote")
+      );
+      return;
+    }
+
     if (voted) {
       toastError('You already voted for another challenge in stage 2')
       return
     }
 
-    // if (stage == 3) {
-    //   toastError(
-    //     t("Error"),
-    //     t("You already voted for another challenge in stage 3")
-    //   );
-    //   return;
-    // }
-
-    // if (stage == 2 && level == 0) {
-    //   toastError(t("Error"), t("You should have level to be able to vote"));
-    //   return;
-    // }
-
-    // if (stage == 3 && level != 3) {
-    //   toastError(t("Error"), t("Only Level 3 can vote in this stage"));
-    //   return;
-    // }
-
     const vote = JSON.stringify({
       timestamp: moment().unix(),
       voterAddress: account,
-      level: level,
+      level: votingLevel,
       round: "1",
     });
 
@@ -162,7 +166,7 @@ const VoteStageTwo = (props: { level; stage }) => {
           round: "1",
           // challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
-          level: level,
+          level: votingLevel,
           // @ts-ignore
           CId: selectedChallange.CID
         },
