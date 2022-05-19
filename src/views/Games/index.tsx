@@ -75,6 +75,7 @@ export default function Game() {
     const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4)
     
     let stageGroups = [];
+
     let stage1 = { start: roundStartTime, end: roundStartTime + STAGE_1 * 60 };
     let stage2 = { start: stage1.end, end: stage1.end + STAGE_1 * 60 };
     let stage3 = { start: stage2.end, end: stage2.end + STAGE_2 * 60 };

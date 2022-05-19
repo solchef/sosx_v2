@@ -312,7 +312,7 @@ export default function DaoStaking() {
                   <span>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control fs-28"
                       //   required
                       onChange={(e) => handleAmountChange(e)}
                       value={amountToStake}
