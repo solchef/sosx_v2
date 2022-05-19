@@ -79,7 +79,7 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    const roundStartTime = 1652959504;
+    const roundStartTime = 1652963371;
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 10 * 10 };
     let stage2 = { start: stage1.end, end: stage1.end + 10 * 10 };
