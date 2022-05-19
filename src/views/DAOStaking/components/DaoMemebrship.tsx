@@ -6,7 +6,7 @@ export default function DaoMemebrship() {
   return (
 
 
-    <div style={{ flex: `${biggest1500? ' 1 1 30%':' 1 1 45%' }`, maxWidth:'100%' }}>
+    <div style={{ flex: `${biggest1500? ' 1 1 30%':' 1 1 30%' }`,gap:'20px', maxWidth:'100%' }}>
     <div className="card d-flex flex-column justify-content-between h-100">
       <div className="card-body">
         <div className="d-flex align-items-center mb-2">
