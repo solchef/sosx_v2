@@ -30,53 +30,60 @@ export default function userStaking(props) {
   const [showDetails, setShowDetails] = useState(-1);
   const [loadingData, setLoadingData] = useState(false);
   const [level, setlevel] = useState(false);
+  const [stakeCount, setStakeCount] = useState(0);
+
+
+  const listUserStaking = async (props) => {
+    // console.log(numberOfActiveStake);
+    let stakeData = [];
+    contract.getStakeCount().then((stakes) => {
+      setStakeCount(Number(stakes));
+
+      for (let i = 0; i < stakeCount; i++) {
+        // const element = array[i];
+        
+      }
+  
+      // for (let i = 0; i < stakeCount; i++) {
+      //   contract.getStakeInfo(i).then((stakeInstance) => {
+      //     let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
+      //     let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
+       
+      //     let instance = {
+      //       amount: stakeAmt,
+      //       isWithdrawed: Boolean(stakeInstance[1]),
+      //       stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
+      //         "en-US",
+      //         { timeZone: "America/New_York" }
+      //       ),
+      //       referral: stakeInstance[3],
+      //       rewardAmount: Number(stakeInstance[4]),
+      //       penalty: Number(stakeInstance[5]),
+      //       stakingClass: stakeClass,
+      //       periodElapsed: stakeClass,
+      //     };
+      //     stakeData.push(instance);
+      //   });
+      // }
+
+      setActiveStakes(stakeData);
+    });
+
+    // 
+
+  };
   
 
-  const handleUnstake = async (stakeID) => {
-    const unstake = await contract.returnTokens(stakeID);
-
-    if (unstake) {
-      toastSuccess(
-        "Successfully sent unstake SOSX transaction, Check balance in your wallet"
-      );
-    }
-  };
-
-
-  const listUserStaking = async () => {
-    contract.getStakeCount().then((stakes) => {
-      setActiveStakes([]);
-      for (let i = 0; i < stakes; i++) {
-        contract.getStakeInfo(i).then((stakeInstance) => {
-          let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
-          let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
-          let instance = {
-            amount: stakeAmt,
-            isWithdrawed: Boolean(stakeInstance[1]),
-            stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
-              "en-US",
-              { timeZone: "America/New_York" }
-            ),
-            referral: stakeInstance[3],
-            rewardAmount: Number(stakeInstance[4]),
-            penalty: Number(stakeInstance[5]),
-            stakingClass: stakeClass,
-            periodElapsed: stakeClass,
-          };
-          setActiveStakes((activeStakes) => [...activeStakes, instance]);
-        });
-      }
-    });
-  };
 
 
   useEffect(() => {
-    listUserStaking();
+    // listUserStaking();
+    console.log(stakeCount)
   }, []);
 
   return (
     <>
-      <div style={{ flex: "1 1 45%" }}>
+      <div style={{ flex: "1 1 30%" }}>
         <div className="card d-flex flex-column h-100">
           <div className="card-body">
             <div className="d-flex align-items-center mb-2">
