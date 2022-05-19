@@ -34,7 +34,7 @@ const VoteStageTwo = (props: { level; stage }) => {
   const dataIndex = 5;
   const contract = useDaoStakingContract();
   const stage = props.stage;
-  const level = props.level;
+  const level = useLevels(account);
 
   const getChalanges = async () => {
     const result: any = await getChallengesByPage(currentPage, dataIndex);
@@ -186,7 +186,7 @@ const VoteStageTwo = (props: { level; stage }) => {
       toastError(t("Error"), t("Unable to sign payload"));
     }
   };
-  console.log(selectedChallange);
+  // console.log(selectedChallange)
 
   return (
     <div className="card h-100">

@@ -28,6 +28,7 @@ const VoteStageThree = (props: { level; stage }) => {
   const { t } = useTranslation();
   const contract = useDaoStakingContract();
   const [stage3Challenges, setStage3Challenges] = useState();
+  const [selectedChallange, setSelectedChallange] = useState({});
   const top3Challenges = useQuery(GET_Stage3Challenges);
   const stage = props.stage;
   const level = props.level;
@@ -114,7 +115,7 @@ const VoteStageThree = (props: { level; stage }) => {
       toastError(t("Error"), t("Unable to sign payload"));
     }
   };
-
+console.log(stage3Challenges)
   return (
     <div className="card h-100">
       <div className="d-flex align-items-center mb-2">
@@ -162,73 +163,64 @@ const VoteStageThree = (props: { level; stage }) => {
         Vote for the next OX Game challenge within the top 3 voted challenges.
       </p>
       <div className="d-flex flex-row flex-wrap">
-        <div className="challenge-list m-3 rounded">
-          <div className="challenge-items d-flex">
-            <div className="list-title">Challenge Title Here</div>
-            <div className="list-button">
-              {" "}
-              <button className="btn mx-auto btn-primary btn-sm " type="button">
-                VIEW
-              </button>
-            </div>
-          </div>
-          <div className="challenge-items d-flex">
-            <div className="list-title">Challenge Title Here</div>
-            <div className="list-button">
-              {" "}
-              <button className="btn mx-auto btn-primary btn-sm " type="button">
-                VIEW
-              </button>
-            </div>
-          </div>
-          <div className="challenge-items d-flex">
-            <div className="list-title">Challenge Title Here</div>
-            <div className="list-button">
-              {" "}
-              <button className="btn mx-auto btn-primary btn-sm " type="button">
-                VIEW
-              </button>
-            </div>
-          </div>
+        <div style={{ display: "inline-table" }}>
+          {stage3Challenges ? stage3Challenges.stage3Challenges.map((data, index) => {
+            return (
+              <div key={index} className="challenge-list m-3 rounded">
+                <div className="challenge-items d-flex">
+                  <div className="list-title">{data.payload.name}</div>
+                  <div className="list-button">
+                    {" "}
+                    <button
+                      className="btn mx-auto btn-primary btn-sm "
+                      type="button"
+                      onClick={() => setSelectedChallange(stage3Challenges.stage3Challenges[index])}
+                    >
+                      VIEW
+                    </button>
+                  </div>
+                </div>
+                {/* <div className="challenge-items d-flex">
+              <div className="list-title">
+                Challenge Title Here
+              </div>
+              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
+              </div>
+            </div> */}
+              </div>
+            );
+          }) : ""}
         </div>
-        <div className="challenge-details m-3 d-flex flex-column">
-          <h1>Challenge Title Here</h1>
-          <p>
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of using Lorem Ipsum is that it has a more-or-less normal
-            distribution of letters, as opposed to using 'Content here, content
-            here', making it look like readable English. Many desktop publishing
-            packages and web page editors now use Lorem Ipsum as their default
-            model text, and a search for 'lorem ipsum' will uncover many web
-            sites still in their infancy. Various versions have evolved over the
-            years, sometimes by accident, sometimes on purpose (injected humour
-            and the like).
-          </p>
-          <div className="challenge-meta">
-            <p className="mb-0">
-              {" "}
-              <span>Created by: x00000000000000000 </span>
-            </p>
-            <p>
-              <span>Created On: 22/22/2202 22:22:00 </span>
-            </p>
+
+        {selectedChallange.payload !== undefined ? (
+          <div className="challenge-details m-3 d-flex flex-column">
+            <h1>{selectedChallange.payload.name}</h1>
+            <p>{selectedChallange.payload.body}</p>
+            <div className="challenge-meta">
+              <p className="mb-0">
+                {" "}
+                <span>{selectedChallange.payload.creator} </span>
+              </p>
+              <p>{/* <span>{moment(selectedChallange.timestamp)} </span> */}</p>
+            </div>
+            <form onSubmit={handleSubmit}>
+              {!account ? (
+                <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4" />
+              ) : (
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-lg mt-5 mb-5 "
+                  style={{ width: "max-content" }}
+                >
+                  <i className="fa-solid fa-check-to-slot pr-2"></i>
+                  VOTE FOR THIS CHALLENGE
+                </button>
+              )}
+            </form>
           </div>
-          <form onSubmit={handleSubmit}>
-            {!account ? (
-              <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4" />
-            ) : (
-              <button
-                type="submit"
-                className="btn btn-primary btn-lg mt-5 mb-5 "
-                style={{ width: "max-content" }}
-              >
-                <i className="fa-solid fa-check-to-slot pr-2"></i>
-                VOTE FOR THIS CHALLENGE
-              </button>
-            )}
-          </form>
-        </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

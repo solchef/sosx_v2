@@ -1,19 +1,10 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import { useMediaPredicate } from "react-media-hook";
 import { create } from "ipfs-http-client";
-import useToast from "hooks/useToast";
-import { concat } from "uint8arrays";
 import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
 import moment from "moment";
-import ConnectWalletButton from "../../components/ConnectWalletButton";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
-import { validLinks } from "utils/validateLink";
-import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
-import { cleanNumber } from "utils/amount";
 import CreateChallenge from "./CreateChallenge";
-// import Votechallenge from "./Votechallenge";
 import Media from "./components/media";
 import Ranking from "./components/ranking";
 import TimerDisplay from "./components/timer";
@@ -31,13 +22,11 @@ const server = create({
 
 export default function Game() {
   const { account } = useActiveWeb3React();
-  const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [videos, setVideos] = useState([]);
   const [lastVideos, setLastVideos] = useState([]);
-  const router = useRouter();
   const contract = useDaoStakingContract();
   let [stage, setStage] = useState(5);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
@@ -57,7 +46,6 @@ export default function Game() {
 
     duration = moment.duration(duration.asSeconds() - 1, "seconds");
 
-    setDays(duration.days());
     setHours(duration.hours());
     setMinutes(duration.minutes());
     setSeconds(duration.seconds());
@@ -79,12 +67,18 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    const roundStartTime = 1652948880;
+    const roundStartTime = 1652963607;
+
+    const STAGE_1 = Number(process.env.NEXT_PUBLIC_STAGE_1)
+    const STAGE_2 = Number(process.env.NEXT_PUBLIC_STAGE_2)
+    const STAGE_3 = Number(process.env.NEXT_PUBLIC_STAGE_3)
+    const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4)
+    
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 500 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 500 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + 2400 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 500 };
+    let stage2 = { start: stage1.end, end: stage1.end + 500 * 500 };
+    let stage3 = { start: stage2.end, end: stage2.end + 500 * 500 };
+    let stage4 = { start: stage3.end, end: stage3.end + 1000 * 10 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
@@ -99,7 +93,7 @@ export default function Game() {
       const interval = setInterval(() => {
         let currTime = moment().unix();
         let checkStage = stageGroups.findIndex(
-          (group) => group.end > currTime && currTime > group.start
+          (group) => group.end > currTime && currTime > group.start 
         );
 
         if (checkStage != -1) {

@@ -31,6 +31,8 @@ import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract } from "hooks/useContract";
 import moment from "moment";
 import { StageNav } from "../Nav";
+import { getDaoLevel } from "../hooks/getDaoLevel";
+import { formatFixedNumber } from "utils/formatBalance";
 
 // import MDEditor from './MDEdit,or'
 
@@ -103,8 +105,6 @@ const CreateChallenge = (props) => {
   };
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    // console.log(body)
     if (votingLevel == 2 || votingLevel == 3) {
       // await createRound();
       try {
@@ -161,7 +161,7 @@ const CreateChallenge = (props) => {
           }
 
           await server.files.write(
-            `/Rounds/Round-1/challenges/${challengeName}/info.json`,
+            `/Rounds/Round-1/challenges/${account}/info.json`,
             forIPFS,
             { create: true }
           );
@@ -237,29 +237,8 @@ const CreateChallenge = (props) => {
   const userVotingLevel = async () => {
     let amount = await contract.getVoterTotalStakeAmount(account);
     amount = amount;
-    // console.log(amount);
-    // alert(amount)
-    let level = getLevel(amount);
+    let level = getDaoLevel(Number(formatFixedNumber(amount, 3, 18)));
     setVotingLevel(level);
-  };
-
-  const getLevel = (amount) => {
-    // console.log(process.env.NEXT_PUBLIC_LEVEL1)
-    if (
-      amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
-      amount < process.env.NEXT_PUBLIC_LEVEL2
-    ) {
-      return 1;
-    }
-    if (
-      amount >= process.env.NEXT_PUBLIC_LEVEL2 &&
-      amount < process.env.NEXT_PUBLIC_LEVEL3
-    ) {
-      return 2;
-    }
-    if (amount >= process.env.NEXT_PUBLIC_LEVEL3) {
-      return 3;
-    }
   };
 
   return (

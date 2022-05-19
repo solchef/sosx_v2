@@ -96,6 +96,8 @@ const Submission = (props: { level; stage }) => {
     }
   };
 
+  console.log(winingChallenge);
+
   return (
     <div className="card h-100">
       <div className="d-flex align-items-center mb-2">
@@ -145,26 +147,17 @@ const Submission = (props: { level; stage }) => {
       </p>
       <div className="mt-5 d-flex flex-row flex-wrap">
         <div className="challenge-details m-3 d-flex flex-column">
-          <h1>Challenge Title Here</h1>
+          <h1>{winingChallenge.winingChallenge.payload.name}</h1>
           <p>
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of using Lorem Ipsum is that it has a more-or-less normal
-            distribution of letters, as opposed to using 'Content here, content
-            here', making it look like readable English. Many desktop publishing
-            packages and web page editors now use Lorem Ipsum as their default
-            model text, and a search for 'lorem ipsum' will uncover many web
-            sites still in their infancy. Various versions have evolved over the
-            years, sometimes by accident, sometimes on purpose (injected humour
-            and the like).
+          {winingChallenge.winingChallenge.payload.body}
           </p>
           <div className="challenge-meta">
             <p className="mb-0">
               {" "}
-              <span>Created by: x00000000000000000 </span>
+              <span>Created by: {winingChallenge.winingChallenge.payload.creator} </span>
             </p>
             <p>
-              <span>Created On: 22/22/2202 22:22:00 </span>
+              <span>Created On: {winingChallenge.winingChallenge.payload.name} </span>
             </p>
           </div>
         </div>
