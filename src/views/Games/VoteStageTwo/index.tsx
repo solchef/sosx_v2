@@ -22,6 +22,7 @@ const server = create({
 
 const VoteStageTwo = (props: { level; stage }) => {
   const [challenge, setChallenge] = useState<any[]>([]);
+  const [challenges, setChallenges] = useState<any[]>([]);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
   const { toastSuccess, toastError } = useToast();
@@ -61,6 +62,53 @@ const VoteStageTwo = (props: { level; stage }) => {
   useEffect(() => {
     getChalanges();
   }, [currentPage]);
+
+  useEffect(() => {
+    const getData = async () => {
+      let challenges = [];
+      for await (const roundContent of server.files.ls(
+        "/Rounds/Round-1/challenges"
+      )) {
+        let challengeData;
+        let vote;
+        const chunks = [];
+
+        if (roundContent.name.includes("challenge-")) {
+          for await (const challengeFolderContent of server.files.ls(
+            `/Rounds/Round-1/challenges/${roundContent.name}`
+          )) {
+            if (challengeFolderContent.name == "info.json") {
+              for await (const chunk of server.cat(
+                challengeFolderContent.cid
+              )) {
+                chunks.push(chunk);
+              }
+              const data = concat(chunks);
+              challengeData = JSON.parse(
+                new TextDecoder().decode(data).toString()
+              );
+              challenges.push(challengeData);
+            }
+          }
+          setChallenges(challenges);
+        }
+      }
+
+      let topThreeChallenges = [];
+      const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
+      topThreeChallenges.push(ch[0], ch[1], ch[2]);
+      if (stage == 3) {
+        if (challenges.length > 3) {
+          setChallenges(topThreeChallenges);
+        } else {
+          setChallenges(challenges);
+        }
+      } else {
+        setChallenges(challenges);
+      }
+    };
+    getData();
+  }, [stage]);
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

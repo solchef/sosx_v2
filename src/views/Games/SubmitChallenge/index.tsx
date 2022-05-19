@@ -49,22 +49,15 @@ const Submission = (props: { level; stage }) => {
       return;
     }
 
-    let data;
-    if (url.search("youtube") != -1) {
-      let regExp =
-        /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-      let match = url.match(regExp);
-      const valid = match && match[7].length == 11 ? match[7] : false;
-      if (valid !== false) {
-        data = JSON.stringify({
-          id: `${account}+round-1`,
-          rId: "round",
-          urls: {
-            youtube: valid,
-          },
-        });
-      }
-    }
+    let data = JSON.stringify(
+      {
+        id: `${account}`,
+        rId: "1",
+        url: url,
+      },
+      null,
+      2
+    );
 
     if (url.search("tiktok") != -1) {
       if (url.search("tiktok") != -1) {
@@ -92,11 +85,9 @@ const Submission = (props: { level; stage }) => {
 
       let todayChallengeName = "Mall-Streaking-Challenge";
       const fileName = `video-${moment().unix()}`;
-      await server.files.write(
-        `/challenges/challenge-${todayChallengeName}/videos/${fileName}`,
-        data,
-        { create: true }
-      );
+      await server.files.write(`/Rounds/Round-1/Videos/${fileName}`, data, {
+        create: true,
+      });
       toastSuccess("Uploaded");
       form.reset();
       //   getVideo();
