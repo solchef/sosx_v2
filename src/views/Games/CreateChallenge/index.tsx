@@ -80,10 +80,8 @@ const CreateChallenge = (props) => {
             2
           );
 
-          const challengeName = `challenge` + `-${challengeInputName.replaceAll(" ", "-")}`;
-
           try {
-            await server.files.mkdir(`/Rounds/Round-1/challenges/${challengeName}`);
+            await server.files.mkdir(`/Rounds/Round-1/challenges/${account}`);
           } catch (err) {
             // @ts-ignore
             console.log(err.message)
@@ -92,7 +90,7 @@ const CreateChallenge = (props) => {
           }
 
           await server.files.write(
-            `/Rounds/Round-1/challenges/${challengeName}/info.json`,
+            `/Rounds/Round-1/challenges/${account}/info.json`,
             forIPFS,
             { create: true }
           );
