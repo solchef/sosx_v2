@@ -1,92 +1,30 @@
-import { ChangeEvent, FormEvent, useEffect, useState, useMemo } from "react";
-import { CardBody, useModal } from "@pancakeswap/uikit";
+import { FormEvent, useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
-import times from "lodash/times";
-import isEmpty from "lodash/isEmpty";
-import { useInitialBlock } from "state/block/hooks";
-import { SnapshotCommand } from "state/types";
 import useToast from "hooks/useToast";
 import useWeb3Provider from "hooks/useActiveWeb3React";
 import { signMessage } from "utils/web3React";
 import { useTranslation } from "contexts/Localization";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import dynamic from "next/dynamic";
-import {
-  sendSnapshotData,
-  Message,
-  generateMetaData,
-  generatePayloadData,
-} from "../helpers";
-import { FormErrors } from "./styles";
-import Choices, { Choice, makeChoice, MINIMUM_CHOICES } from "./Choices";
-import { combineDateAndTime, getFormErrors } from "./helpers";
-import { FormState } from "./types";
-import { ADMINS } from "../config";
-import NavGame from "../NavGame";
-import { CID, create } from "ipfs-http-client";
-import ReactMarkdown from "react-markdown";
-import { useMediaPredicate } from "react-media-hook";
+import { create } from "ipfs-http-client";
 import { useDaoStakingContract } from "hooks/useContract";
 import moment from "moment";
-import { StageNav } from "../Nav";
-
-// import MDEditor from './MDEdit,or'
-
-// const MDEditor = dynamic(
-//   () => import("@uiw/react-md-editor"),
-//   { ssr: false }
-// );
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
 
-const EasyMde = dynamic(() => import("components/EasyMde"), {
-  ssr: false,
-});
 
 const CreateChallenge = (props) => {
-  const router = useRouter();
-  const [state, setState] = useState<FormState>({
-    name: "",
-    body: "",
-    choices: times(MINIMUM_CHOICES).map(makeChoice),
-    startDate: null,
-    startTime: null,
-    endDate: null,
-    endTime: null,
-    snapshot: 0,
-  });
   const [isLoading, setIsLoading] = useState(false);
   const [votingLevel, setVotingLevel] = useState(0);
   const [challengeDetails, setChallengeDetails] = useState("");
   const [challengeInputName, setChallengeInputName] = useState("");
-
-  const [fieldsState, setFieldsState] = useState<{ [key: string]: boolean }>(
-    {}
-  );
-  const [images, setImages] = useState<{ cid: CID; path: string }[]>([]);
   const { t } = useTranslation();
   const { account } = useWeb3React();
-  const initialBlock = useInitialBlock();
-  const { push } = useRouter();
   const { library, connector } = useWeb3Provider();
   const { toastSuccess, toastError } = useToast();
-  const {
-    name,
-    body,
-    choices,
-    startDate,
-    startTime,
-    endDate,
-    endTime,
-    snapshot,
-  } = state;
-
   const contract = useDaoStakingContract();
-
 
   let roundId;
   const roundInfo = JSON.stringify({
@@ -105,9 +43,8 @@ const CreateChallenge = (props) => {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    // console.log(body)
+    const form = event.target as HTMLFormElement;
     if (votingLevel == 2 || votingLevel == 3) {
-      // await createRound();
       try {
         setIsLoading(true);
         const challenge = JSON.stringify({
@@ -123,7 +60,6 @@ const CreateChallenge = (props) => {
         });
 
         const sig = await signMessage(connector, library, account, challenge);
-        // alert(challengeDetails)
         if (sig) {
           const forIPFS = JSON.stringify(
             {
@@ -160,6 +96,7 @@ const CreateChallenge = (props) => {
           );
           setIsLoading(false);
           toastSuccess(t("challenge created!"));
+          form.reset()
         } else {
           toastError(t("Error"), t("Unable to sign payload"));
         }
@@ -176,68 +113,18 @@ const CreateChallenge = (props) => {
     }
   };
 
-  const updateValue = (key: string, value: string | Choice[] | Date) => {
-    setState((prevState) => ({
-      ...prevState,
-      [key]: value,
-    }));
-
-    // Keep track of what fields the user has attempted to edit
-    setFieldsState((prevFieldsState) => ({
-      ...prevFieldsState,
-      [key]: true,
-    }));
-  };
-
-  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { name: inputName, value } = evt.currentTarget;
-    updateValue(inputName, value);
-  };
-
-  const handleEasyMdeChange = (e) => {
-    // console.log(value);
-    setChallengeDetails(e.target.value);
-    // updateValue("body", value);
-  };
-
-  const handleChoiceChange = (newChoices: Choice[]) => {
-    updateValue("choices", newChoices);
-  };
-
-  const handleDateChange = (key: string) => (value: Date) => {
-    updateValue(key, value);
-  };
-
-  const options = useMemo(() => {
-    return {
-      hideIcons:
-        account && ADMINS.includes(account.toLowerCase())
-          ? []
-          : ["guide", "fullscreen", "preview", "side-by-side", "image"],
-    };
-  }, [account]);
-
   useEffect(() => {
     userVotingLevel();
-    // if (initialBlock > 0) {
-    //   setState((prevState) => ({
-    //     ...prevState,
-    //     snapshot: initialBlock,
-    //   }));
-    // }
   }, []);
 
   const userVotingLevel = async () => {
     let amount = await contract.getVoterTotalStakeAmount(account);
     amount = amount;
-    // console.log(amount);
-    // alert(amount)
     let level = getLevel(amount);
     setVotingLevel(level);
   };
 
   const getLevel = (amount) => {
-    // console.log(process.env.NEXT_PUBLIC_LEVEL1)
     if (
       amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
       amount < process.env.NEXT_PUBLIC_LEVEL2
@@ -257,7 +144,7 @@ const CreateChallenge = (props) => {
 
   return (
     <div className="card h-100">
-      <form onSubmit={handleSubmit}>
+      <form id="form" onSubmit={handleSubmit}>
         <div>
           <div className="d-flex align-items-center mb-2">
             <svg
@@ -335,19 +222,8 @@ const CreateChallenge = (props) => {
                     onChange={(e) => setChallengeDetails(e.target.value)}
                     rows={20}
                     cols={33}
-                    // defaultValue={"Explain in detail what your challenge is...\n"}
                     placeholder={"Explain in detail what your challenge is"}
                   />
-
-                  {/* @ts-ignore */}
-                  {/* <EasyMde
-              id="body"
-              name="body"
-              onTextChange={handleEasyMdeChange}
-              value={body}
-              options={options}
-              required
-            /> */}
                 </div>
               </div>
               {account ? (
