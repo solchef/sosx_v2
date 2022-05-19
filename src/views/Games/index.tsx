@@ -67,7 +67,7 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    const roundStartTime = 1652963607;
+    const roundStartTime = 1652969630;
 
     const STAGE_1 = Number(process.env.NEXT_PUBLIC_STAGE_1)
     const STAGE_2 = Number(process.env.NEXT_PUBLIC_STAGE_2)
@@ -75,10 +75,10 @@ export default function Game() {
     const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4)
     
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 500 };
-    let stage2 = { start: stage1.end, end: stage1.end + 500 * 500 };
-    let stage3 = { start: stage2.end, end: stage2.end + 500 * 500 };
-    let stage4 = { start: stage3.end, end: stage3.end + 1000 * 10 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + STAGE_1 * 500 };
+    let stage2 = { start: stage1.end, end: stage1.end + STAGE_1 * 500 };
+    let stage3 = { start: stage2.end, end: stage2.end + STAGE_1 * 500 };
+    let stage4 = { start: stage3.end, end: stage3.end + STAGE_1 * 500 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
