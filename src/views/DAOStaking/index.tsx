@@ -16,6 +16,7 @@ import StakingSummary from "./components/DaoMemebrship";
 import DaoMemebrship from "./components/DaoMemebrship";
 import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
 import { formatFixedNumber, getDecimalAmount } from "utils/formatBalance";
+import { Modal, ModalHeader } from "react-bootstrap";
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -50,6 +51,9 @@ export default function DaoStaking() {
   const [estimateDaoLevel, setEstimateDaoLevel] = useState(0);
   const [transactionState, setTransactionState] = useState(1);
   const [txHash, setTxHash] = useState("");
+  const [ahow, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
 
@@ -61,6 +65,8 @@ export default function DaoStaking() {
         setUserBalace(Number(balance));
       });
 
+      listUserStaking();
+
       tokenContract.allowance(account, contract.address).then((allowance) => {
           allowance = Number(formatFixedNumber(allowance, 3, 18));
           console.log(allowance)
@@ -71,6 +77,35 @@ export default function DaoStaking() {
       });
     }
   }, [account]);
+
+
+
+  const listUserStaking = async () => {
+    contract.getStakeCount().then((stakes) => {
+      setActiveStakes([]);
+      for (let i = 0; i < stakes; i++) {
+        contract.getStakeInfo(i).then((stakeInstance) => {
+          let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
+          let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
+          let instance = {
+            amount: stakeAmt,
+            isWithdrawed: Boolean(stakeInstance[1]),
+            stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
+              "en-US",
+              { timeZone: "America/New_York" }
+            ),
+            referral: stakeInstance[3],
+            rewardAmount: Number(stakeInstance[4]),
+            penalty: Number(stakeInstance[5]),
+            stakingClass: stakeClass,
+            periodElapsed: stakeClass,
+          };
+          setActiveStakes((activeStakes) => [...activeStakes, instance]);
+        });
+      }
+    });
+  };
+
 
 
   const handleAmountChange = async (event) => {
@@ -116,7 +151,8 @@ export default function DaoStaking() {
           "0x0000000000000000000000000000000000000001",
           stakingClass
         );
-
+        
+        await listUserStaking();
         // alert('ss')
         if (stake) {
           setActivatestake(true);
@@ -143,7 +179,7 @@ export default function DaoStaking() {
 
     let result = BigNumber(amountToStake).multiply(decimals);
     setLoading(true);
-
+    
     const tx = await contract.returnTokens(0);
 
     if (tx) {
@@ -155,6 +191,8 @@ export default function DaoStaking() {
       toastError("Could not unstake");
     }
   };
+
+  
 
   const handleConfirmDismiss = useCallback(() => {
     setTransactionState(4)
@@ -216,7 +254,9 @@ export default function DaoStaking() {
     true,
     "ConfirmStakingModal"
   );
+	const biggest1500 = useMediaPredicate("(min-width: 1500px)");
 
+  
   return (
       <div
         className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
@@ -224,7 +264,7 @@ export default function DaoStaking() {
       >
         <Statistics status={loading} />
 
-        <div style={{ flex: "2 1 30%", minWidth: "400px" }}>
+        <div style={{ flex: `${biggest1500? ' 1 1 30%':' 1 1 45%' }`, maxWidth:'100%'}}>
           <div className="card d-flex flex-column">
             <div className="card-body">
               <div className="d-flex align-items-center mb-2">
@@ -241,8 +281,7 @@ export default function DaoStaking() {
                     width: " 40px",
                     fill: "rgb(255, 0, 204)",
                     marginRight: "10px",
-                  }}
-                >
+                  }} >
                   <path d="M58,0C25.97,0,0,25.97,0,58c0,32.03,25.97,58,58,58s58-25.97,58-58C116,25.97,90.03,0,58,0z M58,90.78 c-18.11,0-32.78-14.68-32.78-32.78c0-18.11,14.68-32.78,32.78-32.78S90.78,39.89,90.78,58C90.78,76.11,76.11,90.78,58,90.78z"></path>
                   <g>
                     <path
@@ -291,7 +330,14 @@ export default function DaoStaking() {
                   onClick={handleSubmit}>
                   {activateStake ? 'STAKE'  : 'APPROVE'  }
                     </button>
+                     {/* <button
+                        className="btn w-100  mr-1 btn-primary btn-lg mt-2"
+                        type="button"
+                        onClick={handleShow}>
+                        UNSTAKE
+                    </button> */}
               </div>
+
             </div>
           </div>
 
@@ -337,9 +383,158 @@ export default function DaoStaking() {
 
         <DaoMemebrship  />
 
-        <UserStaking  status={loading}/>
+        <UserStaking  status={loading} stakelist={activeStakes}/>
 
       
+      
+
+        <Modal show={ahow} onHide={handleClose} centered>
+        <ModalHeader
+          className="text-dark"
+          style={{ background: "#111117", borderRadius: "10px 10px 0px 0px" }}
+        >
+          Select the Stake Entry to UNSTAKE
+          {/* <CloseButton /> */}
+          <a
+            href="#"
+            onClick={handleClose}
+            className="pull-right text-white" >
+            <i className="fa fa-close"></i>
+          </a>
+        </ModalHeader>
+
+        <div
+          className="modal-body"
+          style={{ background: "#111117", borderRadius: "0px 0px 10px 10px" }}
+        >
+              
+              {activeStakes.map((stake, i) => 
+                <>
+                  <ul
+                    className="token-balance-list mb-2 mt-2"
+                    onClick={() => {
+                      showDetails == i ? setShowDetails(-1) : setShowDetails(i);
+                    }}
+                  >
+                    <li>
+                      <span className="justify-content-between success fs-12">
+                        Level{" "}
+                        {stake.stakingClass == 1
+                          ? 1
+                          : stake.stakingClass == 2
+                          ? 2
+                          : 3}{" "}
+                      </span>
+                    </li>
+                    <li>
+                      <span className="success fs-12">
+                        {stake.amount.toFixed(3)}
+                      </span>
+                    </li>
+                    <i className="fa fa-chevron-down"></i>
+                  </ul>
+
+                  <div
+                    style={{
+                      display: showDetails == i ? "block" : "none",
+                    }}
+                    className="faq-header"
+                  >
+                    <div className="bg-dark rounded">
+                      <ul
+                        className="token-balance-list mb-2 mt-2"
+                        onClick={() => {
+                          showDetails == i
+                            ? setShowDetails(-1)
+                            : setShowDetails(i);
+                        }}
+                      >
+                        <li>
+                          <span className="justify-content-between success fs-12">
+                            {" "}
+                            Amount Staked: <br />
+                            {stake.amount.toFixed(3)} SOSX
+                          </span>
+                        </li>
+                        <li>
+                          <span className="justify-content-between success fs-12">
+                            {" "}
+                            Rewards Gained: <br />
+                            {stake.amount.toFixed(3)} SOSX{" "}
+                          </span>
+                        </li>
+                      </ul>
+
+                      <ul className="token-balance-list mb-2 mt-2">
+                        <li>
+                          <span className="justify-content-between success fs-12">
+                            {" "}
+                            Date Staked: <br />
+                            {stake.stakeDate}
+                          </span>
+                        </li>
+
+                        <li>
+                          <span className="justify-content-between success fs-12">
+                            {" "}
+                            Duration Elapsed: <br />
+                            {(stake.periodElapsed / (24 * 60)).toFixed(0)} Days
+                          </span>
+                        </li>
+                      </ul>
+
+                      <ul
+                        className="token-balance-list mb-2 mt-2"
+                        onClick={() => {
+                          showDetails == i
+                            ? setShowDetails(-1)
+                            : setShowDetails(i);
+                        }}
+                      >
+                        <li>
+                          <span className="justify-content-between success fs-12">
+                            {" "}
+                            Withdrawed: <br />
+                            {stake.isWithdrawed ? "Yes" : "No"}
+                          </span>
+                        </li>
+     
+                      </ul>
+                      {!stake.isWithdrawed ? (
+                        <ul className="token-balance-list mb-2 mt-2">
+                          <li>
+                            <span className="justify-content-between success fs-12">
+                              <button
+                                onClick={() =>
+                                  toastSuccess("No claim available")
+                                }
+                                className="btn btn-success full-width"
+                              >
+                                CLAIM REWARDS
+                              </button>
+                            </span>
+                          </li>
+                          <li>
+                            <span className="justify-content-between success fs-12">
+                              <button
+                                onClick={() => handleUnStake(i)}
+                                className="btn btn-primary"
+                              >
+                                UNSTAKE
+                              </button>
+                            </span>
+                          </li>
+                        </ul>
+                      ) : (
+                        <p></p>
+                      )}
+
+                  </div>
+              </div>
+            </>
+              )}
+        </div>
+      </Modal>
   </div>
   );
 }

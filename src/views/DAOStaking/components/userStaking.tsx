@@ -138,7 +138,7 @@ export default function userStaking(props) {
                 overflow: "auto",
                 paddingRight: "5px",
               }}>
-                {activeStakes.map((stake, i) => 
+                {props.stakelist.map((stake, i) => 
                   <div
                     className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
                     style={{ justifyContent: "space-between" }}>
