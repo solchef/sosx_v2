@@ -231,7 +231,7 @@ const VoteStageTwo = (props: { level; stage }) => {
       </div>
       <p>Vote for the next OX Game challenge.</p>
       <div className="d-flex flex-row flex-wrap">
-        <div>
+        <div style={{ display: "inline-table" }}>
           {challangeList.map((data, index) => {
             return (
               <div key={index} className="challenge-list m-3 rounded">
