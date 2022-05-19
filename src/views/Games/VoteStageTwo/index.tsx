@@ -280,7 +280,7 @@ const VoteStageTwo = (props: { level; stage }) => {
             <div className="challenge-meta">
               <p className="mb-0">
                 {" "}
-                <span>{selectedChallange.payload.creator} </span>
+                <span>Created By: {selectedChallange.payload.creator} </span>
               </p>
               <p>{/* <span>{moment(selectedChallange.timestamp)} </span> */}</p>
             </div>
