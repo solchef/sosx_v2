@@ -76,7 +76,7 @@ export default function userStaking(props) {
 
   return (
     <>
-      <div style={{ flex: "1 1 45%" }}>
+      <div style={{ flex: "1 1 30%" }}>
         <div className="card d-flex flex-column h-100">
           <div className="card-body">
             <div className="d-flex align-items-center mb-2">
