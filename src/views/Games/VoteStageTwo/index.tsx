@@ -21,7 +21,7 @@ const server = create({
 });
 
 const VoteStageTwo = (props: { level; stage }) => {
-  const [voted, setVoted] = useState(false)
+  const [voted, setVoted] = useState(true)
   const [challenges, setChallenges] = useState<any[]>([]);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
@@ -59,17 +59,18 @@ const VoteStageTwo = (props: { level; stage }) => {
     setChallangeList(result.chalanges);
   };
 
-  useEffect(() => {
-    const getVoteData = async () => {
-      console.log(account)
-      const voted = await getWalletIsVotedStage2(account)
-      if (voted.walltIsVotaed2 == null) {
-        setVoted(true)
-      }
-      
+  const getVoteData = async () => {
+    console.log(account)
+    const vote = await getWalletIsVotedStage2(account)
+    if (vote.walltIsVotaed2 == null) {
+      setVoted(false)
     }
+  }
+
+  useEffect(() => {
     getVoteData()
   }, [account])
+  console.log(voted)
 
   useEffect(() => {
     getChalanges();
@@ -121,17 +122,14 @@ const VoteStageTwo = (props: { level; stage }) => {
     };
     getData();
   }, [stage]);
+  console.log(selectedChallange)
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    // if (stage == 2) {
-    //   toastError(
-    //     t("Error"),
-    //     t("You already voted for another challenge in stage 2")
-    //   );
-    //   return;
-    // }
+    if (voted) {
+      toastError('You already voted for another challenge in stage 2')
+      return
+    }
 
     // if (stage == 3) {
     //   toastError(
@@ -156,6 +154,7 @@ const VoteStageTwo = (props: { level; stage }) => {
       voterAddress: account,
       level: level,
       round: "1",
+      // cId: 
     });
 
     const sig = await signMessage(connector, library, account, vote);
@@ -180,6 +179,7 @@ const VoteStageTwo = (props: { level; stage }) => {
         { create: true }
       );
       toastSuccess(t("Vote created!"));
+      getVoteData()
     } else {
       toastError(t("Error"), t("Unable to sign payload"));
     }
@@ -292,6 +292,7 @@ const VoteStageTwo = (props: { level; stage }) => {
                   type="submit"
                   className="btn btn-primary btn-lg mt-5 mb-5 "
                   style={{ width: "max-content" }}
+                  disabled={voted}
                 >
                   <i className="fa-solid fa-check-to-slot pr-2"></i>
                   VOTE FOR THIS CHALLENGE
