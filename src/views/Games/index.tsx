@@ -67,7 +67,7 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    const roundStartTime = 1652972204;
+    const roundStartTime = 1652972511;
 
     const STAGE_1 = Number(process.env.NEXT_PUBLIC_STAGE_1)
     const STAGE_2 = Number(process.env.NEXT_PUBLIC_STAGE_2)
