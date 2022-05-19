@@ -27,7 +27,7 @@ export default function DaoMemebrship() {
               6%{" "}
              
             </span>
-             <span style={{ fontSize: "15px", color: "#ff00cc" }}>
+             <span className="mt-2" style={{ fontSize: "15px", color: "#ff00cc" }}>
                 *EST. APY
               </span>
            </div>
@@ -46,7 +46,7 @@ export default function DaoMemebrship() {
               9%{" "}
              
             </span>
-             <span style={{ fontSize: "15px", color: "#ff00cc" }}>
+             <span className="mt-2" style={{ fontSize: "15px", color: "#ff00cc" }}>
                 *EST. APY
               </span>
            </div>
@@ -65,7 +65,7 @@ export default function DaoMemebrship() {
               12%
              
             </span>
-             <span style={{ fontSize: "15px", color: "#ff00cc" }}>
+             <span className="mt-2" style={{ fontSize: "15px", color: "#ff00cc" }}>
                 *EST. APY
               </span>
            </div>

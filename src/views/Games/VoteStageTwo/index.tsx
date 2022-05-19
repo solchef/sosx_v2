@@ -21,7 +21,7 @@ const server = create({
 });
 
 const VoteStageTwo = (props: { level; stage }) => {
-  const [voted, setVoted] = useState(false)
+  const [voted, setVoted] = useState(true)
   const [challenges, setChallenges] = useState<any[]>([]);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
@@ -59,15 +59,14 @@ const VoteStageTwo = (props: { level; stage }) => {
     setChallangeList(result.chalanges);
   };
 
-  useEffect(() => {
-    const getVoteData = async () => {
-      console.log(account)
-      const voted = await getWalletIsVotedStage2(account)
-      if (voted.walltIsVotaed2 == null) {
-        setVoted(true)
-      }
-      
+  const getVoteData = async () => {
+    const vote = await getWalletIsVotedStage2(account)
+    if (vote.walltIsVotaed2 == null) {
+      setVoted(false)
     }
+  }
+
+  useEffect(() => {
     getVoteData()
   }, [account])
 
@@ -82,7 +81,6 @@ const VoteStageTwo = (props: { level; stage }) => {
         "/Rounds/Round-1/challenges"
       )) {
         let challengeData;
-        let vote;
         const chunks = [];
 
         if (roundContent.name.includes("challenge-")) {
@@ -124,14 +122,10 @@ const VoteStageTwo = (props: { level; stage }) => {
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    // if (stage == 2) {
-    //   toastError(
-    //     t("Error"),
-    //     t("You already voted for another challenge in stage 2")
-    //   );
-    //   return;
-    // }
+    if (voted) {
+      toastError('You already voted for another challenge in stage 2')
+      return
+    }
 
     // if (stage == 3) {
     //   toastError(
@@ -169,6 +163,8 @@ const VoteStageTwo = (props: { level; stage }) => {
           // challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
           level: level,
+          // @ts-ignore
+          CId: selectedChallange.CID
         },
         null,
         2
@@ -180,11 +176,11 @@ const VoteStageTwo = (props: { level; stage }) => {
         { create: true }
       );
       toastSuccess(t("Vote created!"));
+      getVoteData()
     } else {
       toastError(t("Error"), t("Unable to sign payload"));
     }
   };
-  // console.log(selectedChallange)
 
   return (
     <div className="card h-100">
@@ -292,6 +288,7 @@ const VoteStageTwo = (props: { level; stage }) => {
                   type="submit"
                   className="btn btn-primary btn-lg mt-5 mb-5 "
                   style={{ width: "max-content" }}
+                  disabled={voted}
                 >
                   <i className="fa-solid fa-check-to-slot pr-2"></i>
                   VOTE FOR THIS CHALLENGE

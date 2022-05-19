@@ -7,6 +7,7 @@ export const GET_Challenges = gql`
       timestamp
       type
       signiture
+      CID
       payload {
         name
         body
@@ -66,6 +67,7 @@ export const GET_MyChallenge = `
       timestamp
       type
       signiture
+      CID
       payload {
         name
         body
@@ -96,6 +98,7 @@ export const GET_WiningChallenge = gql`
       timestamp
       type
       signiture
+      CID
       payload {
         name
         body
@@ -126,6 +129,7 @@ export const GET_Stage3Challenges = gql`
       timestamp
       type
       signiture
+      CID
       payload {
         name
         body
@@ -157,6 +161,7 @@ query GetChallengesByPage($page: Int, $values: Int) {
       timestamp
       type
       signiture
+      CID
       payload {
         name
         body
