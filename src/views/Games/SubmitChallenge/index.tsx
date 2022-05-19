@@ -49,54 +49,32 @@ const Submission = (props: { level; stage }) => {
       return;
     }
 
-    let data = JSON.stringify(
-      {
-        id: `${account}`,
-        rId: "1",
-        url: url,
-      },
-      null,
-      2
-    );
-
-    if (url.search("tiktok") != -1) {
-      if (url.search("tiktok") != -1) {
-        if (url.search("vt") != -1) {
-          toastError("Use https://tiktok.com/@usename...");
-          return;
-        }
-        const index = url.indexOf("video/");
-        data = JSON.stringify({
-          id: `${account}+round-1`,
-          rId: "round",
-          urls: {
-            youtube: url.substring(index + 6, index + 25),
-          },
-        });
-      } else {
-        return false;
-      }
+    let data
+    if (url.search("tiktok") != -1 || url.search("youtu") != -1 || url.search("instagram") != -1) {
+      data = JSON.stringify(
+        {
+          timestamp: moment().unix(),
+          id: `${account}`,
+          rId: "1",
+          url: url,
+        },
+        null,
+        2
+      );
+    } else {
+      toastError("Invalid video link");
     }
 
     if (data !== "") {
-      //   const todayChallengeName = String(
-      //     todayChallenge.challenge.payload.name
-      //   ).replaceAll(" ", "-");
-
-      let todayChallengeName = "Mall-Streaking-Challenge";
-      const fileName = `video-${moment().unix()}`;
-      await server.files.write(`/Rounds/Round-1/Videos/${fileName}`, data, {
-        create: true,
-      });
+        await server.files.write(`/Rounds/Round-1/Videos/${account}.json`, data, {
+          create: true,
+        });
       toastSuccess("Uploaded");
       form.reset();
-      //   getVideo();
     } else {
       toastError("Not Valid Links");
     }
   };
-
-  console.log(winingChallenge);
 
   return (
     <div className="card h-100">
@@ -147,17 +125,17 @@ const Submission = (props: { level; stage }) => {
       </p>
       <div className="mt-5 d-flex flex-row flex-wrap">
         <div className="challenge-details m-3 d-flex flex-column">
-          <h1>{winingChallenge.winingChallenge.payload.name}</h1>
+          <h1>{winingChallenge?.winingChallenge.payload.name}</h1>
           <p>
-          {winingChallenge.winingChallenge.payload.body}
+          {winingChallenge?.winingChallenge.payload.body}
           </p>
           <div className="challenge-meta">
             <p className="mb-0">
               {" "}
-              <span>Created by: {winingChallenge.winingChallenge.payload.creator} </span>
+              <span>Created by: {winingChallenge?.winingChallenge.payload.creator} </span>
             </p>
             <p>
-              <span>Created On: {winingChallenge.winingChallenge.payload.name} </span>
+              <span>Created On: {winingChallenge?.winingChallenge.payload.name} </span>
             </p>
           </div>
         </div>
@@ -168,7 +146,7 @@ const Submission = (props: { level; stage }) => {
               <div className="d-flex justify-content-between align-items-center">
                 <input
                   onChange={(e) => setURL(e.target.value)}
-                  type="text"
+                  type="url"
                   placeholder="Video Hosted URL"
                   required
                   className="form-control w-100"
