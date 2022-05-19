@@ -60,16 +60,15 @@ export default function Admin() {
         style={{ gap: "20px" }}
       >
 
-        <div style={{ flex: '1 1 50%' ,maxWidth:"100%"}}>
+        <div style={{ flex: '1 1 25%', maxWidth: "100%" }}>
           <div className="card">
-            <div className="  d-flex  h-100 text-white flex-column">
-              <span className="text-white pt-1 fs-18 pb-1 mb-1">
+              <span className="text-white pt-1 fs-18 pb-2 mb-2">
                 {" "}
                 Admin Panel{" "}
               </span>
               {account === "0x684A4e50De4ff380E70DB03D7B61a4111395326a" ? (
                 <div >
-                  <div className="d-flex align-items-center mb-2">
+                  <div className="d-flex align-items-center mt-3 mb-3">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -114,38 +113,39 @@ export default function Admin() {
                     Choose the winner from the videos Submissions sorted by
                     first uploaded
                   </p>
-                      {videos.map((video) => (
-                        <div className="challenge-items d-flex">
-                          <div className="list-title">{video.id}</div>
-                           <div className="d-flex w-100">
-                           <a href={video.url} target="_blank">
-                              <button className="btn mr-1 pr-5 pl-5 btn-primary btn-sm ">
-                                Visit Video
-                              </button>
-                            </a>
-                            <form onSubmit={handleSubmit} onClick={() => setWinnerAddress(video.id)}>
-                              <button
-                                type="submit"
-                                className="btn btn-primary btn-sm"
-                                style={{ width: "max-content" }}
-                              >
-                                Winner
-                              </button>
-                            </form>
-                           </div>
+                  <div className="card-body ">
 
-                         
+                    {videos.map((video) => (
+                      <>
+                        <div className="fs-14 border-top">{video.id}</div>
+                        <div className="d-flex mt-2 mb-2 w-100">
+                          <a className="mr-3 w-100" href={video.url} target="_blank">
+                            <button className="btn  w-100 btn-primary ">
+                              Visit Video
+                            </button>
+                          </a>
+                          <form className="w-100" onSubmit={handleSubmit} onClick={() => setWinnerAddress(video.id)}>
+                            <button
+                              type="submit"
+                              className="btn w-100 btn-primary"
+                              style={{ width: "max-content" }}
+                            >
+                              Winner
+                            </button>
+                          </form>
                         </div>
-                      ))}
-                
+                      </>
+
+                    ))}
+
+                  </div>
                 </div>
               ) : (
                 <p>You don't authorized to be here</p>
               )}
-            </div>
           </div>
         </div>
-        <div style={{ flex: '1 1 45%' }} >
+        <div style={{ flex: '1 1 60%' }} >
 
         </div>
       </div>
