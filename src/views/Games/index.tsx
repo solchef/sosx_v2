@@ -67,13 +67,19 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    const roundStartTime = 1652963607;
+    const roundStartTime = 1652970763;
 
+    const STAGE_1 = Number(process.env.NEXT_PUBLIC_STAGE_1)
+    const STAGE_2 = Number(process.env.NEXT_PUBLIC_STAGE_2)
+    const STAGE_3 = Number(process.env.NEXT_PUBLIC_STAGE_3)
+    const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4)
+    
     let stageGroups = [];
-    let stage1 = { start: roundStartTime, end: roundStartTime + 9 * 50 };
-    let stage2 = { start: stage1.end, end: stage1.end + 9 * 500 };
-    let stage3 = { start: stage2.end, end: stage2.end + 1 * 1 };
-    let stage4 = { start: stage3.end, end: stage3.end + 100000000 * 10 };
+
+    let stage1 = { start: roundStartTime, end: roundStartTime + STAGE_1 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + STAGE_1 * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + STAGE_2 * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end + STAGE_3 * 60 };
     let stage5 = { start: stage4.end, end: stage1.start };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
@@ -88,7 +94,7 @@ export default function Game() {
       const interval = setInterval(() => {
         let currTime = moment().unix();
         let checkStage = stageGroups.findIndex(
-          (group) => group.end > currTime && currTime > group.start
+          (group) => group.end > currTime && currTime > group.start 
         );
 
         if (checkStage != -1) {
@@ -120,10 +126,10 @@ export default function Game() {
       </div>
 
       <div id="action-section" style={{ flex: "2 73%" }}>
-        {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
-        {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
-        {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
-        {stage == 4 && <Submission level={currentLevel} stage={stage} />}
+          {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
+          {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
+          {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
+          {stage == 4 && <Submission level={currentLevel} stage={stage} />}
       </div>
       <div id="ranking-section" style={{ flex: "0 1 350px" }}>
         <Ranking stage={stage} />
