@@ -21,6 +21,9 @@ import LoaderDisplay from "./components/loader";
 import { getDaoLevel } from "./hooks/getDaoLevel";
 import { useQuery } from "@apollo/client";
 import { GET_LastVideo, GET_Videos } from "utils/graphqlQ";
+import VoteStageTwo from "./VoteStageTwo";
+import VoteStageThree from "./VoteStageThree";
+import Submission from "./SubmitChallenge";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -29,17 +32,13 @@ const server = create({
 export default function Game() {
   const { account } = useActiveWeb3React();
   const [days, setDays] = useState(0);
-  const { toastError, toastSuccess } = useToast();
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  const [url, setURL] = useState("");
-  const [displayLevel, setDisplayLevel] = useState(1);
   const [videos, setVideos] = useState([]);
-  const [lastVideos, setLastVideos] = useState({});
+  const [lastVideos, setLastVideos] = useState([]);
   const router = useRouter();
   const contract = useDaoStakingContract();
-  const [challenges, setChallenges] = useState<any[]>([]);
   let [stage, setStage] = useState(5);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
   const GraphqlVideosData = useQuery(GET_Videos);
@@ -80,7 +79,7 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    const roundStartTime = 1652826898;
+    const roundStartTime = 1652948880;
     let stageGroups = [];
     let stage1 = { start: roundStartTime, end: roundStartTime + 500 * 60 };
     let stage2 = { start: stage1.end, end: stage1.end + 500 * 60 };
@@ -122,27 +121,27 @@ export default function Game() {
 
   return (
     <div className="game container-fluid d-flex flex-wrap flex-direction-row">
-     <div id="timer-section" style={{flex:" 0 1 335px"}}>
-          <TimerDisplay
-            hours={hours}
-            minutes={minutes}
-            seconds={seconds}
-            stage={stage}
-          />
+      <div id="timer-section" style={{ flex: "0 1 350px" }}>
+        <TimerDisplay
+          hours={hours}
+          minutes={minutes}
+          seconds={seconds}
+          stage={stage}
+        />
       </div>
 
-
-
-      <div id="action-section" style={{ flex: "5 70%" }}>
-        <CreateChallenge level={currentLevel} stage={stage} />
+      <div id="action-section" style={{ flex: "2 73%" }}>
+        {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
+        {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
+        {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
+        {stage == 4 && <Submission level={currentLevel} stage={stage} />}
+      </div>
+      <div id="ranking-section" style={{ flex: "0 1 350px" }}>
+        <Ranking stage={stage} />
       </div>
 
-      <div id="ranking-section" style={{ flex: "1 20%", minWidth: "335px" }}>
-        <Ranking />
-      </div>
-
-      <div id="video-section" style={{ flex: "5 70%" }}>
-        <Media />
+      <div id="video-section" style={{ flex: "2 73%" }}>
+        <Media todayVideo={undefined} />
       </div>
     </div>
   );

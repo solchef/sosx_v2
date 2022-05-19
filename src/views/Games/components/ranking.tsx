@@ -11,6 +11,8 @@ import { useMediaPredicate } from "react-media-hook";
 import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
+import web3 from "web3";
+import { getDaoLevel } from "../hooks/getDaoLevel";
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -24,7 +26,7 @@ const StyledList = styled.ol`
   }
 `;
 
-const Ranking = () => {
+const Ranking = (props) => {
   const { t } = useTranslation();
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
@@ -33,12 +35,12 @@ const Ranking = () => {
   const { account } = useActiveWeb3React();
   const [loading, setLoading] = useState<boolean>();
 
-  const loadDaoLevels = async () => {
+  const loadDaoLevels = async (data) => {
     setLoading(true);
     const level1 = [];
     const level2 = [];
     const level3 = [];
-    let daoList = await contract.getAllAccount();
+    let daoList = data;
     daoList = [...new Set(daoList)];
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
@@ -49,7 +51,7 @@ const Ranking = () => {
       let data = {
         address: voter_address,
         amount: total_stake,
-        level: getLevel(total_stake),
+        level: await getDaoLevel(total_stake),
       };
       // if (voter_address == account) {setCurrentLevel(data.level)};
       // alert(data.level)
@@ -69,13 +71,16 @@ const Ranking = () => {
   };
 
   useEffect(() => {
-    loadDaoLevels();
+    contract.getAllAccount().then((daolist) => {
+      loadDaoLevels(daolist);
+    });
+    // alert(account)
     sortData();
-  }, [account]);
+  }, [props.stage]);
 
   useEffect(() => {
     sortData();
-  }, []);
+  }, [displayLevel]);
 
   const sortData = () => {
     const currentLevel = [];
@@ -85,26 +90,8 @@ const Ranking = () => {
     }
     setVoters(currentLevel);
   };
-  const getLevel = (amount) => {
-    if (
-      amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
-      amount < process.env.NEXT_PUBLIC_LEVEL2
-    ) {
-      return 1;
-    }
 
-    if (
-      amount >= process.env.NEXT_PUBLIC_LEVEL2 &&
-      amount < process.env.NEXT_PUBLIC_LEVEL3
-    ) {
-      return 2;
-    }
-
-    if (amount >= process.env.NEXT_PUBLIC_LEVEL3) {
-      return 3;
-    }
-  };
-
+  
   return (
     <div className="card h-100 w-100" style={{ minHeight: 500 }}>
       <div className="d-flex align-items-center mb-2">

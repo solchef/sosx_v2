@@ -139,13 +139,13 @@ const Menu: React.FC<NavProps> = ({
         return "Dao Staking";
 
       case '/xgame':
-        return "XGame";
+        return "OX Game";
       case '/createchallenge':
-        return "XGame";
+        return "OX Game";
       case '/votechallenge':
-        return "XGame";
-      case '/xgame':
-        return "XGame";
+        return "OX Game";
+      case '/Ox game':
+        return "OX Game";
 
       case '/referrals':
         return "Referrals";

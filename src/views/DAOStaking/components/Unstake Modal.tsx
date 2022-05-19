@@ -59,13 +59,13 @@ const ConfirmStakingModal: React.FC<
           </AutoColumn>
           {/* {receipt} */}
           <Text small color="textSubtle" textAlign="center">
-            {t("You will be able to stake once confirmed")}
+            {t("Confirm this transaction in your wallet")}
           </Text>
         </AutoColumn>
       </Wrapper>
 
-      <button  onClick={onConfirm} className="btn mx-full btn-primary btn-lg mt-3">
-           STAKE
+      <button onClick={onConfirm} className="btn btn-primary btn-md">
+        Approve
       </button>
     </Modal>
   );

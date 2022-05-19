@@ -20,10 +20,7 @@ const StyledMedia = styled(Box)`
   padding-top: 32px;
 `;
 
-const Media = (props) => {
-
-//I temoraritly removed this from main page
-// const Media = (props: { todayVideo }) => {
+const Media = (props: { todayVideo }) => {
   const { t } = useTranslation();
 
   const breakpointColumnsObj = {

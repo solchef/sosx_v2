@@ -24,7 +24,6 @@ import Choices, { Choice, makeChoice, MINIMUM_CHOICES } from "./Choices";
 import { combineDateAndTime, getFormErrors } from "./helpers";
 import { FormState } from "./types";
 import { ADMINS } from "../config";
-import VoteDetailsModal from "../components/VoteDetailsModal";
 import NavGame from "../NavGame";
 import { CID, create } from "ipfs-http-client";
 import ReactMarkdown from "react-markdown";
@@ -87,9 +86,7 @@ const CreateChallenge = (props) => {
   } = state;
 
   const contract = useDaoStakingContract();
-  const [onPresentVoteDetailsModal] = useModal(
-    <VoteDetailsModal block={state.snapshot} />
-  );
+
 
   let roundId;
   const roundInfo = JSON.stringify({
@@ -147,7 +144,14 @@ const CreateChallenge = (props) => {
 
           const challengeName = `challenge` + `-${challengeInputName.replaceAll(" ", "-")}`;
 
-          await server.files.mkdir(`/Rounds/Round-1/challenges/${challengeName}`);
+          try {
+            await server.files.mkdir(`/Rounds/Round-1/challenges/${challengeName}`);
+          } catch (err) {
+            // @ts-ignore
+            console.log(err.message)
+            toastError(t("Challenge Error"), t("Every Challenge should have unique Title, Please choose unique one"));
+            return
+          }
 
           await server.files.write(
             `/Rounds/Round-1/challenges/${challengeName}/info.json`,
@@ -254,6 +258,7 @@ const CreateChallenge = (props) => {
   return (
     <div className="card h-100">
       <form onSubmit={handleSubmit}>
+        <div>
           <div className="d-flex align-items-center mb-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -365,7 +370,7 @@ const CreateChallenge = (props) => {
               )}
             </div>
           </div>
-       
+       </div>
       </form>
     </div>
   );
