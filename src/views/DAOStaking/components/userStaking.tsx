@@ -252,6 +252,8 @@ export default function userStaking(props) {
                           <span className="justify-content-between success fs-12">
                             {" "}
                             Date Staked: <br />
+
+                            
                             {stake.stakeDate}
                           </span>
                         </li>
