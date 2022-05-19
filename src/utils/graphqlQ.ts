@@ -59,6 +59,36 @@ export const GET_Stage2Voter = gql`
   }
 `;
 
+export const GET_MyChallenge = `
+  query GetMyChallenge($wallet: String) {
+    getMyChallenge(wallet: $wallet) {
+      version
+      timestamp
+      type
+      signiture
+      payload {
+        name
+        body
+        creator
+      }
+      votedList {
+        stage2 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+        stage3 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+      }
+    }
+  }
+`;
+
 export const GET_WiningChallenge = gql`
   query WiningChallenge {
     winingChallenge {

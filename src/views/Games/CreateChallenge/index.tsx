@@ -87,7 +87,6 @@ const CreateChallenge = (props) => {
 
   const contract = useDaoStakingContract();
 
-
   let roundId;
   const roundInfo = JSON.stringify({
     id: roundId,
@@ -142,15 +141,23 @@ const CreateChallenge = (props) => {
             2
           );
 
-          const challengeName = `challenge` + `-${challengeInputName.replaceAll(" ", "-")}`;
+          const challengeName =
+            `challenge` + `-${challengeInputName.replaceAll(" ", "-")}`;
 
           try {
-            await server.files.mkdir(`/Rounds/Round-1/challenges/${challengeName}`);
+            await server.files.mkdir(
+              `/Rounds/Round-1/challenges/${challengeName}`
+            );
           } catch (err) {
             // @ts-ignore
-            console.log(err.message)
-            toastError(t("Challenge Error"), t("Every Challenge should have unique Title, Please choose unique one"));
-            return
+            console.log(err.message);
+            toastError(
+              t("Challenge Error"),
+              t(
+                "Every Challenge should have unique Title, Please choose unique one"
+              )
+            );
+            return;
           }
 
           await server.files.write(
@@ -370,7 +377,7 @@ const CreateChallenge = (props) => {
               )}
             </div>
           </div>
-       </div>
+        </div>
       </form>
     </div>
   );
