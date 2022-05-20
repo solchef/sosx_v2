@@ -55,10 +55,11 @@ export default function Admin() {
   const createRound = async () => {
     await server.files.mkdir(`/Rounds/Round-${roundId}`);
     await server.files.write(`/Rounds/Round-${roundId}/info.json`, roundInfo, {create: true});
-    await server.files.mkdir(`/Rounds/Round-${roundId}/videos`);
-    await server.files.mkdir(`/Rounds/Round-${roundId}/votes`);
-    await server.files.mkdir(`/Rounds/Round-${roundId}/votes/stage-2`);
-    await server.files.mkdir(`/Rounds/Round-${roundId}/votes/stage-3`);
+    await server.files.mkdir(`/Rounds/Round-${roundId}/Videos`);
+    await server.files.mkdir(`/Rounds/Round-${roundId}/challenges`);
+    await server.files.mkdir(`/Rounds/Round-${roundId}/Votes`);
+    await server.files.mkdir(`/Rounds/Round-${roundId}/Votes/stage-2`);
+    await server.files.mkdir(`/Rounds/Round-${roundId}/Votes/stage-3`);
   };
   
 
