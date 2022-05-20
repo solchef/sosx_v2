@@ -6,6 +6,9 @@ import { concat } from "uint8arrays";
 import { signMessage } from "utils/web3React";
 import useWeb3Provider from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
+import { GET_LastRound } from "utils/graphqlQ";
+import { useQuery } from "@apollo/client";
+import moment from "moment";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -15,26 +18,49 @@ export default function Admin() {
   const { account } = useActiveWeb3React();
   const [winnerAddress, setWinnerAddress] = useState("");
   const [videos, setVideos] = useState([]);
+  const [lastRound, setLastRound] = useState(Number)
   const { library, connector } = useWeb3Provider();
   const { toastSuccess, toastError } = useToast();
+  const GraphqlLastRoundData = useQuery(GET_LastRound);
 
   useEffect(() => {
-    const getVideos = async () => {
-      let finalData = [];
-      for await (const videoFile of server.files.ls(`/Rounds/Round-1/Videos`)) {
-        let fileContent;
-        const chunks = [];
-        for await (const chunk of server.cat(videoFile.cid)) {
-          chunks.push(chunk);
-        }
-        const data = concat(chunks);
-        fileContent = JSON.parse(new TextDecoder().decode(data).toString());
-        finalData.push(fileContent);
+    if (GraphqlLastRoundData.data !== undefined)
+      setLastRound(GraphqlLastRoundData.data.lastRound.id);
+  }, [GraphqlLastRoundData.data]);
+
+  const getVideos = async () => {
+    let finalData = [];
+    for await (const videoFile of server.files.ls(`/Rounds/Round-${lastRound}/Videos`)) {
+      let fileContent;
+      const chunks = [];
+      for await (const chunk of server.cat(videoFile.cid)) {
+        chunks.push(chunk);
       }
-      setVideos(finalData);
-    };
+      const data = concat(chunks);
+      fileContent = JSON.parse(new TextDecoder().decode(data).toString());
+      finalData.push(fileContent);
+    }
+    setVideos(finalData);
+  };
+
+  useEffect(() => {
     getVideos();
-  }, []);
+  }, [lastRound]);
+
+  let roundId:number = Number(lastRound) + 1
+  const roundInfo = JSON.stringify({
+    id: roundId,
+    startingTime: moment().unix(),
+  }, null, 2);
+  const createRound = async () => {
+    await server.files.mkdir(`/Rounds/Round-${roundId}`);
+    await server.files.write(`/Rounds/Round-${roundId}/info.json`, roundInfo, {create: true});
+    await server.files.mkdir(`/Rounds/Round-${roundId}/videos`);
+    await server.files.mkdir(`/Rounds/Round-${roundId}/votes`);
+    await server.files.mkdir(`/Rounds/Round-${roundId}/votes/stage-2`);
+    await server.files.mkdir(`/Rounds/Round-${roundId}/votes/stage-3`);
+  };
+  
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -46,6 +72,8 @@ export default function Admin() {
     try {
       await signMessage(connector, library, account, send);
       toastSuccess('Sent Successfully')
+      createRound()
+      getVideos()
     } catch (err) {
       // @ts-ignore
       toastError(err.message)
@@ -107,7 +135,7 @@ export default function Admin() {
                     <h4 style={{ fontSize: "60px" }}>Game</h4>
                   </div>
                   <div className="d-flex align-items-center mb-2">
-                    <h4>WINNER SELECTION</h4>
+                    <h4>WINNER SELECTION FOR ROUND #{lastRound}</h4>
                   </div>
                   <p>
                     Choose the winner from the videos Submissions sorted by

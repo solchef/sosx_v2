@@ -19,8 +19,9 @@ export default function Game() {
   const [videos, setVideos] = useState([]);
   const [lastVideos, setLastVideos] = useState([]);
   const [lastRound, setLastRound] = useState(Number)
+  const [startingTimeStamp, setStartingTime] = useState(Number)
   const contract = useDaoStakingContract();
-  let [stage, setStage] = useState(4);
+  let [stage, setStage] = useState(1);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
   const GraphqlVideosData = useQuery(GET_Videos);
   const GraphqlLastVideosData = useQuery(GET_LastVideo);
@@ -28,7 +29,7 @@ export default function Game() {
 
   const calculateTimeLeft = (entryTime) => {
     let eventTime = moment(entryTime).unix();
-    let currentTime = Number(Math.floor(Date.now() / 1000).toString());
+    let currentTime = Number(Math.floor(Date.now() / 1000).toString()); 
     let leftTime = eventTime - currentTime;
     let duration = moment.duration(leftTime, "seconds");
     let interval = 1000;
@@ -37,7 +38,7 @@ export default function Game() {
       clearInterval(interval);
     }
 
-    duration = moment.duration(duration.asSeconds() - 1, "seconds");
+    duration = moment.duration(duration.asSeconds() - 1, "seconds"); 
 
     setHours(duration.hours());
     setMinutes(duration.minutes());
@@ -51,7 +52,7 @@ export default function Game() {
   };
 
   useEffect(() => {
-    if (GraphqlVideosData.data !== undefined) setVideos(GraphqlVideosData.data);
+    if (GraphqlVideosData.data !== undefined) setVideos(GraphqlVideosData.data); 
   }, [GraphqlVideosData.data]);
 
   useEffect(() => {
@@ -60,18 +61,20 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    if (GraphqlLastRoundData.data !== undefined)
+    if (GraphqlLastRoundData.data !== undefined) {
       setLastRound(GraphqlLastRoundData.data.lastRound.id);
+      setStartingTime(GraphqlLastRoundData.data.lastRound.startingTime);
+    } 
   }, [GraphqlLastRoundData.data]);
-
+  
   useEffect(() => {
-    const roundStartTime = 1652979696;
+    const roundStartTime = startingTimeStamp; 
 
     let stageGroups = [];
 
-    let stage1 = { start: roundStartTime, end: roundStartTime * 1 };
-    let stage2 = { start: stage1.end, end: stage1.end * 1 };
-    let stage3 = { start: stage2.end, end: stage2.end * 1 };
+    let stage1 = { start: roundStartTime, end: roundStartTime * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end * 60 };
     let stage4 = { start: stage3.end, end: stage3.end * 60 };
     let stage5 = { start: stage3.end, end: stage3.end * 60 };
 
@@ -97,7 +100,7 @@ export default function Game() {
       }, 1000);
       return () => clearInterval(interval);
     }
-  }, []);
+  }, [lastRound]);
 
   useEffect(() => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
@@ -108,7 +111,9 @@ export default function Game() {
   }, [stage]);
 
   return (
-    <div className="game container-fluid d-flex flex-wrap flex-direction-row">
+    <>
+    {startingTimeStamp > 0 ? (
+      <div className="game container-fluid d-flex flex-wrap flex-direction-row">
       <div id="timer-section" style={{ flex: "0 1 400px" }}>
         <TimerDisplay
           hours={hours}
@@ -132,5 +137,7 @@ export default function Game() {
         <Media todayVideo={undefined} />
       </div>
     </div>
+    ) : ""}
+    </>
   );
 }
