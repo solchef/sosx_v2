@@ -85,7 +85,9 @@ export default function DaoStaking() {
             stakingClass: stakeClass,
             periodElapsed: stakeClass,
           };
-          setActiveStakes((activeStakes) => [...activeStakes, instance]);
+          if(!instance.isWithdrawed){
+            setActiveStakes((activeStakes) => [...activeStakes, instance]);
+          }
         });
       }
     });

@@ -20,12 +20,12 @@ const Ranking = (props) => {
   const { account } = useActiveWeb3React();
   const [loading, setLoading] = useState<boolean>();
 
-  const loadDaoLevels = async (data) => {
+  const loadDaoLevels = async () => {
     setLoading(true);
     const level1 = [];
     const level2 = [];
     const level3 = [];
-    let daoList = data;
+    let daoList = contract.getAllAccount();
     daoList = [...new Set(daoList)];
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
@@ -44,7 +44,7 @@ const Ranking = (props) => {
       setAllVoter(voters);
     }
 
-    voters.sort((b, a) => a.amount - b.amount);
+    voters.sort((a, b) => a.amount - b.amount);
     if (displayLevel === 1) setVoters(level1);
     if (displayLevel === 2) setVoters(level2);
     if (displayLevel === 3) setVoters(level3);
@@ -52,9 +52,7 @@ const Ranking = (props) => {
   };
 
   useEffect(() => {
-    contract.getAllAccount().then((daolist) => {
-      loadDaoLevels(daolist);
-    });
+    loadDaoLevels();
     sortData();
   }, [props.stage]);
 
