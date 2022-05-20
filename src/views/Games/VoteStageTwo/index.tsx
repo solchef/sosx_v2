@@ -1,7 +1,5 @@
-import { useRouter } from "next/router";
 import { create } from "ipfs-http-client";
 import { useEffect, useState } from "react";
-import { concat } from "uint8arrays";
 import React, { FormEvent } from "react";
 import { signMessage } from "utils/web3React";
 import { useWeb3React } from "@web3-react/core";
@@ -9,8 +7,6 @@ import useWeb3Provider from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
 import { useDaoStakingContract } from "hooks/useContract";
 import ConnectWalletButton from "../../../components/ConnectWalletButton";
-import useStage from "../../../hooks/useStage";
-import useLevels from "hooks/useLevels";
 import moment from "moment";
 import { useTranslation } from "contexts/Localization";
 import { getChallengesByPage, getWalletIsVotedStage2 } from "api/graphql";
@@ -24,7 +20,6 @@ const server = create({
 
 const VoteStageTwo = (props: { level; stage }) => {
   const [voted, setVoted] = useState(true);
-  const [challenges, setChallenges] = useState<any[]>([]);
   const [justVoted, setJustVoted] = useState(false);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
@@ -63,7 +58,6 @@ const VoteStageTwo = (props: { level; stage }) => {
 
   const getVoteData = async () => {
     const vote = await getWalletIsVotedStage2(account);
-    console.log(vote);
     if (vote.walltIsVotaed2 == null) {
       setVoted(false);
     }
@@ -76,52 +70,6 @@ const VoteStageTwo = (props: { level; stage }) => {
   useEffect(() => {
     getChalanges();
   }, [currentPage]);
-
-  useEffect(() => {
-    const getData = async () => {
-      let challenges = [];
-      for await (const roundContent of server.files.ls(
-        "/Rounds/Round-1/challenges"
-      )) {
-        let challengeData;
-        const chunks = [];
-
-        if (roundContent.name.includes("challenge-")) {
-          for await (const challengeFolderContent of server.files.ls(
-            `/Rounds/Round-1/challenges/${roundContent.name}`
-          )) {
-            if (challengeFolderContent.name == "info.json") {
-              for await (const chunk of server.cat(
-                challengeFolderContent.cid
-              )) {
-                chunks.push(chunk);
-              }
-              const data = concat(chunks);
-              challengeData = JSON.parse(
-                new TextDecoder().decode(data).toString()
-              );
-              challenges.push(challengeData);
-            }
-          }
-          setChallenges(challenges);
-        }
-      }
-
-      let topThreeChallenges = [];
-      const ch = challenges.sort((a, b) => a.votes - b.votes).reverse();
-      topThreeChallenges.push(ch[0], ch[1], ch[2]);
-      if (stage == 3) {
-        if (challenges.length > 3) {
-          setChallenges(topThreeChallenges);
-        } else {
-          setChallenges(challenges);
-        }
-      } else {
-        setChallenges(challenges);
-      }
-    };
-    getData();
-  }, [stage]);
 
   useEffect(() => {
     userVotingLevel();
@@ -162,7 +110,6 @@ const VoteStageTwo = (props: { level; stage }) => {
           timestamp: moment().unix(),
           voterAddress: account,
           round: "1",
-          // challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
           level: votingLevel,
           // @ts-ignore
@@ -246,13 +193,6 @@ const VoteStageTwo = (props: { level; stage }) => {
                     </button>
                   </div>
                 </div>
-                {/* <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div> */}
               </div>
             );
           })}

@@ -45,8 +45,6 @@ export default function UserStakingLogs(props) {
   };
 
   const listUserStaking = async () => {
-  
-    // console.log(numberOfActiveStake);
     contract.getStakeCount().then(stakes => {
       let list = [];
       let count = 1;
@@ -55,8 +53,6 @@ export default function UserStakingLogs(props) {
         contract.getStakeInfo(i).then(stakeInstance => {
           let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
           let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
-          // count.push(i)
-          // alert(i)
           let instance = {
             amount: stakeAmt,
             isWithdrawed: Boolean(stakeInstance[1]),
@@ -77,20 +73,15 @@ export default function UserStakingLogs(props) {
        
         })
         count ++;
-        console.log(activeStakes)
 
       }
-      // setActiveStakes(list);
-
      
     });
   };
 
   const loadUI = async () => {
     setLoadingData(true);
-    // await stakingDetails();
     await listUserStaking();
-    // console.log(activeStakes)
     setLoadingData(false);
   };
 

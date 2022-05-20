@@ -1,20 +1,9 @@
-import { useRouter } from "next/router";
 import { create } from "ipfs-http-client";
 import { useEffect, useState } from "react";
-import { concat } from "uint8arrays";
 import React, { FormEvent } from "react";
-import { signMessage } from "utils/web3React";
 import { useWeb3React } from "@web3-react/core";
-import useWeb3Provider from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
-import { useDaoStakingContract } from "hooks/useContract";
-import ConnectWalletButton from "../../../components/ConnectWalletButton";
-import useStage from "../../../hooks/useStage";
-import useLevels from "hooks/useLevels";
 import moment from "moment";
-import { useTranslation } from "contexts/Localization";
-import useActiveWeb3React from "hooks/useActiveWeb3React";
-import { validLinks } from "utils/validateLink";
 import { useQuery } from "@apollo/client";
 import { GET_WiningChallenge } from "utils/graphqlQ";
 
@@ -23,17 +12,11 @@ const server = create({
 });
 
 const Submission = (props: { level; stage }) => {
-  const [challenge, setChallenge] = useState<any[]>([]);
   const { account } = useWeb3React();
   const [winingChallenge, setWingingChallenge] = useState();
-  const { library, connector } = useWeb3Provider();
   const [url, setURL] = useState("");
   const { toastSuccess, toastError } = useToast();
-  const { t } = useTranslation();
-  const contract = useDaoStakingContract();
   const winingChallengeData = useQuery(GET_WiningChallenge);
-  const stage = props.stage;
-  const level = props.level;
 
   useEffect(() => {
     if (winingChallengeData.data !== undefined)
@@ -49,8 +32,12 @@ const Submission = (props: { level; stage }) => {
       return;
     }
 
-    let data
-    if (url.search("tiktok") != -1 || url.search("youtu") != -1 || url.search("instagram") != -1) {
+    let data;
+    if (
+      url.search("tiktok") != -1 ||
+      url.search("youtu") != -1 ||
+      url.search("instagram") != -1
+    ) {
       data = JSON.stringify(
         {
           timestamp: moment().unix(),
@@ -66,9 +53,9 @@ const Submission = (props: { level; stage }) => {
     }
 
     if (data !== "") {
-        await server.files.write(`/Rounds/Round-1/Videos/${account}.json`, data, {
-          create: true,
-        });
+      await server.files.write(`/Rounds/Round-1/Videos/${account}.json`, data, {
+        create: true,
+      });
       toastSuccess("Uploaded");
       form.reset();
     } else {
@@ -126,13 +113,14 @@ const Submission = (props: { level; stage }) => {
       <div className="mt-5 d-flex flex-row flex-wrap">
         <div className="challenge-details m-3 d-flex flex-column">
           <h1>{winingChallenge?.winingChallenge.payload.name}</h1>
-          <p>
-          {winingChallenge?.winingChallenge.payload.body}
-          </p>
+          <p>{winingChallenge?.winingChallenge.payload.body}</p>
           <div className="challenge-meta">
             <p className="mb-0">
               {" "}
-              <span>Created by: {winingChallenge?.winingChallenge.payload.creator} </span>
+              <span>
+                {/* ts-nocheck */}
+                Created by: {winingChallenge?.winingChallenge.payload.creator}{" "}
+              </span>
             </p>
             <p>
               {/* <span>Created On: {winingChallenge?.winingChallenge.payload.name} </span> */}

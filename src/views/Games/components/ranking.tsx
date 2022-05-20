@@ -1,24 +1,10 @@
-import { Box, Button, Flex, Heading, ProposalIcon } from "@pancakeswap/uikit";
 import styled from "styled-components";
-import { useTranslation } from "contexts/Localization";
-import Container from "components/Layout/Container";
 import Link from "next/link";
-import DesktopImage from "./DesktopImage";
-import Masonry from "react-masonry-css";
 import { cleanNumber } from "utils/amount";
 import { useState, useEffect } from "react";
-import { useMediaPredicate } from "react-media-hook";
-import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
-import ConnectWalletButton from "components/ConnectWalletButton";
+import { useDaoStakingContract } from "hooks/useContract";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
-import web3 from "web3";
 import { getDaoLevel } from "../hooks/getDaoLevel";
-
-const StyledRanking = styled(Box)`
-  background: ${({ theme }) => theme.colors.gradients.bubblegum};
-  padding-bottom: 32px;
-  padding-top: 32px;
-`;
 
 const StyledList = styled.ol`
   li {
@@ -27,7 +13,6 @@ const StyledList = styled.ol`
 `;
 
 const Ranking = (props) => {
-  const { t } = useTranslation();
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
   const [voters, setVoters] = useState([]);
@@ -44,7 +29,6 @@ const Ranking = (props) => {
     daoList = [...new Set(daoList)];
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
-      // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
       total_stake = total_stake / 10 ** 18;
@@ -53,14 +37,11 @@ const Ranking = (props) => {
         amount: total_stake,
         level: await getDaoLevel(total_stake),
       };
-      // if (voter_address == account) {setCurrentLevel(data.level)};
-      // alert(data.level)
       if (data.level === 1) level1.push(data);
       if (data.level === 2) level2.push(data);
       if (data.level === 3) level3.push(data);
       voters.push(data);
       setAllVoter(voters);
-      // }
     }
 
     voters.sort((b, a) => a.amount - b.amount);
@@ -74,7 +55,6 @@ const Ranking = (props) => {
     contract.getAllAccount().then((daolist) => {
       loadDaoLevels(daolist);
     });
-    // alert(account)
     sortData();
   }, [props.stage]);
 
@@ -90,8 +70,7 @@ const Ranking = (props) => {
     }
     setVoters(currentLevel);
   };
-
-
+  
   return (
     <div className="card h-100" style={{ minHeight: 500 }}>
       <div className="d-flex align-items-center mb-2">

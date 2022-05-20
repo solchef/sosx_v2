@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { create } from "ipfs-http-client";
-import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
+import { useDaoStakingContract } from "hooks/useContract";
 import moment from "moment";
-import useActiveWeb3React from "hooks/useActiveWeb3React";
 import CreateChallenge from "./CreateChallenge";
 import Media from "./components/media";
 import Ranking from "./components/ranking";
 import TimerDisplay from "./components/timer";
-import LoaderDisplay from "./components/loader";
 import { getDaoLevel } from "./hooks/getDaoLevel";
 import { useQuery } from "@apollo/client";
 import { GET_LastVideo, GET_Videos } from "utils/graphqlQ";
@@ -16,12 +12,7 @@ import VoteStageTwo from "./VoteStageTwo";
 import VoteStageThree from "./VoteStageThree";
 import Submission from "./SubmitChallenge";
 
-const server = create({
-  url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
-});
-
 export default function Game() {
-  const { account } = useActiveWeb3React();
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
