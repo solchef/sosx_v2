@@ -25,6 +25,7 @@ const server = create({
 const VoteStageTwo = (props: { level; stage }) => {
   const [voted, setVoted] = useState(true);
   const [challenges, setChallenges] = useState<any[]>([]);
+  const [justVoted, setJustVoted] = useState(false);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
   const { toastSuccess, toastError } = useToast();
@@ -62,6 +63,7 @@ const VoteStageTwo = (props: { level; stage }) => {
 
   const getVoteData = async () => {
     const vote = await getWalletIsVotedStage2(account);
+    console.log(vote);
     if (vote.walltIsVotaed2 == null) {
       setVoted(false);
     }
@@ -176,7 +178,7 @@ const VoteStageTwo = (props: { level; stage }) => {
         { create: true }
       );
       toastSuccess(t("Vote created!"));
-      getVoteData();
+      setJustVoted(true);
     } else {
       toastError(t("Error"), t("Unable to sign payload"));
     }
@@ -288,7 +290,7 @@ const VoteStageTwo = (props: { level; stage }) => {
                   type="submit"
                   className="btn btn-primary btn-lg mt-5 mb-5 "
                   style={{ width: "max-content" }}
-                  disabled={voted}
+                  disabled={justVoted || voted}
                 >
                   <i className="fa-solid fa-check-to-slot pr-2"></i>
                   VOTE FOR THIS CHALLENGE

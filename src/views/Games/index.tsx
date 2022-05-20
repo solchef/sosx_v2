@@ -28,7 +28,7 @@ export default function Game() {
   const [videos, setVideos] = useState([]);
   const [lastVideos, setLastVideos] = useState([]);
   const contract = useDaoStakingContract();
-  let [stage, setStage] = useState(5);
+  let [stage, setStage] = useState(4);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
   const GraphqlVideosData = useQuery(GET_Videos);
   const GraphqlLastVideosData = useQuery(GET_LastVideo);
@@ -67,20 +67,15 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    const roundStartTime = 1652971692 - 80000;
-
-    const STAGE_1 = Number(process.env.NEXT_PUBLIC_STAGE_1);
-    const STAGE_2 = Number(process.env.NEXT_PUBLIC_STAGE_2);
-    const STAGE_3 = Number(process.env.NEXT_PUBLIC_STAGE_3);
-    const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4);
+    const roundStartTime = 1652979696;
 
     let stageGroups = [];
 
     let stage1 = { start: roundStartTime, end: roundStartTime + STAGE_1 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + STAGE_1 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + STAGE_2 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + STAGE_3 * 60 };
-    let stage5 = { start: stage4.end, end: stage1.start };
+    let stage2 = { start: stage1.end, end: stage1.end + STAGE_2 * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + STAGE_3 * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end + STAGE_4 * 60 };
+    let stage5 = { start: stage3.end, end: stage3.end + STAGE_4 * 60 };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
     let current = moment().unix();
@@ -89,7 +84,7 @@ export default function Game() {
     );
 
     if (check == -1 && current > current) {
-      setStage(1);
+      setStage(4);
     } else {
       const interval = setInterval(() => {
         let currTime = moment().unix();

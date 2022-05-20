@@ -25,6 +25,7 @@ const server = create({
 
 const VoteStageThree = (props: { level; stage }) => {
   const [voted, setVoted] = useState(true);
+  const [justVoted, setJustVoted] = useState(false);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
   const { toastSuccess, toastError } = useToast();
@@ -43,10 +44,14 @@ const VoteStageThree = (props: { level; stage }) => {
     }
   }, [top3Challenges.data]);
 
+  console.log(top3Challenges);
+
   const getVoteData = async () => {
-    const vote = await getWalletIsVotedStage3(account);
-    if (vote.walltIsVotaed3 == null) {
-      setVoted(false);
+    if (account) {
+      const vote = await getWalletIsVotedStage3(account);
+      if (vote.walltIsVotaed3 == null) {
+        setVoted(false);
+      }
     }
   };
 
@@ -108,7 +113,7 @@ const VoteStageThree = (props: { level; stage }) => {
         { create: true }
       );
       toastSuccess(t("Vote created!"));
-      getVoteData();
+      setJustVoted(true);
     } else {
       toastError(t("Error"), t("Unable to sign payload"));
     }
@@ -164,35 +169,32 @@ const VoteStageThree = (props: { level; stage }) => {
         <div style={{ display: "inline-table" }}>
           {stage3Challenges
             ? stage3Challenges.stage3Challenges.map((data, index) => {
-                if (data !== null)
-                  return (
-                    <div key={index} className="challenge-list m-3 rounded">
-                      <div className="challenge-items d-flex">
-                        <div className="list-title">{data.payload.name}</div>
-                        <div className="list-button">
-                          {" "}
-                          <button
-                            className="btn mx-auto btn-primary btn-sm "
-                            type="button"
-                            onClick={() =>
-                              setSelectedChallange(
-                                stage3Challenges.stage3Challenges[index]
-                              )
-                            }
-                          >
-                            VIEW
-                          </button>
-                        </div>
+                // if(data != null){
+                return (
+                  <div key={index} className="challenge-list m-3 rounded">
+                    <div className="challenge-items d-flex">
+                      <div className="list-title">{data.payload.name}</div>
+                      <div className="list-button">
+                        {" "}
+                        <button
+                          className="btn mx-auto btn-primary btn-sm "
+                          type="button"
+                          onClick={() => setSelectedChallange(data)}
+                        >
+                          VIEW
+                        </button>
                       </div>
-                      {/* <div className="challenge-items d-flex">
-              <div className="list-title">
-                Challenge Title Here
-              </div>
-              <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-              </div>
-            </div> */}
                     </div>
-                  );
+                    {/* <div className="challenge-items d-flex">
+                <div className="list-title">
+                  Challenge Title Here
+                </div>
+                <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
+                </div>
+              </div> */}
+                  </div>
+                );
+                // }
               })
             : ""}
         </div>
@@ -216,7 +218,7 @@ const VoteStageThree = (props: { level; stage }) => {
                   type="submit"
                   className="btn btn-primary btn-lg mt-5 mb-5 "
                   style={{ width: "max-content" }}
-                  disabled={voted}
+                  disabled={justVoted || voted}
                 >
                   <i className="fa-solid fa-check-to-slot pr-2"></i>
                   VOTE FOR THIS CHALLENGE
