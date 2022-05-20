@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useToast from "hooks/useToast";
 import { useStakingContract, useSosxContract } from "hooks/useContract";
 import { useMediaPredicate } from "react-media-hook";
@@ -10,6 +10,8 @@ import { cleanNumber } from "utils/amount";
 import UserStakingLogs from "./components/userStaking";
 import ConfirmStakingModal from "./components/ConfirmStakingModal";
 import { useModal } from "@pancakeswap/uikit";
+import Statistics from "./components/statistics";
+import { formatFixedNumber } from "utils/formatBalance";
 
 export default function Staking() {
   const contract = useStakingContract();
@@ -69,6 +71,7 @@ export default function Staking() {
     });
 
     tokenContract.allowance(account, contract.address).then((allowance) => {
+      
       setAllowanceValue(allowance);
     });
   };
@@ -100,23 +103,24 @@ export default function Staking() {
   };
 
   useEffect(() => {
+    setLoading(false);
     if (account !== undefined) {
       tokenContract.balanceOf(account).then((bal) => {
-        let balance = Number(bal / 10 ** 18);
-        setUserBalace(balance);
+        let balance = formatFixedNumber(bal, 3, 18);
+        setUserBalace(Number(balance));
       });
 
-      const loadUI = async () => {
-        setLoadingData(true);
-        await stakingDetails();
-        await listUserStaking();
-        setLoadingData(false);
-      };
-
-      loadUI();
       listUserStaking();
+
+      tokenContract.allowance(account, contract.address).then((allowance) => {
+        allowance = Number(formatFixedNumber(allowance, 3, 18));
+        if (allowance > 0) {
+          setActivatestake(true);
+        }
+        setAllowanceValue(allowance);
+      });
     }
-  }, []);
+  }, [account]);
 
   const handleAmountChange = async (event) => {
     let _amountToStake = Number(event.target.value);
@@ -172,13 +176,23 @@ export default function Staking() {
   };
 
   const handleSubmit = async () => {
-    if (Number(amountToStake) < 1) {
-      toastError("Yo must stake a minimum of 1 token");
+    if (amountToStake < 1) {
+      toastError("You must stake a minimum of 1 token");
+      return;
     }
 
+    if (amountToStake > balance) {
+      toastError(
+        `Insufficient balance. Your wallet balance is ${balance} you need  ${(
+          amountToStake - balance
+        ).toFixed(3)} more SOSX to stake that amount. `
+      );
+      return;
+    }
+    console.log(allowanceValue, amountToStake)
     let decimals = BigNumber(10).pow(18);
     let result = BigNumber(amountToStake).multiply(decimals);
-    if (Number(allowanceValue) >= amountToStake * 10 ** 18) {
+    if (allowanceValue > amountToStake) {
       onPresentConfirmModal();
     } else {
       const tx = await tokenContract.populateTransaction.approve(
@@ -187,91 +201,113 @@ export default function Staking() {
       );
 
       let signer = contract.signer;
+
       let trans = await signer.sendTransaction(tx);
       setPendingTx(true);
+
+      onPresentConfirmModal();
 
       toastSuccess(
         "Approval transaction sent. You can stake after the transaction is mined."
       );
-      onPresentConfirmModal();
     }
   };
 
+  const handleConfirmDismiss = useCallback(() => {
+      listUserStaking();
+  }, []);
+
   const [onPresentConfirmModal] = useModal(
     <ConfirmStakingModal
-      onConfirm={handleSubmit}
-      attemptingTxn={pendingTx}
-      recipient={""}
-      allowedSlippage={0}
+      onConfirm={handleStake}
+      receipt={pendingTx ? "Pending" : "Success"}
+      clientMessage={"Your spending approval is being confirmed. "}
       onAcceptChanges={function (): void {
         throw new Error("Function not implemented.");
       }}
+      customOnDismiss={handleConfirmDismiss}
     />,
     true,
     true,
     "ConfirmStakingModal"
   );
+  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
 
   return (
     <>
       <div
-        className={`${biggerThan1400 && "container"} ${
-          biggest1400 && "container-fluid"
-        }`}
+        className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
+        style={{ gap: "20px" }}
       >
-        <div className="row mb-2">
-          <div className="col-sm-3 col-6">
-            <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-              <h4>10,000,000,000</h4>
-              <span className="pt-1 pb-1">Total supply</span>
-            </div>
-          </div>
-          <div className="col-sm-3 col-6">
-            <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-              <h4>${marketCap.toFixed(8)}</h4>
-              <span className="pt-1 pb-1">Market Cap</span>
-            </div>
-          </div>
-          <div className="col-sm-3 col-6">
-            <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-              <h4>${price.toFixed(8)}</h4>
-              <span className="pt-1 pb-1">Price</span>
-            </div>
-          </div>
-
-          <div className="col-sm-3 col-6">
-            <div className="card overflow-hidden" style={{ rowGap: "20px" }}>
-              <h4>321139778.950</h4>
-              <span className="pt-1 pb-1">Circulating Supply</span>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xl-4 mb-4">
-            <div className="card d-flex flex-column h-100">
-              <div className="card-header border-0 pl-0 pt-0">
-                <h4 className="fs-18 ">Stake SOSX</h4>
+        <Statistics />
+        <div style={{ flex: "2 1 30%", maxWidth: "100%" }}>
+          <div className="card d-flex flex-column">
+            <div className="card-body">
+              <div className="d-flex align-items-center mb-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                  version="1.1"
+                  id="Layer_1"
+                  x="0px"
+                  y="0px"
+                  viewBox="0 0 239 116"
+                  xmlSpace="preserve"
+                  style={{
+                    width: " 40px",
+                    fill: "rgb(255, 0, 204)",
+                    marginRight: "10px",
+                  }}
+                >
+                  <path d="M58,0C25.97,0,0,25.97,0,58c0,32.03,25.97,58,58,58s58-25.97,58-58C116,25.97,90.03,0,58,0z M58,90.78 c-18.11,0-32.78-14.68-32.78-32.78c0-18.11,14.68-32.78,32.78-32.78S90.78,39.89,90.78,58C90.78,76.11,76.11,90.78,58,90.78z"></path>
+                  <g>
+                    <path
+                      className="st0"
+                      d="M151.87,48.3l-25.23-25.23c-5.27-5.27-5.27-13.82,0-19.09l0,0c5.27-5.27,13.82-5.27,19.09,0l25.23,25.23 c5.27,5.27,5.27,13.82,0,19.09l0,0C165.69,53.57,157.14,53.57,151.87,48.3z"
+                    ></path>
+                    <path
+                      className="st0"
+                      d="M215.27,112.05l-25.23-25.23c-5.27-5.27-5.27-13.82,0-19.09l0,0c5.27-5.27,13.82-5.27,19.09,0l25.23,25.23 c5.27,5.27,5.27,13.82,0,19.09l0,0C229.09,117.32,220.55,117.32,215.27,112.05z"
+                    ></path>
+                    <path
+                      className="st0"
+                      d="M126.64,92.96l25.23-25.23c5.27-5.27,13.82-5.27,19.09,0l0,0c5.27,5.27,5.27,13.82,0,19.09l-25.23,25.23 c-5.27,5.27-13.82,5.27-19.09,0l0,0C121.37,106.77,121.37,98.23,126.64,92.96z"
+                    ></path>
+                    <path
+                      className="st0"
+                      d="M190.73,29.21l25.23-25.23c5.27-5.27,13.82-5.27,19.09,0l0,0c5.27,5.27,5.27,13.82,0,19.09L209.82,48.3 c-5.27,5.27-13.82,5.27-19.09,0l0,0C185.46,43.03,185.46,34.48,190.73,29.21z"
+                    ></path>
+                  </g>
+                </svg>
+                <h4>STAKE SOSX</h4>
               </div>
-              <div className="card-body">
-                <div className="bg-dark mb-3 p-3 rounded">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <span>
-                      <input
-                        type="text"
-                        className="form-control"
-                        required
-                        onChange={(e) => handleAmountChange(e)}
-                        defaultValue={0}
-                      />
-                    </span>
-                    <span className="text-white fs-18">SOSX</span>
-                  </div>
+              <p className="mb-4">
+                Stake SOSX and gain rewards
+              </p>
+              <div className="bg-input mb-3 py-2 px-3 rounded mt-4">
+                <div className="d-flex justify-content-between align-items-center">
+                  <span>
+                    <input
+                      type="number"
+                      className="form-control fs-28"
+                      onChange={(e) => handleAmountChange(e)}
+                      required
+                      // defaultValue={0}
+                      placeholder="0.00"
+                    />{" "}
+                  </span>
+                  <h3 className=" pt-3 pb-3 " style={{ color: " #8e8e8e" }}>
+                    SOSX
+                  </h3>
                 </div>
-                <div className="bg-dark p-3 mb-3 rounded">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <span>
-                      <select
-                        className="form-control  select-special"
+              </div>
+
+              <div className="bg-input mb-3 py-2 px-3 rounded mt-4">
+                <div className="d-flex justify-content-between align-items-center">
+                  <span>
+
+                  <select
+                        className="form-control fs-28"
                         onChange={(e) => {
                           setStakingClass(Number(e.target.value));
 
@@ -298,145 +334,80 @@ export default function Staking() {
                         <option value={2}>6 </option>
                         <option value={3}>12 </option>
                       </select>
-                    </span>
-                    <span className="text-white fs-18">Months</span>
-                  </div>
+                    {/* <input
+                      type="text"
+                      className="form-control fs-28"
+                      required
+                      value="0"
+                    />{" "} */}
+                  </span>
+                  <h3 className=" pt-3 pb-3 " style={{ color: " #8e8e8e" }}>
+                    MONTHS
+                  </h3>
                 </div>
-                <div className="bg-dark p-3 rounded">
-                  <div className="d-flex justify-content-between">
-                    <div className="small2">
-                      <div className="success mr-1">Reward Interest: </div>
-                      <div className="d-flex align-items-center">
-                        <div className="text-white fs-14">
-                          {" "}
-                          {stakingClass == 1
+              </div>
+             
+              <button
+                className="btn mr-1 btn-primary btn-lg mt-2"
+                type="button"
+                onClick={handleSubmit}
+              >
+                STAKE SOSX
+              </button>
+            </div>
+          </div>
+          <div className="card d-flex flex-column mt-4">
+            <div className="card-body">
+              <div className="d-flex align-items-center mt-2 mb-2">
+                <img src="images/prize-pool-icon.png" className="title-icon" />
+                <h4>RETURN CALCULATOR</h4>
+              </div>
+              <p>Investment Return Estimator</p>
+              <div className=" mt-4 ">
+                <div className="d-flex h-100 justify-content-between mt-3 mb-3">
+                  <div>
+                    <div className="d-flex w-auto m-auto">
+                      <h3> {stakingClass == 1
                             ? 29
                             : stakingClass == 2
                             ? 64
-                            : 145}
-                          %
-                        </div>
-                      </div>
+                            : 145}%</h3>
                     </div>
-                    <div className="small2">
-                      <div className="success mr-1">Estimated </div>
-                      <div className="d-flex align-items-center">
-                        <div className="text-white fs-14">
-                          {" "}
-                          {stakingInterest} SOSX
-                        </div>
-                      </div>
+                    <p className="success mb-0 main-pink pt-2 fs-14">
+                      Reward %{" "}
+                    </p>
+                  </div>
+                  <div>
+                    <div className="d-flex w-auto m-auto">
+                      <h3>{stakingClass == 1
+                            ? 3
+                            : stakingClass == 2
+                            ? 6
+                            : 12} Months</h3>
                     </div>
+                    <p className="success main-pink mb-0 pt-2 fs-14">
+                      Duration
+                    </p>
+                  </div>
+                  <div>
+                    <div className="d-flex w-auto m-auto">
+                      <h3>{stakingInterest} SOSX</h3>
+                    </div>
+                    <p className="success mb-0 main-pink pt-2 fs-14">
+                      Estimate yearly Return
+                    </p>
                   </div>
                 </div>
-              </div>
-              <div className="card-footer pt-0 foot-card  border-0">
-                {account ? (
-                  <>
-                    {activateStake ? (
-                      <div className="d-flex card-footer pt-0 pb-0 foot-card  border-0 justify-content-between">
-                        <button
-                          type="button"
-                          onClick={handleSubmit}
-                          className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
-                        >
-                          {loading ? "Approving..." : "Approve"}
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
-                          disabled
-                        >
-                          Stake
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="d-flex card-footer pt-0 pb-0  foot-card  border-0 justify-content-between">
-                        <button
-                          type="button"
-                          className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
-                          disabled
-                        >
-                          Approve
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleSubmit}
-                          className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
-                        >
-                          {loading ? "Staking.." : "Stake"}
-                        </button>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <ConnectWalletButton />
-                )}
               </div>
             </div>
-          </div>
-
-          <div className="col-xl-4 mb-4">
-            <div className="card d-flex flex-column h-100">
-              <div className="card-header border-0 p-0">
-                <h4 className="fs-18">Staking Summary</h4>
-              </div>
-
-              <div className="card-body flex-column d-flex justify-content-between">
-                <div className="pt-4">
-                  <div className="d-flex justify-content-between">
-                    <p className="success mb-0 fs-12">Total SOSX Staked</p>
-                    <h4 className="mb-0 font-w600  fs-24 pb-3">
-                      {cleanNumber(totalAmountStaked / 10 ** 18 + "")}
-                    </h4>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <p className="success mb-0 fs-12">Active Stakes</p>
-                    <h4 className="mb-0 font-w600  fs-24 pb-3">
-                      {numberOfActiveStake}
-                    </h4>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <p className="success mb-0 fs-12">Has Referral</p>
-                    <h6 className="mb-0 font-w600  fs-24 pb-2">
-                      {hasReferral ? "Yes" : <b> No</b>}
-                    </h6>
-                  </div>
-                </div>
-                <div className="d-flex justify-content-between">
-                  <p className="success mb-0 fs-12">Show Archived</p>
-                  <span className="MuiSwitch-root mb-0 font-w600  fs-24 pb-3">
-                    <span
-                      className="MuiButtonBase-root MuiIconButton-root jss5 MuiSwitch-switchBase MuiSwitch-colorSecondary"
-                      aria-disabled="false"
-                    >
-                      <span className="MuiIconButton-label">
-                        <input
-                          className="jss8 MuiSwitch-input"
-                          type="checkbox"
-                          defaultValue="false"
-                        />
-                        <span className="MuiSwitch-thumb" />
-                      </span>
-                      <span className="MuiTouchRipple-root" />
-                    </span>
-                    <span className="MuiSwitch-track" />
-                  </span>
-                </div>
-              </div>
-              <div className="card-footer pt-0 mx-auto foot-card  border-0">
-                <button type="button" className="btn btn-primary btn-lg mt-5">
-                  Refresh Summarry
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-xl-4 mb-4">
-            <UserStakingLogs />
           </div>
         </div>
+                    
+       <UserStakingLogs/>
+
       </div>
+
+   
     </>
   );
 }

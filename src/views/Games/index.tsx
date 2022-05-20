@@ -68,38 +68,38 @@ export default function Game() {
   }, [GraphqlLastRoundData.data]);
   
   useEffect(() => {
-    const roundStartTime = startingTimeStamp; 
+          const roundStartTime = startingTimeStamp; 
 
-    let stageGroups = [];
+          let stageGroups = [];
 
-    let stage1 = { start: roundStartTime, end: roundStartTime * 60 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end * 60 * 60};
-    let stage3 = { start: stage2.end, end: stage2.end * 60 * 60};
-    let stage4 = { start: stage3.end, end: stage3.end * 60 * 60};
-    let stage5 = { start: stage3.end, end: stage3.end * 60 * 60};
+          let stage1 = { start: roundStartTime, end: roundStartTime * 60 * 60 };
+          let stage2 = { start: stage1.end, end: stage1.end * 60 * 60};
+          let stage3 = { start: stage2.end, end: stage2.end * 60 * 60};
+          let stage4 = { start: stage3.end, end: stage3.end * 60 * 60};
+          let stage5 = { start: stage3.end, end: stage3.end * 60 * 60};
 
-    stageGroups.push(stage1, stage2, stage3, stage4, stage5);
-    let current = moment().unix();
-    let check = stageGroups.findIndex(
-      (group) => group.end > current && current > group.start
-    );
+          stageGroups.push(stage1, stage2, stage3, stage4, stage5);
+          let current = moment().unix();
+          let check = stageGroups.findIndex(
+            (group) => group.end > current && current > group.start
+          );
 
-    if (check == -1 && current > current) {
-      setStage(4);
-    } else {
-      const interval = setInterval(() => {
-        let currTime = moment().unix();
-        let checkStage = stageGroups.findIndex(
-          (group) => group.end > currTime && currTime > group.start
-        );
+          if (check == -1 && current > current) {
+            setStage(4);
+          } else {
+            const interval = setInterval(() => {
+              let currTime = moment().unix();
+              let checkStage = stageGroups.findIndex(
+                (group) => group.end > currTime && currTime > group.start
+              );
 
-        if (checkStage != -1) {
-          setStage(checkStage + 1);
-          calculateTimeLeft(moment.unix(stageGroups[checkStage].end));
-        }
-      }, 1000);
-      return () => clearInterval(interval);
-    }
+              if (checkStage != -1) {
+                setStage(checkStage + 1);
+                calculateTimeLeft(moment.unix(stageGroups[checkStage].end));
+              }
+            }, 1000);
+            return () => clearInterval(interval);
+          }
   }, [lastRound]);
 
   useEffect(() => {

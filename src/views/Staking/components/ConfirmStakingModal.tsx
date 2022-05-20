@@ -1,8 +1,6 @@
-import { useMemo } from "react";
-import { Trade } from "@pancakeswap/sdk";
+import { useCallback, useMemo } from "react";
 import { InjectedModalProps, Modal, Spinner } from "@pancakeswap/uikit";
 import { useTranslation } from "contexts/Localization";
-import StakeModalFooter from "./StakeModalFooter";
 import { AutoColumn, ColumnCenter } from "components/Layout/Column";
 import { Text } from "@pancakeswap/uikit";
 import styled from "styled-components";
@@ -16,39 +14,38 @@ const Wrapper = styled.div`
 `;
 
 interface ConfirmStakingModalProps {
-  trade?: Trade;
-  originalTrade?: Trade;
-  attemptingTxn: boolean;
-  txHash?: string;
-  recipient: string | null;
-  allowedSlippage: number;
   onAcceptChanges: () => void;
   onConfirm: () => void;
-  swapErrorMessage?: string;
   customOnDismiss?: () => void;
+  clientMessage :string
+  receipt :string
 }
 
 const ConfirmStakingModal: React.FC<
   InjectedModalProps & ConfirmStakingModalProps
 > = ({
-  trade,
-  originalTrade,
-  allowedSlippage,
+  onAcceptChanges,
+  clientMessage,
   onConfirm,
-  swapErrorMessage,
+  onDismiss,
+  customOnDismiss,
+  receipt,
 }) => {
-  const showAcceptChanges = useMemo(
-    () =>
-      Boolean(
-        trade && originalTrade && tradeMeaningfullyDiffers(trade, originalTrade)
-      ),
-    [originalTrade, trade]
-  );
-
   const { t } = useTranslation();
 
+  const handleDismiss = useCallback(() => {
+    if (customOnDismiss) {
+      customOnDismiss();
+    }
+    onDismiss?.();
+  }, [customOnDismiss, onDismiss]);
+
   return (
-    <Modal headerBackground="gradients.cardHeader">
+    <Modal
+      onDismiss={handleDismiss}
+      title={"Staking"}
+      headerBackground="gradients.cardHeader"
+    >
       <Wrapper>
         <ConfirmedIcon>
           <Spinner />
@@ -57,22 +54,19 @@ const ConfirmStakingModal: React.FC<
           <Text fontSize="20px">You are staking SOSX</Text>
           <AutoColumn gap="12px" justify="center">
             <Text bold small textAlign="center">
-              Transaction is being sent
+              {clientMessage}
             </Text>
           </AutoColumn>
+          {/* {receipt} */}
           <Text small color="textSubtle" textAlign="center">
-            {t("Confirm the transaction by clicking the button below")}
+            {t("You will be able to stake once confirmed")}
           </Text>
         </AutoColumn>
       </Wrapper>
 
-      <StakeModalFooter
-        onConfirm={onConfirm}
-        trade={trade}
-        disabledConfirm={showAcceptChanges}
-        swapErrorMessage={swapErrorMessage}
-        allowedSlippage={allowedSlippage}
-      />
+      <button  onClick={onConfirm} className="btn mx-full btn-primary btn-lg mt-3">
+           STAKE
+      </button>
     </Modal>
   );
 };

@@ -1,287 +1,103 @@
-import { useMediaPredicate } from "react-media-hook";
-
+import { useState } from 'react';
+import { Modal, Button } from 'react-bootstrap'
 export default function Test() {
-  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (<>
-    <div className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
-      style={{ gap: '20px' }}>
-      <div style={{ flex: `${biggest1500 ? ' 1 1 17%' : ' 1 1 40%'}`, gap: '20px', maxWidth: '100%' }} className="stake-amount">
-        <div className="card h-100">
-          <div className="card-body">
-            <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center"
-            >
-              <div className="data-content">
-                <div className="d-flex  align-items-end">
-                  <h2 className="mb-3 main-pink">$3,210.34</h2>
+
+
+    <div className="container-fluid">
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
+
+
+
+      <Modal dialogClassName="modal-css" show={show} onHide={handleClose}>
+      <Modal.Header
+          className="card border-bottom">
+          Select the Stake Entry
+          {/* <CloseButton /> */}
+          <a href="#" onClick={handleClose} className="text-white">
+            <i className="fa fa-close"></i>
+          </a>
+        </Modal.Header>
+        <div className="card">
+          <div className="d-flex mb-4 justify-content-between">
+            <div className="fs-18 font-weight-bold main-pink">Date</div>
+            <div className="fs-18 font-weight-bold main-pink">1.000</div>
+            <div className="fs-18 font-weight-bold main-pink"><i className="fa fa-chevron-down"></i></div>
+          </div>
+          {/* style={{display: 'none'}} */}
+          <div >
+            <div className="d-flex justify-content-between">
+              <div>
+                <div className="d-flex mb-3 flex-column">
+                  <span className="fs-14 mb-1">Amount Staked:
+                  </span>
+                  <span className="fs-14 text-success">1.000 SOSX
+                  </span>
                 </div>
-                <div>
-                  <div>
-                    <h4>STAKED SOSX</h4>
-                  </div>
-                  <p className="mb-0">Actively staking</p>
+                <div className="d-flex mb-3 flex-column">
+                  <span className="fs-14 mb-1">Date Staked:
+                  </span>
+                  <span className="fs-14 text-success">5/15/2022, 11:34:40 PM
+                  </span>
+                </div>
+                <div className="d-flex mb-3 flex-column">
+                  <span className="fs-14 mb-1">Withdrawed:
+                  </span>
+                  <span className="fs-14 text-success">No</span>
                 </div>
               </div>
+              <div>
+                <div className="d-flex mb-3 flex-column">
+                  <span className="fs-14 mb-1">Rewards Gained:
+                  </span>
+                  <span className="fs-14 text-success">1.000 SOSX
+                  </span>
+                </div>
+                <div className="d-flex mb-3 flex-column">
+                  <span className="fs-14 mb-1">Duration Elapsed:
+                  </span>
+                  <span className="fs-14 text-success">0 Days
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex justify-content-between">
+              <button className="btn btn-primary bg-success border-0">CLAIM
+                REWARDS</button>
+              <button className="btn btn-primary border-0">UNSTAKE</button>
             </div>
           </div>
         </div>
+      </Modal>
+      <style jsx global>{`
+          .modal-css::before {
+              content: "";
+              width: 102%;
+              height: 102%;
+              border-radius: 10px;
+              background-image: linear-gradient( var(--rotate), #ff85d4, #bf24ff, #00fbfe);
+              position: absolute;
+              z-index: -1;
+              top: -1%;
+              left: -1%;
+              animation: spin 2.5s linear infinite;
+          }
+          @keyframes spin {
+              0% {
+                  --rotate: 0deg;
+              }
+              100% {
+                  --rotate: 360deg;
+              }
+          }
+      `}</style>
 
-      </div>
-
-      <div style={{ flex: `${biggest1500 ? ' 1 1 17%' : ' 1 1 40%'}`, gap: '20px', maxWidth: '100%' }} className="rate-amount">
-        <div className="card h-100">
-          <div className="card-body">
-            <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center"
-            >
-              <div className="data-content">
-                <div className="d-flex  align-items-end">
-                  <h2 className="mb-3 main-pink">16.4%</h2>
-                </div>
-                <div>
-                  <div>
-                    <h4>DAILY APY</h4>
-                  </div>
-                  <p className="mb-0">Daily Staking Rewards %</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div style={{ flex: `${biggest1500 ? ' 1 1 17%' : ' 1 1 40%'}`, gap: '20px', maxWidth: '100%' }} className="price-box">
-        <div className="card h-100 datarow justify-content-between">
-          <div className="card-body">
-            <div className="flex-row d-flex flex-wrap justify-content-between w-100 align-items-center"
-            >
-              <div className="data-content">
-                <div className="d-flex align-items-end">
-                  <h2 className="mb-3 main-pink">0.000948</h2>
-                </div>
-                <div className="d-flex flex-column align-items-start ">
-                  <div className="d-flex align-items-center">
-                    <h4>TOTAL REWARDS</h4>
-                  </div>
-                  <p className="mb-0">Total SOSX you gained staking.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style={{ flex: `${biggest1500 ? ' 1 1 17%' : ' 1 1 40%'}`, gap: '20px', maxWidth: '100%' }} className="dao-box">
-        <div className="card h-100 datarow justify-content-between">
-          <div className="card-body">
-            <div
-              className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center">
-              <div className="data-content">
-                <div className="d-flex align-items-end">
-                  <h2 className="mb-3 main-pink">Price SOSX</h2>
-                </div>
-                <div>
-                  <div>
-                    <h4>DAOX MEMBERSHIP</h4>
-                  </div>
-                  <p className="mb-0">Create, vote and final pick.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div style={{ flex: '2 1 30%', maxWidth: '100%' }}>
-        <div className="card d-flex flex-column">
-          <div className="card-body">
-            <div className="d-flex align-items-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px"
-                y="0px" viewBox="0 0 239 116" xmlSpace="preserve"
-                style={{ width: ' 40px', fill: 'rgb(255, 0, 204)', marginRight: '10px' }}>
-                <path
-                  d="M58,0C25.97,0,0,25.97,0,58c0,32.03,25.97,58,58,58s58-25.97,58-58C116,25.97,90.03,0,58,0z M58,90.78 c-18.11,0-32.78-14.68-32.78-32.78c0-18.11,14.68-32.78,32.78-32.78S90.78,39.89,90.78,58C90.78,76.11,76.11,90.78,58,90.78z">
-                </path>
-                <g>
-                  <path className="st0"
-                    d="M151.87,48.3l-25.23-25.23c-5.27-5.27-5.27-13.82,0-19.09l0,0c5.27-5.27,13.82-5.27,19.09,0l25.23,25.23 c5.27,5.27,5.27,13.82,0,19.09l0,0C165.69,53.57,157.14,53.57,151.87,48.3z">
-                  </path>
-                  <path className="st0"
-                    d="M215.27,112.05l-25.23-25.23c-5.27-5.27-5.27-13.82,0-19.09l0,0c5.27-5.27,13.82-5.27,19.09,0l25.23,25.23 c5.27,5.27,5.27,13.82,0,19.09l0,0C229.09,117.32,220.55,117.32,215.27,112.05z">
-                  </path>
-                  <path className="st0"
-                    d="M126.64,92.96l25.23-25.23c5.27-5.27,13.82-5.27,19.09,0l0,0c5.27,5.27,5.27,13.82,0,19.09l-25.23,25.23 c-5.27,5.27-13.82,5.27-19.09,0l0,0C121.37,106.77,121.37,98.23,126.64,92.96z">
-                  </path>
-                  <path className="st0"
-                    d="M190.73,29.21l25.23-25.23c5.27-5.27,13.82-5.27,19.09,0l0,0c5.27,5.27,5.27,13.82,0,19.09L209.82,48.3 c-5.27,5.27-13.82,5.27-19.09,0l0,0C185.46,43.03,185.46,34.48,190.73,29.21z">
-                  </path>
-                </g>
-              </svg>
-              <h4>STAKE SOSX</h4>
-            </div>
-            <p className="mb-4">Become a DAOX member while receiving daily rewards</p>
-            <div className="bg-input mb-3 py-2 px-3 rounded mt-4
-">
-              <div className="d-flex justify-content-between align-items-center"><span><input type="text"
-                className="form-control fs-28" required value="0"
-              /> </span>
-                <h3 className=" pt-3 pb-3 " style={{ color: ' #8e8e8e' }}>SOSX</h3>
-              </div>
-            </div>
-            <button className="btn mr-1 btn-primary btn-lg mt-2"
-              type="button">STAKE SOSX</button>
-
-          </div>
-
-        </div>
-        <div className="card d-flex flex-column mt-4">
-
-          <div className="card-body">
-
-
-
-
-            <div className="d-flex align-items-center mt-2 mb-2"><img src="images/prize-pool-icon.png"
-              className="title-icon" />
-              <h4>RETURN CALCULATOR</h4>
-            </div>
-            <p>Investment Return Estimator</p>
-            <div className=" mt-4 ">
-              <div className="d-flex h-100 justify-content-between mt-3 mb-3">
-                <div>
-                  <div className="d-flex w-auto m-auto">
-                    <h3>6%</h3>
-                  </div>
-                  <p className="success mb-0 main-pink pt-2 fs-14">Reward % </p>
-                </div>
-                <div>
-
-                  <div className="d-flex w-auto m-auto">
-                    <h3>Lv 3</h3>
-                  </div>
-                  <p className="success main-pink mb-0 pt-2 fs-14">DAO Level</p>
-                </div>
-                <div>
-
-                  <div className="d-flex w-auto m-auto">
-                    <h3>1,320,930.00</h3>
-                  </div>
-                  <p className="success mb-0 main-pink pt-2 fs-14">Estimate yearly Return</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-
-      <div style={{ flex: '1 1 60%', maxWidth: '100%' }}>
-        <div className="card d-flex flex-column h-100">
-
-          <div className="card-body">
-            <div className="d-flex align-items-center mb-2">
-
-              <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
-                version="1.1" id="Capa_1" x="0px" y="0px" width="503.379px" height="503.379px"
-                viewBox="0 0 503.379 503.379" style={{
-                  width: '30px',
-                  fill: 'rgb(255, 0, 204)',
-                  marginRight: '10px', height: '30px'
-                }}
-
-
-                xmlSpace="preserve">
-                <g>
-                  <path
-                    d="M458.091,128.116v326.842c0,26.698-21.723,48.421-48.422,48.421h-220.92c-26.699,0-48.421-21.723-48.421-48.421V242.439   c6.907,1.149,13.953,1.894,21.184,1.894c5.128,0,10.161-0.381,15.132-0.969v211.594c0,6.673,5.429,12.104,12.105,12.104h220.92   c6.674,0,12.105-5.432,12.105-12.104V128.116c0-6.676-5.432-12.105-12.105-12.105H289.835c0-12.625-1.897-24.793-5.297-36.315   h125.131C436.368,79.695,458.091,101.417,458.091,128.116z M159.49,228.401c-62.973,0-114.202-51.229-114.202-114.199   C45.289,51.229,96.517,0,159.49,0c62.971,0,114.202,51.229,114.202,114.202C273.692,177.172,222.461,228.401,159.49,228.401z    M159.49,204.19c49.618,0,89.989-40.364,89.989-89.988c0-49.627-40.365-89.991-89.989-89.991   c-49.626,0-89.991,40.364-89.991,89.991C69.499,163.826,109.87,204.19,159.49,204.19z M227.981,126.308   c6.682,0,12.105-5.423,12.105-12.105s-5.423-12.105-12.105-12.105h-56.386v-47.52c0-6.682-5.423-12.105-12.105-12.105   s-12.105,5.423-12.105,12.105v59.625c0,6.682,5.423,12.105,12.105,12.105H227.981z M367.697,224.456h-131.14   c-6.682,0-12.105,5.423-12.105,12.105c0,6.683,5.423,12.105,12.105,12.105h131.14c6.685,0,12.105-5.423,12.105-12.105   C379.803,229.879,374.382,224.456,367.697,224.456z M367.91,297.885h-131.14c-6.682,0-12.105,5.42-12.105,12.105   s5.423,12.105,12.105,12.105h131.14c6.685,0,12.104-5.42,12.104-12.105S374.601,297.885,367.91,297.885z M367.91,374.353h-131.14   c-6.682,0-12.105,5.426-12.105,12.105c0,6.685,5.423,12.104,12.105,12.104h131.14c6.685,0,12.104-5.42,12.104-12.104   C380.015,379.778,374.601,374.353,367.91,374.353z">
-                  </path>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-                <g>
-                </g>
-              </svg>
-
-
-
-              <h4>STAKING LOG</h4>
-            </div>
-            <p></p>
-            <p className="mb-4">Keep track of your investments activities.</p>
-            <p></p>
-
-            <div className="tab-bg" style={{ height: '430px', overflow: 'auto', paddingRight: '5px' }}>
-
-
-              <div className="rank-item mt-3 d-flex  px-4 pt-4 mt-0"
-                style={{ justifyContent: 'space-between' }}>
-                <div className="header-item mr-3">Date</div>
-                <div className="header-item mr-3"> Action</div>
-                <div className="header-item mr-3">Reward</div>
-                <div className="header-item"> <div className="d-flex flex-column flex-sm-row "> <button className="btn ml-2 mt-2 pr-4 pl-4 w-100 btn-primary"
-                  type="button">CLAIM</button> <button className="btn ml-2 mt-2  w-100 btn-primary"
-                    type="button">UNSTAKE</button></div></div>
-              </div>
-              <div className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
-                style={{ justifyContent: 'space-between' }}>
-                
-                <div className="header-item mr-3">Date</div>
-                <div className="header-item mr-3"> Action</div>
-                <div className="header-item mr-3">Reward</div>
-                <div className="header-item"> <div className="d-flex flex-column flex-sm-row "> <button className="btn ml-2 mt-2 pr-4 pl-4 w-100 btn-primary"
-                  type="button">CLAIM</button> <button className="btn ml-2 mt-2  w-100 btn-primary"
-                    type="button">UNSTAKE</button></div></div>
-              </div>
-              <div className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
-                style={{ justifyContent: 'space-between' }}>
-                 <div className="header-item mr-3">Date</div>
-                <div className="header-item mr-3"> Action</div>
-                <div className="header-item mr-3">Reward</div>
-                
-                <div className="header-item"> <div className="d-flex flex-column flex-sm-row "> <button className="btn ml-2 mt-2 pr-4 pl-4 w-100 btn-primary"
-                  type="button">CLAIM</button> <button className="btn ml-2 mt-2  w-100 btn-primary"
-                    type="button">UNSTAKE</button></div></div>
-              </div>
-              <div className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
-                style={{ justifyContent: 'space-between' }}>
-                 <div className="header-item mr-3">Date</div>
-                <div className="header-item mr-3"> Action</div>
-                <div className="header-item mr-3">Reward</div>
-                
-                <div className="header-item"> <div className="d-flex flex-column flex-sm-row "> <button className="btn ml-2 mt-2 pr-4 pl-4 w-100 btn-primary"
-                  type="button">CLAIM</button> <button className="btn ml-2 mt-2  w-100 btn-primary"
-                    type="button">UNSTAKE</button></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </>
   )

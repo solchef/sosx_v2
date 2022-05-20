@@ -57,6 +57,7 @@ export default function DaoStaking() {
   const [stakingClass, setStakingClass] = useState(1);
   const [stakingInterest, setStakingInterest] = useState(0);
   const [amountToStake, setamountToStake] = useState(0);
+  const [stakelist, setStakeList] = useState([]);
   const [activeStakes, setActiveStakes] = useState([]);
   const [allowanceValue, setAllowanceValue] = useState(0);
   const [activateStake, setActivatestake] = useState(true);
@@ -111,8 +112,12 @@ export default function DaoStaking() {
             stakingClass: stakeClass,
             periodElapsed: stakeClass,
           };
-          if (!instance.isWithdrawed) {
+
+          // if (!instance.isWithdrawed) {
             setActiveStakes((activeStakes) => [...activeStakes, instance]);
+          // }
+          if (!instance.isWithdrawed) {
+            setStakeList((activeStakes) => [...activeStakes, instance]);
           }
         });
       }
@@ -147,13 +152,13 @@ export default function DaoStaking() {
 
   const handleStake = async () => {
     let decimals = BigNumber(10).pow(18);
-
+    let level = getDaoLevel(amountToStake);
     let result = BigNumber(amountToStake).multiply(decimals);
     setLoading(true);
     let stake = await contract.stakeToken(
       result.toString(),
       "0x0000000000000000000000000000000000000001",
-      stakingClass
+      level
     );
 
     await listUserStaking();
@@ -236,27 +241,27 @@ export default function DaoStaking() {
     }
   };
 
-  const [onPresentConfirmModal] = useModal(
-    <ConfirmStakingModal
-      onConfirm={handleStake}
-      receipt={pendingTx ? "Pending" : "Success"}
-      clientMessage={"Your spending approval is being confirmed. "}
-      onAcceptChanges={function (): void {
-        throw new Error("Function not implemented.");
-      }}
-      customOnDismiss={handleConfirmDismiss}
-    />,
-    true,
-    true,
-    "ConfirmStakingModal"
-  );
+    const [onPresentConfirmModal] = useModal(
+      <ConfirmStakingModal
+        onConfirm={handleStake}
+        receipt={pendingTx ? "Pending" : "Success"}
+        clientMessage={"Your spending approval is being confirmed. "}
+        onAcceptChanges={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        customOnDismiss={handleConfirmDismiss}
+      />,
+      true,
+      true,
+      "ConfirmStakingModal"
+    );
+
   const biggest1500 = useMediaPredicate("(min-width: 1500px)");
 
   return (
     <div
       className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
-      style={{ gap: "20px" }}
-    >
+      style={{ gap: "20px" }}>
       <Statistics status={loading} />
 
       <div
@@ -264,15 +269,14 @@ export default function DaoStaking() {
           flex: `${biggest1500 ? " 1 1 30%" : " 1 1 30%"}`,
           gap: "20px",
           maxWidth: "100%",
-        }}
-      >
+        }}>
         <div className="card d-flex flex-column">
           <div className="card-body">
             <div className="d-flex align-items-center mb-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
-                version="1.1"
+                version="1.1" 
                 id="Layer_1"
                 x="0px"
                 y="0px"
@@ -315,9 +319,10 @@ export default function DaoStaking() {
                   <input
                     type="number"
                     className="form-control fs-28"
+                    placeholder="0.00"
                     //   required
                     onChange={(e) => handleAmountChange(e)}
-                    value={amountToStake}
+                    // value={amountToStake}
                   />
                 </span>
                 <h3 className=" pt-3 pb-3 " style={{ color: " #8e8e8e" }}>
@@ -329,12 +334,11 @@ export default function DaoStaking() {
               <button
                 className="btn w-100  mr-1 btn-primary btn-lg mt-2"
                 type="button"
-                onClick={handleSubmit}
-              >
+                onClick={handleSubmit}>
                 {activateStake ? "STAKE" : "APPROVE"}
               </button>
             </div>
-          </div>
+          </div>  
         </div>
 
         <div className="card d-flex flex-column mt-4">
