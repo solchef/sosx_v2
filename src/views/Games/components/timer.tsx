@@ -105,7 +105,7 @@ const TimerDisplay = (props) => {
       )}
 
       {props.stage == 1 && (
-        <div className="card timer-card mb-3">
+        <div className="card timer-card">
           <div className="d-flex align-items-center mb-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
