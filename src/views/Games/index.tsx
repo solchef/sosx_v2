@@ -7,7 +7,7 @@ import Ranking from "./components/ranking";
 import TimerDisplay from "./components/timer";
 import { getDaoLevel } from "./hooks/getDaoLevel";
 import { useQuery } from "@apollo/client";
-import { GET_LastVideo, GET_Videos } from "utils/graphqlQ";
+import { GET_LastVideo, GET_Videos, GET_LastRound } from "utils/graphqlQ";
 import VoteStageTwo from "./VoteStageTwo";
 import VoteStageThree from "./VoteStageThree";
 import Submission from "./SubmitChallenge";
@@ -18,11 +18,13 @@ export default function Game() {
   const [seconds, setSeconds] = useState(0);
   const [videos, setVideos] = useState([]);
   const [lastVideos, setLastVideos] = useState([]);
+  const [lastRound, setLastRound] = useState(Number)
   const contract = useDaoStakingContract();
   let [stage, setStage] = useState(4);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
   const GraphqlVideosData = useQuery(GET_Videos);
   const GraphqlLastVideosData = useQuery(GET_LastVideo);
+  const GraphqlLastRoundData = useQuery(GET_LastRound);
 
   const calculateTimeLeft = (entryTime) => {
     let eventTime = moment(entryTime).unix();
@@ -58,13 +60,18 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
+    if (GraphqlLastRoundData.data !== undefined)
+      setLastRound(GraphqlLastRoundData.data.lastRound.id);
+  }, [GraphqlLastRoundData.data]);
+
+  useEffect(() => {
     const roundStartTime = 1652979696;
 
     let stageGroups = [];
 
-    let stage1 = { start: roundStartTime, end: roundStartTime * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime * 1 };
+    let stage2 = { start: stage1.end, end: stage1.end * 1 };
+    let stage3 = { start: stage2.end, end: stage2.end * 1 };
     let stage4 = { start: stage3.end, end: stage3.end * 60 };
     let stage5 = { start: stage3.end, end: stage3.end * 60 };
 
@@ -112,10 +119,10 @@ export default function Game() {
       </div>
 
       <div id="action-section" style={{ flex: "2 60%" }}>
-        {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
-        {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
-        {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
-        {stage == 4 && <Submission level={currentLevel} stage={stage} />}
+        {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} round={lastRound} />}
+        {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} round={lastRound} />}
+        {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} round={lastRound} />}
+        {stage == 4 && <Submission level={currentLevel} stage={stage} round={lastRound} />}
       </div>
       <div id="ranking-section" style={{ flex: "0 1 400px" }}>
         <Ranking stage={stage} />

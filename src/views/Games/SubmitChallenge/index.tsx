@@ -11,12 +11,13 @@ const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
 
-const Submission = (props: { level; stage }) => {
+const Submission = (props) => {
   const { account } = useWeb3React();
   const [winingChallenge, setWingingChallenge] = useState();
   const [url, setURL] = useState("");
   const { toastSuccess, toastError } = useToast();
   const winingChallengeData = useQuery(GET_WiningChallenge);
+  const lastRound = props.round
 
   useEffect(() => {
     if (winingChallengeData.data !== undefined)
@@ -42,7 +43,7 @@ const Submission = (props: { level; stage }) => {
         {
           timestamp: moment().unix(),
           id: `${account}`,
-          rId: "1",
+          rId: lastRound,
           url: url,
         },
         null,
@@ -53,7 +54,7 @@ const Submission = (props: { level; stage }) => {
     }
 
     if (data !== "") {
-      await server.files.write(`/Rounds/Round-1/Videos/${account}.json`, data, {
+      await server.files.write(`/Rounds/Round-${lastRound}/Videos/${account}.json`, data, {
         create: true,
       });
       toastSuccess("Uploaded");

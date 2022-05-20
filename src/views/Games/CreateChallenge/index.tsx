@@ -25,13 +25,14 @@ const CreateChallenge = (props) => {
   const { library, connector } = useWeb3Provider();
   const { toastSuccess, toastError } = useToast();
   const contract = useDaoStakingContract();
+  const lastRound = props.round
 
   let roundId;
   const roundInfo = JSON.stringify({
     id: roundId,
     startingTime: moment().unix(),
   });
-  const createRound = async () => {
+  const createRound = async (lastRound: number) => {
     await server.files.mkdir(`/Rounds/Round-${roundId}`);
     await server.files.mkdir(`/Rounds/Round-${roundId}`);
 
@@ -79,17 +80,17 @@ const CreateChallenge = (props) => {
           );
 
           try {
-            await server.files.mkdir(`/Rounds/Round-1/challenges/${account}`);
+            await server.files.mkdir(`/Rounds/Round-${lastRound}/challenges/${account}`);
           } catch (err) {
             toastError(
               t("Challenge Error"),
-              t("You can't create more then one challenge")
+              t("You can't create more than one challenge")
             );
             return;
           }
 
           await server.files.write(
-            `/Rounds/Round-1/challenges/${account}/info.json`,
+            `/Rounds/Round-${lastRound}/challenges/${account}/info.json`,
             forIPFS,
             { create: true }
           );

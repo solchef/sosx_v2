@@ -18,7 +18,7 @@ const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
 
-const VoteStageTwo = (props: { level; stage }) => {
+const VoteStageTwo = (props) => {
   const [voted, setVoted] = useState(true);
   const [justVoted, setJustVoted] = useState(false);
   const { account } = useWeb3React();
@@ -32,6 +32,7 @@ const VoteStageTwo = (props: { level; stage }) => {
   const dataIndex = 5;
   const contract = useDaoStakingContract();
   const stage = props.stage;
+  const lastRound = props.round
   const [votingLevel, setVotingLevel] = useState(0);
 
   const getChalanges = async () => {
@@ -98,8 +99,8 @@ const VoteStageTwo = (props: { level; stage }) => {
     const vote = JSON.stringify({
       timestamp: moment().unix(),
       voterAddress: account,
+      round: lastRound,
       level: votingLevel,
-      round: "1",
     });
 
     const sig = await signMessage(connector, library, account, vote);
@@ -109,7 +110,7 @@ const VoteStageTwo = (props: { level; stage }) => {
         {
           timestamp: moment().unix(),
           voterAddress: account,
-          round: "1",
+          round: lastRound,
           sig: sig.toString(),
           level: votingLevel,
           // @ts-ignore
@@ -120,7 +121,7 @@ const VoteStageTwo = (props: { level; stage }) => {
       );
 
       await server.files.write(
-        `/Rounds/Round-1/Votes/stage-${stage}/${account}.json`,
+        `/Rounds/Round-${lastRound}/Votes/stage-${stage}/${account}.json`,
         forIPFS,
         { create: true }
       );
