@@ -1,23 +1,18 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import styled from "styled-components";
-import useToast from "hooks/useToast";
+import { useEffect, useState } from "react";
 import {
   FacebookShareButton,
   TwitterShareButton,
   TelegramShareButton,
-  EmailShareButton,
   WhatsappShareButton,
   WhatsappIcon,
   TelegramIcon,
 } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-import { Popover, OverlayTrigger, Modal } from "react-bootstrap";
+import { Popover, OverlayTrigger} from "react-bootstrap";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useStakingContract } from "hooks/useContract";
 
-import { useCallWithGasPrice } from "hooks/useCallWithGasPrice";
 import { useMediaPredicate } from "react-media-hook";
-import BigNumber from "big-number";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import fetch from "isomorphic-unfetch";
 import ConnectWalletButton from "components/ConnectWalletButton";
@@ -30,31 +25,21 @@ export default function Referral({ datasocial }) {
   const [socialData, setsocialData] = useState([]); 
   const [tab, setTab] = useState(tabs[0]); 
   const { account } = useActiveWeb3React();
-  const [userAccount, setUserAccount] = useState("");
   const contract = useStakingContract();
   const [referralCount, setReferralCount] = useState(0);
   const [viewReferralReward, setViewReferralReward] = useState(0);
   const [referrals, setReferrals] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
-  const { callWithGasPrice } = useCallWithGasPrice();
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-  const [key, setKey] = useState("chart");
-  var results = [];
-  // const account = "dd"
   const toggleTab = (event, type) => {
     event.stopPropagation();
     tabs.map((tabb) => (tabb.name == type ? setTab(tabb) : ""));
   };
-  // console.log(resultsoc);
-  // console.log(account);
 
   useEffect(() => {
-    // console.log("hello")
     fetchReferral();
     getaccountDetails();
-    getDataSocialMining();
   }, []);
 
   const getaccountDetails = async () => {
@@ -72,39 +57,18 @@ export default function Referral({ datasocial }) {
 
       // get the data
       let data = await response.json();
-      console.log(data);
     }
-  };
-  const getDataSocialMining = async () => {
-    // const res = await fetch("/api/social_mining?referedby=" + account);
-    // const json = await res.json();
-    // setResultsoc(json.message);
-    // setsocialData(json.message);
-    // results.push(json.message);
-    // console.log("results",results);
-    // console.log("data is:",json.message)
-    // console.log("data2 is:",socialData)
-    // console.log("resultsoc",resultsoc);
   };
   const fetchReferral = async () => {
     let countreferrals = await contract.getReferralCount();
-
-    // console.log(referralCount);
-    // this.setState({referralCount:countreferrals})
     setReferralCount(Number(countreferrals));
 
     contract
       .getCurrentReferrals()
       .then((result) => {
-        // console.log("Fetched Referrals")
-        // console.log(result)
         if (result.length == 0) {
           result = null;
         }
-        // console.log(result);
-
-        fetchTotalReward();
-
         let referralData = [];
         let total = 0;
 
@@ -116,10 +80,8 @@ export default function Referral({ datasocial }) {
             };
             total = +Number(reward / 10 ** 18).toFixed(2);
             referralData.push(data);
-            // console.log(referralData)
             
           });
-          // console.log(element)
         }
 
            setReferrals(referralData);
@@ -130,65 +92,12 @@ export default function Referral({ datasocial }) {
       });
   };
 
-  const fetchTotalReward = async () => {
-    // console.log(contract)
-    //   contract.calculateTotalRewardReferral().then((rawResult) => {
-    //       console.log("TotalReward:" + rawResult)
-    //       let decimals = BigNumber(10).power(18);
-    //       let realAmount = BigNumber(rawResult).divide(decimals);
-    //      setViewReferralReward(realAmount.toString());
-    //   }).catch( (err) => {
-    //       console.log(err)
-    //   });
-    //   if(referrals === null || referrals.length === 0){
-    //       // console.log("No referrals present")
-    //       return;
-    //   }
-  };
-
-  // const fetchStakeReward = async() => {
-  //     this.state.contractInstance.methods.calculateRewardReferral(this.state.referrals[0]).call().then( (rawResult) => {
-  //         console.log(rawResult)
-  //     }).catch( (err) => {
-  //         console.log("Unable to calculate")
-  //     });
-  // }
-
-  const withdrawReferralReward = async () => {
-    setLoading(true);
-
-    contract
-      .withdrawReferralReward({ from: account })
-      .then((rawResult) => {
-        console.log(rawResult);
-
-        let result = Boolean(rawResult);
-
-        if (result) {
-          console.log("Reward successfully withdrawed");
-        } else {
-          console.log("The POT is exhausted!!!!");
-        }
-
-        fetchTotalReward();
-        fetchReferral();
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log("There was an error : " + err);
-        setLoading(false);
-      });
-  };
 
   let popover = (
     <Popover id="popover-success">
-      {/* <Popover.Header as="h3">Popover right</Popover.Header> */}
       <Popover.Body>
         <WhatsappShareButton
           url={`https://socialx.io?ref=${account}`}
-          // quote={"Welcome to the social experiment"}
-          // hashtag={"#socialx"}
-          // description={"aiueo"}
           className="Demo__some-network__share-button"
         >
           <WhatsappIcon size={32} round /> Whatsapp
@@ -199,9 +108,6 @@ export default function Referral({ datasocial }) {
 
         <TelegramShareButton
           url={`https://socialx.io?ref=${account}`}
-          // quote={"Welcome to the social experiment"}
-          // hashtag={"#socialx"}
-          // description={"aiueo"}
           className="Demo__some-network__share-button"
         >
           <TelegramIcon size={32} round /> Telegram
@@ -214,7 +120,6 @@ export default function Referral({ datasocial }) {
           url={`https://socialx.io?ref=${account}`}
           quote={"Welcome to the social experiment"}
           hashtag={"#socialx"}
-          // description={"aiueo"}
           className="Demo__some-network__share-button"
         >
           <FacebookIcon size={32} round /> Facebook
@@ -235,7 +140,6 @@ export default function Referral({ datasocial }) {
 
   const [show, setShow] = useState(false);
 
-  // console.log(results.length);
   return (
     <div
       className={`${biggerThan1400 && "container"} ${
@@ -344,7 +248,6 @@ export default function Referral({ datasocial }) {
                             text={`https://socialx.io?ref=${account}`}
                             onCopy={() => setCopied(true)}
                           >
-                            {/* <Button variant="outlined"><Trans i18nKey="referral_panel.copyButton" /></Button> */}
                             <a className="nav-link" data-toggle="modal">
                               <i className="fa-regular fa-clone" />
                             </a>
@@ -666,10 +569,6 @@ export default function Referral({ datasocial }) {
                       <p className="main-pink">Wallet Address</p>
                     </div>
 
-                    {/* <div className="col-xl-3">
-                      <p className="main-pink">Mining Rewards</p>
-                    </div> */}
-
                     <div className="col-xl-3">
                       <p className="main-pink">Staking Rewards</p>
                     </div>
@@ -720,10 +619,6 @@ export default function Referral({ datasocial }) {
   );
 }
 export async function getServerSideProps(ctx) {
-  // get the current environment
-  // let dev = process.env.NODE_ENV !== 'production';
-  // let { DEV_URL, PROD_URL } = process.env;
-
   // request posts from api
   let response = await fetch(`https://testbed.socialx.io/api/social_mining`);
   // extract the data

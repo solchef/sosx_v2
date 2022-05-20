@@ -1,22 +1,11 @@
-import { Box, Button, Flex, Heading, ProposalIcon } from "@pancakeswap/uikit";
-import styled from "styled-components";
-import { useTranslation } from "contexts/Localization";
-import Container from "components/Layout/Container";
-import Link from "next/link";
-import DesktopImage from "./DesktopImage";
-import Masonry from "react-masonry-css";
-import { cleanNumber } from "utils/amount";
 import { useEffect, useState } from "react";
-import { useMediaPredicate } from "react-media-hook";
 import axios from "axios";
-import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
+import { Modal, ModalHeader } from "react-bootstrap";
 import { useDaoStakingContract } from "hooks/useContract";
 import useToast from "hooks/useToast";
-import { SubmissionAside } from "./SubmissionAside";
 import PrizePool from "./PrizePool";
 
 const TimerDisplay = (props) => {
-  const { t } = useTranslation();
   const [price, setPrice] = useState(Number);
   const [donateAmount, setDonateAmount] = useState(0);
   const [showDonate, setShowDonate] = useState(false);
@@ -51,16 +40,6 @@ const TimerDisplay = (props) => {
     }
   };
 
-  // if(props.stage == 4){
-
-  //   return(
-  //     <>
-  //      <SubmissionAside/>
-  //     </>
-
-  //   )
-  // }
-
   return (
     <>
       <PrizePool />
@@ -93,7 +72,7 @@ const TimerDisplay = (props) => {
                   Minutes
                 </p>
                 <p className="li d-flex align-self-baseline">
-                  <span>:</span> 
+                  <span>:</span>
                 </p>
               </div>
               <p className="li">

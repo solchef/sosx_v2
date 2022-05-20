@@ -1,5 +1,5 @@
 import Link from "next/link";
-import router, { useRouter } from "next/router";
+import router from "next/router";
 
 const NavMining = () => {
     console.log(router.pathname)
@@ -75,21 +75,6 @@ const NavMining = () => {
         }
       `}</style>
         </div>
-                        // <ul className="nav nav-tabs nav-justified mt-5 mb-3" style={{marginTop:"100px"}}>
-                        //             <li className="nav-item   text-white">
-                        //             <Link href="/x-mining" className={`nav-link btn-primary ${router.pathname === '/' && 'active'}`}>Steps</Link>
-                        //             </li>
-                        //             <li className="nav-item">
-                        //             <Link href="/socialmining-s1" className={`nav-link ${router.pathname === '/socialmining-s1' && 'active'}`}>Copy</Link>
-                        //             </li>
-                        //             <li className="nav-item">
-                        //             <Link href="/socialmining-s2" className={`nav-link ${router.pathname === '/socialmining-s2' && 'active'}`}>Affiliate</Link>
-                        //             </li>
-                        //             <li className="nav-item">
-                        //             <Link href="/socialmining-s3" className={`nav-link ${router.pathname === '/socialmining-s3'  && 'active'}`}>Redeem</Link>
-                        //     </li>
-                        // </ul>
-
     )
 
 }

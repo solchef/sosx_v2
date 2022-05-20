@@ -1,7 +1,5 @@
-import { useRouter } from "next/router";
 import { create } from "ipfs-http-client";
 import { useEffect, useState } from "react";
-import { concat } from "uint8arrays";
 import React, { FormEvent } from "react";
 import { signMessage } from "utils/web3React";
 import { useWeb3React } from "@web3-react/core";
@@ -9,8 +7,6 @@ import useWeb3Provider from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
 import { useDaoStakingContract } from "hooks/useContract";
 import ConnectWalletButton from "../../../components/ConnectWalletButton";
-import useStage from "../../../hooks/useStage";
-import useLevels from "hooks/useLevels";
 import moment from "moment";
 import { useTranslation } from "contexts/Localization";
 import { useQuery } from "@apollo/client";
@@ -185,16 +181,8 @@ const VoteStageThree = (props: { level; stage }) => {
                         </button>
                       </div>
                     </div>
-                    {/* <div className="challenge-items d-flex">
-                <div className="list-title">
-                  Challenge Title Here
-                </div>
-                <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
-                </div>
-              </div> */}
                   </div>
                 );
-                // }
               })
             : ""}
         </div>

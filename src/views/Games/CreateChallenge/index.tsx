@@ -5,7 +5,6 @@ import useWeb3Provider from "hooks/useActiveWeb3React";
 import { signMessage } from "utils/web3React";
 import { useTranslation } from "contexts/Localization";
 import ConnectWalletButton from "components/ConnectWalletButton";
-import { useRouter } from "next/router";
 import { create } from "ipfs-http-client";
 import { useDaoStakingContract } from "hooks/useContract";
 import moment from "moment";
@@ -15,7 +14,6 @@ import { formatFixedNumber } from "utils/formatBalance";
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
-
 
 const CreateChallenge = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -83,8 +81,11 @@ const CreateChallenge = (props) => {
           try {
             await server.files.mkdir(`/Rounds/Round-1/challenges/${account}`);
           } catch (err) {
-            toastError(t("Challenge Error"), t("You can't create more then one challenge"));
-            return
+            toastError(
+              t("Challenge Error"),
+              t("You can't create more then one challenge")
+            );
+            return;
           }
 
           await server.files.write(
@@ -94,7 +95,7 @@ const CreateChallenge = (props) => {
           );
           setIsLoading(false);
           toastSuccess(t("challenge created!"));
-          form.reset()
+          form.reset();
         } else {
           toastError(t("Error"), t("Unable to sign payload"));
         }
@@ -121,7 +122,6 @@ const CreateChallenge = (props) => {
     let level = getDaoLevel(Number(formatFixedNumber(amount, 3, 18)));
     setVotingLevel(level);
   };
-
 
   return (
     <div className="card h-100">
@@ -227,7 +227,7 @@ const CreateChallenge = (props) => {
               )}
             </div>
           </div>
-       </div>
+        </div>
       </form>
     </div>
   );
