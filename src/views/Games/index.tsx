@@ -67,13 +67,13 @@ export default function Game() {
   }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
-    const roundStartTime = 1652971692;
+    const roundStartTime = 1652971692 - 80000;
 
-    const STAGE_1 = Number(process.env.NEXT_PUBLIC_STAGE_1)
-    const STAGE_2 = Number(process.env.NEXT_PUBLIC_STAGE_2)
-    const STAGE_3 = Number(process.env.NEXT_PUBLIC_STAGE_3)
-    const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4)
-    
+    const STAGE_1 = Number(process.env.NEXT_PUBLIC_STAGE_1);
+    const STAGE_2 = Number(process.env.NEXT_PUBLIC_STAGE_2);
+    const STAGE_3 = Number(process.env.NEXT_PUBLIC_STAGE_3);
+    const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4);
+
     let stageGroups = [];
 
     let stage1 = { start: roundStartTime, end: roundStartTime + STAGE_1 * 60 };
@@ -94,7 +94,7 @@ export default function Game() {
       const interval = setInterval(() => {
         let currTime = moment().unix();
         let checkStage = stageGroups.findIndex(
-          (group) => group.end > currTime && currTime > group.start 
+          (group) => group.end > currTime && currTime > group.start
         );
 
         if (checkStage != -1) {
@@ -126,10 +126,10 @@ export default function Game() {
       </div>
 
       <div id="action-section" style={{ flex: "2 73%" }}>
-          {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
-          {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
-          {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
-          {stage == 4 && <Submission level={currentLevel} stage={stage} />}
+        {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
+        {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
+        {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
+        {stage == 4 && <Submission level={currentLevel} stage={stage} />}
       </div>
       <div id="ranking-section" style={{ flex: "0 1 350px" }}>
         <Ranking stage={stage} />

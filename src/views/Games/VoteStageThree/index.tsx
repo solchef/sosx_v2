@@ -24,7 +24,7 @@ const server = create({
 });
 
 const VoteStageThree = (props: { level; stage }) => {
-  const [voted, setVoted] = useState(true)
+  const [voted, setVoted] = useState(true);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
   const { toastSuccess, toastError } = useToast();
@@ -39,20 +39,20 @@ const VoteStageThree = (props: { level; stage }) => {
   useEffect(() => {
     if (top3Challenges.data !== undefined) {
       setStage3Challenges(top3Challenges.data);
+      setSelectedChallange(top3Challenges.data.stage3Challenges[0]);
     }
   }, [top3Challenges.data]);
 
-
   const getVoteData = async () => {
-    const vote = await getWalletIsVotedStage3(account)
+    const vote = await getWalletIsVotedStage3(account);
     if (vote.walltIsVotaed3 == null) {
-      setVoted(false)
+      setVoted(false);
     }
-  }
+  };
 
   useEffect(() => {
-    getVoteData()
-  }, [account])
+    getVoteData();
+  }, [account]);
 
   useEffect(() => {
     userVotingLevel();
@@ -65,23 +65,19 @@ const VoteStageThree = (props: { level; stage }) => {
     setVotingLevel(level);
   };
 
-
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (votingLevel !== 3) {
-      toastError(
-        t("Error"),
-        t("Only Level 3 can vote in this stage")
-      );
+      toastError(t("Error"), t("Only Level 3 can vote in this stage"));
       return;
     }
 
     if (voted) {
-      toastError('You already voted for another challenge in stage 3')
-      return
+      toastError("You already voted for another challenge in stage 3");
+      return;
     }
-    
+
     const vote = JSON.stringify({
       timestamp: moment().unix(),
       voterAddress: account,
@@ -100,7 +96,7 @@ const VoteStageThree = (props: { level; stage }) => {
           sig: sig.toString(),
           level: votingLevel,
           // @ts-ignore
-          CId: selectedChallange.CID
+          CId: selectedChallange.CID,
         },
         null,
         2
@@ -112,7 +108,7 @@ const VoteStageThree = (props: { level; stage }) => {
         { create: true }
       );
       toastSuccess(t("Vote created!"));
-      getVoteData()
+      getVoteData();
     } else {
       toastError(t("Error"), t("Unable to sign payload"));
     }
@@ -166,32 +162,39 @@ const VoteStageThree = (props: { level; stage }) => {
       </p>
       <div className="d-flex flex-row flex-wrap">
         <div style={{ display: "inline-table" }}>
-          {stage3Challenges ? stage3Challenges.stage3Challenges.map((data, index) => {
-            return (
-              <div key={index} className="challenge-list m-3 rounded">
-                <div className="challenge-items d-flex">
-                  <div className="list-title">{data.payload.name}</div>
-                  <div className="list-button">
-                    {" "}
-                    <button
-                      className="btn mx-auto btn-primary btn-sm "
-                      type="button"
-                      onClick={() => setSelectedChallange(stage3Challenges.stage3Challenges[index])}
-                    >
-                      VIEW
-                    </button>
-                  </div>
-                </div>
-                {/* <div className="challenge-items d-flex">
+          {stage3Challenges
+            ? stage3Challenges.stage3Challenges.map((data, index) => {
+                if (data !== null)
+                  return (
+                    <div key={index} className="challenge-list m-3 rounded">
+                      <div className="challenge-items d-flex">
+                        <div className="list-title">{data.payload.name}</div>
+                        <div className="list-button">
+                          {" "}
+                          <button
+                            className="btn mx-auto btn-primary btn-sm "
+                            type="button"
+                            onClick={() =>
+                              setSelectedChallange(
+                                stage3Challenges.stage3Challenges[index]
+                              )
+                            }
+                          >
+                            VIEW
+                          </button>
+                        </div>
+                      </div>
+                      {/* <div className="challenge-items d-flex">
               <div className="list-title">
                 Challenge Title Here
               </div>
               <div className="list-button"> <button className="btn mx-auto btn-primary btn-sm " type="button">VIEW</button>
               </div>
             </div> */}
-              </div>
-            );
-          }) : ""}
+                    </div>
+                  );
+              })
+            : ""}
         </div>
 
         {selectedChallange.payload !== undefined ? (

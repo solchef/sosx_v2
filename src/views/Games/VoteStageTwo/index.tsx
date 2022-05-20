@@ -23,7 +23,7 @@ const server = create({
 });
 
 const VoteStageTwo = (props: { level; stage }) => {
-  const [voted, setVoted] = useState(true)
+  const [voted, setVoted] = useState(true);
   const [challenges, setChallenges] = useState<any[]>([]);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
@@ -56,21 +56,20 @@ const VoteStageTwo = (props: { level; stage }) => {
       }
       setMaxPages(list);
     }
-
     setSelectedChallange(result.chalanges[0]);
     setChallangeList(result.chalanges);
   };
 
   const getVoteData = async () => {
-    const vote = await getWalletIsVotedStage2(account)
+    const vote = await getWalletIsVotedStage2(account);
     if (vote.walltIsVotaed2 == null) {
-      setVoted(false)
+      setVoted(false);
     }
-  }
+  };
 
   useEffect(() => {
-    getVoteData()
-  }, [account])
+    getVoteData();
+  }, [account]);
 
   useEffect(() => {
     getChalanges();
@@ -137,16 +136,13 @@ const VoteStageTwo = (props: { level; stage }) => {
     evt.preventDefault();
 
     if (votingLevel === 0) {
-      toastError(
-        t("Error"),
-        t("You should have level to be able to vote")
-      );
+      toastError(t("Error"), t("You should have level to be able to vote"));
       return;
     }
 
     if (voted) {
-      toastError('You already voted for another challenge in stage 2')
-      return
+      toastError("You already voted for another challenge in stage 2");
+      return;
     }
 
     const vote = JSON.stringify({
@@ -168,7 +164,7 @@ const VoteStageTwo = (props: { level; stage }) => {
           sig: sig.toString(),
           level: votingLevel,
           // @ts-ignore
-          CId: selectedChallange.CID
+          CId: selectedChallange.CID,
         },
         null,
         2
@@ -180,7 +176,7 @@ const VoteStageTwo = (props: { level; stage }) => {
         { create: true }
       );
       toastSuccess(t("Vote created!"));
-      getVoteData()
+      getVoteData();
     } else {
       toastError(t("Error"), t("Unable to sign payload"));
     }
