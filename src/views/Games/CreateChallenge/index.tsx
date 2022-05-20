@@ -27,21 +27,6 @@ const CreateChallenge = (props) => {
   const contract = useDaoStakingContract();
   const lastRound = props.round
 
-  let roundId;
-  const roundInfo = JSON.stringify({
-    id: roundId,
-    startingTime: moment().unix(),
-  });
-  const createRound = async (lastRound: number) => {
-    await server.files.mkdir(`/Rounds/Round-${roundId}`);
-    await server.files.mkdir(`/Rounds/Round-${roundId}`);
-
-    await server.files.mkdir(`/Rounds/round-${roundId}/videos`);
-    await server.files.mkdir(`/Rounds/Round-${roundId}/votes`);
-    await server.files.mkdir(`/Rounds/Round-${roundId}/votes/stage-2`);
-    await server.files.mkdir(`/Rounds/Round-${roundId}/votes/stage-3`);
-  };
-
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const form = event.target as HTMLFormElement;
