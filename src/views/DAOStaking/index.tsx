@@ -295,13 +295,6 @@ export default function DaoStaking() {
                   onClick={handleSubmit}>
                   {activateStake ? 'STAKE'  : 'APPROVE'  }
                     </button>
-
-                    <button
-                  className="btn w-100  mr-1 btn-primary btn-lg mt-2"
-                  type="button"
-                  onClick={handleShow}>
-                  {activateStake ? 'UNSTAKE'  : 'UNSTAKE'  }
-                    </button>
               </div>
 
             </div>
@@ -338,11 +331,20 @@ export default function DaoStaking() {
                   </div>
                 </div>
               </div>
+              <div className="d-flex justify-content-between">
               <button onClick={handleClaimReward}
-                className="btn mx-auto btn-primary btn-lg mt-3"
+                className="btn w-100  mr-1 btn-primary btn-lg mt-2"
                 type="button">
                 CLAIM REWARD
               </button>
+
+              <button
+                  className="btn w-100  mr-1 btn-primary btn-lg mt-2"
+                  type="button"
+                  onClick={handleShow}>
+                  {activateStake ? 'UNSTAKE'  : 'UNSTAKE'  }
+                </button>
+            </div>
             </div>
           </div>
         </div>
