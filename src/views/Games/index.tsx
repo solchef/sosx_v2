@@ -71,11 +71,11 @@ export default function Game() {
 
     let stageGroups = [];
 
-    let stage1 = { start: roundStartTime, end: roundStartTime + STAGE_1 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + STAGE_2 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + STAGE_3 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + STAGE_4 * 60 };
-    let stage5 = { start: stage3.end, end: stage3.end + STAGE_4 * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end * 60 };
+    let stage5 = { start: stage3.end, end: stage3.end * 60 };
 
     stageGroups.push(stage1, stage2, stage3, stage4, stage5);
     let current = moment().unix();
