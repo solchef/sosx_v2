@@ -114,11 +114,11 @@ export default function DaoStaking() {
           };
 
           // if (!instance.isWithdrawed) {
-            setActiveStakes((activeStakes) => [...activeStakes, instance]);
+            setActiveStakes(activeStakes => [...activeStakes, instance]);
           // }
-          if (!instance.isWithdrawed) {
-            setStakeList((activeStakes) => [...activeStakes, instance]);
-          }
+          // if (!instance.isWithdrawed) {
+            setStakeList(activeStakes => [...activeStakes, instance]);
+          // }
         });
       }
     });
@@ -404,7 +404,7 @@ export default function DaoStaking() {
 
       <DaoMemebrship />
 
-      <UserStaking status={loading} stakelist={activeStakes} />
+      <UserStaking status={loading} stakelist={stakelist} />
 
       <Modal show={ahow} onHide={handleClose} centered>
         <ModalHeader

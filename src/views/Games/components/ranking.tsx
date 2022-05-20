@@ -20,12 +20,12 @@ const Ranking = (props) => {
   const { account } = useActiveWeb3React();
   const [loading, setLoading] = useState<boolean>();
 
-  const loadDaoLevels = async () => {
+  const loadDaoLevels = async (data) => {
     setLoading(true);
     const level1 = [];
     const level2 = [];
     const level3 = [];
-    let daoList = contract.getAllAccount();
+    let daoList = data;
     daoList = [...new Set(daoList)];
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
@@ -44,7 +44,7 @@ const Ranking = (props) => {
       setAllVoter(voters);
     }
 
-    voters.sort((a, b) => a.amount - b.amount);
+    voters.sort((b, a) => a.amount - b.amount);
     if (displayLevel === 1) setVoters(level1);
     if (displayLevel === 2) setVoters(level2);
     if (displayLevel === 3) setVoters(level3);
@@ -52,7 +52,9 @@ const Ranking = (props) => {
   };
 
   useEffect(() => {
-    loadDaoLevels();
+    contract.getAllAccount().then((daolist) => {
+      loadDaoLevels(daolist);
+    });
     sortData();
   }, [props.stage]);
 
@@ -170,29 +172,35 @@ const Ranking = (props) => {
                 );
               })
             ) : !account ? (
-              <tr className=" mt-4">
-          
-                <td colSpan={3} className="text-white fs-12" style={{ border: 'none' }} >
+              <tr className=" text-nowrap mt-4">
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
+                <td className="text-white fs-14" style={{ border: 'none' }} >
                   You need to be connected to view the Level {displayLevel}
                 </td>
-            
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
               </tr>
 
             ) : loading ? (
-              <tr className="mt-4">
-              
-                <td colSpan={3}  className="text-white fs-12" style={{ border: 'none' }} >
+              <tr className=" text-nowrap mt-4">
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
+                <td className="text-white fs-14" style={{ border: 'none' }} >
                   Loading Data
                 </td>
-             
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
               </tr>
             ) : (
-              <tr className=" mt-4">
-               
-                <td colSpan={3} className="text-white fs-12" style={{ border: 'none' }} >
+              <tr className=" text-nowrap mt-4">
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
+                <td className="text-white fs-14" style={{ border: 'none' }} >
                   No one is on Level {displayLevel}
                 </td>
-               
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
               </tr>
             )}
           </tbody>
