@@ -50,32 +50,36 @@ export default function userStaking(props) {
             </div>
             <p></p>
             <p className="mb-4">Keep track of your investments activities.</p>
-            <p></p>
-            <div
-              className="d-flex pt-0 px-4  mt-0 ranking-header"
-              style={{ justifyContent: "space-between", borderTop: " none" }}
-            >
-              <div className="header-item">Date</div>
-              <div className="header-item">Action</div>
-              <div className="header-item">Staking</div>
-            </div>
-            <div
-              className="tab-bg"
-              style={{
-                height: "430px",
-                overflow: "auto",
-                paddingRight: "5px",
-              }}>
-                {props.stakelist.map((stake, i) => 
-                  <div
-                    className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
-                    style={{ justifyContent: "space-between" }}>
-                    <div className="header-item">{stake.stakeDate}</div>
-                    <div className="header-item">Staked</div>
-                    <div className="header-item"> {cleanNumber(stake.amount.toFixed(2))}</div>
-                  </div>
+
+
+            <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table ">
+
+              <tr>
+                <th className="fs-16 font-weight-normal">Date</th>
+                <th className="fs-16 font-weight-normal text-center">Action</th>
+                <th className="fs-16 font-weight-normal">Staking</th>
+              </tr>
+
+              <tbody>
+
+
+                {props.stakelist.map((stake, i) =>
+
+
+                  <tr key={i} style={{ borderColor: '#1e2124' }}>
+                    <td className="text-white" >{stake.stakeDate}</td>
+                    <td className="text-white" >Staked</td>
+                    <td className="text-white" > {cleanNumber(stake.amount.toFixed(2))}</td>
+                  </tr>
+
                 )}
-            </div>
+              </tbody>
+            </table>
+            <style jsx>{`
+       tbody tr:last-child td{
+        border-bottom: none;
+      }
+      `}</style>
           </div>
         </div>
       </div>    </>
