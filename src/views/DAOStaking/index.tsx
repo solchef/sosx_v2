@@ -295,6 +295,13 @@ export default function DaoStaking() {
                   onClick={handleSubmit}>
                   {activateStake ? 'STAKE'  : 'APPROVE'  }
                     </button>
+
+                    <button
+                  className="btn w-100  mr-1 btn-primary btn-lg mt-2"
+                  type="button"
+                  onClick={handleShow}>
+                  {activateStake ? 'UNSTAKE'  : 'UNSTAKE'  }
+                    </button>
               </div>
 
             </div>
