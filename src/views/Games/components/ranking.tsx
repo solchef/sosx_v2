@@ -170,35 +170,29 @@ const Ranking = (props) => {
                 );
               })
             ) : !account ? (
-              <tr className=" text-nowrap mt-4">
-                <td className="text-white fs-14" style={{ border: 'none' }}>
-                </td>
-                <td className="text-white fs-14" style={{ border: 'none' }} >
+              <tr className=" mt-4">
+          
+                <td colSpan={3} className="text-white fs-12" style={{ border: 'none' }} >
                   You need to be connected to view the Level {displayLevel}
                 </td>
-                <td className="text-white fs-14" style={{ border: 'none' }}>
-                </td>
+            
               </tr>
 
             ) : loading ? (
-              <tr className=" text-nowrap mt-4">
-                <td className="text-white fs-14" style={{ border: 'none' }}>
-                </td>
-                <td className="text-white fs-14" style={{ border: 'none' }} >
+              <tr className="mt-4">
+              
+                <td colSpan={3}  className="text-white fs-12" style={{ border: 'none' }} >
                   Loading Data
                 </td>
-                <td className="text-white fs-14" style={{ border: 'none' }}>
-                </td>
+             
               </tr>
             ) : (
-              <tr className=" text-nowrap mt-4">
-                <td className="text-white fs-14" style={{ border: 'none' }}>
-                </td>
-                <td className="text-white fs-14" style={{ border: 'none' }} >
+              <tr className=" mt-4">
+               
+                <td colSpan={3} className="text-white fs-12" style={{ border: 'none' }} >
                   No one is on Level {displayLevel}
                 </td>
-                <td className="text-white fs-14" style={{ border: 'none' }}>
-                </td>
+               
               </tr>
             )}
           </tbody>
