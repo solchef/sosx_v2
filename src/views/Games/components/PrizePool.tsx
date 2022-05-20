@@ -1,13 +1,11 @@
-import { useTranslation } from "contexts/Localization";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { CloseButton, Modal, ModalHeader } from "react-bootstrap";
+import {  Modal, ModalHeader } from "react-bootstrap";
 import { useDaoStakingContract } from "hooks/useContract";
 import useToast from "hooks/useToast";
 
 
 const PrizePool = (props) => {
-  const { t } = useTranslation();
   const [price, setPrice] = useState(Number);
   const [donateAmount, setDonateAmount] = useState(0);
   const [showDonate, setShowDonate] = useState(false);
