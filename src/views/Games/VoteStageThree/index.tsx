@@ -40,8 +40,6 @@ const VoteStageThree = (props: { level; stage }) => {
     }
   }, [top3Challenges.data]);
 
-  console.log(top3Challenges);
-
   const getVoteData = async () => {
     if (account) {
       const vote = await getWalletIsVotedStage3(account);

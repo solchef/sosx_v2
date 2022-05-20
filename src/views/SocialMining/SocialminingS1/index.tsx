@@ -1,9 +1,7 @@
-import { useEffect, useState, createContext } from "react";
-import { Link as reactLink } from "react-router-dom";
+import { useState } from "react";
 import Link from "next/link";
 import NavMining from "../NavMining";
 import { useMediaPredicate } from "react-media-hook";
-import SocialminingS3 from "../SocialminingS3";
 
 const socialMedias = [
   { name: "twitter", addres: "https://twitter.com", reward: "500" },
@@ -14,9 +12,7 @@ const socialMedias = [
 export default function SocialminingS1() {
   const [media, setMedia] = useState(socialMedias[0]);
   const [copySuccess, setCopySuccess] = useState("");
-  const [reward, setReward] = useState("");
   const toggleMenu = (event, type) => {
-    setReward(type);
     event.stopPropagation();
     socialMedias.map((socialMedia) =>
       socialMedia.name == type ? setMedia(socialMedia) : ""
@@ -28,7 +24,6 @@ export default function SocialminingS1() {
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
-  console.log(reward);
   localStorage.setItem("reward", media.reward);
   return (
     <div

@@ -100,7 +100,6 @@ export default function Game() {
   }, []);
 
   const getData = async () => {
-    console.log("first");
     let challenges = [];
     for await (const resultPart of server.files.ls("/challenges")) {
       let challenge;

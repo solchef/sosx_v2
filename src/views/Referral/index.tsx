@@ -88,7 +88,6 @@ export default function Referral({ datasocial }) {
             setViewReferralReward(total);
       })
       .catch((err) => {
-        console.log("Unable to list  current referrals; " + err);
       });
   };
 
@@ -591,11 +590,6 @@ export default function Referral({ datasocial }) {
                             {ref.address.replace(/(.{13})..+/, "$1…")}
                           </p>
                         </div>
-
-
-                        {/* <div className="col-xl-3">
-                          <p className="text-white fs-12">0</p>
-                        </div> */}
 
                         <div className="col-xl-3">
                           <p className="text-white fs-12">{ref.amount}</p>
