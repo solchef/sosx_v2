@@ -201,7 +201,6 @@ export default function Challenge() {
     const toggleReadMore = () => {
       setIsReadMore(!isReadMore);
     };
-    // console.log(text.length)
     return (
       <p className="text  overflow-hidden">
         {isReadMore ? text.slice(0, 600) : text}
@@ -228,7 +227,6 @@ export default function Challenge() {
   };
 
   const getLevel = (amount) => {
-    // console.log(process.env.NEXT_PUBLIC_LEVEL1)
     if (
       amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
       amount < process.env.NEXT_PUBLIC_LEVEL2

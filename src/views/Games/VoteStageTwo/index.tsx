@@ -58,7 +58,6 @@ const VoteStageTwo = (props: { level; stage }) => {
 
   const getVoteData = async () => {
     const vote = await getWalletIsVotedStage2(account);
-    console.log(vote);
     if (vote.walltIsVotaed2 == null) {
       setVoted(false);
     }
@@ -111,7 +110,6 @@ const VoteStageTwo = (props: { level; stage }) => {
           timestamp: moment().unix(),
           voterAddress: account,
           round: "1",
-          // challenge: challenge[0].cid.toString(),
           sig: sig.toString(),
           level: votingLevel,
           // @ts-ignore

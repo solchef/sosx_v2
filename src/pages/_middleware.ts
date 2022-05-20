@@ -11,12 +11,6 @@ export async function middleware(req: NextRequest) {
   const { geo } = req
   const { country, region } = geo
 
-  // Only track UA for debugging purpose
-  if (country === 'UA') {
-    // eslint-disable-next-line no-console
-    console.log('country-region:', `${country}-${region}`)
-  }
-
   const shouldBlock: boolean =
     BLOCK_COUNTRIES.some((c) => c === country) || BLOCK_REGIONS.some((r) => r === `${country}-${region}`)
 

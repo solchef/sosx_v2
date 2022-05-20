@@ -24,15 +24,16 @@ export default function SocialminingS3() {
   const handlePost = async (e) => {
     e.preventDefault();
     recaptchaRef.current.getValue();
-    console.log(recaptchaRef);
     const reward = localStorage.getItem("reward");
     // reset error and message
     setError("");
     setMessage("");
 
     // fields check
-    if (!email_address || !socialpostlink)
-      return console.log("All fields are required");
+    if (!email_address || !socialpostlink) {
+      toastError("All Fields Required")
+      return 
+    }
 
     // post structure
     let post = {
@@ -139,7 +140,6 @@ export default function SocialminingS3() {
                     ref={recaptchaRef}
                     size="normal"
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                    // onChange={}
                   />
                 </div>
               </div>
