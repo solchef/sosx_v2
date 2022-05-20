@@ -19,7 +19,7 @@ const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
 
-const VoteStageThree = (props: { level; stage }) => {
+const VoteStageThree = (props) => {
   const [voted, setVoted] = useState(true);
   const [justVoted, setJustVoted] = useState(false);
   const { account } = useWeb3React();
@@ -31,6 +31,7 @@ const VoteStageThree = (props: { level; stage }) => {
   const [selectedChallange, setSelectedChallange] = useState({});
   const top3Challenges = useQuery(GET_Stage3Challenges);
   const stage = props.stage;
+  const lastRound = props.round
   const [votingLevel, setVotingLevel] = useState(0);
 
   useEffect(() => {
@@ -81,7 +82,7 @@ const VoteStageThree = (props: { level; stage }) => {
       timestamp: moment().unix(),
       voterAddress: account,
       level: votingLevel,
-      round: "1",
+      round: lastRound,
     });
 
     const sig = await signMessage(connector, library, account, vote);
@@ -91,7 +92,7 @@ const VoteStageThree = (props: { level; stage }) => {
         {
           timestamp: moment().unix(),
           voterAddress: account,
-          round: "1",
+          round: lastRound,
           sig: sig.toString(),
           level: votingLevel,
           // @ts-ignore
@@ -102,7 +103,7 @@ const VoteStageThree = (props: { level; stage }) => {
       );
 
       await server.files.write(
-        `/Rounds/Round-1/Votes/stage-${stage}/${account}.json`,
+        `/Rounds/Round-${lastRound}/Votes/stage-${stage}/${account}.json`,
         forIPFS,
         { create: true }
       );
