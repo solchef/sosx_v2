@@ -70,9 +70,9 @@ const Ranking = (props) => {
     }
     setVoters(currentLevel);
   };
-
+  
   return (
-    <div className="card h-100 w-100" style={{ minHeight: 500 }}>
+    <div className="card h-100" style={{ minHeight: 500 }}>
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -124,9 +124,8 @@ const Ranking = (props) => {
         <button
           type="submit"
           onClick={() => setDisplayLevel(1)}
-          className={`font-weight-bold btn  text-nowrap ${
-            displayLevel === 1 ? " btn-primary" : ""
-          }`}
+          className={`font-weight-bold btn  text-nowrap ${displayLevel === 1 ? " btn-primary" : ""
+            }`}
         >
           {" "}
           Level 1
@@ -134,9 +133,8 @@ const Ranking = (props) => {
         <button
           type="submit"
           onClick={() => setDisplayLevel(2)}
-          className={`font-weight-bold btn  text-nowrap ${
-            displayLevel === 2 ? " btn-primary" : ""
-          }`}
+          className={`font-weight-bold btn  text-nowrap ${displayLevel === 2 ? " btn-primary" : ""
+            }`}
         >
           {" "}
           Level 2
@@ -144,9 +142,8 @@ const Ranking = (props) => {
         <button
           type="submit"
           onClick={() => setDisplayLevel(3)}
-          className={`font-weight-bold btn  text-nowrap  ${
-            displayLevel === 3 ? " btn-primary" : ""
-          }`}
+          className={`font-weight-bold btn  text-nowrap  ${displayLevel === 3 ? " btn-primary" : ""
+            }`}
         >
           {" "}
           Level 3
@@ -154,67 +151,65 @@ const Ranking = (props) => {
       </div>
 
       <div className="tab-bg">
-        <div
-          className="d-flex p-4 mt-0 ranking-header"
-          style={{
-            justifyContent: "space-between",
-          }}
-        >
-          <div className="header-item" style={{ width: "40px" }}>
-            Rank
-          </div>
-          <div
-            className="header-item"
-            style={{ width: "55px", textAlign: "center" }}
-          >
-            Wallet
-          </div>
-          <div className="header-item">Staking</div>
-        </div>
-        <StyledList>
-          {voters.length > 0 ? (
-            voters.map((voter, i) => {
-              return (
-                <span key={i}>
-                  <div
-                    className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
-                    style={{
-                      justifyContent: "space-between",
-                      marginTop: "0px!important",
-                      display: "flex",
-                    }}
-                  >
-                    <div
-                      className="header-item"
-                      style={{ width: "40px", textAlign: "center" }}
-                    >
-                      {i + 1}
-                    </div>
-                    <div
-                      className="header-item"
-                      style={{ width: "160px", textAlign: "left" }}
-                    >
-                      {voter.address.replace(/(.{10})..+/, "$1…")}
-                    </div>
-                    <div className="header-item">
-                      {cleanNumber(voter.amount + "")}
-                    </div>
-                  </div>
-                </span>
-              );
-            })
-          ) : !account ? (
-            <div className="mx-auto text-center">
-              You need to be connected to view the Level {displayLevel}
-            </div>
-          ) : loading ? (
-            <div className="mx-auto text-center">Loading Data</div>
-          ) : (
-            <div className="mx-auto text-center">
-              No one is on Level {displayLevel}
-            </div>
-          )}
-        </StyledList>
+
+        <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table ">
+
+          <tr>
+            <th className="fs-16 font-weight-normal">Rank</th>
+            <th className="fs-16 font-weight-normal text-center">Wallet</th>
+            <th className="fs-16 font-weight-normal">Staking</th>
+          </tr>
+
+          <tbody>
+            {voters.length > 0 ? (
+              voters.map((voter, i) => {
+                return (
+                  <tr key={i} style={{ borderColor: '#1e2124' }}>
+                    <td className="text-white" > {i + 1}</td>
+                    <td className="text-white" >  {voter.address.replace(/(.{10})..+/, "$1…")}</td>
+                    <td className="text-white" >{cleanNumber(voter.amount + "")}</td>
+                  </tr>
+                );
+              })
+            ) : !account ? (
+              <tr className=" text-nowrap mt-4">
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
+                <td className="text-white fs-14" style={{ border: 'none' }} >
+                  You need to be connected to view the Level {displayLevel}
+                </td>
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
+              </tr>
+
+            ) : loading ? (
+              <tr className=" text-nowrap mt-4">
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
+                <td className="text-white fs-14" style={{ border: 'none' }} >
+                  Loading Data
+                </td>
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
+              </tr>
+            ) : (
+              <tr className=" text-nowrap mt-4">
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
+                <td className="text-white fs-14" style={{ border: 'none' }} >
+                  No one is on Level {displayLevel}
+                </td>
+                <td className="text-white fs-14" style={{ border: 'none' }}>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <style jsx>{`
+       tbody tr:last-child td{
+        border-bottom: none;
+      }
+      `}</style>
       </div>
     </div>
   );

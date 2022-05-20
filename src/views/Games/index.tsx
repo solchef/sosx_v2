@@ -102,7 +102,7 @@ export default function Game() {
 
   return (
     <div className="game container-fluid d-flex flex-wrap flex-direction-row">
-      <div id="timer-section" style={{ flex: "0 1 350px" }}>
+      <div id="timer-section" style={{ flex: "0 1 400px" }}>
         <TimerDisplay
           hours={hours}
           minutes={minutes}
@@ -111,17 +111,17 @@ export default function Game() {
         />
       </div>
 
-      <div id="action-section" style={{ flex: "2 73%" }}>
+      <div id="action-section" style={{ flex: "2 60%" }}>
         {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} />}
         {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} />}
         {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} />}
         {stage == 4 && <Submission level={currentLevel} stage={stage} />}
       </div>
-      <div id="ranking-section" style={{ flex: "0 1 350px" }}>
+      <div id="ranking-section" style={{ flex: "0 1 400px" }}>
         <Ranking stage={stage} />
       </div>
 
-      <div id="video-section" style={{ flex: "2 73%" }}>
+      <div id="video-section" style={{ flex: "2 60%" }}>
         <Media todayVideo={undefined} />
       </div>
     </div>
