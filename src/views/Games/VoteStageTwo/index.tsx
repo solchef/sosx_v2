@@ -27,7 +27,7 @@ const VoteStageTwo = (props) => {
   const [selectedChallange, setSelectedChallange] = useState({});
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [maxPages, setMaxPages] = useState([]);
-  const [challangeList, setChallangeList] = useState([]);
+  const [challangeList, setChallangeList] = useState([]); 
   const { t } = useTranslation();
   const dataIndex = 5;
   const contract = useDaoStakingContract();
@@ -57,16 +57,15 @@ const VoteStageTwo = (props) => {
     setChallangeList(result.chalanges);
   };
 
-  const getVoteData = async () => {
-    const vote = await getWalletIsVotedStage2(account);
-    if (vote.walltIsVotaed2 == null) {
-      setVoted(false);
-    }
-  };
-
   useEffect(() => {
+    const getVoteData = async () => {
+      const vote = await getWalletIsVotedStage2(account);
+      if (vote.walltIsVotaed2 == null) {
+        setVoted(false);
+      }
+    };
     getVoteData();
-  }, [account]);
+  }, [account, lastRound]);
 
   useEffect(() => {
     getChalanges();
