@@ -148,22 +148,27 @@ export default function DaoStaking() {
       toastError("Rewards not yet available");
   };
 
-  const handleUnStake = async () => {
+  const handleUnStake = async (instance) => {
     let decimals = BigNumber(10).pow(18);
 
-    let result = BigNumber(amountToStake).multiply(decimals);
-    setLoading(true);
-    
-    const tx = await contract.returnTokens(0);
-
-    if (tx) {
-      setActivatestake(true);
-      setLoading(false);
-      toastSuccess("Staking Transaction successfully sent");
+    try{
+      let result = BigNumber(amountToStake).multiply(decimals);
+      setLoading(true);
       
-    } else {
-      toastError("Could not unstake");
+      const tx = await contract.returnTokens(instance);
+  
+      if (tx) {
+        setActivatestake(true);
+        setLoading(false);
+        toastSuccess("Staking Transaction successfully sent");
+        listUserStaking();
+      } else {
+        toastError("Could not unstake");
+      }
+    }catch(e){
+          toastError("Could not unstake at the moment.");
     }
+    
   };
 
   
@@ -278,7 +283,7 @@ export default function DaoStaking() {
                 <div className="d-flex justify-content-between align-items-center">
                   <span>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control fs-28"
                       //   required
                       onChange={(e) => handleAmountChange(e)}

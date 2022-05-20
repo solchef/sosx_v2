@@ -64,8 +64,7 @@ export default function userStaking(props) {
 
 
                 {props.stakelist.map((stake, i) =>
-
-
+                
                   <tr key={i} style={{ borderColor: '#1e2124' }}>
                     <td className="text-white" >{stake.stakeDate}</td>
                     <td className="text-white" >Staked</td>
