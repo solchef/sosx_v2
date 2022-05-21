@@ -70,7 +70,7 @@ const Ranking = (props) => {
     }
     setVoters(currentLevel);
   };
-  
+
   return (
     <div className="card h-100" style={{ minHeight: 500 }}>
       <div className="d-flex align-items-center mb-2">
@@ -172,13 +172,9 @@ const Ranking = (props) => {
                 );
               })
             ) : !account ? (
-              <tr className=" text-nowrap mt-4">
-                <td className="text-white fs-14" style={{ border: 'none' }}>
-                </td>
-                <td className="text-white fs-14" style={{ border: 'none' }} >
+              <tr className=" mt-4">
+                <td colSpan={3} className="text-white fs-12" style={{ border: 'none' }} >
                   You need to be connected to view the Level {displayLevel}
-                </td>
-                <td className="text-white fs-14" style={{ border: 'none' }}>
                 </td>
               </tr>
 
