@@ -70,7 +70,7 @@ const Ranking = (props) => {
     }
     setVoters(currentLevel);
   };
-  
+
   return (
     <div className="card h-100" style={{ minHeight: "500px" }}>
       <div className="d-flex align-items-center mb-2">
