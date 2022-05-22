@@ -3,11 +3,10 @@ import { cleanNumber } from "utils/amount";
 export default function userStaking(props) {
 
   return (
-    <>
-      <div style={{ flex: "1 1 30%" }}>
         <div className="card d-flex flex-column h-100">
-          <div className="card-body">
-            <div className="d-flex align-items-center mb-2">
+           <div className="card-header">
+           <div style={{flex: "2 auto"}}>
+            <div className="jsx-e5e2ca7965fa437a d-flex align-items-center mb-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -47,27 +46,32 @@ export default function userStaking(props) {
 
               <h4>STAKING LOG</h4>
             </div>
-            <p></p>
             <p className="mb-4">Keep track of your investments activities.</p>
+            </div>
+            <div style={{flex:" 0 120px"}}>
+                                <button className="btn mr-1 btn-primary btn-lg mt-2" onClick={props.onActionModal}  type="button">UNSTAKE</button>
+                            </div>
 
+                  </div>
 
-            <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table ">
-
+                  <div className="jsx-e5e2ca7965fa437a card-body">
+            <table  className="jsx-e5e2ca7965fa437a fs-12 p-4 mt-0 table ">
+               <tbody className="ranking-header">
               <tr>
-                <th className="fs-16 font-weight-normal">Date</th>
-                <th className="fs-16 font-weight-normal text-center">Action</th>
-                <th className="fs-16 font-weight-normal">Staking</th>
+                <th className="jsx-e5e2ca7965fa437a">Date</th>
+                <th className="jsx-e5e2ca7965fa437a text-left">Action</th>
+                <th className="jsx-e5e2ca7965fa437a">Staking</th>
               </tr>
-
-              <tbody>
+              </tbody>
+              <tbody className="jsx-e5e2ca7965fa437a">
 
 
                 {props.stakelist.map((stake, i) =>
                 
-                  <tr key={i} style={{ borderColor: '#1e2124' }}>
-                    <td className="text-white" >{stake.stakeDate}</td>
-                    <td className="text-white" >Staked</td>
-                    <td className="text-white" > {cleanNumber(stake.amount.toFixed(2))}</td>
+                  <tr className="jsx-e5e2ca7965fa437a" key={i} style={{ borderColor: "rgb(30, 33, 36)" }}>
+                    <td className="jsx-e5e2ca7965fa437a text-white" >{stake.stakeDate}</td>
+                    <td className="jsx-e5e2ca7965fa437a text-white" >Staked</td>
+                    <td className="jsx-e5e2ca7965fa437a text-white" > {cleanNumber(stake.amount.toFixed(2))}</td>
                   </tr>
 
                 )}
@@ -79,7 +83,7 @@ export default function userStaking(props) {
       }
       `}</style>
           </div>
+          
         </div>
-      </div>    </>
   );
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDaoStakingContract } from "hooks/useContract";
-import moment from "moment";
 import CreateChallenge from "./CreateChallenge";
 import Media from "./components/media";
 import Ranking from "./components/ranking";
@@ -12,45 +11,20 @@ import VoteStageTwo from "./VoteStageTwo";
 import VoteStageThree from "./VoteStageThree";
 import Submission from "./SubmitChallenge";
 import GameGuide from "./guide";
+import useStage from "hooks/useStage";
 
 export default function Game() {
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
   const [videos, setVideos] = useState([]);
   const [lastVideos, setLastVideos] = useState([]);
   const [lastRound, setLastRound] = useState(Number);
   const [startingTimeStamp, setStartingTime] = useState(Number);
   const contract = useDaoStakingContract();
-  let [stage, setStage] = useState(1);
+  // let [stage, setStage] = useState(1);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
   const GraphqlVideosData = useQuery(GET_Videos);
   const GraphqlLastVideosData = useQuery(GET_LastVideo);
   const GraphqlLastRoundData = useQuery(GET_LastRound);
-
-  const calculateTimeLeft = (entryTime) => {
-    let eventTime = moment(entryTime).unix();
-    let currentTime = Number(Math.floor(Date.now() / 1000).toString());
-    let leftTime = eventTime - currentTime;
-    let duration = moment.duration(leftTime, "seconds");
-    let interval = 1000;
-
-    if (duration.asSeconds() <= 0) {
-      clearInterval(interval);
-    }
-
-    duration = moment.duration(duration.asSeconds() - 1, "seconds");
-
-    setHours(duration.hours());
-    setMinutes(duration.minutes());
-    setSeconds(duration.seconds());
-
-    return {
-      hour: duration.hours(),
-      min: duration.minutes(),
-      sec: duration.seconds(),
-    };
-  };
+   const {stage} = useStage();
 
   useEffect(() => {
     if (GraphqlVideosData.data !== undefined) setVideos(GraphqlVideosData.data);
@@ -69,45 +43,7 @@ export default function Game() {
   }, [GraphqlLastRoundData.data]);
 
   useEffect(() => {
-    // const roundStartTime = startingTimeStamp;
-        const roundStartTime = 1653232534;
-
-
-    let stageGroups = [];
-
-    let stage1 = { start: roundStartTime, end: roundStartTime + 2400 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + 0 * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + 0 * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + 2400 * 60 };
-    let stage5 = { start: stage3.end, end: stage3.end + 60 * 60 };
-
-    stageGroups.push(stage1, stage2, stage3, stage4, stage5);
-    let current = moment().unix();
-    let check = stageGroups.findIndex(
-      (group) => group.end > current && current > group.start
-    );
-
-    if (check == -1 && current > current) {
-      setStage(4);
-    } else {
-      const interval = setInterval(() => {
-        let currTime = moment().unix();
-        let checkStage = stageGroups.findIndex(
-          (group) => group.end > currTime && currTime > group.start
-        );
-
-        if (checkStage != -1) {
-          setStage(checkStage + 1);
-          calculateTimeLeft(moment.unix(stageGroups[checkStage].end));
-        }
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [lastRound]);
-
-  useEffect(() => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
-      // setTotalAmountStaked(stakeAmount);
       let level = getDaoLevel(stakeAmount);
       setCurrentLevel(level);
     });
@@ -117,13 +53,8 @@ export default function Game() {
     <>
       {startingTimeStamp > 0 ? (
         <div className="game container-fluid d-flex flex-wrap flex-direction-row">
-          <div id="timer-section" style={{ flex: "0 1 400px" }}>
-            <TimerDisplay
-              hours={hours}
-              minutes={minutes}
-              seconds={seconds}
-              stage={stage}
-            />
+          <div id="timer-section" style={{ flex: "0 1 350px" }}>
+            <TimerDisplay />
           </div>
 
           <div id="action-section" style={{ flex: "1 45%" }}>
@@ -156,7 +87,7 @@ export default function Game() {
               />
             )}
           </div>
-          <div id="ranking-section" style={{ flex: "0px", maxWidth:"400p" }}>
+          <div id="ranking-section" style={{ flex: "0px"}}>
             <Ranking stage={stage} />
           </div>
 

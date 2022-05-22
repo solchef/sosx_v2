@@ -59,7 +59,7 @@ class MyDocument extends Document {
 
         </Head>
 
-        <body data-typography="roboto"   data-theme-version="dark" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="fixed" data-header-position="fixed" data-container="wide" dir="ltr" data-primary="color_1">
+        <body data-typography="roboto" data-theme-version="dark" data-layout="vertical" data-nav-headerbg="color_1" data-headerbg="color_1" data-sidebar-style="full" data-sibebarbg="color_1" data-sidebar-position="fixed" data-header-position="fixed" data-container="wide" dir="ltr" data-primary="color_1">
           <noscript>
             <iframe
               // src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTAG}`}

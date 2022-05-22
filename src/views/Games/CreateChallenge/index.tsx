@@ -112,7 +112,7 @@ const CreateChallenge = (props) => {
   };
 
   return (
-    <div className="card h-100">
+    <div className="card">
       <div className="card-body">
         <form id="form" onSubmit={handleSubmit}>
           <div>
@@ -190,7 +190,7 @@ const CreateChallenge = (props) => {
                       id="story"
                       name="story"
                       onChange={(e) => setChallengeDetails(e.target.value)}
-                      rows={20}
+                      rows={15}
                       cols={33}
                       placeholder={"Explain in detail what your challenge is"}
                     />

@@ -34,18 +34,15 @@ export default function Challenge() {
   const { t } = useTranslation();
   const contract = useDaoStakingContract();
   const [voters, setVoters] = useState([]);
-  const [stage, setStage] = useState(2);
   const [challenges, setChallenges] = useState([]);
+  const {stage} = useStage();
+
 
   useEffect(() => {
     getData();
     userVotingLevel();
   }, [stage, name]);
 
-  const stageHook = useStage();
-  useEffect(() => {
-    setStage(stageHook);
-  });
 
   const allowedStages = [2, 3];
   let challengeName = `challenge-${name}`;

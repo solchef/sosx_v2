@@ -116,6 +116,7 @@ const VoteStageThree = (props) => {
 
   return (
     <div className="card h-100">
+       <div className="card-body">
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -199,11 +200,11 @@ const VoteStageThree = (props) => {
             </div>
             <form onSubmit={handleSubmit}>
               {!account ? (
-                <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4" />
+                <ConnectWalletButton className="btn btn-primary btn-lg mt-4" />
               ) : (
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg mt-5 mb-5 "
+                  className="btn btn-primary btn-lg mt-5  "
                   style={{ width: "max-content" }}
                   disabled={justVoted || voted}
                 >
@@ -216,6 +217,7 @@ const VoteStageThree = (props) => {
         ) : (
           ""
         )}
+      </div>
       </div>
     </div>
   );

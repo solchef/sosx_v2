@@ -162,21 +162,21 @@ const Ranking = (props) => {
 
           <tbody>
             {voters.length > 0 ? (
-              voters.map((voter, i) => {
-                return (
-                  <tr key={i} style={{ borderColor: '#1e2124' }}>
+              voters.map((voter, i) => 
+         
+                  <tr className=" text-nowrap mt-4" key={i} style={{ borderColor: '#1e2124' }}>
                     <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" > {i + 1}</td>
-                    <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" >  {voter.address.replace(/(.{10})..+/, "$1…")}</td>
+                    <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" >  {voter.address.replace(/(.{15})..+/, "$1…")}</td>
                     <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" >{cleanNumber(voter.amount + "")}</td>
                   </tr>
-                );
-              })
+            
+              )
             ) : !account ? (
               <tr className=" text-nowrap mt-4">
                 <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
                 <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }} >
-                  You need to be connected to view the Level {displayLevel}
+                  You need to be connected
                 </td>
                 <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>

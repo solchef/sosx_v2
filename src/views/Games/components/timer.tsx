@@ -1,28 +1,14 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { Modal, ModalHeader } from "react-bootstrap";
-import { useDaoStakingContract } from "hooks/useContract";
-import useToast from "hooks/useToast";
 import PrizePool from "./PrizePool";
+import useStage from "hooks/useStage";
 
-const TimerDisplay = (props) => {
-  const [price, setPrice] = useState(Number);
-  const [donateAmount, setDonateAmount] = useState(0);
+const TimerDisplay = () => {
   const [showRules, setshowRules] = useState(false);
   const handleCloseRules = () => setshowRules(false);
   const handleshowRules = () => setshowRules(true);
-  const contract = useDaoStakingContract();
+  const {stage, hour, min, sec} = useStage();
 
-  const getSOSXPrice = async () => {
-    const getSOSXValue = await axios.get(
-      "https://api.pancakeswap.info/api/v2/tokens/0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF",
-      {}
-    );
-    setPrice(1000 / parseFloat(getSOSXValue.data.data.price));
-  };
-  useEffect(() => {
-    getSOSXPrice();
-  }, []);
 
   const pad = (num) => {
     return ("0" + num).slice(-2);
@@ -36,8 +22,8 @@ const TimerDisplay = (props) => {
     },
     {
       stage: 2,
-      action: "VOTE TOP£ CHALLENGES",
-      participationText: "ONLY LEVEL 1, 2 & 3 CAN PARTICIPATE",
+      action: "VOTE TOP 3 CHALLENGES",
+      participationText: "LEVEL 1, 2 & 3 CAN PARTICIPATE",
     },
     {
       stage: 3,
@@ -53,11 +39,10 @@ const TimerDisplay = (props) => {
 
   return (
     <>
-     
-
-      <div className="card timer-card mb-3">
-      <div className="card-body"> 
-      <div className="d-flex align-items-center mb-2">
+      {stage != 4 && (
+        <div className="card timer-card mb-3">
+           <div className="card-body">
+          <div className="d-flex align-items-center mb-2">
             <img src="images/submission-date-icon.png" className="title-icon" />
             <h4>TIME REMAINING</h4>
           </div>
@@ -70,7 +55,7 @@ const TimerDisplay = (props) => {
             >
               <div className="d-flex justify-content-start align-items-center">
                 <p className="li ">
-                  <span className=" main-pink m-0">{pad(props.hours)}</span>
+                  <span className=" main-pink m-0">{pad(hour)}</span>
                   Hours
                 </p>
                 <p className="li d-flex align-self-baseline">
@@ -79,7 +64,7 @@ const TimerDisplay = (props) => {
               </div>
               <div className="d-flex justify-content-start align-items-center">
                 <p className="li ">
-                  <span className=" main-pink m-0">{pad(props.minutes)}</span>
+                  <span className=" main-pink m-0">{pad(min)}</span>
                   Minutes
                 </p>
                 <p className="li d-flex align-self-baseline">
@@ -87,15 +72,21 @@ const TimerDisplay = (props) => {
                 </p>
               </div>
               <p className="li">
-                <span className=" main-pink m-0">{pad(props.seconds)}</span>
+                <span className=" main-pink m-0">{pad(sec)}</span>
                 Seconds
               </p>
             </div>
           </div>
+          </div>
+        </div>
+      )}
+
+      <div className="card timer-card mb-3">
+      <div className="card-body">
         <div className="steps">
           <ul className="progressbar mb-4 ">
             <li style={{ width: "27%" }} className="active">
-              CREATE CHALLENGE
+              CREATE
             </li>
             <li className="active">TOP 3 VOTE</li>
             <li className="active">FINAL VOTE</li>
@@ -138,17 +129,17 @@ const TimerDisplay = (props) => {
               ></path>
             </g>
           </svg>
-          <h4>GAME STAGE {stages[props.stage - 1].stage}</h4>
+          <h4>GAME STAGE {stages[stage-1].stage}</h4>
         </div>
         <div className="d-flex align-items-center">
-          <h4 className="subtitle">{stages[props.stage - 1].action}</h4>
+          <h4 className="subtitle">{stages[stage-1].action}</h4>
         </div>
         <div className="d-flex align-items-center">
           <h4
             className="subtitle"
             style={{ color: "#c6ca12", marginTop: "10px" }}
           >
-            {stages[props.stage - 1].participationText}
+            {stages[stage-1].participationText}
           </h4>
         </div>
         <div className="d-flex align-items-center mt-4">
@@ -156,7 +147,7 @@ const TimerDisplay = (props) => {
             Click here for details rules
           </a>
         </div>
-      </div>
+        </div>
       </div>
 
       <PrizePool />
@@ -179,8 +170,7 @@ const TimerDisplay = (props) => {
 
         <div
           className="modal-body"
-          style={{ background: "#111117", borderRadius: "0px 0px 10px 10px" }}
-        >
+          style={{ background: "#111117", borderRadius: "0px 0px 10px 10px" }}>
           <h1>What is the craziest thing you would do on camera for money?</h1>
           <p>
             The First person to complete created and voted challenge by the SOSX

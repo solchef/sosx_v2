@@ -29,7 +29,7 @@ const VoteStageTwo = (props) => {
   const [maxPages, setMaxPages] = useState([]);
   const [challangeList, setChallangeList] = useState([]); 
   const { t } = useTranslation();
-  const dataIndex = 5;
+  const dataIndex = 7;
   const contract = useDaoStakingContract();
   const stage = props.stage;
   const lastRound = props.round
@@ -133,6 +133,7 @@ const VoteStageTwo = (props) => {
 
   return (
     <div className="card h-100">
+       <div className="card-body">
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -196,19 +197,22 @@ const VoteStageTwo = (props) => {
               </div>
             );
           })}
-          <ButtonGroup aria-label="Basic example">
-            {maxPages.map((data, index) => {
-              return (
-                <Button
-                  key={index}
-                  className="btn mx-auto btn-primary btn-sm "
-                  onClick={() => setCurrentPage(index + 1)}
-                >
-                  {index + 1}
-                </Button>
-              );
-            })}
-          </ButtonGroup>
+          {maxPages.length > dataIndex && 
+                  <ButtonGroup aria-label="Basic example">
+                  {maxPages.map((data, index) => {
+                    return (
+                      <Button
+                        key={index}
+                        className="btn mx-auto btn-primary btn-sm "
+                        onClick={() => setCurrentPage(index + 1)}
+                      >
+                        {index + 1}
+                      </Button>
+                    );
+                  })}
+                </ButtonGroup>
+          }
+     
         </div>
 
         {selectedChallange.payload !== undefined ? (
@@ -224,12 +228,12 @@ const VoteStageTwo = (props) => {
             </div>
             <form onSubmit={handleSubmit}>
               {!account ? (
-                <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4" />
+                <ConnectWalletButton className="btn btn-primary btn-lg  mt-4" />
               ) : (
                 <button
                   type="submit"
-                  className="btn btn-primary btn-lg mt-5 mb-5 "
-                  style={{ width: "max-content" }}
+                  className="btn btn-primary btn-lg mt-5"
+                  
                   disabled={justVoted || voted}
                 >
                   <i className="fa-solid fa-check-to-slot pr-2"></i>
@@ -241,6 +245,7 @@ const VoteStageTwo = (props) => {
         ) : (
           ""
         )}
+      </div>
       </div>
     </div>
   );
