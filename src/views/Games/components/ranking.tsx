@@ -72,7 +72,7 @@ const Ranking = (props) => {
   };
   
   return (
-    <div className="card h-100" style={{ minHeight: 500 }}>
+    <div className="card h-100" style={{ minHeight: "500px" }}>
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -150,11 +150,11 @@ const Ranking = (props) => {
         </button>
       </div>
 
-      <div className="tab-bg">
+      <div className="jsx-e5e2ca7965fa437a tab-bg">
 
-        <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table ">
+        <table style={{ maxWidth: '100%' }} className="jsx-e5e2ca7965fa437a ranking-header fs-12 p-4 mt-0 table">
 
-          <tr>
+          <tr className="jsx-e5e2ca7965fa437a">
             <th className="fs-16 font-weight-normal">Rank</th>
             <th className="fs-16 font-weight-normal text-center">Wallet</th>
             <th className="fs-16 font-weight-normal">Staking</th>
@@ -165,41 +165,41 @@ const Ranking = (props) => {
               voters.map((voter, i) => {
                 return (
                   <tr key={i} style={{ borderColor: '#1e2124' }}>
-                    <td className="text-white" > {i + 1}</td>
-                    <td className="text-white" >  {voter.address.replace(/(.{10})..+/, "$1…")}</td>
-                    <td className="text-white" >{cleanNumber(voter.amount + "")}</td>
+                    <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" > {i + 1}</td>
+                    <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" >  {voter.address.replace(/(.{10})..+/, "$1…")}</td>
+                    <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" >{cleanNumber(voter.amount + "")}</td>
                   </tr>
                 );
               })
             ) : !account ? (
               <tr className=" text-nowrap mt-4">
-                <td className="text-white fs-14" style={{ border: 'none' }}>
+                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
-                <td className="text-white fs-14" style={{ border: 'none' }} >
+                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }} >
                   You need to be connected to view the Level {displayLevel}
                 </td>
-                <td className="text-white fs-14" style={{ border: 'none' }}>
+                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
               </tr>
 
             ) : loading ? (
               <tr className=" text-nowrap mt-4">
-                <td className="text-white fs-14" style={{ border: 'none' }}>
+                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
-                <td className="text-white fs-14" style={{ border: 'none' }} >
+                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }} >
                   Loading Data
                 </td>
-                <td className="text-white fs-14" style={{ border: 'none' }}>
+                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
               </tr>
             ) : (
               <tr className=" text-nowrap mt-4">
-                <td className="text-white fs-14" style={{ border: 'none' }}>
+                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
-                <td className="text-white fs-14" style={{ border: 'none' }} >
+                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }} >
                   No one is on Level {displayLevel}
                 </td>
-                <td className="text-white fs-14" style={{ border: 'none' }}>
+                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
               </tr>
             )}

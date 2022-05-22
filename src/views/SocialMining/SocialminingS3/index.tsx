@@ -58,7 +58,11 @@ export default function SocialminingS3() {
       headers,
     });
 
-    toastSuccess("Details successfully submitted for verification");
+    if(rest.status == 300){
+      toastError("You had submitted another record");
+
+    }
+     toastSuccess("Details successfully submitted for verification");
 
     router.replace("/x-mining");
   };

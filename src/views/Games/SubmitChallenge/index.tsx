@@ -65,7 +65,7 @@ const Submission = (props) => {
   };
 
   return (
-    <div className="card h-100">
+    <div className="card h-100" style={{backgroundColor: "#1e1e1e"}}>
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -102,17 +102,18 @@ const Submission = (props) => {
             ></path>
           </g>
         </svg>
-        <h4 style={{ fontSize: "60px" }}>Games</h4>
+        <h4 style={{ fontSize: "53px !important" }}>Games</h4>
       </div>
-      <div className="d-flex align-items-center mb-2">
-        <h4>SUBMIT YOUR VIDEO</h4>
-      </div>
-      <p>
-        Create a video accomplishing described challenge bellow for a chance to
-        win prize pool
-      </p>
-      <div className="mt-5 d-flex flex-row flex-wrap">
-        <div className="challenge-details m-3 d-flex flex-column">
+    
+      <div className="mt-3 d-flex flex-row flex-wrap">
+        <div className="challenge-section d-flex flex-column">
+          <div className="d-flex align-items-start flex-column mt-3 mb-4">
+                            <h4 style={{marginBottom: "15px"}}>COMPLETE CHALLENGE</h4>
+                            <p>Be the first to complete the challenge below to receive win the prize pool.
+                                Record yourself completing the challenge. Remember to start the video with
+                                "SocialX paid me to do it!"</p>
+          </div>
+          <div className="challenge-details">
           <h1>{winingChallenge?.winingChallenge.payload.name}</h1>
           <p>{winingChallenge?.winingChallenge.payload.body}</p>
           <div className="challenge-meta">
@@ -128,23 +129,26 @@ const Submission = (props) => {
             </p>
           </div>
         </div>
-        <div className="upload-game pt-5 m-3 rounded">
-          <p> Enter the YOUTUBE, INSTAGRAM or TIKTOK URL of your video.</p>
+        </div>
+        <div className="upload-game">
+              <div className="d-flex align-items-start flex-column mt-3 mb-2">
+                  <h4 style={{ marginBottom: "15px"}}>SUBMIT VIDEO</h4>
+                  <p>Submit the video to youtube or TikTok and provide us with the link below.
+                      SocialX.io must be mentioned in the about section of your video &amp; you must
+                      share your video on your own social media.</p>
+              </div>
           <form onSubmit={videoLink}>
             <div className="bg-input mb-3 mt-3 py-2 px-3 rounded ">
-              <div className="d-flex justify-content-between align-items-center">
                 <input
                   onChange={(e) => setURL(e.target.value)}
                   type="url"
                   placeholder="Video Hosted URL"
                   required
-                  className="form-control w-100"
-                  style={{ fontSize: "20px" }}
+                  className="form-control"
                 />
-              </div>
             </div>
             <button
-              className="btn btn-primary btn-lg mt-5 mb-5 "
+              className="btn btn-primary btn-lg mt25"
               type="submit"
               style={{ width: "max-content" }}
             >

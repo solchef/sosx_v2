@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {  Modal, ModalHeader } from "react-bootstrap";
+import { Modal, ModalHeader } from "react-bootstrap";
 import { useDaoStakingContract } from "hooks/useContract";
 import useToast from "hooks/useToast";
-
 
 const PrizePool = (props) => {
   const [price, setPrice] = useState(Number);
@@ -40,12 +39,10 @@ const PrizePool = (props) => {
     }
   };
 
-
-
-
   return (
     <>
       <div className="card prize-card">
+      <div className="card-body"> 
         <div className="d-flex flex-column mb-0">
           <div className="d-flex mb-2 align-items-center">
             <img src="images/prize-pool-icon.png" className="title-icon" />
@@ -59,9 +56,10 @@ const PrizePool = (props) => {
             to the prize pool.
           </p>
         </div>
-        <div className="d-flex justify-content-center mb-2">
+        <div className="d-flex justify-content-center">
           <h2 className="main-pink">$1,000.00</h2>
         </div>
+      </div>
       </div>
 
       <Modal show={showDonate} onHide={handleCloseDonate} centered>

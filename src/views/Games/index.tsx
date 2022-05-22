@@ -11,6 +11,7 @@ import { GET_LastVideo, GET_Videos, GET_LastRound } from "utils/graphqlQ";
 import VoteStageTwo from "./VoteStageTwo";
 import VoteStageThree from "./VoteStageThree";
 import Submission from "./SubmitChallenge";
+import GameGuide from "./guide";
 
 export default function Game() {
   const [hours, setHours] = useState(0);
@@ -18,8 +19,8 @@ export default function Game() {
   const [seconds, setSeconds] = useState(0);
   const [videos, setVideos] = useState([]);
   const [lastVideos, setLastVideos] = useState([]);
-  const [lastRound, setLastRound] = useState(Number)
-  const [startingTimeStamp, setStartingTime] = useState(Number)
+  const [lastRound, setLastRound] = useState(Number);
+  const [startingTimeStamp, setStartingTime] = useState(Number);
   const contract = useDaoStakingContract();
   let [stage, setStage] = useState(1);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
@@ -29,7 +30,7 @@ export default function Game() {
 
   const calculateTimeLeft = (entryTime) => {
     let eventTime = moment(entryTime).unix();
-    let currentTime = Number(Math.floor(Date.now() / 1000).toString()); 
+    let currentTime = Number(Math.floor(Date.now() / 1000).toString());
     let leftTime = eventTime - currentTime;
     let duration = moment.duration(leftTime, "seconds");
     let interval = 1000;
@@ -38,7 +39,7 @@ export default function Game() {
       clearInterval(interval);
     }
 
-    duration = moment.duration(duration.asSeconds() - 1, "seconds"); 
+    duration = moment.duration(duration.asSeconds() - 1, "seconds");
 
     setHours(duration.hours());
     setMinutes(duration.minutes());
@@ -52,7 +53,7 @@ export default function Game() {
   };
 
   useEffect(() => {
-    if (GraphqlVideosData.data !== undefined) setVideos(GraphqlVideosData.data); 
+    if (GraphqlVideosData.data !== undefined) setVideos(GraphqlVideosData.data);
   }, [GraphqlVideosData.data]);
 
   useEffect(() => {
@@ -64,42 +65,44 @@ export default function Game() {
     if (GraphqlLastRoundData.data !== undefined) {
       setLastRound(GraphqlLastRoundData.data.lastRound.id);
       setStartingTime(GraphqlLastRoundData.data.lastRound.startingTime);
-    } 
+    }
   }, [GraphqlLastRoundData.data]);
-  
+
   useEffect(() => {
-          const roundStartTime = startingTimeStamp; 
+    // const roundStartTime = startingTimeStamp;
+        const roundStartTime = 1653232534;
 
-          let stageGroups = [];
 
-          let stage1 = { start: roundStartTime, end: roundStartTime * 60 * 60 };
-          let stage2 = { start: stage1.end, end: stage1.end * 60 * 60};
-          let stage3 = { start: stage2.end, end: stage2.end * 60 * 60};
-          let stage4 = { start: stage3.end, end: stage3.end * 60 * 60};
-          let stage5 = { start: stage3.end, end: stage3.end * 60 * 60};
+    let stageGroups = [];
 
-          stageGroups.push(stage1, stage2, stage3, stage4, stage5);
-          let current = moment().unix();
-          let check = stageGroups.findIndex(
-            (group) => group.end > current && current > group.start
-          );
+    let stage1 = { start: roundStartTime, end: roundStartTime + 2400 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + 0 * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + 0 * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end + 2400 * 60 };
+    let stage5 = { start: stage3.end, end: stage3.end + 60 * 60 };
 
-          if (check == -1 && current > current) {
-            setStage(4);
-          } else {
-            const interval = setInterval(() => {
-              let currTime = moment().unix();
-              let checkStage = stageGroups.findIndex(
-                (group) => group.end > currTime && currTime > group.start
-              );
+    stageGroups.push(stage1, stage2, stage3, stage4, stage5);
+    let current = moment().unix();
+    let check = stageGroups.findIndex(
+      (group) => group.end > current && current > group.start
+    );
 
-              if (checkStage != -1) {
-                setStage(checkStage + 1);
-                calculateTimeLeft(moment.unix(stageGroups[checkStage].end));
-              }
-            }, 1000);
-            return () => clearInterval(interval);
-          }
+    if (check == -1 && current > current) {
+      setStage(4);
+    } else {
+      const interval = setInterval(() => {
+        let currTime = moment().unix();
+        let checkStage = stageGroups.findIndex(
+          (group) => group.end > currTime && currTime > group.start
+        );
+
+        if (checkStage != -1) {
+          setStage(checkStage + 1);
+          calculateTimeLeft(moment.unix(stageGroups[checkStage].end));
+        }
+      }, 1000);
+      return () => clearInterval(interval);
+    }
   }, [lastRound]);
 
   useEffect(() => {
@@ -112,32 +115,59 @@ export default function Game() {
 
   return (
     <>
-    {startingTimeStamp > 0 ? (
-      <div className="game container-fluid d-flex flex-wrap flex-direction-row">
-      <div id="timer-section" style={{ flex: "0 1 400px" }}>
-        <TimerDisplay
-          hours={hours}
-          minutes={minutes}
-          seconds={seconds}
-          stage={stage}
-        />
-      </div>
+      {startingTimeStamp > 0 ? (
+        <div className="game container-fluid d-flex flex-wrap flex-direction-row">
+          <div id="timer-section" style={{ flex: "0 1 400px" }}>
+            <TimerDisplay
+              hours={hours}
+              minutes={minutes}
+              seconds={seconds}
+              stage={stage}
+            />
+          </div>
 
-      <div id="action-section" style={{ flex: "2 60%" }}>
-        {stage == 1 && <CreateChallenge level={currentLevel} stage={stage} round={lastRound} />}
-        {stage == 2 && <VoteStageTwo level={currentLevel} stage={stage} round={lastRound} />}
-        {stage == 3 && <VoteStageThree level={currentLevel} stage={stage} round={lastRound} />}
-        {stage == 4 && <Submission level={currentLevel} stage={stage} round={lastRound} />}
-      </div>
-      <div id="ranking-section" style={{ flex: "0 1 400px" }}>
-        <Ranking stage={stage} />
-      </div>
+          <div id="action-section" style={{ flex: "1 45%" }}>
+            {stage == 1 && (
+              <CreateChallenge
+                level={currentLevel}
+                stage={stage}
+                round={lastRound}
+              />
+            )}
+            {stage == 2 && (
+              <VoteStageTwo
+                level={currentLevel}
+                stage={stage}
+                round={lastRound}
+              />
+            )}
+            {stage == 3 && (
+              <VoteStageThree
+                level={currentLevel}
+                stage={stage}
+                round={lastRound}
+              />
+            )}
+            {stage == 4 && (
+              <Submission
+                level={currentLevel}
+                stage={stage}
+                round={lastRound}
+              />
+            )}
+          </div>
+          <div id="ranking-section" style={{ flex: "0px", maxWidth:"400p" }}>
+            <Ranking stage={stage} />
+          </div>
 
-      <div id="video-section" style={{ flex: "2 60%" }}>
-        <Media todayVideo={undefined} />
-      </div>
-    </div>
-    ) : ""}
+          <div id="video-section" style={{ flex: "1 40%" }}>
+            <Media todayVideo={undefined} />
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      <GameGuide />
     </>
   );
 }
