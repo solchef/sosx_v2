@@ -234,7 +234,7 @@ export default function DaoStaking() {
       style={{ gap: "20px" }}
     >
       <Statistics/>
-      <div style={{ flex: "1 1 30%", gap: "20px"}}>
+      <div style={{ flex: "1 1 30%"}}>
         <div className="card d-flex flex-column"
          style={{ background: "#1e1e1e" }}
         >
@@ -394,7 +394,6 @@ export default function DaoStaking() {
                 <g></g>
                 <g></g>
               </svg>
-           
               <h4>RETURN CALCULATOR</h4>
             </div>
             <p>Input staking amount to show estimation</p>

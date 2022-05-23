@@ -214,11 +214,9 @@ export default function Staking() {
     let decimals = BigNumber(10).pow(18);
 
     try {
-      let result = BigNumber(amountToStake).multiply(decimals);
       setLoading(true);
 
       const tx = await contract.returnTokens(instance);
-
       if (tx) {
         setActivatestake(true);
         setLoading(false);
@@ -228,7 +226,8 @@ export default function Staking() {
         toastError("Could not unstake");
       }
     } catch (e) {
-      toastError("Could not unstake at the moment.");
+      console.log(e)
+      toastError("Could not unstake at the stake at the moment. Try again after sometime.");
     }
   };
 

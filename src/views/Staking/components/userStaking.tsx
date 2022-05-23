@@ -62,7 +62,7 @@ export default function UserStakingLogs(props) {
                 { timeZone: "America/New_York" }
               ),
               referral: stakeInstance[3],
-              rewardAmount: calculateInterest(3, stakeAmt, period),
+              rewardAmount: calculateInterest(12, stakeAmt, period),
               penalty: Number(stakeInstance[5]),
               stakingClass: 1,
               periodElapsed: period / (24 * 60),

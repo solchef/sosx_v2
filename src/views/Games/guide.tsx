@@ -68,53 +68,39 @@ const GameGuide = () => {
   return (
     <>
     
-      <Modal show={showGuide} centered>
-        <ModalHeader
-          className="text-dark"
-          style={{ background: "#111117", borderRadius: "10px 10px 0px 0px" }}
-        >
-         OXGAME GUIDE
-          {/* <CloseButton /> */}
-          <a
-            href="#"
-            onClick={handleCloseGuide}
-            className="pull-right text-white"
-          >
-            <i className="fa fa-close"></i>
-          </a>
-        </ModalHeader>
-
-        <div
-          className="modal-body"
-          style={{ background: "#111117", borderRadius: "0px 0px 10px 10px" }}
-        >
-          {/* Guides are displayed here below */}
-          {manageStepShow()}
-
-          <div className="d-flex justify-content-between">
-          <div>
-            <input type="checkbox" onChange={() => pauseGuideShow()} />
-            <label className="label mt-3">Dont show again?</label>
-          </div>
-
-            <div className="flex justify-content-between">
-              {step !== 1 && (
-                <button
-                  className="btn btn-secondary btn-sm m-2"
-                  onClick={() => setStep(step - 1)}
-                >
-                  Back
-                </button>
-              )}
-              <button
-                className="btn btn-primary btn-sm m-2"
-                onClick={() => setStep(step == 4 ? 1 : step + 1)}
+      <Modal show={showGuide} centered size="lg">
+          <div className="modal-content">
+            <div
+              className="text-dark modal-header"
+              style={{background: "rgb(17, 17, 23)", borderRadius: "10px 10px 0px 0px"}}>
+              OXGAME GUIDE
+              <a href="#" onClick={handleCloseGuide} className="pull-right text-white">
+                <i className="fa fa-close"></i>
+              </a>
+            </div>
+            <div
+              className="modal-body"
+              style={{background: "rgb(17, 17, 23)", borderRadius: "0px 0px 10px 10px"}}
+            >
+              {manageStepShow()}
+              <div
+                className="modal-footer guide-popup"
+                style={{ justifyContent: "space-between" }}
               >
-                {step == 4 ? "Start Over" : "NEXT"}
-              </button>
+                <div>
+                  <input onClick={() => pauseGuideShow} type="checkbox" style={{ marginRight: "10px" }} />
+                  <label>Don't show this again</label>
+                </div>
+
+                <div>
+                {step !== 1 && (
+                  <button onClick={() => setStep(step - 1)} className="btn btn-primary btn-sm m-2">Back</button>
+                )}
+                  <button onClick={() => setStep(step == 4 ? 1 : step + 1)} className="btn btn-primary btn-sm m-2">{step == 4 ? "Start Over" : "NEXT"}</button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
       </Modal>
     </>
   );
