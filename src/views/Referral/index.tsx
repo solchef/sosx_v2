@@ -16,6 +16,7 @@ import { useMediaPredicate } from "react-media-hook";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import fetch from "isomorphic-unfetch";
 import ConnectWalletButton from "components/ConnectWalletButton";
+import GameGuide from "./guide";
 
 
 
@@ -623,17 +624,17 @@ export default function Referral({ datasocial }) {
             <p>Input staking amount to show estimation</p>
             <div className="font-weight-bold align-items-center d-flex justify-content-between ">
               <div className="d-flex flex-column align-items-center">
-                <h4 className="fs-18 font-weight-bold">You will get</h4>
+                <h4 className=" font-weight-bold">You will get</h4>
                 <h2 className="main-pink">35%</h2>
               </div>
-              <i className="fa-solid fs-28 text-success fa-angles-right"></i>
+              <h4><i className="fa-solid main-pink fa-angles-right"></i></h4>
               <div>
                 <p className="text-muted">Social Mining</p>
-                <h3 style={{ fontFamily: 'digital-7' }} className="main-pink"> 25%</h3>
+                <h4 style={{ fontFamily: 'digital-7' }} className="main-pink"> 25%</h4>
               </div>
               <div>
                 <p className="text-muted">Staking</p>
-                <h3 style={{ fontFamily: 'digital-7' }} className="main-pink"> 10%</h3>
+                <h4 style={{ fontFamily: 'digital-7' }} className="main-pink"> 10%</h4>
 
               </div>
             </div>
@@ -1047,6 +1048,8 @@ export default function Referral({ datasocial }) {
           </div>
         </div>
       </div>
+    <GameGuide />
+
     </div>
   );
 }
