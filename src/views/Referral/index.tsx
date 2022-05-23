@@ -483,14 +483,17 @@ export default function Referral({ datasocial }) {
             </svg>
               <h4>My Referral Link</h4>
             </div>
-            <p className="mb-4">Become a DAOX member while receiving daily rewards</p>
+            <p className="mb-4">My Referral Link</p>
             <div className="bg-input mb-3 py-2 px-3 rounded mt-4">
               <div className="d-flex justify-content-between align-items-center">
                 {account != null ? (
+                  <>
                   <h5 className="font-weight-bold text-nowrap pt-3 pb-3 " style={{ color: 'rgb(142, 142, 142)' }}>
                     https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}
                   </h5>
-
+  {copied ? (
+    <span style={{ color: "red" }}>Copied.</span>
+  ) : null}</>
 
                 ) : (
                   <h5 className="font-weight-bold pt-3 pb-3 " style={{ color: 'rgb(142, 142, 142)' }}>** Connect to Refer **</h5>)}
@@ -498,7 +501,17 @@ export default function Referral({ datasocial }) {
               </div>
             </div>
             {account ? (
-              <div className="d-flex">
+              <>
+              
+         
+              <div className="d-flex justify-content-end">
+              <CopyToClipboard
+                  text={`https://socialx.io?ref=${account}`}
+                  onCopy={() => setCopied(true)}
+                >
+                  <button className="btn btn-primary mr-2">Copy</button>
+                </CopyToClipboard>
+              
                 <OverlayTrigger
                   show={show}
                   trigger="click"
@@ -509,28 +522,14 @@ export default function Referral({ datasocial }) {
 
 
                 </OverlayTrigger>
-                <CopyToClipboard
-                  text={`https://socialx.io?ref=${account}`}
-                  onCopy={() => setCopied(true)}
-                >
-                  <button className="btn btn-primary mr-2">Copy</button>
-                </CopyToClipboard>
-                {copied ? (
-                  <span style={{ color: "red" }}>Copied.</span>
-                ) : null}
-              </div>
-
+               
+           </div>
+           </>
             ) : (
-              <>
-                <div className="d-flex w-auto m-auto">
-                  <h3> </h3>
-                </div>
-
-                <ConnectWalletButton className="btn mr-1 btn-primary mt-2">share</ConnectWalletButton>
+              <div className="d-flex justify-content-end">
                 <ConnectWalletButton className="btn mr-1 btn-primary mt-2">copy</ConnectWalletButton>
-
-
-              </>
+                <ConnectWalletButton className="btn mr-1 btn-primary mt-2">share</ConnectWalletButton>
+                </div>
 
             )}
 
@@ -619,9 +618,9 @@ export default function Referral({ datasocial }) {
                 <g></g>
               </svg>
 
-              <h4>RETURN CALCULATOR</h4>
+              <h4>You will get</h4>
             </div>
-            <p>Input staking amount to show estimation</p>
+            <p>You will get</p>
             <div className="font-weight-bold align-items-center d-flex justify-content-between ">
               <div className="d-flex flex-column align-items-center">
                 <h4 className=" font-weight-bold">You will get</h4>
@@ -765,9 +764,9 @@ export default function Referral({ datasocial }) {
                 </path>
               </g>
             </svg>
-              <h4>My Referral Link</h4>
+              <h4>Referral List</h4>
             </div>
-            <p className="mb-4">Become a DAOX member while receiving daily rewards</p>
+            <p className="mb-4">All your referral friends in one place.</p>
 
 
             <div
@@ -817,9 +816,9 @@ export default function Referral({ datasocial }) {
               <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
 
                 <tr className="jsx-e5e2ca7965fa437a">
-                  <th className="fs-16 font-weight-normal">Rank</th>
-                  <th className="fs-16 font-weight-normal text-center">Wallet</th>
-                  <th className="fs-16 font-weight-normal">Staking</th>
+                  <th className="fs-16 font-weight-normal">Wallet Address</th>
+                  <th className="fs-16 font-weight-normal text-center">Staking Rewards</th>
+                  <th className="fs-16 font-weight-normal">Total Earned</th>
                 </tr>
 
                 <tbody>
