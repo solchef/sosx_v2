@@ -25,10 +25,10 @@ const GameGuide = () => {
   }, []);
 
   const checkGuideShow = () => {
-    let status = checkCookies("oxgame_guide");
+    let status = checkCookies("referral_guide");
     // alert(status)
     if (status) {
-      let cookieVal = getCookie("oxgame_guide");
+      let cookieVal = getCookie("referral_guide");
       if (cookieVal == "play") {
         handleStartGuide();
       } else {
@@ -36,14 +36,14 @@ const GameGuide = () => {
         setShowGameGuide(false);
       }
     } else {
-      setCookies("oxgame_guide", "play");
+      setCookies("referral_guide", "play");
       setShowGameGuide(true);
     }
   };
 
   const pauseGuideShow = () => {
-    removeCookies("oxgame_guide");
-    setCookies("oxgame_guide", "pause");
+    removeCookies("referral_guide");
+    setCookies("referral_guide", "pause");
     setShowGameGuide(false);
   };
 
