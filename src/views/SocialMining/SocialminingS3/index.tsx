@@ -184,14 +184,6 @@ export default function SocialminingS3() {
             <div className="container-fluid">
               <div className="row text-center">
                 <div className="col-md-12">
-                  <Link href="/x-mining">
-                    <a>
-                      <button className="btn btn-outline-primary mr-2 mb-3">
-                        Reset
-                      </button>
-                    </a>
-                  </Link>
-
                   <button value="submit" className="btn btn-primary mr-3 mb-3">
                     Claim Your Tokens
                   </button>
@@ -205,21 +197,7 @@ export default function SocialminingS3() {
                 <div className="d-flex justify-content-center mt-5">
                       <p>You had already submitted a social mining request. Please allow upto 12 hours to submit another request. Your rewards will be sent to your wallet.</p>
                 </div>
-                
               </div>
-              <div className="container-fluid">
-              <div className="row text-center">
-                <div className="col-md-12">
-                  <Link href="/x-mining">
-                    <a>
-                      <button className="btn btn-outline-primary mr-2 mb-3">
-                        Back
-                      </button>
-                    </a>
-                  </Link>
-                </div>
-              </div>
-            </div>
           </div>
         )} 
       </div>

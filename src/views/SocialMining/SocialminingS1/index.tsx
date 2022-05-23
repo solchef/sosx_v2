@@ -172,25 +172,6 @@ export default function SocialminingS1() {
           </div>
         </div>
       </div>
-
-      <div className="container-fluid">
-        <div className="row text-center">
-          <div className="col-md-12">
-            <Link href="/x-mining">
-              <a>
-                <button className="btn btn-outline-primary mr-2 mb-3">
-                  Back
-                </button>
-              </a>
-            </Link>
-            <Link href="/socialmining-s2">
-              <a>
-                <button className="btn btn-primary mr-3 mb-3">Continue</button>
-              </a>
-            </Link>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
