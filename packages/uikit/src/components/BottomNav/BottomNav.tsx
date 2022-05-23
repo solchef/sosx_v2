@@ -69,7 +69,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
           <Link href="/daostaking">
             <a>
               <i className="fa fa-coins"></i>
-              <span>DAO</span>
+              <span>DAOX</span>
             </a>
           </Link>
         </li>
@@ -78,7 +78,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
           <Link href="/xgame">
             <a>
               <i className="fa fa-gamepad"></i>
-              <span>OXGAME</span>
+              <span>OXGame</span>
             </a>
           </Link>
         </li>

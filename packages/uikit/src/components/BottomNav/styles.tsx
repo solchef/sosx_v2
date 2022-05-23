@@ -27,14 +27,11 @@ const StyledBottomNav = styled(Flex)`
       margin-bottom: 3px;
       margin-left: 6px;
     }
+    
     span{
       font-size: 12px;
       margin-top:8px !important;
     }
-    
-
-  
-
   
   }
 `;
