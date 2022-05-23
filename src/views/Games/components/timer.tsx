@@ -155,7 +155,7 @@ const TimerDisplay = () => {
       <Modal show={showRules} onHide={handleCloseRules} centered size="lg"> 
         <div className="modal-content">
           <div className="text-dark modal-header" style={{background: 'rgb(17, 17, 23)', borderRadius: '10px 10px 0px 0px'}}>
-            Rules<a href="#" className="pull-right text-white"><i className="fa fa-close" /></a></div>
+            Rules<a href="#" className="pull-right text-white" onClick={handleCloseRules}><i className="fa fa-close" /></a></div>
           <div className="modal-body" style={{background: 'rgb(17, 17, 23)', borderRadius: '0px 0px 10px 10px'}}>
             <h1>What is the craziest thing you would do on camera for money?</h1>
             <p>The First person to complete created and voted challenge by the SOSX DAOX members and submit the video on
