@@ -394,6 +394,7 @@ export default function DaoStaking() {
                 <g></g>
                 <g></g>
               </svg>
+    
               <h4>RETURN CALCULATOR</h4>
             </div>
             <p>Input staking amount to show estimation</p>
@@ -413,13 +414,13 @@ export default function DaoStaking() {
                 </div>
                 <div>
                   <div className="d-flex w-auto m-auto">
-                    <h3>Lv{estimateDaoLevel}</h3>
+                    <h3>Lv {estimateDaoLevel}</h3>
                   </div>
                   <p className="success fs-13 main-pink mb-0 pt-2">DAO Level</p>
                 </div>
                 <div>
                   <div className="d-flex w-auto m-auto">
-                    <h3>{stakingInterest}</h3>
+                  <h3>{(stakingInterest - amountToStake).toFixed(2)}</h3>
                   </div>
                   <p className="success fs-13 mb-0 main-pink pt-2">
                     Estimate yearly Return

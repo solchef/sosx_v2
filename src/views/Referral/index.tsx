@@ -823,22 +823,22 @@ export default function Referral({ datasocial }) {
                 </tr>
 
                 <tbody>
-                  {referrals.length > 0 ? (
-                    referrals.map((ref) => (
+                  {/* {referrals.length > 0 ? ( */}
+                    {referrals.map(ref => 
 
                       <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
                         <td className="text-white">{ref.address.replace(/(.{13})..+/, "$1…")}</td>
                         <td className="text-white">{ref.amount}</td>
                         <td className="text-white">{ref.amount}</td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr className=" mt-4">
+                    )}
+                  {/* ) : ( */}
+                    {/* <tr className=" mt-4">
                       <td colSpan={3} className="text-white fs-12" style={{ border: 'none' }} >
                         Data not available
                       </td>
-                    </tr>
-                  )}
+                    </tr> */}
+                  {/* )} */}
                 </tbody>
               </table>
               <style jsx>{`
