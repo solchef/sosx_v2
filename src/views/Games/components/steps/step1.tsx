@@ -2,7 +2,7 @@ const Step1 = () => {
 
 
   return (
-    <div className="d-flex flex-column-reverse">
+      <div className="d-flex flex-column-reverse">
                 <div className="w-100">
                   <div className="title-pink custom-pt mb-5">
                     <h3>Submit Challenges</h3>
@@ -20,6 +20,7 @@ const Step1 = () => {
                     src="https://socialx.io/img/submitchallenge-banner.png"
                     data-aos="fade-up"
                     alt=""
+                    style={{maxHeight:"300px"}}
                     className="aos-init aos-animate"
                   />
                 </div>

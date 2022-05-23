@@ -19,6 +19,7 @@ const Step2 = () => {
                     src="https://socialx.io/img/votetopchallenge-banner.png"
                     data-aos="fade-up"
                     alt=""
+                    style={{maxHeight:"300px"}}
                     className="aos-init aos-animate"
                   />
                 </div>

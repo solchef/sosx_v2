@@ -42,9 +42,9 @@ const GameGuide = () => {
     }
   };
 
-  const pauseGuideShow = () => {
-    removeCookies("oxgame_guide");
-    setCookies("oxgame_guide", "pause");
+  const pauseGuideShow = async () => {
+    await removeCookies("oxgame_guide");
+    await setCookies("oxgame_guide", "pause");
     setShowGameGuide(false);
   };
 
@@ -88,7 +88,7 @@ const GameGuide = () => {
                 style={{ justifyContent: "space-between" }}
               >
                 <div>
-                  <input onClick={() => pauseGuideShow} type="checkbox" style={{ marginRight: "10px" }} />
+                  <input onClick={() => pauseGuideShow()} type="checkbox" style={{ marginRight: "10px" }} />
                   <label>Don't show this again</label>
                 </div>
 

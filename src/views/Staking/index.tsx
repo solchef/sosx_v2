@@ -214,11 +214,9 @@ export default function Staking() {
     let decimals = BigNumber(10).pow(18);
 
     try {
-      let result = BigNumber(amountToStake).multiply(decimals);
       setLoading(true);
 
       const tx = await contract.returnTokens(instance);
-
       if (tx) {
         setActivatestake(true);
         setLoading(false);
@@ -228,7 +226,8 @@ export default function Staking() {
         toastError("Could not unstake");
       }
     } catch (e) {
-      toastError("Could not unstake at the moment.");
+      console.log(e)
+      toastError("Could not unstake at the stake at the moment. Try again after sometime.");
     }
   };
 
@@ -482,7 +481,7 @@ export default function Staking() {
                 </div>
                 <div>
                   <div className="d-flex w-auto m-auto">
-                    <h3>{stakingInterest - amountToStake}</h3>
+                    <h3>{(stakingInterest - amountToStake).toFixed(2)}</h3>
                   </div>
                   <p className="success fs-13 mb-0 main-pink pt-2">
                     Estimate yearly Return

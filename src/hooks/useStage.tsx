@@ -5,7 +5,7 @@ import {  GET_LastRound } from "utils/graphqlQ";
 
 
 const useStage = () => {
-  const [stage, setStage] = useState(1);
+  const [stage, setStage] = useState(4);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [lastRound, setLastRound] = useState(Number);
@@ -39,10 +39,11 @@ const useStage = () => {
   };
 
 
-  
 
   useEffect(() => {
-    const roundStartTime = startingTimeStamp;
+    // const roundStartTime = startingTimeStamp;
+    // {round starting time}
+    const roundStartTime = 1653314751;
 
     let stageGroups = [];
 
@@ -51,10 +52,10 @@ const useStage = () => {
     const STAGE_3 = Number(process.env.NEXT_PUBLIC_STAGE_3)
     const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4)
 
-    let stage1 = { start: roundStartTime, end: roundStartTime + STAGE_1 * 60 };
-    let stage2 = { start: stage1.end, end: stage1.end + STAGE_2  * 60 };
-    let stage3 = { start: stage2.end, end: stage2.end + STAGE_3  * 60 };
-    let stage4 = { start: stage3.end, end: stage3.end + STAGE_4  * 60 };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 0 * 60 };
+    let stage2 = { start: stage1.end, end: stage1.end + 0  * 60 };
+    let stage3 = { start: stage2.end, end: stage2.end + 0  * 60 };
+    let stage4 = { start: stage3.end, end: stage3.end + 2400  * 60 };
 
     stageGroups.push(stage1, stage2, stage3, stage4);
     let current = moment().unix();
