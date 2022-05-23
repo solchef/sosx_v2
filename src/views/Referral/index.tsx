@@ -147,7 +147,8 @@ export default function Referral({ datasocial }) {
         <div className="card h-100">
           <div className="card-body">
             <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
-              <div>
+              <div className="border-right pr-2">
+
                 <div>
 
                   <h4>   <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 297.334 297.334" style={{ width: '30px', fill: 'rgb(255, 0, 204)', marginRight: '10px' }} xmlSpace="preserve">
@@ -199,7 +200,8 @@ export default function Referral({ datasocial }) {
 
 
               </div>
-              <div>
+              <div className="pl-2">
+
                 <div>
                   <h4>   <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 297.334 297.334" style={{ width: '30px', fill: 'rgb(255, 0, 204)', marginRight: '10px' }} xmlSpace="preserve">
                     <g>
@@ -257,7 +259,8 @@ export default function Referral({ datasocial }) {
         <div className="card h-100">
           <div className="card-body">
             <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
-              <div>
+              <div className="border-right pr-2">
+
                 <div>
                   <h4>   <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 297.334 297.334" style={{ width: '30px', fill: 'rgb(255, 0, 204)', marginRight: '10px' }} xmlSpace="preserve">
                     <g>
@@ -305,7 +308,8 @@ export default function Referral({ datasocial }) {
                 </div>
                 <h2 className="main-pink">0</h2>
               </div>
-              <div>
+              <div className="pl-2">
+
                 <div>
                   <h4>   <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 297.334 297.334" style={{ width: '30px', fill: 'rgb(255, 0, 204)', marginRight: '10px' }} xmlSpace="preserve">
                     <g>
@@ -361,7 +365,7 @@ export default function Referral({ datasocial }) {
         <div className="card h-100">
           <div className="card-body">
             <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
-              <div>
+              <div className="border-right pr-2">
                 <div>
                   <h4>   <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 297.334 297.334" style={{ width: '30px', fill: 'rgb(255, 0, 204)', marginRight: '10px' }} xmlSpace="preserve">
                     <g>
@@ -407,11 +411,9 @@ export default function Referral({ datasocial }) {
                   </svg>Staking Friends
                   </h4>
                 </div>
-
                 <h2 className="main-pink"> {referralCount}</h2>
-
               </div>
-              <div>
+              <div className="pl-2">
                 <div>
                   <h4>   <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 297.334 297.334" style={{ width: '30px', fill: 'rgb(255, 0, 204)', marginRight: '10px' }} xmlSpace="preserve">
                     <g>
@@ -458,7 +460,6 @@ export default function Referral({ datasocial }) {
                   </h4>
                 </div>
                 <h2 className="main-pink">{viewReferralReward}</h2>
-
               </div>
             </div>
           </div>
@@ -488,12 +489,12 @@ export default function Referral({ datasocial }) {
               <div className="d-flex justify-content-between align-items-center">
                 {account != null ? (
                   <>
-                  <h5 className="font-weight-bold text-nowrap pt-3 pb-3 " style={{ color: 'rgb(142, 142, 142)' }}>
-                    https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}
-                  </h5>
-  {copied ? (
-    <span style={{ color: "red" }}>Copied.</span>
-  ) : null}</>
+                    <h5 className="font-weight-bold text-nowrap pt-3 pb-3 " style={{ color: 'rgb(142, 142, 142)' }}>
+                      https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}
+                    </h5>
+                    {copied ? (
+                      <span style={{ color: "red" }}>Copied.</span>
+                    ) : null}</>
 
                 ) : (
                   <h5 className="font-weight-bold pt-3 pb-3 " style={{ color: 'rgb(142, 142, 142)' }}>** Connect to Refer **</h5>)}
@@ -502,41 +503,41 @@ export default function Referral({ datasocial }) {
             </div>
             {account ? (
               <>
-              
-         
-              <div className="d-flex justify-content-end">
-              <CopyToClipboard
-                  text={`https://socialx.io?ref=${account}`}
-                  onCopy={() => setCopied(true)}
-                >
-                  <button className="btn btn-primary mr-2">Copy</button>
-                </CopyToClipboard>
-              
-                <OverlayTrigger
-                  show={show}
-                  trigger="click"
-                  placement="right"
-                  overlay={popover}
-                >
-                  <button onClick={() => setShow(!show)} className="btn btn-primary mr-2">Share</button>
 
 
-                </OverlayTrigger>
-               
-           </div>
-           </>
+                <div className="d-flex justify-content-end">
+                  <CopyToClipboard
+                    text={`https://socialx.io?ref=${account}`}
+                    onCopy={() => setCopied(true)}
+                  >
+                    <button className="btn btn-primary mr-2">Copy</button>
+                  </CopyToClipboard>
+
+                  <OverlayTrigger
+                    show={show}
+                    trigger="click"
+                    placement="right"
+                    overlay={popover}
+                  >
+                    <button onClick={() => setShow(!show)} className="btn btn-primary mr-2">Share</button>
+
+
+                  </OverlayTrigger>
+
+                </div>
+              </>
             ) : (
               <div className="d-flex justify-content-end">
                 <ConnectWalletButton className="btn mr-1 btn-primary mt-2">copy</ConnectWalletButton>
                 <ConnectWalletButton className="btn mr-1 btn-primary mt-2">share</ConnectWalletButton>
-                </div>
+              </div>
 
             )}
 
           </div>
           <div
             className="card-body"
-            style={{ borderTop: "1px solid #1e2124", paddingTop: "20px" }}
+            style={{ borderTop: "1px solid #1e2124", paddingTop: "30px", marginTop: "10px" }}
           >
             <div className="d-flex align-items-center mt-">
               <svg
@@ -669,7 +670,7 @@ export default function Referral({ datasocial }) {
                   ) : (
                     <>
                       <div className="d-flex w-auto m-auto">
-                        <h3>&nbsp; </h3>
+                        <h3> 0 SOSX</h3>
                       </div>
 
                       <ConnectWalletButton
@@ -721,7 +722,7 @@ export default function Referral({ datasocial }) {
                   ) : (
                     <>
                       <div className="d-flex w-auto m-auto">
-                        <h3> &nbsp;</h3>
+                        <h3> 0 SOSX</h3>
                       </div>
 
                       <ConnectWalletButton
@@ -764,9 +765,18 @@ export default function Referral({ datasocial }) {
                 </path>
               </g>
             </svg>
-              <h4>Referral List</h4>
+              <h4>
+                
+              {tab.name == "list" ?"Referral List":tab.name == "mining" ?"Social Mining":"Staking"}
+
+              </h4>
             </div>
-            <p className="mb-4">All your referral friends in one place.</p>
+            <p className="mb-4">
+              
+              
+              
+              All your referral friends in one place.
+           </p>
 
 
             <div
@@ -778,7 +788,7 @@ export default function Referral({ datasocial }) {
                 marginRight: '2px'
               }}
                 type="submit"
-                onClick={() => setDisplayLevel(1)}
+                onClick={(e) => { toggleTab(e, "list"); setDisplayLevel(1) }}
                 className={`font-weight-bold btn  text-nowrap ${displayLevel === 1 ? " btn-primary" : ""
                   }`}
               >
@@ -790,7 +800,7 @@ export default function Referral({ datasocial }) {
                 marginRight: '2px'
               }}
                 type="submit"
-                onClick={() => setDisplayLevel(2)}
+                onClick={(e) => { toggleTab(e, "mining"), setDisplayLevel(2) }}
                 className={`font-weight-bold btn  text-nowrap ${displayLevel === 2 ? " btn-primary" : ""
                   }`}
               >
@@ -802,7 +812,7 @@ export default function Referral({ datasocial }) {
                 marginRight: '2px'
               }}
                 type="submit"
-                onClick={() => setDisplayLevel(3)}
+                onClick={(e) => { toggleTab(e, "staking"); setDisplayLevel(3) }}
                 className={`font-weight-bold btn  text-nowrap  ${displayLevel === 3 ? " btn-primary" : ""
                   }`}
               >
@@ -812,34 +822,100 @@ export default function Referral({ datasocial }) {
             </div>
 
             <div className="tab-bg">
+              {tab.name == "list" &&
 
-              <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
+                <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
 
-                <tr className="jsx-e5e2ca7965fa437a">
-                  <th className="fs-16 font-weight-normal">Wallet Address</th>
-                  <th className="fs-16 font-weight-normal text-center">Staking Rewards</th>
-                  <th className="fs-16 font-weight-normal">Total Earned</th>
-                </tr>
+                  <tr className="jsx-e5e2ca7965fa437a">
+                    <th className="fs-16 font-weight-normal">Wallet Address</th>
+                    <th className="fs-16 font-weight-normal">Mining Rewards</th>
+                    <th className="fs-16 font-weight-normal text-center">Staking Rewards</th>
+                    <th className="fs-16 font-weight-normal">Total Earned</th>
+                  </tr>
 
-                <tbody>
-                  {referrals.length > 0 ? (
-                    referrals.map((ref) => (
+                  <tbody>
+                    {referrals.length > 0 ? (
+                      referrals.map((ref) => (
 
-                      <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
-                        <td className="text-white">{ref.address.replace(/(.{13})..+/, "$1…")}</td>
-                        <td className="text-white">{ref.amount}</td>
-                        <td className="text-white">{ref.amount}</td>
+                        <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
+                          <td className="text-white">{ref.address.replace(/(.{13})..+/, "$1…")}</td>
+                          <td className="text-white">0</td>
+                          <td className="text-white">{ref.amount}</td>
+                          <td className="text-white">{ref.amount}</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr className=" mt-4">
+                        <td colSpan={3} className="text-white fs-12" style={{ border: 'none' }} >
+                          Data not available
+                        </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr className=" mt-4">
-                      <td colSpan={3} className="text-white fs-12" style={{ border: 'none' }} >
-                        Data not available
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
+              }
+              {tab.name == "mining" &&
+
+                <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
+
+                  <tr className="jsx-e5e2ca7965fa437a">
+                    <th className="fs-16 font-weight-normal">Wallet Address</th>
+                    <th className="fs-16 font-weight-normal">Mining Rewards</th>
+                    <th className="fs-16 font-weight-normal text-center">Staking Rewards</th>
+                    <th className="fs-16 font-weight-normal">Total Earned</th>
+                  </tr>
+
+                  <tbody>
+                    {socialData.length > 0 ? (
+                      resultsoc.map((ref) => (
+
+                        <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
+                          <td className="text-white">{ref.address.replace(/(.{13})..+/, "$1…")}</td>
+                          <td className="text-white">0</td>
+                          <td className="text-white">0</td>
+                          <td className="text-white">0</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr className=" mt-4">
+                        <td colSpan={3} className="text-white fs-12" style={{ border: 'none' }} >
+                          Data not available
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              }
+              {tab.name == "staking" &&
+
+                <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
+
+                  <tr className="jsx-e5e2ca7965fa437a">
+                    <th className="fs-16 font-weight-normal">Wallet Address</th>
+                    <th className="fs-16 font-weight-normal text-center">Staking Rewards</th>
+                    <th className="fs-16 font-weight-normal">Total Earned</th>
+                  </tr>
+
+                  <tbody>
+                    {socialData.length > 0 ? (
+                      referrals.map((ref) => (
+
+                        <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
+                          <td className="text-white">{ref.address.replace(/(.{13})..+/, "$1…")}</td>
+                          <td className="text-white">{ref.amount}</td>
+                          <td className="text-white">{ref.amount}</td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr className=" mt-4">
+                        <td colSpan={3} className="text-white fs-12" style={{ border: 'none' }} >
+                          Data not available
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              }
               <style jsx>{`
        tbody tr:last-child td{
         border-bottom: none;
@@ -1047,7 +1123,7 @@ export default function Referral({ datasocial }) {
           </div>
         </div>
       </div>
-    <GameGuide />
+      <GameGuide />
 
     </div>
   );
