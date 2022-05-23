@@ -207,7 +207,6 @@ export default function SocialminingS3() {
                 </div>
                 
               </div>
-
               <div className="container-fluid">
               <div className="row text-center">
                 <div className="col-md-12">
@@ -218,12 +217,9 @@ export default function SocialminingS3() {
                       </button>
                     </a>
                   </Link>
-
-              
                 </div>
               </div>
             </div>
-
           </div>
         )}
       </div>
