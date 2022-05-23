@@ -150,9 +150,9 @@ const Ranking = (props) => {
         </button>
       </div>
 
-      <div className="jsx-e5e2ca7965fa437a tab-bg">
+      <div className="tab-bg">
 
-        <table style={{ maxWidth: '100%' }} className="jsx-e5e2ca7965fa437a ranking-header fs-12 p-4 mt-0 table">
+        <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
 
           <tr className="jsx-e5e2ca7965fa437a">
             <th className="fs-16 font-weight-normal">Rank</th>
@@ -165,41 +165,41 @@ const Ranking = (props) => {
               voters.map((voter, i) => 
          
                   <tr className=" text-nowrap mt-4" key={i} style={{ borderColor: '#1e2124' }}>
-                    <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" > {i + 1}</td>
-                    <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" >  {voter.address.replace(/(.{15})..+/, "$1…")}</td>
-                    <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" >{cleanNumber(voter.amount + "")}</td>
+                    <td className="fs-16 font-weight-normal" > {i + 1}</td>
+                    <td className="fs-16 font-weight-normal" >  {voter.address.replace(/(.{15})..+/, "$1…")}</td>
+                    <td className="fs-16 font-weight-normal" >{cleanNumber(voter.amount + "")}</td>
                   </tr>
             
               )
             ) : !account ? (
               <tr className=" text-nowrap mt-4">
-                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
-                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }} >
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
                   You need to be connected
                 </td>
-                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
               </tr>
 
             ) : loading ? (
               <tr className=" text-nowrap mt-4">
-                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
-                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }} >
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
                   Loading Data
                 </td>
-                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
               </tr>
             ) : (
               <tr className=" text-nowrap mt-4">
-                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
-                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }} >
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
                   No one is on Level {displayLevel}
                 </td>
-                <td className="jsx-e5e2ca7965fa437a fs-16 font-weight-normal" style={{ border: 'none' }}>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
               </tr>
             )}
