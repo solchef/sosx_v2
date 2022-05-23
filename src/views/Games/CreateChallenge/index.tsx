@@ -112,7 +112,7 @@ const CreateChallenge = (props) => {
   };
 
   return (
-    <div className="card">
+    <div className="card h-100">
       <div className="card-body">
         <form id="form" onSubmit={handleSubmit}>
           <div>
@@ -180,9 +180,7 @@ const CreateChallenge = (props) => {
                         className="form-control w-100"
                         style={{ fontSize: "20px" }}
                       />
-                      <h3 className=" pt-3 pb-3 " style={{ color: "#8e8e8e" }}>
-                        SOSX
-                      </h3>
+                   
                     </div>
                   </div>
                   <div className="bg-input bg-input mb-3 py-2 px-3 rounded ">
@@ -191,7 +189,7 @@ const CreateChallenge = (props) => {
                       name="story"
                       onChange={(e) => setChallengeDetails(e.target.value)}
                       rows={15}
-                      cols={33}
+                      cols={10}
                       placeholder={"Explain in detail what your challenge is"}
                     />
                   </div>
