@@ -222,10 +222,11 @@ const Menu: React.FC<NavProps> = ({
               <div className="header-left">
                 <div className="dashboard_bar">
                   {title()} 
-                </div>
-                {router.pathname == '/xgame' && 
-                    <p className="mb-0 ml-2">  | {stages[stage-1] && stages[stage-1].title}</p>
+                  {router.pathname == '/xgame' && 
+                    <p className="mb-0 ml-2 float-right">  | {stages[stage-1] && stages[stage-1].title}</p>
                 }
+                </div>
+               
               </div>
               <ul className="navbar-nav header-right">
 

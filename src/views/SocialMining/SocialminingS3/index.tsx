@@ -58,7 +58,7 @@ export default function SocialminingS3() {
       ? await contract.getMyReferral()
       : "0x0000000000000000000000000000000000000001";
 
-    setCookies("lab-processing", "submitted", { maxAge: 1 * 60 });
+    setCookies("lab-processing", "submitted", { maxAge: 960 * 60 });
 
     fd.append("my-name", "SOSX");
     fd.append("url-reward", socialpostlink);
