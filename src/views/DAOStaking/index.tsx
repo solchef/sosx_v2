@@ -394,7 +394,6 @@ export default function DaoStaking() {
                 <g></g>
                 <g></g>
               </svg>
-    
               <h4>RETURN CALCULATOR</h4>
             </div>
             <p>Input staking amount to show estimation</p>
