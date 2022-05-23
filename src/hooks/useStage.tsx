@@ -42,7 +42,7 @@ const useStage = () => {
   
 
   useEffect(() => {
-    const roundStartTime = startingTimeStamp;
+    const roundStartTime = 1653271693;
 
     let stageGroups = [];
 
