@@ -84,11 +84,11 @@ const GameGuide = () => {
             >
               {manageStepShow()}
               <div
-                className="modal-footer"
+                className="modal-footer guide-popup"
                 style={{ justifyContent: "space-between" }}
               >
                 <div>
-                  <input type="checkbox" style={{ marginRight: "10px" }} />
+                  <input onClick={() => pauseGuideShow} type="checkbox" style={{ marginRight: "10px" }} />
                   <label>Don't show this again</label>
                 </div>
 

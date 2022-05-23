@@ -58,7 +58,7 @@ export default function SocialminingS3() {
       ? await contract.getMyReferral()
       : "0x0000000000000000000000000000000000000001";
 
-    setCookies("lab-processing", "submitted", { maxAge: 60 * 60 });
+    setCookies("lab-processing", "submitted", { maxAge: 1 * 60 });
 
     fd.append("my-name", "SOSX");
     fd.append("url-reward", socialpostlink);
@@ -87,15 +87,15 @@ export default function SocialminingS3() {
 
     if (check) {
 
-      let val = getCookie("lab-processing");
-      // alert(val)
-      if (val == "submitted") {
-        setBlock(true);
-      } else {
-        setBlock(false);
-      }
+      // let val = getCookie("lab-processing");
+      
+      setBlock(true);
+      
+    
+    }else{
+      setBlock(false);
     }
-  },[]);
+  },);
 
   return (
     <>
@@ -105,7 +105,7 @@ export default function SocialminingS3() {
         }`}
       >
         <NavMining />
-        {!block ? (
+        {block === false ? (
           <form onSubmit={handlePost}>
             <div className="car d p-3 mt-5">
               <div className="row">
@@ -203,7 +203,7 @@ export default function SocialminingS3() {
           <div className="card p-3 mt-5">
                <div className="card-body">
                 <div className="d-flex justify-content-center mt-5">
-                      <p>You had already submitted. Please allow upto 12 hours to submit another request.</p>
+                      <p>You had already submitted a social mining request. Please allow upto 12 hours to submit another request. Your rewards will be sent to your wallet.</p>
                 </div>
                 
               </div>
@@ -221,7 +221,7 @@ export default function SocialminingS3() {
               </div>
             </div>
           </div>
-        )}
+        )} 
       </div>
     </>
   );
