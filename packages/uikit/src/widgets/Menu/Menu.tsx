@@ -241,94 +241,7 @@ const Menu: React.FC<NavProps> = ({
         </div>
       </div>
 
-      <ul className="mobile-nav d-flex" id="menu">
-        
-          <li className={router.pathname == "/" ? "mm-active" : ""}>
-            <Link href="/">
-              <a>
-                <i className="fa fa-repeat active"></i>
-              </a>
-            </Link>
-          </li>
-          <li className={router.pathname == "/stake" ? "mm-active" : ""}>
-            <Link href="/stake">
-              <a>
-                <i className="fa fa-coins"></i>
-              </a>
-            </Link>
-          </li>
-
-          <li className={router.pathname == "/daostaking" ? "mm-active" : ""}>
-            <Link href="/daostaking">
-              <a>
-                <i className="fa fa-coins"></i>
-              </a>
-            </Link>
-          </li>
-
-          <li className={router.pathname == "/xgame" || router.pathname == "/createchallenge" || router.pathname == "/votechallenge" || router.pathname == "/xgame" ? "mm-active" : ""}>
-            <Link href="/xgame">
-              <a>
-                <i className="fa fa-gamepad"></i>
-              </a>
-            </Link>
-          </li>
-          <li className={router.pathname == "/referrals" ? "mm-active" : ""}>
-            <Link href="/referrals">
-              <a>
-                <i className="fa fa-bullhorn"></i>
-              </a>
-            </Link>
-          </li>
-       
-          <li className={router.pathname == "/adspace" ? "mm-active" : ""}>
-            <Link href="/adspace">
-              <a>
-                <i className="fa fa-briefcase"></i>
-              </a>
-            </Link>
-          </li>
-          <li className={router.pathname == "/x-mining" || router.pathname == "/socialmining-s1" || router.pathname == "/socialmining-s2" || router.pathname == "/socialmining-s3" ? "mm-active" : ""}>
-            <Link href="/x-mining">
-              <a>
-                <i className="fa fa-users"></i>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link href="#">
-
-              <a>
-                <i className="fa fa-images"></i>
-              </a>
-            </Link>
-
-          </li>
-
-          <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
-
-            <Link href="/aboutsosx">
-
-              <a>
-                <img src="/images/xlogo.png" style={{ width: '12px', height: '12px' }} />
-              </a>
-            </Link>
-
-          </li>
-
-          <li className={router.pathname == "/faq" ? "mm-active" : ""}>
-
-            <Link href="/faq">
-
-              <a>
-                <i className="fa-solid fa-circle-question"></i>
-              </a>
-            </Link>
-
-          </li>
      
-
-      </ul>
       <div className="deznav mobile-hide">
         <div className="deznav-scroll">
           <ul className="metismenu" id="menu">
@@ -448,6 +361,9 @@ const Menu: React.FC<NavProps> = ({
       <div className={`content-body ${preloader ? 'content-preloader' : ''}`}>
 
         {children}
+
+        {isMobile && <BottomNav items={links} activeItem={activeItem} activeSubItem={activeSubItem} />}
+
       </div>
 
 

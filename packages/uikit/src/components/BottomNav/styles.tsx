@@ -5,7 +5,7 @@ const StyledBottomNav = styled(Flex)`
   position: fixed;
   bottom: 0px;
   width: 100%;
-  padding: 5px 8px;
+  padding: 10px 8px 10px 8px;
   background: ${({ theme }) => theme.colors.backgroundAlt};
   border-top: 1px solid ${({ theme }) => theme.colors.cardBorder};
   padding-bottom: env(safe-area-inset-bottom);
@@ -13,6 +13,18 @@ const StyledBottomNav = styled(Flex)`
     padding-bottom: 45px;
   }
   z-index: 20;
+  
+
+  a{
+    display:flex;
+    flex-direction:column;
+    text-align: center;
+    color: white !important;
+    span{
+      font-size: 12px;
+      margin-top:8px !important;
+    }
+  }
 `;
 
 export default StyledBottomNav;
