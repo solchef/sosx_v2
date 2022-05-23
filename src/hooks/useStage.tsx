@@ -1,7 +1,26 @@
+import { useQuery } from "@apollo/client";
 import moment from "moment";
 import { useState, useEffect, useMemo } from "react";
+import {  GET_LastRound } from "utils/graphqlQ";
+
 
 const useStage = () => {
+  const [stage, setStage] = useState(1);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [lastRound, setLastRound] = useState(Number);
+  const [startingTimeStamp, setStartingTime] = useState(Number);
+  const [seconds, setSeconds] = useState(0);
+  const GraphqlLastRoundData = useQuery(GET_LastRound);
+
+
+  useEffect(() => {
+    if (GraphqlLastRoundData.data !== undefined) {
+      setLastRound(GraphqlLastRoundData.data.lastRound.id);
+      setStartingTime(GraphqlLastRoundData.data.lastRound.startingTime);
+    }
+  }, [GraphqlLastRoundData.data]);
+
   const calculateTimeLeft = (entryTime) => {
     let eventTime = moment(entryTime).unix();
     let currentTime = Number(Math.floor(Date.now() / 1000).toString());
@@ -14,19 +33,16 @@ const useStage = () => {
     }
 
     duration = moment.duration(duration.asSeconds() - 1, "seconds");
-
-    return {
-      hour: duration.hours(),
-      min: duration.minutes(),
-      sec: duration.seconds(),
-    };
+    setHours(duration.hours());
+    setMinutes(duration.minutes());
+    setSeconds(duration.seconds());
   };
 
 
   
-  const [stage, setStage] = useState(0);
+
   useEffect(() => {
-    const roundStartTime = 1652666907;
+    const roundStartTime = startingTimeStamp;
 
     let stageGroups = [];
 
@@ -39,16 +55,15 @@ const useStage = () => {
     let stage2 = { start: stage1.end, end: stage1.end + STAGE_2  * 60 };
     let stage3 = { start: stage2.end, end: stage2.end + STAGE_3  * 60 };
     let stage4 = { start: stage3.end, end: stage3.end + STAGE_4  * 60 };
-    let stage5 = { start: stage4.end, end: stage1.start };
 
-    stageGroups.push(stage1, stage2, stage3, stage4, stage5);
+    stageGroups.push(stage1, stage2, stage3, stage4);
     let current = moment().unix();
     let check = stageGroups.findIndex(
       (group) => group.end > current && current > group.start
     );
 
     if (check == -1 && current > current) {
-      setStage(1);
+      setStage(4);
     } else {
       const interval = setInterval(() => {
         let currTime = moment().unix();
@@ -63,7 +78,17 @@ const useStage = () => {
       return () => clearInterval(interval);
     }
   });
-  return stage;
+
+    return {
+      hour: hours,
+      min: minutes,
+      sec: seconds,
+      stage: stage
+    };
 };
 
 export default useStage;
+
+
+
+

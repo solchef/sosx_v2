@@ -1,7 +1,5 @@
-import { useRouter } from "next/router";
 import { create } from "ipfs-http-client";
 import { useEffect, useState } from "react";
-import { concat } from "uint8arrays";
 import React, { FormEvent } from "react";
 import { signMessage } from "utils/web3React";
 import { useWeb3React } from "@web3-react/core";
@@ -9,83 +7,82 @@ import useWeb3Provider from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
 import { useDaoStakingContract } from "hooks/useContract";
 import ConnectWalletButton from "../../../components/ConnectWalletButton";
-import useStage from "../../../hooks/useStage";
-import useLevels from "hooks/useLevels";
 import moment from "moment";
 import { useTranslation } from "contexts/Localization";
 import { useQuery } from "@apollo/client";
 import { GET_Stage3Challenges } from "utils/graphqlQ";
+import { getWalletIsVotedStage3 } from "api/graphql";
+import { getDaoLevel } from "../hooks/getDaoLevel";
+import { formatFixedNumber } from "utils/formatBalance";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
 
-const VoteStageThree = (props: { level; stage }) => {
-  const [challenge, setChallenge] = useState<any[]>([]);
+const VoteStageThree = (props) => {
+  const [voted, setVoted] = useState(true);
+  const [justVoted, setJustVoted] = useState(false);
   const { account } = useWeb3React();
   const { library, connector } = useWeb3Provider();
   const { toastSuccess, toastError } = useToast();
   const { t } = useTranslation();
   const contract = useDaoStakingContract();
   const [stage3Challenges, setStage3Challenges] = useState();
+  const [selectedChallange, setSelectedChallange] = useState({});
   const top3Challenges = useQuery(GET_Stage3Challenges);
   const stage = props.stage;
-  const level = props.level;
+  const lastRound = props.round
+  const [votingLevel, setVotingLevel] = useState(0);
 
   useEffect(() => {
     if (top3Challenges.data !== undefined) {
       setStage3Challenges(top3Challenges.data);
-      console.log(top3Challenges.data);
+      setSelectedChallange(top3Challenges.data.stage3Challenges[0]);
     }
   }, [top3Challenges.data]);
 
+  const getVoteData = async () => {
+    if (account) {
+      const vote = await getWalletIsVotedStage3(account);
+      if (vote.walltIsVotaed3 == null) {
+        setVoted(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getVoteData();
+  }, [account]);
+
+  useEffect(() => {
+    userVotingLevel();
+  }, []);
+
+  const userVotingLevel = async () => {
+    let amount = await contract.getVoterTotalStakeAmount(account);
+    amount = amount;
+    let level = getDaoLevel(Number(formatFixedNumber(amount, 3, 18)));
+    setVotingLevel(level);
+  };
+
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    let daoList = await contract.getAllAccount();
-    let voters = [];
-    for (let i = 0; i < daoList.length; i++) {
-      let voter_address = daoList[i];
-      let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
-      total_stake = Number(total_stake / 10 ** 18);
-      let voterData = {
-        address: voter_address,
-        amount: total_stake,
-        level: level,
-      };
 
-      voters.push(voterData);
+    if (votingLevel !== 3) {
+      toastError(t("Error"), t("Only Level 3 can vote in this stage"));
+      return;
     }
 
-    // if (stage == 2) {
-    //   toastError(
-    //     t("Error"),
-    //     t("You already voted for another challenge in stage 2")
-    //   );
-    //   return;
-    // }
-
-    // if (stage == 3) {
-    //   toastError(
-    //     t("Error"),
-    //     t("You already voted for another challenge in stage 3")
-    //   );
-    //   return;
-    // }
-
-    // if (stage == 2 && level == 0) {
-    //   toastError(t("Error"), t("You should have level to be able to vote"));
-    //   return;
-    // }
-
-    // if (stage == 3 && level != 3) {
-    //   toastError(t("Error"), t("Only Level 3 can vote in this stage"));
-    //   return;
-    // }
+    if (voted) {
+      toastError("You already voted for another challenge in stage 3");
+      return;
+    }
 
     const vote = JSON.stringify({
       timestamp: moment().unix(),
-      address: account,
-      round: "1",
+      voterAddress: account,
+      level: votingLevel,
+      round: lastRound,
     });
 
     const sig = await signMessage(connector, library, account, vote);
@@ -94,22 +91,24 @@ const VoteStageThree = (props: { level; stage }) => {
       const forIPFS = JSON.stringify(
         {
           timestamp: moment().unix(),
-          address: account,
-          round: "1",
-          // challenge: challenge[0].cid.toString(),
+          voterAddress: account,
+          round: lastRound,
           sig: sig.toString(),
-          // data: voters,
+          level: votingLevel,
+          // @ts-ignore
+          CId: selectedChallange.CID,
         },
         null,
         2
       );
 
       await server.files.write(
-        `/Rounds/Round-1/votes/stage-${stage}/${account}.json`,
+        `/Rounds/Round-${lastRound}/Votes/stage-${stage}/${account}.json`,
         forIPFS,
         { create: true }
       );
       toastSuccess(t("Vote created!"));
+      setJustVoted(true);
     } else {
       toastError(t("Error"), t("Unable to sign payload"));
     }
@@ -117,6 +116,7 @@ const VoteStageThree = (props: { level; stage }) => {
 
   return (
     <div className="card h-100">
+       <div className="card-body">
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -162,73 +162,62 @@ const VoteStageThree = (props: { level; stage }) => {
         Vote for the next OX Game challenge within the top 3 voted challenges.
       </p>
       <div className="d-flex flex-row flex-wrap">
-        <div className="challenge-list m-3 rounded">
-          <div className="challenge-items d-flex">
-            <div className="list-title">Challenge Title Here</div>
-            <div className="list-button">
-              {" "}
-              <button className="btn mx-auto btn-primary btn-sm " type="button">
-                VIEW
-              </button>
-            </div>
-          </div>
-          <div className="challenge-items d-flex">
-            <div className="list-title">Challenge Title Here</div>
-            <div className="list-button">
-              {" "}
-              <button className="btn mx-auto btn-primary btn-sm " type="button">
-                VIEW
-              </button>
-            </div>
-          </div>
-          <div className="challenge-items d-flex">
-            <div className="list-title">Challenge Title Here</div>
-            <div className="list-button">
-              {" "}
-              <button className="btn mx-auto btn-primary btn-sm " type="button">
-                VIEW
-              </button>
-            </div>
-          </div>
+        <div style={{ display: "inline-table" }}>
+          {stage3Challenges
+            ? stage3Challenges.stage3Challenges.map((data, index) => {
+                // if(data != null){
+                return (
+                  <div key={index} className="challenge-list m-3 rounded">
+                    <div className="challenge-items d-flex">
+                      <div className="list-title">{data.payload.name}</div>
+                      <div className="list-button">
+                        {" "}
+                        <button
+                          className="btn mx-auto btn-primary btn-sm "
+                          type="button"
+                          onClick={() => setSelectedChallange(data)}
+                        >
+                          VIEW
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            : ""}
         </div>
-        <div className="challenge-details m-3 d-flex flex-column">
-          <h1>Challenge Title Here</h1>
-          <p>
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of using Lorem Ipsum is that it has a more-or-less normal
-            distribution of letters, as opposed to using 'Content here, content
-            here', making it look like readable English. Many desktop publishing
-            packages and web page editors now use Lorem Ipsum as their default
-            model text, and a search for 'lorem ipsum' will uncover many web
-            sites still in their infancy. Various versions have evolved over the
-            years, sometimes by accident, sometimes on purpose (injected humour
-            and the like).
-          </p>
-          <div className="challenge-meta">
-            <p className="mb-0">
-              {" "}
-              <span>Created by: x00000000000000000 </span>
-            </p>
-            <p>
-              <span>Created On: 22/22/2202 22:22:00 </span>
-            </p>
+
+        {selectedChallange.payload !== undefined ? (
+          <div className="challenge-details m-3 d-flex flex-column">
+            <h1>{selectedChallange.payload.name}</h1>
+            <p>{selectedChallange.payload.body}</p>
+            <div className="challenge-meta">
+              <p className="mb-0">
+                {" "}
+                <span>{selectedChallange.payload.creator} </span>
+              </p>
+              <p>{/* <span>{moment(selectedChallange.timestamp)} </span> */}</p>
+            </div>
+            <form onSubmit={handleSubmit}>
+              {!account ? (
+                <ConnectWalletButton className="btn btn-primary btn-lg mt-4" />
+              ) : (
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-lg mt-5  "
+                  style={{ width: "max-content" }}
+                  disabled={justVoted || voted}
+                >
+                  <i className="fa-solid fa-check-to-slot pr-2"></i>
+                  VOTE FOR THIS CHALLENGE
+                </button>
+              )}
+            </form>
           </div>
-          <form onSubmit={handleSubmit}>
-            {!account ? (
-              <ConnectWalletButton className="btn btn-primary btn-lg w-100 mt-4" />
-            ) : (
-              <button
-                type="submit"
-                className="btn btn-primary btn-lg mt-5 mb-5 "
-                style={{ width: "max-content" }}
-              >
-                <i className="fa-solid fa-check-to-slot pr-2"></i>
-                VOTE FOR THIS CHALLENGE
-              </button>
-            )}
-          </form>
-        </div>
+        ) : (
+          ""
+        )}
+      </div>
       </div>
     </div>
   );

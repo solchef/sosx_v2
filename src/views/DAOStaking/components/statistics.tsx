@@ -40,7 +40,7 @@ export default function Statistics(props) {
 
   return (
     <>
-      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`, maxWidth:'100%'}} className="stake-amount">
+      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`,gap:'20px', maxWidth:'100%'}} className="stake-amount">
         <div className="card h-100">
           <div className="card-body">
             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center">
@@ -60,7 +60,7 @@ export default function Statistics(props) {
         </div>
       </div>
 
-      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`, maxWidth:'100%'}} className="rate-amount">
+      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`,gap:'20px', maxWidth:'100%'}} className="rate-amount">
         <div className="card h-100">
           <div className="card-body">
             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center">
@@ -89,7 +89,7 @@ export default function Statistics(props) {
         </div>
       </div>
 
-      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`, maxWidth:'100%'}} className="dao-box">
+      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`,gap:'20px', maxWidth:'100%'}} className="dao-box">
         <div className="card h-100 datarow justify-content-between">
           <div className="card-body">
             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center">
@@ -109,7 +109,7 @@ export default function Statistics(props) {
         </div>
       </div>
 
-      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`, maxWidth:'100%'}} className="price-box">
+      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`,gap:'20px', maxWidth:'100%'}} className="price-box">
         <div className="card h-100 datarow justify-content-between">
           <div className="card-body">
             <div className="flex-row d-flex flex-wrap justify-content-between w-100 align-items-center">

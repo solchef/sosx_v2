@@ -16,6 +16,7 @@ import LangSelector from "../../components/LangSelector/LangSelector";
 import { MenuContext } from "./context";
 import Link from 'next/link'
 import router, { useRouter } from "next/router";
+import useStage from "../../../../../src/hooks/useStage";
 
 const Wrapper = styled.div`
   position: relative;
@@ -86,6 +87,7 @@ const Menu: React.FC<NavProps> = ({
 }) => {
   const { isMobile, isMd } = useMatchBreakpoints();
   const [showMenu, setShowMenu] = useState(true);
+  const {stage} = useStage();
   const refPrevOffset = useRef(typeof window === "undefined" ? 0 : window.pageYOffset);
 
   const topBannerHeight = isMobile ? TOP_BANNER_HEIGHT_MOBILE : TOP_BANNER_HEIGHT;
@@ -126,27 +128,48 @@ const Menu: React.FC<NavProps> = ({
 
   const subLinksWithoutMobile = subLinks?.filter((subLink) => !subLink.isMobileOnly);
   const subLinksMobileOnly = subLinks?.filter((subLink) => subLink.isMobileOnly);
-  const title = () => {
+
+    const stages = [
+      {
+        stage: 1,
+        title: "STAGE 1 CHALLENGE CREATION",
+        participationText: "ONLY LEVEL 2 & 3 CAN PARTICIPATE",
+      },
+      {
+        stage: 2,
+        title: "STAGE 2 TOP CHALLENGES VOTING",
+        participationText: "ONLY LEVEL 1, 2 & 3 CAN PARTICIPATE",
+      },
+      {
+        stage: 3,
+        title: "STAGE 3 FINAL CHALLENGE VOTING",
+        participationText: "ONLY LEVEL  3 CAN PARTICIPATE",
+      },
+      {
+        stage: 4,
+        title: "STAGE 4 VIDEO SUBMISSION",
+        participationText: "ANYONE CAN PARTICIPATE",
+      },
+    ];
+  
+  
+
+   const title = () => {
     switch (router.pathname) {
 
       case '/':
 
         return "Swap";
       case '/stake':
-        return "Staking";
+        return "STAKING";
 
       case '/daostaking':
-        return "Dao Staking";
+        return "DAO STAKING";
 
       case '/xgame':
-        return "OX Game";
-      case '/createchallenge':
-        return "OX Game";
-      case '/votechallenge':
-        return "OX Game";
-      case '/Ox game':
-        return "OX Game";
-
+        
+        return 'OX GAME';
+        
       case '/referrals':
         return "Referrals";
 
@@ -198,15 +221,18 @@ const Menu: React.FC<NavProps> = ({
             <div className="collapse navbar-collapse justify-content-between">
               <div className="header-left">
                 <div className="dashboard_bar">
-                  {title()}
+                  {title()} 
+                  {router.pathname == '/xgame' && 
+                    <p className="mb-0 ml-2 float-right">  | {stages[stage-1] && stages[stage-1].title}</p>
+                }
                 </div>
+               
               </div>
               <ul className="navbar-nav header-right">
 
                 <li className="nav-item wallet-btn">
                   {/* <button type="button" className="btn btn-primary btn-lg">Connect Wallet</button> */}
                   {userMenu}
-
 
                 </li>
               </ul>

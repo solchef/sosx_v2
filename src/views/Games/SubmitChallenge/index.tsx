@@ -1,20 +1,9 @@
-import { useRouter } from "next/router";
 import { create } from "ipfs-http-client";
 import { useEffect, useState } from "react";
-import { concat } from "uint8arrays";
 import React, { FormEvent } from "react";
-import { signMessage } from "utils/web3React";
 import { useWeb3React } from "@web3-react/core";
-import useWeb3Provider from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
-import { useDaoStakingContract } from "hooks/useContract";
-import ConnectWalletButton from "../../../components/ConnectWalletButton";
-import useStage from "../../../hooks/useStage";
-import useLevels from "hooks/useLevels";
 import moment from "moment";
-import { useTranslation } from "contexts/Localization";
-import useActiveWeb3React from "hooks/useActiveWeb3React";
-import { validLinks } from "utils/validateLink";
 import { useQuery } from "@apollo/client";
 import { GET_WiningChallenge } from "utils/graphqlQ";
 
@@ -22,18 +11,13 @@ const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
 });
 
-const Submission = (props: { level; stage }) => {
-  const [challenge, setChallenge] = useState<any[]>([]);
+const Submission = (props) => {
   const { account } = useWeb3React();
   const [winingChallenge, setWingingChallenge] = useState();
-  const { library, connector } = useWeb3Provider();
   const [url, setURL] = useState("");
   const { toastSuccess, toastError } = useToast();
-  const { t } = useTranslation();
-  const contract = useDaoStakingContract();
   const winingChallengeData = useQuery(GET_WiningChallenge);
-  const stage = props.stage;
-  const level = props.level;
+  const lastRound = props.round
 
   useEffect(() => {
     if (winingChallengeData.data !== undefined)
@@ -49,55 +33,39 @@ const Submission = (props: { level; stage }) => {
       return;
     }
 
-    let data = JSON.stringify(
-      {
-        id: `${account}`,
-        rId: "1",
-        url: url,
-      },
-      null,
-      2
-    );
-
-    if (url.search("tiktok") != -1) {
-      if (url.search("tiktok") != -1) {
-        if (url.search("vt") != -1) {
-          toastError("Use https://tiktok.com/@usename...");
-          return;
-        }
-        const index = url.indexOf("video/");
-        data = JSON.stringify({
-          id: `${account}+round-1`,
-          rId: "round",
-          urls: {
-            youtube: url.substring(index + 6, index + 25),
-          },
-        });
-      } else {
-        return false;
-      }
+    let data;
+    if (
+      url.search("tiktok") != -1 ||
+      url.search("youtu") != -1 ||
+      url.search("instagram") != -1
+    ) {
+      data = JSON.stringify(
+        {
+          timestamp: moment().unix(),
+          id: `${account}`,
+          rId: lastRound,
+          url: url,
+        },
+        null,
+        2
+      );
+    } else {
+      toastError("Invalid video link");
     }
 
     if (data !== "") {
-      //   const todayChallengeName = String(
-      //     todayChallenge.challenge.payload.name
-      //   ).replaceAll(" ", "-");
-
-      let todayChallengeName = "Mall-Streaking-Challenge";
-      const fileName = `video-${moment().unix()}`;
-      await server.files.write(`/Rounds/Round-1/Videos/${fileName}`, data, {
+      await server.files.write(`/Rounds/Round-${lastRound}/Videos/${account}.json`, data, {
         create: true,
       });
       toastSuccess("Uploaded");
       form.reset();
-      //   getVideo();
     } else {
       toastError("Not Valid Links");
     }
   };
 
   return (
-    <div className="card h-100">
+    <div className="card h-100" style={{backgroundColor: "#1e1e1e"}}>
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -134,57 +102,53 @@ const Submission = (props: { level; stage }) => {
             ></path>
           </g>
         </svg>
-        <h4 style={{ fontSize: "60px" }}>Games</h4>
+        <h4 style={{ fontSize: "53px !important" }}>Games</h4>
       </div>
-      <div className="d-flex align-items-center mb-2">
-        <h4>SUBMIT YOUR VIDEO</h4>
-      </div>
-      <p>
-        Create a video accomplishing described challenge bellow for a chance to
-        win prize pool
-      </p>
-      <div className="mt-5 d-flex flex-row flex-wrap">
-        <div className="challenge-details m-3 d-flex flex-column">
-          <h1>Challenge Title Here</h1>
-          <p>
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of using Lorem Ipsum is that it has a more-or-less normal
-            distribution of letters, as opposed to using 'Content here, content
-            here', making it look like readable English. Many desktop publishing
-            packages and web page editors now use Lorem Ipsum as their default
-            model text, and a search for 'lorem ipsum' will uncover many web
-            sites still in their infancy. Various versions have evolved over the
-            years, sometimes by accident, sometimes on purpose (injected humour
-            and the like).
-          </p>
+    
+      <div className="mt-3 d-flex flex-row flex-wrap">
+        <div className="challenge-section d-flex flex-column">
+          <div className="d-flex align-items-start flex-column mt-3 mb-4">
+                            <h4 style={{marginBottom: "15px"}}>COMPLETE CHALLENGE</h4>
+                            <p>Be the first to complete the challenge below to receive win the prize pool.
+                                Record yourself completing the challenge. Remember to start the video with
+                                "SocialX paid me to do it!"</p>
+          </div>
+          <div className="challenge-details">
+          <h1>{winingChallenge?.winingChallenge.payload.name}</h1>
+          <p>{winingChallenge?.winingChallenge.payload.body}</p>
           <div className="challenge-meta">
             <p className="mb-0">
               {" "}
-              <span>Created by: x00000000000000000 </span>
+              <span>
+                {/* ts-nocheck */}
+                Created by: {winingChallenge?.winingChallenge.payload.creator}{" "}
+              </span>
             </p>
             <p>
-              <span>Created On: 22/22/2202 22:22:00 </span>
+              {/* <span>Created On: {winingChallenge?.winingChallenge.payload.name} </span> */}
             </p>
           </div>
         </div>
-        <div className="upload-game pt-5 m-3 rounded">
-          <p> Enter the YOUTUBE, INSTAGRAM or TIKTOK URL of your video.</p>
+        </div>
+        <div className="upload-game">
+              <div className="d-flex align-items-start flex-column mt-3 mb-2">
+                  <h4 style={{ marginBottom: "15px"}}>SUBMIT VIDEO</h4>
+                  <p>Submit the video to youtube or TikTok and provide us with the link below.
+                      SocialX.io must be mentioned in the about section of your video &amp; you must
+                      share your video on your own social media.</p>
+              </div>
           <form onSubmit={videoLink}>
             <div className="bg-input mb-3 mt-3 py-2 px-3 rounded ">
-              <div className="d-flex justify-content-between align-items-center">
                 <input
                   onChange={(e) => setURL(e.target.value)}
-                  type="text"
+                  type="url"
                   placeholder="Video Hosted URL"
                   required
-                  className="form-control w-100"
-                  style={{ fontSize: "20px" }}
+                  className="form-control"
                 />
-              </div>
             </div>
             <button
-              className="btn btn-primary btn-lg mt-5 mb-5 "
+              className="btn btn-primary btn-lg mt25"
               type="submit"
               style={{ width: "max-content" }}
             >
