@@ -51,7 +51,7 @@ export default function Game() {
 
   return (
     <>
-      {/* {startingTimeStamp > 0 ? ( */}
+      {startingTimeStamp > 0 ? (
         <div className="game container-fluid d-flex flex-wrap flex-direction-row">
           <div id="timer-section" style={{ flex: "0 1 350px" }}>
             <TimerDisplay />
@@ -65,6 +65,7 @@ export default function Game() {
                 round={lastRound}
               />
             )}
+
             {stage == 2 && (
               <VoteStageTwo
                 level={currentLevel}
@@ -95,9 +96,9 @@ export default function Game() {
             <Media todayVideo={undefined} />
           </div>
         </div>
-      {/* ) : (
+     ) : (
         ""
-      )} */}
+      )} 
       <GameGuide />
     </>
   );

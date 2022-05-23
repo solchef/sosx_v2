@@ -39,7 +39,6 @@ const useStage = () => {
   };
 
 
-  
 
   useEffect(() => {
     const roundStartTime = startingTimeStamp;
