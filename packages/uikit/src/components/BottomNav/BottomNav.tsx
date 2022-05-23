@@ -123,7 +123,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
           <Link href="/aboutsosx">
 
             <a>
-              <img src="/images/xlogo.png" style={{ width: '13px', height: '13px', marginBottom:"3px" }} />
+              <img src="/images/xlogo.png"  />
               <span className="mt-0 mb-1">About</span>
             </a>
           </Link>

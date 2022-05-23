@@ -20,10 +20,22 @@ const StyledBottomNav = styled(Flex)`
     flex-direction:column;
     text-align: center;
     color: white !important;
+
+    img{
+      width: 13px;
+      height: 13px;
+      margin-bottom: 3px;
+      margin-left: 6px;
+    }
     span{
       font-size: 12px;
       margin-top:8px !important;
     }
+    
+
+  
+
+  
   }
 `;
 
