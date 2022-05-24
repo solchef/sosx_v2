@@ -254,7 +254,7 @@ export default function DaoStaking() {
       className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
       style={{ gap: "20px" }}
     >
-      <Statistics reward={reward.toFixed(4)}/>
+      <Statistics reward={reward}/>
       <div style={{ flex: "1 1 30%"}}>
         <div className="card d-flex flex-column"
          style={{ background: "#1e1e1e" }}
