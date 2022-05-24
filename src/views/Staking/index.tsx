@@ -151,11 +151,15 @@ export default function Staking() {
     let decimals = BigNumber(10).pow(18);
 
     let result = BigNumber(amountToStake).multiply(decimals);
-
+    
     setLoading(true);
+    let ref = localStorage.getItem('referral');
+    if(ref){
+      setReferralAddress(ref);
+    }
     let stake = await contract.stakeToken(
       result.toString(),
-      "0x0000000000000000000000000000000000000001",
+       ref ? ref : referralAddress,
       stakingClass
     );
 
@@ -182,9 +186,11 @@ export default function Staking() {
       );
       return;
     }
-    console.log(allowanceValue, amountToStake);
+    // console.log(allowanceValue, amountToStake);
+
     let decimals = BigNumber(10).pow(18);
     let result = BigNumber(amountToStake).multiply(decimals);
+
     if (allowanceValue > amountToStake) {
       onPresentConfirmModal();
     } else {
