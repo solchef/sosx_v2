@@ -74,6 +74,7 @@ export default function Staking() {
       setActiveStakes([]);
       for (let i = 0; i < stakes; i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
+
           contract.calculatePeriods(i).then((period) => {
             let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
             let instance = {
@@ -585,6 +586,7 @@ export default function Staking() {
                     onClick={() => handleClaimReward(stake.stakeID)}
                     className="btn w-100  mr-1 btn-primary btn-lg mt-2"
                     type="button"
+                    disabled={stake.periodElapsed.toFixed(0) < 90}
                   >
                     CLAIM REWARD
                   </button>
@@ -592,6 +594,8 @@ export default function Staking() {
                   <button
                     className="btn w-100  mr-1 btn-primary btn-lg mt-2"
                     type="button"
+                    title="Stake duration not elapsed for unstaking and claims"
+                    disabled={stake.periodElapsed.toFixed(0) < 90}
                     onClick={() => handleUnStake(stake.stakeID)}
                   >
                     UNSTAKE
