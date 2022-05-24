@@ -189,7 +189,7 @@ export default function SocialminingS3() {
         ) : (
           <div className="card p-3 mt-4">
                <div className="card-body">
-                <div className="d-flex flex-column align-items-center">
+                <div className="d-flex flex-column align-items-start align-items-sm-center ">
                       <p className="text-white">You had already submitted a social mining request. Please allow upto 12 hours to submit another request.</p>
                       <p className="text-white">Your rewards will be sent to your wallet.</p>
                 </div>

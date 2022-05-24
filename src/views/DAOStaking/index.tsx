@@ -400,32 +400,15 @@ export default function DaoStaking() {
             <p>Input staking amount to show estimation</p>
             <div>
               <div className="d-flex h-100 justify-content-between mt-3">
-                <div>
-                  <div className="d-flex w-auto m-auto">
-                    <h3>  {estimateDaoLevel > 0
+              <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}> {estimateDaoLevel > 0
                         ? estimateDaoLevel == 1
                           ? 6.0
                           : estimateDaoLevel == 2
                           ? 9.0
                           : 12.0
-                        : 0}{" "} %</h3>
-                  </div>
-                  <p className="success mb-0 fs-13 main-pink pt-2">Reward % </p>
-                </div>
-                <div>
-                  <div className="d-flex w-auto m-auto">
-                    <h3>Lv {estimateDaoLevel}</h3>
-                  </div>
-                  <p className="success fs-13 main-pink mb-0 pt-2">DAO Level</p>
-                </div>
-                <div>
-                  <div className="d-flex w-auto m-auto">
-                  <h3>{(stakingInterest - amountToStake).toFixed(2)}</h3>
-                  </div>
-                  <p className="success fs-13 mb-0 main-pink pt-2">
-                    Estimate yearly Return
-                  </p>
-                </div>
+                        : 0}%</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}> Reward % </p></div>
+              <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}>Lv{estimateDaoLevel}</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}> DAO Level </p></div>
+              <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}>{(stakingInterest - amountToStake).toFixed(2)}</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}>   Estimate yearly Return </p></div>
               </div>
             </div>
           </div>
