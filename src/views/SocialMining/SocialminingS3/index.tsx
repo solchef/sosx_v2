@@ -45,6 +45,13 @@ export default function SocialminingS3() {
       return;
     }
 
+
+    if (
+      socialpostlink.search("tiktok") != -1 ||
+      socialpostlink.search("youtu") != -1 ||
+      socialpostlink.search("instagram") != -1 ||
+      socialpostlink.search("twitter") != -1 
+    ) {
     // post structure
     let post = {
       email_address,
@@ -53,33 +60,42 @@ export default function SocialminingS3() {
       createdAt: new Date().toISOString(),
     };
 
-    let fd = new FormData();
-    let referal = account
-      ? await contract.getMyReferral()
-      : "0x0000000000000000000000000000000000000001";
+            let fd = new FormData();
+            let referal = account
+              ? await contract.getMyReferral()
+              : "0x0000000000000000000000000000000000000001";
 
-    setCookies("lab-processing", "submitted", { maxAge: 960 * 60 });
+            setCookies("lab-processing", "submitted", { maxAge: 960 * 60 });
+            let rewardamount = 500;
+            if(socialpostlink.search("tiktok") != -1){
+              // alert("tik")
+              rewardamount = 1000;
+            }
+            fd.append("my-name", "SOSX");
+            fd.append("url-reward", socialpostlink);
+            fd.append("referral", referal);
+            fd.append("wallet", account);
+            fd.append("reward-email", email_address);
+            fd.append("reward", reward);
+            fd.append("reward_amount", rewardamount);
 
-    fd.append("my-name", "SOSX");
-    fd.append("url-reward", socialpostlink);
-    fd.append("referral", referal);
-    fd.append("wallet", account);
-    fd.append("reward-email", email_address);
-    fd.append("reward", reward);
+            const headers = {
+              "Content-Type": "application/x-www-form-urlencoded",
+            };
+            let rest = await axios.post("https://socialx.io/inviteemail.php", fd, {
+              headers,
+            });
 
-    const headers = {
-      "Content-Type": "application/x-www-form-urlencoded",
-    };
-    let rest = await axios.post("https://socialx.io/inviteemail.php", fd, {
-      headers,
-    });
+            if (rest.status == 300) {
+              toastError("You had submitted another record");
+            }
+            toastSuccess("Details successfully submitted for verification");
 
-    if (rest.status == 300) {
-      toastError("You had submitted another record");
-    }
-    toastSuccess("Details successfully submitted for verification");
-
-    router.replace("/x-mining");
+            router.replace("/x-mining");
+            }else {
+              toastError("Invalid social media post link provided. Links accepted are tiktok, twitter or instagram");
+            }
+  
   };
 
   useEffect(() => {

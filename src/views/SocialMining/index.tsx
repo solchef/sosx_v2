@@ -14,11 +14,11 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import NavMining from './NavMining';
 import { useMediaPredicate } from "react-media-hook";
 
-const GameGuide = () => {
+const SocialMining = () => {
   const [showGuide, setshowGuide] = useState(false);
   const handleCloseGuide = () => setshowGuide(false);
   const handleStartGuide = () => setshowGuide(true);
-  const [showGameGuide, setShowGameGuide] = useState(false);
+  const [showSocialMining, setShowSocialMining] = useState(false);
   const [step, setStep] = useState(0);
   const [title, setTitle] = useState('');
   const { account } = useActiveWeb3React();
@@ -38,18 +38,18 @@ const GameGuide = () => {
         handleStartGuide();
       } else {
         //oxgame steps wont play
-        setShowGameGuide(false);
+        setShowSocialMining(false);
       }
     } else {
       setCookies("referral_guide", "play");
-      setShowGameGuide(true);
+      setShowSocialMining(true);
     }
   };
 
   const pauseGuideShow = () => {
     removeCookies("referral_guide");
     setCookies("referral_guide", "pause");
-    setShowGameGuide(false);
+    setShowSocialMining(false);
   };
 
   const manageStepShow = () => {
@@ -113,4 +113,4 @@ const GameGuide = () => {
   );
 };
 
-export default GameGuide;
+export default SocialMining;
