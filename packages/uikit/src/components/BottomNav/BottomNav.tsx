@@ -6,11 +6,13 @@ import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import { BottomNavProps } from "./types";
 import { NotificationDot } from "../NotificationDot";
 import { Overlay } from "../Overlay";
-import { Link } from "../Link";
+import Link from "next/link"
+import {useRouter} from 'next/router';
 
 const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", activeSubItem = "", ...props }) => {
   const [menuOpenByIndex, setMenuOpenByIndex] = useState({});
   const isBottomMenuOpen = Object.values(menuOpenByIndex).reduce((acc, value) => acc || value, false);
+  const router = useRouter()
   return (
     <>
       {isBottomMenuOpen && <Overlay />}
@@ -46,8 +48,8 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
             );
           }
         )} */}
-        
-        <li className={props == "/" ? "mm-active" : ""}>
+        {console.log(router.route)}
+        <li className={ router.route == "/" ? "mm-active" : ""}>
           <Link href="/">
             <a>
               <i className="fa fa-repeat active"></i>
@@ -56,7 +58,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
             
           </Link>
         </li>
-        <li className={props == "/stake" ? "mm-active" : ""}>
+        <li className={router.route == "stake" ? "mm-active" : ""}>
           <Link href="/stake">
             <a>
               <i className="fa fa-coins"></i>
@@ -65,7 +67,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
           </Link>
         </li>
 
-        <li className={props == "/daostaking" ? "mm-active" : ""}>
+        <li className={router.route == "/daostaking" ? "mm-active" : ""}>
           <Link href="/daostaking">
             <a>
               <i className="fa fa-coins"></i>
@@ -74,7 +76,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
           </Link>
         </li>
 
-        <li className={props == "/xgame" || props == "/createchallenge" || props == "/votechallenge" || props == "/xgame" ? "mm-active" : ""}>
+        <li className={router.route == "/xgame" || router.route == "/createchallenge" || router.route == "/votechallenge" || router.route == "/xgame" ? "mm-active" : ""}>
           <Link href="/xgame">
             <a>
               <i className="fa fa-gamepad"></i>
@@ -82,7 +84,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
             </a>
           </Link>
         </li>
-        <li className={props == "/referrals" ? "mm-active" : ""}>
+        <li className={router.route == "/referrals" ? "mm-active" : ""}>
           <Link href="/referrals">
             <a>
               <i className="fa fa-bullhorn"></i>
@@ -91,7 +93,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
           </Link>
         </li>
      
-        {/* <li className={props == "/adspace" ? "mm-active" : ""}>
+        {/* <li className={router.route == "/adspace" ? "mm-active" : ""}>
           <Link href="/adspace">
             <a>
               <i className="fa fa-briefcase"></i>
@@ -99,7 +101,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
             </a>
           </Link>
         </li> */}
-        <li className={props == "/x-mining" || props == "/socialmining-s1" || props == "/socialmining-s2" || props == "/socialmining-s3" ? "mm-active" : ""}>
+        <li className={router.route == "/x-mining" || router.route == "/socialmining-s1" || router.route == "/socialmining-s2" || router.route == "/socialmining-s3" ? "mm-active" : ""}>
           <Link href="/x-mining">
             <a>
               <i className="fa fa-users"></i>
@@ -118,7 +120,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
 
         </li> */}
 
-        <li className={props == "/aboutsosx" ? "mm-active" : ""}>
+        <li className={router.route == "/aboutsosx" ? "mm-active" : ""}>
 
           <Link href="/aboutsosx">
 
@@ -130,7 +132,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
 
         </li>
 
-        <li className={props == "/faq" ? "mm-active" : ""}>
+        <li className={router.route == "/faq" ? "mm-active" : ""}>
 
           <Link href="/faq">
 
