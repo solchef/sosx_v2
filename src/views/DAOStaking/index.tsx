@@ -29,6 +29,7 @@ export default function DaoStaking() {
   const [activeStakes, setActiveStakes] = useState([]);
   const [allowanceValue, setAllowanceValue] = useState(0);
   const [activateStake, setActivatestake] = useState(true);
+  const [reward, setReward] = useState(true);
   const [showDetails, setShowDetails] = useState(-1);
   const [loading, setLoading] = useState(true);
   const [pendingTx, setPendingTx] = useState(false);
@@ -61,10 +62,12 @@ export default function DaoStaking() {
 
   const listUserStaking = async () => {
     const list = [];
+    const rew = 0;
     contract.getStakeCount().then((stakes) => {
       setActiveStakes([]);
       for (let i = 0; i < stakes; i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
+          contract.calculatePeriods(i).then((period) => {
           let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
           let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
           let instance = {
@@ -81,7 +84,12 @@ export default function DaoStaking() {
             stakingClass: stakeClass,
             periodElapsed: stakeClass,
           };
-            list.push(instance)
+          // console.log(stakeClass)
+         let rate = stakeClass == 1 ? 0.06 : timeLocked == 2 ? 0.09 : 0.12;
+          rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
+          console.log(Number(period))
+          setReward(rew);
+          list.push(instance)
           // if (!instance.isWithdrawed) {
           setActiveStakes((activeStakes) => [...activeStakes, instance]);
           // }
@@ -89,8 +97,21 @@ export default function DaoStaking() {
           setStakeList((activeStakes) => [...activeStakes, instance]);
           // }
         });
+      });
       }
     });
+  };
+
+  const calculateInterest = (timeLocked, amount, periods, rate) => {
+    let t = periods;
+    let r = rate;
+    let n = 12;
+    let p = amount;
+    let amt = p * Math.pow(1 + r / n, n * t);
+    // amt = amt.toFixed(3);
+    const interest = (amt - p).toFixed(2);
+
+    return interest;
   };
 
   const handleAmountChange = async (event) => {
@@ -233,7 +254,7 @@ export default function DaoStaking() {
       className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
       style={{ gap: "20px" }}
     >
-      <Statistics/>
+      <Statistics reward={reward}/>
       <div style={{ flex: "1 1 30%"}}>
         <div className="card d-flex flex-column"
          style={{ background: "#1e1e1e" }}
