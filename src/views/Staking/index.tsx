@@ -570,7 +570,7 @@ export default function Staking() {
                   <div>
                     <div className="d-flex mb-3 flex-column">
                       <span className="mb-1">Rewards Gained:</span>
-                      <span className="text-success"> 0.00 SOSX </span>
+                      <span className="text-success"> {stake.rewardAmount} SOSX </span>
                     </div>
                     <div className="d-flex mb-3 flex-column">
                       <span className="mb-1">Duration Elapsed:</span>
