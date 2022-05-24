@@ -83,13 +83,15 @@ export default function Staking() {
             stakingClass: stakeClass,
             periodElapsed: stakeClass,
           };
+          setActiveStakes((activeStakes) => [...activeStakes, instance]);
+              setStakeList((activeStakes) => [...activeStakes, instance]);
+
           list.push(instance);
         });
       });
     }
 
     setActiveStakes(list);
-   
     // setStakeList((activeStakes) => [...activeStakes, instance]);
 
   };
