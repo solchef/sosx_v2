@@ -15,11 +15,20 @@ const StyledBottomNav = styled(Flex)`
   z-index: 20;
   
 
+  .mm-active{
+    a{
+      color:#f600cc !important;
+    }
+   
+  }
+
   a{
     display:flex;
     flex-direction:column;
     text-align: center;
     color: white !important;
+
+   
 
     img{
       width: 13px;
@@ -27,14 +36,11 @@ const StyledBottomNav = styled(Flex)`
       margin-bottom: 3px;
       margin-left: 6px;
     }
+
     span{
       font-size: 12px;
       margin-top:8px !important;
     }
-    
-
-  
-
   
   }
 `;

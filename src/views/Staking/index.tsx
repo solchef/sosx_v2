@@ -307,7 +307,7 @@ export default function Staking() {
             <div className="bg-input mb-3 py-2 px-3 rounded mt-4">
               <div className="d-flex justify-content-between align-items-center">
                 <span>
-                  <input
+                  <input style={{backgroundColor:'#d9d9d9'}}
                     type="number"
                     className="form-control fs-28"
                     onChange={(e) => handleAmountChange(e)}
@@ -327,7 +327,7 @@ export default function Staking() {
             <div className="bg-input mb-3 py-2 px-3 rounded mt-4">
               <div className="d-flex justify-content-between align-items-center">
                 <span>
-                  <select
+                  <select style={{backgroundColor:'#d9d9d9'}}
                     className="form-control fs-28"
                     onChange={(e) => {
                       setStakingClass(Number(e.target.value));
@@ -459,34 +459,16 @@ export default function Staking() {
             </div>
             <p>Input staking amount to show estimation</p>
             <div>
-              <div className="d-flex h-100 justify-content-between mt-3">
-                <div>
-                  <div className="d-flex w-auto m-auto">
-                    <h3>
-                      {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145} %
-                    </h3>
-                  </div>
-                  <p className="success mb-0 fs-13 main-pink pt-2">Reward % </p>
-                </div>
-                <div>
-                  <div className="d-flex w-auto m-auto">
-                    <h3>
-                      {stakingClass == 1 ? 3 : stakingClass == 2 ? 6 : 12}
-                      Mo
-                    </h3>
-                  </div>
-                  <p className="success fs-13 main-pink mb-0 pt-2">
-                    Locked Period
-                  </p>
-                </div>
-                <div>
-                  <div className="d-flex w-auto m-auto">
-                    <h3>{(stakingInterest - amountToStake).toFixed(2)}</h3>
-                  </div>
-                  <p className="success fs-13 mb-0 main-pink pt-2">
-                    Estimate yearly Return
-                  </p>
-                </div>
+              <div className="d-flex h-10 justify-content-between mt-3">
+      
+                 
+
+
+                <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}> {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145}%</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}>Reward % </p></div>
+
+                <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}> {stakingClass == 1 ? 3 : stakingClass == 2 ? 6 : 12} Mo</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}> Locked Period</p></div>
+                <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}> {(stakingInterest - amountToStake).toFixed(2)}</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}>  Estimate yearly Return </p></div>
+      
               </div>
             </div>
           </div>

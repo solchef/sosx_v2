@@ -46,7 +46,6 @@ const GameGuide = () => {
     setCookies("referral_guide", "pause");
     setShowGameGuide(false);
   };
-
   const manageStepShow = () => {
     switch (step) {
       case 1:
@@ -59,9 +58,7 @@ const GameGuide = () => {
         // return <Step1 />;
         break
     }
-
   };
-
   return (
     <>
     
