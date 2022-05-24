@@ -58,7 +58,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ items = [], activeItem = "", acti
             
           </Link>
         </li>
-        <li className={router.route == "stake" ? "mm-active" : ""}>
+        <li className={router.route == "/stake" ? "mm-active" : ""}>
           <Link href="/stake">
             <a>
               <i className="fa fa-coins"></i>
