@@ -9,18 +9,12 @@ import Staking from "./components/Staking";
 import { useMediaPredicate } from "react-media-hook";
 import { useStakingContract } from "hooks/useContract";
 
-
 export default function Referral({ datasocial }) {
 
   const contract = useStakingContract();
   const [displayLevel, setDisplayLevel] = useState(1);
   const [socialData, setsocialData] = useState([]);
   const [resultsoc, setResultsoc] = useState(datasocial);
-  const { account } = useActiveWeb3React();
-  const [referralCount, setReferralCount] = useState(0);
-  const [viewReferralReward, setViewReferralReward] = useState(0);
-  const biggerThan1400 = useMediaPredicate("(min-width: 576px)");
-
   const toggleTab = (event, type) => {
     event.stopPropagation();
     tabs.map((tabb) => (tabb.name == type ? setTab(tabb) : ""));
@@ -31,6 +25,7 @@ export default function Referral({ datasocial }) {
     fetchReferral();
     getaccountDetails();
   }, []);
+
 
 
   const getaccountDetails = async () => {
@@ -55,8 +50,8 @@ export default function Referral({ datasocial }) {
   const fetchReferral = async () => {
     let countreferrals = await contract.getReferralCount();
     setReferralCount(Number(countreferrals));
-    referralCount
-    contract(countreferrals);
+
+    contract
       .getCurrentReferrals()
       .then((result) => {
         if (result.length == 0) {
@@ -85,6 +80,10 @@ export default function Referral({ datasocial }) {
   };
 
 
+  const { account } = useActiveWeb3React();
+  const [referralCount, setReferralCount] = useState(0);
+  const [viewReferralReward, setViewReferralReward] = useState(0);
+  const biggerThan1400 = useMediaPredicate("(min-width: 576px)");
   return (
     <div className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse" style={{ gap: '20px' }}>
 
