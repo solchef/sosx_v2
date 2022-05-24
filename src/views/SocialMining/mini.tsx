@@ -6,9 +6,6 @@ export default function SocialMining() {
 
     return (
         <>
-           
-
-      
             <div className="pt-2 pb-0">
                 
                 <div className="row pt-3">
@@ -54,9 +51,6 @@ export default function SocialMining() {
                     </div>
                 </div>
             </div>
-
-           
-          
         </>
     );
 

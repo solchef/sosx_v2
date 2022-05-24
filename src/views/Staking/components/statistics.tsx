@@ -77,11 +77,11 @@ export default function Statistics(props) {
                             <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
                                 <div className="data-content">
                                     <div className="d-flex align-items-end">
-                                        <h2 className="mb-3 main-pink">3 MO</h2>
+                                        <h2 className="mb-3 main-pink">0 MO</h2>
                                     </div>
                                     <div className="">
                                         <div className="">
-                                            <h4>LOCKED FROM</h4>
+                                            <h4>LOCKED</h4>
                                         </div>
                                         <p className="mb-0">Investment locked period</p>
                                     </div>
@@ -97,11 +97,11 @@ export default function Statistics(props) {
                             <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
                                 <div className="data-content">
                                     <div className="d-flex align-items-end">
-                                        <h2 className="mb-3 main-pink">29%</h2>
+                                        <h2 className="mb-3 main-pink">0%</h2>
                                     </div>
                                     <div className="">
                                         <div className="">
-                                            <h4>STAKING APY FROM</h4>
+                                            <h4>STAKING APY</h4>
                                         </div>
                                         <p className="mb-0">Period Staking Rewards %</p>
                                     </div>
