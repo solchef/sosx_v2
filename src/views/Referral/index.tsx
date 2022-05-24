@@ -3,7 +3,7 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 import fetch from "isomorphic-unfetch";
 import GameGuide from "./guide";
 import Header from "./components/Header";
-import REFERRAL from "./components/REFERRAL";
+import REFERRAL from "./components/Referral";
 import Mining from "./components/Mining";
 import Staking from "./components/Staking";
 import { useMediaPredicate } from "react-media-hook";
