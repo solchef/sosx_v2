@@ -5,7 +5,7 @@ const StyledBottomNav = styled(Flex)`
   position: fixed;
   bottom: 0px;
   width: 100%;
-  padding: 10px 8px 10px 8px;
+  padding: 10px 18px 10px 8px;
   background: ${({ theme }) => theme.colors.backgroundAlt};
   border-top: 1px solid ${({ theme }) => theme.colors.cardBorder};
   padding-bottom: env(safe-area-inset-bottom);
@@ -14,7 +14,9 @@ const StyledBottomNav = styled(Flex)`
   }
   z-index: 20;
   
-
+  li{
+    list-style:none;
+  }
   .mm-active{
     a{
       color:#f600cc !important;
@@ -38,7 +40,7 @@ const StyledBottomNav = styled(Flex)`
     }
 
     span{
-      font-size: 12px;
+      font-size: 9px;
       margin-top:8px !important;
     }
   
