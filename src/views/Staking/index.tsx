@@ -282,7 +282,7 @@ export default function Staking() {
       className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
       style={{ gap: "20px" }}
     >
-      <Statistics reward={reward} />
+      <Statistics reward={reward.toFixed(3)} />
       <div style={{ flex: "1 1 30%" }}>
         <div
           className="card d-flex flex-column h-100"
