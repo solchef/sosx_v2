@@ -1,5 +1,3 @@
-import Link from 'next/link';
-import NavMining from './NavMining';
 import { useMediaPredicate } from 'react-media-hook';
 
 export default function SocialMining() {
@@ -8,9 +6,9 @@ export default function SocialMining() {
 
     return (
         <>
-           <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
-          <NavMining/>
+           
 
+      
             <div className="pt-2 pb-0">
                 
                 <div className="row pt-3">
@@ -58,7 +56,7 @@ export default function SocialMining() {
             </div>
 
            
-            </div>
+          
         </>
     );
 

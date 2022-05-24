@@ -18,7 +18,7 @@ export default function SocialminingS2(props) {
 
   return (
 
-    <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
+    < >
 		<Overlay target={target.current} show={show} placement="right">
         {({ placement, arrowProps, show: _show, popper, ...props }) => (
           <div
@@ -70,7 +70,7 @@ export default function SocialminingS2(props) {
         )}
       </Overlay>
 
-			<NavMining />
+
 
 
 
@@ -147,6 +147,6 @@ export default function SocialminingS2(props) {
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }
