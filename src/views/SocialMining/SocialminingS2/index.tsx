@@ -18,7 +18,7 @@ export default function SocialminingS2(props) {
 
   return (
 
-    <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
+    < >
 		<Overlay target={target.current} show={show} placement="right">
         {({ placement, arrowProps, show: _show, popper, ...props }) => (
           <div
@@ -70,7 +70,7 @@ export default function SocialminingS2(props) {
         )}
       </Overlay>
 
-			<NavMining />
+
 
 
 
@@ -147,29 +147,6 @@ export default function SocialminingS2(props) {
 					</div>
 				</div>
 			</div>
-
-			<div className="container-fluid">
-				<div className="row text-center">
-					<div className="col-md-12">
-						<Link href="/socialmining-s1">
-
-							<a>
-								<button className="btn btn-outline-primary mr-2 mb-3">Back</button>
-							</a>
-						</Link>
-						{account ? (
-						<Link href="/socialmining-s3">
-
-							<a>
-								<button className="btn btn-primary mr-3 mb-3">Continue</button>
-							</a>
-						</Link>
-						):(
-							<ConnectWalletButton className="btn btn-primary mr-3 mb-3 "/>
-						)}
-					</div>
-				</div>
-			</div>
-		</div>
+		</>
 	)
 }

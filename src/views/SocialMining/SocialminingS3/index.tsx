@@ -99,12 +99,7 @@ export default function SocialminingS3() {
 
   return (
     <>
-      <div
-        className={`${biggerThan1400 && "container"} pt-3 ${
-          biggest1400 && "container-fluid"
-        }`}
-      >
-        <NavMining />
+ 
         {block === false ? (
           <form onSubmit={handlePost}>
             <div className="car d p-3 mt-5">
@@ -184,14 +179,6 @@ export default function SocialminingS3() {
             <div className="container-fluid">
               <div className="row text-center">
                 <div className="col-md-12">
-                  <Link href="/x-mining">
-                    <a>
-                      <button className="btn btn-outline-primary mr-2 mb-3">
-                        Reset
-                      </button>
-                    </a>
-                  </Link>
-
                   <button value="submit" className="btn btn-primary mr-3 mb-3">
                     Claim Your Tokens
                   </button>
@@ -200,29 +187,16 @@ export default function SocialminingS3() {
             </div>
           </form>
         ) : (
-          <div className="card p-3 mt-5">
+          <div className="card p-3 mt-4">
                <div className="card-body">
-                <div className="d-flex justify-content-center mt-5">
-                      <p>You had already submitted a social mining request. Please allow upto 12 hours to submit another request. Your rewards will be sent to your wallet.</p>
-                </div>
-                
-              </div>
-              <div className="container-fluid">
-              <div className="row text-center">
-                <div className="col-md-12">
-                  <Link href="/x-mining">
-                    <a>
-                      <button className="btn btn-outline-primary mr-2 mb-3">
-                        Back
-                      </button>
-                    </a>
-                  </Link>
+                <div className="d-flex flex-column align-items-center">
+                      <p className="text-white">You had already submitted a social mining request. Please allow upto 12 hours to submit another request.</p>
+                      <p className="text-white">Your rewards will be sent to your wallet.</p>
                 </div>
               </div>
-            </div>
           </div>
         )} 
-      </div>
+  
     </>
   );
 }

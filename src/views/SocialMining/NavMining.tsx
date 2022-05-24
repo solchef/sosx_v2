@@ -1,50 +1,48 @@
-import Link from "next/link";
-import router from "next/router";
 
-const NavMining = () => {
+const NavMining = ({step}) => {
   return (
     <div className="mx-auto d-flex justify-content-center mt-5 mb-3 align-items-center">
       <div id="steps">
-        <Link href="/x-mining">
+    
           <div
-            className={`step ${router.pathname === "" ? "active" : "done"} `}
+            className={`step ${step === 0 ? "active" : "done"} `}
             data-desc="Steps"
           >
             1
           </div>
-        </Link>
-        <Link href="/socialmining-s1">
+
+ 
           <div
             className={`step ${
-              router.pathname === "/socialmining-s1" ? "active" : ""
-            } ${router.pathname === "/socialmining-s3" ? "done" : ""} ${
-              router.pathname === "/socialmining-s2" ? "done" : ""
+              step === 1 ? "active" : ""
+            } ${step === 3 ? "done" : ""} ${
+              step === 2 ? "done" : ""
             }`}
             data-desc="Copy"
           >
             2
           </div>
-        </Link>
-        <Link href="/socialmining-s2">
+
+  
           <div
             className={`step ${
-              router.pathname === "/socialmining-s2" ? "active" : ""
-            } ${router.pathname === "/socialmining-s3" ? "done" : ""}`}
+              step === 2 ? "active" : ""
+            } ${step === 3 ? "done" : ""}`}
             data-desc="Affiliate"
           >
             3
           </div>
-        </Link>
-        <Link href="/socialmining-s3">
+   
+
           <div
             className={`step ${
-              router.pathname === "/socialmining-s3" ? "active" : ""
+              step === 3 ? "active" : ""
             } `}
             data-desc="Redeem"
           >
             4
           </div>
-        </Link>
+      
       </div>
       <style jsx>{`
         @media (max-width: 576px) {
@@ -85,7 +83,6 @@ const NavMining = () => {
           content: attr(data-desc);
           font-weight: 400;
           font-size: 13px;
-          cursor: pointer !important;
         }
         .step:first-child {
           padding-top: 2px;
