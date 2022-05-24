@@ -87,7 +87,7 @@ export default function DaoStaking() {
           // console.log(stakeClass)
          let rate = stakeClass == 1 ? 0.06 : timeLocked == 2 ? 0.09 : 0.12;
           rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
-          console.log(Number(period))
+          console.log(rew)
           setReward(rew);
           list.push(instance)
           // if (!instance.isWithdrawed) {
@@ -103,13 +103,13 @@ export default function DaoStaking() {
   };
 
   const calculateInterest = (timeLocked, amount, periods, rate) => {
-    let t = periods;
+    let t = periods/360;
     let r = rate;
     let n = 12;
     let p = amount;
     let amt = p * Math.pow(1 + r / n, n * t);
     // amt = amt.toFixed(3);
-    const interest = (amt - p).toFixed(2);
+    const interest = (amt - p).toFixed(4);
 
     return interest;
   };
