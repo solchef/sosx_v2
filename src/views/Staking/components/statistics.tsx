@@ -115,7 +115,7 @@ export default function Statistics(props) {
                             <div className="flex-row d-flex flex-wrap justify-content-between w-100 align-items-center">
                                 <div className="data-content">
                                     <div className="d-flex align-items-end">
-                                        <h2 className="mb-3 main-pink">0.0000</h2>
+                                        <h2 className="mb-3 main-pink">{props.reward}</h2>
                                     </div>
                                     <div className="d-flex flex-column align-items-start ">
                                         <div className="d-flex align-items-center">

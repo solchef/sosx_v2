@@ -36,6 +36,7 @@ export default function Staking() {
   const [insufficientBalance, setInsufficientBalance] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(-1);
+  const [reward, setReward] = useState(0);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -66,36 +67,53 @@ export default function Staking() {
   };
 
   const listUserStaking = async () => {
-    let list = [];
-    for (let i = 0; i < numberOfActiveStake; i++) {
-      await contract.getStakeInfo(i).then((stakeInstance) => {
-        contract.getCurrentStakeClass(i).then((stakeClass) => {
-          let instance = {
-            amount: Number(stakeInstance[0] / 10 ** 18),
-            isWithdrawed: Boolean(stakeInstance[1]),
-            stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
-              "en-US",
-              { timeZone: "America/New_York" }
-            ),
-            referral: stakeInstance[3],
-            rewardAmount: Number(stakeInstance[4]),
-            penalty: Number(stakeInstance[5]),
-            stakingClass: stakeClass,
-            periodElapsed: stakeClass,
-          };
-          setActiveStakes((activeStakes) => [...activeStakes, instance]);
-              setStakeList((activeStakes) => [...activeStakes, instance]);
-
-          list.push(instance);
+    contract.getStakeCount().then((stakes) => {
+      let list = [];
+      let count = 1;
+      let rew = 0;
+      setActiveStakes([]);
+      for (let i = 0; i < stakes; i++) {
+        contract.getStakeInfo(i).then((stakeInstance) => {
+          contract.calculatePeriods(i).then((period) => {
+            let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
+            let instance = {
+              stakeID: i,
+              amount: stakeAmt,
+              isWithdrawed: Boolean(stakeInstance[1]),
+              stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
+                "en-US",
+                { timeZone: "America/New_York" }
+              ),
+              referral: stakeInstance[3],
+              rewardAmount: calculateInterest(12, stakeAmt, period),
+              penalty: Number(stakeInstance[5]),
+              stakingClass: 1,
+              periodElapsed: period / (24 * 60),
+            };
+            rew = rew + Number(calculateInterest(12, stakeAmt, period));
+            // console.log(rew)
+            // list.push(instance);
+                  setReward(rew);
+            setActiveStakes((activeStakes) => [...activeStakes, instance]);
+          });
         });
-      });
-    }
-
-    setActiveStakes(list);
-    // setStakeList((activeStakes) => [...activeStakes, instance]);
-
+        count++;
+      }
+      // console.log(rew)
+    });
   };
 
+  const calculateInterest = (timeLocked, amount, periods) => {
+    let t = periods / (24 * 60) / 360;
+    let r = timeLocked == 1 ? 0.29 : timeLocked == 2 ? 0.64 : 1.45;
+    let n = 12;
+    let p = amount;
+    let amt = p * Math.pow(1 + r / n, n * t);
+    // amt = amt.toFixed(3);
+    const interest = (amt - p).toFixed(2);
+
+    return interest;
+  };
 
   useEffect(() => {
     setLoading(false);
@@ -264,7 +282,7 @@ export default function Staking() {
       className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
       style={{ gap: "20px" }}
     >
-      <Statistics />
+      <Statistics reward={reward} />
       <div style={{ flex: "1 1 30%" }}>
         <div
           className="card d-flex flex-column h-100"
