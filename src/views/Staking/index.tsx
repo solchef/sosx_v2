@@ -27,7 +27,7 @@ export default function Staking() {
   const [amountToStake, setamountToStake] = useState(0);
   const [pendingTx, setPendingTx] = useState(false);
   const [hasReferral, setHasReferral] = useState(false);
-  const [referralAddress, setReferralAddress] = useState("");
+  const [referralAddress, setReferralAddress] = useState("0x0000000000000000000000000000000000000001");
   const [totalAmountStaked, setTotalAmountStaked] = useState(0);
   const [numberOfActiveStake, setNumberOfActiveStake] = useState(0);
   const [activeStakes, setActiveStakes] = useState([]);
@@ -174,13 +174,18 @@ export default function Staking() {
     let result = BigNumber(amountToStake).multiply(decimals);
     
     setLoading(true);
-    let ref = localStorage.getItem('referral');
+    let ref = await contract.getMyReferral();
     if(ref){
       setReferralAddress(ref);
+    }else{
+      ref = await contract.getMyReferral();
     }
+    // alert(referralAddress);
+    
+    // alert(ref);
     let stake = await contract.stakeToken(
       result.toString(),
-       ref ? ref : referralAddress,
+       ref.toString(),
       stakingClass
     );
 
