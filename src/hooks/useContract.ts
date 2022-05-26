@@ -193,19 +193,16 @@ export const useIfoPoolContract = () => {
 
 export const useStakingContract = () => {
   const { library } = useActiveWeb3React()
-  // console.log(library.getSigner())
   return useMemo(() => getStakingContract(library.getSigner()), [library])
 }
 
 export const useDaoStakingContract = () => {
   const { library } = useActiveWeb3React()
-  // console.log(library.getSigner())
   return useMemo(() => getDaoStakingContract(library.getSigner()), [library])
 }
 
 export const useSosxContract = () => {
   const { library } = useActiveWeb3React()
-  // console.log(library.getSigner())
   return useMemo(() => getSosxContract(library.getSigner()), [library])
 }
 

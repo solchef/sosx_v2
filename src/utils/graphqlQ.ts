@@ -7,6 +7,7 @@ export const GET_Challenges = gql`
       timestamp
       type
       signiture
+      CID
       payload {
         name
         body
@@ -58,6 +59,132 @@ export const GET_Stage2Voter = gql`
     }
   }
 `;
+
+export const GET_MyChallenge = `
+  query GetMyChallenge($wallet: String) {
+    getMyChallenge(wallet: $wallet) {
+      version
+      timestamp
+      type
+      signiture
+      CID
+      payload {
+        name
+        body
+        creator
+      }
+      votedList {
+        stage2 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+        stage3 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+      }
+    }
+  }
+`;
+
+export const GET_WiningChallenge = gql`
+  query WiningChallenge {
+    winingChallenge {
+      version
+      timestamp
+      type
+      signiture
+      CID
+      payload {
+        name
+        body
+        creator
+      }
+      votedList {
+        stage2 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+        stage3 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+      }
+    }
+  }
+`;
+
+export const GET_Stage3Challenges = gql`
+  query Stage3Challenges {
+    stage3Challenges {
+      version
+      timestamp
+      type
+      signiture
+      CID
+      payload {
+        name
+        body
+        creator
+      }
+      votedList {
+        stage2 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+        stage3 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+      }
+    }
+  }
+`;
+
+export const GET_Challange_Pages = `
+query GetChallengesByPage($page: Int, $values: Int) {
+  getChallengesByPage(page: $page, values: $values) {
+    chalanges {
+      version
+      timestamp
+      type
+      signiture
+      CID
+      payload {
+        name
+        body
+        creator
+      }
+      votedList {
+        stage2 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+        stage3 {
+          cId
+          voterAddress
+          signiture
+          level
+        }
+      }
+    }
+    maxData
+  }
+}`;
 
 export const GET_WalletIsVoted = `
   query Vote($wallet: String) {
