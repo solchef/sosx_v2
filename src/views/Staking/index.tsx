@@ -15,7 +15,7 @@ import { cleanNumber } from "utils/amount";
 import UserStakingLogs from "./components/userStaking";
 import ConfirmStakingModal from "./components/ConfirmStakingModal";
 import { useModal } from "@pancakeswap/uikit";
-
+import { useTranslation } from 'contexts/Localization'
 
 export default function Staking() {
   const contract = useStakingContract();
@@ -43,7 +43,8 @@ export default function Staking() {
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const [price, setPrice] = useState(Number);
   const [marketCap, setMarketCap] = useState(Number);
-
+  const { t } = useTranslation();
+  
   const getSOSXPrice = async () => {
     const getSOSXValue = await axios.get(
       "https://api.pancakeswap.info/api/v2/tokens/0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF",
@@ -276,19 +277,19 @@ export default function Staking() {
           <div className="col-sm-3 col-6">
             <div className="card overflow-hidden"  style={{rowGap:"20px"}} >
               <h4>10,000,000,000</h4>
-              <span className="pt-1 pb-1">Total supply</span>
+              <span className="pt-1 pb-1">{t("Total supply")}</span>
             </div>
           </div>
           <div className="col-sm-3 col-6">
             <div className="card overflow-hidden" style={{rowGap:"20px"}}> 
               <h4>${marketCap.toFixed(8)}</h4>
-              <span className="pt-1 pb-1">Market Cap</span>
+              <span className="pt-1 pb-1">{t("Market Cap")}</span>
             </div>
           </div>
           <div className="col-sm-3 col-6">
             <div className="card overflow-hidden" style={{rowGap:"20px"}}> 
               <h4>${price.toFixed(8)}</h4>
-              <span className="pt-1 pb-1">Price</span>
+              <span className="pt-1 pb-1">{t("Price")}</span>
               {/* <div className="daily-avr warning fs-12">
 								<i className="fa fa-chevron-down"></i> 0.5% 7D
 							</div> */}
@@ -298,7 +299,7 @@ export default function Staking() {
           <div className="col-sm-3 col-6">
             <div className="card overflow-hidden" style={{rowGap:"20px"}}> 
               <h4>321139778.950</h4>
-              <span className="pt-1 pb-1">Circulating Supply</span>
+              <span className="pt-1 pb-1">{t("Circulating Supply")}</span>
               {/* <div className="daily-avr success fs-12">
 								<i className="fa fa-chevron-up"></i> 1.5% 7D
 							</div> */}
@@ -309,7 +310,7 @@ export default function Staking() {
           <div className="col-xl-4 mb-4">
             <div className="card d-flex flex-column h-100">
               <div className="card-header border-0 pl-0 pt-0">
-                <h4 className="fs-18 ">Stake SOSX</h4>
+                <h4 className="fs-18 ">{t("Stake SOSX")}</h4>
               </div>
                 <div className="card-body">
                   <div className="bg-dark mb-3 p-3 rounded">
@@ -323,7 +324,7 @@ export default function Staking() {
                           defaultValue={0}
                         />
                       </span>
-                      <span className="text-white fs-18">SOSX</span>
+                      <span className="text-white fs-18">{t("SOSX")}</span>
                     </div>
                   </div>
                   <div className="bg-dark p-3 mb-3 rounded">
@@ -358,19 +359,19 @@ export default function Staking() {
                           <option value={3}>12 </option>
                         </select>
                       </span>
-                      <span className="text-white fs-18">Months</span>
+                      <span className="text-white fs-18">{t("Months")}</span>
                     </div>
                   </div>
                   <div className="bg-dark p-3 rounded">
                     <div className="d-flex justify-content-between">
                       <div className="small2">
-                        <div className="success mr-1">Reward Interest: </div>
+                        <div className="success mr-1">{t("Reward Interest:")} </div>
                         <div className="d-flex align-items-center">
                           <div className="text-white fs-14"> {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145}%</div>
                         </div>
                       </div>
                       <div className="small2">
-                        <div className="success mr-1">Estimated </div>
+                        <div className="success mr-1">{t("Estimated")} </div>
                         <div className="d-flex align-items-center">
                           <div className="text-white fs-14">
                             {" "}
@@ -392,14 +393,14 @@ export default function Staking() {
                           className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
                         //   disabled={insufficientBalance || activateStake}
                         >
-                          {loading ? "Approving..." : "Approve"}
+                          {loading ? t("Approving..."): t("Approve")}
                         </button>
                         <button
                           type="button"
                           className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
                           disabled
                         >
-                          Stake
+                          {t("Stake")}
                         </button>
                       </div>
                     ) : (
@@ -409,7 +410,7 @@ export default function Staking() {
                           className="btn btn-primary mr-1 btn-lg w-100 text-nowrap mt-3"
                           disabled
                         >
-                          Approve
+                          {t("Approve")}
                         </button>
                         <button
                           type="button"
@@ -417,7 +418,7 @@ export default function Staking() {
                           onClick={handleSubmit}
                           className="btn btn-primary ml-1 btn-lg w-100 text-nowrap mt-3"
                         >
-                          {loading ? "Staking.." : "Stake"}
+                          {loading ? t("Staking..") : t("Stake")}
                         </button>
                       </div>
                     )}
@@ -433,32 +434,32 @@ export default function Staking() {
           <div className="col-xl-4 mb-4">
             <div className="card d-flex flex-column h-100">
               <div className="card-header border-0 p-0">
-                <h4 className="fs-18">Staking Summary</h4>
+                <h4 className="fs-18">{t("Staking Summary")}</h4>
               </div>
 
               <div className="card-body flex-column d-flex justify-content-between">
                 <div className="pt-4">
                   <div className="d-flex justify-content-between">
-                    <p className="success mb-0 fs-12">Total SOSX Staked</p>
+                    <p className="success mb-0 fs-12">{t("Total SOSX Staked")}</p>
                     <h4 className="mb-0 font-w600  fs-24 pb-3">
                       {cleanNumber(totalAmountStaked / 10 ** 18 + "")}
                     </h4>
                   </div>
                   <div className="d-flex justify-content-between">
-                    <p className="success mb-0 fs-12">Active Stakes</p>
+                    <p className="success mb-0 fs-12">{t("Active Stakes")}</p>
                     <h4 className="mb-0 font-w600  fs-24 pb-3">
                       {numberOfActiveStake}
                     </h4>
                   </div>
                   <div className="d-flex justify-content-between">
-                    <p className="success mb-0 fs-12">Has Referral</p>
+                    <p className="success mb-0 fs-12">{t("Has Referral")}</p>
                     <h6 className="mb-0 font-w600  fs-24 pb-2">
-                      {hasReferral ? "Yes" : <b> No</b>}
+                      {hasReferral ? t("Yes") : <b> {t("No")}</b>}
                     </h6>
                   </div>
                 </div>
                 <div className="d-flex justify-content-between">
-                  <p className="success mb-0 fs-12">Show Archived</p>
+                  <p className="success mb-0 fs-12">{t("Show Archived")}</p>
                   <span className="MuiSwitch-root mb-0 font-w600  fs-24 pb-3">
                     <span
                       className="MuiButtonBase-root MuiIconButton-root jss5 MuiSwitch-switchBase MuiSwitch-colorSecondary"
@@ -483,7 +484,7 @@ export default function Staking() {
                   type="button"
                   className="btn btn-primary btn-lg mt-5"
                 >
-                  Refresh Summarry
+                  {t("Refresh Summarry")}
                 </button>
               </div>
             </div>

@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import NavMining from './NavMining';
 import { useMediaPredicate } from 'react-media-hook';
+import { useTranslation } from 'contexts/Localization';
 
 export default function SocialMining() {
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
     const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+    const { t } = useTranslation();
 
     return (
         <>
@@ -15,7 +17,7 @@ export default function SocialMining() {
                 
                 <div className="row pt-3">
                     <div className="col-sm-12">
-                        <h3 className="text-center h3-mobile pb-1">CLAIM YOUR DAILY FREE SOSX TOKEN REWARD</h3>
+                        <h3 className="text-center h3-mobile pb-1">{t("CLAIM YOUR DAILY FREE SOSX TOKEN REWARD")}</h3>
                     </div>
 
                     <div className="row pt-1 text-center container ">
@@ -24,9 +26,8 @@ export default function SocialMining() {
                                 <div>
                                     <img src="images/share-img.png" className="steps-img pb-3 justify-content-center pb-3" />
                                     <p className="main-pink pb-2 pt-2">Step 1</p>
-                                    <h4 className="fs-18 mb-0">Share</h4>
-                                    <p className="text-white">Share given assignement on your social media every
-                                        24h.</p>
+                                    <h4 className="fs-18 mb-0">{t("Share")}</h4>
+                                    <p className="text-white">{t("Share given assignement on your social media every 24h")}.</p>
                                 </div>
                             </div>
                         </div>
@@ -36,8 +37,8 @@ export default function SocialMining() {
                                 <div>
                                     <img src="images/inv-img.png" className="steps-img pb-3 justify-content-center pb-3" />
                                     <p className="main-pink pb-2 pt-2">Step 2</p>
-                                    <h4 className="fs-18 mb-0">Invite</h4>
-                                    <p className="text-white">Attempt to recruit one person to join SocialX everyday.</p>
+                                    <h4 className="fs-18 mb-0">{t("Invite")}</h4>
+                                    <p className="text-white">{t("Attempt to recruit one person to join SocialX everyday")}.</p>
                                 </div>
                             </div>
                         </div>
@@ -48,8 +49,8 @@ export default function SocialMining() {
                                     <img src="images/collect-img.png"
                                         className="steps-img pb-3 justify-content-center pb-3" />
                                     <p className="main-pink pb-2 pt-2">Step 3</p>
-                                    <h4 className="fs-18 mb-0">Collect</h4>
-                                    <p className="text-white">Log your progress and claim your free SOSX Token reward.</p>
+                                    <h4 className="fs-18 mb-0">{t("Collect")}</h4>
+                                    <p className="text-white">{t("Log your progress and claim your free SOSX Token reward")}.</p>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +62,7 @@ export default function SocialMining() {
                 <div className="col-md-12 mx-auto">
                     <Link href="/socialmining-s1">
                         <a href="socialmining-s1.html">
-                            <button className="btn w-25  btn-primary">Continue</button>
+                            <button className="btn w-25  btn-primary">{t("Continue")}</button>
                         </a>
                     </Link>
                 </div>

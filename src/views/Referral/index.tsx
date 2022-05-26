@@ -21,7 +21,7 @@ import BigNumber from "big-number";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import fetch from "isomorphic-unfetch";
 import ConnectWalletButton from "components/ConnectWalletButton";
-
+import { useTranslation } from 'contexts/Localization';
 
 
 const tabs = [{ name: "list" }, { name: "mining" }, { name: "staking" }];
@@ -41,6 +41,8 @@ export default function Referral({ datasocial }) {
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const [key, setKey] = useState("chart");
+  const { t } = useTranslation();
+  
   var results = [];
   // const account = "dd"
   const toggleTab = (event, type) => {
@@ -191,7 +193,7 @@ export default function Referral({ datasocial }) {
           // description={"aiueo"}
           className="Demo__some-network__share-button"
         >
-          <WhatsappIcon size={32} round /> Whatsapp
+          <WhatsappIcon size={32} round /> {t("Whatsapp")}
         </WhatsappShareButton>
 
         <br />
@@ -204,7 +206,7 @@ export default function Referral({ datasocial }) {
           // description={"aiueo"}
           className="Demo__some-network__share-button"
         >
-          <TelegramIcon size={32} round /> Telegram
+          <TelegramIcon size={32} round /> {t("Telegram")}
         </TelegramShareButton>
 
         <br />
@@ -217,7 +219,7 @@ export default function Referral({ datasocial }) {
           // description={"aiueo"}
           className="Demo__some-network__share-button"
         >
-          <FacebookIcon size={32} round /> Facebook
+          <FacebookIcon size={32} round /> {"Facebook"}
         </FacebookShareButton>
         <br />
         <br />
@@ -227,7 +229,7 @@ export default function Referral({ datasocial }) {
           hashtags={["socialx", "socialx"]}
         >
           <TwitterIcon size={32} round />
-          Twitter
+          {"Twitter"}
         </TwitterShareButton>
       </Popover.Body>
     </Popover>
@@ -248,10 +250,9 @@ export default function Referral({ datasocial }) {
             <div className=" mt-2">
               <img className="p-3 mb-4 " src="images/step1-referrallink.png" />
               <span className="main-pink">Step 1</span>
-              <h4 className="fs-16 font-weight-bold">Get a referral link</h4>
+              <h4 className="fs-16 font-weight-bold">{t("Get a referral link")}</h4>
               <p className="pt-2">
-                Connect a wallet & generate your referral link in the Referral
-                section.
+                {t("Connect a wallet & generate your referral link in the Referral section")}.
               </p>
             </div>
           </div>
@@ -261,9 +262,9 @@ export default function Referral({ datasocial }) {
           <div className="card">
             <img className="p-3" src="images/step2invitefriend-img.png" />
             <span className="main-pink">Step 2</span>
-            <h4 className="fs-16 font-weight-bold">Invite friends</h4>
+            <h4 className="fs-16 font-weight-bold">{t("Invite friends")}</h4>
             <p className="pt-2">
-              Invite your friends & register with your referral link.
+              {t("Invite your friends & register with your referral link")}.
             </p>
           </div>
         </div>
@@ -272,9 +273,9 @@ export default function Referral({ datasocial }) {
           <div className="card">
             <img className="p-3" src="images/step3earnsosx-img.png" />
             <span className="main-pink">Step 3</span>
-            <h4 className="fs-16 font-weight-bold">Earn SOSX</h4>
+            <h4 className="fs-16 font-weight-bold">{t("Earn SOSX")}</h4>
             <p className="pt-2">
-              Receive a referral rewards from your friends’ earnings.
+              {t("Receive a referral rewards from your friends’ earnings")}.
             </p>
           </div>
         </div>
@@ -283,41 +284,41 @@ export default function Referral({ datasocial }) {
       <div className="row mb-3 " style={{rowGap:"20px"}}>
         <div className="col-sm-4 col-6 col-xl-2">
           <div className="card h-100 overflow-hidden">
-            <p className="pb-2">Total Friends</p>
+            <p className="pb-2">{t("Total Friends")}</p>
             <h4 className="fs-16 font-weight-bold">{referralCount}</h4>
           </div>
         </div>
         <div className="col-sm-4 col-6 col-xl-2">
           <div className="card h-100 overflow-hidden">
-            <p className="pb-2">Total Earned</p>
+            <p className="pb-2">{t("Total Earned")}</p>
             <h4 className="fs-16 font-weight-bold">{viewReferralReward}</h4>
           </div>
         </div>
 
         <div className="col-sm-4 col-6 col-xl-2">
           <div className="card h-100 overflow-hidden">
-            <p className="pb-2">Mining Friends</p>
+            <p className="pb-2">{t("Mining Friends")}</p>
             <h4 className="fs-16 font-weight-bold">0</h4>
           </div>
         </div>
 
         <div className="col-sm-4 col-6 col-xl-2">
           <div className="card h-100 overflow-hidden">
-            <p className="pb-2">Mining Earned</p>
+            <p className="pb-2">{t("Mining Earned")}</p>
             <h4 className="fs-16 font-weight-bold">0</h4>
           </div>
         </div>
 
         <div className="col-sm-4 col-6 col-xl-2">
           <div className="card h-100 overflow-hidden">
-            <p className="pb-2">Staking Friends</p>
+            <p className="pb-2">{t("Staking Friends")}</p>
             <h4 className="fs-16 font-weight-bold">{referralCount}</h4>
           </div>
         </div>
 
         <div className="col-sm-4 col-6 col-xl-2">
           <div className="card h-100 overflow-hidden">
-            <p className="pb-2">Staking Earned</p>
+            <p className="pb-2">{t("Staking Earned")}</p>
             <h4 className="fs-16 font-weight-bold">{viewReferralReward}</h4>
           </div>
         </div>
@@ -327,7 +328,7 @@ export default function Referral({ datasocial }) {
         <div className="col-xl-6">
           <div className="card h-100">
             <div className="card-header pl-1  border-0 pb-0">
-              <h4 className="fs-18 font-weight-bold">My Referral Link</h4>
+              <h4 className="fs-18 font-weight-bold">{t("My Referral Link")}</h4>
             </div>
             <div className="card-body">
               <div className="bg-dark rounded">
@@ -350,7 +351,7 @@ export default function Referral({ datasocial }) {
                             </a>
                           </CopyToClipboard>
                           {copied ? (
-                            <span style={{ color: "red" }}>Copied.</span>
+                            <span style={{ color: "red" }}>{t("Copied")}.</span>
                           ) : null}
                         </li>
 
@@ -373,7 +374,7 @@ export default function Referral({ datasocial }) {
                       </div>
                     </div>
                   ) : (
-                    <p>** Connect to Refer ** </p>
+                    <p>** {t("Connect to Refer")} ** </p>
                   )}
                 </div>
               </div>
@@ -384,16 +385,16 @@ export default function Referral({ datasocial }) {
               <div className="bg-dark rounded">
                 <div className="font-weight-bold align-items-center d-flex justify-content-between ">
                   <div className="d-flex flex-column align-items-center">
-                    <h4 className="fs-18 font-weight-bold">You will get</h4>
+                    <h4 className="fs-18 font-weight-bold">{t("You will get")}</h4>
                     <p className="text-success font-weight-bold mt-1 fs-28">35%</p>
                   </div>
                   <i className="fa-solid fs-28 text-success fa-angles-right"></i>
                   <div>
-                    <p className="text-muted">Social Mining</p>
+                    <p className="text-muted">{t("Social Mining")}</p>
                     <h3 className="font-weight-bold"> 25%</h3>
                   </div>
                   <div>
-                    <p className="text-muted">Staking </p>
+                    <p className="text-muted">{t("Staking")} </p>
                     <h3 className="font-weight-bold"> 10%</h3>
                   </div>
                 </div>
@@ -414,7 +415,7 @@ export default function Referral({ datasocial }) {
                  
                   {account ? (
                     <div>
-                       <h4 className="main-pink">Social Mining Referral</h4>
+                       <h4 className="main-pink">{t("Social Mining Referral")}</h4>
                       <h4 className="fs-18 font-weight-bold pt-2 pb-2">
                         {viewReferralReward} SOSX
                       </h4>
@@ -423,12 +424,12 @@ export default function Referral({ datasocial }) {
                         type="button"
                         className="btn btn-primary  "
                       >
-                        Withdraw
+                        {t("Withdraw")}
                       </button>
                     </div>
                   ) : (
                     <div>
-                       <h4 className="main-pink">Social Mining Referral</h4>
+                       <h4 className="main-pink">{t("Social Mining Referral")}</h4>
                       <h4 className="fs-18 font-weight-bold pt-2 pb-2"></h4>
                       <ConnectWalletButton
                         style={{ padding: "0.338rem 1rem" }}
@@ -450,7 +451,7 @@ export default function Referral({ datasocial }) {
 
                   {account ? (
                     <div>
-                       <h4 className="main-pink">Staking Referral</h4>
+                       <h4 className="main-pink">{t("Staking Referral")}</h4>
                       <h4 className="fs-18 font-weight-bold pt-2 pb-2">
                         {viewReferralReward} SOSX
                       </h4>
@@ -458,12 +459,12 @@ export default function Referral({ datasocial }) {
                         style={{ padding: "0.338rem 1rem" }}
                         type="button"
                         className="btn btn-primary">
-                        Withdraw
+                        {t("Withdraw")}
                       </button>
                     </div>
                   ) : (
                     <div>
-                       <h4 className="main-pink">Staking Referral</h4>
+                       <h4 className="main-pink">{t("Staking Referral")}</h4>
                       <h4 className="fs-18 font-weight-bold pt-2 pb-2"></h4>
                       <ConnectWalletButton
                         style={{ padding: "0.338rem 1rem" }}
@@ -497,30 +498,30 @@ export default function Referral({ datasocial }) {
               htmlFor="tab-1"
               className="tab-label"
             >
-              Referral List
+              {t("Referral List")}
             </label>
 
             <div className="tab-content">
-              <h4 className="fs-16 font-weight-bold">Referral List</h4>
-              <span>All your referral friends in one place.</span>
+              <h4 className="fs-16 font-weight-bold">{t("Referral List")}</h4>
+              <span>{t("All your referral friends in one place")}.</span>
               <hr />
               <div className="row pb-3">
                 <div className="col-xl-12">
                   <div className="d-flex justify-content-between">
                     <div className="col-xl-2">
-                      <p className="main-pink">Wallet Address</p>
+                      <p className="main-pink">{t("Wallet Address")}</p>
                     </div>
 
                     <div className="col-xl-3">
-                      <p className="main-pink">Mining Rewards</p>
+                      <p className="main-pink">{t("Mining Rewards")}</p>
                     </div>
 
                     <div className="col-xl-3">
-                      <p className="main-pink">Staking Rewards</p>
+                      <p className="main-pink">{t("Staking Rewards")}</p>
                     </div>
 
                     <div className="col-xl-2">
-                      <p className="main-pink">Total Earned</p>
+                      <p className="main-pink">{t("Total Earned")}</p>
                     </div>
                   </div>
                 </div>
@@ -555,7 +556,7 @@ export default function Referral({ datasocial }) {
                   </div>
                 ))
               ) : (
-                <div className=" mx-auto text-center">Data not available</div>
+                <div className=" mx-auto text-center">{t("Data not available")}</div>
               )}
             </div>
 
@@ -577,29 +578,29 @@ export default function Referral({ datasocial }) {
               htmlFor="tab-2"
               className="tab-label"
             >
-              Social Mining
+              {t("Social Mining")}
             </label>
             <div className="tab-content">
-              <h4 className="fs-16 font-weight-bold">Social Mining</h4>
-              <span>All your referral friends in one place.</span>
+              <h4 className="fs-16 font-weight-bold">{t("Social Mining")}</h4>
+              <span>{t("All your referral friends in one place")}.</span>
               <hr />
               <div className="row pb-3">
                 <div className="col-xl-12">
                   <div className="d-flex justify-content-between">
                     <div className="col-xl-2">
-                      <p className="main-pink">Wallet Address</p>
+                      <p className="main-pink">{t("Wallet Address")}</p>
                     </div>
 
                     <div className="col-xl-3">
-                      <p className="main-pink">Mining Rewards</p>
+                      <p className="main-pink">{t("Mining Rewards")}</p>
                     </div>
 
                     <div className="col-xl-3">
-                      <p className="main-pink">Staking Rewards</p>
+                      <p className="main-pink">{t("Staking Rewards")}</p>
                     </div>
 
                     <div className="col-xl-2">
-                      <p className="main-pink">Total Earned</p>
+                      <p className="main-pink">{t("Total Earned")}</p>
                     </div>
                   </div>
                 </div>
@@ -632,7 +633,7 @@ export default function Referral({ datasocial }) {
                   </div>
                 ))
               ) : (
-                <div className=" mx-auto text-center">Data not available</div>
+                <div className=" mx-auto text-center">{t("Data not available")}</div>
               )}
             </div>
           </div>
@@ -653,17 +654,17 @@ export default function Referral({ datasocial }) {
               htmlFor="tab-3"
               className="tab-label"
             >
-              Staking
+              {t("Staking")}
             </label>
             <div className="tab-content">
-              <h4 className="fs-16 font-weight-bold">Staking</h4>
-              <span>All your referral friends in one place.</span>
+              <h4 className="fs-16 font-weight-bold">{t("Staking")}</h4>
+              <span>{t("All your referral friends in one place")}.</span>
               <hr />
               <div className="row pb-3">
                 <div className="col-xl-12">
                   <div className="d-flex justify-content-between">
                     <div className="col-xl-2">
-                      <p className="main-pink">Wallet Address</p>
+                      <p className="main-pink">{t("Wallet Address")}</p>
                     </div>
 
                     {/* <div className="col-xl-3">
@@ -671,11 +672,11 @@ export default function Referral({ datasocial }) {
                     </div> */}
 
                     <div className="col-xl-3">
-                      <p className="main-pink">Staking Rewards</p>
+                      <p className="main-pink">{t("Staking Rewards")}</p>
                     </div>
 
                     <div className="col-xl-2">
-                      <p className="main-pink">Total Earned</p>
+                      <p className="main-pink">{t("Total Earned")}</p>
                     </div>
                   </div>
                 </div>
@@ -710,7 +711,7 @@ export default function Referral({ datasocial }) {
                   </div>
                 ))
               ) : (
-                <div className=" mx-auto text-center">Data not available</div>
+                <div className=" mx-auto text-center">{t("Data not available")}</div>
               )}
             </div>
           </div>

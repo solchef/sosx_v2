@@ -9,6 +9,8 @@ import React from "react";
 import { useMediaPredicate } from "react-media-hook";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
+import { useTranslation } from 'contexts/Localization';
+import { Trans } from "react-i18next";
 
 export default function SocialminingS3() {
 
@@ -20,7 +22,7 @@ export default function SocialminingS3() {
   const recaptchaRef = React.useRef(null);
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-
+  const { t } = useTranslation();
   const { toastError, toastSuccess } = useToast();
 
   const handlePost = async (e) => {
@@ -33,7 +35,7 @@ export default function SocialminingS3() {
     setMessage('');
 
     // fields check
-    if (!email_address || !socialpostlink) return console.log('All fields are required');
+    if (!email_address || !socialpostlink) return console.log(t("'All fields are required'"));
 
     // post structure
     let post = {
@@ -74,12 +76,12 @@ export default function SocialminingS3() {
         setsocialpostlink('');
         // set the message
         
-        toastSuccess("Details successfully submiotted for verifications");
+        toastSuccess(t("Details successfully submiotted for verifications"));
         router.replace('/x-mining')
         return setMessage(data.message);
     } else {
         // set the error
-        toastSuccess("Error During Submission");
+        toastSuccess(t("Error During Submission"));
     }
 
    
@@ -140,12 +142,10 @@ export default function SocialminingS3() {
               
                 <div className="card-body">
                   <h3 className="text-white font-weight-bold">
-                    CLAIM YOUR DAILY SOCIALX TOKEN REWARDS.
+                    {t("CLAIM YOUR DAILY SOCIALX TOKEN REWARDS.")}
                   </h3>
                   <p className="text-white fs-16 pr-3 mb-3 mt-3">
-                    Please provide your metamask wallet, and a direct URL link
-                    to the post you shared. The transfer is not immediate as
-                    they get individually reviewed and might come in bulk.
+                    {t("Please provide your metamask wallet, and a direct URL link to the post you shared. The transfer is not immediate as they get individually reviewed and might come in bulk")}.
                   </p>
 
                   <div className="row mb-3">
@@ -155,7 +155,7 @@ export default function SocialminingS3() {
                       name="title"
                       onChange={(e) => setEmailAdrress(e.target.value)}
                       value={email_address}
-                      placeholder="E-mail Address"
+                      placeholder={t("E-mail Address")}
                       required
                     />
                   </div>
@@ -179,7 +179,7 @@ export default function SocialminingS3() {
                       name="postlink"
                       onChange={(e) => setsocialpostlink(e.target.value)}
                       value={socialpostlink}
-                      placeholder="Link to Social Media post"
+                      placeholder={t("Link to Social Media post")}
                       required
                     />
                   </div>
@@ -191,14 +191,15 @@ export default function SocialminingS3() {
             <div className="col-lg-6">
               <div className="card-body">
                 <p className="main-pink fs-22  font-weight-bold">
-                  GET PAID FOR LIFE!
+                  {t("GET PAID FOR LIFE!")}
                 </p>
                 <p className="text-white fs-16 pr-3 mb-3 mt-3">
-                  Rewards are automatic and instant with no staking required.
-                  This resolves the issue of locking up finances in hopes of a
+                <Trans i18nKey="description.part1">
+                  Rewards are automatic and instant with no staking required. This resolves the issue of locking up finances in hopes of a
                   better interest rate. Rewards are dependent on network trading
                   activity. The more you share the more the network is utilized,
                   the more holders will receive.
+                  </Trans>
                 </p>
                 
                 <ReCAPTCHA
@@ -219,7 +220,7 @@ export default function SocialminingS3() {
             <Link href="/x-mining">
               <a>
                 <button className="btn btn-outline-primary mr-2 mb-3">
-                  Reset
+                  {t("Reset")}
                 </button>
               </a>
             </Link>
@@ -230,7 +231,7 @@ export default function SocialminingS3() {
                   className="btn btn-primary mr-3 mb-3"
                   // onClick={() => router.replace('/x-mining')}
                 >
-                  Claim Your Tokens
+                  {t("Claim Your Tokens")}
                 </button>
              
           </div>

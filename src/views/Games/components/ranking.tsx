@@ -13,6 +13,7 @@ import ConnectWalletButton from "components/ConnectWalletButton";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import web3 from "web3";
 import { getDaoLevel } from "../hooks/getDaoLevel";
+import { Trans } from "react-i18next";
 
 const StyledRanking = styled(Box)`
   background: ${({ theme }) => theme.colors.gradients.bubblegum};
@@ -133,10 +134,12 @@ const Ranking = (props) => {
           </g>
         </svg>
 
-        <h4>DAOX MEMBERS</h4>
+        <h4>{t("DAOX MEMBERS")}</h4>
       </div>
       <p>
+      <Trans i18nKey="description.part1">
         To become member, visit <Link href="/daostaking/">STAKING DAO</Link>
+        </Trans>
       </p>
       <div
         className="d-flex justify-content-left mt-4"
@@ -183,15 +186,15 @@ const Ranking = (props) => {
           }}
         >
           <div className="header-item" style={{ width: "40px" }}>
-            Rank
+            {t("Rank")}
           </div>
           <div
             className="header-item"
             style={{ width: "55px", textAlign: "center" }}
           >
-            Wallet
+            {t("Wallet")}
           </div>
-          <div className="header-item">Staking</div>
+          <div className="header-item">{t("Staking")}</div>
         </div>
         <StyledList>
           {voters.length > 0 ? (
@@ -227,13 +230,13 @@ const Ranking = (props) => {
             })
           ) : !account ? (
             <div className="mx-auto text-center">
-              You need to be connected to view the Level {displayLevel}
+             {t(" You need to be connected to view the Level ")}{displayLevel}
             </div>
           ) : loading ? (
-            <div className="mx-auto text-center">Loading Data</div>
+            <div className="mx-auto text-center">{t("Loading Data")}</div>
           ) : (
             <div className="mx-auto text-center">
-              No one is on Level {displayLevel}
+              {t("No one is on Level")} {displayLevel}
             </div>
           )}
         </StyledList>

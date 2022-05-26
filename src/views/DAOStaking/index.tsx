@@ -16,6 +16,8 @@ import StakingSummary from "./components/DaoMemebrship";
 import DaoMemebrship from "./components/DaoMemebrship";
 import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
 import { formatFixedNumber, getDecimalAmount } from "utils/formatBalance";
+import { useTranslation } from 'contexts/Localization';
+import { Trans } from "react-i18next";
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -50,6 +52,7 @@ export default function DaoStaking() {
   const [estimateDaoLevel, setEstimateDaoLevel] = useState(0);
   const [transactionState, setTransactionState] = useState(1);
   const [txHash, setTxHash] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
 
@@ -121,10 +124,10 @@ export default function DaoStaking() {
         if (stake) {
           setActivatestake(true);
           setLoading(false);
-          toastSuccess("Staking Transaction successfully sent");
+          toastSuccess(t("Staking Transaction successfully sent"));
           handleConfirmDismiss();
         } else {
-          toastError("Could not stake");
+          toastError(t("Could not stake"));
         }
   };
 
@@ -134,7 +137,7 @@ export default function DaoStaking() {
     //   setLoading(false);
     //   toastSuccess("Staking Transaction successfully sent");
     // } else {
-      toastError("Rewards not yet available");
+      toastError(t("Rewards not yet available"));
     // }
   };
 
@@ -149,10 +152,10 @@ export default function DaoStaking() {
     if (tx) {
       setActivatestake(true);
       setLoading(false);
-      toastSuccess("Staking Transaction successfully sent");
+      toastSuccess(t("Staking Transaction successfully sent"));
       
     } else {
-      toastError("Could not unstake");
+      toastError(t("Could not unstake"));
     }
   };
 
@@ -166,12 +169,12 @@ export default function DaoStaking() {
 
   const handleSubmit = async () => {
     if (amountToStake < 1) {
-      toastError("You must stake a minimum of 1 token");
+      toastError(t("You must stake a minimum of 1 token"));
       return;
     }
 
     if (amountToStake > balance) {
-      toastError(`Insufficient balance. Your wallet balance is ${balance} you need  ${(amountToStake - balance).toFixed(3)} more SOSX to stake that amount. `);
+      toastError(t(`Insufficient balance. Your wallet balance is ${balance} you need  ${(amountToStake - balance).toFixed(3)} more SOSX to stake that amount. `));
       return;
     }
 
@@ -197,7 +200,7 @@ export default function DaoStaking() {
       onPresentConfirmModal();
 
       toastSuccess(
-        "Approval transaction sent. You can stake after the transaction is mined."
+        t("Approval transaction sent. You can stake after the transaction is mined.")
       );
     }
   };
@@ -205,10 +208,10 @@ export default function DaoStaking() {
   const [onPresentConfirmModal] = useModal(
     <ConfirmStakingModal
       onConfirm={handleStake}
-      receipt={pendingTx? 'Pending' : 'Success'}
-      clientMessage={"Your spending approval is being confirmed. "}
+      receipt={pendingTx? t('Pending') : t('Success')}
+      clientMessage={t("Your spending approval is being confirmed. ")}
       onAcceptChanges={function (): void {
-        throw new Error("Function not implemented.");
+        throw new Error(t("Function not implemented."));
       }}
      customOnDismiss={handleConfirmDismiss}
     />,
@@ -263,10 +266,10 @@ export default function DaoStaking() {
                     ></path>
                   </g>
                 </svg>
-                <h4>STAKE SOSX</h4>
+                <h4>{t("STAKE SOSX")}</h4>
               </div>
               <p className="mb-4">
-                Become a DAOX member while receiving daily rewards
+               { t("Become a DAOX member while receiving daily rewards")}
               </p>
               <div className="bg-input mb-3 py-2 px-3 rounded mt-4">
                 <div className="d-flex justify-content-between align-items-center">
@@ -289,7 +292,7 @@ export default function DaoStaking() {
                   className="btn w-100  mr-1 btn-primary btn-lg mt-2"
                   type="button"
                   onClick={handleSubmit}>
-                  {activateStake ? 'STAKE'  : 'APPROVE'  }
+                  {activateStake ? t('STAKE')  : t('APPROVE')  }
                     </button>
               </div>
             </div>
@@ -299,29 +302,29 @@ export default function DaoStaking() {
             <div className="card-body">
               <div className="d-flex align-items-center mt-2 mb-2">
                 <img src="images/prize-pool-icon.png" className="title-icon" />
-                <h4>RETURN CALCULATOR</h4>
+                <h4>{t("RETURN CALCULATOR")}</h4>
               </div>
-              <p>Investment Return Estimator</p>
+              <p>{t("Investment Return Estimator")}</p>
               <div className=" mt-4 ">
                 <div className="d-flex h-100 justify-content-between mt-3 mb-3">
                   <div>
                     <div className="d-flex w-auto m-auto">
                       <h3>{estimateDaoLevel > 0 ? (estimateDaoLevel == 1 ? 6.00 : estimateDaoLevel == 2 ? 9.00 : 12.00) : 0} %</h3>
                     </div>
-                    <p className="success mb-0 main-pink pt-2">Reward % </p>
+                    <p className="success mb-0 main-pink pt-2">{t("Reward ")}% </p>
                   </div>
                   <div>
                     <div className="d-flex w-auto m-auto">
                       <h3>Lv {estimateDaoLevel}</h3>
                     </div>
-                    <p className="success main-pink mb-0 pt-2">DAO Level</p>
+                    <p className="success main-pink mb-0 pt-2">{t("DAO Level")}</p>
                   </div>
                   <div>
                     <div className="d-flex w-auto m-auto">
                       <h3>{stakingInterest}</h3>
                     </div>
                     <p className="success mb-0 main-pink pt-2">
-                      Estimate yearly Return
+                      {t("Estimate yearly Return")}
                     </p>
                   </div>
                 </div>
@@ -329,7 +332,7 @@ export default function DaoStaking() {
               <button onClick={handleClaimReward}
                 className="btn mx-auto btn-primary btn-lg mt-3"
                 type="button">
-                CLAIM REWARD
+                {t("CLAIM REWARD")}
               </button>
             </div>
           </div>

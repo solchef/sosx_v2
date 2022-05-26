@@ -13,6 +13,7 @@ import axios from "axios";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import web3 from "web3";
 import { cleanNumber } from "utils/amount";
+import { useTranslation } from 'contexts/Localization';
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -29,13 +30,14 @@ export default function UserStakingLogs(props) {
   const [activeStakes, setActiveStakes] = useState([]);
   const [showDetails, setShowDetails] = useState(-1);
   const [loadingData, setLoadingData] = useState(false);
-
+  const { t } = useTranslation();
+  
   const handleUnstake = async (stakeID) => {
     const unstake = await contract.returnTokens(stakeID);
 
     if (unstake) {
       toastSuccess(
-        "Successfully sent unstake SOSX transaction, Check balance in your wallet"
+        t("Successfully sent unstake SOSX transaction, Check balance in your wallet")
       );
     }
   };
@@ -112,21 +114,21 @@ export default function UserStakingLogs(props) {
                   </div>
                 </div>
                 <div className="col-9">
-                  <h4 className="fs-18 pl-3">Staking Details</h4>
+                  <h4 className="fs-18 pl-3">{t("Staking Details")}</h4>
                 </div>
               </div>
               <div className="card-body">
        
                   <>
-                    <span className="fs-14">Staking Details</span>
+                    <span className="fs-14">{t("Staking Details")}</span>
                     <ul className="token-balance-list mb-2 mt-2">
                       <li>
                         <span className="justify-content-between success fs-12">
-                          Duration
+                          {t("Duration")}
                         </span>
                       </li>
                       <li>
-                        <span className="success fs-12">Amount</span>
+                        <span className="success fs-12">{t("Amount")}</span>
                       </li>
                     </ul>
 
@@ -149,7 +151,7 @@ export default function UserStakingLogs(props) {
                                 : stake.stakingClass == 2
                                   ? 6
                                   : 12}{" "}
-                              Months
+                              {t("Months")}
                             </span>
                           </li>
                           <li>
@@ -177,14 +179,14 @@ export default function UserStakingLogs(props) {
                               <li>
                                 <span className="justify-content-between success fs-12">
                                   {" "}
-                                  Amount Staked: <br />
+                                  {t("Amount Staked:")} <br />
                                   {stake.amount} SOSX
                                 </span>
                               </li>
                               <li>
                                 <span className="justify-content-between success fs-12">
                                   {" "}
-                                  Rewards Gained: <br />
+                                  {t("Rewards Gained:")} <br />
                                   {stake.amount} SOSX{" "}
                                 </span>
                               </li>
@@ -194,7 +196,7 @@ export default function UserStakingLogs(props) {
                               <li>
                                 <span className="justify-content-between success fs-12">
                                   {" "}
-                                  Date Staked: <br />
+                                  {t("Date Staked:")} <br />
                                   {stake.stakeDate}
                                 </span>
                               </li>
@@ -202,11 +204,11 @@ export default function UserStakingLogs(props) {
                               <li>
                                 <span className="justify-content-between success fs-12">
                                   {" "}
-                                  Duration Elapsed: <br />
+                                  {t("Duration Elapsed:")} <br />
                                   {(stake.periodElapsed / (24 * 60)).toFixed(
                                     0
                                   )}{" "}
-                                  Days
+                                  {t("Days")}
                                 </span>
                               </li>
                             </ul>
@@ -222,14 +224,14 @@ export default function UserStakingLogs(props) {
                               <li>
                                 <span className="justify-content-between success fs-12">
                                   {" "}
-                                  Withdrawed: <br />
-                                  {stake.isWithdrawed ? "Yes" : "No"}
+                                 {t(" Withdrawed:")} <br />
+                                  {stake.isWithdrawed ? t("Yes") : t("No")}
                                 </span>
                               </li>
                               <li>
                                 <span className="justify-content-between success fs-12">
                                   {" "}
-                                  Remaining Period: <br />
+                                  {t("Remaining Period:")} <br />
                                   {(
                                     (stake.stakingClass == 1
                                       ? 90
@@ -238,7 +240,7 @@ export default function UserStakingLogs(props) {
                                         : 360) -
                                     stake.periodElapsed / (24 * 60)
                                   ).toFixed(0)}{" "}
-                                  Days
+                                  {t("Days")}
                                 </span>
                               </li>
                             </ul>
@@ -254,14 +256,14 @@ export default function UserStakingLogs(props) {
                               <li>
                                 <span className="justify-content-between success fs-12">
                                   <button className="btn btn-success full-width">
-                                    CLAIM REWARDS
+                                    {t("CLAIM REWARDS")}
                                   </button>
                                 </span>
                               </li>
                               <li>
                                 <span className="justify-content-between success fs-12">
                                   <button className="btn btn-primary">
-                                    UNSTAKE
+                                    {t("UNSTAKE")}
                                   </button>
                                 </span>
                               </li>

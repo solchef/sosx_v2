@@ -13,6 +13,7 @@ import axios from "axios";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import web3 from "web3";
 import { cleanNumber } from "utils/amount";
+import { useTranslation } from 'contexts/Localization';
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -30,14 +31,14 @@ export default function userStaking(props) {
   const [showDetails, setShowDetails] = useState(-1);
   const [loadingData, setLoadingData] = useState(false);
   const [level, setlevel] = useState(false);
-  
+  const { t } = useTranslation();
 
   const handleUnstake = async (stakeID) => {
     const unstake = await contract.returnTokens(stakeID);
 
     if (unstake) {
       toastSuccess(
-        "Successfully sent unstake SOSX transaction, Check balance in your wallet"
+        t("Successfully sent unstake SOSX transaction, Check balance in your wallet")
       );
     }
   };
@@ -118,18 +119,18 @@ export default function userStaking(props) {
                 <g></g>
               </svg>
 
-              <h4>STAKING LOG</h4>
+              <h4>{t("STAKING LOG")}</h4>
             </div>
             <p></p>
-            <p className="mb-4">Keep track of your investments activities.</p>
+            <p className="mb-4">{t("Keep track of your investments activities.")}</p>
             <p></p>
             <div
               className="d-flex pt-0 px-4  mt-0 ranking-header"
               style={{ justifyContent: "space-between", borderTop: " none" }}
             >
-              <div className="header-item">Date</div>
-              <div className="header-item">Action</div>
-              <div className="header-item">Staking</div>
+              <div className="header-item">{t("Date")}</div>
+              <div className="header-item">{t("Action")}</div>
+              <div className="header-item">{t("Staking")}</div>
             </div>
             <div
               className="tab-bg"
