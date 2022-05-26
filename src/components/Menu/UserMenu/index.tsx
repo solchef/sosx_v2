@@ -19,13 +19,18 @@ import { usePendingTransactions } from 'state/transactions/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useGetBnbBalance } from 'hooks/useTokenBalance'
 import { useTranslation } from 'contexts/Localization'
-import { nftsBaseUrl } from 'views/Nft/market/constants'
+// import { nftsBaseUrl } from 'views/Nft/market/constants'
 import { FetchStatus } from 'config/constants/types'
 import WalletModal, { WalletView, LOW_BNB_BALANCE } from './WalletModal'
 import ProfileUserMenuItem from './ProfileUserMenutItem'
 import WalletUserMenuItem from './WalletUserMenuItem'
+import { NavProps } from "../../../../packages/uikit/src/widgets/Menu/types";
 
-const UserMenu = () => {
+const UserMenu: React.FC<NavProps> = ({
+  currentLang,
+  setLang,
+  langs,
+}) => {
   const router = useRouter()
   const { t } = useTranslation()
   const { account, error } = useWeb3React()
@@ -73,6 +78,13 @@ const UserMenu = () => {
           {t('Recent Transactions')}
           {hasPendingTransactions && <RefreshIcon spin />}
         </UserMenuItem>
+       
+        {langs.map( la =>
+        <UserMenuItem as="button" disabled={isWrongNetwork} onClick={() => setLang(la)}>
+        {la.language}
+        </UserMenuItem>
+        )} 
+        
         {/* <UserMenuDivider />
         <UserMenuItem
           as="button"
