@@ -250,6 +250,7 @@ const Menu: React.FC<NavProps> = ({
                 <a>
                   <i className="fa fa-repeat"></i>
                   <span className="nav-text">Swap</span>
+             
                 </a>
               </Link>
 
