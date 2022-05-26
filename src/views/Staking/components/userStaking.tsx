@@ -145,7 +145,7 @@ export default function UserStakingLogs(props) {
                 <tr className="jsx-e5e2ca7965fa437a" style={{borderColor: 'rgb(30, 33, 36)'}}>
                   <td className="jsx-e5e2ca7965fa437a text-white">{stake.stakeDate}</td>
                   <td className="jsx-e5e2ca7965fa437a text-white">Staked</td>
-                  <td className="jsx-e5e2ca7965fa437a text-white">{stake.periodElapsed.toFixed(0)} </td>
+                  <td className="jsx-e5e2ca7965fa437a text-white">{stake.periodElapsed.toFixed(0)} D</td>
                   <td className="jsx-e5e2ca7965fa437a text-white"> {stake.amount}</td>
                 </tr>
               )}
