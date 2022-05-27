@@ -1,75 +1,116 @@
-import Link from 'next/link';
+import { useEffect, useState } from "react";
+import {
+  setCookies,
+  getCookie,
+  checkCookies,
+  removeCookies,
+} from "cookies-next";
+import Step0 from "./mini";
+import Step1 from "./SocialminingS1";
+import Step2 from "./SocialminingS2";
+import Step3 from "./SocialminingS3";
+import ConnectWalletButton from "components/ConnectWalletButton";
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import NavMining from './NavMining';
-import { useMediaPredicate } from 'react-media-hook';
-import { useTranslation } from 'contexts/Localization';
+import { useMediaPredicate } from "react-media-hook";
 
-export default function SocialMining() {
-    const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
-    const biggest1400 = useMediaPredicate("(max-width: 1400px)");
-    const { t } = useTranslation();
+const GameGuide = () => {
+  const [showGuide, setshowGuide] = useState(false);
+  const handleCloseGuide = () => setshowGuide(false);
+  const handleStartGuide = () => setshowGuide(true);
+  const [showGameGuide, setShowGameGuide] = useState(false);
+  const [step, setStep] = useState(0);
+  const [title, setTitle] = useState('');
+  const { account } = useActiveWeb3React();
 
-    return (
-        <>
-           <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
-          <NavMining/>
 
-            <div className="pt-2 pb-0">
-                
-                <div className="row pt-3">
-                    <div className="col-sm-12">
-                        <h3 className="text-center h3-mobile pb-1">{t("CLAIM YOUR DAILY FREE SOSX TOKEN REWARD")}</h3>
-                    </div>
+  useEffect(() => {
+    checkGuideShow();
 
-                    <div className="row pt-1 text-center container ">
-                        <div className="col-md-4 mb-3">
-                            <div className="card overflow-hidden">
-                                <div>
-                                    <img src="images/share-img.png" className="steps-img pb-3 justify-content-center pb-3" />
-                                    <p className="main-pink pb-2 pt-2">Step 1</p>
-                                    <h4 className="fs-18 mb-0">{t("Share")}</h4>
-                                    <p className="text-white">{t("Share given assignement on your social media every 24h")}.</p>
-                                </div>
-                            </div>
-                        </div>
+  }, []);
 
-                        <div className="col-md-4 mb-3">
-                            <div className="card overflow-hidden">
-                                <div>
-                                    <img src="images/inv-img.png" className="steps-img pb-3 justify-content-center pb-3" />
-                                    <p className="main-pink pb-2 pt-2">Step 2</p>
-                                    <h4 className="fs-18 mb-0">{t("Invite")}</h4>
-                                    <p className="text-white">{t("Attempt to recruit one person to join SocialX everyday")}.</p>
-                                </div>
-                            </div>
-                        </div>
+  const checkGuideShow = () => {
+    let status = checkCookies("referral_guide");
+    // alert(status)
+    if (status) {
+      let cookieVal = getCookie("referral_guide");
+      if (cookieVal == "play") {
+        handleStartGuide();
+      } else {
+        //oxgame steps wont play
+        setShowGameGuide(false);
+      }
+    } else {
+      setCookies("referral_guide", "play");
+      setShowGameGuide(true);
+    }
+  };
 
-                        <div className="col-md-4">
-                            <div className="card overflow-hidden">
-                                <div>
-                                    <img src="images/collect-img.png"
-                                        className="steps-img pb-3 justify-content-center pb-3" />
-                                    <p className="main-pink pb-2 pt-2">Step 3</p>
-                                    <h4 className="fs-18 mb-0">{t("Collect")}</h4>
-                                    <p className="text-white">{t("Log your progress and claim your free SOSX Token reward")}.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  const pauseGuideShow = () => {
+    removeCookies("referral_guide");
+    setCookies("referral_guide", "pause");
+    setShowGameGuide(false);
+  };
 
-            <div className="row mx-auto text-center">
-                <div className="col-md-12 mx-auto">
-                    <Link href="/socialmining-s1">
-                        <a href="socialmining-s1.html">
-                            <button className="btn w-25  btn-primary">{t("Continue")}</button>
-                        </a>
-                    </Link>
-                </div>
-            </div>
-            </div>
-        </>
-    );
+  const manageStepShow = () => {
+    switch (step) {
+      case 0:
+        return <Step0 />;
+      case 1:
+        return <Step1 />;
+      case 2:
+        return <Step2 />;
+      case 3:
+        return <Step3 />;
+      default:
+        // return <Step0 />;
+        break
+    }
 
-}
+  };
 
+  const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+  return (
+    <>
+    <div className={`${biggerThan1400 && "container"} mt-0 ${biggest1400 && "container-fluid"}`} >
+
+      <NavMining step={step}/>
+
+      {/* Guides are displayed here below */}
+      <div className="d-flex flex-column align-items-center">
+        {manageStepShow()}
+
+
+        <div className="d-flex justify-content-between mt-4">
+          {step !== 0 && (
+            <button
+              className="btn btn-outline-primary pr-4 pl-4 mr-2 mb-3"
+              onClick={() => setStep(step - 1)}
+            >
+              Back
+            </button>
+          )}
+
+          {(step == 2) && !account ? <ConnectWalletButton className="btn btn-primary  pr-3 pl-3 mr-3 mb-3 " />
+            : <button
+              className="btn   pr-3 pl-3  btn-primary mr-3 mb-3"
+              onClick={() => setStep(step == 3 ? 0 : step + 1)}
+            >
+              {step == 3 ? "Reset" : "Continue"}
+
+            </button>}
+
+
+        </div>
+
+      </div>
+
+
+      </div>
+
+    </>
+  );
+};
+
+export default GameGuide;
