@@ -5,7 +5,7 @@ import {  GET_LastRound } from "utils/graphqlQ";
 
 
 const useStage = () => {
-  const [stage, setStage] = useState(1);
+  const [stage, setStage] = useState(2);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [lastRound, setLastRound] = useState(Number);

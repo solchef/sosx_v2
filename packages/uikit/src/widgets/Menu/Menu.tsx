@@ -164,11 +164,11 @@ const Menu: React.FC<NavProps> = ({
         return "STAKING";
 
       case '/daostaking':
-        return "DAO STAKING";
+        return "DAOX";
 
       case '/xgame':
         
-        return 'OX GAME';
+        return 'GAME';
         
       case '/referrals':
         return "Referrals";
@@ -211,6 +211,10 @@ const Menu: React.FC<NavProps> = ({
       <div className="nav-header">
         <a href="https://socialx.io" className="brand-logo">
           <img className="logo-abbr" src="/images/xlogo-black.b90261b2.svg" alt="" />
+         
+             <div className="dashboard_bar mobile-show ml-2">
+             {title()} 
+            </div>
         </a>
       </div>
 
@@ -220,10 +224,17 @@ const Menu: React.FC<NavProps> = ({
             <div className="collapse navbar-collapse justify-content-between">
               <div className="header-left">
                 <div className="dashboard_bar">
-                  {title()} 
-                  {router.pathname == '/xgame' && 
-                    <p className="mb-0 ml-2 float-right">  | {stages[stage-1] && stages[stage-1].title}</p>
-                }
+                 
+                  {router.pathname == '/xgame' ?
+                  <>
+                    OX {title()} 
+                    <p className="mb-0 ml-1 mt-1 float-right">  | {stages[stage-1] && stages[stage-1].title}</p>
+                    </>
+                    :
+                    <>
+                    {title()} 
+                    </>
+                  }
                 </div>
                
               </div>
@@ -232,7 +243,6 @@ const Menu: React.FC<NavProps> = ({
                 <li className="nav-item wallet-btn">
                   {/* <button type="button" className="btn btn-primary btn-lg">Connect Wallet</button> */}
                   {userMenu}
-
                 </li>
               </ul>
             </div>
@@ -269,7 +279,7 @@ const Menu: React.FC<NavProps> = ({
               <Link href="/daostaking">
                 <a>
                   <i className="fa fa-coins"></i>
-                  <span className="nav-text">DAO Staking</span>
+                  <span className="nav-text">DAOX</span>
                 </a>
               </Link>
 

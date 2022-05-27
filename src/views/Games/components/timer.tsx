@@ -137,12 +137,12 @@ const TimerDisplay = () => {
       <div className="card-body">
         <div className="steps">
           <ul className="progressbar mb-4 ">
-            <li style={{ width: "27%" }} className="active">
+            <li style={{ width: "27%" }} className={stage == 1 && 'active'}>
               CREATE
             </li>
-            <li className="active">TOP 3 VOTE</li>
-            <li className="active">FINAL VOTE</li>
-            <li className="active">SUBMIT VIDEO</li>
+            <li className={stage == 2 && 'active'}>TOP 3 VOTE</li>
+            <li className={stage == 3 && 'active'}>FINAL VOTE</li>
+            <li className={stage == 4 && 'active'}>SUBMIT VIDEO</li>
           </ul>
         </div>
         <div className="d-flex align-items-baseline">
@@ -205,7 +205,7 @@ const TimerDisplay = () => {
       <PrizePool />
 
       <Modal show={showRules} onHide={handleCloseRules} centered size="lg"> 
-        <div className="modal-content">
+        <div className="modal-content" style={{textAlign:"left"}}>
           <div className="text-dark modal-header" style={{background: 'rgb(17, 17, 23)', borderRadius: '10px 10px 0px 0px'}}>
             Rules<a href="#" className="pull-right text-white" onClick={handleCloseRules}><i className="fa fa-close" /></a></div>
           <div className="modal-body" style={{background: 'rgb(17, 17, 23)', borderRadius: '0px 0px 10px 10px'}}>
