@@ -11,6 +11,7 @@ import {
     TelegramIcon,
   } from "react-share";
   import { FacebookIcon, TwitterIcon } from "react-share";
+  import { useMediaPredicate } from "react-media-hook";
   const Referral = ({account})=>{
     const [copied, setCopied] = useState(false);
     const [show, setShow] = useState(false);
@@ -60,10 +61,11 @@ import {
           </Popover.Body>
         </Popover>
       );
-    
-
+      const lessThan700 = useMediaPredicate("(max-width:700px)");
 return (
-    <div style={{ flex: '1 1 25%',maxWidth:'100%' }}>
+    <div 
+   style={{ flex: '1 1 25%',maxWidth:'100%', order: lessThan700 ? "1" : "5" }}
+    >
     <div className="card d-flex flex-column">
       <div className="card-body mb-3">
         <div className="d-flex align-items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 239 116" xmlSpace="preserve" style={{ width: '40px', fill: 'rgb(255, 0, 204)', marginRight: '10px' }}>

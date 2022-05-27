@@ -181,7 +181,7 @@ const CreateChallenge = (props) => {
                         style={{ fontSize: "20px" }}
                       />
                       <h3 className=" pt-3 pb-3 " style={{ color: "#8e8e8e" }}>
-                        SOSX
+                      &nbsp;
                       </h3>
                     </div>
                   </div>

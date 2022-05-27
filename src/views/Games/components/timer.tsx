@@ -140,9 +140,9 @@ const TimerDisplay = () => {
             <li style={{ width: "27%" }} className="active">
               CREATE
             </li>
-            <li className="active">TOP 3 VOTE</li>
-            <li className="active">FINAL VOTE</li>
-            <li className="active">SUBMIT VIDEO</li>
+            <li>TOP 3 VOTE</li>
+            <li>FINAL VOTE</li>
+            <li>SUBMIT VIDEO</li>
           </ul>
         </div>
         <div className="d-flex align-items-baseline">

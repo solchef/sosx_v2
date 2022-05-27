@@ -29,7 +29,7 @@ export default function SocialMining() {
                         <div className="col-md-4 mb-3">
                             <div className="card overflow-hidden">
                                 <div>
-                                    <img src="images/inv-img.png" className="steps-img pb-3 justify-content-center pb-3" />
+                                    <img src="images/inv-img.png" style={{width:'162px'}} className="steps-img pb-3 justify-content-center pb-3" />
                                     <p className="main-pink pb-2 pt-2">Step 2</p>
                                     <h4 className="fs-18 mb-0">Invite</h4>
                                     <p className="text-white">Attempt to recruit one person to join SocialX everyday.</p>
