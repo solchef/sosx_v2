@@ -3,7 +3,7 @@ import ConnectWalletButton from "components/ConnectWalletButton";
 const Mining = ({account,viewReferralReward})=>{
 
     return (
-        <div style={{ flex: '1 1 25%' ,maxWidth:'100%'}}>
+        <div style={{ flex: '1 1 25%',order:'6' ,maxWidth:'100%'}}>
 
         <div className="card d-flex flex-column">
           <div className="card-body">
@@ -99,8 +99,6 @@ const Mining = ({account,viewReferralReward})=>{
         </div>
       </div>
     )
-    
-    
     }
     
     export default Mining
