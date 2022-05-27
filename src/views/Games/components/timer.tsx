@@ -209,7 +209,7 @@ const TimerDisplay = () => {
           <div className="text-dark modal-header" style={{background: 'rgb(17, 17, 23)', borderRadius: '10px 10px 0px 0px'}}>
             Rules<a href="#" className="pull-right text-white" onClick={handleCloseRules}><i className="fa fa-close" /></a></div>
           <div className="modal-body" style={{background: 'rgb(17, 17, 23)', borderRadius: '0px 0px 10px 10px'}}>
-            <h1>What is the craziest thing you would do on camera for money?</h1>
+            <h3>What is the craziest thing you would do on camera for money?</h3>
             <p>The First person to complete created and voted challenge by the SOSX DAOX members and submit the video on
               socialx.io wins the prize pool!</p>
             <h3 className="mt-5">DAOX Membership</h3>
@@ -269,17 +269,17 @@ const TimerDisplay = () => {
             <p>A new challenge is now public, and the race is on since the first successful submission that follows all
               rules wins the prize pool. If one mistake, one direction is missed, the submission is automatically
               rejected, giving the following submission a chance to win. </p>
-            <ul>
-              <li>1- Video must be uploaded to youtube or TikTok.</li>
-              <li>2- Share your video on your social media.</li>
-              <li>3- Submit the URL on SocialX. </li>
-            </ul>
+            <ol>
+              <li>Video must be uploaded to youtube or TikTok.</li>
+              <li>Share your video on your social media.</li>
+              <li>Submit the URL on SocialX. </li>
+            </ol>
             <p>Video must include the following:</p>
-            <ul>
-              <li>1- You must state in the video, "SocialX paid me to do it."</li>
-              <li>2- Socialx.io must be mentioned in the info</li>
-              <li>3- Video must be uploaded on your social media.</li>
-            </ul>
+            <ol>
+              <li>You must state in the video, "SocialX paid me to do it."</li>
+              <li>Socialx.io must be mentioned in the info</li>
+              <li>Video must be uploaded on your social media.</li>
+            </ol>
           </div>
         </div>
       </Modal>
