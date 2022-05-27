@@ -74,7 +74,7 @@ const Staking = ({ account, datasocial, referralCount, setReferralCount, viewRef
 
   return (
 
-    <div style={{ flex: '1 1 40%',maxWidth:'100%' }}>
+    <div style={{ flex: '1 1 40%',order:'7',maxWidth:'100%' }}>
       <div className="card h-100">
         <div className="card-body mb-3">
           <div className="d-flex align-items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 239 116" xmlSpace="preserve" style={{ width: '40px', fill: 'rgb(255, 0, 204)', marginRight: '10px' }}>

@@ -6,24 +6,14 @@ import Header from "./components/Header";
 import REFERRAL from "./components/Referral";
 import Mining from "./components/Mining";
 import Staking from "./components/Staking";
-import { useMediaPredicate } from "react-media-hook";
 export default function Referral({ datasocial }) {
   const { account } = useActiveWeb3React();
   const [referralCount, setReferralCount] = useState(0);
   const [viewReferralReward, setViewReferralReward] = useState(0);
-  const biggerThan1400 = useMediaPredicate("(min-width: 576px)");
   return (
     <div className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse" style={{ gap: '20px' }}>
-
-      {biggerThan1400 ? <>
         <Header referralCount={referralCount} viewReferralReward={viewReferralReward} />
         <REFERRAL account={account} />
-      </> :
-        <>
-          <REFERRAL account={account} />
-          <Header referralCount={referralCount} viewReferralReward={viewReferralReward} />
-        </>
-      }
       <Mining viewReferralReward={viewReferralReward} account={account} />
       <Staking setViewReferralReward={setViewReferralReward} viewReferralReward={viewReferralReward} referralCount={referralCount} setReferralCount={setReferralCount} account={account} datasocial={datasocial} />
       <GameGuide />
