@@ -45,7 +45,6 @@ export default function SocialminingS3() {
       return;
     }
 
-
     if (
       socialpostlink.search("tiktok") != -1 ||
       socialpostlink.search("youtu") != -1 ||
@@ -86,9 +85,13 @@ export default function SocialminingS3() {
               headers,
             });
 
+
             if (rest.status == 300) {
               toastError("You had submitted another record");
+            }else{
+              handleReferral();
             }
+            
             toastSuccess("Details successfully submitted for verification");
 
             router.replace("/x-mining");
@@ -98,16 +101,28 @@ export default function SocialminingS3() {
   
   };
 
+    const handleReferral = async() => {
+      let fd = new FormData();
+      let referal = account
+        ? await contract.getMyReferral()
+        : "0x0000000000000000000000000000000000000001";
+      fd.append("referrer", localStorage.getItem("referral"));
+      fd.append("referee", account);
+      fd.append("referee_email", email_address);
+      const headers = {
+        "Content-Type": "application/x-www-form-urlencoded",
+      };
+      let rest = await axios.post("https://socialx.io/referral.php", fd, {
+        headers,
+      });
+    }
+
   useEffect(() => {
     let check = checkCookies("lab-processing");
 
     if (check) {
-
       // let val = getCookie("lab-processing");
-      
       setBlock(true);
-      
-    
     }else{
       setBlock(false);
     }

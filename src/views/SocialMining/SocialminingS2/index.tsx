@@ -16,6 +16,7 @@ export default function SocialminingS2(props) {
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
+
   return (
 
     < >
