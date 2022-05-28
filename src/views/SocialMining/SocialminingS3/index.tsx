@@ -133,8 +133,8 @@ export default function SocialminingS3() {
 
                     <div className="row mb-3">
                       <input
-                        className="input1"
-                        type="text"
+                        className="input1 form-control rounded py-4"
+                        type="email"
                         name="title"
                         onChange={(e) => setEmailAdrress(e.target.value)}
                         value={email_address}
