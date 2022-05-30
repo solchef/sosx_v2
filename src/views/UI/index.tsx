@@ -1,3 +1,4 @@
+import Link from "next/link"
 import React from "react"
 
 
@@ -22,18 +23,22 @@ export const UI = () => {
               <div>
                 <h1 className="h1-1" style={{fontFamily: 'game_of_squidsregular'}}>social <br className="mobile-hide" /> mining</h1>
                 <p style={{ fontFamily: 'sans-serif', color:' #ffff', fontWeight: '300', height: '100px', width: '30vw' }}>EARN FREE TOKENS</p>
-                <a href="socialmining.html">
+                <Link href="/social-mining" >
+                <a>
                   <span className="span1" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500, color:' #ffff'}}>Free Tokens &gt;</span>
                 </a>
+                  </Link>
               </div>
             </li>
             <li>
               <div>
                 <h1 className="ox h1-2" style={{fontFamily: 'game_of_squidsregular'}}>ox <br className="mobile-hide" /> game</h1>
                 <p style={{  fontFamily: 'sans-serif', color:' #ffff', fontWeight: '300', height: '100px', width: '30vw' }}>WIN MONEY</p>
-                <a href="oxgame.html">
+                <Link href="/ox">
+                <a>
                   <span className="span2" style={{fontFamily: 'game_of_squidsregular'}}>Play Now &gt;</span>
                 </a>
+                </Link>
               </div>
             </li>
             <li>
@@ -47,11 +52,6 @@ export const UI = () => {
               </div>
             </li>
           </ul>
-      {/* <style jsx>{`
-        .ox {
-          font-size: 5.5em !important;
-        }
-      `}</style> */}
         </div>
         <section className="footer mobile-hide">
           <div className="social-link">
@@ -69,7 +69,9 @@ export const UI = () => {
           <div className="legal-link">
             <a href="privacy.html">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
             <a className="slipage-text">*set slippage tolarance 25%*</a>
-            <a href="aboutsosx.html" className="utility-button">ABOUT SOSX</a>
+            <Link href="/aboutsosx">
+                  <a className="utility-button">ABOUT SOSX</a>
+                  </Link>
           </div>
         </section>
         <nav className="navbar navbar-expand-lg2  center-brand static-nav mobile-show">
@@ -95,7 +97,9 @@ export const UI = () => {
                 <div className="legal-link">
                   <a href="privacy">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
                   <a className="slipage-text">*set slippage tolarance 25%*</a>
-                  <a href="aboutsosx.html" className="utility-button">ABOUT SOSX</a>
+                  <Link href="/aboutsosx">
+                  <a className="utility-button">ABOUT SOSX</a>
+                  </Link>
                 </div>
               </div>
             </div>

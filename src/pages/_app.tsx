@@ -151,7 +151,7 @@ const App = ({ Component, pageProps, ...appProps }) => {
   // Use the layout defined at the page level, if available
   const Layout = Component.Layout || Fragment
   const getContent = () => {
-    if ([`/social-mining`, `/ui`, `/ox`, `/privacy`, `/experiment`, `/aboutsosx`, `/faq`].includes(appProps.router.pathname)) {
+    if ([`/social-mining`, `/ui`, `/`, `/ox`, `/privacy`, `/experiment`, `/aboutsosx`, `/faq`].includes(appProps.router.pathname)) {
       return (
         <ProductionErrorBoundary>
         <Head>
