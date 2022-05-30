@@ -1,6 +1,6 @@
 import ConnectWalletButton from "components/ConnectWalletButton";
 
-const Mining = ({account,viewReferralReward})=>{
+const Summary = ({account,viewReferralReward, viewMiningReward})=>{
 
     return (
         <div style={{ flex: '1 1 25%',order:'6' ,maxWidth:'100%'}}>
@@ -18,12 +18,13 @@ const Mining = ({account,viewReferralReward})=>{
                   <>
                     <div>
                       <div className="d-flex w-auto m-auto">
-                        <h3> {viewReferralReward} SOSX</h3>
+                        <h3> {viewMiningReward} SOSX</h3>
                       </div>
-                      <p className="success mb-0 fs-13 main-pink pt-2">AVAILABLE</p>
+                      <p className="success mb-0 fs-13 main-pink pt-2">Rewards are sent to your wallet.</p>
                     </div>
                     <div className="d-flex justify-content-between">
                       <button
+                      disabled
                         className="btn mr-1 btn-primary btn-lg mt-2"
                         type="button"
                       >
@@ -35,7 +36,7 @@ const Mining = ({account,viewReferralReward})=>{
                   <>
                     <div>
                       <div className="d-flex w-auto m-auto">
-                        <h3>{viewReferralReward} SOSX</h3>
+                        <h3>{viewMiningReward} SOSX</h3>
                       </div>
                       <p className="success mb-0 fs-13 main-pink pt-2">AVAILABLE</p>
                     </div>
@@ -72,8 +73,7 @@ const Mining = ({account,viewReferralReward})=>{
                     <div className="d-flex justify-content-between">
                       <button
                         className="btn mr-1 btn-primary btn-lg mt-2"
-                        type="button"
-                      >
+                        type="button">
                         Withdraw
                       </button>
                     </div>
@@ -101,4 +101,4 @@ const Mining = ({account,viewReferralReward})=>{
     )
     }
     
-    export default Mining
+    export default Summary

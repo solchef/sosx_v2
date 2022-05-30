@@ -97,7 +97,7 @@ function MyApp(props: AppProps) {
       });
 
       // get the data
-      let data = await response.json();
+      // let data = await response.json();
     }
   };
 

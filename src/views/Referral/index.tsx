@@ -4,18 +4,19 @@ import fetch from "isomorphic-unfetch";
 import GameGuide from "./guide";
 import Header from "./components/Header";
 import REFERRAL from "./components/Referral";
-import Mining from "./components/Mining";
-import Staking from "./components/ReferralList";
 import ReferralList from "./components/ReferralList";
+import Summary from "./components/Summarry";
 export default function Referral({ datasocial }) {
   const { account } = useActiveWeb3React();
   const [referralCount, setReferralCount] = useState(0);
   const [viewReferralReward, setViewReferralReward] = useState(0);
+  const [viewMiningReward, setviewMiningReward] = useState(0);
+
   return (
     <div className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse" style={{ gap: '20px' }}>
         <Header referralCount={referralCount} viewReferralReward={viewReferralReward} />
         <REFERRAL account={account} />
-      <Mining viewReferralReward={viewReferralReward} account={account} />
+      <Summary viewReferralReward={viewReferralReward}   viewMiningReward={viewMiningReward} setviewMiningReward={setviewMiningReward}  account={account} />
       <ReferralList setViewReferralReward={setViewReferralReward} viewReferralReward={viewReferralReward} referralCount={referralCount} setReferralCount={setReferralCount} account={account} datasocial={datasocial} />
       <GameGuide />
     </div>

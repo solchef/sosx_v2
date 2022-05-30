@@ -62,6 +62,17 @@ export default function SocialminingS3() {
       createdAt: new Date().toISOString(),
     };
 
+            let response = await fetch('/api/posts', {
+              method: 'POST',
+              body: JSON.stringify(post),
+            });
+
+            console.log(response)
+            // get the data
+            let data = await response.json(); 
+            console.log(data)
+
+
             let fd = new FormData();
             let referal = account
               ? await contract.getMyReferral()
