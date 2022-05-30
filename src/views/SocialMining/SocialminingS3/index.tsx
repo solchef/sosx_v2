@@ -164,7 +164,7 @@ export default function SocialminingS3() {
 
   return (
     <>
-      {block !== false ? (
+      {block === false ? (
         <form onSubmit={handlePost}>
           <div className="car d p-3 mt-5">
             <div className="row">
