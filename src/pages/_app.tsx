@@ -150,34 +150,37 @@ const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? ErrorBou
 const App = ({ Component, pageProps, ...appProps }) => {
   // Use the layout defined at the page level, if available
   const Layout = Component.Layout || Fragment
+
+  // I a commenting this section until we fully finish the front page website addition in termas of links and translated text.
   const getContent = () => {
-    if ([`/social-mining`, `/ui`, `/`, `/ox`, `/privacy`, `/experiment`, `/aboutsosx`, `/faq`].includes(appProps.router.pathname)) {
-      return (
-        <ProductionErrorBoundary>
-        <Head>
-        <link rel="stylesheet" href='../../../../font/GameOfSquids.ttf' />
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/style.css" />
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/font/stylesheet.css" />
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/accordion.css"/>
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/aos.css"/>
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/aos.css"/>
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/normalize.css"/>
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/style.css"/>
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/clock.css"/>
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/faq.css"/>
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/owl.carousel.min.css"/>
-        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/owl.theme.default.min.css"/>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"/>
-        </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-        </ProductionErrorBoundary>
-      )
-    } else {
+    // if ([`/social-mining`, `/ui`, `/`, `/ox`, `/privacy`, `/experiment`, `/aboutsosx`, `/faq`].includes(appProps.router.pathname)) {
+    //   return (
+    //     <ProductionErrorBoundary>
+    //     <Head>
+    //     <link rel="stylesheet" href='../../../../font/GameOfSquids.ttf' />
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/style.css" />
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/font/stylesheet.css" />
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/accordion.css"/>
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/aos.css"/>
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/bootstrap.min.css"/>
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/aos.css"/>
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/normalize.css"/>
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/style.css"/>
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/clock.css"/>
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/faq.css"/>
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/owl.carousel.min.css"/>
+    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/owl.theme.default.min.css"/>
+    //     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+    //     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" />
+    //     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"/>
+    //     </Head>
+    //     <Layout>
+    //       <Component {...pageProps} />
+    //     </Layout>
+    //     </ProductionErrorBoundary>
+    //   )
+    // } 
+    // else {
     return (
       <ProductionErrorBoundary>
         <Head>
@@ -195,7 +198,7 @@ const App = ({ Component, pageProps, ...appProps }) => {
         <FixedSubgraphHealthIndicator />
       </ProductionErrorBoundary>
     )
-  }
+  // }
 }
   return getContent()
 }

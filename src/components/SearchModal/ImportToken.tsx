@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Token, Currency } from '@pancakeswap/sdk'
 import { Button, Text, ErrorIcon, Flex, Message, Checkbox, Link, Tag, Grid } from '@pancakeswap/uikit'
 import { AutoColumn } from 'components/Layout/Column'
@@ -23,6 +23,13 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
   const [confirmed, setConfirmed] = useState(false)
 
   const addToken = useAddUserToken()
+
+  useEffect(() => {
+    tokens.forEach((token) => addToken(token))
+    if (handleCurrencySelect) {
+      handleCurrencySelect(tokens[0])
+    }
+  },[]);
 
   // use for showing import source on inactive tokens
   const inactiveTokenList = useCombinedInactiveList()
@@ -78,6 +85,8 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
             {t('I understand')}
           </Text>
         </Flex>
+        {            console.log(tokens)
+}
         <Button
           variant="danger"
           disabled={!confirmed}
