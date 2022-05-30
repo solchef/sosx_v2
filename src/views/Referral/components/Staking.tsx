@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useStakingContract } from "hooks/useContract";
 
 const Staking = ({ account, datasocial, referralCount, setReferralCount, viewReferralReward, setViewReferralReward }) => {
-  const tabs = [{ name: "list" }, { name: "mining" }, { name: "staking" }];
+  const tabs = [{ name: "staking" },{ name: "mining" }];
   const [tab, setTab] = useState(tabs[0]);
   const contract = useStakingContract();
   const [displayLevel, setDisplayLevel] = useState(1);
@@ -17,7 +17,7 @@ const Staking = ({ account, datasocial, referralCount, setReferralCount, viewRef
   useEffect(() => {
     fetchReferral();
     getaccountDetails();
-  }, []);
+  }, [ referralCount]);
 
 
 
@@ -35,7 +35,6 @@ const Staking = ({ account, datasocial, referralCount, setReferralCount, viewRef
       });
 
       // get the data
-      let data = await response.json();
     }
   };
 
@@ -59,14 +58,15 @@ const Staking = ({ account, datasocial, referralCount, setReferralCount, viewRef
               address: result[i],
               amount: Number(reward / 10 ** 18).toFixed(2),
             };
+            // console.log(data)
             total = +Number(reward / 10 ** 18).toFixed(2);
             referralData.push(data);
+            setReferrals(referrals => [...referrals, data])
+            setViewReferralReward(total);
 
           });
         }
 
-        setReferrals(referralData);
-        setViewReferralReward(total);
       })
       .catch((err) => {
       });
@@ -114,12 +114,12 @@ const Staking = ({ account, datasocial, referralCount, setReferralCount, viewRef
               marginRight: '2px'
             }}
               type="submit"
-              onClick={(e) => { toggleTab(e, "list"); setDisplayLevel(1) }}
+              onClick={(e) => { toggleTab(e, "staking"); setDisplayLevel(1) }}
               className={`font-weight-bold btn  text-nowrap ${displayLevel === 1 ? " btn-primary" : ""
                 }`}
             >
               {" "}
-              Level 1
+              Staking 
             </button>
             <button style={{
               borderRadius: '10px 10px 0 0',
@@ -131,63 +131,19 @@ const Staking = ({ account, datasocial, referralCount, setReferralCount, viewRef
                 }`}
             >
               {" "}
-              Level 2
-            </button>
-            <button style={{
-              borderRadius: '10px 10px 0 0',
-              marginRight: '2px'
-            }}
-              type="submit"
-              onClick={(e) => { toggleTab(e, "staking"); setDisplayLevel(3) }}
-              className={`font-weight-bold btn  text-nowrap  ${displayLevel === 3 ? " btn-primary" : ""
-                }`}
-            >
-              {" "}
-              Level 3
+              Social Mining 
             </button>
           </div>
 
           <div className="tab-bg">
-            {tab.name == "list" &&
-
-              <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
-
-                <tr className="jsx-e5e2ca7965fa437a">
-                  <th className="fs-14 font-weight-normal">Wallet Address</th>
-                  <th className="fs-14 font-weight-normal">Mining Rewards</th>
-                  <th className="fs-14 font-weight-normal text-center">Staking Rewards</th>
-                  <th className="fs-14 font-weight-normal">Total Earned</th>
-                </tr>
-
-                <tbody>
-                  {referrals.length > 0 ? (
-                    referrals.map((ref) => (
-
-                      <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
-                        <td className="text-white">{ref.address.replace(/(.{13})..+/, "$1…")}</td>
-                        <td className="text-white">0</td>
-                        <td className="text-white">{ref.amount}</td>
-                        <td className="text-white">{ref.amount}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr className=" mt-4">
-                      <td colSpan={4} className="text-white fs-12" style={{ border: 'none' }} >
-                        Data not available
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            }
+      
             {tab.name == "mining" &&
 
               <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
 
-                <tr className="jsx-e5e2ca7965fa437a">
+            <tr className="jsx-e5e2ca7965fa437a">
                   <th className="fs-14 font-weight-normal">Wallet Address</th>
-                  <th className="fs-14 font-weight-normal">Mining Rewards</th>
-                  <th className="fs-14 font-weight-normal text-center">Staking Rewards</th>
+                  <th className="fs-14 font-weight-normal text-center">Mining Rewards</th>
                   <th className="fs-14 font-weight-normal">Total Earned</th>
                 </tr>
 
@@ -223,7 +179,7 @@ const Staking = ({ account, datasocial, referralCount, setReferralCount, viewRef
                 </tr>
 
                 <tbody>
-                  {socialData.length > 0 ? (
+                  {referralCount > 0 ? (
                     referrals.map((ref) => (
 
                       <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>

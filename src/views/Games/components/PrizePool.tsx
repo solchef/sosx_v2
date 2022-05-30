@@ -109,7 +109,3 @@ const PrizePool = (props) => {
 };
 
 export default PrizePool;
-function t(arg0: string): string {
-  throw new Error("Function not implemented.");
-}
-

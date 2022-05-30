@@ -63,7 +63,6 @@ const Ranking = (props) => {
 
     });
     // setDisplayLevel(1)
-
     // sortData();
   }, [displayLevel, props.currentLevel, account]);
 
