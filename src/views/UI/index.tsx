@@ -4,13 +4,24 @@ import React from "react"
 export const UI = () => {
     return (
         <div>
+          <nav className="justify-content-between navbar navbar-expand-lg fixed-top center-brand static-nav">
+            <a className="navbar-brand" href="https://socialx.io/">
+              <img src="https://socialx.io/img/logo.png" alt="logo" className="logo-default" />
+            </a>
+            <div className="float-right">
+              <a href="#" id="dapp_url_swap">
+                <button type="button" className="btn btn-primary btn-lg">LAUNCH DAPPS</button>
+              </a>
+            </div>
+          </nav>
+
+
         <div className="accordion">
           <ul>
             <li>
               <div>
-                <h1 className="ox h1-1" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500}}>social <br className="mobile-hide" /> mining</h1>
-
-                <p style={{ fontSize: '50px', fontFamily: 'sans-serif', color:' #ffff', fontWeight: '300', height: '100px', width: '30vw' }}>EARN FREE TOKENS</p>
+                <h1 className="h1-1" style={{fontFamily: 'game_of_squidsregular'}}>social <br className="mobile-hide" /> mining</h1>
+                <p style={{ fontFamily: 'sans-serif', color:' #ffff', fontWeight: '300', height: '100px', width: '30vw' }}>EARN FREE TOKENS</p>
                 <a href="socialmining.html">
                   <span className="span1" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500, color:' #ffff'}}>Free Tokens &gt;</span>
                 </a>
@@ -18,29 +29,29 @@ export const UI = () => {
             </li>
             <li>
               <div>
-                <h1 className="ox h1-2" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500}}>ox <br className="mobile-hide" /> game</h1>
-                <p style={{ fontSize: '50px', fontFamily: 'sans-serif', color:' #ffff', fontWeight: '300', height: '100px', width: '30vw' }}>WIN MONEY</p>
+                <h1 className="ox h1-2" style={{fontFamily: 'game_of_squidsregular'}}>ox <br className="mobile-hide" /> game</h1>
+                <p style={{  fontFamily: 'sans-serif', color:' #ffff', fontWeight: '300', height: '100px', width: '30vw' }}>WIN MONEY</p>
                 <a href="oxgame.html">
-                  <span className="span2" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500, color:' #ffff'}}>Play Now &gt;</span>
+                  <span className="span2" style={{fontFamily: 'game_of_squidsregular'}}>Play Now &gt;</span>
                 </a>
               </div>
             </li>
             <li>
               <a href="#">
               </a><div><a href="#">
-              <h1 className="ox h1-3" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500}}>sosx <br className="mobile-hide" /> nft</h1>
-              <p style={{ fontSize: '50px', fontFamily: 'sans-serif', color:' #ffff', fontWeight: '300', height: '100px', width: '30vw' }}>BATTLE X MONEY</p>
+              <h1 className="ox h1-3" style={{fontFamily: 'game_of_squidsregular'}}>sosx <br className="mobile-hide" /> nft</h1>
+              <p style={{ fontFamily: 'sans-serif', color:' #ffff', fontWeight: '300', height: '100px', width: '30vw' }}>BATTLE X MONEY</p>
                 </a><a href="#">
-                  <span className="span3" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500, color:' #ffff'}}>Coming Soon...</span>
+                  <span className="span3" style={{fontFamily: 'game_of_squidsregular'}}>Coming Soon...</span>
                 </a>
               </div>
             </li>
           </ul>
-      <style jsx>{`
+      {/* <style jsx>{`
         .ox {
           font-size: 5.5em !important;
         }
-      `}</style>
+      `}</style> */}
         </div>
         <section className="footer mobile-hide">
           <div className="social-link">

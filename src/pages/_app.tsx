@@ -179,6 +179,11 @@ const App = ({ Component, pageProps, ...appProps }) => {
     } else {
     return (
       <ProductionErrorBoundary>
+        <Head>
+          <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+          <link href="/css/style.css" rel="stylesheet" />
+          <link rel="stylesheet" type="text/css" href="/css/faq.css" />
+        </Head>
         <Menu>
           <Layout>
             <Component {...pageProps} />
