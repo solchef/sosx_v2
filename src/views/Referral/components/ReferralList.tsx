@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useStakingContract } from "hooks/useContract";
 
-const Staking = ({ account, datasocial, referralCount, setReferralCount, viewReferralReward, setViewReferralReward }) => {
+const ReferralList = ({ account, datasocial, referralCount, setReferralCount, viewReferralReward, setViewReferralReward }) => {
   const tabs = [{ name: "staking" },{ name: "mining" }];
   const [tab, setTab] = useState(tabs[0]);
   const contract = useStakingContract();
@@ -210,7 +210,6 @@ const Staking = ({ account, datasocial, referralCount, setReferralCount, viewRef
     </div>
   )
 
-
 }
 
-export default Staking
+export default ReferralList
