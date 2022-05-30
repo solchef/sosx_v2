@@ -1,6 +1,6 @@
 import ConnectWalletButton from "components/ConnectWalletButton";
 
-const Summary = ({account,viewReferralReward, viewMiningReward})=>{
+const Summary = ({account,viewReferralReward, viewMiningReward, handleWithdrawReward})=>{
 
     return (
         <div style={{ flex: '1 1 25%',order:'6' ,maxWidth:'100%'}}>
@@ -72,6 +72,7 @@ const Summary = ({account,viewReferralReward, viewMiningReward})=>{
                     </div>
                     <div className="d-flex justify-content-between">
                       <button
+                      onClick={handleWithdrawReward}
                         className="btn mr-1 btn-primary btn-lg mt-2"
                         type="button">
                         Withdraw

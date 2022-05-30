@@ -8,6 +8,9 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
   const [displayLevel, setDisplayLevel] = useState(1);
   const [socialData, setsocialData] = useState([]);
   const [resultsoc, setResultsoc] = useState(datasocial);
+
+  var results = [];
+
   const toggleTab = (event, type) => {
     event.stopPropagation();
     tabs.map((tabb) => (tabb.name == type ? setTab(tabb) : ""));
@@ -15,8 +18,11 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
   const [referrals, setReferrals] = useState([]);
 
   useEffect(() => {
+
     fetchReferral();
     getaccountDetails();
+    getDataSocialMining();
+
   }, [ referralCount]);
 
 
@@ -35,9 +41,22 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
       });
 
       // get the data
+      let data = await response.json();
+      console.log(data);
     }
   };
 
+  const getDataSocialMining = async () => {
+    const res = await fetch("/api/social_mining?referedby=" + account);
+    const json = await res.json();
+    setResultsoc(json.message);
+    setsocialData(json.message);
+    results.push(json.message);
+    console.log("results",results);
+    console.log("data is:",json.message)
+    console.log("data2 is:",socialData)
+    console.log("resultsoc",resultsoc);
+  };
 
   const fetchReferral = async () => {
     let countreferrals = await contract.getReferralCount();

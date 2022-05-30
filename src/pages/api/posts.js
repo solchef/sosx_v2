@@ -8,7 +8,7 @@ async function getPosts(req,res){
         // fetch the posts
         let posts = await db
             .collection('posts')
-            .find({})
+            .find({account:req.query.account})
             .sort({ published: -1 })
             .toArray();
         // return the posts
@@ -24,12 +24,14 @@ async function getPosts(req,res){
         });
     }
 }
+
 async function addPost(req, res) {
     try {
         // connect to the database
         let { db } = await connectToDatabase();
-        // add the post
-        db.collection('posts').createIndex({"email_address":1},{unique:true});
+        db.collection('posts').createIndex({"account":1},{unique:false});
+        // let count = await posts.count({userId, createdAt: {$gte: startOfDay}});
+
         if(db.collection('posts').find({ "email_address" : { $exists : true, $not : null } })){
         await db.collection('posts').insertOne(JSON.parse(req.body));
         // return a message
@@ -45,6 +47,7 @@ async function addPost(req, res) {
         });
     }
 }
+
 async function updatePost(req, res) {
     try {
         // connect to the database
@@ -57,21 +60,21 @@ async function updatePost(req, res) {
             },
             { $set: { published: true } }
         );
-
         // return a message
         return res.json({
             message: 'Post updated successfully',
             success: true,
         });
     } catch (error) {
-
         // return an error
         return res.json({
             message: new Error(error).message,
             success: false,
         });
     }
-}async function deletePost(req, res) {
+}
+
+async function deletePost(req, res) {
     try {
         // Connecting to the database
         let { db } = await connectToDatabase();
