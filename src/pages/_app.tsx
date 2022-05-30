@@ -11,7 +11,7 @@ import useSentryUser from 'hooks/useSentryUser'
 import useUserAgent from 'hooks/useUserAgent'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
 import { useStore, persistor } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
@@ -22,6 +22,7 @@ import ErrorBoundary from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 // import "../../public/newHome/css/accordion.css"
 // import "../../public/newHome/css/aos.css"
 // import "../../public/newHome/css/faq.css"
@@ -61,6 +62,45 @@ const noOverlayWorkaroundScript = `
 function MyApp(props: AppProps) {
   const { pageProps } = props
   const store = useStore(pageProps.initialReduxState)
+  const [referrerAddress, setReferrerAddress] = useState("");
+  const { account } = useActiveWeb3React();
+
+  
+  let referedby = null;
+
+  useEffect(() => {
+    let param = new URLSearchParams(window.location.search);
+    if (param) {
+      setReferrerAddress(param.get("ref"));
+
+      referedby = param.get("ref");
+      //  @ts-ignore
+      localStorage.setItem("referral", param.get("ref"));
+      if (referedby != null) {
+        getaccountDetails();
+      }
+    }
+
+  }, []);
+
+  const getaccountDetails = async () => {
+    if (account) {
+      let post = {
+        gotrefered: account,
+        referedby,
+        createdAt: new Date().toDateString(),
+      };
+      // save the post
+    let response = await fetch("/api/social_mining", {
+        method: "POST",
+        body: JSON.stringify(post),
+      });
+
+      // get the data
+      let data = await response.json();
+    }
+  };
+
 
   return (
     <>
@@ -83,6 +123,7 @@ function MyApp(props: AppProps) {
         <meta name="twitter:title" content="SocialX" />
         <title>SOCIALx</title>
         {process.env.NODE_ENV !== 'production' && <script dangerouslySetInnerHTML={{ __html: noOverlayWorkaroundScript }} />}
+
       </Head>
       <Providers store={store}>
         <Blocklist>

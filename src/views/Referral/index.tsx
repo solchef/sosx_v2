@@ -5,7 +5,8 @@ import GameGuide from "./guide";
 import Header from "./components/Header";
 import REFERRAL from "./components/Referral";
 import Mining from "./components/Mining";
-import Staking from "./components/Staking";
+import Staking from "./components/ReferralList";
+import ReferralList from "./components/ReferralList";
 export default function Referral({ datasocial }) {
   const { account } = useActiveWeb3React();
   const [referralCount, setReferralCount] = useState(0);
@@ -15,7 +16,7 @@ export default function Referral({ datasocial }) {
         <Header referralCount={referralCount} viewReferralReward={viewReferralReward} />
         <REFERRAL account={account} />
       <Mining viewReferralReward={viewReferralReward} account={account} />
-      <Staking setViewReferralReward={setViewReferralReward} viewReferralReward={viewReferralReward} referralCount={referralCount} setReferralCount={setReferralCount} account={account} datasocial={datasocial} />
+      <ReferralList setViewReferralReward={setViewReferralReward} viewReferralReward={viewReferralReward} referralCount={referralCount} setReferralCount={setReferralCount} account={account} datasocial={datasocial} />
       <GameGuide />
     </div>
   );
