@@ -151,7 +151,7 @@ const App = ({ Component, pageProps, ...appProps }) => {
   // Use the layout defined at the page level, if available
   const Layout = Component.Layout || Fragment
   const getContent = () => {
-    if ([`/sm`, `/ui`, `/ox`, `/privacy`, `/experiment`].includes(appProps.router.pathname)) {
+    if ([`/social-mining`, `/ui`, `/ox`, `/privacy`, `/experiment`, `/aboutsosx`, `/faq`].includes(appProps.router.pathname)) {
       return (
         <ProductionErrorBoundary>
         <Head>
@@ -165,6 +165,7 @@ const App = ({ Component, pageProps, ...appProps }) => {
         <link rel="stylesheet" type="text/css" href="https://socialx.io/css/normalize.css"/>
         <link rel="stylesheet" type="text/css" href="https://socialx.io/css/style.css"/>
         <link rel="stylesheet" type="text/css" href="https://socialx.io/css/clock.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/faq.css"/>
         <link rel="stylesheet" type="text/css" href="https://socialx.io/css/owl.carousel.min.css"/>
         <link rel="stylesheet" type="text/css" href="https://socialx.io/css/owl.theme.default.min.css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
