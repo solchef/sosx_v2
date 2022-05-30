@@ -23,7 +23,7 @@ export const Sm = () => {
             <div className="col-md-auto col-sm-auto">
               <div className="hero-app-mock">
                 {/*mobile inside image*/}
-                <img src="newHome/img/mining-main.png" alt="" />
+                <img src="https://socialx.io/img/mining-main.png" alt="" />
               </div>
               {/*/.banner-app-mock*/}
             </div>
@@ -49,7 +49,7 @@ export const Sm = () => {
             <div className="col-md-auto col-sm-auto">
               <div className="hero-app-mock">
                 {/*mobile inside image*/}
-                <img src="newHome/img/mining-main.png" alt="" />
+                <img src="https://socialx.io/img/mining-main.png" alt="" />
               </div>
               {/*/.banner-app-mock*/}
             </div>
@@ -65,7 +65,7 @@ export const Sm = () => {
       <div className="row">
         <div className="col-md-4 col-4">
           <div className="card">
-            <img src="newHome/img/share-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/share-img.png" className="steps-img" />
             <h1>SHARE</h1>
             <p className="fs-12">Share given post on your social media every
               24 hours.</p>
@@ -73,14 +73,14 @@ export const Sm = () => {
         </div>
         <div className="col-md-4 col-4">
           <div className="card">
-            <img src="newHome/img/inv-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/inv-img.png" className="steps-img" />
             <h1>INVITE</h1>
             <p className="fs-12">Attempt to have one person join socialx everyday</p>
           </div>
         </div>
         <div className="col-md-4 col-4">
           <div className="card">
-            <img src="newHome/img/collect-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/collect-img.png" className="steps-img" />
             <h1>COLLECT</h1>
             <p className="fs-12">Log your progress and claim your free SOSX Tokens. </p>
           </div>
@@ -99,7 +99,7 @@ export const Sm = () => {
           </div>
         </div>
         <div className="col-md-6">
-          <img src="newHome/img/sharepost-banner.png" />
+          <img src="https://socialx.io/img/sharepost-banner.png" />
         </div>
       </div>
     </div>
@@ -108,7 +108,7 @@ export const Sm = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-6 mobile-hide">
-          <img src="newHome/img/invite-banner.png" />
+          <img src="https://socialx.io/img/invite-banner.png" />
         </div>
         <div className="col-md-6 custom-pt">
           <div className="title-green custom-pt">
@@ -118,7 +118,7 @@ export const Sm = () => {
               transactions.</p>
           </div>
           <div className="col-md-6 mobile-show">
-            <img src="newHome/img/invite-banner.png" />
+            <img src="https://socialx.io/img/invite-banner.png" />
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@ export const Sm = () => {
           </div>
         </div>
         <div className="col-md-6">
-          <img src="newHome/img/collect-banner.png"  alt="" />
+          <img src="https://socialx.io/img/collect-banner.png"  alt="" />
         </div>
       </div>
     </div>
@@ -153,49 +153,49 @@ export const Sm = () => {
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/reflections-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/reflections-img.png" className="steps-img" />
             <h1>REFLECTIONS</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/mining-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/mining-img.png" className="steps-img" />
             <h1>SOCIAL MINING</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/affiliate-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/affiliate-img.png" className="steps-img" />
             <h1>AFFILIATE</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/staking-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/staking-img.png" className="steps-img" />
             <h1>STAKING</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/game-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/game-img.png" className="steps-img" />
             <h1>GAME MONEY</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/pool-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/pool-img.png" className="steps-img" />
             <h1>LIQUIDITY POOL</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/sosxprice-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/sosxprice-img.png" className="steps-img" />
             <h1>RISE IN SOSX <br className="mobile-show" /> PRICE</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/nft-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/nft-img.png" className="steps-img" />
             <h1>NFT <br className="mobile-show" />(COMING SOON)</h1>
           </div>
         </div>

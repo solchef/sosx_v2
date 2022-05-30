@@ -7,7 +7,7 @@ export const Experiment = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-6 mobile-show">
-          <img src="newHome/img/social-mining-experiment-banner.png"  alt="" />
+          <img src="https://socialx.io/img/social-mining-experiment-banner.png"  alt="" />
         </div>
         <div className="col-md-6">
           <div className="experiment-title custom-pt">
@@ -24,7 +24,7 @@ export const Experiment = () => {
           </div>
         </div>
         <div className="col-md-6 mobile-hide">
-          <img src="newHome/img/social-mining-experiment-banner.png"  alt="" />
+          <img src="https://socialx.io/img/social-mining-experiment-banner.png"  alt="" />
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@ export const Experiment = () => {
       <div className="row">
         <div className="col-md-4 col-4">
           <div className="card2">
-            <img src="newHome/img/share-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/share-img.png" className="steps-img" />
             <h1>SHARE</h1>
             <p className="fs-12">Share given post on your social media every
               24 hours.</p>
@@ -42,14 +42,14 @@ export const Experiment = () => {
         </div>
         <div className="col-md-4 col-4">
           <div className="card2">
-            <img src="newHome/img/inv-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/inv-img.png" className="steps-img" />
             <h1>INVITE</h1>
             <p className="fs-12">Attempt to have one person join socialx everyday</p>
           </div>
         </div>
         <div className="col-md-4 col-4">
           <div className="card2">
-            <img src="newHome/img/collect-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/collect-img.png" className="steps-img" />
             <h1>COLLECT</h1>
             <p className="fs-12">Log your progress and claim your free SOSX Token
               reward.</p>
@@ -78,12 +78,12 @@ export const Experiment = () => {
       <div className="row">
         <div className="col-sm-6">
           <div className="card3">
-            <img src="newHome/img/buyer-dynamicprice.png" className="steps-img" />
+            <img src="https://socialx.io/img/buyer-dynamicprice.png" className="steps-img" />
           </div>
         </div>
         <div className="col-sm-6">
           <div className="card3">
-            <img src="newHome/img/seller-dynamicprice.png" className="steps-img" />
+            <img src="https://socialx.io/img/seller-dynamicprice.png" className="steps-img" />
           </div>
         </div>
       </div>
@@ -97,49 +97,49 @@ export const Experiment = () => {
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/reflections-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/reflections-img.png" className="steps-img" />
             <h1>REFLECTIONS</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/mining-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/mining-img.png" className="steps-img" />
             <h1>SOCIAL MINING</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/affiliate-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/affiliate-img.png" className="steps-img" />
             <h1>AFFILIATE</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/staking-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/staking-img.png" className="steps-img" />
             <h1>STAKING</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/game-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/game-img.png" className="steps-img" />
             <h1>GAME MONEY</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/pool-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/pool-img.png" className="steps-img" />
             <h1>LIQUIDITY POOL</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="newHome/img/sosxprice-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/sosxprice-img.png" className="steps-img" />
             <h1>RISE IN SOSX <br className="mobile-show" /> PRICE</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="card2">
-            <img src="newHome/img/nft-img.png" className="steps-img" />
+            <img src="https://socialx.io/img/nft-img.png" className="steps-img" />
             <h1>NFT <br className="mobile-show" />(COMING SOON)</h1>
           </div>
         </div>
@@ -163,49 +163,49 @@ export const Experiment = () => {
         <div className="row justify-content-center">
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="newHome/img/reflections-img.png" className="steps-img" />
+              <img src="https://socialx.io/img/reflections-img.png" className="steps-img" />
               <h1>REFLECTIONS</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="newHome/img/mining-img.png" className="steps-img" />
+              <img src="https://socialx.io/img/mining-img.png" className="steps-img" />
               <h1>SOCIAL MINING</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="newHome/img/affiliate-img.png" className="steps-img" />
+              <img src="https://socialx.io/img/affiliate-img.png" className="steps-img" />
               <h1>AFFILIATE</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="newHome/img/staking-img.png" className="steps-img" />
+              <img src="https://socialx.io/img/staking-img.png" className="steps-img" />
               <h1>STAKING</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="newHome/img/game-img.png" className="steps-img" />
+              <img src="https://socialx.io/img/game-img.png" className="steps-img" />
               <h1>GAME MONEY</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="newHome/img/pool-img.png" className="steps-img" />
+              <img src="https://socialx.io/img/pool-img.png" className="steps-img" />
               <h1>LIQUIDITY POOL</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="newHome/img/sosxprice-img.png" className="steps-img" />
+              <img src="https://socialx.io/img/sosxprice-img.png" className="steps-img" />
               <h1>RISE IN SOSX <br className="mobile-show" /> PRICE</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="newHome/img/nft-img.png" className="steps-img" />
+              <img src="https://socialx.io/img/nft-img.png" className="steps-img" />
               <h1>NFT <br className="mobile-show" />(COMING SOON)</h1>
             </div>
           </div>
@@ -234,31 +234,31 @@ export const Experiment = () => {
       <div className="row justify-content-center">
         <div className="col-md-4 col-6">
           <div className="card2">
-            <img src="newHome/img/gas-free.svg" className="steps-img" />
+            <img src="https://socialx.io/img/gas-free.svg" className="steps-img" />
             <h1>GAS FEE FREE ON REWARDS</h1>
           </div>
         </div>
         <div className="col-md-4 col-6">
           <div className="card2">
-            <img src="newHome/img/autolock.svg" className="steps-img" />
+            <img src="https://socialx.io/img/autolock.svg" className="steps-img" />
             <h1>AUTO-LOCKED LIQUIDITY</h1>
           </div>
         </div>
         <div className="col-md-4 col-6">
           <div className="card2">
-            <img src="newHome/img/deflat.svg" className="steps-img" />
+            <img src="https://socialx.io/img/deflat.svg" className="steps-img" />
             <h1>DEFLATIONARY TOKENOMICS</h1>
           </div>
         </div>
         <div className="col-md-4 col-6">
           <div className="card2">
-            <img src="newHome/img/safe.svg" className="steps-img" />
+            <img src="https://socialx.io/img/safe.svg" className="steps-img" />
             <h1>100% SAFE &amp; RUG-PROOF</h1>
           </div>
         </div>
         <div className="col-md-4 col-6">
           <div className="card2">
-            <img src="newHome/img/antiwhale.svg" className="steps-img" />
+            <img src="https://socialx.io/img/antiwhale.svg" className="steps-img" />
             <h1>ANTI-WHALE
               <br className="mobile-show" />DUMP</h1>
           </div>
@@ -308,10 +308,10 @@ export const Experiment = () => {
       </div>
       <div className="row">
         <div className="col-md-12 mobile-hide">
-          <img src="newHome/img/30daychart.png"  className="steps-img" />
+          <img src="https://socialx.io/img/30daychart.png"  className="steps-img" />
         </div>
         <div className="col-md-12 mobile-show">
-          <img src="newHome/img/30daychart-mob.png"  className="steps-img" />
+          <img src="https://socialx.io/img/30daychart-mob.png"  className="steps-img" />
         </div>
       </div>
     </div>
