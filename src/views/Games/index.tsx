@@ -14,26 +14,25 @@ import GameGuide from "./guide";
 import useStage from "hooks/useStage";
 
 export default function Game() {
-  const [videos, setVideos] = useState([]);
-  const [lastVideos, setLastVideos] = useState([]);
   const [lastRound, setLastRound] = useState(Number);
   const [startingTimeStamp, setStartingTime] = useState(Number);
   const contract = useDaoStakingContract();
+  const {stage} = useStage();
+
   // let [stage, setStage] = useState(1);
   let [currentLevel, setCurrentLevel] = useState<number>(0);
-  const GraphqlVideosData = useQuery(GET_Videos);
-  const GraphqlLastVideosData = useQuery(GET_LastVideo);
+  // const GraphqlVideosData = useQuery(GET_Videos);
+  // const GraphqlLastVideosData = useQuery(GET_LastVideo);
   const GraphqlLastRoundData = useQuery(GET_LastRound);
-   const {stage} = useStage();
 
-  useEffect(() => {
-    if (GraphqlVideosData.data !== undefined) setVideos(GraphqlVideosData.data);
-  }, [GraphqlVideosData.data]);
+  // useEffect(() => {
+  //   if (GraphqlVideosData.data !== undefined) setVideos(GraphqlVideosData.data);
+  // }, [GraphqlVideosData.data]);
 
-  useEffect(() => {
-    if (GraphqlLastVideosData.data !== undefined)
-      setLastVideos(GraphqlLastVideosData.data);
-  }, [GraphqlLastVideosData.data]);
+  // useEffect(() => {
+  //   if (GraphqlLastVideosData.data !== undefined)
+  //     setLastVideos(GraphqlLastVideosData.data);
+  // }, [GraphqlLastVideosData.data]);
 
   useEffect(() => {
     if (GraphqlLastRoundData.data !== undefined) {
@@ -51,7 +50,6 @@ export default function Game() {
 
   return (
     <>
-      {startingTimeStamp > 0 ? (
         <div className="game container-fluid d-flex flex-wrap flex-direction-row">
           <div id="timer-section" style={{ flex: "0 1 350px" }}>
             <TimerDisplay />
@@ -89,16 +87,14 @@ export default function Game() {
             )}
           </div>
           <div id="ranking-section" style={{ flex: "0px"}}>
-            <Ranking stage={stage} />
+            <Ranking stage={stage} currentLevel={currentLevel} />
           </div>
 
           <div id="video-section" style={{ flex: "1 40%" }}>
             <Media todayVideo={undefined} />
           </div>
         </div>
-     ) : (
-        ""
-      )} 
+    
       <GameGuide />
     </>
   );

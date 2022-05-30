@@ -13,6 +13,7 @@ const server = create({
 
 const Media = (props: { todayVideo }) => {
   const [videos, setVideos] = useState([]);
+  const {t} = useTranslation();
 
   useEffect(() => {
     getVideo();

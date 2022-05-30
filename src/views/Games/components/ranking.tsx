@@ -7,7 +7,6 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { getDaoLevel } from "../hooks/getDaoLevel";
 import { Trans } from "react-i18next";
 import { useTranslation } from 'contexts/Localization';
-const { t } = useTranslation();
 
 const StyledList = styled.ol`
   li {
@@ -22,6 +21,7 @@ const Ranking = (props) => {
   const [allVoters, setAllVoter] = useState([]);
   const { account } = useActiveWeb3React();
   const [loading, setLoading] = useState<boolean>();
+  const { t } = useTranslation();
 
   const loadDaoLevels = async (data) => {
     setLoading(true);
@@ -43,11 +43,14 @@ const Ranking = (props) => {
       if (data.level === 1) level1.push(data);
       if (data.level === 2) level2.push(data);
       if (data.level === 3) level3.push(data);
-      voters.push(data);
-      setAllVoter(voters);
-    }
+      voters.sort((b, a) => a.amount - b.amount);
 
-    voters.sort((b, a) => a.amount - b.amount);
+      voters.push(data);
+    }
+    level1.sort((b, a) => a.amount - b.amount);
+    level2.sort((b, a) => a.amount - b.amount);
+    level3.sort((b, a) => a.amount - b.amount);
+    setAllVoter(voters);
     if (displayLevel === 1) setVoters(level1);
     if (displayLevel === 2) setVoters(level2);
     if (displayLevel === 3) setVoters(level3);
@@ -57,13 +60,13 @@ const Ranking = (props) => {
   useEffect(() => {
     contract.getAllAccount().then((daolist) => {
       loadDaoLevels(daolist);
-    });
-    sortData();
-  }, [props.stage]);
 
-  useEffect(() => {
-    sortData();
-  }, [displayLevel]);
+    });
+    // setDisplayLevel(1)
+
+    // sortData();
+  }, [displayLevel, props.currentLevel, account]);
+
 
   const sortData = () => {
     const currentLevel = [];
