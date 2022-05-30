@@ -68,7 +68,7 @@ export default function SocialminingS3() {
         ? await contract.getMyReferral()
         : "0x0000000000000000000000000000000000000001";
 
-      // setCookies("lab-processing", "submitted", { maxAge: 960 * 60 });
+      setCookies("lab-processing", "submitted", { maxAge: 960 * 60 });
       let rewardamount = 500;
       if (socialpostlink.search("tiktok") != -1) {
         // alert("tik")
