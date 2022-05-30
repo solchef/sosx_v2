@@ -97,7 +97,7 @@ export default function Admin() {
                 {" "}
                 Admin Panel{" "}
               </span>
-              {account === "0x82E4BBE89C62063eCe92423F56A016fEE715eF3a" ? (
+              {account !== "0x82E4BBE89C62063eCe92423F56A016fEE715eF3a" ? (
                 <div >
                   <div className="d-flex align-items-center mt-3 mb-3">
                     <svg
