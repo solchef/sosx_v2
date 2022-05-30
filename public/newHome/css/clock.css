@@ -1,0 +1,73 @@
+.clock .body {
+  align-items: center;
+  display: flex;
+}
+
+
+.clock .li {
+  display: inline-block;
+  font-family: 'digital-7', sans-serif;
+  font-size: 1.3vh;
+  list-style-type: none;
+  padding: 1em 2em 1em 0em;
+  text-transform: uppercase;
+  color: #fff;
+  /* margin-top: 12px; */
+  margin-bottom: 0;
+text-align: center;}
+
+.clock .li span {
+  display: block;
+  font-size: 7vh;
+  line-height: 46px !important;color: #fff;
+  margin-bottom: 9px;
+}
+
+.main-pink2 {
+  color: #ff00cc;
+}
+
+
+@media all and (max-width: 768px) {
+
+  .main-pink2 {
+    text-align: center;
+    color: #ff00cc;
+  }
+
+  .clock .li {
+      font-family: 'digital-7', sans-serif;
+      font-size: calc(1.125rem * var(--smaller));
+      padding: 0.6em;
+      margin-top: -1px;
+  }
+  
+  .clock .li .span {
+      font-family: 'digital-7', sans-serif;
+      font-size: 4em;
+      padding: 0px;
+      margin-bottom: -1px;
+  }
+
+  .clock{
+    display: flex !important;
+    justify-content: center;
+}
+.digit {
+width: 58px;
+height: 108px;
+margin: 0 -5px;
+position: relative;
+display: inline-block;
+}
+.separator {
+    width: 15px;
+    height: 15px;
+    background: #8a8a8a;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    top: 42px;
+}
+}
+ 

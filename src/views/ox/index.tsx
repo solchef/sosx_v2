@@ -1,0 +1,329 @@
+import React from "react"
+
+
+export const OX = () => {
+    return (
+      <div>
+
+      {/*hero section*/}
+      <header className="hero-pink hero-banner">
+        {/*bg animation*/}
+        <div className="main-line">
+          <div className="main-line-w">
+            <div className="line-num one" />
+            <div className="line-num two" />
+            <div className="line-num three" />
+            <div className="line-num four" />
+          </div>
+        </div>
+        {/*bg animation*/}
+        <div className="container">
+          <div className="row text-center justify-content-center">
+            <div className="col-md-10">
+              <div className="hero-pink">
+                <h1>ox game</h1>
+                <p>WHAT’S THE CRAZIEST THING YOU WOULD RECORD YOURSELF DO FOR MONEY?</p>
+                <div className="btn-group">
+                  <a href="#" id="dapp_url_game" className="btn">I WANT TO PLAY</a>
+                </div>
+              </div>
+              <img src="/newHome/img/sosx-prizepool-banner2.png" />
+            </div>
+          </div>
+        </div>
+        {/*/.container*/}
+      </header>
+      {/*/.hero section*/}
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4">
+            <div className="card5">
+              <img src="/newHome/img/rule1-img.png" className="steps-img" />
+              <h1>RULE # 1</h1>
+              <p className="fs-12">First person to complete the voted challenge by the SOSX community and submit the video on
+                socialx.io
+                and post it on their social media wins all the prize money!</p>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="card5">
+              <img src="/newHome/img/rule2-img.png" className="steps-img" />
+              <h1>RULE # 2</h1>
+              <p className="fs-12">If the 1st person who submitted the video failed to meet the conditions or incorrectly
+                completed the challenge, the 2nd in line until voted correct takes the prize.</p>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="card5">
+              <img src="/newHome/img/rule3-img.png" className="steps-img" />
+              <h1>RULE # 3</h1>
+              <p className="fs-12">Prize money will be 100% of the 10% collected on all buy orders from the previous days 24
+                hour traded volume.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section className="dao-section">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12 text-center">
+              <h1>DAOX</h1>
+              <img src="/newHome/img/daox-img.png" className="daox-img" />
+            </div>
+            <div className="col-md-4">
+              <div className="dao-card">
+                <h3>LEVEL 1</h3>
+                <h4>STAKING 1+ SOSX Tokens</h4>
+                <p>Vote 1 to top 3 challenges</p>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="dao-card">
+                <h3>LEVEL 2</h3>
+                <h4>STAKING 100,000+ SOSX Tokens</h4>
+                <p>Vote 1 to top 3 challenges
+                  <br />create challenges</p>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="dao-card">
+                <h3>LEVEL 3</h3>
+                <h4>STAKING 1,000,000+ SOSX Tokens</h4>
+                <p>Final vote from top 3 challenges
+                  <br />create challenges</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*
+        <section class="rules-sec">
+    
+      <div class="container">
+          <div class="row">
+    
+              <div class="tab-wrap">
+    
+    
+    
+                  <input type="radio" id="tab4" name="tabGroup2" class="tab" checked>
+                  <label for="tab4">Rule # 1</label>
+    
+                  <input type="radio" id="tab5" name="tabGroup2" class="tab">
+                  <label for="tab5">Rule # 2</label>
+    
+                  <input type="radio" id="tab6" name="tabGroup2" class="tab">
+                  <label for="tab6">Rule # 3</label>
+    
+                  <input type="radio" id="tab7" name="tabGroup2" class="tab">
+                  <label for="tab7">Rule # 4</label>
+    
+                  <div class="tab__content">
+                      <h3 class="tab-title">Rule # 1</h3>
+                      <p>First person to complete the voted challenge by the SOSX community and submit the video on
+                          socialx.io
+                          and post it on their social media wins all the prize money!
+    
+                          (Condition: You must say in video “SocialX paid me” when uploading the video to any
+                          social media platform state “www.socialx.io”)</p>
+                  </div>
+    
+                  <div class="tab__content">
+                      <h3 class="tab-title">Rule # 2</h3>
+                      <p>If the 1st person who submitted the video failed to meet the conditions or incorrectly
+                          completed the challenge, the 2nd in line until voted correct takes the prize.</p>
+                  </div>
+    
+                  <div class="tab__content">
+                      <h3 class="tab-title">Rule # 3</h3>
+                      <p>Submissions are reviewed by the order they come in at.</p>
+    
+                  </div>
+    
+                  <div class="tab__content">
+                      <h3 class="tab-title">Rule # 4</h3>
+                      <p>Prize money will be 100% of the 10% collected on all buy orders from the previous days 24
+                          hour traded volume.</p>
+                  </div>
+              </div>
+    
+              <div class="col-md-12">
+                  <div class="title-pink mt-5">
+                      <h3>Example</h3>
+                      <span>$1,000,000 in buyer trading volume (10%) = $100,000 POOL PRIZE</span>
+                      <p>If the challenge is not completed within 6 hours after voted by community, it will be rolled
+                          over to the
+                          following day with the additional added buy volume. If the additional buy volume for that
+                          day equals to $1,400,000,
+                          we will add 10% of that ($140,000) to the current on going challenge prize, making it to a
+                          total of $240,000 until
+                          someone completes the challenge and is rewarded the money.
+    
+                          <br><br> Minimum daily prize starts at $1000 WORTH every 24 hours.
+                      </p>
+                  </div>
+              </div>
+    
+          </div>
+      </div>
+        </section>
+    
+      */}
+      <section className="submitchallenge-sec">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="title-pink custom-pt">
+                <h3>Submit Challenges</h3>
+                <p>8 hours to submit the challenges created by the Level 2 &amp; 3 DAO members.</p>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <img src="newHome/img/submitchallenge-banner.png" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="votetopchallenge-sec">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6 mobile-hide">
+              <img src="/newHome/img/votetopchallenge-banner.png"  />
+            </div>
+            <div className="col-md-6 custom-pt">
+              <div className="title-pink custom-pt">
+                <h3>Vote Top Challenges</h3>
+                <p>8 hours to vote the top 3 challenges for the challengers by all level community. </p>
+              </div>
+            </div>
+            <div className="col-md-6 mobile-show">
+              <img src="/newHome/img/votetopchallenge-banner.png"  />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="votefinalchallenge-sec">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="title-pink custom-pt">
+                <h3>Vote Final Challenge</h3>
+                <p>8 hours to vote the final challenges of the top 3 by the Level 3 DAO members.</p> <br />
+              </div>
+            </div>
+            <div className="col-md-6">
+              <img src="/newHome/img/votefinalchallenge-banner.png"  />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="completechallenge-sec">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6 mobile-hide">
+              <img src="/newHome/img/completechallenge-banner.png"  alt="" />
+            </div>
+            <div className="col-md-6 custom-pt">
+              <div className="title-pink custom-pt">
+                <h3>Complete Challenge</h3>
+                <p> 
+                  The challenge will stay up until someone completed it. No new challenge will get voted until
+                  the previous one is completed.
+                </p>
+              </div>
+              <div className="col-md-6 mobile-show">
+                <img src="img/completechallenge-banner.png"  alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="sosxwinner-sec">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12 text-center">
+              <div className="title-pink">
+                <h3>SOSX WINNERS</h3>
+                <p>All submitted challenge videos that win, will be permanently uploaded to the socialx
+                  media website and YouTube channel. All prize money will be recorded through the blockchain
+                  and verified for 100% transparency!</p>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <img src="/newHome/img/previouswinner-banner.png"  alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="sosxrule-sec" id="feature">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <img src="/newHome/img/rules-banner.png"  alt="" />
+            </div>
+            <div className="col-md-6 pl-5">
+              <h3>THERE ARE NO RULES TO THE CHALLENGES EXCEPT NO CHALLENGE CAN BE MADE TO CAUSE INTENTIONAL HARM
+                OR LEADING TO DEATH OR KILL.</h3>
+              <span>- sosx team</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*copyright*/}
+      {/* <section className="footer mobile-hide">
+        <div className="social-link">
+          <a href="https://www.instagram.com/socialxtoken/?hl=en" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/instagram-social-icon@2x.png" /></a>
+          <a href="https://twitter.com/socialx_io" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/twittericon@2x.png" /></a>
+          <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/youtube-social-icon@2x.png" /></a>
+          <a href="https://t.me/SocialXToken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/telegram-social-icon@2x.png" /></a>
+          <a href="https://bscscan.com/address/0xC27f6473a04b2bdeE0bf650f153F1D8720AA3062" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/etherscan@2x.png" /></a>
+          <a href="https://www.coingecko.com/en/coins/socialx" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/geckoicon@2x.png" /></a>
+          <a href="https://coinmarketcap.com/currencies/socialx-2/" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/cmcicon@2x.png" /></a>
+          <a href="https://pancakeswap.finance/swap" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/pancakeswapicon@2x.png" /></a>
+          <a href="https://www.tiktok.com/@socialxtoken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/tiktokicon@2x.png" /></a>
+        </div>
+        <div className="contract">0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF</div>
+        <div className="legal-link">
+          <a href="privacy.html">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
+          <a className="slipage-text">*set slippage tolarance 25%*</a>
+          <a href="aboutsosx.html" className="utility-button">ABOUT SOSX</a>
+        </div>
+      </section>
+      <div className="footer">
+        <div className="social-link text-center">
+          <a href="https://www.instagram.com/socialxtoken/?hl=en" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/instagram-social-icon@2x.png" /></a>
+          <a href="https://twitter.com/socialx_io" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/twittericon@2x.png" /></a>
+          <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/youtube-social-icon@2x.png" /></a>
+          <a href="https://t.me/SocialXToken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/telegram-social-icon@2x.png" /></a>
+          <a href="https://bscscan.com/address/0xC27f6473a04b2bdeE0bf650f153F1D8720AA3062" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/etherscan@2x.png" /></a>
+          <a href="https://www.coingecko.com/en/coins/socialx" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/geckoicon@2x.png" /></a>
+          <a href="https://coinmarketcap.com/currencies/socialx-2/" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/cmcicon@2x.png" /></a>
+          <a href="https://pancakeswap.finance/swap" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/pancakeswapicon@2x.png" /></a>
+          <a href="https://www.tiktok.com/@socialxtoken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="img/tiktokicon@2x.png" /></a>
+        </div>
+        <div className="contract">0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF</div>
+        <div className="legal-link">
+          <a href="privacy">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
+          <a className="slipage-text">*set slippage tolarance 25%*</a>
+          <a href="aboutsosx.html" className="utility-button">ABOUT SOSX</a>
+        </div>
+      </div> */}
+      {/*/.CONTAINER*/}
+      {/*/.copyright*/}
+      {/*<div  data-aos-anchor=".other-element"></div>*/}
+      {/*jquery*/}
+      {/*bootstrap v4 js*/}
+      {/*popper js*/}
+      {/*aos js*/}
+      {/*owl carousel */}
+      {/*counter js*/}
+      {/*easing js*/}
+      {/*ajax contact*/}
+      {/*maps*/}
+      {/*main script*/}
+    </div>
+    
+    )
+}
