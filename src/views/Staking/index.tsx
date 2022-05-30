@@ -10,6 +10,7 @@ import { cleanNumber } from "utils/amount";
 import UserStakingLogs from "./components/userStaking";
 import ConfirmStakingModal from "./components/ConfirmStakingModal";
 import { useModal } from "@pancakeswap/uikit";
+import { useTranslation } from 'contexts/Localization'
 import Statistics from "./components/statistics";
 import { formatFixedNumber } from "utils/formatBalance";
 import { Info } from "./components/info";
@@ -35,6 +36,25 @@ export default function Staking() {
   const [activateStake, setActivatestake] = useState(true);
   const [insufficientBalance, setInsufficientBalance] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingData, setLoadingData] = useState(false);
+  const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
+  const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+  const [price, setPrice] = useState(Number);
+  const [marketCap, setMarketCap] = useState(Number);
+  const { t } = useTranslation();
+  
+  const getSOSXPrice = async () => {
+    const getSOSXValue = await axios.get(
+      "https://api.pancakeswap.info/api/v2/tokens/0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF",
+      {}
+    );
+    setPrice(parseFloat(getSOSXValue.data.data.price));
+    setMarketCap(parseFloat(getSOSXValue.data.data.price_BNB));
+  };
+  useEffect(() => {
+    listUserStaking();
+    getSOSXPrice();
+  }, []);
   const [showDetails, setShowDetails] = useState(-1);
   const [reward, setReward] = useState(0);
   const [show, setShow] = useState(false);
@@ -192,7 +212,7 @@ export default function Staking() {
     if (stake) {
       setActivatestake(true);
       setLoading(false);
-      toastSuccess("Staking Transaction successfully sent");
+      toastSuccess(`${t('Staking Transaction successfully sent')}`);
     } else {
       toastError("Could not stake");
     }
@@ -200,15 +220,15 @@ export default function Staking() {
 
   const handleSubmit = async () => {
     if (amountToStake < 1) {
-      toastError("You must stake a minimum of 1 token");
+      toastError(`${t("You must stake a minimum of 1 token")}`);
       return;
     }
 
     if (amountToStake > balance) {
       toastError(
-        `Insufficient balance. Your wallet balance is ${balance} you need  ${(
+        `${t('Insufficient balance. Your wallet balance is')} ${balance} ${t('you need')}  ${(
           amountToStake - balance
-        ).toFixed(3)} more SOSX to stake that amount. `
+        ).toFixed(3)} ${t('more SOSX to stake that amount.')} `
       );
       return;
     }

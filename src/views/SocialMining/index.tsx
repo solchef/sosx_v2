@@ -13,6 +13,7 @@ import ConnectWalletButton from "components/ConnectWalletButton";
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import NavMining from './NavMining';
 import { useMediaPredicate } from "react-media-hook";
+import { useTranslation } from "contexts/Localization";
 
 const SocialMining = () => {
   const [showGuide, setshowGuide] = useState(false);
@@ -22,7 +23,7 @@ const SocialMining = () => {
   const [step, setStep] = useState(0);
   const [title, setTitle] = useState('');
   const { account } = useActiveWeb3React();
-
+  const { t } = useTranslation();
 
   useEffect(() => {
     checkGuideShow();
@@ -88,7 +89,7 @@ const SocialMining = () => {
               className="btn btn-outline-primary pr-4 pl-4 mr-2 mb-3"
               onClick={() => setStep(step - 1)}
             >
-              Back
+              {t('Back')}
             </button>
           )}
 
@@ -97,7 +98,7 @@ const SocialMining = () => {
               className="btn   pr-3 pl-3  btn-primary mr-3 mb-3"
               onClick={() => setStep(step == 3 ? 0 : step + 1)}
             >
-              {step == 3 ? "Reset" : "Continue"}
+              {step == 3 ? t("Reset") : t("Continue")}
 
             </button>}
 

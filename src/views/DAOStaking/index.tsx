@@ -12,6 +12,8 @@ import Statistics from "./components/statistics";
 import DaoMemebrship from "./components/DaoMemebrship";
 import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
 import { formatFixedNumber, getDecimalAmount } from "utils/formatBalance";
+import { useTranslation } from 'contexts/Localization';
+import { Trans } from "react-i18next";
 import { Modal, ModalHeader } from "react-bootstrap";
 import ConnectWalletButton from "components/ConnectWalletButton";
 
@@ -36,6 +38,7 @@ export default function DaoStaking() {
   const [estimateDaoLevel, setEstimateDaoLevel] = useState(0);
   const [transactionState, setTransactionState] = useState(1);
   const [txHash, setTxHash] = useState("");
+  const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -62,7 +65,7 @@ export default function DaoStaking() {
 
   const listUserStaking = async () => {
     const list = [];
-    const rew = 0;
+    let rew = 0;
     contract.getStakeCount().then((stakes) => {
       setActiveStakes([]);
       for (let i = 0; i < stakes; i++) {
@@ -85,7 +88,7 @@ export default function DaoStaking() {
             periodElapsed: stakeClass,
           };
           // console.log(stakeClass)
-         let rate = stakeClass == 1 ? 0.06 : timeLocked == 2 ? 0.09 : 0.12;
+         let rate = stakeClass == 1 ? 0.06 : stakeClass == 2 ? 0.09 : 0.12;
           rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
           console.log(rew)
           setReward(rew);
@@ -194,7 +197,7 @@ export default function DaoStaking() {
 
   const handleSubmit = async () => {
     if (amountToStake < 1) {
-      toastError("You must stake a minimum of 1 token");
+      toastError(t("You must stake a minimum of 1 token"));
       return;
     }
 
@@ -226,7 +229,7 @@ export default function DaoStaking() {
       onPresentConfirmModal();
 
       toastSuccess(
-        "Approval transaction sent. You can stake after the transaction is mined."
+        t("Approval transaction sent. You can stake after the transaction is mined.")
       );
     }
   };
@@ -237,7 +240,7 @@ export default function DaoStaking() {
       receipt={pendingTx ? "Pending" : "Success"}
       clientMessage={"Your spending approval is being confirmed. "}
       onAcceptChanges={function (): void {
-        throw new Error("Function not implemented.");
+        throw new Error(t("Function not implemented."));
       }}
       customOnDismiss={handleConfirmDismiss}
     />,

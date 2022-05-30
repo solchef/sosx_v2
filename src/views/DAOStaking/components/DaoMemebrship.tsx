@@ -1,6 +1,9 @@
-import { useMediaPredicate } from "react-media-hook";
+import { useTranslation } from 'contexts/Localization';
+import { Trans } from "react-i18next";
 
 export default function DaoMemebrship() {
+  const { t } = useTranslation();
+
   return (
     <div className="card d-flex flex-column justify-content-between h-100">
       <div className="card-body">
@@ -48,10 +51,14 @@ export default function DaoMemebrship() {
         </div>
         <p>SocialX Exclusive DAO Community</p>
         <p className="mb-4 mt-4">
-          DAOX members get to control the OX Games. Depending on their levels,
-          DAOs can create/vote challenges. Each membership level is reflected on
-          how much SOSX they are staking. The OXGames is in your hands; what
-          will you do with that kind of power?
+        <Trans i18nKey="description.part1">
+          DAOX members get to decide the rules for each challenge . 
+          Depending on their levels, DAOs can participate, vote and create challenges . 
+          Each membership level is reflected on how much SOSX
+          they are staking and offers different types of voting/creating
+          privilege. The OXGames are in their hands; what will they do
+          with that kind of power?
+        </Trans>
         </p>
         <div className="mb-3">
           <div className="d-flex align-items-center justify-content-between">

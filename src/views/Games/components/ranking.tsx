@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { useDaoStakingContract } from "hooks/useContract";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { getDaoLevel } from "../hooks/getDaoLevel";
+import { Trans } from "react-i18next";
+import { useTranslation } from 'contexts/Localization';
+const { t } = useTranslation();
 
 const StyledList = styled.ol`
   li {
@@ -112,10 +115,12 @@ const Ranking = (props) => {
           </g>
         </svg>
 
-        <h4>DAOX MEMBERS</h4>
+        <h4>{t("DAOX MEMBERS")}</h4>
       </div>
       <p>
+      <Trans i18nKey="description.part1">
         To become member, visit <Link href="/daostaking/">STAKING DAO</Link>
+        </Trans>
       </p>
       <div
         className="d-flex justify-content-left mt-4"
@@ -176,7 +181,7 @@ const Ranking = (props) => {
                 <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
                 <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
-                  You need to be connected
+                 {t("You need to be connected")}
                 </td>
                 <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
@@ -187,7 +192,7 @@ const Ranking = (props) => {
                 <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
                 <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
-                  Loading Data
+                  {t("Loading Data")}
                 </td>
                 <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
@@ -197,7 +202,7 @@ const Ranking = (props) => {
                 <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>
                 <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
-                  No one is on Level {displayLevel}
+                  {t("No one is on Level")} {displayLevel}
                 </td>
                 <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
                 </td>

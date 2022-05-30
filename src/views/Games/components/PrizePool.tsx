@@ -33,11 +33,13 @@ const PrizePool = (props) => {
       donateAmount + "000000000000000000"
     );
     if (donate) {
-      toastSuccess("Thank you for contributing to the reward pool");
+      toastSuccess(t("Thank you for contributing to the reward pool"));
     } else {
-      toastError("An error has occurred");
+      toastError(t("An error has occurred"));
     }
   };
+
+
 
   return (
     <>
@@ -107,3 +109,7 @@ const PrizePool = (props) => {
 };
 
 export default PrizePool;
+function t(arg0: string): string {
+  throw new Error("Function not implemented.");
+}
+

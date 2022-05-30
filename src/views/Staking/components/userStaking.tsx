@@ -13,6 +13,7 @@ import axios from "axios";
 import ConnectWalletButton from "components/ConnectWalletButton";
 import web3 from "web3";
 import { cleanNumber } from "utils/amount";
+import { useTranslation } from 'contexts/Localization';
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -29,13 +30,14 @@ export default function UserStakingLogs(props) {
   const [activeStakes, setActiveStakes] = useState([]);
   const [showDetails, setShowDetails] = useState(-1);
   const [loadingData, setLoadingData] = useState(false);
-
+  const { t } = useTranslation();
+  
   const handleUnstake = async (stakeID) => {
     const unstake = await contract.returnTokens(stakeID);
 
     if (unstake) {
       toastSuccess(
-        "Successfully sent unstake SOSX transaction, Check balance in your wallet"
+        t("Successfully sent unstake SOSX transaction, Check balance in your wallet")
       );
     }
   };

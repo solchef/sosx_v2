@@ -483,7 +483,7 @@ export default function Swap() {
           <div className="card">
             <div className="card-header border-0 pb-0 justify-content-between">
               {/* <span className="fs-26 main-color-1">Ditto</span> */}
-              <h4 className="fs-14">Swap</h4>
+              <h4 className="fs-14">{t("Swap")}</h4>
               <a href="#" className="pull-right" data-toggle="modal">
                 <CurrencyInputHeader
                   title={""}

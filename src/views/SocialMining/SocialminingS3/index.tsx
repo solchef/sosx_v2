@@ -8,6 +8,8 @@ import React from "react";
 import { useMediaPredicate } from "react-media-hook";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
+import { useTranslation } from 'contexts/Localization';
+import { Trans } from "react-i18next";
 import { useStakingContract } from "hooks/useContract";
 import {
   setCookies,
@@ -27,6 +29,7 @@ export default function SocialminingS3() {
   const recaptchaRef = React.useRef(null);
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
+  const { t } = useTranslation();
   const contract = useStakingContract();
 
   const { toastError, toastSuccess } = useToast();

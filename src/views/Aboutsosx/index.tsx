@@ -1,9 +1,11 @@
 import { } from 'react'
 import { useMediaPredicate } from "react-media-hook";
+import { useTranslation } from 'contexts/Localization';
+import { Trans } from "react-i18next";
 
 export default function Aboutsosx() {
 
- 
+    const { t } = useTranslation();
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
@@ -16,21 +18,22 @@ export default function Aboutsosx() {
     
                 <div className="row text-center">
                     <div className="col-md-12">
-                        <div className="aboutus-title">ACTUAL PURPOSE OF SOSX - UTILITY CASE
+                        <div className="aboutus-title">{t("ACTUAL PURPOSE OF SOSX - UTILITY CASE")}
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>BECOMING THE WORLDS #1 MEDIA AGENCY</h3>
-                        <p>SocialX is taking a different approach to becoming the #1 AD space media agency in the world.
+                        <h3>{t("BECOMING THE WORLDS #1 MEDIA AGENCY")}</h3>
+                        <p><Trans i18nKey="description.part1">
+                            SocialX is taking a different approach to becoming the #1 AD space media agency in the world.
                             We’re adding a little more fun to it by gamifying the whole process and rewarding individual’s
                             with lots of money for helping us get to this goal!
-                        </p>
+                        </Trans></p>
                     </div>
     
                     <div className="col-md-12">
-                        <h4>SOCIAL X WILL HAVE 4 MAIN UTILITY'S IT POWERS!</h4>
+                        <h4>{t("SOCIAL X WILL HAVE 4 MAIN UTILITY'S IT POWERS!")}</h4>
                     </div>
                     <div className="col-md-3 col-3">
                         <img src="images/mining-about-banner.png"
@@ -61,16 +64,17 @@ export default function Aboutsosx() {
         <section className="mining-about-sec">
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>SOCIAL MINING</h3>
-                        <p>Social mining is new concept that allows anyone in crypto or outside of crypto to earn
+                        <h3>{t("SOCIAL MINING")}</h3>
+                        <p><Trans i18nKey="description.part1">
+                            Social mining is new concept that allows anyone in crypto or outside of crypto to earn
                             SOSX tokens daily for posting on social media the daily SocialX posts. This system is
                             designed to incentivize wide spread of any message we wanna market to our token holders
                             social media audience, while allowing someone with no investment to start collecting
                             tokens and participate in our other protocols.
-                        </p>
+                        </Trans></p>
     
                         <a href="https://socialx.io/socialmining.html">
-                            <button type="button" className="btn btn-primary btn-lg mt-4">How Social Mining Works</button>
+                            <button type="button" className="btn btn-primary btn-lg mt-4">{t("How Social Mining Works")}</button>
                         </a>
                     </div>
                 </div>
@@ -80,23 +84,25 @@ export default function Aboutsosx() {
         <section className="oxgame-about-sec">
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>OX CHALLENGE GAMES</h3>
-                        <p>The game is simple… you the token holders get to create challenges/dares. Some of the
+                        <h3>{"OX CHALLENGE GAMES"}</h3>
+                        <p><Trans i18nKey="description.part1">
+                            The game is simple… you the token holders get to create challenges/dares. Some of the
                             bigger token holders get to choose out of the first batch what are the top 3 dares.
                             Finally all the token holders can then choose which of the top 3 will be for the prize
                             pool. Minimum daily prize pool starts at $1000 & goes up to $1 million + He who films
                             himself first completing the chosen challenge of the day and uploads it to their social
                             media and states (SocialX paid me) gets rewarded the full prize pool.
-                        </p>
+                        </Trans></p>
                         <br/>
-                        <p>This is one of our fun methods of creating opportunity for others to make money while
+                        <p><Trans i18nKey="description.part1">
+                            This is one of our fun methods of creating opportunity for others to make money while
                             creating internment at the same time. The whole system is community driven through our
                             DOA Governance system. This method of online entertainment only opens of the SocialX
                             brand to more awareness. This awareness drives more traffic and creates higher value
                             to the SOCIAL MINING ad space.
-                        </p>
+                        </Trans></p>
                         <a href="https://socialx.io/oxgame.html">
-                            <button type="button" className="btn btn-primary btn-lg mt-4 ">View OX Game Rules</button>
+                            <button type="button" className="btn btn-primary btn-lg mt-4 ">{t("View OX Game Rules")}</button>
                         </a>
                     </div>
                 </div>
@@ -107,7 +113,7 @@ export default function Aboutsosx() {
                 <div className="row">
                     <div className="col-md-12">
                         <h3>SOSX NFT</h3>
-                        <p>Coming soon...
+                        <p>{t("Coming soon")}...
                         </p>
                     </div>
                 </div>
@@ -117,19 +123,21 @@ export default function Aboutsosx() {
         <section className="adspace-about-sec">
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>CORPORATE AD SPACE - NFT STAKING</h3>
-                        <h5>AD SPACE</h5>
-                        <p>SocialX provides companies with ad space under social mining. If you want to have a post
+                        <h3>{t("CORPORATE AD SPACE - NFT STAKING")}</h3>
+                        <h5>{t("AD SPACE")}</h5>
+                        <p><Trans i18nKey="description.part1">
+                            SocialX provides companies with ad space under social mining. If you want to have a post
                             and message shared by our community please contact admins for details at <a
                                 href="mailto:support@socialx.io">support@socialx.io</a>
-                        </p>
+                        </Trans></p>
                         <br/>
-                        <h5>NFT STAKING</h5>
-                        <p>SocialX provides NFT Projects staking solutions. A NFT project can offer their holders
+                        <h5>{t("NFT STAKING")}</h5>
+                        <p><Trans i18nKey="description.part1">
+                            SocialX provides NFT Projects staking solutions. A NFT project can offer their holders
                             the ability to stake their NFT’s for SOSX tokens. We created a plug and play cross
                             chain staking system that can be implemented with any project on any blockchain.
                             For details please contact admins at <a href="mailto:support@socialx.io">support@socialx.io.</a>
-                        </p>
+                        </Trans></p>
                     </div>
                 </div>
         </section>
@@ -140,7 +148,8 @@ export default function Aboutsosx() {
                 <div className="row">
                     <div className="col-md-12">
                         <h3>SOCIAL X - $10 BILLION TARGET</h3>
-                        <p>We calculated that at around a $10 billion market cap we would have reached a perfect
+                        <p><Trans i18nKey="description.part1">
+                            We calculated that at around a $10 billion market cap we would have reached a perfect
                             amount of wallet holders
                             and brand recognition to have a success launch of a whole new kind of social media
                             experience. We are in
@@ -149,7 +158,7 @@ export default function Aboutsosx() {
                             We believe in freedom of speech and will go lengths to protect this. This is why we
                             built something community driven,
                             developed on smart contracts, on the blockchain. Time to take back our freedoms! Time to
-                            work together!</p>
+                            work together!</Trans></p>
                     </div>
                 </div>
         </section>
@@ -157,7 +166,7 @@ export default function Aboutsosx() {
         <section className="prtnr-about-sec mobile-hide">
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>CURRENT PARTNERS</h3>
+                        <h3>{t("CURRENT PARTNERS")}</h3>
                     </div>
                     <div className="col-md-4">
                         <img src="images/acatoken.png"/>
@@ -174,7 +183,7 @@ export default function Aboutsosx() {
         <section className="prtnr-about-sec mobile-show">
                 <div className="row justify-content-center">
                     <div className="col-md-12">
-                        <h3>CURRENT PARTNERS</h3>
+                        <h3>{t("CURRENT PARTNERS")}</h3>
                     </div>
                     <div className="col-xs-6">
                         <img src="images/acatoken.png"/>

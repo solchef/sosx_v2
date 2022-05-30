@@ -1,6 +1,8 @@
 import { cleanNumber } from "utils/amount";
+import { useTranslation } from 'contexts/Localization';
 
 export default function userStaking(props) {
+  const { t } = useTranslation();
 
   return (
     <div className="card d-flex flex-column h-100">
@@ -46,10 +48,10 @@ export default function userStaking(props) {
 
             <h4>STAKING LOG</h4>
           </div>
-          <p className="mb-4">Keep track of your investments activities.</p>
+          <p className="mb-4">{t("Keep track of your investments activities")}.</p>
         </div>
         <div style={{ flex: " 0 120px" }}>
-          <button className="btn mr-1 btn-primary btn-lg mt-2" onClick={props.onActionModal} type="button">UNSTAKE</button>
+          <button className="btn mr-1 btn-primary btn-lg mt-2" onClick={props.onActionModal} type="button">{t("UNSTAKE")}</button>
         </div>
 
       </div>
@@ -58,9 +60,9 @@ export default function userStaking(props) {
         <table className="jsx-e5e2ca7965fa437a fs-12 p-4 mt-0 table ">
           <tbody className="ranking-header">
             <tr>
-              <th className="jsx-e5e2ca7965fa437a">Date</th>
-              <th className="jsx-e5e2ca7965fa437a text-left">Action</th>
-              <th className="jsx-e5e2ca7965fa437a">Staking</th>
+              <th className="jsx-e5e2ca7965fa437a">{t('Date')}</th>
+              <th className="jsx-e5e2ca7965fa437a text-left">{t('Action')}</th>
+              <th className="jsx-e5e2ca7965fa437a">{t('Staking')}</th>
             </tr>
           </tbody>
           <tbody className="jsx-e5e2ca7965fa437a">
@@ -70,7 +72,7 @@ export default function userStaking(props) {
 
               <tr className="jsx-e5e2ca7965fa437a" key={i} style={{ borderColor: "rgb(30, 33, 36)" }}>
                 <td className="jsx-e5e2ca7965fa437a text-white" >{stake.stakeDate}</td>
-                <td className="jsx-e5e2ca7965fa437a text-white" >Staked</td>
+                <td className="jsx-e5e2ca7965fa437a text-white" >{t("Staked")}</td>
                 <td className="jsx-e5e2ca7965fa437a text-white" > {cleanNumber(stake.amount.toFixed(2))}</td>
               </tr>
 
