@@ -16,6 +16,7 @@ import LangSelector from "../../components/LangSelector/LangSelector";
 import { MenuContext } from "./context";
 import Link from 'next/link'
 import router, { useRouter } from "next/router";
+import useStage from "../../../../../src/hooks/useStage";
 
 const Wrapper = styled.div`
   position: relative;
@@ -86,6 +87,7 @@ const Menu: React.FC<NavProps> = ({
 }) => {
   const { isMobile, isMd } = useMatchBreakpoints();
   const [showMenu, setShowMenu] = useState(true);
+  const {stage} = useStage();
   const refPrevOffset = useRef(typeof window === "undefined" ? 0 : window.pageYOffset);
 
   const topBannerHeight = isMobile ? TOP_BANNER_HEIGHT_MOBILE : TOP_BANNER_HEIGHT;
@@ -121,32 +123,57 @@ const Menu: React.FC<NavProps> = ({
     };
   }, [totalTopMenuHeight]);
 
+  const handleReferral = () => {
+      
+  }
+
   // Find the home link if provided
   const homeLink = links.find((link) => link.label === "Home");
 
   const subLinksWithoutMobile = subLinks?.filter((subLink) => !subLink.isMobileOnly);
   const subLinksMobileOnly = subLinks?.filter((subLink) => subLink.isMobileOnly);
-  const title = () => {
+
+    const stages = [
+      {
+        stage: 1,
+        title: "STAGE 1 CHALLENGE CREATION",
+        participationText: "ONLY LEVEL 2 & 3 CAN PARTICIPATE",
+      },
+      {
+        stage: 2,
+        title: "STAGE 2 TOP CHALLENGES VOTING",
+        participationText: "ONLY LEVEL 1, 2 & 3 CAN PARTICIPATE",
+      },
+      {
+        stage: 3,
+        title: "STAGE 3 FINAL CHALLENGE VOTING",
+        participationText: "ONLY LEVEL  3 CAN PARTICIPATE",
+      },
+      {
+        stage: 4,
+        title: "STAGE 4 VIDEO SUBMISSION",
+        participationText: "ANYONE CAN PARTICIPATE",
+      },
+    ];
+  
+  
+
+   const title = () => {
     switch (router.pathname) {
 
       case '/':
 
         return "Swap";
       case '/stake':
-        return "Staking";
+        return "STAKING";
 
       case '/daostaking':
-        return "Dao Staking";
+        return "DAOX";
 
       case '/xgame':
-        return "OX Game";
-      case '/createchallenge':
-        return "OX Game";
-      case '/votechallenge':
-        return "OX Game";
-      case '/Ox game':
-        return "OX Game";
-
+        
+        return 'GAME';
+        
       case '/referrals':
         return "Referrals";
 
@@ -183,12 +210,15 @@ const Menu: React.FC<NavProps> = ({
   }
     , [children])
   return (
-  
 
     <>
       <div className="nav-header">
         <a href="https://socialx.io" className="brand-logo">
           <img className="logo-abbr" src="/images/xlogo-black.b90261b2.svg" alt="" />
+         
+             <div className="dashboard_bar mobile-show ml-2">
+             {title()} 
+            </div>
         </a>
       </div>
 
@@ -198,16 +228,25 @@ const Menu: React.FC<NavProps> = ({
             <div className="collapse navbar-collapse justify-content-between">
               <div className="header-left">
                 <div className="dashboard_bar">
-                  {title()}
+                 
+                  {router.pathname == '/xgame' ?
+                  <>
+                    OX {title()} 
+                    <p className="mb-0 ml-1 mt-1 float-right">  | {stages[stage-1] && stages[stage-1].title}</p>
+                    </>
+                    :
+                    <>
+                    {title()} 
+                    </>
+                  }
                 </div>
+               
               </div>
               <ul className="navbar-nav header-right">
 
                 <li className="nav-item wallet-btn">
                   {/* <button type="button" className="btn btn-primary btn-lg">Connect Wallet</button> */}
                   {userMenu}
-
-
                 </li>
               </ul>
             </div>
@@ -215,94 +254,7 @@ const Menu: React.FC<NavProps> = ({
         </div>
       </div>
 
-      <ul className="mobile-nav d-flex" id="menu">
-        
-          <li className={router.pathname == "/" ? "mm-active" : ""}>
-            <Link href="/">
-              <a>
-                <i className="fa fa-repeat active"></i>
-              </a>
-            </Link>
-          </li>
-          <li className={router.pathname == "/stake" ? "mm-active" : ""}>
-            <Link href="/stake">
-              <a>
-                <i className="fa fa-coins"></i>
-              </a>
-            </Link>
-          </li>
-
-          <li className={router.pathname == "/daostaking" ? "mm-active" : ""}>
-            <Link href="/daostaking">
-              <a>
-                <i className="fa fa-coins"></i>
-              </a>
-            </Link>
-          </li>
-
-          <li className={router.pathname == "/xgame" || router.pathname == "/createchallenge" || router.pathname == "/votechallenge" || router.pathname == "/xgame" ? "mm-active" : ""}>
-            <Link href="/xgame">
-              <a>
-                <i className="fa fa-gamepad"></i>
-              </a>
-            </Link>
-          </li>
-          <li className={router.pathname == "/referrals" ? "mm-active" : ""}>
-            <Link href="/referrals">
-              <a>
-                <i className="fa fa-bullhorn"></i>
-              </a>
-            </Link>
-          </li>
-       
-          <li className={router.pathname == "/adspace" ? "mm-active" : ""}>
-            <Link href="/adspace">
-              <a>
-                <i className="fa fa-briefcase"></i>
-              </a>
-            </Link>
-          </li>
-          <li className={router.pathname == "/x-mining" || router.pathname == "/socialmining-s1" || router.pathname == "/socialmining-s2" || router.pathname == "/socialmining-s3" ? "mm-active" : ""}>
-            <Link href="/x-mining">
-              <a>
-                <i className="fa fa-users"></i>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link href="#">
-
-              <a>
-                <i className="fa fa-images"></i>
-              </a>
-            </Link>
-
-          </li>
-
-          <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
-
-            <Link href="/aboutsosx">
-
-              <a>
-                <img src="/images/xlogo.png" style={{ width: '12px', height: '12px' }} />
-              </a>
-            </Link>
-
-          </li>
-
-          <li className={router.pathname == "/faq" ? "mm-active" : ""}>
-
-            <Link href="/faq">
-
-              <a>
-                <i className="fa-solid fa-circle-question"></i>
-              </a>
-            </Link>
-
-          </li>
      
-
-      </ul>
       <div className="deznav mobile-hide">
         <div className="deznav-scroll">
           <ul className="metismenu" id="menu">
@@ -312,6 +264,7 @@ const Menu: React.FC<NavProps> = ({
                 <a>
                   <i className="fa fa-repeat"></i>
                   <span className="nav-text">Swap</span>
+             
                 </a>
               </Link>
 
@@ -330,7 +283,7 @@ const Menu: React.FC<NavProps> = ({
               <Link href="/daostaking">
                 <a>
                   <i className="fa fa-coins"></i>
-                  <span className="nav-text">DAO Staking</span>
+                  <span className="nav-text">DAOX</span>
                 </a>
               </Link>
 
@@ -422,6 +375,9 @@ const Menu: React.FC<NavProps> = ({
       <div className={`content-body ${preloader ? 'content-preloader' : ''}`}>
 
         {children}
+
+        {isMobile && <BottomNav items={links} activeItem={activeItem} activeSubItem={activeSubItem} />}
+
       </div>
 
 

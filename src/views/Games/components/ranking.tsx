@@ -1,25 +1,13 @@
-import { Box, Button, Flex, Heading, ProposalIcon } from "@pancakeswap/uikit";
 import styled from "styled-components";
-import { useTranslation } from "contexts/Localization";
-import Container from "components/Layout/Container";
 import Link from "next/link";
-import DesktopImage from "./DesktopImage";
-import Masonry from "react-masonry-css";
 import { cleanNumber } from "utils/amount";
 import { useState, useEffect } from "react";
-import { useMediaPredicate } from "react-media-hook";
-import { useDaoStakingContract, useSosxContract } from "hooks/useContract";
-import ConnectWalletButton from "components/ConnectWalletButton";
+import { useDaoStakingContract } from "hooks/useContract";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
-import web3 from "web3";
 import { getDaoLevel } from "../hooks/getDaoLevel";
 import { Trans } from "react-i18next";
-
-const StyledRanking = styled(Box)`
-  background: ${({ theme }) => theme.colors.gradients.bubblegum};
-  padding-bottom: 32px;
-  padding-top: 32px;
-`;
+import { useTranslation } from 'contexts/Localization';
+const { t } = useTranslation();
 
 const StyledList = styled.ol`
   li {
@@ -28,7 +16,6 @@ const StyledList = styled.ol`
 `;
 
 const Ranking = (props) => {
-  const { t } = useTranslation();
   const [displayLevel, setDisplayLevel] = useState(1);
   const contract = useDaoStakingContract();
   const [voters, setVoters] = useState([]);
@@ -45,7 +32,6 @@ const Ranking = (props) => {
     daoList = [...new Set(daoList)];
     let voters = [];
     for (let i = 0; i < daoList.length; i++) {
-      // if(voters.findIndex(vt => vt.address == daoList[i]) != -1){
       let voter_address = daoList[i];
       let total_stake = await contract.getVoterTotalStakeAmount(voter_address);
       total_stake = total_stake / 10 ** 18;
@@ -54,14 +40,11 @@ const Ranking = (props) => {
         amount: total_stake,
         level: await getDaoLevel(total_stake),
       };
-      // if (voter_address == account) {setCurrentLevel(data.level)};
-      // alert(data.level)
       if (data.level === 1) level1.push(data);
       if (data.level === 2) level2.push(data);
       if (data.level === 3) level3.push(data);
       voters.push(data);
       setAllVoter(voters);
-      // }
     }
 
     voters.sort((b, a) => a.amount - b.amount);
@@ -75,7 +58,6 @@ const Ranking = (props) => {
     contract.getAllAccount().then((daolist) => {
       loadDaoLevels(daolist);
     });
-    // alert(account)
     sortData();
   }, [props.stage]);
 
@@ -92,9 +74,8 @@ const Ranking = (props) => {
     setVoters(currentLevel);
   };
 
-  
   return (
-    <div className="card h-100 w-100" style={{ minHeight: 500 }}>
+    <div className="card h-100" style={{ minHeight: "500px" }}>
       <div className="d-flex align-items-center mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -148,9 +129,8 @@ const Ranking = (props) => {
         <button
           type="submit"
           onClick={() => setDisplayLevel(1)}
-          className={`font-weight-bold btn  text-nowrap ${
-            displayLevel === 1 ? " btn-primary" : ""
-          }`}
+          className={`font-weight-bold btn  text-nowrap ${displayLevel === 1 ? " btn-primary" : ""
+            }`}
         >
           {" "}
           Level 1
@@ -158,9 +138,8 @@ const Ranking = (props) => {
         <button
           type="submit"
           onClick={() => setDisplayLevel(2)}
-          className={`font-weight-bold btn  text-nowrap ${
-            displayLevel === 2 ? " btn-primary" : ""
-          }`}
+          className={`font-weight-bold btn  text-nowrap ${displayLevel === 2 ? " btn-primary" : ""
+            }`}
         >
           {" "}
           Level 2
@@ -168,9 +147,8 @@ const Ranking = (props) => {
         <button
           type="submit"
           onClick={() => setDisplayLevel(3)}
-          className={`font-weight-bold btn  text-nowrap  ${
-            displayLevel === 3 ? " btn-primary" : ""
-          }`}
+          className={`font-weight-bold btn  text-nowrap  ${displayLevel === 3 ? " btn-primary" : ""
+            }`}
         >
           {" "}
           Level 3
@@ -178,68 +156,65 @@ const Ranking = (props) => {
       </div>
 
       <div className="tab-bg">
-        <div
-          className="d-flex p-4 mt-0 ranking-header"
-          style={{
-            justifyContent: "space-between",
-            // marginTop: "0px!important",
-          }}
-        >
-          <div className="header-item" style={{ width: "40px" }}>
-            {t("Rank")}
-          </div>
-          <div
-            className="header-item"
-            style={{ width: "55px", textAlign: "center" }}
-          >
-            {t("Wallet")}
-          </div>
-          <div className="header-item">{t("Staking")}</div>
-        </div>
-        <StyledList>
-          {voters.length > 0 ? (
-            voters.map((voter, i) => {
-              return (
-                <span key={i}>
-                  <div
-                    className="rank-item mt-3 d-flex px-4 pt-4 mt-0"
-                    style={{
-                      justifyContent: "space-between",
-                      marginTop: "0px!important",
-                      display: "flex",
-                    }}
-                  >
-                    <div
-                      className="header-item"
-                      style={{ width: "40px", textAlign: "center" }}
-                    >
-                      {i + 1}
-                    </div>
-                    <div
-                      className="header-item"
-                      style={{ width: "160px", textAlign: "left" }}
-                    >
-                      {voter.address.replace(/(.{10})..+/, "$1…")}
-                    </div>
-                    <div className="header-item">
-                      {cleanNumber(voter.amount + "")}
-                    </div>
-                  </div>
-                </span>
-              );
-            })
-          ) : !account ? (
-            <div className="mx-auto text-center">
-             {t(" You need to be connected to view the Level ")}{displayLevel}
-            </div>
-          ) : loading ? (
-            <div className="mx-auto text-center">{t("Loading Data")}</div>
-          ) : (
-            <div className="mx-auto text-center">
-              {t("No one is on Level")} {displayLevel}
-            </div>
-          )}
-        </StyledList>
+
+        <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
+
+          <tr className="jsx-e5e2ca7965fa437a">
+            <th className="fs-16 font-weight-normal">Rank</th>
+            <th className="fs-16 font-weight-normal text-center">Wallet</th>
+            <th className="fs-16 font-weight-normal">Staking</th>
+          </tr>
+
+          <tbody>
+            {voters.length > 0 ? (
+              voters.map((voter, i) => 
+         
+                  <tr className=" text-nowrap mt-4" key={i} style={{ borderColor: '#1e2124' }}>
+                    <td className="fs-16 font-weight-normal" > {i + 1}</td>
+                    <td className="fs-16 font-weight-normal" >  {voter.address.replace(/(.{15})..+/, "$1…")}</td>
+                    <td className="fs-16 font-weight-normal" >{cleanNumber(voter.amount + "")}</td>
+                  </tr>
+            
+              )
+            ) : !account ? (
+              <tr className=" text-nowrap mt-4">
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
+                </td>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+                 {t("You need to be connected")}
+                </td>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
+                </td>
+              </tr>
+
+            ) : loading ? (
+              <tr className=" text-nowrap mt-4">
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
+                </td>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+                  {t("Loading Data")}
+                </td>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
+                </td>
+              </tr>
+            ) : (
+              <tr className=" text-nowrap mt-4">
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
+                </td>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+                  {t("No one is on Level")} {displayLevel}
+                </td>
+                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <style jsx>{`
+       tbody tr:last-child td{
+        border-bottom: none;
+      }
+      `}</style>
       </div>
     </div>
   );

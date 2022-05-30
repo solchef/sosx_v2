@@ -1,5 +1,4 @@
-import { useEffect, useState, createContext } from "react";
-import { Link as reactLink } from "react-router-dom";
+import { useState } from "react";
 import Link from "next/link";
 import NavMining from "../NavMining";
 import { useMediaPredicate } from "react-media-hook";
@@ -16,9 +15,7 @@ const socialMedias = [
 export default function SocialminingS1() {
   const [media, setMedia] = useState(socialMedias[0]);
   const [copySuccess, setCopySuccess] = useState("");
-  const [reward, setReward] = useState("");
   const toggleMenu = (event, type) => {
-    setReward(type);
     event.stopPropagation();
     socialMedias.map((socialMedia) =>
       socialMedia.name == type ? setMedia(socialMedia) : ""
@@ -30,22 +27,16 @@ export default function SocialminingS1() {
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
-  console.log(reward);
   localStorage.setItem("reward", media.reward);
   return (
-    <div
-      className={`${biggerThan1400 && "container"} pt-3 ${
-        biggest1400 && "container-fluid"
-      }`}
-    >
-      <NavMining />
 
-      <div className="container-fluid mt-3 pb-0">
+      <div className="container-fluid pb-0">
         <div className="card">
           <div className="row align-items-center">
-            <div className="col-xl-5 mx-auto align-items-center col-12">
+            <div className="col-xl-5 col-12">
+              <div className="d-flex justify-content-center">
               {media.name == "tiktok" ? 
-                <video width="400" height={400} autoPlay  controls>
+                <video width="auto" height={400} autoPlay  controls>
                   <source  src="posts/xgame.mp4" type="video/mp4" />
                   {t("Your browser does not support HTML video")}.
                 </video>
@@ -61,6 +52,7 @@ export default function SocialminingS1() {
                   }`}
                 />
               }
+              </div>
             </div>
 
             <div className="col-xl-7 pl-3 pt-3">
@@ -183,25 +175,6 @@ export default function SocialminingS1() {
           </div>
         </div>
       </div>
-
-      <div className="container-fluid">
-        <div className="row text-center">
-          <div className="col-md-12">
-            <Link href="/x-mining">
-              <a>
-                <button className="btn btn-outline-primary mr-2 mb-3">
-                  {t("Back")}
-                </button>
-              </a>
-            </Link>
-            <Link href="/socialmining-s2">
-              <a>
-                <button className="btn btn-primary mr-3 mb-3">{t("Continue")}</button>
-              </a>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
+ 
   );
 }

@@ -1,39 +1,24 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import styled from "styled-components";
-import useToast from "hooks/useToast";
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  TelegramShareButton,
-  EmailShareButton,
-  WhatsappShareButton,
-  WhatsappIcon,
-  TelegramIcon,
-} from "react-share";
-import { FacebookIcon, TwitterIcon } from "react-share";
-import { Popover, OverlayTrigger, Modal } from "react-bootstrap";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useStakingContract } from "hooks/useContract";
-
-import { useCallWithGasPrice } from "hooks/useCallWithGasPrice";
-import { useMediaPredicate } from "react-media-hook";
-import BigNumber from "big-number";
+import { useState } from "react";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import fetch from "isomorphic-unfetch";
+<<<<<<< HEAD
 import ConnectWalletButton from "components/ConnectWalletButton";
 import { useTranslation } from 'contexts/Localization';
 
 
 const tabs = [{ name: "list" }, { name: "mining" }, { name: "staking" }];
+=======
+import GameGuide from "./guide";
+import Header from "./components/Header";
+import REFERRAL from "./components/Referral";
+import Mining from "./components/Mining";
+import Staking from "./components/Staking";
+>>>>>>> 781a7a9fb53ed2ca2a9cc0079ffacfb94e12ca7d
 export default function Referral({ datasocial }) {
-  const [resultsoc, setResultsoc] = useState(datasocial);
-  const [socialData, setsocialData] = useState([]); 
-  const [tab, setTab] = useState(tabs[0]); 
   const { account } = useActiveWeb3React();
-  const [userAccount, setUserAccount] = useState("");
-  const contract = useStakingContract();
   const [referralCount, setReferralCount] = useState(0);
   const [viewReferralReward, setViewReferralReward] = useState(0);
+<<<<<<< HEAD
   const [referrals, setReferrals] = useState([]);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -717,19 +702,23 @@ export default function Referral({ datasocial }) {
           </div>
         </div>
       </div>
+=======
+  return (
+    <div className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse" style={{ gap: '20px' }}>
+        <Header referralCount={referralCount} viewReferralReward={viewReferralReward} />
+        <REFERRAL account={account} />
+      <Mining viewReferralReward={viewReferralReward} account={account} />
+      <Staking setViewReferralReward={setViewReferralReward} viewReferralReward={viewReferralReward} referralCount={referralCount} setReferralCount={setReferralCount} account={account} datasocial={datasocial} />
+      <GameGuide />
+>>>>>>> 781a7a9fb53ed2ca2a9cc0079ffacfb94e12ca7d
     </div>
   );
 }
 export async function getServerSideProps(ctx) {
-  // get the current environment
-  // let dev = process.env.NODE_ENV !== 'production';
-  // let { DEV_URL, PROD_URL } = process.env;
-
   // request posts from api
-  let response = await fetch(`https://testbed.socialx.io/api/social_mining`);
+  let response = await fetch(`https://app.socialx.io/api/social_mining`);
   // extract the data
   let data = await response.json();
-
   return {
     props: {
       datasocial: data["message"],

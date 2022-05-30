@@ -34,18 +34,15 @@ export default function Challenge() {
   const { t } = useTranslation();
   const contract = useDaoStakingContract();
   const [voters, setVoters] = useState([]);
-  const [stage, setStage] = useState(2);
   const [challenges, setChallenges] = useState([]);
+  const {stage} = useStage();
+
 
   useEffect(() => {
     getData();
     userVotingLevel();
   }, [stage, name]);
 
-  const stageHook = useStage();
-  useEffect(() => {
-    setStage(stageHook);
-  });
 
   const allowedStages = [2, 3];
   let challengeName = `challenge-${name}`;
@@ -201,7 +198,6 @@ export default function Challenge() {
     const toggleReadMore = () => {
       setIsReadMore(!isReadMore);
     };
-    // console.log(text.length)
     return (
       <p className="text  overflow-hidden">
         {isReadMore ? text.slice(0, 600) : text}
@@ -228,7 +224,6 @@ export default function Challenge() {
   };
 
   const getLevel = (amount) => {
-    // console.log(process.env.NEXT_PUBLIC_LEVEL1)
     if (
       amount >= process.env.NEXT_PUBLIC_LEVEL1 &&
       amount < process.env.NEXT_PUBLIC_LEVEL2

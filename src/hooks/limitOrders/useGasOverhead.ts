@@ -71,15 +71,6 @@ export default function useGasOverhead(
       return 'never executes'
     }
     return rateType === Rate.DIV ? realExecutionPrice.invert().toSignificant(6) : realExecutionPrice.toSignificant(6)
-    // return rateType === Rate.DIV
-    //   ? realInputAmount
-    //       .divide(outputAmount.asFraction)
-    //       ?.multiply(JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(outputAmount.currency.decimals)))
-    //       ?.toSignificant(6)
-    //   : outputAmount
-    //       ?.divide(realInputAmount.asFraction)
-    //       ?.multiply(JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(inputAmount.currency.decimals)))
-    //       ?.toSignificant(6)
   }, [
     rateType,
     realInputAmount,
@@ -90,14 +81,6 @@ export default function useGasOverhead(
     inputIsBNB,
     realExecutionPrice,
   ])
-
-  // console.log('GAS OVERHEAD', {
-  //   requiredGasAsCurrencyAmount: requiredGasAsCurrencyAmount?.toSignificant(6),
-  //   gasCostInInputTokens: gasCostInInputTokens?.outputAmount?.toSignificant(6),
-  //   bufferedOutputAmount: bufferedOutputAmount?.toSignificant(6),
-  //   realInputAmount: realInputAmount?.toSignificant(6),
-  //     realExecutionPriceAsString,
-  //   })
 
   return chainId
     ? { realExecutionPrice, gasPrice, realExecutionPriceAsString }

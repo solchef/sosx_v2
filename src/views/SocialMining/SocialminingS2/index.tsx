@@ -2,7 +2,7 @@ import Link from 'next/link';
 import NavMining from '../NavMining';
 import { useState,useRef } from 'react'
 import { InlineShareButtons } from 'sharethis-reactjs';
-import {Popover, Overlay,Button,Tooltip } from 'react-bootstrap';
+import { Overlay } from 'react-bootstrap';
 import { useMediaPredicate } from "react-media-hook";
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import ConnectWalletButton from '../../../components/ConnectWalletButton'
@@ -20,9 +20,10 @@ export default function SocialminingS2(props) {
     const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
 	const biggest1400 = useMediaPredicate("(max-width: 1400px)");
 
+
   return (
 
-    <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
+    < >
 		<Overlay target={target.current} show={show} placement="right">
         {({ placement, arrowProps, show: _show, popper, ...props }) => (
           <div
@@ -74,7 +75,7 @@ export default function SocialminingS2(props) {
         )}
       </Overlay>
 
-			<NavMining />
+
 
 
 
@@ -103,7 +104,6 @@ export default function SocialminingS2(props) {
 								{account ? (
 									<div className="d-flex p-2 justify-content-between align-items-center">
 										<p className='fs-14'>https://socialx.io?ref={account.slice(0, 23)}...</p>
-										{console.log(account)}
 										<div className="float-right d-flex">
 											<li onClick={() => {
 												navigator.clipboard.writeText(`https://socialx.io?ref=${account}`)
@@ -153,29 +153,6 @@ export default function SocialminingS2(props) {
 					</div>
 				</div>
 			</div>
-
-			<div className="container-fluid">
-				<div className="row text-center">
-					<div className="col-md-12">
-						<Link href="/socialmining-s1">
-
-							<a>
-								<button className="btn btn-outline-primary mr-2 mb-3">{t("Back")}</button>
-							</a>
-						</Link>
-						{account ? (
-						<Link href="/socialmining-s3">
-
-							<a>
-								<button className="btn btn-primary mr-3 mb-3">{t("Continue")}</button>
-							</a>
-						</Link>
-						):(
-							<ConnectWalletButton className="btn btn-primary mr-3 mb-3 "/>
-						)}
-					</div>
-				</div>
-			</div>
-		</div>
+		</>
 	)
 }

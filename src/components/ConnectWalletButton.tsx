@@ -10,7 +10,7 @@ const ConnectWalletButton = ({ children, ...props }: ButtonProps) => {
 
   return (
     <button className="btn btn-primary btn-lg w-100 mt-4" onClick={onPresentConnectModal} {...props}>
-      {children || <Trans>Connect Wallet</Trans>}
+      {children || <Trans>CONNECT</Trans>}
     </button>
   )
 }

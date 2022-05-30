@@ -1,4 +1,4 @@
-import { } from 'react'
+
 import { useMediaPredicate } from "react-media-hook";
 
 export default function Adspace() {
@@ -10,7 +10,7 @@ export default function Adspace() {
   return (
 
     <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
-                <div className="row">
+                <div className="row mt-5">
                     <div className="col">
                         <div className="card">
                             <div className="row">

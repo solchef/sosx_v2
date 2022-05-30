@@ -35,7 +35,9 @@ const Menu = (props) => {
       linkComponent={(linkProps) => {
         return <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
       }}
-      userMenu={<UserMenu />}
+      userMenu={<UserMenu langs={languageList.filter(function (lan) {
+        return lan.language == "English" || lan.language == "Español" || lan.language == "Français" 
+      })} setLang={setLanguage} />}
       globalMenu={<GlobalSettings />}
       banner={showPhishingWarningBanner && typeof window !== 'undefined' && <PhishingWarningBanner />}
       isDark={isDark}
@@ -45,7 +47,7 @@ const Menu = (props) => {
       setLang={setLanguage}
       cakePriceUsd={cakePriceUsd.toNumber()}
       links={menuItems}
-      subLinks={activeMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
+      subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
       footerLinks={footerLinks(t)}
       activeItem={activeMenuItem?.href}
       activeSubItem={activeSubMenuItem?.href}
