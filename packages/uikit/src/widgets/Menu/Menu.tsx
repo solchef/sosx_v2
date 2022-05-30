@@ -123,6 +123,10 @@ const Menu: React.FC<NavProps> = ({
     };
   }, [totalTopMenuHeight]);
 
+  const handleReferral = () => {
+      
+  }
+
   // Find the home link if provided
   const homeLink = links.find((link) => link.label === "Home");
 

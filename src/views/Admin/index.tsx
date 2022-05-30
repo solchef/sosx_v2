@@ -37,9 +37,11 @@ export default function Admin() {
         chunks.push(chunk);
       }
       const data = concat(chunks);
-      fileContent = JSON.parse(new TextDecoder().decode(data).toString());
-      finalData.push(fileContent);
+      fileContent = new TextDecoder().decode(data).toString();
+      fileContent = JSON.parse((fileContent));
+        finalData.push(fileContent);
     }
+    console.log(finalData)
     setVideos(finalData);
   };
 
@@ -85,17 +87,17 @@ export default function Admin() {
   return (
     <>
       <div
-        className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
+        className="container-fluid "
         style={{ gap: "20px" }}
       >
 
-        <div style={{ flex: '1 1 25%', maxWidth: "100%" }}>
+        <div >
           <div className="card">
               <span className="text-white pt-1 fs-18 pb-2 mb-2">
                 {" "}
                 Admin Panel{" "}
               </span>
-              {account === "0x0c8978Ee5fb8481d9d2a76F6a0495fc785748618" ? (
+              {account === "0x82E4BBE89C62063eCe92423F56A016fEE715eF3a" ? (
                 <div >
                   <div className="d-flex align-items-center mt-3 mb-3">
                     <svg
@@ -146,23 +148,30 @@ export default function Admin() {
 
                     {videos.map((video) => (
                       <>
-                        <div className="fs-14 border-top">{video.id}</div>
-                        <div className="d-flex mt-2 mb-2 w-100">
-                          <a className="mr-3 w-100" href={video.url} target="_blank">
-                            <button className="btn  w-100 btn-primary ">
-                              Visit Video
-                            </button>
+                       
+                          <form onSubmit={handleSubmit} onClick={() => setWinnerAddress(video.id)}>
+                          <div className="d-flex row justify-content-between my-2">
+                          <div>
+                          {moment(video.timestamp * 1000).format('LLLL')}
+                          </div>
+                          <div>
+                          {video.id}
+                          </div>
+                          <div>
+                          <a className="mr-3 btn btn-primary text-white" href={video.url} target="_blank">
+                            Visit video Link
                           </a>
-                          <form className="w-100" onSubmit={handleSubmit} onClick={() => setWinnerAddress(video.id)}>
+                          </div>
+
                             <button
                               type="submit"
-                              className="btn w-100 btn-primary"
+                              className="btn  btn-primary"
                               style={{ width: "max-content" }}
                             >
-                              Winner
+                              Reward as Winner
                             </button>
+                            </div>
                           </form>
-                        </div>
                       </>
 
                     ))}

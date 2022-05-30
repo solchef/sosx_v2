@@ -85,7 +85,7 @@ export default function SocialminingS3() {
               headers,
             });
 
-
+            console.log(rest);
             if (rest.status == 300) {
               toastError("You had submitted another record");
             }else{

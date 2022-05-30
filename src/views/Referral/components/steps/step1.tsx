@@ -17,12 +17,7 @@ const Step1 = () => {
       className="guide-image justify-items-center"
       style={{alignSelf: "center"}}
     >
-      <img
-          src="images/step1-referrallink.png"
-          data-aos="fade-up"
-          alt=""
-          className="aos-init aos-animate"
-        />
+     <img src="images/share-img.png" className="steps-img pb-3 justify-content-center pb-3" />
     </div>
   </div>
   );

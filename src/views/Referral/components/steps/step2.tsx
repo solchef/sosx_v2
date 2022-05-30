@@ -5,10 +5,9 @@ const Step2 = () => {
       <div className="w-100">
         <div className="title-pink custom-pt mb-5">
           <h3>Step 2</h3>
-          <h3>Get a referral link</h3>
+          <h3>Invite</h3>
           <p>
-            Connect a wallet & generate your referral link in the Referral
-            section.
+              Share your referral link link to friends to join socialx
           </p>
         </div>
       </div>
@@ -16,12 +15,7 @@ const Step2 = () => {
         className="guide-image justify-items-center"
         style={{ alignSelf: "center" }}
       >
-        <img
-          src="images/step2invitefriend-img.png" height={100}
-          data-aos="fade-up"
-          alt=""
-          className="aos-init aos-animate"
-        />
+        <img src="images/inv-img.png" style={{width:'162px'}} className="steps-img pb-3 justify-content-center pb-3" />
       </div>
     </div>
           

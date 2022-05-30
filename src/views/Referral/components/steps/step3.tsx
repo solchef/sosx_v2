@@ -9,7 +9,6 @@ const Step3 = () => {
           <h3>Earn SOSX</h3>
           <p>
           Receive a referral rewards from your friends’ earnings.
-
           </p>
       </div>
     </div>
@@ -17,12 +16,8 @@ const Step3 = () => {
       className="guide-image justify-items-center"
       style={{alignSelf: "center"}}
     >
-       <img
-          src="images/step3earnsosx-img.png"
-          data-aos="fade-up"
-          alt=""
-          className="aos-init aos-animate"
-        />
+        <img src="images/collect-img.png"
+                                        className="steps-img pb-3 justify-content-center pb-3" />
     </div>
   </div>
   );
