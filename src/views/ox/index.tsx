@@ -141,79 +141,7 @@ export const OX = () => {
       </div>
     </div>
   </section>
-  {/*
-    <section class="rules-sec">
 
-  <div class="container">
-      <div class="row">
-
-          <div class="tab-wrap">
-
-
-
-              <input type="radio" id="tab4" name="tabGroup2" class="tab" checked>
-              <label for="tab4">Rule # 1</label>
-
-              <input type="radio" id="tab5" name="tabGroup2" class="tab">
-              <label for="tab5">Rule # 2</label>
-
-              <input type="radio" id="tab6" name="tabGroup2" class="tab">
-              <label for="tab6">Rule # 3</label>
-
-              <input type="radio" id="tab7" name="tabGroup2" class="tab">
-              <label for="tab7">Rule # 4</label>
-
-              <div class="tab__content">
-                  <h3 class="tab-title">Rule # 1</h3>
-                  <p>First person to complete the voted challenge by the SOSX community and submit the video on
-                      socialx.io
-                      and post it on their social media wins all the prize money!
-
-                      (Condition: You must say in video “SocialX paid me” when uploading the video to any
-                      social media platform state “www.socialx.io”)</p>
-              </div>
-
-              <div class="tab__content">
-                  <h3 class="tab-title">Rule # 2</h3>
-                  <p>If the 1st person who submitted the video failed to meet the conditions or incorrectly
-                      completed the challenge, the 2nd in line until voted correct takes the prize.</p>
-              </div>
-
-              <div class="tab__content">
-                  <h3 class="tab-title">Rule # 3</h3>
-                  <p>Submissions are reviewed by the order they come in at.</p>
-
-              </div>
-
-              <div class="tab__content">
-                  <h3 class="tab-title">Rule # 4</h3>
-                  <p>Prize money will be 100% of the 10% collected on all buy orders from the previous days 24
-                      hour traded volume.</p>
-              </div>
-          </div>
-
-          <div class="col-md-12">
-              <div class="title-pink mt-5">
-                  <h3>Example</h3>
-                  <span>$1,000,000 in buyer trading volume (10%) = $100,000 POOL PRIZE</span>
-                  <p>If the challenge is not completed within 6 hours after voted by community, it will be rolled
-                      over to the
-                      following day with the additional added buy volume. If the additional buy volume for that
-                      day equals to $1,400,000,
-                      we will add 10% of that ($140,000) to the current on going challenge prize, making it to a
-                      total of $240,000 until
-                      someone completes the challenge and is rewarded the money.
-
-                      <br><br> Minimum daily prize starts at $1000 WORTH every 24 hours.
-                  </p>
-              </div>
-          </div>
-
-      </div>
-  </div>
-    </section>
-
-  */}
   <section className="submitchallenge-sec">
     <div className="container">
       <div className="row">
@@ -311,7 +239,12 @@ export const OX = () => {
         <div className="col-md-6 pl-5">
           <h3>THERE ARE NO RULES TO THE CHALLENGES EXCEPT NO CHALLENGE CAN BE MADE TO CAUSE INTENTIONAL HARM
             OR LEADING TO DEATH OR KILL.</h3>
-          <span>- sosx team</span>
+          <span className="ox" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500}}>- sosx team</span>
+          <style jsx>{`
+        .ox {
+          font-size: 25px !important;
+        }
+      `}</style>
         </div>
       </div>
     </div>
