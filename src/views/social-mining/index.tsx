@@ -1,9 +1,10 @@
+import Link from "next/link"
 import React from "react"
 
-export const Sm = () => {
+export const SMining = () => {
     return (
     <div>
-   <nav className="justify-content-between navbar navbar-expand-lg fixed-top center-brand static-nav">
+ <nav className="justify-content-between navbar navbar-expand-lg fixed-top center-brand static-nav">
     <a className="navbar-brand" href="https://socialx.io/">
       <img src="https://socialx.io/img/logo.png" alt="logo" className="logo-default" />
     </a>
@@ -13,30 +14,40 @@ export const Sm = () => {
     <div className="collapse navbar-collapse" id="xenav">
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <a className="nav-link" href="socialmining.html">SOCIAL MINING</a>
+        <Link href="/social-mining">
+          <a className="nav-link">SOCIAL MINING</a>
+        </Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="oxgame.html">OX GAME</a>
+        <Link href="/ox">
+          <a className="nav-link">OX GAME</a>
+        </Link>
         </li>
         <li className="nav-item">
           <a className="nav-link" href="#nft"> <span style={{color: '#5b5b5b'}}>NFT</span></a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="aboutsosx.html">ABOUT SOSX</a>
+        <Link href="/aboutsosx">
+          <a className="nav-link">ABOUT SOSX</a>
+        </Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="experiment.html">EXPERIMENT</a>
+        <Link href="/experiment">
+          <a className="nav-link">EXPERIMENT</a>
+        </Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="faq.html"> FAQ </a>
+        <Link href="/faq">
+          <a className="nav-link">FAQ</a>
+        </Link>
         </li>
         <li className="nav-item mobile-hide">
-          <a href="#" id="dapp_url_swap">
+          <a href="https://app.socialx.io/swap#">
             <button type="button" className="btn btn-primary btn-lg">LAUNCH DAPPS</button>
           </a>
         </li>
         <li className="nav-item mobile-show">
-          <a className="nav-link" href="#" id="dapp_url_swap"> LAUNCH DAPPS</a>
+          <a className="nav-link" href="https://app.socialx.io/swap#"> LAUNCH DAPPS</a>
         </li>
       </ul>
     </div>
