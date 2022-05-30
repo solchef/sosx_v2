@@ -1,7 +1,7 @@
-import Swap from '../views/Swap'
+import { UI } from 'views/UI'
 
 const Index = () => {
-  return <Swap />
+  return <UI />
 }
 
 export default Index

@@ -22,14 +22,9 @@ import ErrorBoundary from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
+import '../../public/font/fontsheet.css'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-// import "../../public/newHome/css/accordion.css"
-// import "../../public/newHome/css/aos.css"
-// import "../../public/newHome/css/faq.css"
-// import "../../public/newHome/css/style.css"
-// import "../../public/newHome/css/normalize.css"
-// import "../../public/newHome/css/owl.theme.default.min.css"
-// import "../../public/newHome/css/accordion.css"
+
 
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
@@ -152,21 +147,57 @@ type AppPropsWithLayout = AppProps & {
 
 const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? ErrorBoundary : Fragment
 
-const App = ({ Component, pageProps }: AppPropsWithLayout) => {
+const App = ({ Component, pageProps, ...appProps }) => {
   // Use the layout defined at the page level, if available
   const Layout = Component.Layout || Fragment
-  return (
-    <ProductionErrorBoundary>
-      <Menu>
+  const getContent = () => {
+    if ([`/social-mining`, `/ui`, `/`, `/ox`, `/privacy`, `/experiment`, `/aboutsosx`, `/faq`].includes(appProps.router.pathname)) {
+      return (
+        <ProductionErrorBoundary>
+        <Head>
+        <link rel="stylesheet" href='../../../../font/GameOfSquids.ttf' />
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/font/stylesheet.css" />
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/accordion.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/aos.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/aos.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/normalize.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/clock.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/faq.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/owl.carousel.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx.io/css/owl.theme.default.min.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"/>
+        </Head>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </Menu>
-      <EasterEgg iterations={2} />
-      <ToastListener />
-      <FixedSubgraphHealthIndicator />
-    </ProductionErrorBoundary>
-  )
+        </ProductionErrorBoundary>
+      )
+    } else {
+    return (
+      <ProductionErrorBoundary>
+        <Head>
+          <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+          <link href="/css/style.css" rel="stylesheet" />
+          <link rel="stylesheet" type="text/css" href="/css/faq.css" />
+        </Head>
+        <Menu>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Menu>
+        <EasterEgg iterations={2} />
+        <ToastListener />
+        <FixedSubgraphHealthIndicator />
+      </ProductionErrorBoundary>
+    )
+  }
+}
+  return getContent()
 }
 
 export default MyApp
