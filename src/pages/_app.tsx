@@ -22,13 +22,13 @@ import ErrorBoundary from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
-import "../../public/newHome/css/accordion.css"
-import "../../public/newHome/css/aos.css"
-import "../../public/newHome/css/faq.css"
-import "../../public/newHome/css/style.css"
-import "../../public/newHome/css/normalize.css"
-import "../../public/newHome/css/owl.theme.default.min.css"
-import "../../public/newHome/css/accordion.css"
+// import "../../public/newHome/css/accordion.css"
+// import "../../public/newHome/css/aos.css"
+// import "../../public/newHome/css/faq.css"
+// import "../../public/newHome/css/style.css"
+// import "../../public/newHome/css/normalize.css"
+// import "../../public/newHome/css/owl.theme.default.min.css"
+// import "../../public/newHome/css/accordion.css"
 
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
