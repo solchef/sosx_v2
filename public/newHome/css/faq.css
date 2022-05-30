@@ -1,0 +1,148 @@
+/* BASIC SETUP */
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+
+.container {
+    margin: 0 auto;
+    padding: 3rem;
+}
+
+/* RESPONSIVENESS */
+/* mobile phones */
+@media screen and (max-width: 575px) {
+    .container {
+        width: 100%;
+        font-size: 75%;
+    }
+}
+
+/* small smart phones */
+@media screen and (min-width: 576px) and (max-width: 767px) {
+    .container {
+        width: 540px;
+        font-size: 80%;
+    }
+}
+
+/* smart phones */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .container {
+        width: 720px;
+        font-size: 90%;
+    }
+}
+
+/* iPads */
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+    .container {
+        width: 960px;
+    }
+}
+
+/* Laptops & Desktops & TV */
+@media screen and (min-width: 1200px) {
+    .container {
+        width: 1140px;
+    }
+}
+
+/* STYLING WEB PAGE */
+.section {
+    background: #000000
+    ; /* fallback for old browsers */
+    /* background: -webkit-linear-gradient(45deg, #11998e, #38ef7d); */ /* Chrome 10-25, Safari 5.1-6 */
+    /* background: linear-gradient(45deg, #11998e, #38ef7d); */ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    min-height: 100%;
+margin-top: 120px;padding-bottom: 130px;}
+
+.section-heading {
+font-size: 3.5em;    
+font-weight: 700;/* margin: 0 0 4rem 0; */
+color: white;
+line-height: 60px;
+font-weight: 700;
+text-shadow: 0px 0px 0px #ff00cc, 0 0 25px #ff00cc, 0 0 5px #ff00cc;
+}
+
+.p-main{
+
+font-size: 18px;
+margin-top: 15px;color: #fff;margin-bottom: 30px;}
+
+/* STYLING FAQ */
+
+.faq-list .faq {
+    background-color: #121216;
+    border-radius: 1rem;
+    margin: 0 0 1.5rem 0;
+    /* hack for border radius on parent */
+    overflow: hidden;
+    z-index: 1;
+/* padding-bottom: 20px; */}
+
+.faq-list .faq .faq-header {
+    padding: 1.5rem;
+    /* Give an impression of button to the faq header */
+    cursor: pointer;
+}
+
+.faq-list .faq .faq-header .faq-title {
+    color: #fff;
+    font-size: 18px;
+font-weight: 600;;;;;;;text-shadow: 0px 0px 0px #ff00cc, 0 0 25px #ff00cc, 0 0 5px #ff00cc;}
+
+.faq-list .faq .faq-body {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.5s;
+}
+
+.faq-list .faq .faq-body .faq-text {
+    /* text-align: justify; */
+    font-size: 1em;
+    color: #fff;
+    opacity: 0;
+    padding: 1.5rem 1.5rem;
+    transition: opacity 0.5s;
+}
+
+/* expanded faq item */
+.faq-list .faq.expanded .faq-header {
+    padding-bottom: 0.8rem;
+}
+
+.faq-list .faq.expanded .faq-body .faq-text {
+    opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+.section-heading {
+font-size: 29px;
+font-weight: 700;margin: 0 0 1rem 0;
+text-align: center;color: white;
+line-height: 40px;font-weight: 700;
+text-shadow: 0px 0px 0px #ff00cc, 0 0 25px #ff00cc, 0 0 5px #ff00cc;
+
+}
+
+.faq-list .faq .faq-header .faq-title {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    text-shadow: 0px 0px 0px #ff00cc, 0 0 25px #ff00cc, 0 0 5px #ff00cc;
+}
+
+.p-main {
+    font-size: 15px;
+    margin-top: 15px;
+    color: #fff;
+    text-align: center;margin-bottom: 30px;
+}
+
+}
