@@ -271,7 +271,9 @@ export const SMining = () => {
           <div className="legal-link">
             <a href="privacy.html">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
             <a className="slipage-text">*set slippage tolarance 25%*</a>
-            <a href="aboutsosx.html" className="utility-button">ABOUT SOSX</a>
+            <Link href="/aboutsosx">
+                  <a className="utility-button">ABOUT SOSX</a>
+                  </Link>
           </div>
         </section>
         <nav className="navbar navbar-expand-lg2  center-brand static-nav mobile-show">
@@ -297,10 +299,12 @@ export const SMining = () => {
                 <div className="legal-link">
                   <a href="privacy">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
                   <a className="slipage-text">*set slippage tolarance 25%*</a>
-                  <a href="aboutsosx.html" className="utility-button">ABOUT SOSX</a>
-                </div>
+                  <Link href="/aboutsosx">
+                  <a className="utility-button">ABOUT SOSX</a>
+                  </Link>
               </div>
             </div>
+          </div>
           </div>
         
         </nav>

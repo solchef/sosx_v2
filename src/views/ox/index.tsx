@@ -80,7 +80,10 @@ export const OX = () => {
 
             <p>WHAT’S THE CRAZIEST THING YOU WOULD RECORD YOURSELF DO FOR MONEY?</p>
             <div className="btn-group">
-              <a href="#" id="dapp_url_game" className="btn">I WANT TO PLAY</a>
+              <Link href="/xgame">
+              <a id="dapp_url_game" className="btn">I WANT TO PLAY</a>
+              </Link>
+
             </div>
           </div>
           <img src="https://socialx.io/img/sosx-prizepool-banner2.png" />
@@ -277,7 +280,9 @@ export const OX = () => {
     <div className="legal-link">
       <a href="privacy.html">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
       <a className="slipage-text">*set slippage tolarance 25%*</a>
-      <a href="aboutsosx.html" className="utility-button">ABOUT SOSX</a>
+      <Link href="/aboutsosx">
+                  <a className="utility-button">ABOUT SOSX</a>
+                  </Link>
     </div>
   </section>
   <div className="footer">
@@ -296,22 +301,11 @@ export const OX = () => {
     <div className="legal-link">
       <a href="privacy">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
       <a className="slipage-text">*set slippage tolarance 25%*</a>
-      <a href="aboutsosx.html" className="utility-button">ABOUT SOSX</a>
+      <Link href="/aboutsosx">
+        <a className="utility-button">ABOUT SOSX</a>
+      </Link>
     </div>
   </div>
-  {/*/.CONTAINER*/}
-  {/*/.copyright*/}
-  {/*<div data-aos-anchor=".other-element"></div>*/}
-  {/*jquery*/}
-  {/*bootstrap v4 js*/}
-  {/*popper js*/}
-  {/*aos js*/}
-  {/*owl carousel */}
-  {/*counter js*/}
-  {/*easing js*/}
-  {/*ajax contact*/}
-  {/*maps*/}
-  {/*main script*/}
 </div>
 
     
