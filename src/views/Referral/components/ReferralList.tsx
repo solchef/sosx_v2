@@ -58,10 +58,10 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
     setResultsoc(json.message);
     setsocialData(json.message);
     results.push(json.message);
-    console.log("results",results);
-    console.log("data is:",json.message)
-    console.log("data2 is:",socialData)
-    console.log("resultsoc",resultsoc);
+    // console.log("results",results);
+    // console.log("data is:",json.message)
+    // console.log("data2 is:",socialData)
+    // console.log("resultsoc",resultsoc);
   };
 
   const fetchReferral = async () => {
