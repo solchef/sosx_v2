@@ -46,22 +46,24 @@ export default function DaoStaking() {
   useEffect(() => {
     setLoading(false);
     if (account !== undefined) {
+
       tokenContract.balanceOf(account).then((bal) => {
         let balance = formatFixedNumber(bal, 3, 18);
         setUserBalace(Number(balance));
       });
 
       listUserStaking();
-
+      
       tokenContract.allowance(account, contract.address).then((allowance) => {
         allowance = Number(formatFixedNumber(allowance, 3, 18));
         if (allowance > 0) {
           setActivatestake(true);
         }
         setAllowanceValue(allowance);
+
       });
     }
-  }, [account]);
+}, [account]);
 
   const listUserStaking = async () => {
     const list = [];
@@ -126,6 +128,7 @@ export default function DaoStaking() {
     } else {
       setActivatestake(false);
     }
+
     const p = event.target.value;
     const t = stakingClass == 1 ? 0.25 : stakingClass == 2 ? 0.5 : 1;
     const r = stakingClass == 1 ? 0.06 : stakingClass == 2 ? 0.09 : 0.12;
@@ -196,15 +199,20 @@ export default function DaoStaking() {
   }, []);
 
   const handleSubmit = async () => {
+
+    let bal = await tokenContract.balanceOf(account);
+
+    bal = formatFixedNumber(bal, 3, 18);
+
     if (amountToStake < 1) {
       toastError(t("You must stake a minimum of 1 token"));
       return;
     }
 
-    if (amountToStake > balance) {
+    if (amountToStake > bal) {
       toastError(
-        `Insufficient balance. Your wallet balance is ${balance} you need  ${(
-          amountToStake - balance
+        `Insufficient balance. Your wallet balance is ${bal} you need  ${(
+          amountToStake - bal
         ).toFixed(3)} more SOSX to stake that amount. `
       );
       return;
@@ -212,6 +220,7 @@ export default function DaoStaking() {
 
     let decimals = BigNumber(10).pow(18);
     let result = BigNumber(amountToStake).multiply(decimals);
+
     if (allowanceValue > amountToStake) {
       onPresentConfirmModal();
     } else {
