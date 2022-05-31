@@ -40,7 +40,7 @@ export default function Faq() {
       return (
 
         <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
- <nav className="justify-content-between navbar navbar-expand-lg fixed-top center-brand static-nav">
+ {/* <nav className="justify-content-between navbar navbar-expand-lg fixed-top center-brand static-nav">
     <a className="navbar-brand" href="https://socialx.io/">
       <img src="https://socialx.io/img/logo.png" alt="logo" className="logo-default" />
     </a>
@@ -87,7 +87,7 @@ export default function Faq() {
         </li>
       </ul>
     </div>
-  </nav>
+  </nav> */}
 
          <div className="section">
                     <h5 className="section-heading">{t("Frequenty Asked Question (FAQ)")}</h5>

@@ -346,7 +346,7 @@ const Menu: React.FC<NavProps> = ({
 
             </li>
 
-            {/* <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
+            <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
               <Link href="/aboutsosx">
 
                 <a>
@@ -367,7 +367,7 @@ const Menu: React.FC<NavProps> = ({
                 </a>
               </Link>
 
-            </li> */}
+            </li>
 
           </ul>
         </div>
