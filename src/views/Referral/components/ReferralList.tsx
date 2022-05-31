@@ -34,15 +34,21 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
         account,
         createdAt: new Date().toDateString,
       };
-      // save the post
-      let response = await fetch("/api/account", {
-        method: "POST",
-        body: JSON.stringify(post),
-      });
 
-      // get the data
-      let data = await response.json();
-      console.log(data);
+      try{
+        // save the post
+        let response = await fetch("/api/account", {
+          method: "POST",
+          body: JSON.stringify(post),
+        });
+
+        // get the data
+        let data = await response.json();
+        console.log(data);
+      }catch(e){
+        console.log(e)
+      }
+  
     }
   };
 
