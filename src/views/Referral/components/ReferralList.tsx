@@ -57,7 +57,7 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
     const json = await res.json();
     setResultsoc(json.message);
     setsocialData(json.message);
-    results.push(json.message);
+    // results.push(json.message);
     // console.log("results",results);
     // console.log("data is:",json.message)
     // console.log("data2 is:",socialData)
@@ -177,7 +177,7 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
                     socialData.map((ref) => (
 
                       <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
-                        <td className="text-white">{ref.address.replace(/(.{13})..+/, "$1…")}</td>
+                        <td className="text-white">{ref.gotrefered.replace(/(.{13})..+/, "$1…")}</td>
                         <td className="text-white">0</td>
                         <td className="text-white">0</td>
                         <td className="text-white">0</td>
@@ -208,7 +208,7 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
                     referrals.map((ref) => (
 
                       <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
-                        <td className="text-white">{ref.gotrefered.replace(/(.{13})..+/, "$1…")}</td>
+                        <td className="text-white">{ref.address.replace(/(.{13})..+/, "$1…")}</td>
                         <td className="text-white">{ref.amount}</td>
                         <td className="text-white">{ref.amount}</td>
                       </tr>
