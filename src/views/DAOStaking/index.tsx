@@ -71,14 +71,15 @@ useEffect(() => {
 
 listUserStaking()
 
-},[account, totalAmountStaked])
+},[totalAmountStaked])
 
   const listUserStaking = async () => {
     const list = [];
     let rew = 0;
+   
     contract.getStakeCount().then((stakes) => {
-      setActiveStakes([]);
-      setStakeList([])
+       setActiveStakes([]);
+    setStakeList([])
       for (let i = 0; i < stakes; i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
           contract.calculatePeriods(i).then((period) => {
