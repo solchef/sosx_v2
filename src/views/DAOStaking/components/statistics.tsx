@@ -35,7 +35,8 @@ export default function Statistics(props) {
 
   useEffect(() => {
     stakingDetails();
-  }, [stakingDetails]);
+  }, [stakingDetails, account]);
+
 	const biggest1500 = useMediaPredicate("(min-width: 1500px)");
 
   return (

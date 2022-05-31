@@ -63,7 +63,7 @@ export default function DaoStaking() {
 
       });
     }
-}, [account]);
+}, [account, loading]);
 
   const listUserStaking = async () => {
     const list = [];

@@ -1,8 +1,10 @@
 import { cleanNumber } from "utils/amount";
 import { useTranslation } from 'contexts/Localization';
+import useActiveWeb3React from "hooks/useActiveWeb3React";
 
 export default function userStaking(props) {
   const { t } = useTranslation();
+
 
   return (
     <div className="card d-flex flex-column h-100">
