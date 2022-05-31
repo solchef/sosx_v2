@@ -68,8 +68,9 @@ export default function DaoStaking() {
 }, [account]);
 
 useEffect(() => {
-
-listUserStaking()
+  setActiveStakes([]);
+  setStakeList([])
+  listUserStaking()
 
 },[totalAmountStaked])
 
@@ -78,8 +79,6 @@ listUserStaking()
     let rew = 0;
    
     contract.getStakeCount().then((stakes) => {
-       setActiveStakes([]);
-       setStakeList([])
       for (let i = 0; i < Number(stakes); i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
           contract.calculatePeriods(i).then((period) => {
@@ -109,7 +108,8 @@ listUserStaking()
             setActiveStakes((activeStakes) => [...activeStakes, instance]);
           }
           // if (!instance.isWithdrawed) {
-          setStakeList((stakelist) => [...stakelist, instance]);
+          setStakeList(stakelist => [...stakelist, instance]);
+          // console.log([...stakelist, instance])
           // }
         });
       });
@@ -267,8 +267,23 @@ listUserStaking()
     "ConfirmStakingModal"
   );
 
-  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
+  function getUniqueValues(array) {
+    var result = [];
+    var stakes = [];
+    for (var i = 0; i < array.length; i++)
+    {
+        if (!stakes.includes(array[i].stakeID))
+        {
+          stakes.push(array[i].stakeID)
+            result.push(array[i]);
+        }
+    }
+    console.log("fil", result)
+    return result;
+    }
+    
 
+  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
   return (
 
     <div
@@ -488,7 +503,7 @@ listUserStaking()
         <DaoMemebrship />
       </div>
       <div style={{ flex: "1 1 30%" }}>
-        <UserStaking status={loading} stakelist={stakelist} onActionModal={handleShow} />
+        <UserStaking status={loading} stakelist={getUniqueValues(stakelist)} onActionModal={handleShow} />
       </div>
       <Modal show={show} onHide={handleClose} centered>
         <ModalHeader

@@ -68,10 +68,9 @@ export default function userStaking(props) {
             </tr>
           </tbody>
           <tbody className="jsx-e5e2ca7965fa437a">
-
-
-            {props.stakelist.map((stake, i) =>
-
+            
+            
+            {props.stakelist.map((stake, i) => 
               <tr className="jsx-e5e2ca7965fa437a" key={i} style={{ borderColor: "rgb(30, 33, 36)" }}>
                 <td className="jsx-e5e2ca7965fa437a text-white" >{stake.stakeDate}</td>
                 <td className="jsx-e5e2ca7965fa437a text-white" >{ stake.isWithdrawed ? t("UnStaked")  : t("Staked") }</td>
