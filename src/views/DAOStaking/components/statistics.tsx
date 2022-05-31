@@ -7,13 +7,12 @@ import useToast from "hooks/useToast";
 import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
 import { useMediaPredicate } from "react-media-hook";
 
-export default function Statistics(props) {
+export default function Statistics({totalAmountStaked, reward, setTotalAmountStaked}) {
   const [price, setPrice] = useState(Number);
   const [marketCap, setMarketCap] = useState(Number);
   const contract = useDaoStakingContract();
   const { account } = useActiveWeb3React();
   const tokenContract = useSosxContract();
-  const [totalAmountStaked, setTotalAmountStaked] = useState(0);
   const [numberOfActiveStake, setNumberOfActiveStake] = useState(0);
 
   const [level, setLevel] = useState(0);
@@ -116,7 +115,7 @@ export default function Statistics(props) {
             <div className="flex-row d-flex flex-wrap justify-content-between w-100 align-items-center">
               <div className="data-content">
                 <div className="d-flex align-items-end">
-                  <h2 className="mb-3 main-pink">{props.reward > 0 ? props.reward : 0}</h2>
+                  <h2 className="mb-3 main-pink">{reward > 0 ? reward : 0}</h2>
                 </div>
                 <div className="d-flex flex-column align-items-start ">
                   <div className="d-flex align-items-center">

@@ -42,6 +42,8 @@ export default function DaoStaking() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [totalAmountStaked, setTotalAmountStaked] = useState(0);
+
 
   useEffect(() => {
     setLoading(false);
@@ -50,9 +52,8 @@ export default function DaoStaking() {
       tokenContract.balanceOf(account).then((bal) => {
         let balance = formatFixedNumber(bal, 3, 18);
         setUserBalace(Number(balance));
+        
       });
-
-      listUserStaking();
       
       tokenContract.allowance(account, contract.address).then((allowance) => {
         allowance = Number(formatFixedNumber(allowance, 3, 18));
@@ -63,13 +64,21 @@ export default function DaoStaking() {
 
       });
     }
+    
 }, [account, loading]);
+
+useEffect(() => {
+
+listUserStaking()
+
+},[account, totalAmountStaked])
 
   const listUserStaking = async () => {
     const list = [];
     let rew = 0;
     contract.getStakeCount().then((stakes) => {
       setActiveStakes([]);
+      setStakeList([])
       for (let i = 0; i < stakes; i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
           contract.calculatePeriods(i).then((period) => {
@@ -92,14 +101,14 @@ export default function DaoStaking() {
           // console.log(stakeClass)
          let rate = stakeClass == 1 ? 0.06 : stakeClass == 2 ? 0.09 : 0.12;
           rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
-          console.log(rew)
+          // console.log(rew)
           setReward(rew);
           list.push(instance)
           // if (!instance.isWithdrawed) {
           setActiveStakes((activeStakes) => [...activeStakes, instance]);
           // }
           // if (!instance.isWithdrawed) {
-          setStakeList((activeStakes) => [...activeStakes, instance]);
+          setStakeList((stakelist) => [...stakelist, instance]);
           // }
         });
       });
@@ -201,7 +210,6 @@ export default function DaoStaking() {
   const handleSubmit = async () => {
 
     let bal = await tokenContract.balanceOf(account);
-
     bal = formatFixedNumber(bal, 3, 18);
 
     if (amountToStake < 1) {
@@ -266,7 +274,7 @@ export default function DaoStaking() {
       className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
       style={{ gap: "20px" }}
     >
-      <Statistics reward={reward}/>
+      <Statistics reward={reward} totalAmountStaked={totalAmountStaked} setTotalAmountStaked={setTotalAmountStaked}/>
       <div style={{ flex: "1 1 30%"}}>
         <div className="card d-flex flex-column"
          style={{ background: "#1e1e1e" }}
