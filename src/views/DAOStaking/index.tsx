@@ -271,18 +271,14 @@ useEffect(() => {
   function getUniqueValues(array) {
     var result = [];
     var stakes = [];
-    var withdrawed = 0;
     for (var i = 0; i < array.length; i++)
     {
         if (!stakes.includes(array[i].stakeID))
         {
           stakes.push(array[i].stakeID)
             result.push(array[i]);
-            withdrawed = withdrawed + array[i].withdrawned
         }
     }
-    // console.log("fil", withdrawed)
-    // setWithdrawnAmount(withdrawed)
     return result;
     }
 

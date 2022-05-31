@@ -21,7 +21,7 @@ export default function Statistics({totalAmountStaked, reward, setTotalAmountSta
     contract.getTotalStakeAmount().then((stakeAmount) => {
       let amount = Number(stakeAmount / 10 ** 18);
       setTotalAmountStaked(amount);
-      let level = getDaoLevel(amount);
+      let level = getDaoLevel(amount - withdrawned);
 
       // alert(level)
       setLevel(level);
@@ -46,7 +46,6 @@ export default function Statistics({totalAmountStaked, reward, setTotalAmountSta
             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center">
               <div className="data-content">
                 <div className="d-flex  align-items-end">
-                  {console.log(withdrawned)}
                   <h2 className="mb-3 main-pink"> {totalAmountStaked - withdrawned} </h2>
                 </div>
                 <div className="">
