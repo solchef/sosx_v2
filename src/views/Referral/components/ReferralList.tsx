@@ -38,7 +38,7 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
       try{
         // save the post
         let response = await fetch("/api/account", {
-          method: "POST",
+          method: "GET",
           body: JSON.stringify(post),
         });
 
@@ -208,7 +208,7 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
                     referrals.map((ref) => (
 
                       <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
-                        <td className="text-white">{ref.address.replace(/(.{13})..+/, "$1…")}</td>
+                        <td className="text-white">{ref.gotrefered.replace(/(.{13})..+/, "$1…")}</td>
                         <td className="text-white">{ref.amount}</td>
                         <td className="text-white">{ref.amount}</td>
                       </tr>
