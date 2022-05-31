@@ -43,7 +43,7 @@ export default function DaoStaking() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [totalAmountStaked, setTotalAmountStaked] = useState(0);
-
+const [withdrawnAmount, setWithdrawnAmount] = useState(0)
 
   useEffect(() => {
     setLoading(false);
@@ -96,6 +96,7 @@ useEffect(() => {
             rewardAmount: Number(stakeInstance[4]),
             penalty: Number(stakeInstance[5]),
             stakingClass: stakeClass,
+            withdrawned: Boolean(stakeInstance[1]) ? stakeAmt : 0,
             periodElapsed: stakeClass,
           };
           // console.log(stakeClass)
@@ -270,17 +271,34 @@ useEffect(() => {
   function getUniqueValues(array) {
     var result = [];
     var stakes = [];
+    var withdrawed = 0;
     for (var i = 0; i < array.length; i++)
     {
         if (!stakes.includes(array[i].stakeID))
         {
           stakes.push(array[i].stakeID)
             result.push(array[i]);
+            withdrawed = withdrawed + array[i].withdrawned
         }
     }
-    console.log("fil", result)
+    // console.log("fil", withdrawed)
+    // setWithdrawnAmount(withdrawed)
     return result;
     }
+
+    function getWithDrawed(array) {
+          var stakes = [];
+          var withdrawed = 0;
+          for (var i = 0; i < array.length; i++)
+          {
+              if (!stakes.includes(array[i].stakeID))
+              {
+                stakes.push(array[i].stakeID)
+                withdrawed = withdrawed + array[i].withdrawned
+              }
+          }
+          return withdrawed;
+      }
     
 
   const biggest1500 = useMediaPredicate("(min-width: 1500px)");
@@ -290,7 +308,7 @@ useEffect(() => {
       className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
       style={{ gap: "20px" }}
     >
-      <Statistics reward={reward} totalAmountStaked={totalAmountStaked} setTotalAmountStaked={setTotalAmountStaked}/>
+      <Statistics reward={reward} withdrawned={getWithDrawed(stakelist)} totalAmountStaked={totalAmountStaked} setTotalAmountStaked={setTotalAmountStaked}/>
       <div style={{ flex: "1 1 30%"}}>
         <div className="card d-flex flex-column"
          style={{ background: "#1e1e1e" }}
