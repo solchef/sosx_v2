@@ -65,7 +65,7 @@ export default function DaoStaking() {
       });
     }
     
-}, [account, loading]);
+}, [account]);
 
 useEffect(() => {
 
@@ -79,8 +79,8 @@ listUserStaking()
    
     contract.getStakeCount().then((stakes) => {
        setActiveStakes([]);
-    setStakeList([])
-      for (let i = 0; i < stakes; i++) {
+       setStakeList([])
+      for (let i = 0; i < Number(stakes); i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
           contract.calculatePeriods(i).then((period) => {
           let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
@@ -104,10 +104,10 @@ listUserStaking()
           rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
           // console.log(rew)
           setReward(rew);
-          list.push(instance)
-          // if (!instance.isWithdrawed) {
-          setActiveStakes((activeStakes) => [...activeStakes, instance]);
-          // }
+          // list.push(instance)
+          if (!instance.isWithdrawed) {
+            setActiveStakes((activeStakes) => [...activeStakes, instance]);
+          }
           // if (!instance.isWithdrawed) {
           setStakeList((stakelist) => [...stakelist, instance]);
           // }

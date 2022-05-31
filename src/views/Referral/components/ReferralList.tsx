@@ -168,7 +168,7 @@ const ReferralList = ({ account, datasocial, referralCount, setReferralCount, vi
 
                 <tbody>
                   {socialData.length > 0 ? (
-                    resultsoc.map((ref) => (
+                    socialData.map((ref) => (
 
                       <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
                         <td className="text-white">{ref.address.replace(/(.{13})..+/, "$1…")}</td>
