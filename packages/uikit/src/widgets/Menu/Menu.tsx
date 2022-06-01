@@ -355,7 +355,7 @@ const Menu: React.FC<NavProps> = ({
                 </a>
               </Link>
 
-            </li>*/}
+            </li>
 
             <li className={router.pathname == "/multisender" ? "mm-active" : ""}>
 
