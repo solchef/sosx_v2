@@ -183,8 +183,8 @@ const Menu: React.FC<NavProps> = ({
       case '/x-mining':
         return "Social Mining";
 
-      case '/aboutsosx':
-        return "Aboutsosx";
+      case '/multisender':
+        return "Token Multi Sender";
 
       case '/faq':
         return "Faq";
@@ -355,19 +355,19 @@ const Menu: React.FC<NavProps> = ({
                 </a>
               </Link>
 
-            </li>
+            </li>*/}
 
-            <li className={router.pathname == "/faq" ? "mm-active" : ""}>
+            <li className={router.pathname == "/multisender" ? "mm-active" : ""}>
 
-              <Link href="/faq">
+              <Link href="/multisender">
 
                 <a>
                   <i className="fa-solid fa-circle-question"></i>
-                  <span className="nav-text">FAQ</span>
+                  <span className="nav-text"> Token Multi Sender</span>
                 </a>
               </Link>
 
-            </li> */}
+            </li> 
 
           </ul>
         </div>

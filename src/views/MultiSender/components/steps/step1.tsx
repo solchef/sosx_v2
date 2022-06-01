@@ -1,7 +1,32 @@
+import { useTranslation } from "contexts/Localization";
+import { useState } from "react";
 import NavMining from "../../NavMining";
 
-export default function Test() {
+export default function Step1() {
+  const { t } = useTranslation();
+  const [multiSenderValues, setMultiSenderValues] = useState("");
 
+  const data = []
+  const handleChangeUpload = (e) => {
+    const fileReader = new FileReader();
+    fileReader.readAsText(e.target.files[0], "UTF-8");
+    fileReader.onload = (e) => {
+      let inputElement = document.getElementById("story") as HTMLInputElement;
+      inputElement.value += e.target.result;
+      setMultiSenderValues(String(e.target.result));
+    };
+  };
+
+  const valid = () => {
+    const lines = multiSenderValues.trim().split(/\r\n|\r|\n/).length;
+    const accounts = multiSenderValues.split("\n");
+    const acc = accounts.map((line) => line.trim().split(",")[0]);
+    const value = accounts.map((line) => line.trim().split(",")[1]);
+    data.push({
+      acc, value
+    })
+    console.log(data)
+  }
   return (
     <>
       <  NavMining step="0" />
@@ -56,7 +81,9 @@ export default function Test() {
                         name="story"
                         rows={10}
                         cols={10}
-                        placeholder={"Addresses with Amounts"}
+                        placeholder={t("Addresses with Amounts")}
+                        value={multiSenderValues}
+                        onChange={(e) => setMultiSenderValues(e.target.value)}
                       />
                     </div>
                   </div>
@@ -64,13 +91,12 @@ export default function Test() {
 
 
                 </div>
-<p className="text-white">                The address and amount are separated by commas
-</p>
+                <p className="text-white">{t("The address and amount are separated by commas")}</p>
               </div>
 
             </div>
-
           </form>
+            <button type="submit" onClick={() => valid()}>Here</button>
         </div>
       </div>
     </>
