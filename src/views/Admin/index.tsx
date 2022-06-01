@@ -32,7 +32,7 @@ export default function Admin() {
   ]
   return (
     <>
-    {allowedWallets.includes(account) ? (
+    {!allowedWallets.includes(account) ? (
      <div
           className="container-fluid "
           style={{ gap: "20px" }}

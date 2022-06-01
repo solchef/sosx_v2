@@ -24,7 +24,7 @@ export default function DaoStaking() {
   const { account } = useActiveWeb3React();
   const tokenContract = useSosxContract();
   const [balance, setUserBalace] = useState(0);
-  const { toastError, toastSuccess } = useToast();
+  const { toastError, toastSuccess, toastInfo } = useToast();
   const [stakingClass, setStakingClass] = useState(1);
   const [stakingInterest, setStakingInterest] = useState(0);
   const [amountToStake, setamountToStake] = useState(0);
@@ -104,7 +104,7 @@ useEffect(() => {
          let rate = stakeClass == 1 ? 0.06 : stakeClass == 2 ? 0.09 : 0.12;
           rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
           // console.log(rew)
-          setReward(rew);
+          setReward(Number(rew.toFixed(3)));
           // list.push(instance)
           if (!instance.isWithdrawed) {
             setActiveStakes((activeStakes) => [...activeStakes, instance]);
@@ -181,7 +181,8 @@ useEffect(() => {
   };
 
   const handleClaimReward = async (i) => {
-    toastError("Rewards not yet available for claim.");
+    handleClose();
+    toastInfo("Rewards not yet ready for claim.");
   };
 
   const handleUnStake = async (instance) => {
@@ -196,7 +197,7 @@ useEffect(() => {
       if (tx) {
         setActivatestake(true);
         setLoading(false);
-        toastSuccess("Staking Transaction successfully sent");
+        toastSuccess("Un Staking Transaction successfully sent");
         listUserStaking();
       } else {
         toastError("Could not unstake");
@@ -470,7 +471,7 @@ useEffect(() => {
               <div className="d-flex h-100 justify-content-between mt-3">
                 <div>
                   <div className="d-flex w-auto m-auto">
-                    <h3>0.000 SOSX</h3>
+                    <h3>{reward} SOSX</h3>
                   </div>
                   <p className="success mb-0 fs-13 main-pink pt-2">AVAILABLE</p>
                 </div>
