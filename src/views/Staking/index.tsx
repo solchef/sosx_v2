@@ -205,7 +205,7 @@ export default function Staking() {
     // alert(ref);
     let stake = await contract.stakeToken(
       result.toString(),
-       ref.toString(),
+       "0x0000000000000000000000000000000000000001",
       stakingClass
     );
 

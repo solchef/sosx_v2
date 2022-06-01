@@ -42,33 +42,44 @@ export default function DaoStaking() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [totalAmountStaked, setTotalAmountStaked] = useState(0);
+const [withdrawnAmount, setWithdrawnAmount] = useState(0)
 
   useEffect(() => {
     setLoading(false);
     if (account !== undefined) {
+
       tokenContract.balanceOf(account).then((bal) => {
         let balance = formatFixedNumber(bal, 3, 18);
         setUserBalace(Number(balance));
+        
       });
-
-      listUserStaking();
-
+      
       tokenContract.allowance(account, contract.address).then((allowance) => {
         allowance = Number(formatFixedNumber(allowance, 3, 18));
         if (allowance > 0) {
           setActivatestake(true);
         }
         setAllowanceValue(allowance);
+
       });
     }
-  }, [account]);
+    
+}, [account]);
+
+useEffect(() => {
+  setActiveStakes([]);
+  setStakeList([])
+  listUserStaking()
+
+},[totalAmountStaked])
 
   const listUserStaking = async () => {
     const list = [];
     let rew = 0;
+   
     contract.getStakeCount().then((stakes) => {
-      setActiveStakes([]);
-      for (let i = 0; i < stakes; i++) {
+      for (let i = 0; i < Number(stakes); i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
           contract.calculatePeriods(i).then((period) => {
           let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
@@ -85,19 +96,21 @@ export default function DaoStaking() {
             rewardAmount: Number(stakeInstance[4]),
             penalty: Number(stakeInstance[5]),
             stakingClass: stakeClass,
+            withdrawned: Boolean(stakeInstance[1]) ? stakeAmt : 0,
             periodElapsed: stakeClass,
           };
           // console.log(stakeClass)
          let rate = stakeClass == 1 ? 0.06 : stakeClass == 2 ? 0.09 : 0.12;
           rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
-          console.log(rew)
+          // console.log(rew)
           setReward(rew);
-          list.push(instance)
+          // list.push(instance)
+          if (!instance.isWithdrawed) {
+            setActiveStakes((activeStakes) => [...activeStakes, instance]);
+          }
           // if (!instance.isWithdrawed) {
-          setActiveStakes((activeStakes) => [...activeStakes, instance]);
-          // }
-          // if (!instance.isWithdrawed) {
-          setStakeList((activeStakes) => [...activeStakes, instance]);
+          setStakeList(stakelist => [...stakelist, instance]);
+          // console.log([...stakelist, instance])
           // }
         });
       });
@@ -126,6 +139,7 @@ export default function DaoStaking() {
     } else {
       setActivatestake(false);
     }
+
     const p = event.target.value;
     const t = stakingClass == 1 ? 0.25 : stakingClass == 2 ? 0.5 : 1;
     const r = stakingClass == 1 ? 0.06 : stakingClass == 2 ? 0.09 : 0.12;
@@ -196,15 +210,19 @@ export default function DaoStaking() {
   }, []);
 
   const handleSubmit = async () => {
+
+    let bal = await tokenContract.balanceOf(account);
+    bal = formatFixedNumber(bal, 3, 18);
+
     if (amountToStake < 1) {
       toastError(t("You must stake a minimum of 1 token"));
       return;
     }
 
-    if (amountToStake > balance) {
+    if (amountToStake > bal) {
       toastError(
-        `Insufficient balance. Your wallet balance is ${balance} you need  ${(
-          amountToStake - balance
+        `Insufficient balance. Your wallet balance is ${bal} you need  ${(
+          amountToStake - bal
         ).toFixed(3)} more SOSX to stake that amount. `
       );
       return;
@@ -212,6 +230,7 @@ export default function DaoStaking() {
 
     let decimals = BigNumber(10).pow(18);
     let result = BigNumber(amountToStake).multiply(decimals);
+
     if (allowanceValue > amountToStake) {
       onPresentConfirmModal();
     } else {
@@ -249,15 +268,43 @@ export default function DaoStaking() {
     "ConfirmStakingModal"
   );
 
-  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
+  function getUniqueValues(array) {
+    var result = [];
+    var stakes = [];
+    for (var i = 0; i < array.length; i++)
+    {
+        if (!stakes.includes(array[i].stakeID))
+        {
+          stakes.push(array[i].stakeID)
+            result.push(array[i]);
+        }
+    }
+    return result;
+    }
 
+    function getWithDrawed(array) {
+          var stakes = [];
+          var withdrawed = 0;
+          for (var i = 0; i < array.length; i++)
+          {
+              if (!stakes.includes(array[i].stakeID))
+              {
+                stakes.push(array[i].stakeID)
+                withdrawed = withdrawed + array[i].withdrawned
+              }
+          }
+          return withdrawed;
+      }
+    
+
+  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
   return (
 
     <div
       className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
       style={{ gap: "20px" }}
     >
-      <Statistics reward={reward}/>
+      <Statistics reward={reward} withdrawned={getWithDrawed(stakelist)} totalAmountStaked={totalAmountStaked} setTotalAmountStaked={setTotalAmountStaked}/>
       <div style={{ flex: "1 1 30%"}}>
         <div className="card d-flex flex-column"
          style={{ background: "#1e1e1e" }}
@@ -470,7 +517,7 @@ export default function DaoStaking() {
         <DaoMemebrship />
       </div>
       <div style={{ flex: "1 1 30%" }}>
-        <UserStaking status={loading} stakelist={stakelist} onActionModal={handleShow} />
+        <UserStaking status={loading} stakelist={getUniqueValues(stakelist)} onActionModal={handleShow} />
       </div>
       <Modal show={show} onHide={handleClose} centered>
         <ModalHeader

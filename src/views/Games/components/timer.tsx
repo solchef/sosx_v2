@@ -9,31 +9,9 @@ const TimerDisplay = () => {
   const handleCloseRules = () => setshowRules(false);
   const handleshowRules = () => setshowRules(true);
   const {stage, hour, min, sec} = useStage();
-  const [days, setDays] = useState(0);
-  const [hours, setHours] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
 
   const [lastRound, setLastRound] = useState(Number);
 
-  const calculateTimeLeft = () => {
-    let eventTime = moment('2022-06-01 00:07:02').unix();
-    let currentTime = Number(Math.floor(Date.now() / 1000).toString());
-    let leftTime = eventTime - currentTime;
-    let duration = moment.duration(leftTime, "seconds");
-    let interval = 1000;
-
-    if (duration.asSeconds() <= 0) {
-      clearInterval(interval);
-    }
-
-    duration = moment.duration(duration.asSeconds() - 1, "seconds");
-    
-    setDays(duration.days());
-    setHours(duration.hours());
-    setMinutes(duration.minutes());
-    setSeconds(duration.seconds());
-  };
 
   const pad = (num) => {
     return ("0" + num).slice(-2);
@@ -62,23 +40,6 @@ const TimerDisplay = () => {
     },
   ];
 
-
-  useEffect(() => {
-    // const interval = setInterval(() => {
-    //   let time = calculateTimeLeft();
-    //   console.log(seconds)
-    // }, 1000);
-    const interval = setInterval(() => {
-    //   let currTime = moment().unix();
-    //   let checkStage = stageGroups.findIndex(
-    //     (group) => group.end > currTime && currTime > group.start
-    //   );
-      // if (checkStage != -1) {
-        // setStage(checkStage + 1);
-        calculateTimeLeft();
-      // }
-    }, 1000);
-  },[])
   
   return (
     <>
@@ -98,7 +59,7 @@ const TimerDisplay = () => {
             >
               <div className="d-flex justify-content-start align-items-center">
                 <p className="li ">
-                  <span className=" main-pink m-0">{pad(days)}</span>
+                  <span className=" main-pink m-0">00</span>
                   Days
                 </p>
                 <p className="li d-flex align-self-baseline">
@@ -107,7 +68,7 @@ const TimerDisplay = () => {
               </div>
               <div className="d-flex justify-content-start align-items-center">
                 <p className="li ">
-                  <span className=" main-pink m-0">{pad(hours)}</span>
+                  <span className=" main-pink m-0">{pad(hour)}</span>
                   Hours
                 </p>
                 <p className="li d-flex align-self-baseline">
@@ -116,7 +77,7 @@ const TimerDisplay = () => {
               </div>
               <div className="d-flex justify-content-start align-items-center">
                 <p className="li ">
-                  <span className=" main-pink m-0">{pad(minutes)}</span>
+                  <span className=" main-pink m-0">{pad(min)}</span>
                   Minutes
                 </p>
                 <p className="li d-flex align-self-baseline">
@@ -124,7 +85,7 @@ const TimerDisplay = () => {
                 </p>
               </div>
               <p className="li">
-                <span className=" main-pink m-0">{pad(seconds)}</span>
+                <span className=" main-pink m-0">{pad(sec)}</span>
                 Seconds
               </p>
             </div>
