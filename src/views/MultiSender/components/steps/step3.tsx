@@ -4,7 +4,6 @@ const Step3 = () => {
   return (
     <>
       <  NavMining step="2" />
-    
     </>
   );
 };
