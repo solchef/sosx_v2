@@ -14,7 +14,10 @@ export default function Aboutsosx() {
   return (
 
     <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
-<NavHeader />  
+  
+     
+
+<!-- <NavHeader />   -->
     
         <section className="socialxmedia-about-sec">
     

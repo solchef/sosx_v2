@@ -25,6 +25,7 @@ async function getPosts(req,res){
     }
 }
 
+
 async function addPost(req, res) {
     try {
         // connect to the database
