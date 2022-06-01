@@ -46,7 +46,7 @@ const getIcon = (variant: AlertProps["variant"] = variants.INFO) => {
 
 const IconLabel = styled.div<ThemedIconLabel>`
   background-color: ${getThemeColor};
-  border-radius: 16px 0 0 16px;
+  border-radius: 50%;
   color: ${({ theme }) => theme.alert.background};
   padding: 12px;
 `;
@@ -74,6 +74,9 @@ const StyledAlert = styled(Flex)`
   box-shadow: 0px 20px 36px -8px rgba(14, 14, 44, 0.1), 0px 1px 1px rgba(0, 0, 0, 0.05);
 `;
 
+const StyledAlertPopup = styled(Flex)`
+transition: opacity 0.25s linear;
+`;
 const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
   const Icon = getIcon(variant);
 
@@ -94,6 +97,34 @@ const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
         </CloseHandler>
       )}
     </StyledAlert>
+
+    // <StyledAlertPopup>
+    //   <div className="modal fade show" style={{ display: "block" }}>
+    //     <div className="modal-dialog modal-dialog-centered ">
+    //       <div className="modal-content">
+    //         <div className="modal-header">
+    //           <h5 className="modal-title">Error</h5>
+    //         </div>
+    //         <div className="modal-body">
+    //           <div className="row d-flex justify-content-center">
+    //             <IconLabel variant={variant} hasDescription={!!children}>
+    //               <Icon color="currentColor" width="64px" />
+    //             </IconLabel>
+ 
+    //             <p className="modal-title center w-100">{title}</p>
+
+    //             {typeof children === "string" ? <Text as="p">{children}</Text> : children}
+    //           </div>
+    //         </div>
+    //         <div className="modal-footer justify-content-center">
+    //           <button onClick={onClick} className="btn btn-sm btn-primary w-50 m-3" data-dismiss="modal">
+    //             OK
+    //           </button>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </StyledAlertPopup>
   );
 };
 

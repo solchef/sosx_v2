@@ -16,6 +16,7 @@ import { useTranslation } from 'contexts/Localization';
 import { Trans } from "react-i18next";
 import { Modal, ModalHeader } from "react-bootstrap";
 import ConnectWalletButton from "components/ConnectWalletButton";
+import { getUniqueValues, getWithDrawed } from "utils";
 
 
 export default function DaoStaking() {
@@ -31,7 +32,7 @@ export default function DaoStaking() {
   const [activeStakes, setActiveStakes] = useState([]);
   const [allowanceValue, setAllowanceValue] = useState(0);
   const [activateStake, setActivatestake] = useState(true);
-  const [reward, setReward] = useState(true);
+  const [reward, setReward] = useState(0);
   const [showDetails, setShowDetails] = useState(-1);
   const [loading, setLoading] = useState(true);
   const [pendingTx, setPendingTx] = useState(false);
@@ -268,33 +269,7 @@ useEffect(() => {
     "ConfirmStakingModal"
   );
 
-  function getUniqueValues(array) {
-    var result = [];
-    var stakes = [];
-    for (var i = 0; i < array.length; i++)
-    {
-        if (!stakes.includes(array[i].stakeID))
-        {
-          stakes.push(array[i].stakeID)
-            result.push(array[i]);
-        }
-    }
-    return result;
-    }
 
-    function getWithDrawed(array) {
-          var stakes = [];
-          var withdrawed = 0;
-          for (var i = 0; i < array.length; i++)
-          {
-              if (!stakes.includes(array[i].stakeID))
-              {
-                stakes.push(array[i].stakeID)
-                withdrawed = withdrawed + array[i].withdrawned
-              }
-          }
-          return withdrawed;
-      }
     
 
   const biggest1500 = useMediaPredicate("(min-width: 1500px)");
@@ -535,7 +510,7 @@ useEffect(() => {
           className="modal-body"
           style={{ background: "#111117", borderRadius: "0px 0px 10px 10px" }}
         >
-          {activeStakes.map((stake, i) => (
+          {getUniqueValues(activeStakes).map((stake, i) => (
             <>
               <div
                 className="d-flex mb-4 justify-content-between"

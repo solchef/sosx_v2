@@ -109,3 +109,31 @@ export function isTokenOnList(defaultTokens: TokenAddressMap, currency?: Currenc
   if (currency === ETHER) return true
   return Boolean(currency instanceof Token && defaultTokens[currency.chainId]?.[currency.address])
 }
+
+export function getUniqueValues(array) {
+  var result = [];
+  var stakes = [];
+  for (var i = 0; i < array.length; i++)
+  {
+      if (!stakes.includes(array[i].stakeID))
+      {
+        stakes.push(array[i].stakeID)
+          result.push(array[i]);
+      }
+  }
+  return result;
+  }
+
+  export function getWithDrawed(array) {
+        var stakes = [];
+        var withdrawed = 0;
+        for (var i = 0; i < array.length; i++)
+        {
+            if (!stakes.includes(array[i].stakeID))
+            {
+              stakes.push(array[i].stakeID)
+              withdrawed = withdrawed + array[i].withdrawned
+            }
+        }
+        return withdrawed;
+    }
