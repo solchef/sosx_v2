@@ -1,8 +1,9 @@
 import { } from 'react'
 import { useMediaPredicate } from "react-media-hook";
 import { useTranslation } from 'contexts/Localization';
-import { Trans } from "react-i18next";
 import Link from 'next/link';
+import NavHeader from 'components/newHomeHeader';
+import NewFooter from 'components/NewFooter';
 
 export default function Aboutsosx() {
 
@@ -13,57 +14,11 @@ export default function Aboutsosx() {
   return (
 
     <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
-  {/* <nav className="justify-content-between navbar navbar-expand-lg fixed-top center-brand static-nav">
-    <a className="navbar-brand" href="https://socialx.io/">
-      <img src="https://socialx.io/img/logo.png" alt="logo" className="logo-default" />
-    </a>
-    <button className="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#xenav">
-      <i className="fas fa-bars fa-2x" />
-    </button>
-    <div className="collapse navbar-collapse" id="xenav">
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-        <Link href="/social-mining">
-          <a className="nav-link">SOCIAL MINING</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-        <Link href="/ox">
-          <a className="nav-link">OX GAME</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#nft"> <span style={{color: '#5b5b5b'}}>NFT</span></a>
-        </li>
-        <li className="nav-item">
-        <Link href="/aboutsosx">
-          <a className="nav-link">ABOUT SOSX</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-        <Link href="/experiment">
-          <a className="nav-link">EXPERIMENT</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-        <Link href="/faq">
-          <a className="nav-link">FAQ</a>
-        </Link>
-        </li>
-        <li className="nav-item mobile-hide">
-          <a href="https://app.socialx.io/swap#">
-            <button type="button" className="btn btn-primary btn-lg">LAUNCH DAPPS</button>
-          </a>
-        </li>
-        <li className="nav-item mobile-show">
-          <a className="nav-link" href="https://app.socialx.io/swap#"> LAUNCH DAPPS</a>
-        </li>
-      </ul>
-    </div>
-  </nav> */}
   
      
 
+<!-- <NavHeader />   -->
+    
         <section className="socialxmedia-about-sec">
     
                 <div className="row text-center">
@@ -75,11 +30,7 @@ export default function Aboutsosx() {
                 <div className="row">
                     <div className="col-md-12">
                         <h3>{t("BECOMING THE WORLDS #1 MEDIA AGENCY")}</h3>
-                        <p><Trans i18nKey="description.part1">
-                            SocialX is taking a different approach to becoming the #1 AD space media agency in the world.
-                            We’re adding a little more fun to it by gamifying the whole process and rewarding individual’s
-                            with lots of money for helping us get to this goal!
-                        </Trans></p>
+                        <p>{t("SocialX is taking a different approach to becoming the #1 AD space media agency in the world. We’re adding a little more fun to it by gamifying the whole process and rewarding individual’s with lots of money for helping us get to this goal!")}</p>
                     </div>
     
                     <div className="col-md-12">
@@ -115,14 +66,7 @@ export default function Aboutsosx() {
                 <div className="row">
                     <div className="col-md-12">
                         <h3>{t("SOCIAL MINING")}</h3>
-                        <p><Trans i18nKey="description.part1">
-                            Social mining is new concept that allows anyone in crypto or outside of crypto to earn
-                            SOSX tokens daily for posting on social media the daily SocialX posts. This system is
-                            designed to incentivize wide spread of any message we wanna market to our token holders
-                            social media audience, while allowing someone with no investment to start collecting
-                            tokens and participate in our other protocols.
-                        </Trans></p>
-    
+                        <p>{t("Social mining is new concept that allows anyone in crypto or outside of crypto to earn SOSX tokens daily for posting on social media the daily SocialX posts. This system is designed to incentivize wide spread of any message we wanna market to our token holders social media audience, while allowing someone with no investment to start collecting tokens and participate in our other protocols.")}</p>
                         <Link href="/social-mining">
                         <a>
                             <button type="button" className="btn btn-primary btn-lg mt-4">{t("How Social Mining Works")}</button>
@@ -137,25 +81,14 @@ export default function Aboutsosx() {
                 <div className="row">
                     <div className="col-md-12">
                         <h3>{"OX CHALLENGE GAMES"}</h3>
-                        <p><Trans i18nKey="description.part1">
-                            The game is simple… you the token holders get to create challenges/dares. Some of the
-                            bigger token holders get to choose out of the first batch what are the top 3 dares.
-                            Finally all the token holders can then choose which of the top 3 will be for the prize
-                            pool. Minimum daily prize pool starts at $1000 & goes up to $1 million + He who films
-                            himself first completing the chosen challenge of the day and uploads it to their social
-                            media and states (SocialX paid me) gets rewarded the full prize pool.
-                        </Trans></p>
+                        <p>{t("The game is simple… you the token holders get to create challenges/dares. Some of the bigger token holders get to choose out of the first batch what are the top 3 dares. Finally all the token holders can then choose which of the top 3 will be for the prize pool. Minimum daily prize pool starts at $1000 & goes up to $1 million + He who films himself first completing the chosen challenge of the day and uploads it to their social media and states (SocialX paid me) gets rewarded the full prize pool.")}</p>
                         <br/>
-                        <p><Trans i18nKey="description.part1">
-                            This is one of our fun methods of creating opportunity for others to make money while
-                            creating internment at the same time. The whole system is community driven through our
-                            DOA Governance system. This method of online entertainment only opens of the SocialX
-                            brand to more awareness. This awareness drives more traffic and creates higher value
-                            to the SOCIAL MINING ad space.
-                        </Trans></p>
-                        <a href="https://socialx.io/oxgame.html">
+                        <p>{t("This is one of our fun methods of creating opportunity for others to make money while creating internment at the same time. The whole system is community driven through our DOA Governance system. This method of online entertainment only opens of the SocialX brand to more awareness. This awareness drives more traffic and creates higher value to the SOCIAL MINING ad space.")}</p>
+                        <Link href="/ox">
+                        <a>
                             <button type="button" className="btn btn-primary btn-lg mt-4 ">{t("View OX Game Rules")}</button>
                         </a>
+                        </Link>
                     </div>
                 </div>
         </section>
@@ -165,7 +98,7 @@ export default function Aboutsosx() {
                 <div className="row">
                     <div className="col-md-12">
                         <h3>SOSX NFT</h3>
-                        <p>{t("Coming soon")}...
+                        <p>{t("Coming Soon")}...
                         </p>
                     </div>
                 </div>
@@ -177,19 +110,14 @@ export default function Aboutsosx() {
                     <div className="col-md-12">
                         <h3>{t("CORPORATE AD SPACE - NFT STAKING")}</h3>
                         <h5>{t("AD SPACE")}</h5>
-                        <p><Trans i18nKey="description.part1">
-                            SocialX provides companies with ad space under social mining. If you want to have a post
-                            and message shared by our community please contact admins for details at <a
-                                href="mailto:support@socialx.io">support@socialx.io</a>
-                        </Trans></p>
+                        <p>
+                            {t("SocialX provides companies with ad space under social mining. If you want to have a post and message shared by our community please contact admins for details at")} <a href="mailto:support@socialx.io">support@socialx.io</a>
+                        </p>
                         <br/>
                         <h5>{t("NFT STAKING")}</h5>
-                        <p><Trans i18nKey="description.part1">
-                            SocialX provides NFT Projects staking solutions. A NFT project can offer their holders
-                            the ability to stake their NFT’s for SOSX tokens. We created a plug and play cross
-                            chain staking system that can be implemented with any project on any blockchain.
-                            For details please contact admins at <a href="mailto:support@socialx.io">support@socialx.io.</a>
-                        </Trans></p>
+                        <p>
+                            {t("SocialX provides NFT Projects staking solutions. A NFT project can offer their holders the ability to stake their NFT’s for SOSX tokens. We created a plug and play cross chain staking system that can be implemented with any project on any blockchain. For details please contact admins at")} <a href="mailto:support@socialx.io">support@socialx.io.</a>
+                        </p>
                     </div>
                 </div>
         </section>
@@ -199,18 +127,9 @@ export default function Aboutsosx() {
         <section className="adspace-about-sec">
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>SOCIAL X - $10 BILLION TARGET</h3>
-                        <p><Trans i18nKey="description.part1">
-                            We calculated that at around a $10 billion market cap we would have reached a perfect
-                            amount of wallet holders
-                            and brand recognition to have a success launch of a whole new kind of social media
-                            experience. We are in
-                            development of fully decentralized and uncensored platform where individuals can share
-                            their daily content.
-                            We believe in freedom of speech and will go lengths to protect this. This is why we
-                            built something community driven,
-                            developed on smart contracts, on the blockchain. Time to take back our freedoms! Time to
-                            work together!</Trans></p>
+                        <h3>{t("SOCIAL X - $10 BILLION TARGET")}</h3>
+                        <p>{t("We calculated that at around a $10 billion market cap we would have reached a perfect amount of wallet holders and brand recognition to have a success launch of a whole new kind of social media experience. We are in development of fully decentralized and uncensored platform where individuals can share their daily content. We believe in freedom of speech and will go lengths to protect this. This is why we built something community driven, developed on smart contracts, on the blockchain. Time to take back our freedoms! Time to work together!")}
+                        </p>
                     </div>
                 </div>
         </section>
@@ -246,53 +165,7 @@ export default function Aboutsosx() {
                     </div>
                 </div>
         </section>
-        <section className="footer mobile-hide">
-          <div className="social-link">
-            <a href="https://www.instagram.com/socialxtoken/?hl=en" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/instagram-social-icon@2x.png" /></a>
-            <a href="https://twitter.com/socialx_io" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/twittericon@2x.png" /></a>
-            <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/youtube-social-icon@2x.png" /></a>
-            <a href="https://t.me/SocialXToken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/telegram-social-icon@2x.png" /></a>
-            <a href="https://bscscan.com/address/0xC27f6473a04b2bdeE0bf650f153F1D8720AA3062" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/etherscan@2x.png" /></a>
-            <a href="https://www.coingecko.com/en/coins/socialx" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/geckoicon@2x.png" /></a>
-            <a href="https://coinmarketcap.com/currencies/socialx-2/" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/cmcicon@2x.png" /></a>
-            <a href="https://pancakeswap.finance/swap" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/pancakeswapicon@2x.png" /></a>
-            <a href="https://www.tiktok.com/@socialxtoken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/tiktokicon@2x.png" /></a>
-          </div>
-          <div className="contract">0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF</div>
-          <div className="legal-link">
-            <a href="privacy.html">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
-            <a className="slipage-text">*set slippage tolarance 25%*</a>
-          </div>
-        </section>
-        <nav className="navbar navbar-expand-lg2  center-brand static-nav mobile-show">
-          <div className="container">
-            <button className="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#xenav">
-              <i className="fas fa-bars fa-2x" />
-            </button>
-            <div className="collapse navbar-collapse" id="xenav">
-              <div className="footer">
-                <div className="social-link text-center">
-                  <a href="https://www.instagram.com/socialxtoken/?hl=en" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/instagram-social-icon@2x.png" /></a>
-                  <a href="https://twitter.com/socialx_io" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/twittericon@2x.png" /></a>
-                  <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/youtube-social-icon@2x.png" /></a>
-                  <a href="https://t.me/SocialXToken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/telegram-social-icon@2x.png" /></a>
-                  <a href="https://bscscan.com/address/0xC27f6473a04b2bdeE0bf650f153F1D8720AA3062" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/etherscan@2x.png" /></a>
-                  <a href="https://www.coingecko.com/en/coins/socialx" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/geckoicon@2x.png" /></a>
-                  <a href="https://coinmarketcap.com/currencies/socialx-2/" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/cmcicon@2x.png" /></a>
-                  <a href="https://pancakeswap.finance/swap" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/pancakeswapicon@2x.png" /></a>
-                  <a href="https://www.tiktok.com/@socialxtoken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/tiktokicon@2x.png" /></a>
-                </div>
-                <br />
-                <div className="contract">0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF</div>
-                <div className="legal-link">
-                  <a href="privacy">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
-                  <a className="slipage-text">*set slippage tolarance 25%*</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        
-        </nav>
+        <NewFooter />
     
     </div>
     )

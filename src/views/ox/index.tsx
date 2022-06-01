@@ -1,58 +1,16 @@
 import Link from "next/link"
 import React from "react"
-
+import NewFooter from "components/NewFooter"
+import NavHeader from "components/newHomeHeader"
+import Trans from 'components/Trans'
+import { useTranslation } from "contexts/Localization"
 
 export const OX = () => {
+  const { t } = useTranslation();
+
     return (
       <div>
-  <nav className="justify-content-between navbar navbar-expand-lg fixed-top center-brand static-nav">
-    <a className="navbar-brand" href="https://socialx.io/">
-      <img src="https://socialx.io/img/logo.png" alt="logo" className="logo-default" />
-    </a>
-    <button className="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#xenav">
-      <i className="fas fa-bars fa-2x" />
-    </button>
-    <div className="collapse navbar-collapse" id="xenav">
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-        <Link href="/social-mining">
-          <a className="nav-link">SOCIAL MINING</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-        <Link href="/ox">
-          <a className="nav-link">OX GAME</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#nft"> <span style={{color: '#5b5b5b'}}>NFT</span></a>
-        </li>
-        <li className="nav-item">
-        <Link href="/aboutsosx">
-          <a className="nav-link">ABOUT SOSX</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-        <Link href="/experiment">
-          <a className="nav-link">EXPERIMENT</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-        <Link href="/faq">
-          <a className="nav-link">FAQ</a>
-        </Link>
-        </li>
-        <li className="nav-item mobile-hide">
-          <a href="https://app.socialx.io/swap#">
-            <button type="button" className="btn btn-primary btn-lg">LAUNCH DAPPS</button>
-          </a>
-        </li>
-        <li className="nav-item mobile-show">
-          <a className="nav-link" href="https://app.socialx.io/swap#"> LAUNCH DAPPS</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <NavHeader />
   {/* /.navbar */}
   {/*hero section*/}
   <header className="hero-pink hero-banner">
@@ -70,7 +28,7 @@ export const OX = () => {
       <div className="row text-center justify-content-center">
         <div className="col-md-10">
           <div className="hero-pink">
-            <h1 className="ox" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500}}>ox game</h1>
+            <h1 className="ox" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500}}>ox {t("game")}</h1>
       <style jsx>{`
 .ox {
   font-size: 128px !important;
@@ -78,10 +36,10 @@ export const OX = () => {
 `}</style>
 
 
-            <p>WHAT’S THE CRAZIEST THING YOU WOULD RECORD YOURSELF DO FOR MONEY?</p>
+            <p>{t("WHAT’S THE CRAZIEST THING YOU WOULD RECORD YOURSELF DO FOR MONEY?")}</p>
             <div className="btn-group">
               <Link href="/xgame">
-              <a id="dapp_url_game" className="btn">I WANT TO PLAY</a>
+              <a id="dapp_url_game" className="btn">{t("I WANT TO PLAY")}</a>
               </Link>
 
             </div>
@@ -98,26 +56,22 @@ export const OX = () => {
       <div className="col-md-4">
         <div className="card5">
           <img src="https://socialx.io/img/rule1-img.png" className="steps-img" />
-          <h1>RULE # 1</h1>
-          <p className="fs-12">First person to complete the voted challenge by the SOSX community and submit the video on
-            socialx.io
-            and post it on their social media wins all the prize money!</p>
+          <h1>{t("RULE")} # 1</h1>
+          <p className="fs-12">{t("First person to complete the voted challenge by the SOSX community and submit the video on socialx.io and post it on their social media wins all the prize money!")}</p>
         </div>
       </div>
       <div className="col-md-4">
         <div className="card5">
           <img src="https://socialx.io/img/rule2-img.png" className="steps-img" />
-          <h1>RULE # 2</h1>
-          <p className="fs-12">If the 1st person who submitted the video failed to meet the conditions or incorrectly
-            completed the challenge, the 2nd in line until voted correct takes the prize.</p>
+          <h1>{t("RULE")} # 2</h1>
+          <p className="fs-12">{t("If the 1st person who submitted the video failed to meet the conditions or incorrectly completed the challenge, the 2nd in line until voted correct takes the prize.")}</p>
         </div>
       </div>
       <div className="col-md-4">
         <div className="card5">
           <img src="https://socialx.io/img/rule3-img.png" className="steps-img" />
-          <h1>RULE # 3</h1>
-          <p className="fs-12">Prize money will be 100% of the 10% collected on all buy orders from the previous days 24
-            hour traded volume.</p>
+          <h1>{t("RULE")} # 3</h1>
+          <p className="fs-12">{t("Prize money will be 100% of the 10% collected on all buy orders from the previous days 24 hour traded volume.")}</p>
         </div>
       </div>
     </div>
@@ -131,25 +85,25 @@ export const OX = () => {
         </div>
         <div className="col-md-4">
           <div className="dao-card">
-            <h3>LEVEL 1</h3>
-            <h4>STAKING 1+ SOSX Tokens</h4>
-            <p>Vote 1 to top 3 challenges</p>
+            <h3>{t("LEVEL")} 1</h3>
+            <h4>{t("STAKING 1+ SOSX Tokens")}</h4>
+            <p>{t("Vote 1 to top 3 challenges")}</p>
           </div>
         </div>
         <div className="col-md-4">
           <div className="dao-card">
-            <h3>LEVEL 2</h3>
-            <h4>STAKING 100,000+ SOSX Tokens</h4>
-            <p>Vote 1 to top 3 challenges
-              <br />create challenges</p>
+            <h3>{t("LEVEL")} 2</h3>
+            <h4>{t("STAKING 100,000+ SOSX Tokens")}</h4>
+            <p>{t("Vote 1 to top 3 challenges")}
+              <br />{t("create challenges")}</p>
           </div>
         </div>
         <div className="col-md-4">
           <div className="dao-card">
-            <h3>LEVEL 3</h3>
-            <h4>STAKING 1,000,000+ SOSX Tokens</h4>
-            <p>Final vote from top 3 challenges
-              <br />create challenges</p>
+            <h3>{t("LEVEL")} 3</h3>
+            <h4>{t("STAKING 1,000,000+ SOSX Tokens")}</h4>
+            <p>{t("Final vote from top 3 challenges")}
+              <br />{t("create challenges")}</p>
           </div>
         </div>
       </div>
@@ -161,8 +115,8 @@ export const OX = () => {
       <div className="row">
         <div className="col-md-6">
           <div className="title-pink custom-pt">
-            <h3>Submit Challenges</h3>
-            <p>8 hours to submit the challenges created by the Level 2 &amp; 3 DAO members.</p>
+            <h3>{t("Submit Challenges")}</h3>
+            <p>{t("8 hours to submit the challenges created by the Level 2 & 3 DAO members.")}</p>
           </div>
         </div>
         <div className="col-md-6">
@@ -179,8 +133,8 @@ export const OX = () => {
         </div>
         <div className="col-md-6 custom-pt">
           <div className="title-pink custom-pt">
-            <h3>Vote Top Challenges</h3>
-            <p>8 hours to vote the top 3 challenges for the challengers by all level community. </p>
+            <h3>{t("Vote Top Challenges")}</h3>
+            <p>{t("8 hours to vote the top 3 challenges for the challengers by all level community.")} </p>
           </div>
         </div>
         <div className="col-md-6 mobile-show">
@@ -194,8 +148,8 @@ export const OX = () => {
       <div className="row">
         <div className="col-md-6">
           <div className="title-pink custom-pt">
-            <h3>Vote Final Challenge</h3>
-            <p>8 hours to vote the final challenges of the top 3 by the Level 3 DAO members.</p> <br />
+            <h3>{t("Vote Final Challenge")}</h3>
+            <p>{t("8 hours to vote the final challenges of the top 3 by the Level 3 DAO members.")}</p> <br />
           </div>
         </div>
         <div className="col-md-6">
@@ -212,10 +166,10 @@ export const OX = () => {
         </div>
         <div className="col-md-6 custom-pt">
           <div className="title-pink custom-pt">
-            <h3>Complete Challenge</h3>
+            <h3>{t("Complete Challenge")}</h3>
             <p> 
-              The challenge will stay up until someone completed it. No new challenge will get voted until
-              the previous one is completed.
+              <Trans>The challenge will stay up until someone completed it. No new challenge will get voted until
+              the previous one is completed.</Trans>
             </p>
           </div>
           <div className="col-md-6 mobile-show">
@@ -230,10 +184,8 @@ export const OX = () => {
       <div className="row">
         <div className="col-md-12 text-center">
           <div className="title-pink">
-            <h3>SOSX WINNERS</h3>
-            <p>All submitted challenge videos that win, will be permanently uploaded to the socialx
-              media website and YouTube channel. All prize money will be recorded through the blockchain
-              and verified for 100% transparency!</p>
+            <h3>{t("SOSX WINNERS")}</h3>
+            <p><Trans>All submitted challenge videos that win, will be permanently uploaded to the socialx media website and YouTube channel. All prize money will be recorded through the blockchain and verified for 100% transparency!</Trans></p>
           </div>
         </div>
       </div>
@@ -251,9 +203,8 @@ export const OX = () => {
           <img src="https://socialx.io/img/rules-banner.png" alt="" />
         </div>
         <div className="col-md-6 pl-5">
-          <h3>THERE ARE NO RULES TO THE CHALLENGES EXCEPT NO CHALLENGE CAN BE MADE TO CAUSE INTENTIONAL HARM
-            OR LEADING TO DEATH OR KILL.</h3>
-          <span className="ox" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500}}>- sosx team</span>
+          <h3><Trans>THERE ARE NO RULES TO THE CHALLENGES EXCEPT NO CHALLENGE CAN BE MADE TO CAUSE INTENTIONAL HARM OR LEADING TO DEATH OR KILL.</Trans></h3>
+          <span className="ox" style={{fontFamily: 'game_of_squidsregular', fontWeight: 500}}>- {t("sosx team")}</span>
           <style jsx>{`
         .ox {
           font-size: 25px !important;
@@ -264,48 +215,7 @@ export const OX = () => {
     </div>
   </section>
   {/*copyright*/}
-  <section className="footer mobile-hide">
-    <div className="social-link">
-      <a href="https://www.instagram.com/socialxtoken/?hl=en" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/instagram-social-icon@2x.png" /></a>
-      <a href="https://twitter.com/socialx_io" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/twittericon@2x.png" /></a>
-      <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/youtube-social-icon@2x.png" /></a>
-      <a href="https://t.me/SocialXToken" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/telegram-social-icon@2x.png" /></a>
-      <a href="https://bscscan.com/address/0xC27f6473a04b2bdeE0bf650f153F1D8720AA3062" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/etherscan@2x.png" /></a>
-      <a href="https://www.coingecko.com/en/coins/socialx" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/geckoicon@2x.png" /></a>
-      <a href="https://coinmarketcap.com/currencies/socialx-2/" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/cmcicon@2x.png" /></a>
-      <a href="https://pancakeswap.finance/swap" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/pancakeswapicon@2x.png" /></a>
-      <a href="https://www.tiktok.com/@socialxtoken" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/tiktokicon@2x.png" /></a>
-    </div>
-    <div className="contract">0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF</div>
-    <div className="legal-link">
-      <a href="privacy.html">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
-      <a className="slipage-text">*set slippage tolarance 25%*</a>
-      <Link href="/aboutsosx">
-                  <a className="utility-button">ABOUT SOSX</a>
-                  </Link>
-    </div>
-  </section>
-  <div className="footer">
-    <div className="social-link text-center">
-      <a href="https://www.instagram.com/socialxtoken/?hl=en" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/instagram-social-icon@2x.png" /></a>
-      <a href="https://twitter.com/socialx_io" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/twittericon@2x.png" /></a>
-      <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/youtube-social-icon@2x.png" /></a>
-      <a href="https://t.me/SocialXToken" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/telegram-social-icon@2x.png" /></a>
-      <a href="https://bscscan.com/address/0xC27f6473a04b2bdeE0bf650f153F1D8720AA3062" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/etherscan@2x.png" /></a>
-      <a href="https://www.coingecko.com/en/coins/socialx" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/geckoicon@2x.png" /></a>
-      <a href="https://coinmarketcap.com/currencies/socialx-2/" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/cmcicon@2x.png" /></a>
-      <a href="https://pancakeswap.finance/swap" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/pancakeswapicon@2x.png" /></a>
-      <a href="https://www.tiktok.com/@socialxtoken" className="social-icon button" style={{width: '30px', height: '30px'}}><img style={{width: '30px', height: '30px'}} src="https://socialx.io/img/tiktokicon@2x.png" /></a>
-    </div>
-    <div className="contract">0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF</div>
-    <div className="legal-link">
-      <a href="privacy">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
-      <a className="slipage-text">*set slippage tolarance 25%*</a>
-      <Link href="/aboutsosx">
-        <a className="utility-button">ABOUT SOSX</a>
-      </Link>
-    </div>
-  </div>
+  <NewFooter />
 </div>
 
     

@@ -3,6 +3,8 @@ import { useMediaPredicate } from "react-media-hook";
 import { useTranslation } from 'contexts/Localization';
 import { Trans } from "react-i18next";
 import Link from "next/link";
+import NavHeader from "components/newHomeHeader";
+import NewFooter from "components/NewFooter";
 
 const menus = {
     showA: false,
@@ -40,55 +42,7 @@ export default function Faq() {
       return (
 
         <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
- {/* <nav className="justify-content-between navbar navbar-expand-lg fixed-top center-brand static-nav">
-    <a className="navbar-brand" href="https://socialx.io/">
-      <img src="https://socialx.io/img/logo.png" alt="logo" className="logo-default" />
-    </a>
-    <button className="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#xenav">
-      <i className="fas fa-bars fa-2x" />
-    </button>
-    <div className="collapse navbar-collapse" id="xenav">
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-        <Link href="/social-mining">
-          <a className="nav-link">SOCIAL MINING</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-        <Link href="/ox">
-          <a className="nav-link">OX GAME</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#nft"> <span style={{color: '#5b5b5b'}}>NFT</span></a>
-        </li>
-        <li className="nav-item">
-        <Link href="/aboutsosx">
-          <a className="nav-link">ABOUT SOSX</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-        <Link href="/experiment">
-          <a className="nav-link">EXPERIMENT</a>
-        </Link>
-        </li>
-        <li className="nav-item">
-        <Link href="/faq">
-          <a className="nav-link">FAQ</a>
-        </Link>
-        </li>
-        <li className="nav-item mobile-hide">
-          <a href="https://app.socialx.io/swap#">
-            <button type="button" className="btn btn-primary btn-lg">LAUNCH DAPPS</button>
-          </a>
-        </li>
-        <li className="nav-item mobile-show">
-          <a className="nav-link" href="https://app.socialx.io/swap#"> LAUNCH DAPPS</a>
-        </li>
-      </ul>
-    </div>
-  </nav> */}
-
+<!--             <NavHeader /> -->
          <div className="section">
                     <h5 className="section-heading">{t("Frequenty Asked Question (FAQ)")}</h5>
                     <p className="p-main">{t("Everything you need to know about SOSX is just one click away")}.</p>
@@ -107,9 +61,8 @@ export default function Faq() {
                             <div  style={mystyle(showA)}
                             className="faq-header ">
                                 <div className="text-white p-1 hug">
-                                    <a href="https://pancakeswap.finance/swap">
-                                    {t("https://pancakeswap.finance.. </a> MetaMask & TrustWallet - *MetaMask most recommended*")}
-                                </a>
+                                    <a href="https://pancakeswap.finance/swap">https://pancakeswap.finance </a>
+                                    {t("MetaMask & TrustWallet - *MetaMask most recommended*")}
                                 </div>
                             </div>
                         </div>
@@ -143,11 +96,10 @@ export default function Faq() {
                                         href="https://pancakeswap.finance/swap">https://pancakeswap...</a>
                                     </p>
                                     <p>5. {t("Connect your MetaMask wallet")}</p>
-                                    <p>6. <Trans i18nKey="description.part1">The "from" is BNB and "to" is the SOSX token contract <a
+                                    <p>6. {t("The \"from\" is BNB and \"to\" is the SOSX token contract")} <a
                                         href="https://bscscan.com/token/0xee52def4a2683e68ba8aecda8219004c4af376df">
                                         (https://bscscan.com/token...)
-                                    </a> can be
-                                        found here, just copy and paste</Trans></p>
+                                    </a> {t("can be found here, just copy and paste")}</p>
                                     <p>7. {t("Choose the amount of BNB you want to use to buy SOSX")}</p>
                                 </div>
                             </div>
@@ -160,15 +112,9 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showD)} className="faq-header">
-                                <div className="text-white p-1 hug"><Trans i18nKey="description.part1">
-                                    Yes, anyone can record them selves for the challenge videos. But to participate
-                                    in the
-                                    challenge
-                                    creating and voting you will have to have some SOSX token staked. The amount of
-                                    SOSX staked
-                                    will
-                                    determine the level of governance you have.
-                                </Trans></div>
+                                <div className="text-white p-1 hug">
+                                    {t("Yes, anyone can record them selves for the challenge videos. But to participate in the challenge creating and voting you will have to have some SOSX token staked. The amount of SOSX staked will determine the level of governance you have.")}
+                                </div>
                             </div>
                         </div>
 
@@ -179,14 +125,7 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showE)} className="faq-header">
-                                <div className="text-white p-1 hug"><Trans i18nKey="description.part1">
-                                    Yes, the whole point of our social mining system is to make Crypto and SOSX
-                                    token availble
-                                    even to
-                                    user who can’t purchase crypto. Just make a MetaMask wallet, complete the
-                                    activity and
-                                    redeem your SOSX tokens.
-                                </Trans></div>
+                                <div className="text-white p-1 hug">{t("Yes, the whole point of our social mining system is to make Crypto and SOSX token available even to user who can’t purchase crypto. Just make a MetaMask wallet, complete the activity and redeem your SOSX tokens.")}</div>
                             </div>
                         </div>
 
@@ -197,13 +136,10 @@ export default function Faq() {
                                 </h3>
                             </div>
                             <div style={mystyle(showF)} className="faq-header">
-                                <div className="text-white p-1 hug"><Trans i18nKey="description.part1">
-                                    Yes, you can get paid 25% on all social mining rewards and 10% on all staking
-                                    rewards from
-                                    your affiliates.
-                                    To get your affiliate link please visit. <a
+                                <div className="text-white p-1 hug">
+                                    {t("Yes, you can get paid 25% on all social mining rewards and 10% on all staking rewards from your affiliates. To get your affiliate link please visit")} <a
                                         href="https://app.socialx.io/referrals">https://app.socialx.io/referrals</a>
-                                </Trans></div>
+                                </div>
                             </div>
                         </div>
 
@@ -215,11 +151,10 @@ export default function Faq() {
                             </div>
                             <div style={mystyle(showG)} className="faq-header">
                                 <div className="text-white p-1 hug">
-                                <Trans i18nKey="description.part1">
-                                    You can sell your SOSX on <a
+                                    {t("You can sell your SOSX on")}
+                                     <a
                                         href="https://pancakeswap.finance/swap">https://pancakeswap... </a>
-                                    or <a href="https://socialx.io/">socialx.io</a> swap
-                                </Trans>
+                                    {t("or")} <a href="https://socialx.io/">socialx.io</a> swap
                                 </div>
                             </div>
                         </div>
@@ -258,7 +193,7 @@ export default function Faq() {
                             </div>
                             <div style={mystyle(showJ)} className="faq-header">
                                 <div className="text-white p-1 hug">
-                                    {t("SOSX pays in 8 different ways. Visit this link for details")}
+                                    {t("SOSX pays in 8 different ways. Visit this link for details")} <a href="https://socialx.io/experiment.html#sosx8ways">{t("Here")}</a>
                                 </div>
                             </div>
                         </div>
@@ -271,18 +206,11 @@ export default function Faq() {
                             </div>
                             <div style={mystyle(showK)} className="faq-header">
                                 <div className="text-white p-1 hug">
-                                <Trans i18nKey="description.part1">
-                                    Socialx has locked majority of it’s liquidity with a third party LP locker
-                                    Unicrypt for
-                                    6 month periods at a time. This insures our investors a safe investment and no
-                                    possible
-                                    rugpulls. Visit link for detials.
-                                    <br />
-                                    <a
+                                    {t("Socialx has locked in the majority of its cash with a third party, Unicrypt, for periods of 6 months at a time. This ensures that our investors have a secure investment with no downside risk. Visit the link for more details.")}
+                                     <a
                                         href="https://app.unicrypt.network/amm/pancake-v2/pair/0x31550eb6b4628ad83ee71ca1a05df4a40f622ba6">
                                         https://app.unicrypt.network...
                                     </a>
-                                    </Trans>
                                 </div>
                             </div>
                         </div>
@@ -300,70 +228,14 @@ export default function Faq() {
                                 </p>
                                     <br />
                                     <p>1 . {t("Stake any amount of SOSX token")}.</p>
-                                    <p>2. {"Do at least 1 day of social mining post’s"}</p>
+                                    <p>2. {t("Do at least 1 day of social mining post’s")}.</p>
                                 </div>
                             </div>
                         </div>
 
                     </div>
             </div>
-
-            <section className="footer mobile-hide">
-          <div className="social-link">
-            <a href="https://www.instagram.com/socialxtoken/?hl=en" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/instagram-social-icon@2x.png" /></a>
-            <a href="https://twitter.com/socialx_io" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/twittericon@2x.png" /></a>
-            <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/youtube-social-icon@2x.png" /></a>
-            <a href="https://t.me/SocialXToken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/telegram-social-icon@2x.png" /></a>
-            <a href="https://bscscan.com/address/0xC27f6473a04b2bdeE0bf650f153F1D8720AA3062" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/etherscan@2x.png" /></a>
-            <a href="https://www.coingecko.com/en/coins/socialx" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/geckoicon@2x.png" /></a>
-            <a href="https://coinmarketcap.com/currencies/socialx-2/" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/cmcicon@2x.png" /></a>
-            <a href="https://pancakeswap.finance/swap" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/pancakeswapicon@2x.png" /></a>
-            <a href="https://www.tiktok.com/@socialxtoken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/tiktokicon@2x.png" /></a>
-          </div>
-          <div className="contract">0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF</div>
-          <div className="legal-link">
-            <a href="privacy.html">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
-            <a className="slipage-text">*set slippage tolarance 25%*</a>
-            <Link href="/aboutsosx">
-                  <a className="utility-button">ABOUT SOSX</a>
-                  </Link>
-          </div>
-        </section>
-        <nav className="navbar navbar-expand-lg2  center-brand static-nav mobile-show">
-          <div className="container">
-            <button className="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#xenav">
-              <i className="fas fa-bars fa-2x" />
-            </button>
-            <div className="collapse navbar-collapse" id="xenav">
-              <div className="footer">
-                <div className="social-link text-center">
-                  <a href="https://www.instagram.com/socialxtoken/?hl=en" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/instagram-social-icon@2x.png" /></a>
-                  <a href="https://twitter.com/socialx_io" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/twittericon@2x.png" /></a>
-                  <a href="https://www.youtube.com/channel/UCpj_-oiab_vwuJMl7omUrEg" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/youtube-social-icon@2x.png" /></a>
-                  <a href="https://t.me/SocialXToken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/telegram-social-icon@2x.png" /></a>
-                  <a href="https://bscscan.com/address/0xC27f6473a04b2bdeE0bf650f153F1D8720AA3062" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/etherscan@2x.png" /></a>
-                  <a href="https://www.coingecko.com/en/coins/socialx" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/geckoicon@2x.png" /></a>
-                  <a href="https://coinmarketcap.com/currencies/socialx-2/" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/cmcicon@2x.png" /></a>
-                  <a href="https://pancakeswap.finance/swap" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/pancakeswapicon@2x.png" /></a>
-                  <a href="https://www.tiktok.com/@socialxtoken" className="social-icon button" style={{width: '30px', height:'30px'}}><img style={{width: '30px', height:'30px'}} src="https://socialx.io/img/tiktokicon@2x.png" /></a>
-                </div>
-                <br />
-                <div className="contract">0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF</div>
-                <div className="legal-link">
-                  <a href="privacy">Privacy</a> <a href="mailto:support@socialx.io">support@socialx.io</a>
-                  <a className="slipage-text">*set slippage tolarance 25%*</a>
-                  <Link href="/aboutsosx">
-                  <a className="utility-button">ABOUT SOSX</a>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        
-        </nav>
-
-
-
+            <NewFooter />
         </div>
     )
 }
