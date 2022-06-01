@@ -98,6 +98,7 @@ const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
       )}
     </StyledAlert>
 
+
     // <StyledAlertPopup>
     //   <div className="modal fade show" style={{ display: "block" }}>
     //     <div className="modal-dialog modal-dialog-centered ">
@@ -105,6 +106,7 @@ const Alert: React.FC<AlertProps> = ({ title, children, variant, onClick }) => {
     //         <div className="modal-header">
     //           <h5 className="modal-title">Error</h5>
     //         </div>
+    
     //         <div className="modal-body">
     //           <div className="row d-flex justify-content-center">
     //             <IconLabel variant={variant} hasDescription={!!children}>
