@@ -163,7 +163,7 @@ const Menu: React.FC<NavProps> = ({
 
       case '/':
 
-        return "Swap";
+        return "SWAP";
       case '/stake':
         return "STAKING";
 
@@ -175,19 +175,22 @@ const Menu: React.FC<NavProps> = ({
         return 'GAME';
         
       case '/referrals':
-        return "Referrals";
+        return "REFERRALS";
 
       case '/adspace':
-        return "Adspace";
+        return "ADSPACE";
 
       case '/x-mining':
-        return "Social Mining";
+        return "SOCIAL MINING";
 
       case '/multisender':
-        return "Token Multi Sender";
+        return "MULTISENDER";
+
+        case '/aboutsosx':
+          return "ABOUT SOSX";
 
       case '/faq':
-        return "Faq";
+        return "FAQ";
       case '/socialmining-s1':
         return "Social Mining";
       case '/socialmining-s2':
