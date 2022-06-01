@@ -1,47 +1,46 @@
-import { ResetCSS } from '@pancakeswap/uikit'
-import Script from 'next/script'
-import dynamic from 'next/dynamic'
-import BigNumber from 'bignumber.js'
+import { ResetCSS } from "@pancakeswap/uikit";
+import Script from "next/script";
+import dynamic from "next/dynamic";
+import BigNumber from "bignumber.js";
 // import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
-import FixedSubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
-import { ToastListener } from 'contexts/ToastsContext'
-import useEagerConnect from 'hooks/useEagerConnect'
-import { useInactiveListener } from 'hooks/useInactiveListener'
-import useSentryUser from 'hooks/useSentryUser'
-import useUserAgent from 'hooks/useUserAgent'
-import type { AppProps } from 'next/app'
-import Head from 'next/head'
-import { Fragment, useEffect, useState } from 'react'
-import { PersistGate } from 'redux-persist/integration/react'
-import { useStore, persistor } from 'state'
-import { usePollBlockNumber } from 'state/block/hooks'
-import { usePollCoreFarmData } from 'state/farms/hooks'
-import { NextPage } from 'next'
-import { Blocklist, Updaters } from '..'
-import ErrorBoundary from '../components/ErrorBoundary'
-import Menu from '../components/Menu'
-import Providers from '../Providers'
-import GlobalStyle from '../style/Global'
-import '../../public/font/fontsheet.css'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import FixedSubgraphHealthIndicator from "components/SubgraphHealthIndicator";
+import { ToastListener } from "contexts/ToastsContext";
+import useEagerConnect from "hooks/useEagerConnect";
+import { useInactiveListener } from "hooks/useInactiveListener";
+import useSentryUser from "hooks/useSentryUser";
+import useUserAgent from "hooks/useUserAgent";
+import type { AppProps } from "next/app";
+import Head from "next/head";
+import { Fragment, useEffect, useState } from "react";
+import { PersistGate } from "redux-persist/integration/react";
+import { useStore, persistor } from "state";
+import { usePollBlockNumber } from "state/block/hooks";
+import { usePollCoreFarmData } from "state/farms/hooks";
+import { NextPage } from "next";
+import { Blocklist, Updaters } from "..";
+import ErrorBoundary from "../components/ErrorBoundary";
+import Menu from "../components/Menu";
+import Providers from "../Providers";
+import GlobalStyle from "../style/Global";
+import "../../public/font/fontsheet.css";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
 
-
-const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
+const EasterEgg = dynamic(() => import("components/EasterEgg"), { ssr: false });
 
 // This config is required for number formatting
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
   DECIMAL_PLACES: 80,
-})
+});
 
 function GlobalHooks() {
-  usePollBlockNumber()
-  useEagerConnect()
-  usePollCoreFarmData()
-  useUserAgent()
-  useInactiveListener()
-  useSentryUser()
-  return null
+  usePollBlockNumber();
+  useEagerConnect();
+  usePollCoreFarmData();
+  useUserAgent();
+  useInactiveListener();
+  useSentryUser();
+  return null;
 }
 
 const noOverlayWorkaroundScript = `
@@ -52,15 +51,14 @@ const noOverlayWorkaroundScript = `
   window.addEventListener('unhandledrejection', event => {
     event.stopImmediatePropagation()
   })
-`
+`;
 
 function MyApp(props: AppProps) {
-  const { pageProps } = props
-  const store = useStore(pageProps.initialReduxState)
+  const { pageProps } = props;
+  const store = useStore(pageProps.initialReduxState);
   const [referrerAddress, setReferrerAddress] = useState("");
   const { account } = useActiveWeb3React();
 
-  
   let referedby = null;
 
   useEffect(() => {
@@ -75,7 +73,6 @@ function MyApp(props: AppProps) {
         getaccountDetails();
       }
     }
-
   }, []);
 
   const getaccountDetails = async () => {
@@ -86,7 +83,7 @@ function MyApp(props: AppProps) {
         createdAt: new Date().toDateString(),
       };
       // save the post
-    let response = await fetch("/api/social_mining", {
+      let response = await fetch("/api/social_mining", {
         method: "POST",
         body: JSON.stringify(post),
       });
@@ -96,7 +93,6 @@ function MyApp(props: AppProps) {
     }
   };
 
-
   return (
     <>
       <Head>
@@ -104,21 +100,25 @@ function MyApp(props: AppProps) {
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, viewport-fit=cover"
         />
-        <meta
-          name="description"
-          content=""
-        />
+        <meta name="description" content="" />
         <meta name="theme-color" content="#1FC7D4" />
         <meta name="twitter:image" content="" />
-        <meta
-          name="twitter:description"
-          content="."
-        />
+        <meta name="twitter:description" content="." />
         <meta name="twitter:card" content="Welcome to the social experiment" />
         <meta name="twitter:title" content="SocialX" />
-        <title>SOCIALx</title>
-        {process.env.NODE_ENV !== 'production' && <script dangerouslySetInnerHTML={{ __html: noOverlayWorkaroundScript }} />}
+        <link
+          href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css"
+          rel="stylesheet"
+        />
+        <link href="/css/style.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/css/faq.css" />
 
+        <title>SOCIALx</title>
+        {process.env.NODE_ENV !== "production" && (
+          <script
+            dangerouslySetInnerHTML={{ __html: noOverlayWorkaroundScript }}
+          />
+        )}
       </Head>
       <Providers store={store}>
         <Blocklist>
@@ -132,24 +132,24 @@ function MyApp(props: AppProps) {
           </PersistGate>
         </Blocklist>
       </Providers>
-     
     </>
-  )
+  );
 }
 
 type NextPageWithLayout = NextPage & {
-  Layout?: React.FC
-}
+  Layout?: React.FC;
+};
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+  Component: NextPageWithLayout;
+};
 
-const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? ErrorBoundary : Fragment
+const ProductionErrorBoundary =
+  process.env.NODE_ENV === "production" ? ErrorBoundary : Fragment;
 
 const App = ({ Component, pageProps, ...appProps }) => {
   // Use the layout defined at the page level, if available
-  const Layout = Component.Layout || Fragment
+  const Layout = Component.Layout || Fragment;
 
   // I a commenting this section until we fully finish the front page website addition in termas of links and translated text.
   const getContent = () => {
@@ -179,15 +179,15 @@ const App = ({ Component, pageProps, ...appProps }) => {
     //     </Layout>
     //     </ProductionErrorBoundary>
     //   )
-    // } 
+    // }
     // else {
     return (
       <ProductionErrorBoundary>
-        <Head>
+        {/* <Head>
           <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
           <link href="/css/style.css" rel="stylesheet" />
           <link rel="stylesheet" type="text/css" href="/css/faq.css" />
-        </Head>
+        </Head> */}
         <Menu>
           <Layout>
             <Component {...pageProps} />
@@ -197,10 +197,10 @@ const App = ({ Component, pageProps, ...appProps }) => {
         <ToastListener />
         <FixedSubgraphHealthIndicator />
       </ProductionErrorBoundary>
-    )
-  // }
-}
-  return getContent()
-}
+    );
+    // }
+  };
+  return getContent();
+};
 
-export default MyApp
+export default MyApp;
