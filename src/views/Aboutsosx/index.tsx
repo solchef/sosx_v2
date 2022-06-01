@@ -17,7 +17,7 @@ export default function Aboutsosx() {
   
      
 
-<!-- <NavHeader />   -->
+{/* <!-- <NavHeader />   --> */}
     
         <section className="socialxmedia-about-sec">
     

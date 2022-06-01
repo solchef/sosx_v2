@@ -333,10 +333,9 @@ const Menu: React.FC<NavProps> = ({
               </Link>
 
             </li>
+            
 
             <li className={router.pathname == "#" ? "mm-active" : ""}>
-       
-
                 <a>
                   <i className="fa fa-images"></i>
                   <span className="nav-text">NFT</span>
@@ -345,6 +344,18 @@ const Menu: React.FC<NavProps> = ({
             
 
             </li>
+
+
+            {/* <li className={router.pathname == "/multisender" ? "mm-active" : ""}>
+
+              <Link href="/multisender">
+
+                <a>
+                  <i className="fa-solid  fa fa-wallet"></i>
+                  <span className="nav-text"> Multi Sender</span>
+                </a>
+              </Link>
+            </li>  */}
 
             <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
               <Link href="/aboutsosx">
@@ -357,13 +368,13 @@ const Menu: React.FC<NavProps> = ({
 
             </li>
 
-            <li className={router.pathname == "/multisender" ? "mm-active" : ""}>
+            <li className={router.pathname == "/faq" ? "mm-active" : ""}>
 
-              <Link href="/multisender">
+              <Link href="/faq">
 
                 <a>
                   <i className="fa-solid fa-circle-question"></i>
-                  <span className="nav-text"> Token Multi Sender</span>
+                  <span className="nav-text"> FAQ</span>
                 </a>
               </Link>
             </li> 

@@ -42,7 +42,7 @@ export default function Faq() {
       return (
 
         <div className={`${biggerThan1400 && "container"} pt-3 ${biggest1400 && "container-fluid"}`} >
-<!--             <NavHeader /> -->
+{/* <!--             <NavHeader /> --> */}
          <div className="section">
                     <h5 className="section-heading">{t("Frequenty Asked Question (FAQ)")}</h5>
                     <p className="p-main">{t("Everything you need to know about SOSX is just one click away")}.</p>
