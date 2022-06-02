@@ -1,10 +1,7 @@
-import axios from "axios";
 import { useTranslation } from "contexts/Localization";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
-import { useDaoStakingContract } from "hooks/useContract";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { useState } from "react";
 import { cleanNumber } from "utils/amount";
 import  Link  from "next/link";
 
