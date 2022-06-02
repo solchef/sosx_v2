@@ -527,7 +527,7 @@ export default function Staking() {
         </div>
       </div>
       <div style={{ flex: "1 1 30%", gap: "20px", maxWidth: "100%" }}>
-        <Info onActionModal={handleShow} />
+        <Info onActionModal={handleShow} reward={reward.toFixed(3)}  />
       </div>
       <div style={{ flex: "1 1 30%" }}>
         <UserStakingLogs onActionModal={handleShow} />

@@ -46,88 +46,96 @@ export default function Statistics(props) {
     getSOSXPrice();
     stakingDetails();
   }, [stakingDetails]);
-	const biggest1500 = useMediaPredicate("(min-width: 1500px)");
+  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
 
   return (
     <>
-  
+      <div
+        className="stake-amount"
+        style={{ flex: "1 1 17%", gap: "20px", maxWidth: "100%" }}
+      >
+        <div className="card h-100">
+          <div className="card-body">
+            <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
+              <div className="data-content">
+                <div className="d-flex align-items-end">
+                  <h2 className="mb-3 main-pink">{totalAmountStaked}</h2>
+                </div>
+                <div className="">
+                  <div className="">
+                    <h4>STAKED SOSX</h4>
+                  </div>
+                  <p className="mb-0">Actively staking</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="rate-amount"
+        style={{ flex: "1 1 17%", gap: "20px", maxWidth: "100%" }}
+      >
+        <div className="card h-100">
+          <div className="card-body">
+            <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
+              <div className="data-content">
+                <div className="d-flex align-items-end">
+                  <h2 className="mb-3 main-pink">{numberOfActiveStake}</h2>
+                </div>
+                <div className="">
+                  <div className="">
+                    <h4>ACTIVE STAKES</h4>
+                  </div>
+                  <p className="mb-0">Active Stakes Count</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div className="stake-amount" style={{flex: "1 1 17%", gap: "20px", maxWidth: "100%"}}>
-                    <div className="card h-100">
-                        <div className="card-body">
-                            <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
-                                <div className="data-content">
-                                    <div className="d-flex align-items-end">
-                                        <h2 className="mb-3 main-pink">{totalAmountStaked}</h2>
-                                    </div>
-                                    <div className="">
-                                        <div className="">
-                                            <h4>STAKED SOSX</h4>
-                                        </div>
-                                        <p className="mb-0">Actively staking</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div
+        className="stake-amount"
+        style={{ flex: "1 1 17%", gap: "20px", maxWidth: "100%" }}
+      >
+        <div className="card h-100">
+          <div className="card-body">
+            <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
+              <div className="data-content">
+                <div className="d-flex align-items-end">
+                  <h2 className="mb-3 main-pink">29%</h2>
                 </div>
-                <div className="rate-amount" style={{flex: "1 1 17%", gap: "20px", maxWidth: "100%"}}>
-                    <div className="card h-100">
-                        <div className="card-body">
-                            <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
-                                <div className="data-content">
-                                    <div className="d-flex align-items-end">
-                                        <h2 className="mb-3 main-pink">{numberOfActiveStake}</h2>
-                                    </div>
-                                    <div className="">
-                                        <div className="">
-                                            <h4>ACTIVE STAKES</h4>
-                                        </div>
-                                        <p className="mb-0">Active Stakes Count</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="">
+                  <div className="">
+                    <h4>STAKING APY</h4>
+                  </div>
+                  <p className="mb-0">Period Staking Rewards %</p>
                 </div>
-                
-                <div className="stake-amount" style={{flex: "1 1 17%", gap: "20px", maxWidth: "100%"}}>
-                    <div className="card h-100">
-                        <div className="card-body">
-                            <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
-                                <div className="data-content">
-                                    <div className="d-flex align-items-end">
-                                        <h2 className="mb-3 main-pink">29%</h2>
-                                    </div>
-                                    <div className="">
-                                        <div className="">
-                                            <h4>STAKING APY</h4>
-                                        </div>
-                                        <p className="mb-0">Period Staking Rewards %</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><div className="price-box" style={{flex: "1 1 17%"}}>
-                    <div className="card h-100 datarow justify-content-between">
-                        <div className="card-body">
-                            <div className="flex-row d-flex flex-wrap justify-content-between w-100 align-items-center">
-                                <div className="data-content">
-                                    <div className="d-flex align-items-end">
-                                        <h2 className="mb-3 main-pink">{props.reward}</h2>
-                                    </div>
-                                    <div className="d-flex flex-column align-items-start ">
-                                        <div className="d-flex align-items-center">
-                                            <h4>TOTAL REWARDS</h4>
-                                        </div>
-                                        <p className="mb-0">Total SOSX you gained staking.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="price-box" style={{ flex: "1 1 17%" }}>
+        <div className="card h-100 datarow justify-content-between">
+          <div className="card-body">
+            <div className="flex-row d-flex flex-wrap justify-content-between w-100 align-items-center">
+              <div className="data-content">
+                <div className="d-flex align-items-end">
+                  <h2 className="mb-3 main-pink">{props.reward}</h2>
                 </div>
+                <div className="d-flex flex-column align-items-start ">
+                  <div className="d-flex align-items-center">
+                    <h4>TOTAL REWARDS</h4>
+                  </div>
+                  <p className="mb-0">Total SOSX you gained staking.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
