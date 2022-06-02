@@ -101,7 +101,7 @@ const TimerDisplay = () => {
             <li style={{ width: "27%" }} className="active">
               CREATE
             </li>
-            <li className={( stage === 2 ||stage === 3 ||stage === 4) && "active"}>TOP 3 VOTE</li>
+            <li className={( stage !== 1) && "active"}>TOP 3 VOTE</li>
             <li className={(stage === 3 || stage === 4 )&&  "active"}>FINAL VOTE</li>
             <li className={stage === 4 && "active" }>SUBMIT VIDEO</li>
           </ul>
