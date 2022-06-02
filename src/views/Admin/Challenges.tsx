@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import { GET_Challenges } from "utils/graphqlQ";
 import { GET_LastRound } from "utils/graphqlQ";
+import useWeb3Provider from "hooks/useActiveWeb3React";
+import { signMessage } from "utils/web3React";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
 
 const server = create({
   url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
@@ -12,10 +15,12 @@ const server = create({
 
 export default function Challenges() {
   const GraphqlChallengesData = useQuery(GET_Challenges);
-  const { toastSuccess } = useToast()
   const [roundFilter, setRoundFilter] = useState('1')
   const GraphqlLastRoundData = useQuery(GET_LastRound);
   const [lastRound, setLastRound] = useState(Number)
+  const { toastSuccess, toastError } = useToast()
+  const { library, connector } = useWeb3Provider();
+  const { account } = useActiveWeb3React();
 
   useEffect(() => {
     if (GraphqlLastRoundData.data !== undefined)
@@ -24,15 +29,23 @@ export default function Challenges() {
 
   const deleteChallenge = async (walletAddress) => {
     try {
-      await server.files.rm(`/Rounds/Round-1/challenges/${walletAddress}`, { recursive: true })
-      toastSuccess("DELETED")
+      const sig = await signMessage(connector, library, account, `Deleting ${walletAddress} challenge`);
+      if (sig) {
+        await server.files.rm(`/Rounds/Round-1/challenges/${walletAddress}`, { recursive: true })
+        toastSuccess("DELETED")
+      }
     } catch (err) {
       console.log(err);
     }
   }
 
-  console.log(GraphqlChallengesData)
-
+const roundsFilter = () => {
+  let rounds = []
+  for (let i = 1; i <= lastRound; i++) {
+    rounds.push(<Dropdown.Item onClick={() => setRoundFilter(String(i))}>{i}</Dropdown.Item>)
+    return {rounds}
+  }
+}
   return (
     <>
       <div >
@@ -43,8 +56,9 @@ export default function Challenges() {
               <h4 className="mr-3">CHALLENGES SELECTION FOR ROUND #</h4>
               <DropdownButton title={`${roundFilter}`}>
                 <Dropdown.Item onClick={() => setRoundFilter('all')}>All</Dropdown.Item>
-                <Dropdown.Item onClick={() => setRoundFilter('1')}>1</Dropdown.Item>
-                <Dropdown.Item onClick={() => setRoundFilter('2')}>2</Dropdown.Item>
+                {[...Array(lastRound)].map((x, i) =>
+                 <Dropdown.Item onClick={() => setRoundFilter(String(i+1))}>{i+1}</Dropdown.Item>
+                )}
               </DropdownButton>
             </div>
             <div className="card-body ">

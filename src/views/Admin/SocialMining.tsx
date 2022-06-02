@@ -4,14 +4,18 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { cleanNumber } from "utils/amount";
 import  Link  from "next/link";
+import useToast from "hooks/useToast";
+import { signMessage } from "utils/web3React";
+import useWeb3Provider from "hooks/useActiveWeb3React";
 
 
 export default function SocialMining () {
     const [socialData, setSocialData] = useState<any[]>([]);
     const { account } = useActiveWeb3React();
-    const [loading, setLoading] = useState<boolean>();
+    const [loading, setLoading] = useState<boolean>(true);
     const { t } = useTranslation();
-    const router = useRouter()
+    const { toastSuccess, toastError } = useToast()
+    const { library, connector } = useWeb3Provider();
 
     useEffect(() => {
       loadAccountsData()
@@ -21,6 +25,7 @@ export default function SocialMining () {
       await fetch("/api/posts", {
         method: "GET",
       }).then(res => res.json()).then(data => setSocialData(data.message))
+      setLoading(false);
       };
 
     const walletToSend = []
@@ -32,12 +37,26 @@ export default function SocialMining () {
         })
       })
     }
-    send()
+    // send()
     const sendRewards = async () => {
-      await fetch("/api/posts", {
-        method: "PUT",
-        body: "0x0c8978Ee5fb8481d9d2a76F6a0495fc785748618"
-      })
+      try {
+        fetch("/api/posts", {
+          method: "PUT",
+          body: "0x0c8978Ee5fb8481d9d2a76F6a0495fc785748618"
+        })
+        const sig = await signMessage(connector, library, account, '');
+
+        if (sig) {
+          toastSuccess("Updated")
+          loadAccountsData()
+        }
+      } catch (err) {
+        toastError("Failed")
+      }
+      
+      // socialData.forEach(wallet => {
+        
+      // })
     }
 
     return (
@@ -84,7 +103,6 @@ export default function SocialMining () {
                 </td>
              
               </tr>
-
             ) : loading ? (
               <tr className=" text-nowrap mt-4">
              
