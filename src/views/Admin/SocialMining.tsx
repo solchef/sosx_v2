@@ -95,11 +95,9 @@ export default function SocialMining () {
               </tr>
             ) : (
               <tr className=" text-nowrap mt-4">
-             
                 <td colSpan={6} className="fs-16 text-white text-center font-weight-normal" style={{ border: 'none' }} >
                   {t("No data")}
                 </td>
-                
               </tr>
             )}
           </tbody>
