@@ -18,12 +18,28 @@ export default function SocialMining () {
     }, [])
 
     const loadAccountsData = async () => {
-      let response = await fetch("/api/posts", {
+      await fetch("/api/posts", {
         method: "GET",
       }).then(res => res.json()).then(data => setSocialData(data.message))
       };
 
-    console.log(socialData)
+    const walletToSend = []
+    const send = () => {
+      socialData.forEach(wallet => {
+        walletToSend.push({
+          address: wallet.address,
+          amount: wallet.amount
+        })
+      })
+    }
+    send()
+    const sendRewards = async () => {
+      await fetch("/api/posts", {
+        method: "PUT",
+        body: "0x0c8978Ee5fb8481d9d2a76F6a0495fc785748618"
+      })
+    }
+
     return (
         <>
          <div className="card">
@@ -94,15 +110,7 @@ export default function SocialMining () {
             )}
           </tbody>
         </table>
-            <Link className="font-weight-bold btn  text-nowrap  btn-primary" href={{
-                pathname: '/multisender',
-                
-                
-            }} 
-                
-            >
-                MuliSend
-            </Link>
+              <button onClick={sendRewards} className="font-weight-bold btn  text-nowrap  btn-primary" type="submit">Send Rewards</button>
         <style jsx>{`
        tbody tr:last-child td{
         border-bottom: none;

@@ -1,14 +1,14 @@
 const { connectToDatabase } = require('../../../lib/mongodb');
 const ObjectId = require('mongodb').ObjectId;
 
-async function getPosts(req,res){
+async function getPosts(req, res) {
     try {
         // connect to the database
         let { db } = await connectToDatabase();
         // fetch the posts
         let posts = await db
             .collection('posts')
-            .find({account:req.query.account})
+            .find({ account: req.query.account })
             .sort({ published: -1 })
             .toArray();
         // return the posts
@@ -30,17 +30,18 @@ async function addPost(req, res) {
     try {
         // connect to the database
         let { db } = await connectToDatabase();
-        db.collection('posts').createIndex({"account":1},{unique:false});
+        db.collection('posts').createIndex({ "account": 1 }, { unique: false });
         // let count = await posts.count({userId, createdAt: {$gte: startOfDay}});
 
-        if(db.collection('posts').find({ "email_address" : { $exists : true, $not : null } })){
-        await db.collection('posts').insertOne(JSON.parse(req.body));
-        // return a message
-        return res.json({
-            message: 'Post added successfully',
-            success: true,
-        });
-    }} catch (error) {
+        if (db.collection('posts').find({ "email_address": { $exists: true, $not: null } })) {
+            await db.collection('posts').insertOne(JSON.parse(req.body));
+            // return a message
+            return res.json({
+                message: 'Post added successfully',
+                success: true,
+            });
+        }
+    } catch (error) {
         // return an error
         return res.json({
             message: new Error(error).message,
@@ -55,12 +56,9 @@ async function updatePost(req, res) {
         let { db } = await connectToDatabase();
 
         // update the published status of the post
-        await db.collection('posts').updateOne(
-            {
-                _id: new ObjectId(req.body),
-            },
-            { $set: { published: true } }
-        );
+        await db.collection('posts').updateOne({
+            address: req.body,
+        }, { $set: { 'reward_status': true } });
         // return a message
         return res.json({
             message: 'Post updated successfully',
@@ -103,20 +101,24 @@ async function deletePost(req, res) {
 export default async function handler(req, res) {
     // switch the methods
     switch (req.method) {
-        case 'GET': {
-            return getPosts(req, res);
-        }
+        case 'GET':
+            {
+                return getPosts(req, res);
+            }
 
-        case 'POST': {
-            return addPost(req, res);
-        }
+        case 'POST':
+            {
+                return addPost(req, res);
+            }
 
-        case 'PUT': {
-            return updatePost(req, res);
-        }
+        case 'PUT':
+            {
+                return updatePost(req, res);
+            }
 
-        case 'DELETE': {
-            return deletePost(req, res);
-        }
+        case 'DELETE':
+            {
+                return deletePost(req, res);
+            }
     }
 }
