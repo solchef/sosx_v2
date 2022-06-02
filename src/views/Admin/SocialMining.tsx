@@ -80,7 +80,7 @@ export default function SocialMining () {
                   {t("Loading Data")}
                 </td>
                 <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
+                </td> 
               </tr>
             ) : (
               <tr className=" text-nowrap mt-4">
