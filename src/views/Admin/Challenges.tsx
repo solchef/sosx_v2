@@ -84,9 +84,6 @@ const roundsFilter = () => {
                         Delete
                       </button></td>
                       <td className="border-0 text-white">
-
-
-
                         <button
                           type="submit"
                           className="btn  btn-success"
@@ -94,15 +91,11 @@ const roundsFilter = () => {
                         >
                           Push
                         </button></td>
-
                     </tr>
-
                   ))}
                 </tbody>
               </table>
             </div>
-   
-
         </div>
       </div>
 

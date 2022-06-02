@@ -51,9 +51,9 @@ export default function StakingList () {
                       <h4>DAO Stakers</h4>
                     </div>
 
-      <div className="tab-bg">
+      <div className="card-body">
 
-        <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
+        <table className="ranking-header fs-12 p-4 mt-0 table">
 
           <tr className="jsx-e5e2ca7965fa437a">
             <th className="fs-16 font-weight-normal">Rank</th>
@@ -66,42 +66,36 @@ export default function StakingList () {
               voters.map((voter, i) => 
          
                   <tr className=" text-nowrap mt-4" key={i} style={{ borderColor: '#1e2124' }}>
-                    <td className="fs-16 font-weight-normal" > {i + 1}</td>
-                    <td className="fs-16 font-weight-normal" >  {voter.address}</td>
-                    <td className="fs-16 font-weight-normal" >{cleanNumber(voter.amount + "")}</td>
+                    <td className="fs-16 border-0 text-white font-weight-normal" > {i + 1}</td>
+                    <td className="fs-16 border-0 text-white font-weight-normal text-center" >  {voter.address}</td>
+                    <td className="fs-16 border-0 text-white font-weight-normal" >{cleanNumber(voter.amount + "")}</td>
                   </tr>
             
               )
             ) : !account ? (
               <tr className=" text-nowrap mt-4">
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+              
+                <td colSpan={3} className="fs-16  text-white text-center font-weight-normal" style={{ border: 'none' }} >
                  {t("You need to be connected")}
                 </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
+           
               </tr>
 
             ) : loading ? (
               <tr className=" text-nowrap mt-4">
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+             
+                <td colSpan={3} className="fs-16  text-white text-center font-weight-normal" style={{ border: 'none' }} >
                   {t("Loading Data")}
                 </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
+             
               </tr>
             ) : (
               <tr className=" text-nowrap mt-4">
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+       
+                <td colSpan={3} className="fs-16  text-white text-center font-weight-normal" style={{ border: 'none' }} >
                   {t("No one is on Level")} {displayLevel}
                 </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
+         
               </tr>
             )}
           </tbody>
