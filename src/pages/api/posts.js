@@ -8,8 +8,8 @@ async function getPosts(req, res) {
         // fetch the posts
         let posts = await db
             .collection('posts')
-            .find({ account: req.query.account })
-            .sort({ published: -1 })
+            .find({ reward_status: false })
+            // .sort({ published: -1 })
             .toArray();
         // return the posts
         return res.json({
@@ -58,7 +58,7 @@ async function updatePost(req, res) {
         // update the published status of the post
         await db.collection('posts').updateOne({
             address: req.body,
-        }, { $set: { 'reward_status': true } });
+        }, { $set: { reward_status: true } });
         // return a message
         return res.json({
             message: 'Post updated successfully',
