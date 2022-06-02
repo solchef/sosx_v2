@@ -70,9 +70,6 @@ export default function Challenges() {
                         Delete
                       </button></td>
                       <td className="border-0 text-white">
-
-
-
                         <button
                           type="submit"
                           className="btn  btn-success"
@@ -80,15 +77,11 @@ export default function Challenges() {
                         >
                           Push
                         </button></td>
-
                     </tr>
-
                   ))}
                 </tbody>
               </table>
             </div>
-   
-
         </div>
       </div>
 

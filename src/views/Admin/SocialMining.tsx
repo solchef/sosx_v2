@@ -65,12 +65,12 @@ export default function SocialMining () {
               socialData.map((data, i) => 
          
                   <tr className=" text-nowrap mt-4" key={i} style={{ borderColor: '#1e2124' }}>
-                    <td className="fs-16 font-weight-normal" >  {data.email}</td>
-                    <td className="fs-16 font-weight-normal" >  {data.url}</td>
-                    <td className="fs-16 font-weight-normal" >  {data.address}</td>
-                    <td className="fs-16 font-weight-normal" >{cleanNumber(data.amount + "")}</td>
-                    <td className="fs-16 font-weight-normal" >{data.created_at}</td>
-                    <td className="fs-16 font-weight-normal" >{data.reward_status.toString()}</td>
+                    <td className="fs-16 border-0 text-white font-weight-normal" >  {data.email}</td>
+                    <td className="fs-16 border-0 text-white font-weight-normal" >  {data.url}</td>
+                    <td className="fs-16 border-0 text-white font-weight-normal" >  {data.address}</td>
+                    <td className="fs-16 border-0 text-white font-weight-normal" >{cleanNumber(data.amount + "")}</td>
+                    <td className="fs-16 border-0 text-white font-weight-normal" >{data.created_at}</td>
+                    <td className="fs-16 border-0 text-white font-weight-normal" >{data.reward_status.toString()}</td>
                   </tr>
             
               )
@@ -78,34 +78,28 @@ export default function SocialMining () {
             )
             : !account ? (
               <tr className=" text-nowrap mt-4">
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+            
+                <td colSpan={6} className="fs-16 text-white text-center font-weight-normal" style={{ border: 'none' }} >
                  {t("You need to be connected")}
                 </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
+             
               </tr>
 
             ) : loading ? (
               <tr className=" text-nowrap mt-4">
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+             
+                <td colSpan={6} className="fs-16  text-white text-center font-weight-normal" style={{ border: 'none' }} >
                   {t("Loading Data")}
                 </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
+             
               </tr>
             ) : (
               <tr className=" text-nowrap mt-4">
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+             
+                <td colSpan={6} className="fs-16 text-white text-center font-weight-normal" style={{ border: 'none' }} >
                   {t("No data")}
                 </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
+                
               </tr>
             )}
           </tbody>

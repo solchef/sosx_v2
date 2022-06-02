@@ -12,9 +12,9 @@ import moment from "moment";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
 const server = create({
-    url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
-  });
-export default function Submissions () {
+  url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
+});
+export default function Submissions() {
   const { account } = useActiveWeb3React();
   const [winnerAddress, setWinnerAddress] = useState("");
   const [videos, setVideos] = useState([]);
@@ -40,7 +40,7 @@ export default function Submissions () {
       const data = concat(chunks);
       fileContent = new TextDecoder().decode(data).toString();
       fileContent = JSON.parse((fileContent));
-        finalData.push(fileContent);
+      finalData.push(fileContent);
     }
     console.log(finalData)
     setVideos(finalData);
@@ -50,21 +50,21 @@ export default function Submissions () {
     getVideos();
   }, [lastRound]);
 
-  let roundId:number = Number(lastRound) + 1
+  let roundId: number = Number(lastRound) + 1
   const roundInfo = JSON.stringify({
     id: roundId,
     startingTime: moment().unix(),
   }, null, 2);
   const createRound = async () => {
     await server.files.mkdir(`/Rounds/Round-${roundId}`);
-    await server.files.write(`/Rounds/Round-${roundId}/info.json`, roundInfo, {create: true});
+    await server.files.write(`/Rounds/Round-${roundId}/info.json`, roundInfo, { create: true });
     await server.files.mkdir(`/Rounds/Round-${roundId}/Videos`);
     await server.files.mkdir(`/Rounds/Round-${roundId}/challenges`);
     await server.files.mkdir(`/Rounds/Round-${roundId}/Votes`);
     await server.files.mkdir(`/Rounds/Round-${roundId}/Votes/stage-2`);
     await server.files.mkdir(`/Rounds/Round-${roundId}/Votes/stage-3`);
   };
-  
+
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -85,62 +85,56 @@ export default function Submissions () {
   };
 
   const biggerThan1500 = useMediaPredicate("(min-width: 1500px)");
-    return (
-        <>  
+  return (
+    <>
+      <div >
+        <div className="card">
           <div >
-            <div className="card">
-                  <div >
-                    <div className="d-flex align-items-center mb-2">
-                      <h4>WINNER SELECTION FOR ROUND #</h4>
-                      <DropdownButton title={`${roundFilter}`}>
-                      <Dropdown.Item onClick={()=> setRoundFilter('1')}>1</Dropdown.Item>
-                      <Dropdown.Item onClick={()=> setRoundFilter('2')}>2</Dropdown.Item>
-                    </DropdownButton>
-                    </div>
-                   
-                    <p>
-                      Choose the winner from the videos Submissions sorted by
-                      first uploaded
-                    </p>
-                    <div className="card-body ">
-  
-                      {videos.filter((video) => video.rId == roundFilter).map((video) => (
-                        <>
-                         
-                            <form onSubmit={handleSubmit} onClick={() => setWinnerAddress(video.id)}>
-                            <div className="d-flex row justify-content-between my-2">
-                            <div>
-                            {moment(video.timestamp * 1000).format('LLLL')}
-                            </div>
-                            <div>
-                            {video.id}
-                            </div>
-                            <div>
-                            <a className="mr-3 btn btn-primary text-white" href={video.url} target="_blank">
-                              Visit video Link
-                            </a>
-                            </div>
-  
-                              <button
-                                type="submit"
-                                className="btn  btn-primary"
-                                style={{ width: "max-content" }}
-                              >
-                                Reward as Winner
-                              </button>
-                              </div>
-                            </form>
-                        </>
-  
-                      ))}
-  
-                    </div>
-                  </div>
-                
+            <div className="d-flex align-items-center mb-2">
+              <h4 className="mr-3">WINNER SELECTION FOR ROUND #</h4>
+              <DropdownButton title={`${roundFilter}`}>
+                <Dropdown.Item onClick={() => setRoundFilter('1')}>1</Dropdown.Item>
+                <Dropdown.Item onClick={() => setRoundFilter('2')}>2</Dropdown.Item>
+              </DropdownButton>
+            </div>
+
+            <p>
+              Choose the winner from the videos Submissions sorted by
+              first uploaded
+            </p>
+            <div className="card-body ">
+            <form onSubmit={handleSubmit} onClick={() => setWinnerAddress(video.id)}>
+
+              <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
+
+                  {videos.filter((video) => video.rId == roundFilter).map((video) => (
+                    <tr>
+                      <td className="border-0 text-white"> {moment(video.timestamp * 1000).format('LLLL')}</td>
+                      <td className="border-0 text-white">       {video.id}</td>
+                      <td className="border-0 text-white">    <a className="mr-3 btn btn-primary btn-success text-white" href={video.url} target="_blank">
+                        Visit video Link
+                      </a></td>
+                      <td className="border-0 text-white">
+                        <button
+                          type="submit"
+                          className="btn  btn-primary"
+                          style={{ width: "max-content" }}
+                        >
+                          Reward as Winner
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </table>
+              </form>
+
             </div>
           </div>
-          <div style={{ flex: '1 1 60%' }} >
-          </div>
-      </>
-    )
+
+        </div>
+      </div>
+      <div style={{ flex: '1 1 60%' }} >
+      </div>
+    </>
+  )
 }
