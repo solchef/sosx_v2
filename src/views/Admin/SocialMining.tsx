@@ -29,7 +29,7 @@ export default function SocialMining () {
       };
 
     const walletToSend = []
-    const send = () => {
+    const createDataArray = () => {
       socialData.forEach(wallet => {
         walletToSend.push({
           address: wallet.address,
@@ -37,13 +37,16 @@ export default function SocialMining () {
         })
       })
     }
-    // send()
+    createDataArray()
     const sendRewards = async () => {
       try {
-        fetch("/api/posts", {
-          method: "PUT",
-          body: "0x0c8978Ee5fb8481d9d2a76F6a0495fc785748618"
-        })
+        for (let i = 0; i < walletToSend.length; i++) {
+          fetch("/api/posts", {
+            method: "PUT",
+            body: walletToSend[i].address
+          })
+        }
+        
         const sig = await signMessage(connector, library, account, '');
 
         if (sig) {
@@ -53,10 +56,6 @@ export default function SocialMining () {
       } catch (err) {
         toastError("Failed")
       }
-      
-      // socialData.forEach(wallet => {
-        
-      // })
     }
 
     return (

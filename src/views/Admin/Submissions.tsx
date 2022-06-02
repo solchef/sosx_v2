@@ -93,8 +93,10 @@ export default function Submissions() {
             <div className="d-flex align-items-center mb-2">
               <h4 className="mr-3">WINNER SELECTION FOR ROUND #</h4>
               <DropdownButton title={`${roundFilter}`}>
-                <Dropdown.Item onClick={() => setRoundFilter('1')}>1</Dropdown.Item>
-                <Dropdown.Item onClick={() => setRoundFilter('2')}>2</Dropdown.Item>
+              <Dropdown.Item onClick={() => setRoundFilter('all')}>All</Dropdown.Item>
+                {[...Array(lastRound)].map((x, i) =>
+                 <Dropdown.Item onClick={() => setRoundFilter(String(i+1))}>{i+1}</Dropdown.Item>
+                )}
               </DropdownButton>
             </div>
 
@@ -103,7 +105,7 @@ export default function Submissions() {
               first uploaded
             </p>
             <div className="card-body ">
-            <form onSubmit={handleSubmit} onClick={() => setWinnerAddress(video.id)}>
+            <form onSubmit={handleSubmit}>
 
               <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
 
@@ -119,6 +121,7 @@ export default function Submissions() {
                           type="submit"
                           className="btn  btn-primary"
                           style={{ width: "max-content" }}
+                          onClick={() => setWinnerAddress(video.id)}
                         >
                           Reward as Winner
                         </button>
