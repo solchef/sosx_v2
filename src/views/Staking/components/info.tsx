@@ -19,11 +19,11 @@ export const Info = (props) => {
                 <div className="d-flex flex-column align-items-start">
                   <h4 className="main-pink mb-2 ">6 MONTHS</h4>
                   <p style={{fontWeight: 'bold', marginBottom: '10px!important'}}>Lock your SOSX for 6 months<br /> and receive a return of 64%</p></div>
-                <div><h1 className=" mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}>64%</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}>FIXED APY</p></div>
+                <div className="text-center"><h1 className=" mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}>64%</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}>FIXED APY</p></div>
               </div>
             </div>
             <hr />
-            <div className="text-center">
+            <div>
               <div className="d-flex align-items-center justify-content-between">
                 <div className="d-flex flex-column align-items-start">
                   <h4 className="main-pink mb-2 ">12 MONTHS</h4>
