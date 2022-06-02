@@ -5,7 +5,7 @@ import DAOStakingList from "./DAOStakingList";
 import SocialMining from "./SocialMining";
 import StakingList from "./StakingList";
 import Submissions from "./Submissions";
-import styles from "./index.module.css";
+import styles from "./styles/index.module.css";
 
 
 export default function Admin() {
