@@ -64,7 +64,7 @@ const roundsFilter = () => {
             <div className="card-body ">
               <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
                 <tr>
-                  <th className="fs-16 font-weight-normal">CHallenge</th>
+                  <th className="fs-16 font-weight-normal">Challenge</th>
                   <th className="fs-16 font-weight-normal">Stage 2 Votes</th>
                   <th className="fs-16 font-weight-normal">Stage 3 Votes</th>
                   <th className="fs-16 font-weight-normal">Delete Challenge</th>
