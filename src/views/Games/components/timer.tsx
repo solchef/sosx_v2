@@ -98,12 +98,12 @@ const TimerDisplay = () => {
       <div className="card-body">
         <div className="steps">
           <ul className="progressbar mb-4 ">
-            <li style={{ width: "27%" }} className={stage == 1 && 'active'}>
+            <li style={{ width: "27%" }} className="active">
               CREATE
             </li>
-            <li className={stage == 2 && 'active'}>TOP 3 VOTE</li>
-            <li className={stage == 3 && 'active'}>FINAL VOTE</li>
-            <li className={stage == 4 && 'active'}>SUBMIT VIDEO</li>
+            <li className={( stage === 2 ||stage === 3 ||stage === 4) && "active"}>TOP 3 VOTE</li>
+            <li className={(stage === 3 || stage === 4 )&&  "active"}>FINAL VOTE</li>
+            <li className={stage === 4 && "active" }>SUBMIT VIDEO</li>
           </ul>
         </div>
         <div className="d-flex align-items-baseline">
