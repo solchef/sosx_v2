@@ -6,6 +6,7 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
 import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
 import { useMediaPredicate } from "react-media-hook";
+import { cleanNumber } from "utils/amount";
 
 export default function Statistics(props) {
   const [price, setPrice] = useState(Number);
@@ -36,11 +37,18 @@ export default function Statistics(props) {
   useEffect(() => {
     stakingDetails();
   }, [stakingDetails]);
-	const biggest1500 = useMediaPredicate("(min-width: 1500px)");
+  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
 
   return (
     <>
-      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`,gap:'20px', maxWidth:'100%'}} className="stake-amount">
+      <div
+        style={{
+          flex: `${biggest1500 ? " 1 1 17%" : " 1 1 40%"}`,
+          gap: "20px",
+          maxWidth: "100%",
+        }}
+        className="stake-amount"
+      >
         <div className="card h-100">
           <div className="card-body">
             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center">
@@ -60,7 +68,14 @@ export default function Statistics(props) {
         </div>
       </div>
 
-      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`,gap:'20px', maxWidth:'100%'}} className="rate-amount">
+      <div
+        style={{
+          flex: `${biggest1500 ? " 1 1 17%" : " 1 1 40%"}`,
+          gap: "20px",
+          maxWidth: "100%",
+        }}
+        className="rate-amount"
+      >
         <div className="card h-100">
           <div className="card-body">
             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center">
@@ -73,8 +88,8 @@ export default function Statistics(props) {
                         : level == 2
                         ? 9.0
                         : 12.0
-                      : 0} 
-                      {/* {`${'%'}`} */}
+                      : 0}
+                    {/* {`${'%'}`} */}
                   </h2>
                 </div>
                 <div className="">
@@ -89,7 +104,14 @@ export default function Statistics(props) {
         </div>
       </div>
 
-      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`,gap:'20px', maxWidth:'100%'}} className="dao-box">
+      <div
+        style={{
+          flex: `${biggest1500 ? " 1 1 17%" : " 1 1 40%"}`,
+          gap: "20px",
+          maxWidth: "100%",
+        }}
+        className="dao-box"
+      >
         <div className="card h-100 datarow justify-content-between">
           <div className="card-body">
             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center">
@@ -109,13 +131,22 @@ export default function Statistics(props) {
         </div>
       </div>
 
-      <div style={{flex: `${biggest1500? ' 1 1 17%':' 1 1 40%' }`,gap:'20px', maxWidth:'100%'}} className="price-box">
+      <div
+        style={{
+          flex: `${biggest1500 ? " 1 1 17%" : " 1 1 40%"}`,
+          gap: "20px",
+          maxWidth: "100%",
+        }}
+        className="price-box"
+      >
         <div className="card h-100 datarow justify-content-between">
           <div className="card-body">
             <div className="flex-row d-flex flex-wrap justify-content-between w-100 align-items-center">
               <div className="data-content">
                 <div className="d-flex align-items-end">
-                  <h2 className="mb-3 main-pink">{props.reward > 0 ? props.reward : 0}</h2>
+                  <h2 className="mb-3 main-pink">
+                    {props.reward ? cleanNumber(props.reward + "") : "0"}
+                  </h2>
                 </div>
                 <div className="d-flex flex-column align-items-start ">
                   <div className="d-flex align-items-center">

@@ -39,6 +39,7 @@ export const GET_Adspace = gql`
       sharedUrl
       wallet
       image
+      tokenType
     }
   }
 `;

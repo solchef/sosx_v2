@@ -6,7 +6,7 @@ import { useDaoStakingContract } from "hooks/useContract";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { getDaoLevel } from "../hooks/getDaoLevel";
 import { Trans } from "react-i18next";
-import { useTranslation } from 'contexts/Localization';
+import { useTranslation } from "contexts/Localization";
 
 const StyledList = styled.ol`
   li {
@@ -60,12 +60,10 @@ const Ranking = (props) => {
   useEffect(() => {
     contract.getAllAccount().then((daolist) => {
       loadDaoLevels(daolist);
-
     });
     // setDisplayLevel(1)
     // sortData();
   }, [displayLevel, props.currentLevel, account]);
-
 
   const sortData = () => {
     const currentLevel = [];
@@ -120,8 +118,8 @@ const Ranking = (props) => {
         <h4>{t("DAOX MEMBERS")}</h4>
       </div>
       <p>
-      <Trans i18nKey="description.part1">
-        To become member, visit <Link href="/daostaking/">STAKING DAO</Link>
+        <Trans i18nKey="description.part1">
+          To become member, visit <Link href="/daostaking/">STAKING DAO</Link>
         </Trans>
       </p>
       <div
@@ -131,8 +129,9 @@ const Ranking = (props) => {
         <button
           type="submit"
           onClick={() => setDisplayLevel(1)}
-          className={`font-weight-bold btn  text-nowrap ${displayLevel === 1 ? " btn-primary" : ""
-            }`}
+          className={`font-weight-bold btn  text-nowrap ${
+            displayLevel === 1 ? " btn-primary" : ""
+          }`}
         >
           {" "}
           Level 1
@@ -140,8 +139,9 @@ const Ranking = (props) => {
         <button
           type="submit"
           onClick={() => setDisplayLevel(2)}
-          className={`font-weight-bold btn  text-nowrap ${displayLevel === 2 ? " btn-primary" : ""
-            }`}
+          className={`font-weight-bold btn  text-nowrap ${
+            displayLevel === 2 ? " btn-primary" : ""
+          }`}
         >
           {" "}
           Level 2
@@ -149,8 +149,9 @@ const Ranking = (props) => {
         <button
           type="submit"
           onClick={() => setDisplayLevel(3)}
-          className={`font-weight-bold btn  text-nowrap  ${displayLevel === 3 ? " btn-primary" : ""
-            }`}
+          className={`font-weight-bold btn  text-nowrap  ${
+            displayLevel === 3 ? " btn-primary" : ""
+          }`}
         >
           {" "}
           Level 3
@@ -158,9 +159,10 @@ const Ranking = (props) => {
       </div>
 
       <div className="tab-bg">
-
-        <table style={{ maxWidth: '100%' }} className="ranking-header fs-12 p-4 mt-0 table">
-
+        <table
+          style={{ maxWidth: "100%" }}
+          className="ranking-header fs-12 p-4 mt-0 table"
+        >
           <tr className="jsx-e5e2ca7965fa437a">
             <th className="fs-16 font-weight-normal">Rank</th>
             <th className="fs-16 font-weight-normal text-center">Wallet</th>
@@ -169,54 +171,81 @@ const Ranking = (props) => {
 
           <tbody>
             {voters.length > 0 ? (
-              voters.map((voter, i) => 
-         
-                  <tr className=" text-nowrap mt-4" key={i} style={{ borderColor: '#1e2124' }}>
-                    <td className="fs-16 font-weight-normal" > {i + 1}</td>
-                    <td className="fs-16 font-weight-normal" >  {voter.address.replace(/(.{15})..+/, "$1…")}</td>
-                    <td className="fs-16 font-weight-normal" >{cleanNumber(voter.amount + "")}</td>
-                  </tr>
-            
-              )
+              voters.map((voter, i) => (
+                <tr
+                  className=" text-nowrap mt-4"
+                  key={i}
+                  style={{ borderColor: "#1e2124" }}
+                >
+                  <td className="fs-16 font-weight-normal"> {i + 1}</td>
+                  <td className="fs-16 font-weight-normal">
+                    {" "}
+                    {voter.address.replace(/(.{15})..+/, "$1…")}
+                  </td>
+                  <td className="fs-16 font-weight-normal">
+                    {cleanNumber(voter.amount + "")}
+                  </td>
+                </tr>
+              ))
             ) : !account ? (
               <tr className=" text-nowrap mt-4">
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
+                <td
+                  className="fs-16 font-weight-normal"
+                  style={{ border: "none" }}
+                ></td>
+                <td
+                  className="fs-16 font-weight-normal"
+                  style={{ border: "none" }}
+                >
+                  {t("You need to be connected")}
                 </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
-                 {t("You need to be connected")}
-                </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
+                <td
+                  className="fs-16 font-weight-normal"
+                  style={{ border: "none" }}
+                ></td>
               </tr>
-
             ) : loading ? (
               <tr className=" text-nowrap mt-4">
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+                <td
+                  className="fs-16 font-weight-normal"
+                  style={{ border: "none" }}
+                ></td>
+                <td
+                  className="fs-16 font-weight-normal"
+                  style={{ border: "none" }}
+                >
                   {t("Loading Data")}
                 </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
+                <td
+                  className="fs-16 font-weight-normal"
+                  style={{ border: "none" }}
+                ></td>
               </tr>
             ) : (
               <tr className=" text-nowrap mt-4">
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }} >
+                <td
+                  className="fs-16 font-weight-normal"
+                  style={{ border: "none" }}
+                ></td>
+                <td
+                  className="fs-16 font-weight-normal"
+                  style={{ border: "none" }}
+                >
                   {t("No one is on Level")} {displayLevel}
                 </td>
-                <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                </td>
+                <td
+                  className="fs-16 font-weight-normal"
+                  style={{ border: "none" }}
+                ></td>
               </tr>
             )}
           </tbody>
         </table>
         <style jsx>{`
-       tbody tr:last-child td{
-        border-bottom: none;
-      }
-      `}</style>
+          tbody tr:last-child td {
+            border-bottom: none;
+          }
+        `}</style>
       </div>
     </div>
   );

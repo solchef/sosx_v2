@@ -5,6 +5,9 @@ import { FileUploader } from "react-drag-drop-files";
 import { create } from "ipfs-http-client";
 import { GET_Adspace } from "utils/graphqlQ";
 import { useQuery } from "@apollo/client";
+import { useWeb3React } from "@web3-react/core";
+import useToast from "hooks/useToast";
+import { cleanNumber } from "utils/amount";
 
 export default function Adspace() {
   const fileTypes = ["JPG", "PNG", "GIF", "jpeg"];
@@ -17,14 +20,17 @@ export default function Adspace() {
   const [file, setFile] = useState(null);
   const GraphqlAdspaceData = useQuery(GET_Adspace);
   const [adspaceData, setAdspaceData] = useState([]);
+  const { account } = useWeb3React();
+  const { toastSuccess, toastError } = useToast();
 
   const server = create({
     url: process.env.NEXT_PUBLIC_SOSX_IPFS_URL,
   });
 
   useEffect(() => {
+    // console.log(cleanNumber(0.00000023 + 0.0000023321 + ""));
     if (GraphqlAdspaceData.data !== undefined) {
-      console.log(GraphqlAdspaceData.data.getAdspace);
+      // console.log(GraphqlAdspaceData.data.getAdspace);
       setAdspaceData(GraphqlAdspaceData.data.getAdspace);
     }
   }, [GraphqlAdspaceData.data]);
@@ -41,17 +47,28 @@ export default function Adspace() {
   };
 
   const handleSubmit = async () => {
-    const result = await server.add(file);
-    const adspace = JSON.stringify({
-      name: name,
-      amount: amount,
-      sharedUrl: sharedUrl,
-      wallet: "",
-      image: "http://ipfs.io/ipfs/" + result.cid,
-    });
-    await server.files.write(`/Adspace/` + name + ".json", adspace, {
-      create: true,
-    });
+    try {
+      if (account !== undefined) {
+        const result = await server.add(file);
+        const adspace = JSON.stringify({
+          name: name,
+          amount: amount,
+          sharedUrl: sharedUrl,
+          wallet: "",
+          tokenType: "SOSX",
+          image: "http://ipfs.io/ipfs/" + result.cid,
+        });
+        await server.files.write(`/Adspace/` + name + ".json", adspace, {
+          create: true,
+        });
+        toastSuccess("Your Adspace had been created successfully");
+      } else {
+        toastError("Please connect to your wallet");
+      }
+    } catch (error) {
+      toastError("Network Error");
+    }
+
     handleCloseGuide();
   };
 
@@ -80,8 +97,11 @@ export default function Adspace() {
                   <div className="col-lg-8">
                     <h3 className="h3-adspace">{data.name}</h3>
                     <p className="pb-1">Amount Staked:</p>
-                    <h4 className="pb-2"> {data.amount} SOSX</h4>
-                    <a href={data.sharedUrl}>
+                    <h4 className="pb-2">
+                      {" "}
+                      {cleanNumber(data.amount + "")} {data.tokenType}
+                    </h4>
+                    <a href={data.sharedUrl} target="_blank">
                       <button type="button" className="btn btn-primary btn-lg">
                         Visit Website
                       </button>
@@ -116,8 +136,6 @@ export default function Adspace() {
             <div className="bg-input mb-3 py-2 px-3 rounded ">
               <div className="guide-image justify-items-center">
                 <FileUploader
-                  // handleChange={handleFileChange}
-                  className="drop_area drop_zone"
                   multiple={true}
                   onSelect={(file) => handleFileChange(file)}
                   name="file"
@@ -129,7 +147,6 @@ export default function Adspace() {
             <div className="title-pink custom-pt mb-5">
               <div className="bg-input mb-3 py-2 px-3 rounded ">
                 <div className="d-flex justify-content-between align-items-center">
-                  {" "}
                   <input
                     className="form-control fs-28 m-1"
                     onChange={(e) => setName(e.target.value)}
@@ -139,7 +156,6 @@ export default function Adspace() {
               </div>
               <div className="bg-input mb-3 py-2 px-3 rounded ">
                 <div className="d-flex justify-content-between align-items-center">
-                  {" "}
                   <input
                     className="form-control fs-28 m-1"
                     onChange={(e) => setAmount(e.target.value)}
