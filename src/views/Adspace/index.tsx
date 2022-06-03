@@ -37,9 +37,9 @@ export default function Adspace() {
   });
 
   useEffect(() => {
+    refreshData();
     if (GraphqlAdspaceData.data !== undefined) {
       setAdspaceData(GraphqlAdspaceData.data.getAdspace);
-      console.log(GraphqlAdspaceData.data.getAdspace);
     }
   }, [GraphqlAdspaceData.data]);
 
@@ -52,6 +52,11 @@ export default function Adspace() {
     result.onloadend = async () => {
       setFile(Buffer.from(result.result));
     };
+  };
+
+  const refreshData = async () => {
+    GraphqlAdspaceData.refetch();
+    setTimeout(refreshData, 2000);
   };
 
   const handleSubmit = async () => {
