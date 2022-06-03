@@ -122,7 +122,7 @@ export default function Adspace() {
             <a onClick={() => {
               setViewInfoModle(true);
               setSelectedData(data);
-            }} href="">
+            }} >
             <button type="button" className="btn btn-primary btn-lg float-right">Info</button></a>
 
                      
@@ -171,32 +171,32 @@ export default function Adspace() {
               </div>
               <div className="mb-3 py-2 px-3  ">
                 Your stacked ammount is:
-                {cleanNumber(selectedData.amount + "") +
+                {" " +cleanNumber(selectedData.amount + "") +
                   " " +
                   selectedData.tokenType}
               </div>
               <div className="mb-3 py-2 px-3  ">
-                Your remaining stacked ammount is:
-                {cleanNumber(selectedData.amount + "") +
+                Your remaining stacked ammount is: 
+                 {" " +cleanNumber(selectedData.amount + "") +
                   " " +
                   selectedData.tokenType}
               </div>
               <div className="mb-3 py-2 px-3 w-100 ">
-                <table className="jsx-a752e0b28b6254b2 ranking-header fs-12 p-4 mt-0 table">
-                  <tr className="jsx-a752e0b28b6254b2 jsx-e5e2ca7965fa437a">
-                    <th className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                <table className=" ranking-header fs-12 p-4 mt-0 table">
+                  <tr className="">
+                    <th className=" fs-16 font-weight-normal">
                       Ammount
                     </th>
-                    <th className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal text-center">
+                    <th className=" fs-16 font-weight-normal text-center">
                       Wallet
                     </th>
                   </tr>
-                  <tbody className="jsx-a752e0b28b6254b2">
-                    <tr className="jsx-a752e0b28b6254b2  text-nowrap mt-4">
-                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                  <tbody className="">
+                    <tr className="  text-nowrap mt-4">
+                      <td className=" fs-16 font-weight-normal">
                         1000
                       </td>
-                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                      <td className=" fs-16 font-weight-normal">
                         {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
                           0,
                           20
@@ -204,11 +204,11 @@ export default function Adspace() {
                         ...
                       </td>
                     </tr>
-                    <tr className="jsx-a752e0b28b6254b2  text-nowrap mt-4">
-                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                    <tr className="  text-nowrap mt-4">
+                      <td className=" fs-16 font-weight-normal">
                         1000
                       </td>
-                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                      <td className=" fs-16 font-weight-normal">
                         {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
                           0,
                           20
@@ -216,11 +216,11 @@ export default function Adspace() {
                         ...
                       </td>
                     </tr>
-                    <tr className="jsx-a752e0b28b6254b2  text-nowrap mt-4">
-                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                    <tr className="  text-nowrap mt-4">
+                      <td className=" fs-16 font-weight-normal">
                         1000
                       </td>
-                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                      <td className=" fs-16 font-weight-normal">
                         {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
                           0,
                           20
@@ -228,11 +228,11 @@ export default function Adspace() {
                         ...
                       </td>
                     </tr>
-                    <tr className="jsx-a752e0b28b6254b2  text-nowrap mt-4">
-                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                    <tr className="  text-nowrap mt-4">
+                      <td className=" fs-16 font-weight-normal">
                         1000
                       </td>
-                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                      <td className=" fs-16 font-weight-normal">
                         {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
                           0,
                           20
@@ -245,10 +245,10 @@ export default function Adspace() {
               </div>
             </div>
 
-            <div className="modal-footer guide-popup">
+            <div className="modal-footer d-flex justify-content-center guide-popup">
               <button
                 type="button"
-                className="btn btn-primary btn-lg"
+                className="btn btn-primary  btn-lg"
                 onClick={() => setViewInfoModle(false)}
               >
                 Ok
