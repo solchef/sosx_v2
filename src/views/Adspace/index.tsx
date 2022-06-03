@@ -83,9 +83,7 @@ export default function Adspace() {
 
   return (
     <div
-      className={`${biggerThan1400 && "container"} pt-3 ${
-        biggest1400 && "container-fluid"
-      }`}
+      className="container-fluid"
     >
       <button
         type="button"
@@ -94,53 +92,59 @@ export default function Adspace() {
       >
         Create Adspace
       </button>
-      <div className="row mt-5">
-        {adspaceData.map((data, index) => {
+
+      <div className="row ">
+            {adspaceData.map((data, index) => {
           return (
-            <div className="col" key={index}>
-              <div
-                className="card"
-                style={
+      <div key={index}  className="col-sm-4 mb-2 mt-2">
+        <div style={
                   data.wallet === account ? { border: "solid 2px #ff00cc" } : {}
-                }
-              >
-                <div className="row">
-                  <div className="col-lg-4">
-                    <img src={data.image} className="adspace-cmpny-img" />
-                  </div>
-                  <div className="col-lg-8">
-                    <h3 className="h3-adspace">{data.name}</h3>
-                    <p className="pb-1">Amount Staked:</p>
-                    <h4 className="pb-2">
-                      {" "}
-                      {cleanNumber(data.amount + "")} {data.tokenType}
-                    </h4>
-                    {data.wallet === account ? (
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-lg"
-                        onClick={() => {
-                          setViewInfoModle(true);
-                          setSelectedData(data);
-                        }}
-                      >
-                        info
-                      </button>
+                } className="card">
+          <div className="row p-3">
+            <div className="col-md-4 p-4">
+            <img src={data.image} className="adspace-cmpny-img" />
+
+            </div>
+            <div className="col-md-8 pt-3">
+              <h4 className=" mb-0 pt-3 pb-2">{data.name}</h4>
+              <span className="fs-12 pr-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
+                suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
+                facilisis. </span>
+            </div>
+          </div>
+          <div className="card align-items-center d-flex justify-content-between">
+            <span className="fs-16 pr-1 lh50">Amount Staked:</span> 
+            <span className="text-white fs-16 pr-1 lh45 font-weight-bold"> {cleanNumber(data.amount + "")} {data.tokenType} </span>
+
+            {data.wallet === account ? (
+     
+            <a onClick={() => {
+              setViewInfoModle(true);
+              setSelectedData(data);
+            }} href="">
+            <button type="button" className="btn btn-primary btn-lg float-right">Info</button></a>
+
+                     
                     ) : (
                       ""
                     )}
-                    <a href={data.sharedUrl} target="_blank">
-                      <button type="button" className="btn btn-primary btn-lg">
-                        Visit Website
-                      </button>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+<a href={data.sharedUrl}>
+            <button type="button" className="btn btn-primary btn-lg float-right"> Visit Website</button></a>
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
           );
         })}
-      </div>
+        </div>
       <Modal show={viewInfoModle} centered>
         <ModalHeader
           className="text-dark"
