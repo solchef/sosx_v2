@@ -512,12 +512,7 @@ export default function Staking() {
             <p>Input staking amount to show estimation</p>
             <div>
               <div className="d-flex h-10 justify-content-between mt-3">
-      
-                 
-
-
                 <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}> {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145}%</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}>Reward % </p></div>
-
                 <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}> {stakingClass == 1 ? 3 : stakingClass == 2 ? 6 : 12} Mo</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}> Locked Period</p></div>
                 <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}> {(stakingInterest - amountToStake).toFixed(2)}</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}>  Estimate yearly Return </p></div>
       
