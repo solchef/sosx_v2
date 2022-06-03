@@ -82,69 +82,80 @@ export default function Adspace() {
   };
 
   return (
-    <div
-      className="container-fluid"
-    >
+    <div className="container-fluid">
       <button
         type="button"
-        className="btn btn-primary btn-lg"
+        className="btn mt-3 mb-3 btn-primary btn-lg"
         onClick={() => setViewModle(true)}
       >
         Create Adspace
       </button>
 
       <div className="row ">
-            {adspaceData.map((data, index) => {
+        {adspaceData.map((data, index) => {
           return (
-      <div key={index}  className="col-sm-4 mb-2 mt-2">
-        <div style={
+            <div key={index} className="col-12 col-xl-4 mb-2 mt-2">
+              <div
+                style={
                   data.wallet === account ? { border: "solid 2px #ff00cc" } : {}
-                } className="card">
-          <div className="row p-3">
-            <div className="col-md-4 p-4">
-            <img src={data.image} className="adspace-cmpny-img" />
+                }
+                className="card d-flex flex-column justify-content-between h-100 p-0"
+              >
+                <div className="card-body row p-3">
+                  <div className="col-md-4 p-4">
+                    <img src={data.image} className="adspace-cmpny-img" />
+                  </div>
+                  <div className="col-md-8 pt-3">
+                    <h4 className=" mb-0 pt-3 pb-2">{data.name}</h4>
+                    <span className="fs-12 pr-3">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Quis ipsum suspendisse ultrices gravida. Risus
+                      commodo viverra maecenas accumsan lacus vel facilisis.{" "}
+                    </span>
+                  </div>
+                </div>
+                <div className="card-footer align-items-center d-flex justify-content-between">
+                  <span className="text-white fs-16 pr-1 lh45 font-weight-bold">
+                    Amount Staked:
+                    {" " + cleanNumber(data.amount + "")} {data.tokenType}{" "}
+                  </span>
 
-            </div>
-            <div className="col-md-8 pt-3">
-              <h4 className=" mb-0 pt-3 pb-2">{data.name}</h4>
-              <span className="fs-12 pr-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                facilisis. </span>
-            </div>
-          </div>
-          <div className="card align-items-center d-flex justify-content-between">
-            <span className="fs-16 pr-1 lh50">Amount Staked:</span> 
-            <span className="text-white fs-16 pr-1 lh45 font-weight-bold"> {cleanNumber(data.amount + "")} {data.tokenType} </span>
-
-            {data.wallet === account ? (
-     
-            <a onClick={() => {
-              setViewInfoModle(true);
-              setSelectedData(data);
-            }} >
-            <button type="button" className="btn btn-primary btn-lg float-right">Info</button></a>
-
-                     
+                  <div>
+                    {data.wallet === account ? (
+                      <a
+                        onClick={() => {
+                          setViewInfoModle(true);
+                          setSelectedData(data);
+                        }}
+                      >
+                        <button
+                          type="button"
+                          className="btn btn-primary  ml-4 float-right"
+                        >
+                          Info
+                        </button>
+                      </a>
                     ) : (
                       ""
                     )}
 
-<a href={data.sharedUrl}>
-            <button type="button" className="btn btn-primary btn-lg float-right"> Visit Website</button></a>
-
-
-
-
-
-
-
-          </div>
-        </div>
-      </div>
+                    <a href={data.sharedUrl}>
+                      <button
+                        type="button"
+                        className="btn btn-primary  float-right"
+                      >
+                        {" "}
+                        Visit Website
+                      </button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           );
         })}
-        </div>
+      </div>
       <Modal show={viewInfoModle} centered>
         <ModalHeader
           className="text-dark"
@@ -171,31 +182,29 @@ export default function Adspace() {
               </div>
               <div className="mb-3 py-2 px-3  ">
                 Your stacked ammount is:
-                {" " +cleanNumber(selectedData.amount + "") +
+                {" " +
+                  cleanNumber(selectedData.amount + "") +
                   " " +
                   selectedData.tokenType}
               </div>
               <div className="mb-3 py-2 px-3  ">
-                Your remaining stacked ammount is: 
-                 {" " +cleanNumber(selectedData.amount + "") +
+                Your remaining stacked ammount is:
+                {" " +
+                  cleanNumber(selectedData.amount + "") +
                   " " +
                   selectedData.tokenType}
               </div>
               <div className="mb-3 py-2 px-3 w-100 ">
                 <table className=" ranking-header fs-12 p-4 mt-0 table">
                   <tr className="">
-                    <th className=" fs-16 font-weight-normal">
-                      Ammount
-                    </th>
+                    <th className=" fs-16 font-weight-normal">Ammount</th>
                     <th className=" fs-16 font-weight-normal text-center">
                       Wallet
                     </th>
                   </tr>
                   <tbody className="">
                     <tr className="  text-nowrap mt-4">
-                      <td className=" fs-16 font-weight-normal">
-                        1000
-                      </td>
+                      <td className=" fs-16 font-weight-normal">1000</td>
                       <td className=" fs-16 font-weight-normal">
                         {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
                           0,
@@ -205,9 +214,7 @@ export default function Adspace() {
                       </td>
                     </tr>
                     <tr className="  text-nowrap mt-4">
-                      <td className=" fs-16 font-weight-normal">
-                        1000
-                      </td>
+                      <td className=" fs-16 font-weight-normal">1000</td>
                       <td className=" fs-16 font-weight-normal">
                         {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
                           0,
@@ -217,9 +224,7 @@ export default function Adspace() {
                       </td>
                     </tr>
                     <tr className="  text-nowrap mt-4">
-                      <td className=" fs-16 font-weight-normal">
-                        1000
-                      </td>
+                      <td className=" fs-16 font-weight-normal">1000</td>
                       <td className=" fs-16 font-weight-normal">
                         {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
                           0,
@@ -229,9 +234,7 @@ export default function Adspace() {
                       </td>
                     </tr>
                     <tr className="  text-nowrap mt-4">
-                      <td className=" fs-16 font-weight-normal">
-                        1000
-                      </td>
+                      <td className=" fs-16 font-weight-normal">1000</td>
                       <td className=" fs-16 font-weight-normal">
                         {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
                           0,

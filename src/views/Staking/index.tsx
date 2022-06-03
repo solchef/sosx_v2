@@ -205,7 +205,7 @@ export default function Staking() {
     // alert(ref);
     let stake = await contract.stakeToken(
       result.toString(),
-       "0x0000000000000000000000000000000000000001",
+      "0x0000000000000000000000000000000000000001",
       stakingClass
     );
 
@@ -529,7 +529,10 @@ export default function Staking() {
             </div>
             <p>Input staking amount to show estimation</p>
             <div>
-              <div className="d-flex h-10 justify-content-between mt-3">
+              <div
+                style={{ gap: "10%" }}
+                className="d-flex justify-content-start mt-3"
+              >
                 <div className="text-center">
                   <h1
                     className="mb-0 main-pink"
@@ -550,7 +553,6 @@ export default function Staking() {
                     Reward %{" "}
                   </p>
                 </div>
-
                 <div className="text-center">
                   <h1
                     className="mb-0 main-pink"
@@ -593,13 +595,32 @@ export default function Staking() {
                     Estimate yearly Return{" "}
                   </p>
                 </div>
+                {/* <div className="text-center">
+                  <h1
+                    className="mb-0 main-pink"
+                    style={{
+                      fontFamily: "digital-7",
+                      fontSize: "60px",
+                      color: "rgb(255, 0, 204)",
+                      lineHeight: "54px",
+                    }}
+                  >
+                    {" "}
+                  </h1>
+                  <p
+                    className="mt-0"
+                    style={{ fontSize: "15px", color: "rgb(255, 0, 204)" }}
+                  >
+                    {" "}
+                  </p>
+                </div> */}
               </div>
             </div>
           </div>
         </div>
       </div>
       <div style={{ flex: "1 1 30%", gap: "20px", maxWidth: "100%" }}>
-        <Info onActionModal={handleShow} reward={reward.toFixed(3)}  />
+        <Info onActionModal={handleShow} reward={reward.toFixed(3)} />
       </div>
       <div style={{ flex: "1 1 30%" }}>
         <UserStakingLogs onActionModal={handleShow} />

@@ -5,7 +5,7 @@ const StyledBottomNav = styled(Flex)`
   position: fixed;
   bottom: 0px;
   width: 100%;
-  padding: 10px 18px 10px 8px;
+  padding: 10px 30px 10px 10px;
   background: ${({ theme }) => theme.colors.backgroundAlt};
   border-top: 1px solid ${({ theme }) => theme.colors.cardBorder};
   padding-bottom: env(safe-area-inset-bottom);
@@ -13,37 +13,33 @@ const StyledBottomNav = styled(Flex)`
     padding-bottom: 45px;
   }
   z-index: 20;
-  
-  li{
-    list-style:none;
+
+  li {
+    list-style: none;
   }
-  .mm-active{
-    a{
-      color:#f600cc !important;
+  .mm-active {
+    a {
+      color: #f600cc !important;
     }
-   
   }
 
-  a{
-    display:flex;
-    flex-direction:column;
+  a {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     color: white !important;
 
-   
-
-    img{
+    img {
       width: 13px;
       height: 13px;
       margin-bottom: 3px;
       margin-left: 6px;
     }
 
-    span{
+    span {
       font-size: 9px;
-      margin-top:8px !important;
+      margin-top: 8px !important;
     }
-  
   }
 `;
 
