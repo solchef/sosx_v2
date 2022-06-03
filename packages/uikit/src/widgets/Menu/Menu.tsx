@@ -163,7 +163,7 @@ const Menu: React.FC<NavProps> = ({
 
       case '/':
 
-        return "Swap";
+        return "SWAP";
       case '/stake':
         return "STAKING";
 
@@ -175,19 +175,22 @@ const Menu: React.FC<NavProps> = ({
         return 'GAME';
         
       case '/referrals':
-        return "Referrals";
+        return "REFERRALS";
 
       case '/adspace':
-        return "Adspace";
+        return "ADSPACE";
 
       case '/x-mining':
-        return "Social Mining";
+        return "SOCIAL MINING";
 
-      case '/aboutsosx':
-        return "Aboutsosx";
+      case '/multisender':
+        return "MULTISENDER";
+
+        case '/aboutsosx':
+          return "ABOUT SOSX";
 
       case '/faq':
-        return "Faq";
+        return "FAQ";
       case '/socialmining-s1':
         return "Social Mining";
       case '/socialmining-s2':
@@ -333,10 +336,9 @@ const Menu: React.FC<NavProps> = ({
               </Link>
 
             </li>
+            
 
             <li className={router.pathname == "#" ? "mm-active" : ""}>
-       
-
                 <a>
                   <i className="fa fa-images"></i>
                   <span className="nav-text">NFT</span>
@@ -346,7 +348,19 @@ const Menu: React.FC<NavProps> = ({
 
             </li>
 
-            {/* <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
+
+            {/* <li className={router.pathname == "/multisender" ? "mm-active" : ""}>
+
+              <Link href="/multisender">
+
+                <a>
+                  <i className="fa-solid  fa fa-wallet"></i>
+                  <span className="nav-text"> Multi Sender</span>
+                </a>
+              </Link>
+            </li>  */}
+
+            <li className={router.pathname == "/aboutsosx" ? "mm-active" : ""}>
               <Link href="/aboutsosx">
 
                 <a>
@@ -363,11 +377,11 @@ const Menu: React.FC<NavProps> = ({
 
                 <a>
                   <i className="fa-solid fa-circle-question"></i>
-                  <span className="nav-text">FAQ</span>
+                  <span className="nav-text"> FAQ</span>
                 </a>
               </Link>
+            </li> 
 
-            </li> */}
 
           </ul>
         </div>

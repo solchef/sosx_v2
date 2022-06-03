@@ -8,13 +8,12 @@ import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
 import { useMediaPredicate } from "react-media-hook";
 import { cleanNumber } from "utils/amount";
 
-export default function Statistics(props) {
+export default function Statistics({totalAmountStaked, reward, setTotalAmountStaked, withdrawned}) {
   const [price, setPrice] = useState(Number);
   const [marketCap, setMarketCap] = useState(Number);
   const contract = useDaoStakingContract();
   const { account } = useActiveWeb3React();
   const tokenContract = useSosxContract();
-  const [totalAmountStaked, setTotalAmountStaked] = useState(0);
   const [numberOfActiveStake, setNumberOfActiveStake] = useState(0);
 
   const [level, setLevel] = useState(0);
@@ -23,7 +22,7 @@ export default function Statistics(props) {
     contract.getTotalStakeAmount().then((stakeAmount) => {
       let amount = Number(stakeAmount / 10 ** 18);
       setTotalAmountStaked(amount);
-      let level = getDaoLevel(amount);
+      let level = getDaoLevel(amount - withdrawned);
 
       // alert(level)
       setLevel(level);
@@ -36,8 +35,9 @@ export default function Statistics(props) {
 
   useEffect(() => {
     stakingDetails();
-  }, [stakingDetails]);
-  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
+  }, [stakingDetails, account]);
+
+	const biggest1500 = useMediaPredicate("(min-width: 1500px)");
 
   return (
     <>
@@ -54,7 +54,7 @@ export default function Statistics(props) {
             <div className="flex-row d-flex justify-content-between w-100   ml-auto mr-0 align-items-center">
               <div className="data-content">
                 <div className="d-flex  align-items-end">
-                  <h2 className="mb-3 main-pink"> {totalAmountStaked} </h2>
+                  <h2 className="mb-3 main-pink"> {totalAmountStaked - withdrawned} </h2>
                 </div>
                 <div className="">
                   <div className="">
@@ -145,7 +145,7 @@ export default function Statistics(props) {
               <div className="data-content">
                 <div className="d-flex align-items-end">
                   <h2 className="mb-3 main-pink">
-                    {props.reward ? cleanNumber(props.reward + "") : "0"}
+                    {props.reward > 0 ? cleanNumber(props.reward + "") : "0"}
                   </h2>
                 </div>
                 <div className="d-flex flex-column align-items-start ">

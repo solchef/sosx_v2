@@ -109,13 +109,13 @@ export default function Statistics(props) {
             <div className="flex-row d-flex justify-content-between w-100 ml-auto mr-0 align-items-center">
               <div className="data-content">
                 <div className="d-flex align-items-end">
-                  <h2 className="mb-3 main-pink">29%</h2>
+                  <h2 className="mb-3 main-pink">From 29%</h2>
                 </div>
                 <div className="">
                   <div className="">
                     <h4>STAKING APY</h4>
                   </div>
-                  <p className="mb-0">Period Staking Rewards %</p>
+                  <p className="mb-0">Least period Staking Rewards %</p>
                 </div>
               </div>
             </div>

@@ -205,7 +205,7 @@ export default function Staking() {
     // alert(ref);
     let stake = await contract.stakeToken(
       result.toString(),
-      ref.toString(),
+       "0x0000000000000000000000000000000000000001",
       stakingClass
     );
 
@@ -599,7 +599,7 @@ export default function Staking() {
         </div>
       </div>
       <div style={{ flex: "1 1 30%", gap: "20px", maxWidth: "100%" }}>
-        <Info onActionModal={handleShow} />
+        <Info onActionModal={handleShow} reward={reward.toFixed(3)}  />
       </div>
       <div style={{ flex: "1 1 30%" }}>
         <UserStakingLogs onActionModal={handleShow} />

@@ -1,8 +1,10 @@
+import { useGetBnbBalance } from "hooks/useTokenBalance";
+import { formatBigNumberToFixed } from "utils/formatBalance";
 import NavMining from "../../NavMining";
 
-const Step2 = () => {
+const Step2 = (props: {data, addressesCount, totalBNB, amountCheck}) => {  
   return (
-    <>
+      <>
       <  NavMining step="1" />
 
       <div className="card h-100 mt-1 w-100" style={{ minHeight: "500px" }} >
@@ -18,41 +20,28 @@ const Step2 = () => {
           </tbody>
 
           <tbody>
-
+            {props.data.map(((d, i) =>
             <tr className=" text-nowrap mt-4">
-              <td className="fs-16  text-white font-weight-normal" style={{ border: 'none' }}>
-                0x684a4e50de4ff380e70db03d7b61a4111395326a
-              </td>
-              <td className="text-white fs-16 font-weight-normal" style={{ border: 'none' }}>
-             12 BNB
-              </td>
+              {console.log(d)}
+            <td className="fs-16  text-white font-weight-normal" style={{ border: 'none' }}>
+              {d[0]}
+            </td>
+            <td className="text-white fs-16 font-weight-normal" style={{ border: 'none' }}>
+              {d[1]} BNB
+            </td>
             </tr>
-            <tr className=" text-nowrap mt-4">
-              <td className="text-white fs-16 font-weight-normal" style={{ border: 'none' }}>
-                0x684a4e50de4ff380e70db03d7b61a4111395326a
-              </td>
-              <td className="text-white fs-16 font-weight-normal" style={{ border: 'none' }}>
-             12 BNB
-              </td>
-            </tr>
-            <tr className=" text-nowrap mt-4">
-              <td className="text-white fs-16 font-weight-normal" style={{ border: 'none' }}>
-                0x684a4e50de4ff380e70db03d7b61a4111395326a
-              </td>
-              <td className="text-white fs-16 font-weight-normal" style={{ border: 'none' }}>
-             12 BNB
-              </td>
-            </tr>
+            ))}
+            
             <tr  > <td style={{ border: 'none' }} colSpan={3} >  <h4 className="mt-5">Summary</h4></td></tr>
             <tr className=" text-nowrap mt-4">
               <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                <p className="p-0 m-0 text-white">  1</p>
+                <p className="p-0 m-0 text-white">  {props.addressesCount}</p>
                 <span className="p-0 m-0 text-white"> Total number of addresses</span>
 
 
               </td>
               <td className="fs-16 font-weight-normal" style={{ border: 'none' }}>
-                <p className="p-0 m-0 text-white">  12 BNB</p>
+                <p className="p-0 m-0 text-white">  {props.totalBNB} BNB</p>
                 <span className="p-0 m-0 text-white"> number of tokens to be sent</span>
               </td>
             </tr>
@@ -86,11 +75,14 @@ const Step2 = () => {
 
 
       </div>
+        {props.amountCheck ? 
       <div className="card  mt-3 w-100" >
-        <p className="main-pink m-0 p-0">Insufficient BNB balance, Please have at least 11.015198 BNB</p>
-</div>
+          <p className="main-pink m-0 p-0">Insufficient BNB balance, Please have at least {props.totalBNB+0.0152} BNB</p>
+      </div>
+          : ""
+        }
     </>
-  );
+    )
 };
 
 export default Step2;

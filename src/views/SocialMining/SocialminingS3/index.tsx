@@ -21,8 +21,8 @@ import moment from "moment";
 
 export default function SocialminingS3() {
   const { account } = useActiveWeb3React();
-  const [email_address, setEmailAdrress] = useState("");
-  const [socialpostlink, setsocialpostlink] = useState("");
+  const [email, setEmailAdrress] = useState("");
+  const [url, setsocialpostlink] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [block, setBlock] = useState(true);
@@ -45,16 +45,16 @@ export default function SocialminingS3() {
     setMessage("");
 
     // fields check
-    if (!email_address || !socialpostlink) {
+    if (!email || !url) {
       toastError("All Fields Required");
       return;
     }
 
     if (
-      socialpostlink.search("tiktok") != -1 ||
-      socialpostlink.search("youtu") != -1 ||
-      socialpostlink.search("instagram") != -1 ||
-      socialpostlink.search("twitter") != -1
+      url.search("tiktok") != -1 ||
+      url.search("youtu") != -1 ||
+      url.search("instagram") != -1 ||
+      url.search("twitter") != -1
     ) {
       // post structure
    
@@ -69,27 +69,28 @@ export default function SocialminingS3() {
         : "0x0000000000000000000000000000000000000001";
 
       setCookies("lab-processing", "submitted", { maxAge: 960 * 60 });
-      let rewardamount = 500;
-      if (socialpostlink.search("tiktok") != -1) {
+      let amount = 500;
+      if (url.search("tiktok") != -1) {
         // alert("tik")
-        rewardamount = 1000;
+        amount = 1000;
       }
 
       fd.append("my-name", "SOSX");
-      fd.append("url-reward", socialpostlink);
+      fd.append("url-reward", url);
       fd.append("referral", referal);
       fd.append("wallet", account);
-      fd.append("reward-email", email_address);
+      fd.append("reward-email", email);
       fd.append("reward", reward);
-      fd.append("reward_amount", rewardamount);
-      let reward_status = false;
+      // @ts-ignore
+      fd.append("reward_amount", amount);
       let post = {
-        account,
-        email_address,
-        socialpostlink,
-        rewardamount,
-        reward_status,
-        createdAt: new Date().toISOString(),
+        email,
+        url,
+        address: account,
+        title: 'reward_url',
+        amount,
+        created_at: new Date().toISOString(),
+        reward_status: false
       };
 
       let response = await fetch("/api/posts", {
@@ -142,7 +143,7 @@ export default function SocialminingS3() {
       : "0x0000000000000000000000000000000000000001";
     fd.append("referrer", localStorage.getItem("referral"));
     fd.append("referee", account);
-    fd.append("referee_email", email_address);
+    fd.append("referee_email", email);
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
     };
@@ -185,7 +186,7 @@ export default function SocialminingS3() {
                       type="email"
                       name="title"
                       onChange={(e) => setEmailAdrress(e.target.value)}
-                      value={email_address}
+                      value={email}
                       placeholder="E-mail Address"
                       required
                     />
@@ -209,7 +210,7 @@ export default function SocialminingS3() {
                       type="text"
                       name="postlink"
                       onChange={(e) => setsocialpostlink(e.target.value)}
-                      value={socialpostlink}
+                      value={url}
                       placeholder="Link to Social Media post"
                       required
                     />
@@ -287,7 +288,7 @@ export default function SocialminingS3() {
                         {previous.length > 0 ? (
                           previous.map((prev) => (
                             <tr className="" style={{ borderColor: 'rgb(30, 33, 36)' }}>
-                              <td className="text-white">{prev.socialpostlink}</td>
+                              <td className="text-white">{prev.url}</td>
                               <td className="text-white"> {moment(prev.createdAt).format("YYYY/MM/DD kk:mm:ss")}</td>
                               <td className="text-white">{prev.reward}</td> 
                               <td className="text-white">Received</td>

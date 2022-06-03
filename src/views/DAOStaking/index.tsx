@@ -16,13 +16,14 @@ import { useTranslation } from "contexts/Localization";
 import { Trans } from "react-i18next";
 import { Modal, ModalHeader } from "react-bootstrap";
 import ConnectWalletButton from "components/ConnectWalletButton";
+import { getUniqueValues, getWithDrawed } from "utils";
 
 export default function DaoStaking() {
   const contract = useDaoStakingContract();
   const { account } = useActiveWeb3React();
   const tokenContract = useSosxContract();
   const [balance, setUserBalace] = useState(0);
-  const { toastError, toastSuccess } = useToast();
+  const { toastError, toastSuccess, toastInfo } = useToast();
   const [stakingClass, setStakingClass] = useState(1);
   const [stakingInterest, setStakingInterest] = useState(0);
   const [amountToStake, setamountToStake] = useState(0);
@@ -30,7 +31,7 @@ export default function DaoStaking() {
   const [activeStakes, setActiveStakes] = useState([]);
   const [allowanceValue, setAllowanceValue] = useState(0);
   const [activateStake, setActivatestake] = useState(true);
-  const [reward, setReward] = useState();
+  const [reward, setReward] = useState(0);
   const [showDetails, setShowDetails] = useState(-1);
   const [loading, setLoading] = useState(true);
   const [pendingTx, setPendingTx] = useState(false);
@@ -44,64 +45,76 @@ export default function DaoStaking() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [totalAmountStaked, setTotalAmountStaked] = useState(0);
+const [withdrawnAmount, setWithdrawnAmount] = useState(0)
 
   useEffect(() => {
     setLoading(false);
     if (account !== undefined) {
+
       tokenContract.balanceOf(account).then((bal) => {
         let balance = formatFixedNumber(bal, 3, 18);
         setUserBalace(Number(balance));
+        
       });
-
-      listUserStaking();
-
+      
       tokenContract.allowance(account, contract.address).then((allowance) => {
         allowance = Number(formatFixedNumber(allowance, 3, 18));
         if (allowance > 0) {
           setActivatestake(true);
         }
         setAllowanceValue(allowance);
+
       });
     }
-  }, [account]);
+    
+}, [account]);
+
+useEffect(() => {
+  setActiveStakes([]);
+  setStakeList([])
+  listUserStaking()
+
+},[totalAmountStaked])
 
   const listUserStaking = async () => {
     const list = [];
     let rew = 0;
+   
     contract.getStakeCount().then((stakes) => {
-      setActiveStakes([]);
-      for (let i = 0; i < stakes; i++) {
+      for (let i = 0; i < Number(stakes); i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
           contract.calculatePeriods(i).then((period) => {
-            let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
-            let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
-            let instance = {
-              stakeID: i,
-              amount: stakeAmt,
-              isWithdrawed: Boolean(stakeInstance[1]),
-              stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
-                "en-US",
-                { timeZone: "America/New_York" }
-              ),
-              referral: stakeInstance[3],
-              rewardAmount: Number(stakeInstance[4]),
-              penalty: Number(stakeInstance[5]),
-              stakingClass: stakeClass,
-              periodElapsed: stakeClass,
-            };
-            // console.log(stakeClass)
-            let rate = stakeClass == 1 ? 0.06 : stakeClass == 2 ? 0.09 : 0.12;
-            rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
-            console.log(rew);
-            setReward(rew);
-            list.push(instance);
-            // if (!instance.isWithdrawed) {
+          let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
+          let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
+          let instance = {
+            stakeID: i,
+            amount: stakeAmt,
+            isWithdrawed: Boolean(stakeInstance[1]),
+            stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
+              "en-US",
+              { timeZone: "America/New_York" }
+            ),
+            referral: stakeInstance[3],
+            rewardAmount: Number(stakeInstance[4]),
+            penalty: Number(stakeInstance[5]),
+            stakingClass: stakeClass,
+            withdrawned: Boolean(stakeInstance[1]) ? stakeAmt : 0,
+            periodElapsed: stakeClass,
+          };
+          // console.log(stakeClass)
+         let rate = stakeClass == 1 ? 0.06 : stakeClass == 2 ? 0.09 : 0.12;
+          rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
+          // console.log(rew)
+          setReward(Number(rew.toFixed(3)));
+          // list.push(instance)
+          if (!instance.isWithdrawed) {
             setActiveStakes((activeStakes) => [...activeStakes, instance]);
-            // }
-            // if (!instance.isWithdrawed) {
-            setStakeList((activeStakes) => [...activeStakes, instance]);
-            // }
-          });
+          }
+          // if (!instance.isWithdrawed) {
+          setStakeList(stakelist => [...stakelist, instance]);
+          // console.log([...stakelist, instance])
+          // }
         });
       }
     });
@@ -128,6 +141,7 @@ export default function DaoStaking() {
     } else {
       setActivatestake(false);
     }
+
     const p = event.target.value;
     const t = stakingClass == 1 ? 0.25 : stakingClass == 2 ? 0.5 : 1;
     const r = stakingClass == 1 ? 0.06 : stakingClass == 2 ? 0.09 : 0.12;
@@ -168,7 +182,8 @@ export default function DaoStaking() {
   };
 
   const handleClaimReward = async (i) => {
-    toastError("Rewards not yet available for claim.");
+    handleClose();
+    toastInfo("Rewards not yet ready for claim.");
   };
 
   const handleUnStake = async (instance) => {
@@ -184,7 +199,7 @@ export default function DaoStaking() {
       if (tx) {
         setActivatestake(true);
         setLoading(false);
-        toastSuccess("Staking Transaction successfully sent");
+        toastSuccess("Un Staking Transaction successfully sent");
         listUserStaking();
       } else {
         toastError("Could not unstake");
@@ -202,16 +217,20 @@ export default function DaoStaking() {
 
   const handleSubmit = async () => {
     setStackLoading(true);
+
+    let bal = await tokenContract.balanceOf(account);
+    bal = formatFixedNumber(bal, 3, 18);
+
     if (amountToStake < 1) {
       toastError(t("You must stake a minimum of 1 token"));
       setStackLoading(false);
       return;
     }
 
-    if (amountToStake > balance) {
+    if (amountToStake > bal) {
       toastError(
-        `Insufficient balance. Your wallet balance is ${balance} you need  ${(
-          amountToStake - balance
+        `Insufficient balance. Your wallet balance is ${bal} you need  ${(
+          amountToStake - bal
         ).toFixed(3)} more SOSX to stake that amount. `
       );
       setStackLoading(false);
@@ -220,6 +239,7 @@ export default function DaoStaking() {
 
     let decimals = BigNumber(10).pow(18);
     let result = BigNumber(amountToStake).multiply(decimals);
+
     if (allowanceValue > amountToStake) {
       onPresentConfirmModal();
     } else {
@@ -260,18 +280,19 @@ export default function DaoStaking() {
     "ConfirmStakingModal"
   );
 
-  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
 
+    
+
+  const biggest1500 = useMediaPredicate("(min-width: 1500px)");
   return (
     <div
       className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
       style={{ gap: "20px" }}
     >
-      <Statistics reward={reward} />
-      <div style={{ flex: "1 1 30%" }}>
-        <div
-          className="card d-flex flex-column"
-          style={{ background: "#1e1e1e" }}
+      <Statistics reward={reward} withdrawned={getWithDrawed(stakelist)} totalAmountStaked={totalAmountStaked} setTotalAmountStaked={setTotalAmountStaked}/>
+      <div style={{ flex: "1 1 30%"}}>
+        <div className="card d-flex flex-column"
+         style={{ background: "#1e1e1e" }}
         >
           <div className="card-body mb-3">
             <div className="d-flex align-items-center mb-2">
@@ -528,7 +549,7 @@ export default function DaoStaking() {
               <div className="d-flex h-100 justify-content-between mt-3">
                 <div>
                   <div className="d-flex w-auto m-auto">
-                    <h3>0.000 SOSX</h3>
+                    <h3>{reward} SOSX</h3>
                   </div>
                   <p className="success mb-0 fs-13 main-pink pt-2">AVAILABLE</p>
                 </div>
@@ -573,17 +594,49 @@ export default function DaoStaking() {
           style={{ background: "#111117", borderRadius: "0px 0px 10px 10px" }}
         >
           {activeStakes.length !== 0
-            ? activeStakes.map((stake, i) => (
-                <>
-                  <div
-                    className="d-flex mb-4 justify-content-between"
-                    onClick={() => {
-                      showDetails == i ? setShowDetails(-1) : setShowDetails(i);
-                    }}
-                  >
-                    <div className="fs-18 font-weight-bold main-pink">
-                      {" "}
-                      Stake #{stake.stakeID}
+            ?
+           getUniqueValues(activeStakes).map((stake, i) => (
+            <>
+              <div
+                className="d-flex mb-4 justify-content-between"
+                onClick={() => {
+                  showDetails == i ? setShowDetails(-1) : setShowDetails(i);
+                }}
+              >
+                <div className="fs-18 font-weight-bold main-pink">
+                  {" "}
+                  Stake #{stake.stakeID}
+                </div>
+                <div className="fs-18 font-weight-bold main-pink">
+                  {stake.amount.toFixed(3)}
+                </div>
+                <div className="fs-18 font-weight-bold main-pink">
+                  <i className="fa fa-chevron-down"></i>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: showDetails == i ? "block" : "none",
+                }}
+              >
+                <div className="d-flex justify-content-between">
+                  <div>
+                    <div className="d-flex mb-3 flex-column">
+                      <span className="mb-1">Amount Staked:</span>
+                      <span className="text-success">
+                        {stake.amount.toFixed(3)} SOSX
+                      </span>
+                    </div>
+                    <div className="d-flex mb-3 flex-column">
+                      <span className="mb-1">Date Staked:</span>
+                      <span className="text-success">{stake.stakeDate}</span>
+                    </div>
+                    <div className="d-flex mb-3 flex-column">
+                      <span className="mb-1">Withdrawed:</span>
+                      <span className="text-success">
+                        {stake.isWithdrawed ? "Yes" : "No"}
+                      </span>
                     </div>
                     <div className="fs-18 font-weight-bold main-pink">
                       {stake.amount.toFixed(3)}
