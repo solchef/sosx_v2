@@ -20681,6 +20681,14 @@ react-dom@^17.0.1:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-drag-drop-files@^2.3.7:
+  version "2.3.7"
+  resolved "https://registry.yarnpkg.com/react-drag-drop-files/-/react-drag-drop-files-2.3.7.tgz#dc9a157994bf09cf62574ccc2de0391dadb37c10"
+  integrity sha512-OqYA1NaljTLKHGOLu7kFTlo2UC8YyJtldC47bJm0E8cHkDNjx5NBC845YohkVWCIpMM/76eT0ij+kVUxKtS67Q==
+  dependencies:
+    prop-types "^15.7.2"
+    styled-components "^5.3.0"
+
 react-draggable@^4.4.3:
   version "4.4.5"
   resolved "https://registry.npmjs.org/react-draggable/-/react-draggable-4.4.5.tgz"

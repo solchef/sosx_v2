@@ -10,12 +10,11 @@ import { cleanNumber } from "utils/amount";
 import UserStakingLogs from "./components/userStaking";
 import ConfirmStakingModal from "./components/ConfirmStakingModal";
 import { useModal } from "@pancakeswap/uikit";
-import { useTranslation } from 'contexts/Localization'
+import { useTranslation } from "contexts/Localization";
 import Statistics from "./components/statistics";
 import { formatFixedNumber } from "utils/formatBalance";
 import { Info } from "./components/info";
 import { Modal, ModalHeader } from "react-bootstrap";
-
 
 export default function Staking() {
   const contract = useStakingContract();
@@ -27,8 +26,11 @@ export default function Staking() {
   const [stakingInterest, setStakingInterest] = useState(0);
   const [amountToStake, setamountToStake] = useState(0);
   const [pendingTx, setPendingTx] = useState(false);
+  const [stackLoading, setStackLoading] = useState(false);
   const [hasReferral, setHasReferral] = useState(false);
-  const [referralAddress, setReferralAddress] = useState("0x0000000000000000000000000000000000000001");
+  const [referralAddress, setReferralAddress] = useState(
+    "0x0000000000000000000000000000000000000001"
+  );
   const [totalAmountStaked, setTotalAmountStaked] = useState(0);
   const [numberOfActiveStake, setNumberOfActiveStake] = useState(0);
   const [activeStakes, setActiveStakes] = useState([]);
@@ -42,7 +44,7 @@ export default function Staking() {
   const [price, setPrice] = useState(Number);
   const [marketCap, setMarketCap] = useState(Number);
   const { t } = useTranslation();
-  
+
   const getSOSXPrice = async () => {
     const getSOSXValue = await axios.get(
       "https://api.pancakeswap.info/api/v2/tokens/0xeE52def4a2683E68ba8aEcDA8219004c4aF376DF",
@@ -60,7 +62,6 @@ export default function Staking() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
 
   const stakingDetails = async () => {
     contract.getTotalStakeAmount().then((stakeAmount) => {
@@ -94,7 +95,6 @@ export default function Staking() {
       setActiveStakes([]);
       for (let i = 0; i < stakes; i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
-
           contract.calculatePeriods(i).then((period) => {
             let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
             let instance = {
@@ -114,7 +114,7 @@ export default function Staking() {
             rew = rew + Number(calculateInterest(12, stakeAmt, period));
             // console.log(rew)
             // list.push(instance);
-                  setReward(rew);
+            setReward(rew);
             setActiveStakes((activeStakes) => [...activeStakes, instance]);
           });
         });
@@ -192,16 +192,16 @@ export default function Staking() {
     let decimals = BigNumber(10).pow(18);
 
     let result = BigNumber(amountToStake).multiply(decimals);
-    
+
     setLoading(true);
     let ref = await contract.getMyReferral();
-    if(ref){
+    if (ref) {
       setReferralAddress(ref);
-    }else{
+    } else {
       ref = await contract.getMyReferral();
     }
     // alert(referralAddress);
-    
+
     // alert(ref);
     let stake = await contract.stakeToken(
       result.toString(),
@@ -212,7 +212,7 @@ export default function Staking() {
     if (stake) {
       setActivatestake(true);
       setLoading(false);
-      toastSuccess(`${t('Staking Transaction successfully sent')}`);
+      toastSuccess(`${t("Staking Transaction successfully sent")}`);
     } else {
       toastError("Could not stake");
     }
@@ -226,9 +226,11 @@ export default function Staking() {
 
     if (amountToStake > balance) {
       toastError(
-        `${t('Insufficient balance. Your wallet balance is')} ${balance} ${t('you need')}  ${(
-          amountToStake - balance
-        ).toFixed(3)} ${t('more SOSX to stake that amount.')} `
+        `${t("Insufficient balance. Your wallet balance is")} ${balance} ${t(
+          "you need"
+        )}  ${(amountToStake - balance).toFixed(3)} ${t(
+          "more SOSX to stake that amount."
+        )} `
       );
       return;
     }
@@ -278,8 +280,10 @@ export default function Staking() {
         toastError("Could not unstake");
       }
     } catch (e) {
-      console.log(e)
-      toastError("Could not unstake at the stake at the moment. Try again after sometime.");
+      console.log(e);
+      toastError(
+        "Could not unstake at the stake at the moment. Try again after sometime."
+      );
     }
   };
 
@@ -359,7 +363,8 @@ export default function Staking() {
             <div className="bg-input mb-3 py-2 px-3 rounded mt-4">
               <div className="d-flex justify-content-between align-items-center">
                 <span>
-                  <input style={{backgroundColor:'#d9d9d9'}}
+                  <input
+                    style={{ backgroundColor: "#d9d9d9" }}
                     type="number"
                     className="form-control fs-28"
                     onChange={(e) => handleAmountChange(e)}
@@ -379,7 +384,8 @@ export default function Staking() {
             <div className="bg-input mb-3 py-2 px-3 rounded mt-4">
               <div className="d-flex justify-content-between align-items-center">
                 <span>
-                  <select style={{backgroundColor:'#d9d9d9'}}
+                  <select
+                    style={{ backgroundColor: "#d9d9d9" }}
                     className="form-control fs-28"
                     onChange={(e) => {
                       setStakingClass(Number(e.target.value));
@@ -420,7 +426,19 @@ export default function Staking() {
                 type="button"
                 onClick={handleSubmit}
               >
-                STAKE YOUR SOSX TOKEN
+                STAKE YOUR SOSX TOKEN{" "}
+                {stackLoading ? (
+                  <>
+                    <span
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    <span className="sr-only">Loading...</span>
+                  </>
+                ) : (
+                  ""
+                )}
               </button>
             </div>
           </div>
@@ -512,10 +530,69 @@ export default function Staking() {
             <p>Input staking amount to show estimation</p>
             <div>
               <div className="d-flex h-10 justify-content-between mt-3">
-                <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}> {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145}%</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}>Reward % </p></div>
-                <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}> {stakingClass == 1 ? 3 : stakingClass == 2 ? 6 : 12} Mo</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}> Locked Period</p></div>
-                <div className="text-center"><h1 className="mb-0 main-pink" style={{fontFamily: 'digital-7', fontSize: '60px', color: 'rgb(255, 0, 204)', lineHeight: '54px'}}> {(stakingInterest - amountToStake).toFixed(2)}</h1><p className="mt-0" style={{fontSize: '15px', color: 'rgb(255, 0, 204)'}}>  Estimate yearly Return </p></div>
-      
+                <div className="text-center">
+                  <h1
+                    className="mb-0 main-pink"
+                    style={{
+                      fontFamily: "digital-7",
+                      fontSize: "60px",
+                      color: "rgb(255, 0, 204)",
+                      lineHeight: "54px",
+                    }}
+                  >
+                    {" "}
+                    {stakingClass == 1 ? 29 : stakingClass == 2 ? 64 : 145}%
+                  </h1>
+                  <p
+                    className="mt-0"
+                    style={{ fontSize: "15px", color: "rgb(255, 0, 204)" }}
+                  >
+                    Reward %{" "}
+                  </p>
+                </div>
+
+                <div className="text-center">
+                  <h1
+                    className="mb-0 main-pink"
+                    style={{
+                      fontFamily: "digital-7",
+                      fontSize: "60px",
+                      color: "rgb(255, 0, 204)",
+                      lineHeight: "54px",
+                    }}
+                  >
+                    {" "}
+                    {stakingClass == 1 ? 3 : stakingClass == 2 ? 6 : 12} Mo
+                  </h1>
+                  <p
+                    className="mt-0"
+                    style={{ fontSize: "15px", color: "rgb(255, 0, 204)" }}
+                  >
+                    {" "}
+                    Locked Period
+                  </p>
+                </div>
+                <div className="text-center">
+                  <h1
+                    className="mb-0 main-pink"
+                    style={{
+                      fontFamily: "digital-7",
+                      fontSize: "60px",
+                      color: "rgb(255, 0, 204)",
+                      lineHeight: "54px",
+                    }}
+                  >
+                    {" "}
+                    {(stakingInterest - amountToStake).toFixed(2)}
+                  </h1>
+                  <p
+                    className="mt-0"
+                    style={{ fontSize: "15px", color: "rgb(255, 0, 204)" }}
+                  >
+                    {" "}
+                    Estimate yearly Return{" "}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -590,12 +667,15 @@ export default function Staking() {
                   <div>
                     <div className="d-flex mb-3 flex-column">
                       <span className="mb-1">Rewards Gained:</span>
-                      <span className="text-success"> {stake.rewardAmount} SOSX </span>
+                      <span className="text-success">
+                        {" "}
+                        {stake.rewardAmount} SOSX{" "}
+                      </span>
                     </div>
                     <div className="d-flex mb-3 flex-column">
                       <span className="mb-1">Duration Elapsed:</span>
                       <span className="text-success">
-                        {(stake.periodElapsed).toFixed(0)} Days
+                        {stake.periodElapsed.toFixed(0)} Days
                       </span>
                     </div>
                   </div>

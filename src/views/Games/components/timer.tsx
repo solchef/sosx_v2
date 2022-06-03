@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Modal, ModalHeader } from "react-bootstrap";
 import PrizePool from "./PrizePool";
 import useStage from "hooks/useStage";
-import moment from 'moment';
+import moment from "moment";
 
 const TimerDisplay = () => {
   const [showRules, setshowRules] = useState(false);
@@ -40,7 +40,6 @@ const TimerDisplay = () => {
     },
   ];
 
-  
   return (
     <>
       {stage != 4 && (
@@ -90,11 +89,11 @@ const TimerDisplay = () => {
               </p>
             </div>
           </div>
-          </div>
         </div>
       )}
 
       <div className="card timer-card mb-3">
+
       <div className="card-body">
         <div className="steps">
           <ul className="progressbar mb-4 ">
@@ -165,71 +164,143 @@ const TimerDisplay = () => {
 
       <PrizePool />
 
-      <Modal show={showRules} onHide={handleCloseRules} centered size="lg"> 
-        <div className="modal-content" style={{textAlign:"left"}}>
-          <div className="text-dark modal-header" style={{background: 'rgb(17, 17, 23)', borderRadius: '10px 10px 0px 0px'}}>
-            Rules<a href="#" className="pull-right text-white" onClick={handleCloseRules}><i className="fa fa-close" /></a></div>
-          <div className="modal-body" style={{background: 'rgb(17, 17, 23)', borderRadius: '0px 0px 10px 10px'}}>
-            <h3>What is the craziest thing you would do on camera for money?</h3>
-            <p>The First person to complete created and voted challenge by the SOSX DAOX members and submit the video on
-              socialx.io wins the prize pool!</p>
-            <h3 className="mt-5">DAOX Membership</h3>
-            <p>Challenge creation and voting are exclusive to DAOX members. The only requirement to become a member is
-              you must stake SOSX. The more you stake, the higher your DAOX Level. Each level allowed you to create or
-              vote for the challenge in OX Games.</p>
-            <p>SOSX is purchasable on our swap. Once you've staked your SOSX, you can connect your wallet to the game
-              and submit your challenge. For more info on purchasing and staking your SOSX tokens, visit our FAQ Page.
+      <Modal show={showRules} onHide={handleCloseRules} centered size="lg">
+        <div className="modal-content" style={{ textAlign: "left" }}>
+          <div
+            className="text-dark modal-header"
+            style={{
+              background: "rgb(17, 17, 23)",
+              borderRadius: "10px 10px 0px 0px",
+            }}
+          >
+            Rules
+            <a
+              href="#"
+              className="pull-right text-white"
+              onClick={handleCloseRules}
+            >
+              <i className="fa fa-close" />
+            </a>
+          </div>
+          <div
+            className="modal-body"
+            style={{
+              background: "rgb(17, 17, 23)",
+              borderRadius: "0px 0px 10px 10px",
+            }}
+          >
+            <h3>
+              What is the craziest thing you would do on camera for money?
+            </h3>
+            <p>
+              The First person to complete created and voted challenge by the
+              SOSX DAOX members and submit the video on socialx.io wins the
+              prize pool!
             </p>
-            <p><strong>Level 1</strong><br />
-              Staking 1 - 99,999 SOSX 
-            </p><ul>
+            <h3 className="mt-5">DAOX Membership</h3>
+            <p>
+              Challenge creation and voting are exclusive to DAOX members. The
+              only requirement to become a member is you must stake SOSX. The
+              more you stake, the higher your DAOX Level. Each level allowed you
+              to create or vote for the challenge in OX Games.
+            </p>
+            <p>
+              SOSX is purchasable on our swap. Once you've staked your SOSX, you
+              can connect your wallet to the game and submit your challenge. For
+              more info on purchasing and staking your SOSX tokens, visit our
+              FAQ Page.
+            </p>
+            <p>
+              <strong>Level 1</strong>
+              <br />
+              Staking 1 - 99,999 SOSX
+            </p>
+            <ul>
               <li>Vote for the top 3 Challenge</li>
             </ul>
             <p />
-            <p><strong>Level 2</strong><br />
-              Staking 100,000 - 999,999 SOSX 
-            </p><ul>
+            <p>
+              <strong>Level 2</strong>
+              <br />
+              Staking 100,000 - 999,999 SOSX
+            </p>
+            <ul>
               <li>Vote for top 3 Challenge</li>
               <li>Create Challenges </li>
             </ul>
             <p />
-            <p><strong>Level 3</strong><br />
-              Staking 1,000,000 SOSX or more 
-            </p><ul>
+            <p>
+              <strong>Level 3</strong>
+              <br />
+              Staking 1,000,000 SOSX or more
+            </p>
+            <ul>
               <li>Vote for top 3 Challenge</li>
               <li>Create Challenges </li>
               <li>Final Challenge vote</li>
             </ul>
             <p />
-            <h3 className="mt-5">STAGE 1 - 8H<br />
-              Challenges Submissions</h3>
-            <p>Level 2 and 3 DAOX members get the honour to create the most insane challenge imaginable for others (or
-              themselves) to accomplish in exchange for money. The challenge creation period only last 8 hours and
-              needs to follow these four simple rules.</p>
+            <h3 className="mt-5">
+              STAGE 1 - 8H
+              <br />
+              Challenges Submissions
+            </h3>
+            <p>
+              Level 2 and 3 DAOX members get the honour to create the most
+              insane challenge imaginable for others (or themselves) to
+              accomplish in exchange for money. The challenge creation period
+              only last 8 hours and needs to follow these four simple rules.
+            </p>
             <ul>
               <li>Challenges must be accomplishable within a few hours.</li>
               <li>Challenges cannot be location or gender-specific. </li>
-              <li>Challenges cant be designed to harm, kill, or intentionally lead to death.</li>
+              <li>
+                Challenges cant be designed to harm, kill, or intentionally lead
+                to death.
+              </li>
             </ul>
-            <p>When creating a challenge, please be very specific about the rules. If one detail is missed, the
-              submission is automatically disqualified. Also, to assure the authenticity of all submitted videos. We
-              also suggest adding arbitrary rules like they must wear a red hoody or have SOSX marked on their
-              forehead to ensure the video's authenticity. </p>
-            <h3 className="mt-5">STAGE 2 - 8H<br />
-              Vote for top 3 challenges</h3>
-            <p>All DAO members have 8 hours to place a single vote on their favourite challenge. Connect your
-              DAO-associated wallet and press the "submit your vote" button on the XO game page. From there, you can
-              browse all challenges submitted and place your vote. Once the 8-hour clock is completed, the top 3
-              challenges will go for a final vote on stage 3.</p>
-            <h3 className="mt-5">STAGE 3 - 8H<br />
-              Final challenge vote</h3>
-            <p>Finally, Level 3 DAO members get to select today's challenge from the early voted top 3. Once the
-              countdown reaches another 8 hours, the challenge will be announced to the public.</p>
-            <h3 className="mt-5">STAGE 4 <br />
-              Challenge Video Submission</h3>
-            <p>A new challenge is now public, and the race is on since the first successful submission that follows all
-              rules wins the prize pool. If one mistake, one direction is missed, the submission is automatically
-              rejected, giving the following submission a chance to win. </p>
+            <p>
+              When creating a challenge, please be very specific about the
+              rules. If one detail is missed, the submission is automatically
+              disqualified. Also, to assure the authenticity of all submitted
+              videos. We also suggest adding arbitrary rules like they must wear
+              a red hoody or have SOSX marked on their forehead to ensure the
+              video's authenticity.{" "}
+            </p>
+            <h3 className="mt-5">
+              STAGE 2 - 8H
+              <br />
+              Vote for top 3 challenges
+            </h3>
+            <p>
+              All DAO members have 8 hours to place a single vote on their
+              favourite challenge. Connect your DAO-associated wallet and press
+              the "submit your vote" button on the XO game page. From there, you
+              can browse all challenges submitted and place your vote. Once the
+              8-hour clock is completed, the top 3 challenges will go for a
+              final vote on stage 3.
+            </p>
+            <h3 className="mt-5">
+              STAGE 3 - 8H
+              <br />
+              Final challenge vote
+            </h3>
+            <p>
+              Finally, Level 3 DAO members get to select today's challenge from
+              the early voted top 3. Once the countdown reaches another 8 hours,
+              the challenge will be announced to the public.
+            </p>
+            <h3 className="mt-5">
+              STAGE 4 <br />
+              Challenge Video Submission
+            </h3>
+            <p>
+              A new challenge is now public, and the race is on since the first
+              successful submission that follows all rules wins the prize pool.
+              If one mistake, one direction is missed, the submission is
+              automatically rejected, giving the following submission a chance
+              to win.{" "}
+            </p>
             <ol>
               <li>Video must be uploaded to youtube or TikTok.</li>
               <li>Share your video on your social media.</li>

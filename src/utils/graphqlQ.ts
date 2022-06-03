@@ -31,6 +31,18 @@ export const GET_Challenges = gql`
   }
 `;
 
+export const GET_Adspace = gql`
+  query ExampleQuery {
+    getAdspace {
+      name
+      amount
+      sharedUrl
+      wallet
+      image
+      tokenType
+    }
+  }
+`;
 export const GET_Round = gql`
   query Round {
     round {

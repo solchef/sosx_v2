@@ -6,6 +6,7 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 import useToast from "hooks/useToast";
 import { getDaoLevel } from "views/Games/hooks/getDaoLevel";
 import { useMediaPredicate } from "react-media-hook";
+import { cleanNumber } from "utils/amount";
 
 export default function Statistics(props) {
   const [price, setPrice] = useState(Number);
@@ -41,6 +42,10 @@ export default function Statistics(props) {
       setNumberOfActiveStake(Number(activeStakes));
     });
   };
+
+  useEffect(() => {
+    console.log(props.reward);
+  }, []);
 
   useEffect(() => {
     getSOSXPrice();
@@ -123,7 +128,11 @@ export default function Statistics(props) {
             <div className="flex-row d-flex flex-wrap justify-content-between w-100 align-items-center">
               <div className="data-content">
                 <div className="d-flex align-items-end">
-                  <h2 className="mb-3 main-pink">{props.reward}</h2>
+                  <h2 className="mb-3 main-pink">
+                    {props.reward
+                      ? cleanNumber(props.reward + "")
+                      : console.log(props.reward) + ""}
+                  </h2>
                 </div>
                 <div className="d-flex flex-column align-items-start ">
                   <div className="d-flex align-items-center">
