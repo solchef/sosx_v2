@@ -38,83 +38,76 @@ export default function DaoStaking() {
   const [estimateDaoLevel, setEstimateDaoLevel] = useState(0);
   const [transactionState, setTransactionState] = useState(1);
   const [txHash, setTxHash] = useState("");
-  const [stackLoading, setStackLoading] = useState(false);
-  const [unstackLoading, setUnstackLoading] = useState(false);
-
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [totalAmountStaked, setTotalAmountStaked] = useState(0);
-const [withdrawnAmount, setWithdrawnAmount] = useState(0)
+  const [withdrawnAmount, setWithdrawnAmount] = useState(0);
 
   useEffect(() => {
     setLoading(false);
     if (account !== undefined) {
-
       tokenContract.balanceOf(account).then((bal) => {
         let balance = formatFixedNumber(bal, 3, 18);
         setUserBalace(Number(balance));
-        
       });
-      
+
       tokenContract.allowance(account, contract.address).then((allowance) => {
         allowance = Number(formatFixedNumber(allowance, 3, 18));
         if (allowance > 0) {
           setActivatestake(true);
         }
         setAllowanceValue(allowance);
-
       });
     }
-    
-}, [account]);
+  }, [account]);
 
-useEffect(() => {
-  setActiveStakes([]);
-  setStakeList([])
-  listUserStaking()
-
-},[totalAmountStaked])
+  useEffect(() => {
+    setActiveStakes([]);
+    setStakeList([]);
+    listUserStaking();
+  }, [totalAmountStaked]);
 
   const listUserStaking = async () => {
     const list = [];
     let rew = 0;
-   
+
     contract.getStakeCount().then((stakes) => {
       for (let i = 0; i < Number(stakes); i++) {
         contract.getStakeInfo(i).then((stakeInstance) => {
           contract.calculatePeriods(i).then((period) => {
-          let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
-          let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
-          let instance = {
-            stakeID: i,
-            amount: stakeAmt,
-            isWithdrawed: Boolean(stakeInstance[1]),
-            stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
-              "en-US",
-              { timeZone: "America/New_York" }
-            ),
-            referral: stakeInstance[3],
-            rewardAmount: Number(stakeInstance[4]),
-            penalty: Number(stakeInstance[5]),
-            stakingClass: stakeClass,
-            withdrawned: Boolean(stakeInstance[1]) ? stakeAmt : 0,
-            periodElapsed: stakeClass,
-          };
-          // console.log(stakeClass)
-         let rate = stakeClass == 1 ? 0.06 : stakeClass == 2 ? 0.09 : 0.12;
-          rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
-          // console.log(rew)
-          setReward(Number(rew.toFixed(3)));
-          // list.push(instance)
-          if (!instance.isWithdrawed) {
-            setActiveStakes((activeStakes) => [...activeStakes, instance]);
-          }
-          // if (!instance.isWithdrawed) {
-          setStakeList(stakelist => [...stakelist, instance]);
-          // console.log([...stakelist, instance])
-          // }
+            let stakeAmt = Number(stakeInstance[0] / 10 ** 18);
+            let stakeClass = stakeAmt > 100000 ? 2 : stakeAmt > 1000000 ? 3 : 1;
+            let instance = {
+              stakeID: i,
+              amount: stakeAmt,
+              isWithdrawed: Boolean(stakeInstance[1]),
+              stakeDate: new Date(stakeInstance[2] * 1000).toLocaleString(
+                "en-US",
+                { timeZone: "America/New_York" }
+              ),
+              referral: stakeInstance[3],
+              rewardAmount: Number(stakeInstance[4]),
+              penalty: Number(stakeInstance[5]),
+              stakingClass: stakeClass,
+              withdrawned: Boolean(stakeInstance[1]) ? stakeAmt : 0,
+              periodElapsed: stakeClass,
+            };
+            // console.log(stakeClass)
+            let rate = stakeClass == 1 ? 0.06 : stakeClass == 2 ? 0.09 : 0.12;
+            rew = rew + Number(calculateInterest(12, stakeAmt, period, rate));
+            // console.log(rew)
+            setReward(Number(rew.toFixed(3)));
+            // list.push(instance)
+            if (!instance.isWithdrawed) {
+              setActiveStakes((activeStakes) => [...activeStakes, instance]);
+            }
+            // if (!instance.isWithdrawed) {
+            setStakeList((stakelist) => [...stakelist, instance]);
+            // console.log([...stakelist, instance])
+            // }
+          });
         });
       }
     });
@@ -187,7 +180,6 @@ useEffect(() => {
   };
 
   const handleUnStake = async (instance) => {
-    setUnstackLoading(true);
     let decimals = BigNumber(10).pow(18);
 
     try {
@@ -206,9 +198,7 @@ useEffect(() => {
       }
     } catch (e) {
       toastError("Could not unstake at the moment.");
-      setUnstackLoading(false);
     }
-    setUnstackLoading(false);
   };
 
   const handleConfirmDismiss = useCallback(() => {
@@ -216,14 +206,11 @@ useEffect(() => {
   }, []);
 
   const handleSubmit = async () => {
-    setStackLoading(true);
-
     let bal = await tokenContract.balanceOf(account);
     bal = formatFixedNumber(bal, 3, 18);
 
     if (amountToStake < 1) {
       toastError(t("You must stake a minimum of 1 token"));
-      setStackLoading(false);
       return;
     }
 
@@ -233,7 +220,6 @@ useEffect(() => {
           amountToStake - bal
         ).toFixed(3)} more SOSX to stake that amount. `
       );
-      setStackLoading(false);
       return;
     }
 
@@ -262,7 +248,6 @@ useEffect(() => {
         )
       );
     }
-    setStackLoading(false);
   };
 
   const [onPresentConfirmModal] = useModal(
@@ -280,19 +265,22 @@ useEffect(() => {
     "ConfirmStakingModal"
   );
 
-
-    
-
   const biggest1500 = useMediaPredicate("(min-width: 1500px)");
   return (
     <div
       className="container-fluid d-flex flex-wrap flex-column flex-sm-row flex-direction-row-reverse"
       style={{ gap: "20px" }}
     >
-      <Statistics reward={reward} withdrawned={getWithDrawed(stakelist)} totalAmountStaked={totalAmountStaked} setTotalAmountStaked={setTotalAmountStaked}/>
-      <div style={{ flex: "1 1 30%"}}>
-        <div className="card d-flex flex-column"
-         style={{ background: "#1e1e1e" }}
+      <Statistics
+        reward={reward}
+        withdrawned={getWithDrawed(stakelist)}
+        totalAmountStaked={totalAmountStaked}
+        setTotalAmountStaked={setTotalAmountStaked}
+      />
+      <div style={{ flex: "1 1 30%" }}>
+        <div
+          className="card d-flex flex-column"
+          style={{ background: "#1e1e1e" }}
         >
           <div className="card-body mb-3">
             <div className="d-flex align-items-center mb-2">
@@ -358,22 +346,11 @@ useEffect(() => {
             </div>
             <div className="d-flex justify-content-between">
               <button
-                className="btn mr-1 btn-primary btn-lg mt-2 d-flex align-items-center"
+                className="btn mr-1 btn-primary btn-lg mt-2"
                 type="button"
                 onClick={handleSubmit}
               >
                 STAKE YOUR SOSX TOKEN
-                {stackLoading ? (
-                  <>
-                    <span
-                      className="spinner-border spinner-border-sm"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                  </>
-                ) : (
-                  ""
-                )}
               </button>
             </div>
           </div>
@@ -573,7 +550,7 @@ useEffect(() => {
       <div style={{ flex: "1 1 30%" }}>
         <UserStaking
           status={loading}
-          stakelist={stakelist}
+          stakelist={getUniqueValues(stakelist)}
           onActionModal={handleShow}
         />
       </div>
@@ -593,9 +570,7 @@ useEffect(() => {
           className="modal-body"
           style={{ background: "#111117", borderRadius: "0px 0px 10px 10px" }}
         >
-          {activeStakes.length !== 0
-            ?
-           getUniqueValues(activeStakes).map((stake, i) => (
+          {getUniqueValues(activeStakes).map((stake, i) => (
             <>
               <div
                 className="d-flex mb-4 justify-content-between"
@@ -638,86 +613,41 @@ useEffect(() => {
                         {stake.isWithdrawed ? "Yes" : "No"}
                       </span>
                     </div>
-                    <div className="fs-18 font-weight-bold main-pink">
-                      {stake.amount.toFixed(3)}
+                  </div>
+                  <div>
+                    <div className="d-flex mb-3 flex-column">
+                      <span className="mb-1">Rewards Gained:</span>
+                      <span className="text-success"> 0.00 SOSX </span>
                     </div>
-                    <div className="fs-18 font-weight-bold main-pink">
-                      <i className="fa fa-chevron-down"></i>
+                    <div className="d-flex mb-3 flex-column">
+                      <span className="mb-1">Duration Elapsed:</span>
+                      <span className="text-success">
+                        {stake.periodElapsed.toFixed(0)} Days
+                      </span>
                     </div>
                   </div>
+                </div>
 
-                  <div
-                    style={{
-                      display: showDetails == i ? "block" : "none",
-                    }}
+                <div className="d-flex justify-content-between">
+                  <button
+                    onClick={() => handleClaimReward(stake.stakeID)}
+                    className="btn w-100  mr-1 btn-primary btn-lg mt-2"
+                    type="button"
                   >
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <div className="d-flex mb-3 flex-column">
-                          <span className="mb-1">Amount Staked:</span>
-                          <span className="text-success">
-                            {stake.amount.toFixed(3)} SOSX
-                          </span>
-                        </div>
-                        <div className="d-flex mb-3 flex-column">
-                          <span className="mb-1">Date Staked:</span>
-                          <span className="text-success">
-                            {stake.stakeDate}
-                          </span>
-                        </div>
-                        <div className="d-flex mb-3 flex-column">
-                          <span className="mb-1">Withdrawed:</span>
-                          <span className="text-success">
-                            {stake.isWithdrawed ? "Yes" : "No"}
-                          </span>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="d-flex mb-3 flex-column">
-                          <span className="mb-1">Rewards Gained:</span>
-                          <span className="text-success"> 0.00 SOSX </span>
-                        </div>
-                        <div className="d-flex mb-3 flex-column">
-                          <span className="mb-1">Duration Elapsed:</span>
-                          <span className="text-success">
-                            {stake.periodElapsed.toFixed(0)} Days
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                    CLAIM REWARD
+                  </button>
 
-                    <div className="d-flex justify-content-between">
-                      <button
-                        onClick={() => handleClaimReward(stake.stakeID)}
-                        className="btn w-100  mr-1 btn-primary btn-lg mt-2"
-                        type="button"
-                      >
-                        CLAIM REWARD
-                      </button>
-
-                      <button
-                        className="btn w-100  mr-1 btn-primary btn-lg mt-2"
-                        type="button"
-                        onClick={() => handleUnStake(stake.stakeID)}
-                      >
-                        UNSTAKE{" "}
-                        {unstackLoading ? (
-                          <>
-                            <span
-                              className="spinner-border spinner-border-sm"
-                              role="status"
-                              aria-hidden="true"
-                            ></span>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                </>
-              ))
-            : "No Staking History"}
+                  <button
+                    className="btn w-100  mr-1 btn-primary btn-lg mt-2"
+                    type="button"
+                    onClick={() => handleUnStake(stake.stakeID)}
+                  >
+                    UNSTAKE
+                  </button>
+                </div>
+              </div>
+            </>
+          ))}
         </div>
       </Modal>
     </div>

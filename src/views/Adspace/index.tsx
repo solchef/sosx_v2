@@ -14,10 +14,19 @@ export default function Adspace() {
   const biggerThan1400 = useMediaPredicate("(min-width: 1400px)");
   const biggest1400 = useMediaPredicate("(max-width: 1400px)");
   const [viewModle, setViewModle] = useState<boolean>();
+  const [viewInfoModle, setViewInfoModle] = useState<boolean>();
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [sharedUrl, setSharedUrl] = useState("");
   const [file, setFile] = useState(null);
+  const [selectedData, setSelectedData] = useState({
+    name: "",
+    amount: "",
+    sharedUrl: "",
+    wallet: "",
+    tokenType: "",
+    image: "",
+  });
   const GraphqlAdspaceData = useQuery(GET_Adspace);
   const [adspaceData, setAdspaceData] = useState([]);
   const { account } = useWeb3React();
@@ -28,10 +37,9 @@ export default function Adspace() {
   });
 
   useEffect(() => {
-    // console.log(cleanNumber(0.00000023 + 0.0000023321 + ""));
     if (GraphqlAdspaceData.data !== undefined) {
-      // console.log(GraphqlAdspaceData.data.getAdspace);
       setAdspaceData(GraphqlAdspaceData.data.getAdspace);
+      console.log(GraphqlAdspaceData.data.getAdspace);
     }
   }, [GraphqlAdspaceData.data]);
 
@@ -54,7 +62,7 @@ export default function Adspace() {
           name: name,
           amount: amount,
           sharedUrl: sharedUrl,
-          wallet: "",
+          wallet: account,
           tokenType: "SOSX",
           image: "http://ipfs.io/ipfs/" + result.cid,
         });
@@ -67,6 +75,7 @@ export default function Adspace() {
       }
     } catch (error) {
       toastError("Network Error");
+      handleCloseGuide();
     }
 
     handleCloseGuide();
@@ -89,7 +98,12 @@ export default function Adspace() {
         {adspaceData.map((data, index) => {
           return (
             <div className="col" key={index}>
-              <div className="card">
+              <div
+                className="card"
+                style={
+                  data.wallet === account ? { border: "solid 2px #ff00cc" } : {}
+                }
+              >
                 <div className="row">
                   <div className="col-lg-4">
                     <img src={data.image} className="adspace-cmpny-img" />
@@ -101,6 +115,20 @@ export default function Adspace() {
                       {" "}
                       {cleanNumber(data.amount + "")} {data.tokenType}
                     </h4>
+                    {data.wallet === account ? (
+                      <button
+                        type="button"
+                        className="btn btn-primary btn-lg"
+                        onClick={() => {
+                          setViewInfoModle(true);
+                          setSelectedData(data);
+                        }}
+                      >
+                        info
+                      </button>
+                    ) : (
+                      ""
+                    )}
                     <a href={data.sharedUrl} target="_blank">
                       <button type="button" className="btn btn-primary btn-lg">
                         Visit Website
@@ -113,6 +141,125 @@ export default function Adspace() {
           );
         })}
       </div>
+      <Modal show={viewInfoModle} centered>
+        <ModalHeader
+          className="text-dark"
+          style={{ background: "#111117", borderRadius: "10px 10px 0px 0px" }}
+        >
+          {selectedData.name}
+          <a
+            href="#"
+            onClick={() => setViewInfoModle(false)}
+            className="pull-right text-white"
+          >
+            <i className="fa fa-close"></i>
+          </a>
+        </ModalHeader>
+
+        <div
+          className="modal-body"
+          style={{ background: "#111117", borderRadius: "0px 0px 10px 10px" }}
+        >
+          <div className="d-flex flex-column">
+            <div className="title-pink custom-pt mb-5 d-flex flex-column align-items-center">
+              <div className=" mb-3 py-2 px-3  ">
+                <img src={selectedData.image}></img>
+              </div>
+              <div className="mb-3 py-2 px-3  ">
+                Your stacked ammount is:
+                {cleanNumber(selectedData.amount + "") +
+                  " " +
+                  selectedData.tokenType}
+              </div>
+              <div className="mb-3 py-2 px-3  ">
+                Your remaining stacked ammount is:
+                {cleanNumber(selectedData.amount + "") +
+                  " " +
+                  selectedData.tokenType}
+              </div>
+              <div className="mb-3 py-2 px-3 w-100 ">
+                <table className="jsx-a752e0b28b6254b2 ranking-header fs-12 p-4 mt-0 table">
+                  <tr className="jsx-a752e0b28b6254b2 jsx-e5e2ca7965fa437a">
+                    <th className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                      Ammount
+                    </th>
+                    <th className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal text-center">
+                      Wallet
+                    </th>
+                  </tr>
+                  <tbody className="jsx-a752e0b28b6254b2">
+                    <tr className="jsx-a752e0b28b6254b2  text-nowrap mt-4">
+                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                        1000
+                      </td>
+                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                        {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
+                          0,
+                          20
+                        )}
+                        ...
+                      </td>
+                    </tr>
+                    <tr className="jsx-a752e0b28b6254b2  text-nowrap mt-4">
+                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                        1000
+                      </td>
+                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                        {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
+                          0,
+                          20
+                        )}
+                        ...
+                      </td>
+                    </tr>
+                    <tr className="jsx-a752e0b28b6254b2  text-nowrap mt-4">
+                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                        1000
+                      </td>
+                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                        {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
+                          0,
+                          20
+                        )}
+                        ...
+                      </td>
+                    </tr>
+                    <tr className="jsx-a752e0b28b6254b2  text-nowrap mt-4">
+                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                        1000
+                      </td>
+                      <td className="jsx-a752e0b28b6254b2 fs-16 font-weight-normal">
+                        {"0xC410e12052FFf5D4CD6E421AFff24e7f449052A2".substring(
+                          0,
+                          20
+                        )}
+                        ...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="modal-footer guide-popup">
+              <button
+                type="button"
+                className="btn btn-primary btn-lg"
+                onClick={() => setViewInfoModle(false)}
+              >
+                Ok
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary btn-lg"
+                onClick={() => setViewInfoModle(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
       <Modal show={viewModle} centered>
         <ModalHeader
           className="text-dark"

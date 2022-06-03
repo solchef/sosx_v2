@@ -1,5 +1,4 @@
 export const cleanNumber = (amount: string) => {
-  console.log(amount);
   let number = amount;
   if (number.split(",").length !== 0) number = amount.replace(/\D/g, "");
   if (number === "NaN") return "0";
