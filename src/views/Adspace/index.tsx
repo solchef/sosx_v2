@@ -248,7 +248,7 @@ export default function Adspace() {
               </div>
             </div>
 
-            <div className="modal-footer d-flex justify-content-center guide-popup">
+            <div className="modal-footer d-flex justify-content-center align-items-center guide-popup">
               <button
                 type="button"
                 className="btn btn-primary  btn-lg"
