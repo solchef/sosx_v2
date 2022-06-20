@@ -59,7 +59,7 @@ const PrizePool = (props) => {
           </p>
         </div>
         <div className="d-flex justify-content-center">
-          <h2 className="main-pink">$1,500.00</h2>
+          <h2 className="main-pink">$1,000.00</h2>
         </div>
       </div>
       </div>

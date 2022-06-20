@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { Modal, ModalHeader } from "react-bootstrap";
 import PrizePool from "./PrizePool";
 import useStage from "hooks/useStage";
-import moment from "moment";
 
 const TimerDisplay = () => {
   const [showRules, setshowRules] = useState(false);
   const handleCloseRules = () => setshowRules(false);
   const handleshowRules = () => setshowRules(true);
-  const { stage, hour, min, sec } = useStage();
+  const { stage, days, hour, min, sec } = useStage();
 
   const [lastRound, setLastRound] = useState(Number);
 
@@ -60,7 +59,7 @@ const TimerDisplay = () => {
               >
                 <div className="d-flex justify-content-start align-items-center">
                   <p className="li ">
-                    <span className=" main-pink m-0">00</span>
+                    <span className=" main-pink m-0">{pad(days)}</span>
                     Days
                   </p>
                   <p className="li d-flex align-self-baseline">
