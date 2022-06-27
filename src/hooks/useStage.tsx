@@ -45,7 +45,7 @@ const useStage = () => {
 
   useEffect(() => {
     // const roundStartTime = startingTimeStamp;
-    const roundStartTime = 1655757418;
+    const roundStartTime = 1656364705;
 
     let stageGroups = [];
 
@@ -54,7 +54,7 @@ const useStage = () => {
     const STAGE_3 = Number(process.env.NEXT_PUBLIC_STAGE_3)
     const STAGE_4 = Number(process.env.NEXT_PUBLIC_STAGE_4)
 
-    let stage1 = { start: roundStartTime, end: roundStartTime + 429832  };
+    let stage1 = { start: roundStartTime, end: roundStartTime + 254627  };
     let stage2 = { start: stage1.end, end: stage1.end + STAGE_2  * 60 };
     let stage3 = { start: stage2.end, end: stage2.end + STAGE_3  * 60 };
     let stage4 = { start: stage3.end, end: stage3.end + 1000000  * 60 };
