@@ -22,14 +22,14 @@ export const UI = () => {
        <div>
        {(loading === true) && (
        <div id="loading">
-       <img id="loading-image" src="https://socialx.io/img/loader.gif" alt="Loading..." />
+       <img id="loading-image" src="https://socialx-x.vercel.app/img/loader.gif" alt="Loading..." />
      </div>
        ) }
       
           <nav className="justify-content-between navbar navbar-expand-lg fixed-top center-brand static-nav">
             <Link href="/">
             <a className="navbar-brand">
-              <img src="https://socialx.io/img/logo.png" alt="logo" className="logo-default" />
+              <img src="https://socialx-x.vercel.app/img/logo.png" alt="logo" className="logo-default" />
             </a>
             </Link>
             <div className="float-right">

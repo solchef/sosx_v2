@@ -19,7 +19,7 @@ const tokens = {
       97: "",
     },
     decimals: 18,
-    projectLink: "https://socialx.io",
+    projectLink: "https://socialx-x.vercel.app",
   },
   txl: {
     symbol: "TXL",

@@ -44,7 +44,7 @@ export const OX = () => {
 
             </div>
           </div>
-          <img src="https://socialx.io/img/sosx-prizepool-banner2.png" />
+          <img src="https://socialx-x.vercel.app/img/sosx-prizepool-banner2.png" />
         </div>
       </div>
     </div>
@@ -55,21 +55,21 @@ export const OX = () => {
     <div className="row">
       <div className="col-md-4">
         <div className="card5">
-          <img src="https://socialx.io/img/rule1-img.png" className="steps-img" />
+          <img src="https://socialx-x.vercel.app/img/rule1-img.png" className="steps-img" />
           <h1>{t("RULE")} # 1</h1>
           <p className="fs-12">{t("First person to complete the voted challenge by the SOSX community and submit the video on socialx.io and post it on their social media wins all the prize money!")}</p>
         </div>
       </div>
       <div className="col-md-4">
         <div className="card5">
-          <img src="https://socialx.io/img/rule2-img.png" className="steps-img" />
+          <img src="https://socialx-x.vercel.app/img/rule2-img.png" className="steps-img" />
           <h1>{t("RULE")} # 2</h1>
           <p className="fs-12">{t("If the 1st person who submitted the video failed to meet the conditions or incorrectly completed the challenge, the 2nd in line until voted correct takes the prize.")}</p>
         </div>
       </div>
       <div className="col-md-4">
         <div className="card5">
-          <img src="https://socialx.io/img/rule3-img.png" className="steps-img" />
+          <img src="https://socialx-x.vercel.app/img/rule3-img.png" className="steps-img" />
           <h1>{t("RULE")} # 3</h1>
           <p className="fs-12">{t("Prize money will be 100% of the 10% collected on all buy orders from the previous days 24 hour traded volume.")}</p>
         </div>
@@ -81,7 +81,7 @@ export const OX = () => {
       <div className="row">
         <div className="col-md-12 text-center">
           <h1>DAOX</h1>
-          <img src="https://socialx.io/img/daox-img.png" className="daox-img" />
+          <img src="https://socialx-x.vercel.app/img/daox-img.png" className="daox-img" />
         </div>
         <div className="col-md-4">
           <div className="dao-card">
@@ -120,7 +120,7 @@ export const OX = () => {
           </div>
         </div>
         <div className="col-md-6">
-          <img src="https://socialx.io/img/submitchallenge-banner.png" alt="" />
+          <img src="https://socialx-x.vercel.app/img/submitchallenge-banner.png" alt="" />
         </div>
       </div>
     </div>
@@ -129,7 +129,7 @@ export const OX = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-6 mobile-hide">
-          <img src="https://socialx.io/img/votetopchallenge-banner.png" alt="" />
+          <img src="https://socialx-x.vercel.app/img/votetopchallenge-banner.png" alt="" />
         </div>
         <div className="col-md-6 custom-pt">
           <div className="title-pink custom-pt">
@@ -138,7 +138,7 @@ export const OX = () => {
           </div>
         </div>
         <div className="col-md-6 mobile-show">
-          <img src="https://socialx.io/img/votetopchallenge-banner.png" alt="" />
+          <img src="https://socialx-x.vercel.app/img/votetopchallenge-banner.png" alt="" />
         </div>
       </div>
     </div>
@@ -153,7 +153,7 @@ export const OX = () => {
           </div>
         </div>
         <div className="col-md-6">
-          <img src="https://socialx.io/img/votefinalchallenge-banner.png" alt="" />
+          <img src="https://socialx-x.vercel.app/img/votefinalchallenge-banner.png" alt="" />
         </div>
       </div>
     </div>
@@ -162,7 +162,7 @@ export const OX = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-6 mobile-hide">
-          <img src="https://socialx.io/img/completechallenge-banner.png" alt="" />
+          <img src="https://socialx-x.vercel.app/img/completechallenge-banner.png" alt="" />
         </div>
         <div className="col-md-6 custom-pt">
           <div className="title-pink custom-pt">
@@ -173,7 +173,7 @@ export const OX = () => {
             </p>
           </div>
           <div className="col-md-6 mobile-show">
-            <img src="https://socialx.io/img/completechallenge-banner.png" alt="" />
+            <img src="https://socialx-x.vercel.app/img/completechallenge-banner.png" alt="" />
           </div>
         </div>
       </div>
@@ -191,7 +191,7 @@ export const OX = () => {
       </div>
       <div className="row">
         <div className="col-md-12">
-          <img src="https://socialx.io/img/previouswinner-banner.png" alt="" />
+          <img src="https://socialx-x.vercel.app/img/previouswinner-banner.png" alt="" />
         </div>
       </div>
     </div>
@@ -200,7 +200,7 @@ export const OX = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-6">
-          <img src="https://socialx.io/img/rules-banner.png" alt="" />
+          <img src="https://socialx-x.vercel.app/img/rules-banner.png" alt="" />
         </div>
         <div className="col-md-6 pl-5">
           <h3><Trans>THERE ARE NO RULES TO THE CHALLENGES EXCEPT NO CHALLENGE CAN BE MADE TO CAUSE INTENTIONAL HARM OR LEADING TO DEATH OR KILL.</Trans></h3>

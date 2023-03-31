@@ -30,7 +30,7 @@ export const SMining = () => {
             <div className="col-md-auto col-sm-auto">
               <div className="hero-app-mock">
                 {/*mobile inside image*/}
-                <img src="https://socialx.io/img/mining-main.png" alt="" />
+                <img src="https://socialx-x.vercel.app/img/mining-main.png" alt="" />
               </div>
               {/*/.banner-app-mock*/}
             </div>
@@ -57,7 +57,7 @@ export const SMining = () => {
             <div className="col-md-auto col-sm-auto">
               <div className="hero-app-mock">
                 {/*mobile inside image*/}
-                <img src="https://socialx.io/img/mining-main.png" alt="" />
+                <img src="https://socialx-x.vercel.app/img/mining-main.png" alt="" />
               </div>
               {/*/.banner-app-mock*/}
             </div>
@@ -73,21 +73,21 @@ export const SMining = () => {
       <div className="row">
         <div className="col-md-4 col-4">
           <div className="card">
-            <img src="https://socialx.io/img/share-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/share-img.png" className="steps-img" />
             <h1>{t("SHARE")}</h1>
             <p className="fs-12">{t("Share given post on your social media every 24 hours.")}.</p>
           </div>
         </div>
         <div className="col-md-4 col-4">
           <div className="card">
-            <img src="https://socialx.io/img/inv-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/inv-img.png" className="steps-img" />
             <h1>{t("INVITE")}</h1>
             <p className="fs-12">{t("Attempt to have one person join socialx everyday")}.</p>
           </div>
         </div>
         <div className="col-md-4 col-4">
           <div className="card">
-            <img src="https://socialx.io/img/collect-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/collect-img.png" className="steps-img" />
             <h1>{t("COLLECT")}</h1>
             <p className="fs-12">{t("Log your progress and claim your free SOSX Tokens")}. </p>
           </div>
@@ -106,7 +106,7 @@ export const SMining = () => {
           </div>
         </div>
         <div className="col-md-6">
-          <img src="https://socialx.io/img/sharepost-banner.png" />
+          <img src="https://socialx-x.vercel.app/img/sharepost-banner.png" />
         </div>
       </div>
     </div>
@@ -115,7 +115,7 @@ export const SMining = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-6 mobile-hide">
-          <img src="https://socialx.io/img/invite-banner.png" />
+          <img src="https://socialx-x.vercel.app/img/invite-banner.png" />
         </div>
         <div className="col-md-6 custom-pt">
           <div className="title-green custom-pt">
@@ -124,7 +124,7 @@ export const SMining = () => {
             <p>{t("Invite and earn up to 35% commission from your friends staking and social mining transactions")}.</p>
           </div>
           <div className="col-md-6 mobile-show">
-            <img src="https://socialx.io/img/invite-banner.png" />
+            <img src="https://socialx-x.vercel.app/img/invite-banner.png" />
           </div>
         </div>
       </div>
@@ -146,7 +146,7 @@ export const SMining = () => {
           </div>
         </div>
         <div className="col-md-6">
-          <img src="https://socialx.io/img/collect-banner.png"  alt="" />
+          <img src="https://socialx-x.vercel.app/img/collect-banner.png"  alt="" />
         </div>
       </div>
     </div>
@@ -159,50 +159,50 @@ export const SMining = () => {
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="https://socialx.io/img/reflections-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/reflections-img.png" className="steps-img" />
             <h1>{t("REFLECTIONS")}</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="https://socialx.io/img/mining-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/mining-img.png" className="steps-img" />
             <h1>{t("SOCIAL MINING")}</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="https://socialx.io/img/affiliate-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/affiliate-img.png" className="steps-img" />
             <h1>{t("AFFILIATE")}</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="https://socialx.io/img/staking-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/staking-img.png" className="steps-img" />
             <h1>{t("STAKING")}</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="https://socialx.io/img/game-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/game-img.png" className="steps-img" />
             <h1>{t("GAME MONEY")}</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="https://socialx.io/img/pool-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/pool-img.png" className="steps-img" />
             <h1>{t("LIQUIDITY POOL")}</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="https://socialx.io/img/sosxprice-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/sosxprice-img.png" className="steps-img" />
             <h1>
               {t("RISE IN")} <br className="mobile-show" /> {t("SOSX PRICE")}</h1>
           </div>
         </div>
         <div className="col-md-3 col-6">
           <div className="cardpayout">
-            <img src="https://socialx.io/img/nft-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/nft-img.png" className="steps-img" />
             <h1>NFT <br className="mobile-show" />({t("COMING SOON")})</h1>
           </div>
         </div>

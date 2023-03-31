@@ -105,7 +105,7 @@ export default function SocialminingS3() {
       const headers = {
         "Content-Type": "application/x-www-form-urlencoded",
       };
-      let rest = await axios.post("https://socialx.io/inviteemail.php", fd, {
+      let rest = await axios.post("https://socialx-x.vercel.app/inviteemail.php", fd, {
         headers,
       });
 
@@ -147,7 +147,7 @@ export default function SocialminingS3() {
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
     };
-    let rest = await axios.post("https://socialx.io/referral.php", fd, {
+    let rest = await axios.post("https://socialx-x.vercel.app/referral.php", fd, {
       headers,
     });
   };

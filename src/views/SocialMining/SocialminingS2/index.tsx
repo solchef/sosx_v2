@@ -103,10 +103,10 @@ export default function SocialminingS2(props) {
 								<div className="bg-dark p-0  rounded">
 								{account ? (
 									<div className="d-flex p-2 justify-content-between align-items-center">
-										<p className='fs-14'>https://socialx.io?ref={account.slice(0, 23)}...</p>
+										<p className='fs-14'>https://socialx-x.vercel.app?ref={account.slice(0, 23)}...</p>
 										<div className="float-right d-flex">
 											<li onClick={() => {
-												navigator.clipboard.writeText(`https://socialx.io?ref=${account}`)
+												navigator.clipboard.writeText(`https://socialx-x.vercel.app?ref=${account}`)
 												setCopySuccess('Copied!')
 
 											}} className="nav-item pr-2">

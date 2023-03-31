@@ -8,7 +8,7 @@ const NavHeader = () => {
         <nav className="justify-content-between navbar navbar-expand-lg fixed-top center-brand static-nav">
         <Link href="/">
         <a className="navbar-brand">
-          <img src="https://socialx.io/img/logo.png" alt="logo" className="logo-default" />
+          <img src="https://socialx-x.vercel.app/img/logo.png" alt="logo" className="logo-default" />
         </a>
         </Link>
         <button className="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#xenav">

@@ -10,7 +10,7 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://socialx.io/img/fav/favicon-96x96.png",
+      "src": "https://socialx-x.vercel.app/img/fav/favicon-96x96.png",
       "type": "image/x-icon",
       "sizes": "16x16"
     },

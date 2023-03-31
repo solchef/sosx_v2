@@ -14,7 +14,7 @@ export const Experiment = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-6 mobile-show">
-          <img src="https://socialx.io/img/social-mining-experiment-banner.png"  alt="" />
+          <img src="https://socialx-x.vercel.app/img/social-mining-experiment-banner.png"  alt="" />
         </div>
         <div className="col-md-6">
           <div className="experiment-title custom-pt">
@@ -25,7 +25,7 @@ export const Experiment = () => {
           </div>
         </div>
         <div className="col-md-6 mobile-hide">
-          <img src="https://socialx.io/img/social-mining-experiment-banner.png"  alt="" />
+          <img src="https://socialx-x.vercel.app/img/social-mining-experiment-banner.png"  alt="" />
         </div>
       </div>
     </div>
@@ -35,21 +35,21 @@ export const Experiment = () => {
       <div className="row">
         <div className="col-md-4 col-4">
           <div className="card2">
-            <img src="https://socialx.io/img/share-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/share-img.png" className="steps-img" />
             <h1>{t("SHARE")}</h1>
             <p className="fs-12">{t("Share given post on your social media every 24 hours.")}</p>
           </div>
         </div>
         <div className="col-md-4 col-4">
           <div className="card2">
-            <img src="https://socialx.io/img/inv-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/inv-img.png" className="steps-img" />
             <h1>{t("INVITE")}</h1>
             <p className="fs-12">{t("Attempt to have one person join socialx everyday")}</p>
           </div>
         </div>
         <div className="col-md-4 col-4">
           <div className="card2">
-            <img src="https://socialx.io/img/collect-img.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/collect-img.png" className="steps-img" />
             <h1>{t("COLLECT")}</h1>
             <p className="fs-12">{t("Log your progress and claim your free SOSX Tokens")}</p>
           </div>
@@ -71,12 +71,12 @@ export const Experiment = () => {
       <div className="row">
         <div className="col-sm-6">
           <div className="card3">
-            <img src="https://socialx.io/img/buyer-dynamicprice.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/buyer-dynamicprice.png" className="steps-img" />
           </div>
         </div>
         <div className="col-sm-6">
           <div className="card3">
-            <img src="https://socialx.io/img/seller-dynamicprice.png" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/seller-dynamicprice.png" className="steps-img" />
           </div>
         </div>
       </div>
@@ -94,49 +94,49 @@ export const Experiment = () => {
         <div className="row justify-content-center">
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="https://socialx.io/img/reflections-img.png" className="steps-img" />
+              <img src="https://socialx-x.vercel.app/img/reflections-img.png" className="steps-img" />
               <h1>{t("REFLECTIONS")}</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="https://socialx.io/img/mining-img.png" className="steps-img" />
+              <img src="https://socialx-x.vercel.app/img/mining-img.png" className="steps-img" />
               <h1>{t("SOCIAL MINING")}</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="https://socialx.io/img/affiliate-img.png" className="steps-img" />
+              <img src="https://socialx-x.vercel.app/img/affiliate-img.png" className="steps-img" />
               <h1>{t("AFFILIATE")}</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="https://socialx.io/img/staking-img.png" className="steps-img" />
+              <img src="https://socialx-x.vercel.app/img/staking-img.png" className="steps-img" />
               <h1>{t("STAKING")}</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="https://socialx.io/img/game-img.png" className="steps-img" />
+              <img src="https://socialx-x.vercel.app/img/game-img.png" className="steps-img" />
               <h1>{t("GAME MONEY")}</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="https://socialx.io/img/pool-img.png" className="steps-img" />
+              <img src="https://socialx-x.vercel.app/img/pool-img.png" className="steps-img" />
               <h1>{t("LIQUIDITY POOL")}</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="https://socialx.io/img/sosxprice-img.png" className="steps-img" />
+              <img src="https://socialx-x.vercel.app/img/sosxprice-img.png" className="steps-img" />
               <h1>{t("RISE IN SOSX")} <br className="mobile-show" /> {t("PRICE")}</h1>
             </div>
           </div>
           <div className="col-md-3 col-6">
             <div className="card2">
-              <img src="https://socialx.io/img/nft-img.png" className="steps-img" />
+              <img src="https://socialx-x.vercel.app/img/nft-img.png" className="steps-img" />
               <h1>NFT <br className="mobile-show" />({t("COMING SOON")})</h1>
             </div>
           </div>
@@ -158,31 +158,31 @@ export const Experiment = () => {
       <div className="row justify-content-center">
         <div className="col-md-4 col-6">
           <div className="card2">
-            <img src="https://socialx.io/img/gas-free.svg" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/gas-free.svg" className="steps-img" />
             <h1>{t("GAS FEE FREE ON REWARDS")}</h1>
           </div>
         </div>
         <div className="col-md-4 col-6">
           <div className="card2">
-            <img src="https://socialx.io/img/autolock.svg" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/autolock.svg" className="steps-img" />
             <h1>{t("AUTO-LOCKED LIQUIDITY")}</h1>
           </div>
         </div>
         <div className="col-md-4 col-6">
           <div className="card2">
-            <img src="https://socialx.io/img/deflat.svg" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/deflat.svg" className="steps-img" />
             <h1>{t("DEFLATIONARY TOKENOMICS")}</h1>
           </div>
         </div>
         <div className="col-md-4 col-6">
           <div className="card2">
-            <img src="https://socialx.io/img/safe.svg" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/safe.svg" className="steps-img" />
             <h1>{t("100% SAFE & RUG-PROOF")}</h1>
           </div>
         </div>
         <div className="col-md-4 col-6">
           <div className="card2">
-            <img src="https://socialx.io/img/antiwhale.svg" className="steps-img" />
+            <img src="https://socialx-x.vercel.app/img/antiwhale.svg" className="steps-img" />
             <h1>{t('ANTI-WHALE')}
               <br className="mobile-show" />{t("DUMP")}</h1>
           </div>
@@ -224,10 +224,10 @@ export const Experiment = () => {
       </div>
       <div className="row">
         <div className="col-md-12 mobile-hide">
-          <img src="https://socialx.io/img/30daychart.png"  className="steps-img" />
+          <img src="https://socialx-x.vercel.app/img/30daychart.png"  className="steps-img" />
         </div>
         <div className="col-md-12 mobile-show">
-          <img src="https://socialx.io/img/30daychart-mob.png"  className="steps-img" />
+          <img src="https://socialx-x.vercel.app/img/30daychart-mob.png"  className="steps-img" />
         </div>
       </div>
     </div>

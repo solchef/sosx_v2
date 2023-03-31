@@ -16,7 +16,7 @@ const Step2 = () => {
                   style={{alignSelf: "center"}}
                 >
                   <img
-                    src="https://socialx.io/img/votetopchallenge-banner.png"
+                    src="https://socialx-x.vercel.app/img/votetopchallenge-banner.png"
                     data-aos="fade-up"
                     alt=""
                     style={{maxHeight:"300px"}}

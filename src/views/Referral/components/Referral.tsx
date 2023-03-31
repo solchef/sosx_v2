@@ -21,7 +21,7 @@ import {
         <Popover id="popover-success">
           <Popover.Body>
             <WhatsappShareButton
-              url={`https://socialx.io?ref=${account}`}
+              url={`https://socialx-x.vercel.app?ref=${account}`}
               className="Demo__some-network__share-button"
             >
               <WhatsappIcon size={32} round /> Whatsapp
@@ -31,7 +31,7 @@ import {
             <br />
     
             <TelegramShareButton
-              url={`https://socialx.io?ref=${account}`}
+              url={`https://socialx-x.vercel.app?ref=${account}`}
               className="Demo__some-network__share-button"
             >
               <TelegramIcon size={32} round /> Telegram
@@ -41,7 +41,7 @@ import {
             <br />
     
             <FacebookShareButton
-              url={`https://socialx.io?ref=${account}`}
+              url={`https://socialx-x.vercel.app?ref=${account}`}
               quote={"Welcome to the social experiment"}
               hashtag={"#socialx"}
               className="Demo__some-network__share-button"
@@ -52,7 +52,7 @@ import {
             <br />
             <TwitterShareButton
               title={"Welcome to the social experiment"}
-              url={`https://socialx.io?ref=${account}`}
+              url={`https://socialx-x.vercel.app?ref=${account}`}
               hashtags={["socialx", "socialx"]}
             >
               <TwitterIcon size={32} round />
@@ -90,7 +90,7 @@ return (
             {account != null ? (
               <>
                 <h5 className="font-weight-bold text-nowrap pt-3 pb-3 " style={{ color: 'rgb(142, 142, 142)' }}>
-                  https://socialx.io?ref={account.replace(/(.{13})..+/, "$1…")}
+                  https://socialx-x.vercel.app?ref={account.replace(/(.{13})..+/, "$1…")}
                 </h5>
                 {copied ? (
                   <span style={{ color: "red" }}>Copied.</span>
@@ -107,7 +107,7 @@ return (
 
             <div className="d-flex justify-content-end">
               <CopyToClipboard
-                text={`https://socialx.io?ref=${account}`}
+                text={`https://socialx-x.vercel.app?ref=${account}`}
                 onCopy={() => setCopied(true)}
               >
                 <button className="btn btn-primary mr-2">Copy</button>

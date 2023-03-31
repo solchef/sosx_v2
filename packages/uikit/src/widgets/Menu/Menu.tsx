@@ -216,7 +216,7 @@ const Menu: React.FC<NavProps> = ({
 
     <>
       <div className="nav-header">
-        <a href="https://socialx.io" className="brand-logo">
+        <a href="https://socialx-x.vercel.app" className="brand-logo">
           <img className="logo-abbr" src="/images/xlogo-black.b90261b2.svg" alt="" />
          
              <div className="dashboard_bar mobile-show ml-2">
@@ -397,7 +397,7 @@ const Menu: React.FC<NavProps> = ({
 
       {/* <div className="footer">
         <div className="copyright">
-          <p>Copyright © <a href="https://socialx.io/" target="_blank">SocialX</a> 2022</p>
+          <p>Copyright © <a href="https://socialx-x.vercel.app/" target="_blank">SocialX</a> 2022</p>
         </div>
       </div> */}
 

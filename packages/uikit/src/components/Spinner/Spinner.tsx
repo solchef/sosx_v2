@@ -50,7 +50,7 @@ const Loader = styled.img`
 const Spinner: React.FC<SpinnerProps> = ({ size = 128 }) => {
   return (
     <Container>
-      <Loader src="https://socialx.io/img/loader.gif" height={100} width={100} />
+      <Loader src="https://socialx-x.vercel.app/img/loader.gif" height={100} width={100} />
     </Container>
   );
 };

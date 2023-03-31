@@ -95,6 +95,7 @@ function MyApp(props: AppProps) {
 
   return (
     <>
+     
       <Head>
         <meta
           name="viewport"
@@ -106,12 +107,12 @@ function MyApp(props: AppProps) {
         <meta name="twitter:description" content="." />
         <meta name="twitter:card" content="Welcome to the social experiment" />
         <meta name="twitter:title" content="SocialX" />
-        <link
+        {/* <link
           href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css"
           rel="stylesheet"
         />
         <link href="/css/style.css" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="/css/faq.css" />
+        <link rel="stylesheet" type="text/css" href="/css/faq.css" /> */}
 
         <title>SOCIALx</title>
         {process.env.NODE_ENV !== "production" && (
@@ -153,41 +154,41 @@ const App = ({ Component, pageProps, ...appProps }) => {
 
   // I a commenting this section until we fully finish the front page website addition in termas of links and translated text.
   const getContent = () => {
-    // if ([`/social-mining`, `/ui`, `/`, `/ox`, `/privacy`, `/experiment`, `/aboutsosx`, `/faq`].includes(appProps.router.pathname)) {
-    //   return (
-    //     <ProductionErrorBoundary>
-    //     <Head>
-    //     <link rel="stylesheet" href='../../../../font/GameOfSquids.ttf' />
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/style.css" />
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/font/stylesheet.css" />
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/accordion.css"/>
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/aos.css"/>
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/bootstrap.min.css"/>
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/aos.css"/>
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/normalize.css"/>
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/style.css"/>
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/clock.css"/>
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/faq.css"/>
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/owl.carousel.min.css"/>
-    //     <link rel="stylesheet" type="text/css" href="https://socialx.io/css/owl.theme.default.min.css"/>
-    //     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
-    //     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" />
-    //     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"/>
-    //     </Head>
-    //     <Layout>
-    //       <Component {...pageProps} />
-    //     </Layout>
-    //     </ProductionErrorBoundary>
-    //   )
-    // }
-    // else {
+    if ([`/social-mining`, `/ui`, `/`, `/ox`, `/privacy`, `/experiment`, `/aboutsosx`, `/faq`].includes(appProps.router.pathname)) {
+      return (
+        <ProductionErrorBoundary>
+        <Head>
+        <link rel="stylesheet" href='../../../../font/GameOfSquids.ttf' />
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/font/stylesheet.css" />
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/accordion.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/aos.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/aos.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/normalize.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/clock.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/faq.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/owl.carousel.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://socialx-x.vercel.app/css/owl.theme.default.min.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"/>
+        </Head>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+        </ProductionErrorBoundary>
+      )
+    }
+    else {
     return (
       <ProductionErrorBoundary>
-        {/* <Head>
+        <Head>
           <link href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
           <link href="/css/style.css" rel="stylesheet" />
           <link rel="stylesheet" type="text/css" href="/css/faq.css" />
-        </Head> */}
+        </Head>
         <Menu>
           <Layout>
             <Component {...pageProps} />
@@ -198,7 +199,7 @@ const App = ({ Component, pageProps, ...appProps }) => {
         <FixedSubgraphHealthIndicator />
       </ProductionErrorBoundary>
     );
-    // }
+    }
   };
   return getContent();
 };

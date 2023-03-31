@@ -154,7 +154,7 @@ export default function Faq() {
                                     {t("You can sell your SOSX on")}
                                      <a
                                         href="https://pancakeswap.finance/swap">https://pancakeswap... </a>
-                                    {t("or")} <a href="https://socialx.io/">socialx.io</a> swap
+                                    {t("or")} <a href="https://socialx-x.vercel.app/">socialx.io</a> swap
                                 </div>
                             </div>
                         </div>
@@ -193,7 +193,7 @@ export default function Faq() {
                             </div>
                             <div style={mystyle(showJ)} className="faq-header">
                                 <div className="text-white p-1 hug">
-                                    {t("SOSX pays in 8 different ways. Visit this link for details")} <a href="https://socialx.io/experiment.html#sosx8ways">{t("Here")}</a>
+                                    {t("SOSX pays in 8 different ways. Visit this link for details")} <a href="https://socialx-x.vercel.app/experiment.html#sosx8ways">{t("Here")}</a>
                                 </div>
                             </div>
                         </div>
